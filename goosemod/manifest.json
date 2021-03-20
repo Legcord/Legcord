@@ -1,0 +1,23 @@
+{
+    "name": "GooseMod",
+	"version": "1.0",
+    "author": "AAGaming",
+    "description": "Loads GooseMod, a discord client modification",
+    "background": {
+        "scripts": [
+            "CSP.js"
+        ]
+    },
+    "content_scripts": [
+        {
+          "matches": ["*://*.discord.com/*"],
+          "js": ["gm.js"]
+        }
+      ],
+    "permissions": [
+        "webRequest",
+        "webRequestBlocking",
+        "*://*.discord.com/*"
+    ],
+    "manifest_version": 2
+}
