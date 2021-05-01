@@ -12,6 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "custom-electron-titlebar": "3.2.6",
+    "update-electron-app": "^2.0.1",
     "v8-compile-cache": "^2.3.0"
   },
   "devDependencies": {
