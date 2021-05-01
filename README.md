@@ -3,9 +3,11 @@ Armcord is a custom Discord client for ARM Linux. It's goal is to bring a custom
 # To run this you need:
 nodejs, npm
 # How to run/install it?
+Check releases tab for precompiled deb, rpm, tar.gz versions (arm64 only).
+Alternative:  
 1.Run `npm install`   
 2.Run `npm start`  
-Alternative: Download pre-compiled version from releases tab.
+
 
 # FAQ
 ## 1.Will I get banned from using it?   
@@ -14,4 +16,7 @@ Alternative: Download pre-compiled version from releases tab.
 ## 2.How does this work?   
 
  -We are using official web app and adding GooseMod to it with some other tweaks.   
+## 3.Can I use this on other architectures or operating systems?
+
+ -Yes! ArmCord should work normally under Windows, Mac OS, Linux as long as it has NodeJS, npm and Electron support.   
 
