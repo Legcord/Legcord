@@ -17,7 +17,10 @@ function createWindow() {
   })
 
   mainWindow.loadFile('index.html')
-
+  mainWindow.webContents.on("new-window", function (e, url) {
+    e.preventDefault();
+    require("electron").shell.openExternal(url);
+  });
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
 
@@ -46,3 +49,4 @@ app.whenReady().then(() => {
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
+
