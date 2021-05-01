@@ -4,7 +4,7 @@ Armcord is a custom Discord client for ARM Linux. It's goal is to bring a custom
 nodejs, npm
 # How to run/install it?
 1.Run `npm install`   
-2.Run `npm start`
+2.Run `npm start`  
 Alternative: Download pre-compiled version from releases tab.
 
 # FAQ
