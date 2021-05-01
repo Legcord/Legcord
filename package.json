@@ -11,7 +11,7 @@
   "author": "smartfrigde",
   "license": "MIT",
   "dependencies": {
-    "custom-electron-titlebar": "3.2.5",
+    "custom-electron-titlebar": "3.2.6",
     "v8-compile-cache": "^2.3.0"
   },
   "devDependencies": {
