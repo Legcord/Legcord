@@ -1,0 +1,22 @@
+{
+  "name": "custom-electron-titlebar-minimal-example",
+  "version": "1.0.0",
+  "description": "A minimal working example of how to use the custom-electron-titlebar module from AlexTorresSk.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tim L. Greller, Alex Torres",
+  "license": "MIT",
+  "dependencies": {
+    "custom-electron-titlebar": "3.2.5",
+    "v8-compile-cache": "^2.3.0"
+  },
+  "devDependencies": {
+    "electron": "latest",
+    "electron-builder": "latest",
+    "electron-packager": "latest"
+  }
+}
