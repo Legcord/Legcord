@@ -1,6 +1,6 @@
 {
-  "name": "custom-electron-titlebar-minimal-example",
-  "version": "1.0.0",
+  "name": "armcord",
+  "version": "2.0.0",
   "description": "A minimal working example of how to use the custom-electron-titlebar module from AlexTorresSk.",
   "main": "main.js",
   "scripts": {
@@ -18,5 +18,18 @@
     "electron": "latest",
     "electron-builder": "latest",
     "electron-packager": "latest"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smartfrigde/armcord.git"
+  },
+  "keywords": [
+    "arm",
+    "discord",
+    "electron"
+  ],
+  "bugs": {
+    "url": "https://github.com/smartfrigde/armcord/issues"
+  },
+  "homepage": "https://github.com/smartfrigde/armcord#readme"
 }
