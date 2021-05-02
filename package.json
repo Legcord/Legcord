@@ -15,7 +15,6 @@
   "dependencies": {
     "custom-electron-titlebar": "3.2.6",
     "electron-squirrel-startup": "^1.0.0",
-    "update-electron-app": "^2.0.1",
     "v8-compile-cache": "^2.3.0"
   },
   "devDependencies": {
