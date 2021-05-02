@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="5; URL=https://discord.com/app" />
+  <meta http-equiv="refresh" content="5; URL=https://canary.discord.com/app" />
   <title>ArmCord</title>
   <style>
     :root {
@@ -40,6 +40,16 @@
       max-width: 204px;
 
     }
+
+    .centered {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      /* bring your own prefixes */
+      transform: translate(-50%, -50%);
+      max-height: 204px;
+      max-width: 204px;
+    }
   </style>
   <style>
     body {
@@ -49,20 +59,9 @@
 </head>
 
 <body>
-  <video autoplay loop class=center>
+  <video autoplay loop class=centered>
     <source src="https://discord.com/assets/0bdc0497eb3a19e66f2b1e3d5741634c.webm" type="video/webm">
   </video>
-
-  <h1>ArmCord</h1>
-  <h1>Discord will load in few seconds.</h1>
-
-
-<script type=" text/javascript">
-      document.getElementById("myButton").onclick = function () {
-      location.href = "https://discordbotclient.jtmaveryk.repl.co";
-      };
-      </script>
-
 </body>
 
 </html>

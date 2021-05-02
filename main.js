@@ -12,13 +12,14 @@ function createWindow() {
     height: 600,
     frame: false,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, "preload.js"),
       enableRemoteModule: true,
       nodeIntegration: false,
-    }
-  })
-
-  mainWindow.loadFile('index.html')
+    },
+  });
+  mainWindow.webContents.userAgent =
+    "Mozilla/5.0 (X12; TempleOS MIPS) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"; //to set
+  mainWindow.loadFile("index.html");
   mainWindow.webContents.on("new-window", function (e, url) {
     e.preventDefault();
     require("electron").shell.openExternal(url);
@@ -26,9 +27,9 @@ function createWindow() {
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
 
-  mainWindow.on('closed', () => {
-    mainWindow = null
-  })
+  mainWindow.on("closed", () => {
+    mainWindow = null;
+  });
 }
 
 // This method will be called when Electron has finished
