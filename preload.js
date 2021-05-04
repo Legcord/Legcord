@@ -1,4 +1,6 @@
 const customTitlebar = require('custom-electron-titlebar')
+const electronLocalshortcut = require("electron-localshortcut");
+const { remote } = require("electron");
 
 window.addEventListener('DOMContentLoaded', () => {
   new customTitlebar.Titlebar({
@@ -15,6 +17,16 @@ window.addEventListener('DOMContentLoaded', () => {
   document.head.append(style);
 }
 
+
+})
+const currentWindow = remote.getCurrentWindow();
+electronLocalshortcut.register(currentWindow, "F5", () => {
+  location.reload();
+});
+electronLocalshortcut.register(currentWindow, "F12", () => {
+  currentWindow.webContents.openDevTools();
+});
+require("./utils/capturer.js")
 addStyle(`
 @import url("https://kckarnige.github.io/femboi_owo/discord-font.css");
 
@@ -60,3 +72,4 @@ div.menubar[role="menubar"] {
 }
 `);
 })
+

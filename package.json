@@ -1,24 +1,30 @@
 {
   "name": "armcord",
-  "version": "2.0.1",
+  "version": "2.2.0",
   "description": "ArmCord is a Discord client made for ARM Linux that allows you to customize your experience.",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "electron-forge start",
     "dist": "electron-builder",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "author": "smartfrigde",
   "license": "MIT",
   "dependencies": {
     "custom-electron-titlebar": "3.2.6",
-    "update-electron-app": "^2.0.1",
+    "electron-localshortcut": "^3.2.1",
+    "electron-squirrel-startup": "^1.0.0",
     "v8-compile-cache": "^2.3.0"
   },
   "devDependencies": {
-    "electron": "latest",
-    "electron-builder": "latest",
-    "electron-packager": "latest"
+    "@electron-forge/cli": "^6.0.0-beta.54",
+    "@electron-forge/maker-deb": "^6.0.0-beta.54",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.54",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
+    "@electron-forge/maker-zip": "^6.0.0-beta.54",
+    "electron": "latest"
   },
   "repository": {
     "type": "git",
@@ -32,5 +38,32 @@
   "bugs": {
     "url": "https://github.com/smartfrigde/armcord/issues"
   },
-  "homepage": "https://github.com/smartfrigde/armcord#readme"
+  "homepage": "https://github.com/smartfrigde/armcord#readme",
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "armcord"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  }
 }

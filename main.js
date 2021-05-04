@@ -2,10 +2,9 @@
 const { app, BrowserWindow, session } = require('electron')
 const path = require('path')
 require("v8-compile-cache");
-require("update-electron-app")();
+require("./utils/updater");
 let mainWindow
 require("./menu.js")
-
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
@@ -13,13 +12,14 @@ function createWindow() {
     icon: __dirname + '/discord.ico',
     frame: false,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, "preload.js"),
       enableRemoteModule: true,
       nodeIntegration: false,
-    }
-  })
-
-  mainWindow.loadFile('index.html')
+    },
+  });
+  mainWindow.webContents.userAgent =
+    "Mozilla/5.0 (X12; TempleOS MIPS) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"; //to set
+  mainWindow.loadFile("index.html");
   mainWindow.webContents.on("new-window", function (e, url) {
     e.preventDefault();
     require("electron").shell.openExternal(url);
@@ -27,9 +27,9 @@ function createWindow() {
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
 
-  mainWindow.on('closed', () => {
-    mainWindow = null
-  })
+  mainWindow.on("closed", () => {
+    mainWindow = null;
+  });
 }
 
 // This method will be called when Electron has finished
@@ -38,7 +38,17 @@ function createWindow() {
 app.whenReady().then(() => {
   createWindow()
   session.defaultSession.loadExtension(`${require('electron').app.getAppPath()}/goosemod/`)
-  
+  session
+    .fromPartition("some-partition")
+    .setPermissionRequestHandler((webContents, permission, callback) => {
+      const url = webContents.getURL(); //unused?
+
+      if (permission === "notifications") {
+        // Approves the permissions request
+        callback(true);
+      
+      }
+    });
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
