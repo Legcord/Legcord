@@ -10,6 +10,7 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    icon: __dirname + '/discord.ico',
     frame: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
