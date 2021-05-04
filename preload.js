@@ -18,7 +18,6 @@ window.addEventListener('DOMContentLoaded', () => {
 }
 
 
-})
 const currentWindow = remote.getCurrentWindow();
 electronLocalshortcut.register(currentWindow, "F5", () => {
   location.reload();
