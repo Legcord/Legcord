@@ -1,4 +1,4 @@
-# ArmCord 🦾🔌
+# ArmCord Canary🦾🔌
 Armcord is a custom Discord client for ARM Linux. It's goal is to bring a custom Discord client to ARM Architecture. It uses [GooseMod](https://goosemod.com) for custom themes and plugins!
 
 # How to run/install it?
