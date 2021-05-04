@@ -22,6 +22,7 @@ Alternative (npm, nodejs required):
 
 
 # Credits
+[ArmCord Loading Screen](https://github.com/kckarnige)   
 [GooseMod](https://github.com/GooseMod/GooseMod)   
 [GooseMod-Chrome](https://github.com/AAGaming00/GooseMod-chrome)    
 [update.rocks](https://www.update.rocks)   
