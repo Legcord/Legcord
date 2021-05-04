@@ -63,5 +63,25 @@
     <source src="https://discord.com/assets/0bdc0497eb3a19e66f2b1e3d5741634c.webm" type="video/webm">
   </video>
 </body>
-
+<p id=checkOnline></p>
+<script>
+    var ifConnected = window.navigator.onLine;
+    if (ifConnected) {
+      document.getElementById("checkOnline").innerHTML = "🟢Online";
+      document.getElementById("checkOnline").style.color = "green";
+    } else {
+      document.getElementById("checkOnline").innerHTML = "🔴 Check your internet connection!";
+      document.getElementById("checkOnline").style.color = "red";
+    }
+setInterval(function(){ 
+  var ifConnected = window.navigator.onLine;
+    if (ifConnected) {
+      document.getElementById("checkOnline").innerHTML = "🟢Online";
+      document.getElementById("checkOnline").style.color = "green";
+    } else {
+      document.getElementById("checkOnline").innerHTML = "🔴 Check your internet connection!";
+      document.getElementById("checkOnline").style.color = "red";
+    }
+ }, 3000);
+</script>
 </html>

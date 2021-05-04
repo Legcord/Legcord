@@ -40,7 +40,7 @@ app.whenReady().then(() => {
   session
     .fromPartition("some-partition")
     .setPermissionRequestHandler((webContents, permission, callback) => {
-      const url = webContents.getURL();
+      const url = webContents.getURL(); //unused?
 
       if (permission === "notifications") {
         // Approves the permissions request
