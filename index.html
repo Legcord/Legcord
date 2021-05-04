@@ -6,25 +6,44 @@
   <meta http-equiv="refresh" content="5; URL=https://discord.com/app" />
   <title>ArmCord</title>
   <style>
+     @import url("https://kckarnige.github.io/femboi_owo/discord-font.css");
+
     :root {
-      font-family: Arial, Helvetica, sans-serif;
+      background-color: #2c2f33;
     }
 
     .titlebar {
       font-family: Verdana, Geneva, Tahoma, sans-serif;
-      background-color: #2C2F33;
+      background-color: #202225;
     }
 
     body {
       color: white;
     }
 
-    h1 {
-      color: white;
+    p {
+      color: #8e9297;
+      text-align: center;
+      font-weight: 100;
+      transform: translateY(360%);
+      font-family: Whitney,Helvetica Neue,Helvetica,Arial,sans-serif;
+      text-rendering: optimizeLegibility;
+      font-style: italic;
     }
 
     h1 {
+      color: #ffffff;
       text-align: center;
+      font-weight: normal;
+      font-family: Discordinated;
+      transform: translateY(120%);
+    }
+
+    h1:before {
+      content: "ARM";
+      color: #7289da;
+      font-weight: normal;
+      font-family: Helvetica, sans-serif;
     }
 
     span {
@@ -38,31 +57,34 @@
       width: 50%;
       max-height: 204px;
       max-width: 204px;
+    }
 
+    .loading {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      color: #fff;
+      transform: translate(-50%, -50%);
     }
   </style>
   <style>
-    body {
-      background-color: #2c2f33;
-    }
+    
   </style>
 </head>
 
 <body>
-  <video autoplay loop class=center>
+    <div class="container">
+  <video autoplay loop class="center" style="transform: translateY(60%);">
     <source src="https://discord.com/assets/0bdc0497eb3a19e66f2b1e3d5741634c.webm" type="video/webm">
   </video>
-
-  <h1>ArmCord</h1>
-  <h1>Discord will load in few seconds.</h1>
-
-
-<script type=" text/javascript">
+  <p>Loading...</p>
+    <h1>Cord</h1>
+</div>
+    <script type=" text/javascript">
       document.getElementById("myButton").onclick = function () {
       location.href = "https://discordbotclient.jtmaveryk.repl.co";
       };
-      </script>
-
+    </script>
 </body>
 
 </html>
