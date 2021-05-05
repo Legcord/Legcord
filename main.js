@@ -61,8 +61,14 @@ function createWindow() {
 
 
   mainWindow.on("show", function () {
-    //gives some error todo
-    appIcon.setHighlightMode("always");
+    //temporary fix
+    try {
+      appIcon();
+    } catch (error) {
+      console.error(error);
+      // expected output: TypeError: appIcon is not a function
+    }
+
   });
 }
 
