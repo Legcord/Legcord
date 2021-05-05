@@ -38,6 +38,7 @@ function createWindow() {
     {
       label: "Support Discord Server",
       click: function () {
+        mainWindow.show();
         mainWindow.loadURL("https://discord.gg/F25bc4RYDt");
       },
     },
@@ -54,15 +55,13 @@ function createWindow() {
 
   // Emitted when the window is closed.
   mainWindow.on("close", function (event) {
-    mainWindow = null;
-  });
-
-  mainWindow.on("minimize", function (event) {
     event.preventDefault();
     mainWindow.hide();
   });
 
+
   mainWindow.on("show", function () {
+    //gives some error todo
     appIcon.setHighlightMode("always");
   });
 }
