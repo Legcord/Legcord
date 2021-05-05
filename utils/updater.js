@@ -5,7 +5,7 @@ const APP_VERSION = require("../package.json").version;
   This url will need to be modified for yours */
 // The url that the application is going to query for new release
 const AUTO_UPDATE_URL =
-  'https://api.dev.update.rocks/update/github.com/smartfrigde/armcord/stable/' + process.platform + '/' + APP_VERSION
+  'https://api.update.rocks/update/github.com/smartfrigde/armcord/stable/' + process.platform + '/' + APP_VERSION
 
 function init() {
   if (process.platform === "linux") {
