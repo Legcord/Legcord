@@ -48,7 +48,7 @@ div.menubar[role="menubar"] {
   content: "Cord";
   color: #fff;
   font-weight: normal;
-  font-size: 12px;
+  font-size: 14px;
   font-family: Discordinated;
 }
 
@@ -56,14 +56,14 @@ div.menubar[role="menubar"] {
   content: "ARM";
   color: #7289da;
   font-weight: normal;
-  font-size: 12px;
+  font-size: 14px;
   font-family: Helvetica, sans-serif;
 }
 
 .window-title {
   font-size: 0px !important;
   margin-left: initial !important;
-  transform: translate(10px, 3px) !important;
+  transform: translate(10px, 2px) !important;
 }
 
 .titlebar {
