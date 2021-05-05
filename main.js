@@ -59,6 +59,7 @@ function createWindow() {
     {
       label: "Quit",
       click: function () {
+        mainWindow.destroy();
         app.isQuiting = true;
         app.quit();
       },
