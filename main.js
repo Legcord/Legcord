@@ -102,6 +102,10 @@ app.whenReady().then(() => {
         // Approves the permissions request
         callback(true);
       }
+      if (permission === "microphone") {
+        // Approves the permissions request
+        callback(true);
+      }
     });
   app.on("activate", function () {
     // On macOS it's common to re-create a window in the app when the
