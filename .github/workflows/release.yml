@@ -8,6 +8,7 @@ jobs:
 
   publish_on_linux:
     runs-on: ubuntu-latest
+    permissions: write-all
     steps:
     - uses: actions/checkout@v2       
     - uses: actions/setup-node@master
@@ -22,6 +23,7 @@ jobs:
 
   publish_on_mac:
     runs-on: macos-latest
+    permissions: write-all
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@master
@@ -36,6 +38,7 @@ jobs:
 
   publish_on_win:
     runs-on: windows-latest
+    permissions: write-all
     steps:
     - uses: actions/checkout@v2       
     - uses: actions/setup-node@master
