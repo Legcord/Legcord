@@ -8,6 +8,7 @@
     "dist": "electron-builder",
     "test": "echo \"Error: no test specified\" && exit 1",
     "package": "electron-forge package",
+    "publish": "electron-forge publish",
     "make": "electron-forge make"
   },
   "author": "smartfrigde",
