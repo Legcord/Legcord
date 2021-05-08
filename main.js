@@ -21,7 +21,7 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    icon: __dirname + "/discord.ico",
+    icon: __dirname + "/discord.png",
     title: "ArmCord",
     frame: false,
     webPreferences: {
