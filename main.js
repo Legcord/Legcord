@@ -114,6 +114,10 @@ app.whenReady().then(() => {
         // Approves the permissions request
         callback(true);
       }
+      if (!url.startsWith("discord://")) {
+        // Denies the permissions request
+        return callback(false);
+      }
     });
   app.on("activate", function () {
     // On macOS it's common to re-create a window in the app when the

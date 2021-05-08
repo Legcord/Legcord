@@ -5,7 +5,6 @@ const { remote } = require("electron");
 window.addEventListener('DOMContentLoaded', () => {
   new customTitlebar.Titlebar({
     backgroundColor: customTitlebar.Color.fromHex("#202225"),
-    menu: false,
   });
 
 /**
