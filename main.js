@@ -2,8 +2,16 @@
 const { app, BrowserWindow, session, Tray, Menu } = require("electron");
 const path = require("path");
 const contextMenu = require("electron-context-menu");
+const os = require("os");
 require("v8-compile-cache");
 require("./utils/updater");
+
+if (os.type() == 'Linux'){
+  var iconformat = __dirname + "/discord.png" 
+} else {
+  console.log("Running Non-Linux")
+  var iconformat = __dirname + "/discord.ico";
+}
 
 contextMenu({
   prepend: (defaultActions, parameters, browserWindow) => [
@@ -21,7 +29,7 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    icon: __dirname + "/discord.ico",
+    icon: iconformat,
     title: "ArmCord",
     frame: false,
     webPreferences: {
@@ -31,7 +39,7 @@ function createWindow() {
     },
   });
 
-  var appIcon = new Tray(__dirname + "/discord.ico");
+  var appIcon = new Tray(iconformat);
   mainWindow.webContents.userAgent =
     "Mozilla/5.0 (X12; FreeBSD x86) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"; //fake useragent
   mainWindow.loadFile("index.html");
