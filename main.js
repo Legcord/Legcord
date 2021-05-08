@@ -8,7 +8,7 @@ require("./utils/updater");
 
 if (os.type() == 'Linux'){
   var iconformat = __dirname + "/discord.png" 
-} else {
+} else { //test this 
   console.log("Running Non-Linux")
   var iconformat = __dirname + "/discord.ico";
 }
