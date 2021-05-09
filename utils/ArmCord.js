@@ -1,4 +1,4 @@
-exports.Version = "DevBuild";
+exports.Version = require("../package.json").version;
   
 exports.addStyle = function(styleString) {
  const style = document.createElement('style');
