@@ -1,23 +1,13 @@
 const customTitlebar = require('custom-electron-titlebar')
 const electronLocalshortcut = require("electron-localshortcut");
 const { remote } = require("electron");
+const ArmCord = require("./utils/ArmCord.js")
 
 window.addEventListener('DOMContentLoaded', () => {
   new customTitlebar.Titlebar({
     backgroundColor: customTitlebar.Color.fromHex("#202225"),
     menu: false,
   });
-
-/**
- * Utility function to add CSS in multiple passes.
- * @param {string} styleString
- */
- function addStyle(styleString) {
-  const style = document.createElement('style');
-  style.textContent = styleString;
-  document.head.append(style);
-}
-
 
 const currentWindow = remote.getCurrentWindow();
 electronLocalshortcut.register(currentWindow, "F5", () => {
@@ -26,10 +16,22 @@ electronLocalshortcut.register(currentWindow, "F5", () => {
 electronLocalshortcut.register(currentWindow, "F12", () => {
   currentWindow.webContents.openDevTools();
 });
+electronLocalshortcut.register(currentWindow, "F1", () => {
+  require("shell").openExternal("https://support.discord.com/")
+});
+electronLocalshortcut.register(currentWindow, "F2", () => {
+  window.location.href = "https://discord.com/invite/F25bc4RYDt"
+});
 require("./utils/capturer.js")
-addStyle(`
+
+ArmCord.addStyle(`
 @import url("https://kckarnige.github.io/femboi_owo/discord-font.css");
 
+:root {
+  --window-buttons: var(--header-secondary);
+  --cord-color: var(--header-primary);
+  --armcord-color: #7289da;
+}
 .base-3dtUhz, .sidebar-2K8pFh {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -47,7 +49,7 @@ div.menubar[role="menubar"] {
 
 .window-title:after {
   content: "Cord";
-  color: #fff;
+  color: var(--cord-color) !important;
   font-weight: normal;
   font-size: 14px;
   font-family: Discordinated;
@@ -55,7 +57,7 @@ div.menubar[role="menubar"] {
 
 .window-title:before {
   content: "ARM";
-  color: #7289da;
+  color: var(--armcord-color);
   font-weight: normal;
   font-size: 14px;
   font-family: Helvetica, sans-serif;
@@ -68,8 +70,22 @@ div.menubar[role="menubar"] {
 }
 
 .titlebar {
-  background: #202225 !important;
+  background: var(--background-tertiary) !important;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.titlebar .window-controls-container .window-icon {
+  background: var(--window-buttons) !important;
 }
 `);
-})
 
+ArmCord.addStyle(`.info-1VyQPT:last-child:before {
+  content: "ArmCord Version: ` + ArmCord.Version + `";
+  height: auto;
+  line-height: 16px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 12px;
+  text-transform: none;
+}`);
+})
