@@ -1,30 +1,30 @@
-const customTitlebar = require('custom-electron-titlebar')
+const customTitlebar = require("custom-electron-titlebar");
 const electronLocalshortcut = require("electron-localshortcut");
 const { remote } = require("electron");
-const ArmCord = require("./utils/ArmCord.js")
+const ArmCord = require("./utils/ArmCord.js");
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener("DOMContentLoaded", () => {
   new customTitlebar.Titlebar({
     backgroundColor: customTitlebar.Color.fromHex("#202225"),
     menu: false,
   });
 
-const currentWindow = remote.getCurrentWindow();
-electronLocalshortcut.register(currentWindow, "F5", () => {
-  location.reload();
-});
-electronLocalshortcut.register(currentWindow, "F12", () => {
-  currentWindow.webContents.openDevTools();
-});
-electronLocalshortcut.register(currentWindow, "F1", () => {
-  require("shell").openExternal("https://support.discord.com/")
-});
-electronLocalshortcut.register(currentWindow, "F2", () => {
-  window.location.href = "https://discord.com/invite/F25bc4RYDt"
-});
-require("./utils/capturer.js")
+  const currentWindow = remote.getCurrentWindow();
+  electronLocalshortcut.register(currentWindow, "F5", () => {
+    location.reload();
+  });
+  electronLocalshortcut.register(currentWindow, "F12", () => {
+    currentWindow.webContents.openDevTools();
+  });
+  electronLocalshortcut.register(currentWindow, "F1", () => {
+    require("shell").openExternal("https://support.discord.com/");
+  });
+  electronLocalshortcut.register(currentWindow, "F2", () => {
+    window.location.href = "https://discord.com/invite/F25bc4RYDt";
+  });
+  require("./utils/capturer.js");
 
-ArmCord.addStyle(`
+  ArmCord.addStyle(`
 @import url("https://kckarnige.github.io/femboi_owo/discord-font.css");
 
 :root {
@@ -79,6 +79,7 @@ div.menubar[role="menubar"] {
 }
 `);
 
+
 ArmCord.addStyle(`.info-1VyQPT:last-child:before {
   content: "ArmCord Version: ` + ArmCord.Version + `";
   height: auto;
@@ -87,5 +88,7 @@ ArmCord.addStyle(`.info-1VyQPT:last-child:before {
   color: var(--text-muted);
   font-size: 12px;
   text-transform: none;
+
 }`);
 })
+
