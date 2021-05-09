@@ -1,3 +1,4 @@
+
 exports.Version = "2.4";
 
 exports.addStyle = function (styleString) {
@@ -11,3 +12,4 @@ exports.addScript = function (scriptString) {
   script.textContent = scriptString;
   document.body.append(script);
 };
+

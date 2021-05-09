@@ -79,17 +79,16 @@ div.menubar[role="menubar"] {
 }
 `);
 
-  ArmCord.addStyle(
-    `.info-1VyQPT:last-child:before {
-  content: "ArmCord Version: ` +
-      ArmCord.Version +
-      `";
+
+ArmCord.addStyle(`.info-1VyQPT:last-child:before {
+  content: "ArmCord Version: ` + ArmCord.Version + `";
   height: auto;
   line-height: 16px;
   text-align: center;
   color: var(--text-muted);
   font-size: 12px;
   text-transform: none;
-}`
-  );
-});
+
+}`);
+})
+
