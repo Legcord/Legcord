@@ -1,5 +1,4 @@
-
-exports.Version = "2.4";
+exports.Version = require("../package.json").version;
 
 exports.addStyle = function (styleString) {
   const style = document.createElement("style");
@@ -12,4 +11,3 @@ exports.addScript = function (scriptString) {
   script.textContent = scriptString;
   document.body.append(script);
 };
-

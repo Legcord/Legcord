@@ -26,7 +26,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
   ArmCord.addStyle(`
 @import url("https://kckarnige.github.io/femboi_owo/discord-font.css");
-
 :root {
   --window-buttons: var(--header-secondary);
   --cord-color: var(--header-primary);
@@ -42,11 +41,9 @@ window.addEventListener("DOMContentLoaded", () => {
   overflow: hidden;
   border-top-left-radius: 8px;
 }
-
 div.menubar[role="menubar"] {
   width: 0px;
 }
-
 .window-title:after {
   content: "Cord";
   color: var(--cord-color) !important;
@@ -54,7 +51,6 @@ div.menubar[role="menubar"] {
   font-size: 14px;
   font-family: Discordinated;
 }
-
 .window-title:before {
   content: "ARM";
   color: var(--armcord-color);
@@ -62,33 +58,31 @@ div.menubar[role="menubar"] {
   font-size: 14px;
   font-family: Helvetica, sans-serif;
 }
-
 .window-title {
   font-size: 0px !important;
   margin-left: initial !important;
   transform: translate(10px, 2px) !important;
 }
-
 .titlebar {
   background: var(--background-tertiary) !important;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-
 .titlebar .window-controls-container .window-icon {
   background: var(--window-buttons) !important;
 }
 `);
 
-
-ArmCord.addStyle(`.info-1VyQPT:last-child:before {
-  content: "ArmCord Version: ` + ArmCord.Version + `";
+  ArmCord.addStyle(
+    `.info-1VyQPT:last-child:before {
+  content: "ArmCord Version: ` +
+      ArmCord.Version +
+      `";
   height: auto;
   line-height: 16px;
   text-align: center;
   color: var(--text-muted);
   font-size: 12px;
   text-transform: none;
-
-}`);
-})
-
+}`
+  );
+});
