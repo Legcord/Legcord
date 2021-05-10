@@ -1,9 +1,9 @@
 exports.Version = require("../package.json").version;
 
-exports.addStyle = function (styleString) {
-  const style = document.createElement("style");
-  style.textContent = styleString;
-  document.head.append(style);
+exports.addStyle = function(styleString) {
+ const style = document.createElement('style');
+ style.textContent = styleString;
+ document.head.append(style);
 };
 
 exports.addScript = function (scriptString) {
