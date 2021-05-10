@@ -22,7 +22,7 @@ Alternative (npm, nodejs required):
 
 
 # Credits
-[ArmCord UI Elements](https://github.com/kckarnige)   
+[ArmCord UI Elements and few features](https://github.com/kckarnige)   
 [GooseMod](https://github.com/GooseMod/GooseMod)   
 [GooseMod-Chrome](https://github.com/AAGaming00/GooseMod-chrome)    
 [update.rocks](https://www.update.rocks)   
