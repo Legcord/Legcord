@@ -73,6 +73,9 @@ function createWindow() {
       },
     },
   ]);
+  appIcon.on("click", () => {
+    mainWindow.show()
+  });
 
   appIcon.setContextMenu(contextMenu);
 
