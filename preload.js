@@ -8,7 +8,7 @@ window.addEventListener("DOMContentLoaded", () => {
     backgroundColor: customTitlebar.Color.fromHex("#202225"),
     menu: false,
   });
-
+  
   const currentWindow = remote.getCurrentWindow();
   electronLocalshortcut.register(currentWindow, "F5", () => {
     location.reload();
