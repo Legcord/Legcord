@@ -1,12 +1,13 @@
 
 # ArmCord 🦾🔌
-Armcord is a custom alternative Discord client made originally for ARM Linux. It's goal is to bring a alternative Discord client. It uses [GooseMod](https://goosemod.com) for custom themes and plugins!
+Armcord is a custom alternative Discord client made for people on lower-end devices and ARM architecture that want custom Discord experience. It uses [GooseMod](https://goosemod.com) for custom themes and plugins!
 
 # How to run/install it?
 Check releases tab for precompiled deb(ARM64), rpm(ARM64), tar.gz(ARM64), Windows builds.
 Alternative (npm, nodejs required):  
 1.Run `npm install`   
 2.Run `npm start`  
+3.Compile/Package with `npm run make`    
 
 
 # FAQ
