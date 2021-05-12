@@ -1,6 +1,6 @@
 
-# ArmCord 🦾🔌
-Armcord is a custom alternative Discord client made for people on lower-end devices and ARM architecture that want custom Discord experience. It uses [GooseMod](https://goosemod.com) for custom themes and plugins!
+# ![Arm with a Cord](https://raw.githubusercontent.com/kckarnige/armcord/main/arm-with-a-cord.svg)
+ArmCord is a custom alternative Discord client made for people on lower-end devices and ARM architecture that want custom Discord experience. It uses [GooseMod](https://goosemod.com) for custom themes and plugins!
 
 # How to run/install it?
 Check releases tab for precompiled deb(ARM64), rpm(ARM64), tar.gz(ARM64), Windows builds.
@@ -13,7 +13,7 @@ Alternative (npm, nodejs required):
 # FAQ
 ## 1.Will I get banned from using it?   
 
- -You are breaking Discord ToS since we are using GooseMod for themes and plugins. But no one ever got banned from using ArmCord or GooseMod  
+ -You are breaking Discord ToS since we are using GooseMod for themes and plugins. But no one ever got banned from using ArmCord or GooseMod as of now  
 ## 2.How does this work?   
 
  -We are using official web app and adding GooseMod to it with some other tweaks.   
