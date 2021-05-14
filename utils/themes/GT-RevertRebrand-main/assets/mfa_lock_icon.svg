@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="14px" viewBox="0 0 10 14" version="1.1">
+    <!-- Generator: Sketch 3.7 (28169) - http://www.bohemiancoding.com/sketch -->
+    <title>icon-green-lock</title>
+    <desc>Created with Sketch.</desc>
+    <defs/>
+    <g id="Settings" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-HD---2FA,-Settings---Active" transform="translate(-545.000000, -509.000000)" fill="#43b581">
+            <path d="M553,515 L547,515 L547,514 C547,512.346 548.346,511 550,511 C551.654,511 553,512.346 553,514 L553,515 Z M549,521 L551,521 L551,517 L549,517 L549,521 Z M550,509 C547.238,509 545,511.238 545,514 L545,515 L545,519 L545,521 C545,522.104 545.896,523 547,523 L553,523 C554.104,523 555,522.104 555,521 L555,519 L555,515 L555,514 C555,511.238 552.762,509 550,509 L550,509 Z" id="icon-green-lock"/>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,66 @@
+body {
+  /* Revert new green to old color */
+  --old-green: #43b581;
+  --info-positive-foreground: var(--old-green);
+  --status-positive-background: var(--old-green);
+  --text-positive: var(--old-green);
+
+  /* Revert new red to old color */
+  --old-red: #f04747;
+  --text-danger: var(--old-red);
+  --info-danger-foreground: var(--old-red);
+  --status-danger-background: var(--old-red);
+
+  /* Revert to old font var */
+  --font-display: var(--font-primary);
+
+  /* Found in Discord's CSS file: oldBrand vs newBrand HTML class - here we force old brand vars via copying */
+  --brand-experiment-100: #f8f9fd;
+  --brand-experiment-130: #f2f4fc;
+  --brand-experiment-160: #ebeefa;
+  --brand-experiment-200: #e3e7f8;
+  --brand-experiment-230: #dae0f5;
+  --brand-experiment-260: #d1d9f3;
+  --brand-experiment-300: #c7d0f0;
+  --brand-experiment-330: #b5c1ec;
+  --brand-experiment-360: #a5b3e7;
+  --brand-experiment-400: #8ea1e1;
+  --brand-experiment-430: #869adf;
+  --brand-experiment-460: #7d92dd;
+
+  --brand-experiment: #7289da;
+
+  --brand-experiment-500: #7289da;
+  --brand-experiment-530: #687dc6;
+  --brand-experiment-560: #5c6fb1;
+  --brand-experiment-600: #4e5d94;
+  --brand-experiment-630: #435180;
+  --brand-experiment-660: #3b4770;
+  --brand-experiment-700: #2e3757;
+  --brand-experiment-730: #2b3352;
+  --brand-experiment-760: #272f4b;
+  --brand-experiment-800: #222941;
+  --brand-experiment-830: #1a2032;
+  --brand-experiment-860: #111521;
+  --brand-experiment-900: #06070b;
+
+  --brand-experiment-05a: rgba(114,137,218,0.05);
+  --brand-experiment-10a: rgba(114,137,218,0.1);
+  --brand-experiment-15a: rgba(114,137,218,0.15);
+  --brand-experiment-20a: rgba(114,137,218,0.2);
+  --brand-experiment-25a: rgba(114,137,218,0.25);
+  --brand-experiment-30a: rgba(114,137,218,0.3);
+  --brand-experiment-35a: rgba(114,137,218,0.35);
+  --brand-experiment-40a: rgba(114,137,218,0.4);
+  --brand-experiment-45a: rgba(114,137,218,0.45);
+  --brand-experiment-50a: rgba(114,137,218,0.5);
+  --brand-experiment-55a: rgba(114,137,218,0.55);
+  --brand-experiment-60a: rgba(114,137,218,0.6);
+  --brand-experiment-65a: rgba(114,137,218,0.65);
+  --brand-experiment-70a: rgba(114,137,218,0.7);
+  --brand-experiment-75a: rgba(114,137,218,0.75);
+  --brand-experiment-80a: rgba(114,137,218,0.8);
+  --brand-experiment-85a: rgba(114,137,218,0.85);
+  --brand-experiment-90a: rgba(114,137,218,0.9);
+  --brand-experiment-95a: rgba(114,137,218,0.95);
+}
