@@ -22,6 +22,9 @@ window.addEventListener("DOMContentLoaded", () => {
   electronLocalshortcut.register(currentWindow, "F2", () => {
     window.location.href = "https://discord.com/invite/F25bc4RYDt";
   });
+  electronLocalshortcut.register(currentWindow, "F3", () => {
+    window.location.href = "./theme.html";
+  });
   require("./utils/capturer.js");
 
   ArmCord.addStyle(`
