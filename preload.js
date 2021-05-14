@@ -2,7 +2,7 @@ const customTitlebar = require("custom-electron-titlebar");
 const electronLocalshortcut = require("electron-localshortcut");
 const { remote } = require("electron");
 const ArmCord = require("./utils/ArmCord.js");
-
+require('./utils/theme.js')
 window.addEventListener("DOMContentLoaded", () => {
   new customTitlebar.Titlebar({
     backgroundColor: customTitlebar.Color.fromHex("#202225"),
