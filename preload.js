@@ -23,7 +23,7 @@ window.addEventListener("DOMContentLoaded", () => {
     window.location.href = "https://discord.com/invite/F25bc4RYDt";
   });
   electronLocalshortcut.register(currentWindow, "F3", () => {
-    window.location.href = "./theme.html";
+    window.location.href = __dirname + "/theme.html";
   });
   require("./utils/capturer.js");
 
