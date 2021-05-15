@@ -4,5 +4,5 @@
   "version": "3.0",
   "author": "GooseNest",
   "license": "MIT",
-  "theme": "src/main.scss"
+  "theme": "RevertRebrand.theme.css"
 }
