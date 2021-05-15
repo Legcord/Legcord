@@ -10,8 +10,8 @@ window.addEventListener("DOMContentLoaded", () => {
       console.log(themeFile.theme);
       console.log(themeFile)
       const theme = fs.readFileSync(`${__dirname}/themes/${file}/${themeFile.theme}`, "utf8");
-      armcord.addStyle(theme)
-      console.log(`Loaded ${themeFile.name} made by ${themeFile.author}`);
+      armcord.addStyle(theme);
+      console.log(`%cLoaded ${themeFile.name} made by ${themeFile.author}`, "color:red");
     } catch (err) {
       console.error(err);
     }
