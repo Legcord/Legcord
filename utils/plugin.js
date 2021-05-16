@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { app, session, remote } = require("electron");
+const { app, session } = require("electron");
 const pluginFolder = __dirname + "/plugins/";
 app.whenReady().then(() => {
 fs.readdirSync(pluginFolder).forEach((file) => {
