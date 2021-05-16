@@ -12,7 +12,7 @@ window.addEventListener("DOMContentLoaded", () => {
       const theme = fs.readFileSync(`${__dirname}/themes/${file}/${themeFile.theme}`, "utf8");
       if (themeFile.theme.endsWith(".scss")) {
         console.log(
-          `%cCouldn't load ${themeFile.name} made by ${themeFile.author}. ArmCord doesn't suppot scss files if you want to have this theme ported feel free to reach out https://discord.gg/F25bc4RYDt `,
+          `%cCouldn't load ${themeFile.name} made by ${themeFile.author}. ArmCord doesn't support scss files if you want to have this theme ported feel free to reach out https://discord.gg/F25bc4RYDt `,
           "color:red; font-weight: bold; font-size: 50px;color: red;"
         );
       }
