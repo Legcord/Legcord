@@ -1,6 +1,7 @@
 {
     "name": "GooseMod",
 	"version": "1.0",
+    "author": "AAGaming00",
     "description": "Loads GooseMod, a discord client modification",
     "background": {
         "scripts": [
