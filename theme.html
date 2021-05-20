@@ -27,20 +27,11 @@
         transform: translateY(-105%);
       }
 
-      h1:before {
+      .logo:before {
         content: "ARM";
         color: #7289da;
         font-weight: normal;
         font-family: Helvetica, sans-serif;
-        font-size: 32px;
-      }
-
-      h1:after {
-        content: "Cord";
-        color: #ffffff;
-        font-weight: normal;
-        font-family: Discordinated;
-        font-size: 32px;
       }
 
       span {
@@ -52,6 +43,7 @@
         font-weight: normal;
         font-family: Discordinated;
         font-size: 32px;
+        text-align: center;
       }
 
       .container {
@@ -61,11 +53,39 @@
         color: #fff;
         transform: translate(-50%, -50%);
       }
+
+      button.back-btn {
+        position: absolute;
+        background-color: #7289da;
+        font-family: Whitney,"Helvetica Neue",Helvetica,Arial,sans-serif;
+        color: #ffffff;
+        padding: 4px;
+        border-radius: 5px;
+        width: 105px;
+        height: 25px;
+        margin-top: 5px;
+        margin-left: 5px;
+        text-align: center;
+        border-style: none;
+        outline: none;
+      }
+
+      button.back-btn:hover {
+        background-color: #687dc6;
+        border-style: none;
+        outline: none;
+        cursor: pointer;
+      }
+
+      button.back-btn:active {
+        background-color: #5c6fb1;
+      }
     </style>
   </head>
 
   <body>
-    <p class="logo">Theme Manager</p>
+    <a href="https://discord.com/app"><button class="back-btn">Back to Discord</button></a>
+    <p class="logo">Cord Theme Manager</p>
     <div id="tm-list"></div>
   </body>
 </html>
