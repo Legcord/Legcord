@@ -2,12 +2,13 @@ const customTitlebar = require("custom-electron-titlebar");
 const electronLocalshortcut = require("electron-localshortcut");
 const { remote } = require("electron");
 const ArmCord = require("./utils/ArmCord.js");
-require('./utils/theme.js')
+
 window.addEventListener("DOMContentLoaded", () => {
   new customTitlebar.Titlebar({
     backgroundColor: customTitlebar.Color.fromHex("#202225"),
     menu: false,
   });
+  
   const currentWindow = remote.getCurrentWindow();
   electronLocalshortcut.register(currentWindow, "F5", () => {
     location.reload();
@@ -21,14 +22,8 @@ window.addEventListener("DOMContentLoaded", () => {
   electronLocalshortcut.register(currentWindow, "F2", () => {
     window.location.href = "https://discord.com/invite/F25bc4RYDt";
   });
-  electronLocalshortcut.register(currentWindow, "F3", () => {
-    currentWindow.loadFile('theme.html')
-  });
   require("./utils/capturer.js");
-  console.log(
-    "%c ArmCord",
-    "font-weight: bold; font-size: 50px;color: red; text-shadow: 3px 3px 0 rgb(217,31,38) , 6px 6px 0 rgb(226,91,14) , 9px 9px 0 rgb(245,221,8) , 12px 12px 0 rgb(5,148,68) , 15px 15px 0 rgb(2,135,206) , 18px 18px 0 rgb(4,77,145) , 21px 21px 0 rgb(42,21,113)"
-  );
+
   ArmCord.addStyle(`
 @import url("https://kckarnige.github.io/femboi_owo/discord-font.css");
 :root {
@@ -74,9 +69,6 @@ div.menubar[role="menubar"] {
 }
 .titlebar .window-controls-container .window-icon {
   background: var(--window-buttons) !important;
-}
-.notice-3bPHh-.colorDefault-22HBa0 {
-  display: none;
 }
 `);
 
