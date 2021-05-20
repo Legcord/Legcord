@@ -73,6 +73,9 @@ function createWindow() {
       },
     },
   ]);
+  appIcon.on("click", () => {
+    mainWindow.show()
+  });
 
   appIcon.setContextMenu(contextMenu);
 
@@ -98,9 +101,7 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createWindow();
-  session.defaultSession.loadExtension(
-    `${require("electron").app.getAppPath()}/goosemod/`
-  );
+  require("./utils/plugin.js");
   session
     .fromPartition("some-partition")
     .setPermissionRequestHandler((webContents, permission, callback) => {
