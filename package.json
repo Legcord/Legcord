@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "custom-electron-titlebar": "3.2.6",
-    "electron-context-menu": "^3.0.0",
+    "electron-context-menu": "^3.1.0",
     "electron-localshortcut": "^3.2.1",
     "electron-squirrel-startup": "^1.0.0",
     "v8-compile-cache": "^2.3.0"
