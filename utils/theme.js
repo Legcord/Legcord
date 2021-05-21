@@ -1,5 +1,5 @@
 const fs = require("fs");
-const armcord = require("./armcord.js");
+const armcord = require("./ArmCord.js");
 const themeFolder = __dirname + "/themes/";
 
 window.addEventListener("DOMContentLoaded", () => {
