@@ -1,8 +1,8 @@
 const fs = require("fs");
 const armcord = require("./armcord.js");
 const themeFolder = __dirname + "/themes/";
-console.log("Theme Module Loaded")
 window.addEventListener("DOMContentLoaded", () => {
+  console.log("Theme Module Loaded");
   fs.readdirSync(themeFolder).forEach((file) => {
     console.log(file);
     try {
