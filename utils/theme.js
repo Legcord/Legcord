@@ -1,6 +1,7 @@
 const fs = require("fs");
 const armcord = require("./armcord.js");
 const themeFolder = __dirname + "/themes/";
+
 window.addEventListener("DOMContentLoaded", () => {
   console.log("Theme Module Loaded");
   fs.readdirSync(themeFolder).forEach((file) => {
@@ -18,6 +19,8 @@ window.addEventListener("DOMContentLoaded", () => {
         );
       }
       armcord.addStyle(theme);
+      var html = `<p>${themeFile.name}</p>`;
+      document.getElementById("tm-list").insertAdjacentHTML("afterend", html);
       console.log(`%cLoaded ${themeFile.name} made by ${themeFile.author}`, "color:red");
     } catch (err) {
       console.error(err);
