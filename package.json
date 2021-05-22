@@ -1,5 +1,5 @@
 {
-  "name": "armcord",
+  "name": "ArmCord",
   "version": "2.5.0",
   "description": "ArmCord is a Discord client made for ARM Linux that allows you to customize your experience.",
   "main": "main.js",
@@ -43,12 +43,14 @@
   "homepage": "https://github.com/smartfrigde/armcord#readme",
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "icon": "discord.png"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "armcord"
+            "name": "ArmCord"
           }
         },
         {
