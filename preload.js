@@ -73,6 +73,9 @@ div.menubar[role="menubar"] {
 .titlebar .window-controls-container .window-icon {
   background: var(--window-buttons) !important;
 }
+.notice-3bPHh-.colorDefault-22HBa0 {
+  display: none;
+}
 `);
 
   ArmCord.addStyle(
