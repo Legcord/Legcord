@@ -6,12 +6,7 @@ const os = require("os");
 require("v8-compile-cache");
 require("./utils/updater");
 
-if (os.type() == 'Linux'){
-  var iconformat = __dirname + "/discord.png" 
-} else { //test this 
-  console.log("Running Non-Linux")
-  var iconformat = __dirname + "/discord.ico";
-}
+var iconformat = __dirname + "/discord.png" 
 
 contextMenu({
   prepend: (defaultActions, parameters, browserWindow) => [

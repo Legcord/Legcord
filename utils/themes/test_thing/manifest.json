@@ -1,0 +1,8 @@
+{
+  "name": "Test Theme",
+  "description": "A test description (For theme seperation)",
+  "version": "3.0",
+  "author": "KayoticCarnige",
+  "license": "MIT",
+  "theme": "RevertRebrand.theme.css"
+}
