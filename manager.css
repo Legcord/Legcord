@@ -56,6 +56,7 @@ button.back-btn {
     height: 25px;
     margin-top: 5px;
     margin-left: 5px;
+    left: 0;
     text-align: center;
     border-style: none;
     outline: none;
@@ -69,6 +70,34 @@ button.back-btn:hover {
 }
 
 button.back-btn:active {
+    background-color: #5c6fb1;
+}
+
+button#open-themes-btn {
+    position: absolute;
+    background-color: #7289da;
+    font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #ffffff;
+    padding: 4px;
+    border-radius: 5px;
+    width: 105px;
+    height: 25px;
+    margin-top: 5px;
+    margin-right: 5px;
+    right: 0;
+    text-align: center;
+    border-style: none;
+    outline: none;
+}
+
+button#open-themes-btn:hover {
+    background-color: #687dc6;
+    border-style: none;
+    outline: none;
+    cursor: pointer;
+}
+
+button#open-themes-btn:active {
     background-color: #5c6fb1;
 }
 

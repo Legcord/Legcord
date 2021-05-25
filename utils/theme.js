@@ -1,5 +1,6 @@
 const fs = require("fs");
-const armcord = require("./ArmCord.js");
+const {shell} = require('electron');
+const ArmCord = require("./ArmCord.js");
 const themeFolder = __dirname + "/themes/";
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -18,7 +19,7 @@ window.addEventListener("DOMContentLoaded", () => {
           "color:red; font-weight: bold; font-size: 50px;color: red;"
         );
       }
-      armcord.addStyle(theme);
+      ArmCord.addStyle(theme);
       var html = `<div id="tm-list-item"><div id="theme-name">${themeFile.name}</div><div id="theme-author">By ${themeFile.author}</div><div id="theme-description">${themeFile.description}</div></div><br><br>`;
       document.getElementById("tm-list").innerHTML = html + document.getElementById("tm-list").innerHTML;
       console.log(`%cLoaded ${themeFile.name} made by ${themeFile.author}`, "color:red");
@@ -26,4 +27,5 @@ window.addEventListener("DOMContentLoaded", () => {
       console.error(err);
     }
   });
+  document.getElementById("open-themes-btn").onclick = function () {shell.openPath(`${__dirname}/themes`);};
 });

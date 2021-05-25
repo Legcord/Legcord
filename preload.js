@@ -33,6 +33,7 @@ window.addEventListener("DOMContentLoaded", () => {
   --window-buttons: var(--header-secondary);
   --cord-color: var(--header-primary);
   --armcord-color: #7289da;
+  --titlebar-color: var(--background-tertiary);
 }
 .base-3dtUhz, .sidebar-2K8pFh {
   display: -webkit-box;
@@ -64,10 +65,10 @@ div.menubar[role="menubar"] {
 .window-title {
   font-size: 0px !important;
   margin-left: initial !important;
-  transform: translate(10px, 2px) !important;
+  transform: translate(10px, 2px);
 }
 .titlebar {
-  background: var(--background-tertiary) !important;
+  background: var(--titlebar-color) !important;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .titlebar .window-controls-container .window-icon {
