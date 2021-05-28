@@ -3,8 +3,22 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="5; URL=https://discord.com/app" />
   <title>ArmCord</title>
+  <script>
+    window.onload = setTimeout(function() {
+      if (document.getElementById("ac-channel").innerHTML == "stable") {
+        window.location.href = "https://discord.com/app";
+      } else if (document.getElementById("ac-channel").innerHTML == "canary") {
+        window.location.href = "https://canary.discord.com/app";
+      } else if (document.getElementById("ac-channel").innerHTML == "ptb") {
+        window.location.href = "https://ptb.discord.com/app";
+      } else if (document.getElementById("ac-channel").innerHTML == "foss") {
+        window.location.href = "https://dev.fosscord.com/app";
+      } else {
+        window.location.href = "https://discord.com/app";
+      };
+    }, 3000);
+    </script>
   <style>
      @import url("https://kckarnige.github.io/femboi_owo/discord-font.css");
 
@@ -71,6 +85,10 @@
       color: #fff;
       transform: translate(-50%, -50%);
     }
+
+    #ac-channel {
+      display: none;
+    }
   </style>
   <style>
     
@@ -84,6 +102,7 @@
   </video>
   <p>Loading...</p>
     <h1></h1>
+  <p id="ac-channel"></p>
 </div>
 
 </body>

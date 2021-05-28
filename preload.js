@@ -20,7 +20,7 @@ window.addEventListener("DOMContentLoaded", () => {
     require("shell").openExternal("https://support.discord.com/");
   });
   electronLocalshortcut.register(currentWindow, "F2", () => {
-    window.location.href = "https://discord.com/invite/F25bc4RYDt";
+    window.location.href = "/invite/F25bc4RYDt";
   });
   electronLocalshortcut.register(currentWindow, "F4", () => {
     currentWindow.loadFile("./manager.html")
@@ -92,4 +92,7 @@ div.menubar[role="menubar"] {
   text-transform: none;
 }`
   );
+
+  document.getElementById("ac-channel").innerHTML = ArmCord.Channel;
+  
 });

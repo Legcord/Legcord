@@ -28,4 +28,17 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
   document.getElementById("open-themes-btn").onclick = function () {shell.openPath(`${__dirname}/themes`);};
+  document.getElementsByClassName("back-btn")[0].onclick = function () {
+    if (document.getElementById("ac-channel").innerHTML == "stable") {
+      window.location.href = "https://discord.com/app";
+    } else if (document.getElementById("ac-channel").innerHTML == "canary") {
+      window.location.href = "https://canary.discord.com/app";
+    } else if (document.getElementById("ac-channel").innerHTML == "ptb") {
+      window.location.href = "https://ptb.discord.com/app";
+    } else if (document.getElementById("ac-channel").innerHTML == "foss") {
+      window.location.href = "https://dev.fosscord.com/app";
+    } else {
+      window.location.href = "https://discord.com/app";
+    };
+  };
 });

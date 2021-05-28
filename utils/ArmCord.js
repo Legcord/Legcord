@@ -1,5 +1,7 @@
 exports.Version = require("../package.json").version;
 
+exports.Channel = require("../settings.json").channel;
+
 exports.addStyle = function(styleString) {
  const style = document.createElement('style');
  style.textContent = styleString;

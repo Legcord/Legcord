@@ -135,6 +135,10 @@ button#open-themes-btn:active {
     width: 75%;
 }
 
+#ac-channel {
+    display: none;
+  }
+
 ::-webkit-scrollbar {
     width: 0.4em;
     background: transparent;
