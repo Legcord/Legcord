@@ -41,7 +41,7 @@ function createWindow() {
 
   var appIcon = new Tray(iconformat);
   mainWindow.webContents.userAgent =
-    "Mozilla/5.0 (X12; FreeBSD x86) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"; //fake useragent
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) discord/0.0.15 Chrome/83.0.4103.122 Electron/9.3.5 Safari/537.36"; //fake useragent
   mainWindow.loadFile("index.html");
   mainWindow.focus();
   mainWindow.webContents.on("new-window", function (e, url) {

@@ -1,0 +1,42 @@
+{
+    "name": "GooseMod for Web",
+    "description": "A light, secure, and easy to use Discord mod; now in your browser.",
+
+    "version": "1.1.0",
+
+    "author": "GooseMod Team",
+    "homepage_url": "https://goosemod.com",
+
+    "icons": {
+        "48": "icons/48.png",
+        "96": "icons/96.png",
+        "128": "icons/128.png"
+    },
+
+    "background": {
+        "scripts": [
+            "background.js"
+        ]
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["*://*.discord.com/*"],
+            "js": ["content.js"]
+        }
+    ],
+
+    "permissions": [
+        "webRequest",
+        "webRequestBlocking",
+        "*://*.discord.com/*"
+    ],
+
+    "manifest_version": 2,
+
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "invalid@goosemod.com"
+        }
+    }
+}
