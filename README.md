@@ -25,7 +25,7 @@ Alternative (npm, nodejs required):
 # Credits
 [ArmCord UI Elements and few features](https://github.com/kckarnige)   
 [GooseMod](https://github.com/GooseMod/GooseMod)   
-[GooseMod-Chrome](https://github.com/AAGaming00/GooseMod-chrome)    
+[GooseMod Extension](https://github.com/GooseMod/extension)    
 [update.rocks](https://www.update.rocks)   
 [electron-discord-webapp](https://github.com/SpacingBat3/electron-discord-webapp)    
 [custom-electron-titlebar](https://github.com/AlexTorresSk/custom-electron-titlebar)    
