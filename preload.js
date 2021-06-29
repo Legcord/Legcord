@@ -1,6 +1,7 @@
+const { remote } = require("electron");
+const currentWindow = remote.getCurrentWindow();
 const customTitlebar = require("custom-electron-titlebar");
 const electronLocalshortcut = require("electron-localshortcut");
-const { remote } = require("electron");
 const ArmCord = require("./utils/ArmCord.js");
 require("./utils/theme.js");
 window.addEventListener("DOMContentLoaded", () => {
@@ -8,8 +9,7 @@ window.addEventListener("DOMContentLoaded", () => {
     backgroundColor: customTitlebar.Color.fromHex("#202225"),
     menu: false,
   });
-  
-  const currentWindow = remote.getCurrentWindow();
+
   electronLocalshortcut.register(currentWindow, "F5", () => {
     location.reload();
   });
@@ -23,7 +23,7 @@ window.addEventListener("DOMContentLoaded", () => {
     window.location.href = "/invite/F25bc4RYDt";
   });
   electronLocalshortcut.register(currentWindow, "F4", () => {
-    currentWindow.loadFile("./manager.html")
+    currentWindow.loadFile("./manager.html");
   });
   require("./utils/capturer.js");
 
@@ -94,5 +94,4 @@ div.menubar[role="menubar"] {
   );
 
   document.getElementById("ac-channel").innerHTML = ArmCord.Channel;
-  
 });

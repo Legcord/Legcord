@@ -11,7 +11,7 @@ fs.readdirSync(pluginFolder).forEach((file) => {
     );
     var pluginFile = JSON.parse(manifest);
     console.log(pluginFile);
-    session.defaultSession.loadExtension(`${__dirname}/plugins/${file}/`);
+    session.defaultSession.loadExtension(`${__dirname}\\plugins\\${file}`);
     console.log(
       `%cLoaded ${pluginFile.name} made by ${pluginFile.author}`,
       "color:red"

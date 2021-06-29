@@ -101,6 +101,7 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createWindow();
+  require("./utils/csp.js");
   require("./utils/plugin.js");
   session
     .fromPartition("some-partition")
