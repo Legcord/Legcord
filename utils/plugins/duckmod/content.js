@@ -26,8 +26,8 @@ const inject = async () => {
   
   const branch = localStorage.getItem('goosemodUntetheredBranch') || 'release';
 
-  console.log('[GooseMod for Web] Branch =', branch);
-  console.log('[GooseMod for Web] JS Url =', branchURLs[branch]);
+  console.log('[GooseMod for ArmCord] Branch =', branch);
+  console.log('[GooseMod for ArmCord] JS Url =', branchURLs[branch]);
   
   const js = await (await fetch(branchURLs[branch])).text(); // JSON.parse(localStorage.getItem('goosemodCoreJSCache'));
 
@@ -37,7 +37,7 @@ const inject = async () => {
   
   document.body.appendChild(el);
 
-  console.log('[GooseMod for Web] Injected fetched JS');
+  console.log('[GooseMod for ArmCord] Injected fetched JS');
 };
 
 // Delay actual injection to fix FF issues
