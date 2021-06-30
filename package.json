@@ -39,6 +39,13 @@
     "productName": "ArmCord",
     "mac": {
       "category": "Internet"
+    },
+    "linux": {
+      "target": [
+        "deb",
+        "tar.gz",
+        "rpm",
+        "AppImage"]
     }
   },
   "bugs": {
