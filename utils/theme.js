@@ -1,18 +1,23 @@
 const fs = require("fs");
 const {shell} = require('electron');
+const electron = require("electron");
 const ArmCord = require("./ArmCord.js");
-const themeFolder = __dirname + "/themes/";
-
+const userDataPath = (electron.app || electron.remote.app).getPath("userData");
+const themeFolder = userDataPath + "/themes/";
+if (!fs.existsSync(themeFolder)) {
+  fs.mkdirSync(themeFolder);
+  console.log("Created theme folder");
+}
 window.addEventListener("DOMContentLoaded", () => {
   console.log("Theme Module Loaded");
   fs.readdirSync(themeFolder).forEach((file) => {
     console.log(file);
     try {
-      const manifest = fs.readFileSync(`${__dirname}/themes/${file}/manifest.json`, "utf8");
+      const manifest = fs.readFileSync(`${userDataPath}/themes/${file}/manifest.json`, "utf8");
       var themeFile = JSON.parse(manifest);
       console.log(themeFile.theme);
       console.log(themeFile)
-      const theme = fs.readFileSync(`${__dirname}/themes/${file}/${themeFile.theme}`, "utf8");
+      const theme = fs.readFileSync(`${userDataPath}/themes/${file}/${themeFile.theme}`, "utf8");
       if (themeFile.theme.endsWith(".scss")) {
         console.log(
           `%cCouldn't load ${themeFile.name} made by ${themeFile.author}. ArmCord doesn't support SCSS files! If you want to have this theme ported, feel free to reach out https://discord.gg/F25bc4RYDt `,
@@ -27,7 +32,7 @@ window.addEventListener("DOMContentLoaded", () => {
       console.error(err);
     }
   });
-  document.getElementById("open-themes-btn").onclick = function () {shell.openPath(`${__dirname}/themes`);};
+  document.getElementById("open-themes-btn").onclick = function () {shell.openPath(`${userDataPath}/themes`);};
   document.getElementsByClassName("back-btn")[0].onclick = function () {
     if (document.getElementById("ac-channel").innerHTML == "stable") {
       window.location.href = "https://discord.com/app";
