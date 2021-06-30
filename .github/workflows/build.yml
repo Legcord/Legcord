@@ -30,9 +30,9 @@ jobs:
           # If the commit is tagged with a version (e.g. "v1.0.0"),
           # release the app after building
           release: ${{ startsWith(github.ref, 'refs/tags/v') }}
-        - name: Archive production builds
-          uses: actions/upload-artifact@v2
-          with:
+      - name: Archive production builds
+        uses: actions/upload-artifact@v2
+with:
             name: dist folder
             path: |
               dist
