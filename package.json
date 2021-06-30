@@ -37,7 +37,6 @@
   "build": {
     "appId": "com.smartfridge.armcord",
     "productName": "ArmCord",
-    "asar": "false",
     "mac": {
       "category": "Internet"
     }
