@@ -34,7 +34,13 @@ if (!fs.existsSync(pluginFolder)) {
     console.log("Downloaded, attempting to install.");
     const unzip = require("unzipper")
     fs.createReadStream(dest).pipe(unzip.Extract({ path: pluginFolder }));
-    console.log("Success! GooseMod will start on next session!")
+    electron.dialog.showMessageBox({
+      title: "ArmCord",
+      type: "warning",
+      message: "ArmCord installed GooseMod onto your client.",
+      detail:
+        "If you wish to use it restart your ArmCord completely using tray icon. It should appear in next session. GooseMod is reccomended to every user of ArmCord due to various improvements and bugfixes it ships with.",
+    });
   });
   }
   catch (e){
