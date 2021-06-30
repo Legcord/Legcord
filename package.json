@@ -1,6 +1,6 @@
 {
   "name": "ArmCord",
-  "version": "2.5.0",
+  "version": "2.5.0-TESTING",
   "description": "ArmCord is a Discord client made for ARM Linux that allows you to customize your experience.",
   "main": "main.js",
   "scripts": {
