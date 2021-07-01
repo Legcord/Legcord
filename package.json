@@ -11,7 +11,7 @@
     "linux-build": "electron-builder --linux deb tar.gz rpm AppImage",
     "windows-build": "electron-builder --windows nsis portable zip appx"
   },
-  "author": "smartfrigde",
+  "author": "smartfrigde <smartfridge1337@protonmail.com>",
   "license": "MIT",
   "dependencies": {
     "custom-electron-titlebar": "3.2.7",
@@ -41,6 +41,7 @@
       "category": "Internet"
     },
     "linux": {
+      "maintaner": "smartfridge1337@protonmail.com",
       "target": [
         "deb",
         "tar.gz",
@@ -49,7 +50,8 @@
     }
   },
   "bugs": {
-    "url": "https://github.com/smartfrigde/armcord/issues"
+    "url": "https://github.com/smartfrigde/armcord/issues",
+    "email": "smartfridge1337@protonmail.com"
   },
   "homepage": "https://github.com/smartfrigde/armcord#readme"
 }
