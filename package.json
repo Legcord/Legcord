@@ -41,7 +41,7 @@
       "category": "Internet"
     },
     "linux": {
-      "maintaner": "smartfridge1337@protonmail.com",
+      "maintainer": "smartfridge1337@protonmail.com",
       "target": [
         "deb",
         "tar.gz",
