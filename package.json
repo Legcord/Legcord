@@ -38,7 +38,7 @@
     "appId": "com.smartfridge.armcord",
     "productName": "ArmCord",
     "mac": {
-      "category": "Internet"
+      "category": "Network"
     },
     "linux": {
       "maintainer": "smartfridge1337@protonmail.com",
