@@ -37,7 +37,7 @@ if (!fs.existsSync(pluginFolder)) {
     electron.dialog.showMessageBox({
       title: "ArmCord",
       type: "warning",
-      message: "ArmCord installed GooseMod onto your client.",
+      message: "ArmCord has installed GooseMod onto your client.",
       detail:
         "If you wish to use it restart your ArmCord completely using tray icon. It should appear in next session. GooseMod is reccomended to every user of ArmCord due to various improvements and bugfixes it ships with.",
     });
@@ -49,14 +49,12 @@ if (!fs.existsSync(pluginFolder)) {
 }
 app.whenReady().then(() => {
 fs.readdirSync(pluginFolder).forEach((file) => {
-  console.log(file);
   try {
     const manifest = fs.readFileSync(
       `${userDataPath}/plugins/${file}/manifest.json`,
       "utf8"
     );
     var pluginFile = JSON.parse(manifest);
-    console.log(pluginFile);
     session.defaultSession.loadExtension(`${userDataPath}/plugins/${file}`);
     console.log(
       `%cLoaded ${pluginFile.name} made by ${pluginFile.author}`,

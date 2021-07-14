@@ -11,12 +11,9 @@ if (!fs.existsSync(themeFolder)) {
 window.addEventListener("DOMContentLoaded", () => {
   console.log("Theme Module Loaded");
   fs.readdirSync(themeFolder).forEach((file) => {
-    console.log(file);
     try {
       const manifest = fs.readFileSync(`${userDataPath}/themes/${file}/manifest.json`, "utf8");
       var themeFile = JSON.parse(manifest);
-      console.log(themeFile.theme);
-      console.log(themeFile)
       const theme = fs.readFileSync(`${userDataPath}/themes/${file}/${themeFile.theme}`, "utf8");
       if (themeFile.theme.endsWith(".scss")) {
         console.log(
