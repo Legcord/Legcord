@@ -4,7 +4,7 @@ const path = require("path");
 const contextMenu = require("electron-context-menu");
 const os = require("os");
 require("v8-compile-cache");
-require("./utils/updater");
+
 
 if (os.type() == 'Linux'){
   var iconformat = __dirname + "/discord.png" 
