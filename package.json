@@ -1,6 +1,6 @@
 {
-  "name": "ArmCord",
-  "version": "2.5.0-TESTING",
+  "name": "armcord",
+  "version": "2.5.0",
   "description": "ArmCord is a Discord client made for ARM Linux that allows you to customize your experience.",
   "main": "main.js",
   "scripts": {
@@ -12,7 +12,7 @@
     "windows-build": "electron-builder --windows nsis portable zip appx"
   },
   "author": "smartfrigde <smartfridge1337@protonmail.com>",
-  "license": "MIT",
+  "license": "OSL-3.0",
   "dependencies": {
     "custom-electron-titlebar": "3.2.7",
     "electron-context-menu": "^3.0.0",
@@ -46,7 +46,8 @@
         "deb",
         "tar.gz",
         "rpm",
-        "AppImage"]
+        "AppImage"
+      ]
     }
   },
   "bugs": {
