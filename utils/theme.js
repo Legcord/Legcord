@@ -9,9 +9,16 @@ if (!fs.existsSync(themeFolder)) {
   console.log("Created theme folder");
 }
 window.addEventListener("DOMContentLoaded", () => {
-  console.log("Theme Module Loaded");
+  console.log("Theme Module Loaded"); // I KNOW THIS IS A MESS BUT IT'S WORKING MESS, XOXO
   fs.readdirSync(themeFolder).forEach((file) => {
     try {
+      if (file.includes('DISABLED')) {
+        console.log(`Skipping ${file}.`)
+        const manifest = fs.readFileSync(`${userDataPath}/themes/${file}/manifest.json`, "utf8");
+        var themeFile = JSON.parse(manifest);
+        var html = `<div id="tm-list-item"><div id="theme-name">${themeFile.name}</div><div id="theme-author">By ${themeFile.author}</div><div id="theme-description">${themeFile.description}</div></div><br><br>`;
+        document.getElementById("tm-disabled").innerHTML = html + document.getElementById("tm-disabled").innerHTML;
+      }
       const manifest = fs.readFileSync(`${userDataPath}/themes/${file}/manifest.json`, "utf8");
       var themeFile = JSON.parse(manifest);
       const theme = fs.readFileSync(`${userDataPath}/themes/${file}/${themeFile.theme}`, "utf8");

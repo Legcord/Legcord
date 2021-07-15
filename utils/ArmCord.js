@@ -1,6 +1,15 @@
 exports.Version = require("../package.json").version;
-
-exports.Channel = require("../settings.json").channel;
+const fs = require("fs");
+const electron = require("electron");
+const userDataPath = (electron.app || electron.remote.app).getPath("userData");
+const settingsFile= userDataPath + "/settings.json";
+if (!fs.existsSync(settingsFile)) {
+  fs.writeFile(settingsFile, "{}", (err) => {
+    if (err) throw err;
+}); 
+  console.log("Created settings.json file");
+}
+exports.Channel = require(settingsFile).channel;
 
 exports.addStyle = function(styleString) {
  const style = document.createElement('style');

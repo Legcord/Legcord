@@ -39,7 +39,7 @@ if (!fs.existsSync(pluginFolder)) {
       type: "warning",
       message: "ArmCord has installed GooseMod onto your client.",
       detail:
-        "If you wish to use it restart your ArmCord completely using tray icon. It should appear in next session. GooseMod is reccomended to every user of ArmCord due to various improvements and bugfixes it ships with.",
+        "If you wish to use it restart your ArmCord completely using tray icon. It should appear in next session. GooseMod is reccomended to every user of ArmCord due to various improvements and bugfixes it ships with. You won't be able to load themes or see any of ArmCord specific CSS patches including fixed font logo at the top.",
     });
   });
   }
