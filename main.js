@@ -4,7 +4,11 @@ const path = require("path");
 const contextMenu = require("electron-context-menu");
 const os = require("os");
 require("v8-compile-cache");
-
+if (require("./utils/ArmCord.js").Titlebar === "native") {
+  var frame = true
+} else {
+  var frame = false
+}
 
 if (os.type() == 'Linux'){
   var iconformat = __dirname + "/discord.png" 
@@ -31,7 +35,7 @@ function createWindow() {
     height: 600,
     icon: iconformat,
     title: "ArmCord",
-    frame: false,
+    frame: frame,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       enableRemoteModule: true,

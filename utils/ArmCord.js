@@ -10,7 +10,7 @@ if (!fs.existsSync(settingsFile)) {
   console.log("Created settings.json file");
 }
 exports.Channel = require(settingsFile).channel;
-
+exports.Titlebar = require(settingsFile).titlebar;
 exports.addStyle = function(styleString) {
  const style = document.createElement('style');
  style.textContent = styleString;

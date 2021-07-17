@@ -5,10 +5,11 @@ const electronLocalshortcut = require("electron-localshortcut");
 const ArmCord = require("./utils/ArmCord.js");
 require("./utils/theme.js");
 window.addEventListener("DOMContentLoaded", () => {
+  if (require("./utils/ArmCord.js").Titlebar === "native") {console.log("Using native titlebar")} else {
   new customTitlebar.Titlebar({
     backgroundColor: customTitlebar.Color.fromHex("#202225"),
     menu: false,
-  });
+  });}
 
   electronLocalshortcut.register(currentWindow, "F5", () => {
     location.reload();
