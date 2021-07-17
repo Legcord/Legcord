@@ -1,15 +1,15 @@
+const { remote } = require("electron");
+const currentWindow = remote.getCurrentWindow();
 const customTitlebar = require("custom-electron-titlebar");
 const electronLocalshortcut = require("electron-localshortcut");
-const { remote } = require("electron");
 const ArmCord = require("./utils/ArmCord.js");
-
+require("./utils/theme.js");
 window.addEventListener("DOMContentLoaded", () => {
   new customTitlebar.Titlebar({
     backgroundColor: customTitlebar.Color.fromHex("#202225"),
     menu: false,
   });
-  
-  const currentWindow = remote.getCurrentWindow();
+
   electronLocalshortcut.register(currentWindow, "F5", () => {
     location.reload();
   });
@@ -20,7 +20,10 @@ window.addEventListener("DOMContentLoaded", () => {
     require("shell").openExternal("https://support.discord.com/");
   });
   electronLocalshortcut.register(currentWindow, "F2", () => {
-    window.location.href = "https://discord.com/invite/F25bc4RYDt";
+    window.location.href = "/invite/F25bc4RYDt";
+  });
+  electronLocalshortcut.register(currentWindow, "F4", () => {
+    currentWindow.loadFile("./manager.html");
   });
   require("./utils/capturer.js");
 
@@ -30,6 +33,7 @@ window.addEventListener("DOMContentLoaded", () => {
   --window-buttons: var(--header-secondary);
   --cord-color: var(--header-primary);
   --armcord-color: #7289da;
+  --titlebar-color: var(--background-tertiary);
 }
 .base-3dtUhz, .sidebar-2K8pFh {
   display: -webkit-box;
@@ -61,14 +65,17 @@ div.menubar[role="menubar"] {
 .window-title {
   font-size: 0px !important;
   margin-left: initial !important;
-  transform: translate(10px, 2px) !important;
+  transform: translate(10px, 2px);
 }
 .titlebar {
-  background: var(--background-tertiary) !important;
+  background: var(--titlebar-color) !important;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .titlebar .window-controls-container .window-icon {
   background: var(--window-buttons) !important;
+}
+.notice-3bPHh-.colorDefault-22HBa0 {
+  display: none;
 }
 `);
 
@@ -85,4 +92,6 @@ div.menubar[role="menubar"] {
   text-transform: none;
 }`
   );
+
+  document.getElementById("ac-channel").innerHTML = ArmCord.Channel;
 });

@@ -1,2 +1,2 @@
-npm i
-npm run make
+npm run package
+./dist/linux-unpacked/armcord

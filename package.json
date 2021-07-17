@@ -1,33 +1,29 @@
 {
-  "name": "armcord",
+  "name": "ArmCord",
   "version": "2.5.0",
   "description": "ArmCord is a Discord client made for ARM Linux that allows you to customize your experience.",
   "main": "main.js",
   "scripts": {
-    "start": "electron-forge start",
-    "dist": "electron-builder",
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "package": "electron-forge package",
-    "publish": "electron-forge publish",
-    "make": "electron-forge make"
+    "package": "electron-builder --dir",
+    "make": "electron-builder",
+    "linux-build": "electron-builder --linux deb tar.gz rpm AppImage",
+    "windows-build": "electron-builder --windows nsis portable zip appx"
   },
-  "author": "smartfrigde",
-  "license": "MIT",
+  "author": "smartfrigde <smartfridge1337@protonmail.com>",
+  "license": "OSL-3.0",
   "dependencies": {
     "custom-electron-titlebar": "3.2.7",
     "electron-context-menu": "^3.0.0",
     "electron-localshortcut": "^3.2.1",
-    "electron-squirrel-startup": "^1.0.0",
+    "electron-store": "^8.0.0",
+    "unzipper": "^0.10.1",
     "v8-compile-cache": "^2.3.0"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.54",
-    "@electron-forge/maker-deb": "^6.0.0-beta.55",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.55",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.55",
-    "@electron-forge/maker-zip": "^6.0.0-beta.55",
-    "@electron-forge/publisher-github": "*",
-    "electron": "latest"
+    "electron": "latest",
+    "electron-builder": "^22.11.7"
   },
   "repository": {
     "type": "git",
@@ -38,47 +34,25 @@
     "discord",
     "electron"
   ],
-  "bugs": {
-    "url": "https://github.com/smartfrigde/armcord/issues"
-  },
-  "homepage": "https://github.com/smartfrigde/armcord#readme",
-  "config": {
-    "forge": {
-      "packagerConfig": {},
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "armcord"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin",
-            "linux"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
-      ],
-      "publishers": [
-        {
-          "name": "@electron-forge/publisher-github",
-          "config": {
-            "repository": {
-              "owner": "erikhofer",
-              "name": "electron-publish-example"
-            }
-          }
-        }
+  "build": {
+    "appId": "com.smartfridge.armcord",
+    "productName": "ArmCord",
+    "mac": {
+      "category": "Network"
+    },
+    "linux": {
+      "maintainer": "smartfridge1337@protonmail.com",
+      "target": [
+        "deb",
+        "tar.gz",
+        "rpm",
+        "AppImage"
       ]
     }
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/smartfrigde/armcord/issues",
+    "email": "smartfridge1337@protonmail.com"
+  },
+  "homepage": "https://github.com/smartfrigde/armcord#readme"
 }
