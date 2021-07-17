@@ -29,7 +29,7 @@ jobs:
           skip_build: true
           # If the commit is tagged with a version (e.g. "v1.0.0"),
           # release the app after building
-          # release: ${{ startsWith(github.ref, 'refs/tags/v') }} disabled for now as it caused problems
+          release: ${{ startsWith(github.ref, 'refs/tags/v') }} #disabled for now as it caused problems (nvm)
       - name: Archive production builds
         uses: actions/upload-artifact@v2
         with:
