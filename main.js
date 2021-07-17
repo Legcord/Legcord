@@ -90,7 +90,7 @@ function createWindow() {
     try {
       appIcon();
     } catch (error) {
-      console.error(error);
+      //console.error(error);
       // expected output: TypeError: appIcon is not a function
     }
   });

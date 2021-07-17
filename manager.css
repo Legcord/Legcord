@@ -36,7 +36,11 @@ span {
     font-size: 32px;
     text-align: center;
 }
-
+.disabled {
+    text-align: center;
+    font-weight: normal;
+    font-family: Helvetica, sans-serif;
+}
 .container {
     position: fixed;
     top: 50%;
@@ -107,7 +111,12 @@ button#open-themes-btn:active {
     left: 50%;
     transform: translateX(-50%);
 }
-
+#tm-disabled {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+}
 #tm-list-item {
     background: #23272a;
     font-family: Whitney, Helvetica Neue, Helvetica, Arial, sans-serif;
