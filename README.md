@@ -3,8 +3,8 @@
 ArmCord is a custom alternative Discord client made for people on lower-end devices and ARM architecture that want custom Discord experience. It uses [GooseMod](https://goosemod.com) for custom themes and plugins!
 
 # How to run/install it?
-Check releases tab for precompiled deb(ARM64), rpm(ARM64), tar.gz(ARM64), Windows builds.
-Alternative (npm, nodejs required):  
+Check releases tab for precompiled packages for Linux, Windows and Mac OS (experimental).
+Alternatively you can run ArmCord from source (npm, nodejs required):  
 1.Run `npm install`   
 2.Run `npm start`  
 3.Compile/Package with `npm run make`    
@@ -26,8 +26,7 @@ Alternative (npm, nodejs required):
 [ArmCord UI Elements and few features](https://github.com/kckarnige)   
 [GooseMod](https://github.com/GooseMod/GooseMod)   
 [GooseMod Extension](https://github.com/GooseMod/extension)    
-[update.rocks](https://www.update.rocks)   
 [electron-discord-webapp](https://github.com/SpacingBat3/electron-discord-webapp)    
 [custom-electron-titlebar](https://github.com/AlexTorresSk/custom-electron-titlebar)    
 [electron-localshortcut](https://github.com/parro-it/electron-localshortcut)    
-[electron-forge](https://www.npmjs.com/package/electron-forge)    
+[electron-builder](https://electron.build)    
