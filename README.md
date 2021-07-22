@@ -13,7 +13,7 @@ Alternatively you can run ArmCord from source (npm, nodejs required):
 # FAQ
 ## 1.Will I get banned from using it?   
 
- -You are breaking Discord ToS since we are using GooseMod for themes and plugins. But no one ever got banned from using ArmCord or GooseMod as of now  
+ -You are breaking Discord ToS since we are using GooseMod for themes and plugins. But no one ever got banned from using ArmCord or GooseMod as of now. If you wish to remove GooseMod, you can find it in your plugins folder. 
 ## 2.How does this work?   
 
  -We are using official web app and adding GooseMod to it with some other tweaks.   
