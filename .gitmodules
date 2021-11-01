@@ -1,0 +1,3 @@
+[submodule "mods/goosemod"]
+	path = mods/goosemod
+	url = https://github.com/GooseMod/Extension

@@ -19,8 +19,10 @@ Alternatively you can run ArmCord from source (npm, nodejs required):
  -We are using official web app and adding GooseMod to it with some other tweaks.   
 ## 3.Can I use this on other architectures or operating systems?
 
- -Yes! ArmCord should work normally under Windows, Mac OS, Linux as long as it has NodeJS, npm and Electron support.   
+ -Yes! ArmCord should work normally under Windows, ~~Mac OS~~ (Mac OS is broken see [#48](https://github.com/ArmCord/ArmCord/issues/48)), Linux as long as it has NodeJS, npm and Electron support.   
+## 4.Code is big spaghetti.
 
+ -I'm aware. I'm slowly rewriting everything. This branch is mostly fixes only.   
 
 # Credits
 [ArmCord UI Elements and few features](https://github.com/kckarnige)   

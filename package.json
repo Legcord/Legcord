@@ -4,7 +4,7 @@
   "description": "ArmCord is a Discord client made for ARM Linux that allows you to customize your experience.",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "./build.sh",
     "test": "echo \"Error: no test specified\" && exit 1",
     "package": "electron-builder --dir",
     "make": "electron-builder",
@@ -14,15 +14,21 @@
   "author": "smartfrigde <smartfridge1337@protonmail.com>",
   "license": "OSL-3.0",
   "dependencies": {
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.0.6",
     "custom-electron-titlebar": "3.2.7",
     "electron-context-menu": "^3.0.0",
+    "electron-dl": "^3.2.1",
     "electron-localshortcut": "^3.2.1",
     "electron-store": "^8.0.0",
+    "rollup": "^2.58.0",
+    "rollup-plugin-terser": "^7.0.2",
     "unzipper": "^0.10.1",
     "v8-compile-cache": "^2.3.0"
   },
   "devDependencies": {
-    "electron": "latest",
+    "electron": "^13.3.0",
     "electron-builder": "^22.11.7"
   },
   "repository": {
@@ -41,6 +47,7 @@
       "category": "Network"
     },
     "linux": {
+      "extraResources": ["./mods/cumcord/*"],
       "maintainer": "smartfridge1337@protonmail.com",
       "target": [
         "deb",

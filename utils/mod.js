@@ -1,18 +1,17 @@
 const fs = require("fs");
 const { app, session } = require("electron");
 const electron = require("electron");
-const userDataPath = (electron.app || electron.remote.app).getPath("userData");
-const pluginFolder = userDataPath + "/plugins/";
-
+const path = require ('path');
+const execPath = path.dirname (process.execPath);
 app.whenReady().then(() => {
-fs.readdirSync(pluginFolder).forEach((file) => {
+fs.readdirSync(`${execPath}/resources/mods/`).forEach((file) => {
   try {
     const manifest = fs.readFileSync(
-      `${userDataPath}/plugins/${file}/manifest.json`,
+      `${execPath}/resources/mods/${file}/manifest.json`,
       "utf8"
     );
     var pluginFile = JSON.parse(manifest);
-    session.defaultSession.loadExtension(`${userDataPath}/plugins/${file}`);
+    session.defaultSession.loadExtension(`${execPath}/resources/mods/${file}`);
     console.log(
       `%cLoaded ${pluginFile.name} made by ${pluginFile.author}`,
       "color:red"

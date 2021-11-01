@@ -11,10 +11,10 @@ if (require("./utils/ArmCord.js").Titlebar === "native") {
 }
 
 if (os.type() == 'Linux'){
-  var iconformat = __dirname + "/discord.png" 
-} else { //test this 
+  var iconformat = __dirname + "/ac_icon_transparent.png" 
+} else { 
   console.log("Running Non-Linux")
-  var iconformat = __dirname + "/discord.ico";
+  var iconformat = __dirname + "/ac_plug.ico";
 }
 
 contextMenu({
@@ -105,7 +105,7 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createWindow();
-  //require("./utils/csp.js");
+  require("./utils/mod.js");
   require("./utils/plugin.js");
   session
     .fromPartition("some-partition")

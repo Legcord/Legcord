@@ -4,6 +4,7 @@ const customTitlebar = require("custom-electron-titlebar");
 const electronLocalshortcut = require("electron-localshortcut");
 const ArmCord = require("./utils/ArmCord.js");
 require("./utils/theme.js");
+require("./utils/bridge.js")
 window.addEventListener("DOMContentLoaded", () => {
   if (require("./utils/ArmCord.js").Titlebar === "native") {console.log("Using native titlebar")} else {
   new customTitlebar.Titlebar({
@@ -21,7 +22,7 @@ window.addEventListener("DOMContentLoaded", () => {
     require("shell").openExternal("https://support.discord.com/");
   });
   electronLocalshortcut.register(currentWindow, "F2", () => {
-    window.location.href = "/invite/F25bc4RYDt";
+    window.location.href = "https://discord.gg/invite/F25bc4RYDt";
   });
   electronLocalshortcut.register(currentWindow, "F4", () => {
     currentWindow.loadFile("./manager.html");
