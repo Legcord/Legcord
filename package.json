@@ -44,7 +44,11 @@
     "appId": "com.smartfridge.armcord",
     "productName": "ArmCord",
     "mac": {
-      "category": "Network"
+      "category": "Network",
+      "extraResources": ["./mods/cumcord/*"]
+    },
+    "win": {
+      "extraResources": ["./mods/cumcord/*"]
     },
     "linux": {
       "category": "Network",
