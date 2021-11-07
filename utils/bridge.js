@@ -1,5 +1,7 @@
-const { contextBridge, remote, desktopCapturer } = require("electron");
+const { contextBridge, remote } = require("electron");
 const currentWindow = remote.getCurrentWindow();
+const {getDisplayMediaSelector} = require('./capturer')
+const ArmCord = require("./ArmCord.js");
 const version = require("../package.json").version;
 contextBridge.exposeInMainWorld("electron", {
   window: {
@@ -11,6 +13,7 @@ contextBridge.exposeInMainWorld("electron", {
   },
   electron: process.versions.electron,
   version: version,
-  desktopCapturer: desktopCapturer,
+  ArmCord: ArmCord,
+  getDisplayMediaSelector: getDisplayMediaSelector,
 
 });

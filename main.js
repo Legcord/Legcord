@@ -4,6 +4,7 @@ const path = require("path");
 const contextMenu = require("electron-context-menu");
 const os = require("os");
 require("v8-compile-cache");
+require("./utils/updater.js")
 if (require("./utils/ArmCord.js").Titlebar === "native") {
   var frame = true
 } else {
@@ -42,7 +43,6 @@ function createWindow() {
       nodeIntegration: false,
     },
   });
-
   var appIcon = new Tray(iconformat);
   mainWindow.webContents.userAgent =
     "Mozilla/5.0 (X12; Linux x86) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"; //fake useragent
@@ -80,6 +80,7 @@ function createWindow() {
   appIcon.on("click", () => {
     mainWindow.show()
   });
+
 
   appIcon.setContextMenu(contextMenu);
 

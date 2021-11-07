@@ -1,6 +1,5 @@
 const fs = require("fs");
 const { app, session } = require("electron");
-const electron = require("electron");
 const path = require ('path');
 const execPath = path.dirname (process.execPath);
 app.whenReady().then(() => {

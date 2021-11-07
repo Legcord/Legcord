@@ -1,16 +1,14 @@
 const { remote } = require("electron");
 const currentWindow = remote.getCurrentWindow();
-const customTitlebar = require("custom-electron-titlebar");
-const electronLocalshortcut = require("electron-localshortcut");
 const ArmCord = require("./utils/ArmCord.js");
+const electronLocalshortcut = require("electron-localshortcut");
 require("./utils/theme.js");
 require("./utils/bridge.js")
+require('./utils/titlebar')
 window.addEventListener("DOMContentLoaded", () => {
-  if (require("./utils/ArmCord.js").Titlebar === "native") {console.log("Using native titlebar")} else {
-  new customTitlebar.Titlebar({
-    backgroundColor: customTitlebar.Color.fromHex("#202225"),
-    menu: false,
-  });}
+  if (require("./utils/ArmCord.js").Titlebar == "native") {console.log("Using native titlebar")} else {
+    //todo
+  }
 
   electronLocalshortcut.register(currentWindow, "F5", () => {
     location.reload();
@@ -67,7 +65,7 @@ div.menubar[role="menubar"] {
 .window-title {
   font-size: 0px !important;
   margin-left: initial !important;
-  transform: translate(10px, 2px);
+  transform: translate(10px, 0px);
 }
 .titlebar {
   background: var(--titlebar-color) !important;
