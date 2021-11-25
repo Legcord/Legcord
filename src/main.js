@@ -114,15 +114,8 @@ app.whenReady().then(() => {
     .setPermissionRequestHandler((webContents, permission, callback) => {
       const url = webContents.getURL(); //unused?
 
-      if (["notifications", "microphone"].includes(permission)) {
-        // Approves the permissions request
-        callback(true);
-      };
-
-      if (!url.startsWith("discord://")) {
-        // Denies the permissions request
-        return callback(false);
-      }
+      if (["notifications", "microphone"].includes(permission)) callback(true)
+      if (!url.startsWith("discord://")) return callback(false);
     });
 
   app.on("activate", function () {

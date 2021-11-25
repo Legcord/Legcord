@@ -38,7 +38,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	require("./utils/capturer.js");
 
 	ArmCord.addStyle(readFileSync("./styles/preload.style"));
-	ArmCord.addStyle(readFileSync("./styles/vers.on.style").replace("VERSION", ArmCord.Version));
+	ArmCord.addStyle(readFileSync("./styles/vers.on.style").replace("<VERSION>", ArmCord.Version));
 
 	document.getElementById("ac-channel").innerHTML = ArmCord.Channel;
 });
