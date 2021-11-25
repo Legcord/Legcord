@@ -6,7 +6,7 @@ const os = require("os");
 const bundle = require("./bundle.json");
 
 require("v8-compile-cache");
-require("./utils/updater.js.js");
+require("./utils/updater.js");
 
 //Defaults
 let frame = true;
