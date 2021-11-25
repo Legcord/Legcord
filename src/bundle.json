@@ -1,6 +1,7 @@
 {
     "updateHost": "https://download.smartfridge.space",
     "supportServer": "https://discord.gg/invite/F25bc4RYDt",
+    "UserAgent": "Mozilla/5.0 (X12; Linux x86) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
     "channels": {
         "stable": "https://discord.com/app",
         "canary": "https://canary.discord.com/app",

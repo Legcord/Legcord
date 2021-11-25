@@ -5,6 +5,7 @@
   "main": "./src/main.js",
   "scripts": {
     "start": "./scripts/build.sh",
+    "start:windows": "./scripts/build.bat",
     "package": "electron-builder --dir",
     "make": "electron-builder",
     "linux-build": "electron-builder --linux deb tar.gz rpm AppImage",

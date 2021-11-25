@@ -43,7 +43,7 @@ function createWindow() {
   });
 
   const appIcon = new Tray(iconformat);
-  mainWindow.webContents.userAgent = "Mozilla/5.0 (X12; Linux x86) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"; //fake useragent
+  mainWindow.webContents.userAgent = bundle.userAgent;
   mainWindow.loadFile("./client/index.html");
   mainWindow.focus();
 

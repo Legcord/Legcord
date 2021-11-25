@@ -1,6 +1,6 @@
 const { contextBridge, remote } = require("electron");
 const currentWindow = remote.getCurrentWindow();
-const {getDisplayMediaSelector} = require('./capturer')
+const { getDisplayMediaSelector } = require('./capturer');
 const ArmCord = require("./armcord.js");
 const version = require("../../package.json").version;
 
