@@ -3,20 +3,17 @@ const { app, BrowserWindow, session, Tray, Menu } = require("electron");
 const path = require("path");
 const contextMenu = require("electron-context-menu");
 const os = require("os");
-require("v8-compile-cache");
-require("./utils/updater.js")
-if (require("./utils/ArmCord.js").Titlebar === "native") {
-  var frame = true
-} else {
-  var frame = false
-}
+const bundle = require("./bundle.json");
 
-if (os.type() == 'Linux'){
-  var iconformat = __dirname + "/ac_icon_transparent.png" 
-} else { 
-  console.log("Running Non-Linux")
-  var iconformat = __dirname + "/ac_plug.ico";
-}
+require("v8-compile-cache");
+require("./utils/updater.js.js");
+
+//Defaults
+let frame = true;
+let iconformat = "../assets/ac_icon_transparent.png";
+
+if (!require("./utils/armcord.js").Titlebar === "native") frame = false;
+if (!os.type() == 'Linux') iconformat = "../assets/ac_plug.ico";
 
 contextMenu({
   prepend: (defaultActions, parameters, browserWindow) => [
@@ -27,6 +24,7 @@ contextMenu({
     },
   ],
 });
+
 contextMenu.showSearchWithGoogle = false;
 
 let mainWindow;
@@ -43,15 +41,17 @@ function createWindow() {
       nodeIntegration: false,
     },
   });
-  var appIcon = new Tray(iconformat);
-  mainWindow.webContents.userAgent =
-    "Mozilla/5.0 (X12; Linux x86) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"; //fake useragent
-  mainWindow.loadFile("index.html");
+
+  const appIcon = new Tray(iconformat);
+  mainWindow.webContents.userAgent = "Mozilla/5.0 (X12; Linux x86) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"; //fake useragent
+  mainWindow.loadFile("./client/index.html");
   mainWindow.focus();
+
   mainWindow.webContents.on("new-window", function (e, url) {
     e.preventDefault();
     require("electron").shell.openExternal(url);
   });
+
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
   var contextMenu = Menu.buildFromTemplate([
@@ -65,7 +65,7 @@ function createWindow() {
       label: "Support Discord Server",
       click: function () {
         mainWindow.show();
-        mainWindow.loadURL("https://discord.gg/F25bc4RYDt");
+        mainWindow.loadURL(bundle.supportServer);
       },
     },
     {
@@ -77,10 +77,10 @@ function createWindow() {
       },
     },
   ]);
+
   appIcon.on("click", () => {
     mainWindow.show()
   });
-
 
   appIcon.setContextMenu(contextMenu);
 
@@ -99,7 +99,7 @@ function createWindow() {
       // expected output: TypeError: appIcon is not a function
     }
   });
-}
+};
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -108,24 +108,23 @@ app.whenReady().then(() => {
   createWindow();
   require("./utils/mod.js");
   require("./utils/plugin.js");
+
   session
     .fromPartition("some-partition")
     .setPermissionRequestHandler((webContents, permission, callback) => {
       const url = webContents.getURL(); //unused?
 
-      if (permission === "notifications") {
+      if (["notifications", "microphone"].includes(permission)) {
         // Approves the permissions request
         callback(true);
-      }
-      if (permission === "microphone") {
-        // Approves the permissions request
-        callback(true);
-      }
+      };
+
       if (!url.startsWith("discord://")) {
         // Denies the permissions request
         return callback(false);
       }
     });
+
   app.on("activate", function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.

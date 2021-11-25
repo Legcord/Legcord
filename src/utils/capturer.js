@@ -2,7 +2,8 @@
 //original https://github.com/electron/electron/issues/16513#issuecomment-602070250
 const { desktopCapturer } = require('electron');
 const CANCEL_ID = 'desktop-capturer-selection__cancel';
-const ArmCord = require("./ArmCord.js");
+const ArmCord = require("./armcord.js");
+
 async function getDisplayMediaSelector() {
   const sources = await desktopCapturer.getSources({
     types: ['screen', 'window'],

@@ -11,7 +11,8 @@ fs.readdirSync(pluginFolder).forEach((file) => {
       `${userDataPath}/plugins/${file}/manifest.json`,
       "utf8"
     );
-    var pluginFile = JSON.parse(manifest);
+    
+    const pluginFile = JSON.parse(manifest);
     session.defaultSession.loadExtension(`${userDataPath}/plugins/${file}`);
     console.log(
       `%cLoaded ${pluginFile.name} made by ${pluginFile.author}`,

@@ -1,0 +1,10 @@
+{
+    "updateHost": "https://download.smartfridge.space",
+    "supportServer": "https://discord.gg/invite/F25bc4RYDt",
+    "channels": {
+        "stable": "https://discord.com/app",
+        "canary": "https://canary.discord.com/app",
+        "ptb": "https://ptb.discord.com/app",
+        "foss": "https://dev.fosscord.com/app"
+    }
+}

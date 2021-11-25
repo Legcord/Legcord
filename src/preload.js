@@ -1,33 +1,42 @@
 const { remote } = require("electron");
 const currentWindow = remote.getCurrentWindow();
-const ArmCord = require("./utils/ArmCord.js");
+const ArmCord = require("./utils/armcord.js");
 const electronLocalshortcut = require("electron-localshortcut");
+const bundle = require("./bundle.json");
 require("./utils/theme.js");
-require("./utils/bridge.js")
-require('./utils/titlebar')
+require("./utils/bridge.js");
+require("./utils/titlebar.js");
+
 window.addEventListener("DOMContentLoaded", () => {
-  if (require("./utils/ArmCord.js").Titlebar == "native") {console.log("Using native titlebar")} else {
-    //todo
-  }
+	if (require("./utils/armcord.js").Titlebar == "native") {
+		console.log("Using native titlebar");
+	} else {
+		//todo
+	}
 
-  electronLocalshortcut.register(currentWindow, "F5", () => {
-    location.reload();
-  });
-  electronLocalshortcut.register(currentWindow, "F12", () => {
-    currentWindow.webContents.openDevTools();
-  });
-  electronLocalshortcut.register(currentWindow, "F1", () => {
-    require("shell").openExternal("https://support.discord.com/");
-  });
-  electronLocalshortcut.register(currentWindow, "F2", () => {
-    window.location.href = "https://discord.gg/invite/F25bc4RYDt";
-  });
-  electronLocalshortcut.register(currentWindow, "F4", () => {
-    currentWindow.loadFile("./manager.html");
-  });
-  require("./utils/capturer.js");
+	electronLocalshortcut.register(currentWindow, "F5", () => {
+		location.reload();
+	});
 
-  ArmCord.addStyle(`
+	electronLocalshortcut.register(currentWindow, "F12", () => {
+		currentWindow.webContents.openDevTools();
+	});
+
+	electronLocalshortcut.register(currentWindow, "F1", () => {
+		require("shell").openExternal("https://support.discord.com/");
+	});
+
+	electronLocalshortcut.register(currentWindow, "F2", () => {
+		window.location.href = bundle.supportServer;
+	});
+
+	electronLocalshortcut.register(currentWindow, "F4", () => {
+		currentWindow.loadFile("./client/manager.html");
+	});
+
+	require("./utils/capturer.js");
+
+	ArmCord.addStyle(`
 @import url("https://kckarnige.github.io/femboi_owo/discord-font.css");
 :root {
   --window-buttons: var(--header-secondary);
@@ -79,11 +88,11 @@ div.menubar[role="menubar"] {
 }
 `);
 
-  ArmCord.addStyle(
-    `.info-1VyQPT:last-child:before {
+	ArmCord.addStyle(
+		`.info-1VyQPT:last-child:before {
   content: "ArmCord Version: ` +
-      ArmCord.Version +
-      `";
+			ArmCord.Version +
+			`";
   height: auto;
   line-height: 16px;
   text-align: center;
@@ -91,7 +100,7 @@ div.menubar[role="menubar"] {
   font-size: 12px;
   text-transform: none;
 }`
-  );
+	);
 
-  document.getElementById("ac-channel").innerHTML = ArmCord.Channel;
+	document.getElementById("ac-channel").innerHTML = ArmCord.Channel;
 });

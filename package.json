@@ -1,11 +1,10 @@
 {
-  "name": "ArmCord",
+  "name": "armcord",
   "version": "2.7.0",
   "description": "ArmCord is a Discord client made for ARM Linux that allows you to customize your experience.",
-  "main": "main.js",
+  "main": "./src/main.js",
   "scripts": {
-    "start": "./build.sh",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "./scripts/build.sh",
     "package": "electron-builder --dir",
     "make": "electron-builder",
     "linux-build": "electron-builder --linux deb tar.gz rpm AppImage",
@@ -24,7 +23,7 @@
   },
   "devDependencies": {
     "electron": "^13.3.0",
-    "electron-builder": "^22.11.7"
+    "electron-builder": "^22.14.5"
   },
   "repository": {
     "type": "git",

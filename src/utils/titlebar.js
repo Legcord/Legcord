@@ -1,6 +1,6 @@
 const { remote } = require("electron");
 var win = remote.BrowserWindow.getFocusedWindow();
-const ArmCord = require("./ArmCord.js");
+const ArmCord = require("./armcord.js");
 const css = `
 .titleebar {
   position: absolute;
