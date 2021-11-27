@@ -51,6 +51,6 @@ window.addEventListener("DOMContentLoaded", () => {
     let channel = document.getElementById("ac-channel").innerHTML;
     let href = window.location.href;
 
-    href = bundle.channels[channel];
+    href = bundle.channels[channel] || bundle.channels["stable"];
 	};
 });

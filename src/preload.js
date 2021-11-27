@@ -15,14 +15,6 @@ window.addEventListener("DOMContentLoaded", () => {
 		//todo
 	}
 
-	electronLocalshortcut.register(currentWindow, "F5", () => {
-		location.reload();
-	});
-
-	electronLocalshortcut.register(currentWindow, "F12", () => {
-		currentWindow.webContents.openDevTools();
-	});
-
 	electronLocalshortcut.register(currentWindow, "F1", () => {
 		require("shell").openExternal("https://support.discord.com/");
 	});
@@ -35,10 +27,22 @@ window.addEventListener("DOMContentLoaded", () => {
 		currentWindow.loadFile("./client/manager.html");
 	});
 
+	electronLocalshortcut.register(currentWindow, "F5", () => {
+		location.reload();
+	});
+
+	electronLocalshortcut.register(currentWindow, "F6", () => {
+		window.location.href = bundle.misc.developers;
+	});
+
+	electronLocalshortcut.register(currentWindow, "F12", () => {
+		currentWindow.webContents.openDevTools();
+	});
+
 	require("./utils/capturer.js");
 
-	ArmCord.addStyle(readFileSync("./styles/preload.style"));
-	ArmCord.addStyle(readFileSync("./styles/vers.on.style").replace("<VERSION>", ArmCord.Version));
+	ArmCord.addStyle(readFileSync("./styles/preload.css"));
+	ArmCord.addStyle(readFileSync("./styles/version.css").replace("<VERSION>", ArmCord.Version));
 
 	document.getElementById("ac-channel").innerHTML = ArmCord.Channel;
 });

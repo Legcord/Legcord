@@ -32,7 +32,7 @@ async function getDisplayMediaSelector() {
 </div>`;
 }
 
-const screenShareCSS = readFileSync("../styles/utils/capturer/screenShare.style");
+const screenShareCSS = readFileSync("../styles/utils/capturer/screenShare.css");
 
 const screenShareJS = `
 window.navigator.mediaDevices.getDisplayMedia = () => new Promise(async (resolve, reject) => {

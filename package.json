@@ -41,18 +41,21 @@
     "mac": {
       "category": "Network",
       "extraResources": [
-        "./mods/cumcord/*"
+        "./src/cumcord/*",
+        "./assets/*"
       ]
     },
     "win": {
       "extraResources": [
-        "./mods/cumcord/*"
+        "./src/cumcord/*",
+        "./assets/*"
       ]
     },
     "linux": {
       "category": "Network",
       "extraResources": [
-        "./mods/cumcord/*"
+        "./src/cumcord/*",
+        "./assets/*"
       ],
       "maintainer": "smartfridge1337@protonmail.com",
       "target": [

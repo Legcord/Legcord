@@ -1,0 +1,15 @@
+--2021-11-27 12:59:17--  https://discord.com/assets/3b0d96ed8113994f3d139088726cfecd.webm
+Loaded CA certificate '/etc/ssl/certs/ca-certificates.crt'
+Resolving discord.com (discord.com)... 162.159.135.232, 162.159.138.232, 162.159.137.232, ...
+Connecting to discord.com (discord.com)|162.159.135.232|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 160381 (157K) [video/webm]
+Saving to: ‘3b0d96ed8113994f3d139088726cfecd.webm’
+
+     0K .......... .......... .......... .......... .......... 31% 1.81M 0s
+    50K .......... .......... .......... .......... .......... 63% 1.15M 0s
+   100K .......... .......... .......... .......... .......... 95% 1.51M 0s
+   150K ......                                                100% 4.66M=0.1s
+
+2021-11-27 12:59:18 (1.48 MB/s) - ‘3b0d96ed8113994f3d139088726cfecd.webm’ saved [160381/160381]
+

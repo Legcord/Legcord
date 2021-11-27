@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8"/>
   <title>ArmCord</title>
+  <link rel="stylesheet" href="./assets/styles/index.css">
   <script>
     window.onload = setTimeout(function() {
       if (document.getElementById("ac-channel").innerHTML == "stable") {
@@ -19,90 +20,17 @@
       };
     }, 3000);
     </script>
-  <style>
-     @import url("https://kckarnige.github.io/femboi_owo/discord-font.css");
 
-    :root {
-      background-color: #2c2f33;
-      --header-secondary: #b9bbbe;
-      --header-primary: #fff;
-      --background-tertiary: #202225;
-    }
-
-    body {
-      color: white;
-    }
-
-    p {
-      color: #8e9297;
-      text-align: center;
-      font-weight: 100;
-      transform: translateY(-185%);
-      font-family: Whitney,Helvetica Neue,Helvetica,Arial,sans-serif;
-      text-rendering: optimizeLegibility;
-      font-style: italic;
-    }
-
-    h1 {
-      font-size: 0px;
-      text-align: center;
-      transform: translateY(-105%);
-    }
-
-    h1:before {
-      content: "ARM";
-      color: #7289da;
-      font-weight: normal;
-      font-family: Helvetica, sans-serif;
-      font-size: 32px;
-    }
-
-    h1:after {
-      content: "Cord";
-      color: #ffffff;
-      font-weight: normal;
-      font-family: Discordinated;
-      font-size: 32px;
-    }
-
-    span {
-      text-align: center;
-    }
-
-    .logo {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      max-height: 204px;
-      max-width: 204px;
-      transform: translateY(5%);
-    }
-
-    .container {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      color: #fff;
-      transform: translate(-50%, -50%);
-    }
-
-    #ac-channel {
-      display: none;
-    }
-  </style>
 </head>
 
 <body>
-  
     <div class="container">
   <video autoplay loop class="logo">
-    <source src="https://discord.com/assets/3b0d96ed8113994f3d139088726cfecd.webm" type="video/webm">
+    <source src="./assets/loading.webm" type="video/webm">
   </video>
   <p>Loading...</p>
     <h1></h1>
   <p id="ac-channel"></p>
 </div>
-
 </body>
-
 </html>

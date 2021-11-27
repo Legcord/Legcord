@@ -10,7 +10,7 @@ require("./utils/updater.js");
 
 //Defaults
 let frame = true;
-let iconformat = "../assets/ac_icon_transparent.png";
+let iconformat = __dirname + "/../assets/ac_icon_transparent.png";
 
 if (!require("./utils/armcord.js").Titlebar === "native") frame = false;
 if (!os.type() == 'Linux') iconformat = "../assets/ac_plug.ico";
@@ -44,10 +44,10 @@ function createWindow() {
 
   const appIcon = new Tray(iconformat);
   mainWindow.webContents.userAgent = bundle.userAgent;
-  mainWindow.loadFile("./client/index.html");
+  mainWindow.loadFile(__dirname + "/client/index.html");
   mainWindow.focus();
 
-  mainWindow.webContents.on("new-window", function (e, url) {
+  mainWindow.webContents.setWindowOpenHandler((e, url) => {
     e.preventDefault();
     require("electron").shell.openExternal(url);
   });
@@ -105,6 +105,7 @@ function createWindow() {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  console.log("Electron is ready!");
   createWindow();
   require("./utils/mod.js");
   require("./utils/plugin.js");
@@ -114,7 +115,7 @@ app.whenReady().then(() => {
     .setPermissionRequestHandler((webContents, permission, callback) => {
       const url = webContents.getURL(); //unused?
 
-      if (["notifications", "microphone"].includes(permission)) callback(true)
+      if (["notifications", "microphone"].includes(permission)) callback(true);
       if (!url.startsWith("discord://")) return callback(false);
     });
 
