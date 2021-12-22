@@ -1,6 +1,7 @@
 <h1 align="center">
 <img src="https://armcord.vercel.app/armcord_full_logo.png" width="720">
 </h1>
+
 ArmCord is a custom alternative Discord client made for people on lower-end devices and ARM architecture that want custom Discord experience. It uses [Cumcord](https://cumcord.com) for custom themes and plugins!
 
 # How to run/install it?
