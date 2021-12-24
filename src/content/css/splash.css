@@ -1,0 +1,114 @@
+/*MIT License
+
+Copyright (c) 2021 GooseMod
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.*/
+:root {
+  --background-primary: #282b30;
+  --background-secondary: rgba(255, 255, 255, 0.1);
+  --brand-experiment: #5865f2;
+  --header-primary: #fff;
+  --text-muted: #72767d;
+}
+
+@font-face {
+  font-family: Whitney;
+  font-weight: 400;
+  font-style: normal;
+  src: url(https://armcord.smartfridge.space/whitney_400.woff) format("woff");
+}
+
+html,
+body {
+  -webkit-app-region: drag;
+  overflow: hidden;
+
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+
+  background: var(--background-primary);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+* {
+  font-family: "Whitney", sans-serif;
+
+  box-sizing: border-box;
+  -webkit-user-select: none;
+  cursor: default;
+}
+
+video {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+}
+
+#text {
+  font-size: 7vw;
+  text-align: center;
+
+  color: var(--header-primary);
+  font-weight: 400;
+  font-style: italic;
+  font-size: 16px;
+
+  text-transform: uppercase;
+
+  width: 100%;
+}
+
+#bar-container,
+#bar-fill {
+  width: 180px;
+  height: 8px;
+
+  border-radius: 4px;
+
+  visibility: hidden;
+}
+
+#bar-container {
+  background-color: var(--background-secondary);
+
+  position: relative;
+  margin-top: 12px;
+}
+
+#bar-fill {
+  background-color: var(--brand-experiment);
+  width: 0;
+}
+
+#debug {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+
+  text-align: right;
+  font-size: 10px;
+  color: var(--text-muted);
+  white-space: pre;
+}
