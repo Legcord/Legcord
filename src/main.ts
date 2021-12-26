@@ -3,13 +3,15 @@ import { app, BrowserWindow, ipcMain, shell, desktopCapturer } from "electron";
 import * as path from "path";
 import "v8-compile-cache";
 import * as storage from "electron-json-storage";
-import { setup } from "./utils";
+import { saveSettings } from "./utils";
+import "./extensions/mods";
 import "./extensions/plugin";
 import "./tray";
 var isSetup = null;
 var contentPath: string = "null";
 var frame: boolean;
 export var mainWindow: BrowserWindow;
+
 storage.keys(function (error, keys) {
   if (error) throw error;
 
@@ -17,18 +19,18 @@ storage.keys(function (error, keys) {
     console.log("There is a key called: " + key);
   }
 });
-storage.has("firstRun", function (error, hasKey) {
+storage.has("settings", function (error, hasKey) {
   if (error) throw error;
 
   if (!hasKey) {
     console.log("First run of the ArmCord. Starting setup.");
     isSetup = true;
-    setup();
+    // setup(); will be done at setup
     contentPath = __dirname + "/content/setup.html";
   } else {
     console.log("ArmCord has been run before. Skipping setup.");
     isSetup = false;
-    contentPath = __dirname + "/content/index.html";
+    contentPath = __dirname + "/content/splash.html";
   }
 });
 storage.get("settings", function (error, data: any) {
@@ -78,7 +80,30 @@ function createWindow() {
     mainWindow.setSize(800, 600);
   });
   ipcMain.on("channel", (event) => {
-    event.returnValue = storage.getSync("channel");
+    storage.get("settings", function (error, data: any) {
+      if (error) throw error;
+      event.returnValue = data.channel;
+    });
+  });
+  ipcMain.on("saveSettings", (event, ...args) => {
+    //@ts-ignore
+    saveSettings(...args);
+  });
+  ipcMain.on('clientmod' , (event, arg) => {
+    storage.get("settings", function (error, data: any) {
+      if (error) throw error;
+      event.returnValue = data.mods;
+    });
+  })
+  ipcMain.on("setting-armcordCSP", (event) => {
+    storage.get("settings", function (error, data: any) {
+      if (error) throw error;
+      if (data.armcordCSP) {
+        event.returnValue = true;
+      } else {
+        event.returnValue = false;
+      }
+    });
   });
   ipcMain.handle("DESKTOP_CAPTURER_GET_SOURCES", (event, opts) =>
     desktopCapturer.getSources(opts)
