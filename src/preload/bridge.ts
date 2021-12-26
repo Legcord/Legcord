@@ -4,14 +4,14 @@ import {getDisplayMediaSelector} from './capturer';
 
 contextBridge.exposeInMainWorld("armcord", {
   window: {
-    show: () => ipcRenderer.sendSync('win-show'),
-    hide: () => ipcRenderer.sendSync('win-hide'),
-    minimize: () => ipcRenderer.sendSync('win-minimize'),
-    maximize: () => ipcRenderer.sendSync('win-maximize'),
+    show: () => ipcRenderer.send('win-show'),
+    hide: () => ipcRenderer.send('win-hide'),
+    minimize: () => ipcRenderer.send('win-minimize'),
+    maximize: () => ipcRenderer.send('win-maximize'),
   },
   electron: process.versions.electron,
-  version: ipcRenderer.sendSync('get-app-version', 'app-version'),
+  version: ipcRenderer.send('get-app-version', 'app-version'),
   getDisplayMediaSelector: getDisplayMediaSelector,
-  splashEnd: () => ipcRenderer.sendSync('splashEnd'),
-  channel: ipcRenderer.sendSync('channel')
+  splashEnd: () => ipcRenderer.send('splashEnd'),
+  channel: ipcRenderer.send('channel')
 });

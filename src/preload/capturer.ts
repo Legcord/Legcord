@@ -110,7 +110,7 @@ window.navigator.mediaDevices.getDisplayMedia = () => new Promise(async (resolve
   try {
     const selectionElem = document.createElement('div');
     selectionElem.classList = ['desktop-capturer-selection'];
-    selectionElem.innerHTML = await window.electron.getDisplayMediaSelector();
+    selectionElem.innerHTML = await window.armcord.getDisplayMediaSelector();
     document.body.appendChild(selectionElem);
     document
       .querySelectorAll('.desktop-capturer-selection__btn')
@@ -148,5 +148,6 @@ window.navigator.mediaDevices.getDisplayMedia = () => new Promise(async (resolve
 document.addEventListener("DOMContentLoaded", function(event) {     
   addScript(screenShareJS);
   addStyle(screenShareCSS);
+  console.log("Capturer injected.")
 });
 

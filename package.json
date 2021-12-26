@@ -2,12 +2,12 @@
   "name": "armcord",
   "version": "3.0.0",
   "description": "ArmCord is a custom client designed to enhance your Discord experience while keeping everything lightweight.",
-  "main": "src/index.ts",
+  "main": "dist/main.js",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
     "start": "npm run build && npm run copy-files && electron ./dist/main.js",
-    "copy-files": "copyfiles -u 1 src/**/*.html src/**/*.css dist/ && copyfiles package.json dist/"
+    "copy-files": "copyfiles -u 1 src/**/*.html src/**/*.css dist/ && copyfiles package.json dist/ && copyfiles assets/** dist/"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,8 @@
     "@types/node": "^14.18.2",
     "copyfiles": "^2.4.1",
     "electron-json-storage": "^4.5.0",
-    "typescript": "^4.5.4"
+    "typescript": "^4.5.4",
+    "v8-compile-cache": "^2.3.0",
+    "ws": "^8.4.0"
   }
 }
