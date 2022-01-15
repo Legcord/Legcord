@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ArmCord</title>
+    <style>
+      @import url("css/splash.css");
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <video autoplay loop class="logo" id="splashscreen-armcord">
+        <source
+          src="https://armcord.smartfridge.space/discord_loading.webm"
+          type="video/webm"
+        />
+      </video>
+      <p id="text-splashscreen"></p>
+    </div>
+  </body>
+  <script>
+    const text = document.getElementById("text-splashscreen");
+    if (window.navigator.onLine === false) {
+      text.innerHTML =
+        "You appear to be offline. Please connect to the internet and try again.";
+    } else {
+      text.innerHTML = "Starting ArmCord...";
+      fetch("https://armcord.smartfridge.space/latest.json")
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.version !== window.armcord.version) {
+            var elem = document.createElement("img");
+            elem.classList.add("logo");
+            elem.src = "https://armcord.smartfridge.space/update.webp";
+            document.body.prepend(elem);
+            document.getElementById("splashscreen-armcord").remove();
+            text.innerHTML =
+              "A new version of ArmCord is available. Please update to the latest version.";
+          } else {
+            console.log("ArmCord is up to date.")
+          }
+        });
+      setTimeout(() => {
+        window.armcord.splashEnd();
+        switch (window.armcord.channel) {
+        case "stable":
+          window.location.replace("https://discord.com/app");
+          break;
+        case "canary":
+          window.location.replace("https://canary.discord.com/app");
+          break;
+        case "ptb":
+          window.location.replace("https://ptb.discord.com/app");
+          break;
+        case "foss":
+          window.location.replace("https://dev.fosscord.com/app");
+          break;
+        case undefined:
+          window.location.replace("https://discord.com/app");
+          break;
+        default:
+          window.location.replace("https://discord.com/app");
+      }
+      }, 5000);
+    }
+  </script>
+</html>

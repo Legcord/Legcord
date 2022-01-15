@@ -1,9 +1,11 @@
 //Fixed context isolation version https://github.com/getferdi/ferdi/blob/develop/src/webview/screenshare.ts
 //original https://github.com/electron/electron/issues/16513#issuecomment-602070250
-const { desktopCapturer } = require('electron');
+import { desktopCapturer } from 'electron';
+import {addStyle, addScript} from '../utils';
+
 const CANCEL_ID = 'desktop-capturer-selection__cancel';
-const ArmCord = require("./ArmCord.js");
-async function getDisplayMediaSelector() {
+
+export async function getDisplayMediaSelector() {
   const sources = await desktopCapturer.getSources({
     types: ['screen', 'window'],
   });
@@ -108,7 +110,7 @@ window.navigator.mediaDevices.getDisplayMedia = () => new Promise(async (resolve
   try {
     const selectionElem = document.createElement('div');
     selectionElem.classList = ['desktop-capturer-selection'];
-    selectionElem.innerHTML = await window.electron.getDisplayMediaSelector();
+    selectionElem.innerHTML = await window.armcord.getDisplayMediaSelector();
     document.body.appendChild(selectionElem);
     document
       .querySelectorAll('.desktop-capturer-selection__btn')
@@ -144,9 +146,8 @@ window.navigator.mediaDevices.getDisplayMedia = () => new Promise(async (resolve
 `;
 
 document.addEventListener("DOMContentLoaded", function(event) {     
-  ArmCord.addScript(screenShareJS);
-  ArmCord.addStyle(screenShareCSS);
+  addScript(screenShareJS);
+  addStyle(screenShareCSS);
+  console.log("Capturer injected.")
 });
 
-
-exports.getDisplayMediaSelector = getDisplayMediaSelector;
