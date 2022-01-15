@@ -1,0 +1,12 @@
+.info-1VyQPT:last-child:before {
+  content: "ArmCord Version: 3.0.0"!important;
+  height: auto;
+  line-height: 16px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 12px;
+  text-transform: none;
+}
+.notice-3bPHh-.colorDefault-22HBa0 {
+  display: none;
+}

@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/armcord/armcord#readme",
   "devDependencies": {
-    "electron": "^16.0.5"
+    "electron": "^16.0.7"
   },
   "dependencies": {
     "@types/electron-json-storage": "^4.5.0",

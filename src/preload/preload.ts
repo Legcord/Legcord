@@ -1,12 +1,10 @@
-import "./capturer";
 import "./bridge";
+import "./capturer";
+import * as fs from "fs";
+import * as path from "path";
 import { injectTitlebar } from "./titlebar";
+import { sleep, addStyle } from "../utils";
 import { ipcRenderer } from "electron";
-declare global {
-  interface Window {
-    splash: any;
-  }
-}
 
 const clientMods = {
   goosemod: "https://api.goosemod.com/inject.js",
@@ -29,18 +27,23 @@ if (window.location.href.indexOf("splash.html") > -1) {
   console.log("Skipping titlebar injection and client mod injection.");
 } else {
   injectTitlebar();
-  switch (ipcRenderer.sendSync("clientmod")) {
-    case "goosemod":
-      injectJS(clientMods.goosemod);
-      console.log("Loading GooseMod...");
-      break;
-    case "cumcord":
-      injectJS(clientMods.cumcord);
-      console.log("Loading Cumcord...");
-      break;
-    case "flicker":
-      injectJS(clientMods.flicker);
-      console.log("Loading FlickerMod...");
-      break;
-  }
+  sleep(5000).then(() => {
+    const cssPath = path.join(__dirname, "../", "/content/css/discord.css");
+    addStyle(fs.readFileSync(cssPath, "utf8"));
+
+    switch (ipcRenderer.sendSync("clientmod")) {
+      case "goosemod":
+        injectJS(clientMods.goosemod);
+        console.log("Loading GooseMod...");
+        break;
+      case "cumcord":
+        injectJS(clientMods.cumcord);
+        console.log("Loading Cumcord...");
+        break;
+      case "flicker":
+        injectJS(clientMods.flicker);
+        console.log("Loading FlickerMod...");
+        break;
+    }
+  });
 }

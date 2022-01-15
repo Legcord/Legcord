@@ -7,11 +7,12 @@ import { saveSettings } from "./utils";
 import "./extensions/mods";
 import "./extensions/plugin";
 import "./tray";
-var isSetup = null;
 var contentPath: string = "null";
 var frame: boolean;
+var channel: string;
+var titlebar: boolean;
 export var mainWindow: BrowserWindow;
-
+var settings:any;
 storage.keys(function (error, keys) {
   if (error) throw error;
 
@@ -24,26 +25,31 @@ storage.has("settings", function (error, hasKey) {
 
   if (!hasKey) {
     console.log("First run of the ArmCord. Starting setup.");
-    isSetup = true;
     // setup(); will be done at setup
     contentPath = __dirname + "/content/setup.html";
   } else {
     console.log("ArmCord has been run before. Skipping setup.");
-    isSetup = false;
     contentPath = __dirname + "/content/splash.html";
   }
 });
 storage.get("settings", function (error, data: any) {
   if (error) throw error;
   console.log(data);
-  frame = data.customTitlebar;
-  console.log(frame);
+  titlebar = data.customTitlebar;
+  channel = data.channel;
+  settings = data;
+  if ((titlebar = true)) {
+    frame = false;
+  } else {
+    frame = true;
+  }
 });
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 300,
     height: 350,
     title: "ArmCord",
+    icon: "./assets/ac_icon_transparent.png",
     frame: frame,
     webPreferences: {
       preload: path.join(__dirname, "preload/preload.js"),
@@ -79,22 +85,18 @@ function createWindow() {
   ipcMain.on("splashEnd", (event, arg) => {
     mainWindow.setSize(800, 600);
   });
-  ipcMain.on("channel", (event) => {
-    storage.get("settings", function (error, data: any) {
-      if (error) throw error;
-      event.returnValue = data.channel;
-    });
-  });
   ipcMain.on("saveSettings", (event, ...args) => {
     //@ts-ignore
     saveSettings(...args);
   });
-  ipcMain.on('clientmod' , (event, arg) => {
-    storage.get("settings", function (error, data: any) {
-      if (error) throw error;
-      event.returnValue = data.mods;
-    });
-  })
+  ipcMain.on("channel", (event) => {
+    
+    event.returnValue = channel;
+  });
+  ipcMain.on("clientmod", (event, arg) => {
+    event.returnValue = settings.mods;
+  });
+
   ipcMain.on("setting-armcordCSP", (event) => {
     storage.get("settings", function (error, data: any) {
       if (error) throw error;
@@ -110,10 +112,11 @@ function createWindow() {
   );
   mainWindow.webContents.userAgent =
     "Mozilla/5.0 (X11; Linux x86) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"; //fake useragent
-  mainWindow.webContents.on("new-window", function (e, url) {
-    e.preventDefault();
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
     shell.openExternal(url);
+    return { action: "deny" };
   });
+
   mainWindow.loadFile(contentPath);
 }
 
