@@ -1,15 +1,14 @@
 {
   "name": "ArmCord",
-  "version": "3.0.0",
+  "version": "2.9.9",
   "description": "ArmCord is a custom client designed to enhance your Discord experience while keeping everything lightweight.",
   "main": "ts-out/main.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && copyfiles -u 1 src/**/*.html src/**/*.css ts-out/ && copyfiles package.json ts-out/ && copyfiles assets/** ts-out/",
     "watch": "tsc -w",
-    "ci": "npm run build && npm run copy-files",
-    "start": "npm run build && npm run copy-files && electron ./ts-out/main.js",
-    "package": "npm run build && npm run copy-files && electron-builder",
-    "copy-files": "copyfiles -u 1 src/**/*.html src/**/*.css ts-out/ && copyfiles package.json ts-out/ && copyfiles assets/** ts-out/"
+    "start": "npm run build && electron ./ts-out/main.js",
+    "package": "npm run build && electron-builder"
+    
   },
   "repository": {
     "type": "git",
