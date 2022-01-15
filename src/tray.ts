@@ -1,4 +1,4 @@
-import { app, Menu, Tray, ipcRenderer } from 'electron';
+import { app, Menu, Tray } from 'electron';
 import {mainWindow} from './main';
 let tray = null
 app.whenReady().then(() => {
@@ -24,6 +24,7 @@ app.whenReady().then(() => {
       },
     },
   ]);
+  
   tray.setToolTip('ArmCord' + process.env.npm_package_version)
   tray.setContextMenu(contextMenu)
 })

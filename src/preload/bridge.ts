@@ -10,12 +10,12 @@ contextBridge.exposeInMainWorld("armcord", {
     maximize: () => ipcRenderer.send("win-maximize"),
   },
   electron: process.versions.electron,
-  channel: ipcRenderer.sendSync('channel'),
+  channel: ipcRenderer.sendSync("channel"),
   version: ipcRenderer.sendSync("get-app-version", "app-version"),
   getDisplayMediaSelector: getDisplayMediaSelector,
+  restart: () => ipcRenderer.send("restart"),
   saveSettings: (...args: any) => ipcRenderer.send("saveSettings", ...args),
   splashEnd: () => ipcRenderer.send("splashEnd"),
-  loadDiscord: () => ipcRenderer.send("loadDiscord"),
 });
 contextBridge.exposeInMainWorld("electron", {
   //deprecated, used for legacy purposes, will be removed in future versions

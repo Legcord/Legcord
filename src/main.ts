@@ -1,31 +1,26 @@
 // Modules to control application life and create native browser window
-import { app, BrowserWindow, ipcMain, shell, desktopCapturer } from "electron";
+import { app, BrowserWindow, ipcMain, shell, desktopCapturer, session } from "electron";
 import * as path from "path";
 import "v8-compile-cache";
 import * as storage from "electron-json-storage";
-import { saveSettings } from "./utils";
+import { saveSettings, getVersion, setup } from "./utils";
 import "./extensions/mods";
 import "./extensions/plugin";
 import "./tray";
+import "./shortcuts";
 var contentPath: string = "null";
 var frame: boolean;
 var channel: string;
 var titlebar: boolean;
 export var mainWindow: BrowserWindow;
-var settings:any;
-storage.keys(function (error, keys) {
-  if (error) throw error;
+var settings: any;
 
-  for (var key of keys) {
-    console.log("There is a key called: " + key);
-  }
-});
 storage.has("settings", function (error, hasKey) {
   if (error) throw error;
 
   if (!hasKey) {
     console.log("First run of the ArmCord. Starting setup.");
-    // setup(); will be done at setup
+    setup();
     contentPath = __dirname + "/content/setup.html";
   } else {
     console.log("ArmCord has been run before. Skipping setup.");
@@ -80,17 +75,22 @@ function createWindow() {
     mainWindow.hide();
   });
   ipcMain.on("get-app-version", (event) => {
-    event.returnValue = process.env.npm_package_version;
+    event.returnValue = getVersion();
   });
   ipcMain.on("splashEnd", (event, arg) => {
     mainWindow.setSize(800, 600);
   });
+  ipcMain.on("restart", (event, arg) => {
+  app.relaunch();
+  app.exit();
+
+  });
+
   ipcMain.on("saveSettings", (event, ...args) => {
     //@ts-ignore
     saveSettings(...args);
   });
   ipcMain.on("channel", (event) => {
-    
     event.returnValue = channel;
   });
   ipcMain.on("clientmod", (event, arg) => {
@@ -122,7 +122,32 @@ function createWindow() {
 
 app.whenReady().then(() => {
   createWindow();
+session
+  .fromPartition("some-partition")
+  .setPermissionRequestHandler((webContents, permission, callback) => {
+    const url = webContents.getURL(); //unused?
 
+    if (permission === "notifications") {
+      // Approves the permissions request
+      callback(true);
+    }
+    if (permission === "media") {
+      // Approves the permissions request
+      callback(true);
+    }
+    if (url.startsWith("discord://")) {
+      // Denies the permissions request
+      return callback(false);
+    }
+    if (url.startsWith("discord.com/science")) {
+      // Denies the permissions request
+      return callback(false);
+    }
+    if (url.startsWith("discord.com/tracing")) {
+      // Denies the permissions request
+      return callback(false);
+    }
+  });
   app.on("activate", function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });

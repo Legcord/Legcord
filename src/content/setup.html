@@ -22,24 +22,7 @@
       </div>
     </div>
     <script>
-      function discord() {
-        switch (window.armcord.channel) {
-          case "stable":
-            window.location.href = "https://discord.com/app";
-            break;
-          case "canary":
-            window.location.href = "https://canary.discord.com/app";
-            break;
-          case "ptb":
-            window.location.href = "https://ptb.discord.com/app";
-            break;
-          case "foss":
-            window.location.href = "https://dev.fosscord.com/app";
-            break;
-          default:
-            window.location.href = "https://discord.com/app";
-        }
-      }
+
       function fade(element) {
         var op = 1; // initial opacity
         var timer = setInterval(function () {
@@ -58,6 +41,13 @@
           "You appear to be offline. Please connect to the internet and restart ArmCord Setup.";
       } else {
         console.log("Starting ArmCord Setup...");
+        document.getElementById("express").addEventListener("click", function () {
+          window.armcord.saveSettings(true, "stable", true, "cumcord");
+          fade(document.getElementById("setup"));
+                setTimeout(function () {
+                  window.armcord.restart()
+                }, 5000);
+        })
         document.getElementById("full").addEventListener("click", function () {
           document.getElementById("setup").innerHTML = `
         <p class="text-center setup-ask">Choose your Discord channel/instance:</p>
@@ -103,8 +93,7 @@
                     window.armcord.saveSettings(true, branch, true, mod);
                     fade(document.getElementById("setup"));
                     setTimeout(function () {
-                      window.armcord.splashEnd();
-                      discord();
+                      window.armcord.restart();
                     }, 5000);
                   });
               } else {
@@ -112,8 +101,7 @@
                 window.armcord.saveSettings(true, branch, true, "none");
                 fade(document.getElementById("setup"));
                 setTimeout(function () {
-                  window.armcord.splashEnd();
-                  discord();
+                  window.armcord.restart()
                 }, 5000);
               }
             });

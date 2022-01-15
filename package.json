@@ -1,13 +1,14 @@
 {
-  "name": "armcord",
-  "version": "3.0.0",
+  "name": "ArmCord",
+  "version": "2.9.9",
   "description": "ArmCord is a custom client designed to enhance your Discord experience while keeping everything lightweight.",
-  "main": "dist/main.js",
+  "main": "ts-out/main.js",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "start": "npm run build && npm run copy-files && electron ./dist/main.js",
-    "copy-files": "copyfiles -u 1 src/**/*.html src/**/*.css dist/ && copyfiles package.json dist/ && copyfiles assets/** dist/"
+    "start": "npm run build && npm run copy-files && electron ./ts-out/main.js",
+    "package": "npm run build && npm run copy-files && electron-builder",
+    "copy-files": "copyfiles -u 1 src/**/*.html src/**/*.css ts-out/ && copyfiles package.json ts-out/ && copyfiles assets/** ts-out/"
   },
   "repository": {
     "type": "git",
@@ -20,15 +21,32 @@
   },
   "homepage": "https://github.com/armcord/armcord#readme",
   "devDependencies": {
-    "electron": "^16.0.7"
-  },
-  "dependencies": {
+    "electron": "^16.0.7",
     "@types/electron-json-storage": "^4.5.0",
     "@types/node": "^14.18.2",
-    "copyfiles": "^2.4.1",
-    "electron-json-storage": "^4.5.0",
     "typescript": "^4.5.4",
-    "v8-compile-cache": "^2.3.0",
-    "ws": "^8.4.0"
+    "copyfiles": "^2.4.1",
+    "electron-builder": "^22.14.5"
+  },
+  "dependencies": {
+    "electron-json-storage": "^4.5.0",
+    "v8-compile-cache": "^2.3.0"
+  },
+  "build": {
+    "appId": "com.smartfridge.armcord",
+    "productName": "ArmCord",
+    "mac": {
+      "category": "Network"
+    },
+    "linux": {
+      "category": "Network",
+      "maintainer": "smartfrigde@gmail.com",
+      "target": [
+        "deb",
+        "tar.gz",
+        "rpm",
+        "AppImage"
+      ]
+    }
   }
 }
