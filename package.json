@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
+    "ci": "npm run build && npm run copy-files",
     "start": "npm run build && npm run copy-files && electron ./ts-out/main.js",
     "package": "npm run build && npm run copy-files && electron-builder",
     "copy-files": "copyfiles -u 1 src/**/*.html src/**/*.css ts-out/ && copyfiles package.json ts-out/ && copyfiles assets/** ts-out/"
