@@ -1,5 +1,7 @@
-import * as fs from "fs";
 import * as storage from "electron-json-storage";
+import * as fs from "fs";
+import { app } from "electron";
+
 //utillity functions that are used all over the codebase or just too obscure to be put in the file used in
 export function addStyle(styleString: string) {
   const style = document.createElement("style");
@@ -21,6 +23,7 @@ export function setup() {
       channel: "stable",
       firstRun: "done",
       armcordCSP: true,
+      mods: "none"
     },
     function (error) {
       if (error) throw error;
@@ -51,8 +54,16 @@ export function saveSettings(
     }
   );
 }
-
-export function getVersion() {
-  const pkgjson = fs.readFileSync("./package.json", "utf8");
-  return JSON.parse(pkgjson).version;
+export async function getConfigUnsafe(object: string) {
+  const userDataPath = app.getPath("userData");
+  const storagePath = userDataPath + "/storage/";
+  let rawdata = fs.readFileSync(storagePath + "settings.json", "utf-8");
+  let returndata = JSON.parse(rawdata);
+  console.log(returndata[object]);
+  return returndata[object]
 }
+export function getVersion() {
+  //to-do better way of doing this
+  return '3.0.1';
+}
+ 

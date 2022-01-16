@@ -1,9 +1,16 @@
 // Modules to control application life and create native browser window
-import { app, BrowserWindow, ipcMain, shell, desktopCapturer, session } from "electron";
+import {
+  app,
+  BrowserWindow,
+  ipcMain,
+  shell,
+  desktopCapturer,
+  session,
+} from "electron";
 import * as path from "path";
 import "v8-compile-cache";
 import * as storage from "electron-json-storage";
-import { saveSettings, getVersion, setup } from "./utils";
+import { saveSettings, getVersion, setup, getConfigUnsafe } from "./utils";
 import "./extensions/mods";
 import "./extensions/plugin";
 import "./tray";
@@ -11,7 +18,6 @@ import "./shortcuts";
 var contentPath: string = "null";
 var frame: boolean;
 var channel: string;
-var titlebar: boolean;
 export var mainWindow: BrowserWindow;
 var settings: any;
 
@@ -30,22 +36,21 @@ storage.has("settings", function (error, hasKey) {
 storage.get("settings", function (error, data: any) {
   if (error) throw error;
   console.log(data);
-  titlebar = data.customTitlebar;
   channel = data.channel;
   settings = data;
-  if ((titlebar = true)) {
-    frame = false;
-  } else {
-    frame = true;
-  }
+
 });
+var titlebar:any = getConfigUnsafe("customTitlebar")
+console.log(!titlebar)
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 300,
     height: 350,
     title: "ArmCord",
-    icon: "./assets/ac_icon_transparent.png",
-    frame: frame,
+    darkTheme: true,
+    icon: path.join(__dirname, "/assets/icon_transparent.png"),
+    frame: !titlebar,
+    autoHideMenuBar: true,
     webPreferences: {
       preload: path.join(__dirname, "preload/preload.js"),
     },
@@ -81,9 +86,8 @@ function createWindow() {
     mainWindow.setSize(800, 600);
   });
   ipcMain.on("restart", (event, arg) => {
-  app.relaunch();
-  app.exit();
-
+    app.relaunch();
+    app.exit();
   });
 
   ipcMain.on("saveSettings", (event, ...args) => {
@@ -122,32 +126,32 @@ function createWindow() {
 
 app.whenReady().then(() => {
   createWindow();
-session
-  .fromPartition("some-partition")
-  .setPermissionRequestHandler((webContents, permission, callback) => {
-    const url = webContents.getURL(); //unused?
+  session
+    .fromPartition("some-partition")
+    .setPermissionRequestHandler((webContents, permission, callback) => {
+      const url = webContents.getURL(); //unused?
 
-    if (permission === "notifications") {
-      // Approves the permissions request
-      callback(true);
-    }
-    if (permission === "media") {
-      // Approves the permissions request
-      callback(true);
-    }
-    if (url.startsWith("discord://")) {
-      // Denies the permissions request
-      return callback(false);
-    }
-    if (url.startsWith("discord.com/science")) {
-      // Denies the permissions request
-      return callback(false);
-    }
-    if (url.startsWith("discord.com/tracing")) {
-      // Denies the permissions request
-      return callback(false);
-    }
-  });
+      if (permission === "notifications") {
+        // Approves the permissions request
+        callback(true);
+      }
+      if (permission === "media") {
+        // Approves the permissions request
+        callback(true);
+      }
+      if (url.startsWith("discord://")) {
+        // Denies the permissions request
+        return callback(false);
+      }
+      if (url.startsWith("discord.com/science")) {
+        // Denies the permissions request
+        return callback(false);
+      }
+      if (url.startsWith("discord.com/tracing")) {
+        // Denies the permissions request
+        return callback(false);
+      }
+    });
   app.on("activate", function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });

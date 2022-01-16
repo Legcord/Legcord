@@ -1,8 +1,9 @@
 import { app, Menu, Tray } from 'electron';
 import {mainWindow} from './main';
+import * as path from 'path'
 let tray = null
 app.whenReady().then(() => {
-  tray = new Tray('./assets/ac_plug.png')
+  tray = new Tray(path.join(__dirname, "../", "/assets/ac_plug.png"))
   const contextMenu = Menu.buildFromTemplate([
     {
       label: "Open ArmCord",
@@ -25,6 +26,6 @@ app.whenReady().then(() => {
     },
   ]);
   
-  tray.setToolTip('ArmCord' + process.env.npm_package_version)
+  tray.setToolTip('ArmCord ' + process.env.npm_package_version)
   tray.setContextMenu(contextMenu)
 })
