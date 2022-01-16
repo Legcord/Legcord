@@ -26,10 +26,10 @@ storage.has("settings", function (error, hasKey) {
   if (!hasKey) {
     console.log("First run of the ArmCord. Starting setup.");
     setup();
-    contentPath = "content/setup.html";
+    contentPath = __dirname + "/content/setup.html";
   } else {
     console.log("ArmCord has been run before. Skipping setup.");
-    contentPath = "content/splash.html";
+    contentPath = __dirname + "/content/splash.html";
   }
 });
 storage.get("settings", function (error, data: any) {
