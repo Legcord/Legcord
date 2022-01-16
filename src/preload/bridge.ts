@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer } from "electron";
 import { getDisplayMediaSelector } from "./capturer";
-
+import { injectTitlebar } from "./titlebar";
 
 contextBridge.exposeInMainWorld("armcord", {
   window: {
@@ -8,6 +8,9 @@ contextBridge.exposeInMainWorld("armcord", {
     hide: () => ipcRenderer.send("win-hide"),
     minimize: () => ipcRenderer.send("win-minimize"),
     maximize: () => ipcRenderer.send("win-maximize"),
+  },
+  titlebar: {
+    injectTitlebar: () => injectTitlebar(),
   },
   electron: process.versions.electron,
   channel: ipcRenderer.sendSync("channel"),
