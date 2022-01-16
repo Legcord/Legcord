@@ -23,7 +23,7 @@ export function setup() {
       channel: "stable",
       firstRun: "done",
       armcordCSP: true,
-      mods: "none"
+      mods: "cumcord"
     },
     function (error) {
       if (error) throw error;

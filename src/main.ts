@@ -15,8 +15,7 @@ import "./extensions/mods";
 import "./extensions/plugin";
 import "./tray";
 import "./shortcuts";
-var contentPath: string = "null";
-var frame: boolean;
+var contentPath: string;
 var channel: string;
 export var mainWindow: BrowserWindow;
 var settings: any;
@@ -27,10 +26,10 @@ storage.has("settings", function (error, hasKey) {
   if (!hasKey) {
     console.log("First run of the ArmCord. Starting setup.");
     setup();
-    contentPath = __dirname + "/content/setup.html";
+    contentPath = "content/setup.html";
   } else {
     console.log("ArmCord has been run before. Skipping setup.");
-    contentPath = __dirname + "/content/splash.html";
+    contentPath = "content/splash.html";
   }
 });
 storage.get("settings", function (error, data: any) {
@@ -120,8 +119,13 @@ function createWindow() {
     shell.openExternal(url);
     return { action: "deny" };
   });
-
-  mainWindow.loadFile(contentPath);
+  console.log(contentPath)
+  try {
+    mainWindow.loadFile(contentPath);
+  } catch(e) {
+    console.log("Major error detected while starting up. User is most likely on Windows platform. Fallback to alternative startup.")
+    mainWindow.loadURL(`file://${__dirname}/content/splash.html`);
+  }
 }
 
 app.whenReady().then(() => {
