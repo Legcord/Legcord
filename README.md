@@ -31,7 +31,7 @@ Alternatively you can run ArmCord from source (npm, nodejs required):
  -We are using official web app and adding some magic powder to make it all work!   
 ## 3.Can I use this on other architectures or operating systems?
 
- -Yes! ArmCord should work normally under Windows, ~~Mac OS~~ (Mac OS is broken see [#48](https://github.com/ArmCord/ArmCord/issues/48)), Linux as long as it has NodeJS, npm and Electron support.   
+ -Yes! ArmCord should work normally under Windows, ~~Mac OS~~ (Mac OS is broken see [#48](https://github.com/ArmCord/ArmCord/issues/48)) and Linux as long as it has NodeJS, npm and Electron support.   
 
 # Credits
 [ArmCord UI Elements and few features](https://github.com/kckarnige)   
