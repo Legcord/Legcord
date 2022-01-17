@@ -32,7 +32,7 @@
   
 # How to run/install it?
 ### Recommended:
- Check releases tab for precompiled packages for Linux, Windows and Mac OS (experimental).   
+ Check releases tab for precompiled packages for Linux, Windows and ~~Mac OS~~ (Mac OS is broken see [#48](https://github.com/ArmCord/ArmCord/issues/48)).   
 ### Manual:
  Alternatively you can run ArmCord from source (npm, nodejs required):    
  1. Clone ArmCord repo: `git clone https://github.com/ArmCord/ArmCord.git`    
