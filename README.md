@@ -32,12 +32,12 @@
   
 # How to run/install it?
 ### Recommended:
-Check releases tab for precompiled packages for Linux, Windows and Mac OS (experimental).   
+ Check releases tab for precompiled packages for Linux, Windows and Mac OS (experimental).   
 ### Manual:
-Alternatively you can run ArmCord from source (npm, nodejs required):    
-1. Clone ArmCord repo: `git clonehttps://github.com/ArmCord/ArmCord.git`    
-2. Run `npm install` to install dependencies   
-3. Compile/Package with `npm run package`    
+ Alternatively you can run ArmCord from source (npm, nodejs required):    
+ 1. Clone ArmCord repo: `git clone https://github.com/ArmCord/ArmCord.git`    
+ 2. Run `npm install` to install dependencies   
+ 3. Compile/Package with `npm run package`    
 
 
 # FAQ
