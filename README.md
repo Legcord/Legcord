@@ -1,17 +1,35 @@
 
-<h1 align="center">
+<div align="center">
 <img src="https://armcord.vercel.app/armcord_full_logo.png" width="720">
-</h1>
-
-ArmCord is a custom client designed to enhance your Discord experience while keeping everything lightweight. 
+ <br>ArmCord is a custom client designed to enhance your Discord experience while keeping everything lightweight. 
+</div>
 
 # Features
 
-* **Standalone client** - ArmCord is built as standalone client, it doesn't rely on original Discord client.
-* **Various mods built in** - Explore Cumcord/GooseMod/Flicker plugins and their features!
-* **Made for Privacy** - ArmCord automatically blocks Discord's trackers.
-* **Faster than normal Discord app** - ArmCord is using newer Electron than stock Discord app. This usually means increased performance and more stable experience.
-* **Designed to work anywhere** - ArmCord was initially created in mind to run on Arm64 Linux devices. We soon expanded our support to more platforms. We plan to support every platform that [Electron supports](https://www.electronjs.org/docs/latest/tutorial/support#supported-platforms).
+- **Standalone client** 
+
+   ArmCord is built as standalone client, it doesn't rely on original Discord client.
+
+
+- **Various mods built in**
+ 
+   Explore Cumcord/GooseMod/Flicker plugins and their features!
+
+
+- **Made for Privacy**
+
+   ArmCord automatically blocks Discord's trackers.
+
+
+- **Faster than normal Discord app**
+
+   ArmCord is using newer Electron than stock Discord app. This usually means increased performance and more stable experience.
+
+
+- **Designed to work anywhere**
+
+   ArmCord was initially created in mind to run on Arm64 Linux devices. We soon expanded our support to more platforms. We plan to support every platform that [Electron supports](https://www.electronjs.org/docs/latest/tutorial/support#supported-platforms).
+  
 # How to run/install it?
 ### Recommended:
 Check releases tab for precompiled packages for Linux, Windows and Mac OS (experimental).   
