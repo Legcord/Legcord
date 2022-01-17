@@ -26,12 +26,17 @@ storage.has("settings", function (error, hasKey) {
   if (!hasKey) {
     console.log("First run of the ArmCord. Starting setup.");
     setup();
-    contentPath = __dirname + "/content/setup.html";
+    contentPath = path.join(__dirname, "/content/setup.html");
+    if(!contentPath.includes("ts-out")) {
+      contentPath = path.join(__dirname,"/ts-out/content/setup.html");
+  }
   } else {
     console.log("ArmCord has been run before. Skipping setup.");
-    contentPath = __dirname + "/content/splash.html";
+    contentPath = path.join(__dirname,"/content/splash.html");
+    if(!contentPath.includes("ts-out")) {
+      contentPath = path.join(__dirname,"/ts-out/content/splash.html");
   }
-});
+}});
 storage.get("settings", function (error, data: any) {
   if (error) throw error;
   console.log(data);
@@ -114,7 +119,7 @@ function createWindow() {
     desktopCapturer.getSources(opts)
   );
   mainWindow.webContents.userAgent =
-    "Mozilla/5.0 (X11; Linux x86) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"; //fake useragent
+    "Mozilla/5.0 (X11; Linux x86) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36"; //fake useragent for screenshare to work
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
     shell.openExternal(url);
     return { action: "deny" };
@@ -124,7 +129,7 @@ function createWindow() {
     mainWindow.loadFile(contentPath);
   } catch(e) {
     console.log("Major error detected while starting up. User is most likely on Windows platform. Fallback to alternative startup.")
-    mainWindow.loadURL(`file://${__dirname}/content/splash.html`);
+    mainWindow.loadURL(`file://${__dirname}/ts-out/content/splash.html`);
   }
 }
 
