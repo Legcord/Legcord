@@ -15,6 +15,13 @@ ArmCord is a custom client designed to enhance your Discord experience while kee
 # How to run/install it?
 ### Recommended:
 Check releases tab for precompiled packages for Linux, Windows and Mac OS (experimental).   
+### AUR Package
+Armcord is also available on the Arch User Repository (AUR) [here](https://aur.archlinux.org/packages/armcord-bin/).
+
+Install it via an AUR helper tool like `yay`.
+
+**Example:** `yay -S armcord-bin`
+
 ### Manual:
 Alternatively you can run ArmCord from source (npm, nodejs required):    
 1.Clone ArmCord repo: `git clonehttps://github.com/ArmCord/ArmCord.git`    
