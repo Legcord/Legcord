@@ -6,6 +6,11 @@ import { injectTitlebar } from "./titlebar";
 import { sleep, addStyle } from "../utils";
 import { ipcRenderer } from "electron";
 
+declare global {
+  interface Window {
+    armcord: any;
+  }
+}
 const clientMods = {
   goosemod: "https://api.goosemod.com/inject.js",
   cumcord:
@@ -26,7 +31,9 @@ console.log("ArmCord");
 if (window.location.href.indexOf("splash.html") > -1) {
   console.log("Skipping titlebar injection and client mod injection.");
 } else {
-  injectTitlebar();
+  if (ipcRenderer.sendSync("titlebar")) {
+    injectTitlebar();
+  }
   sleep(5000).then(() => {
     const cssPath = path.join(__dirname, "../", "/content/css/discord.css");
     addStyle(fs.readFileSync(cssPath, "utf8"));

@@ -1,6 +1,8 @@
 import * as storage from "electron-json-storage";
 import * as fs from "fs";
 import { app } from "electron";
+import path from "path";
+export var firstRun: boolean;
 
 //utillity functions that are used all over the codebase or just too obscure to be put in the file used in
 export function addStyle(styleString: string) {
@@ -21,9 +23,9 @@ export function setup() {
     {
       customTitlebar: true,
       channel: "stable",
-      firstRun: "done",
+      doneSetup: true,
       armcordCSP: true,
-      mods: "cumcord"
+      mods: "cumcord",
     },
     function (error) {
       if (error) throw error;
@@ -45,7 +47,7 @@ export function saveSettings(
     {
       customTitlebar: customTitlebarSetting,
       channel: channelSetting,
-      firstRun: "done",
+      doneSetup: true,
       armcordCSP: armcordCSPSetting,
       mods: modsSetting,
     },
@@ -55,15 +57,20 @@ export function saveSettings(
   );
 }
 export async function getConfigUnsafe(object: string) {
-  const userDataPath = app.getPath("userData");
-  const storagePath = userDataPath + "/storage/";
-  let rawdata = fs.readFileSync(storagePath + "settings.json", "utf-8");
-  let returndata = JSON.parse(rawdata);
-  console.log(returndata[object]);
-  return returndata[object]
+  try {
+    const userDataPath = app.getPath("userData");
+    const storagePath = path.join(userDataPath, "/storage/");
+    let rawdata = fs.readFileSync(storagePath + "settings.json", "utf-8");
+    let returndata = JSON.parse(rawdata);
+    console.log(returndata[object]);
+    return returndata[object];
+  } catch (e) {
+    console.log("Config probably doesn't exist yet. Returning setup value.");
+    firstRun = true;
+    return "setup";
+  }
 }
 export function getVersion() {
   //to-do better way of doing this
-  return '3.0.1';
+  return "3.1.0";
 }
- 

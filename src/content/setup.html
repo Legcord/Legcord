@@ -42,10 +42,10 @@
       } else {
         console.log("Starting ArmCord Setup...");
         document.getElementById("express").addEventListener("click", function () {
-          window.armcord.saveSettings(true, "stable", true, "cumcord");
+          window.armcordinternal.saveSettings(true, "stable", true, "cumcord");
           fade(document.getElementById("setup"));
                 setTimeout(function () {
-                  window.armcord.restart()
+                  window.armcordinternal.restart()
                 }, 5000);
         })
         document.getElementById("full").addEventListener("click", function () {
@@ -90,18 +90,18 @@
                   .getElementById("next")
                   .addEventListener("click", function () {
                     var mod = document.getElementById("mod").value;
-                    window.armcord.saveSettings(true, branch, true, mod);
+                    window.armcordinternal.saveSettings(true, branch, true, mod);
                     fade(document.getElementById("setup"));
                     setTimeout(function () {
-                      window.armcord.restart();
+                      window.armcordinternal.restart();
                     }, 5000);
                   });
               } else {
                 //saveSettings(customTitlebarSetting: boolean, channelSetting: string, armcordCSPSetting: boolean, modsSetting: string)
-                window.armcord.saveSettings(true, branch, true, "none");
+                window.armcordinternal.saveSettings(true, branch, true, "none");
                 fade(document.getElementById("setup"));
                 setTimeout(function () {
-                  window.armcord.restart()
+                  window.armcordinternal.restart()
                 }, 5000);
               }
             });

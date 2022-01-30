@@ -1,5 +1,5 @@
 import { app, Menu, Tray } from 'electron';
-import {mainWindow} from './main';
+import {mainWindow} from './window';
 import * as path from 'path'
 let tray = null
 app.whenReady().then(() => {
