@@ -26,6 +26,6 @@ app.whenReady().then(() => {
     },
   ]);
   
-  tray.setToolTip('ArmCord ' + process.env.npm_package_version)
+  tray.setToolTip('ArmCord ' + app.getVersion())
   tray.setContextMenu(contextMenu)
 })
