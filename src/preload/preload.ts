@@ -1,11 +1,12 @@
 import "./bridge";
 import "./capturer";
+import "./patch"
 import * as fs from "fs";
 import * as path from "path";
 import { injectTitlebar } from "./titlebar";
-import { sleep, addStyle } from "../utils";
+import { sleep, addStyle, injectJS } from "../utils";
 import { ipcRenderer } from "electron";
-
+import { injectTabs } from "./tabs";
 declare global {
   interface Window {
     armcord: any;
@@ -17,15 +18,6 @@ const clientMods = {
     "https://raw.githubusercontent.com/Cumcord/Cumcord/stable/dist/build.js",
   flicker: "https://raw.githubusercontent.com/FlickerMod/dist/main/build.js",
 };
-async function injectJS(inject: string) {
-  const js = await (await fetch(`${inject}`)).text();
-
-  const el = document.createElement("script");
-
-  el.appendChild(document.createTextNode(js));
-
-  document.body.appendChild(el);
-}
 
 console.log("ArmCord");
 if (window.location.href.indexOf("splash.html") > -1) {
@@ -33,6 +25,9 @@ if (window.location.href.indexOf("splash.html") > -1) {
 } else {
   if (ipcRenderer.sendSync("titlebar")) {
     injectTitlebar();
+  }
+  if (ipcRenderer.sendSync("tabs")) {
+    injectTabs();
   }
   sleep(5000).then(() => {
     const cssPath = path.join(__dirname, "../", "/content/css/discord.css");

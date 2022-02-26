@@ -1,8 +1,11 @@
 //Fixed context isolation version https://github.com/getferdi/ferdi/blob/develop/src/webview/screenshare.ts
 //original https://github.com/electron/electron/issues/16513#issuecomment-602070250
-import { desktopCapturer } from 'electron';
+import { ipcRenderer } from 'electron';
 import {addStyle, addScript} from '../utils';
-
+const desktopCapturer = {
+  getSources: (opts: any) =>
+    ipcRenderer.invoke("DESKTOP_CAPTURER_GET_SOURCES", opts),
+};
 const CANCEL_ID = 'desktop-capturer-selection__cancel';
 
 export async function getDisplayMediaSelector() {
@@ -12,7 +15,7 @@ export async function getDisplayMediaSelector() {
   return `<div class="desktop-capturer-selection__scroller">
   <ul class="desktop-capturer-selection__list">
     ${sources
-      .map(
+      .map( //@ts-ignore i know it works
         ({ id, name, thumbnail }) => `
       <li class="desktop-capturer-selection__item">
         <button class="desktop-capturer-selection__btn" data-id="${id}" title="${name}">

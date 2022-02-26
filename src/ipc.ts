@@ -1,12 +1,15 @@
 //ipc stuff
 import { app, ipcMain, shell, desktopCapturer } from "electron";
-import { mainWindow } from "./window";
+import { createTabsGuest, mainWindow } from "./window";
 import { saveSettings, getVersion } from "./utils";
-import { settings, customTitlebar } from "./main";
+import { settings, customTitlebar, tabs } from "./main";
 import { createSettingsWindow } from "./settings/main";
 export function registerIpc() {
   ipcMain.on("get-app-path", (event, arg) => {
     event.reply("app-path", app.getAppPath());
+  });
+  ipcMain.on("openTab", (event, number: number) => {
+    createTabsGuest(number);
   });
   ipcMain.on("open-external-link", (event, href: string) => {
     shell.openExternal(href);
@@ -29,6 +32,9 @@ export function registerIpc() {
   ipcMain.on("win-hide", (event, arg) => {
     mainWindow.hide();
   });
+  ipcMain.on("win-quit", (event, arg) => {
+    app.exit();
+  });
   ipcMain.on("get-app-version", (event) => {
     event.returnValue = getVersion();
   });
@@ -39,10 +45,13 @@ export function registerIpc() {
     app.relaunch();
     app.exit();
   });
-
   ipcMain.on("saveSettings", (event, ...args) => {
     //@ts-ignore
     saveSettings(...args);
+  });
+  ipcMain.on("minimizeToTray", (event) => {
+    console.log(settings.minimizeToTray);
+    event.returnValue = settings.minimizeToTray;
   });
   ipcMain.on("channel", (event) => {
     event.returnValue = settings.channel;
@@ -52,6 +61,12 @@ export function registerIpc() {
   });
   ipcMain.on("titlebar", (event, arg) => {
     event.returnValue = customTitlebar;
+  });
+  ipcMain.on("tabs", (event, arg) => {
+    event.returnValue = tabs;
+  });
+  ipcMain.on("shouldPatch", (event, arg) => {
+    event.returnValue = settings.automaticPatches;
   });
   ipcMain.on("openSettingsWindow", (event, arg) => {
     createSettingsWindow();
@@ -66,5 +81,4 @@ export function registerIpc() {
   ipcMain.handle("DESKTOP_CAPTURER_GET_SOURCES", (event, opts) =>
     desktopCapturer.getSources(opts)
   );
-  
 }

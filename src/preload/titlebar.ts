@@ -39,7 +39,11 @@ export function injectTitlebar() {
     });
 
     quit!.addEventListener("click", () => {
-      ipcRenderer.send("win-hide");
+      if (ipcRenderer.sendSync("minimizeToTray") === true) {
+        ipcRenderer.send("win-hide");
+      } else if (ipcRenderer.sendSync("minimizeToTray") === false) {
+        ipcRenderer.send("win-quit");
+      }
     });
   });
 }

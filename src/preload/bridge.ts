@@ -15,6 +15,7 @@ contextBridge.exposeInMainWorld("armcord", {
   },
   electron: process.versions.electron,
   channel: ipcRenderer.sendSync("channel"),
+  openTab: (number: number) => ipcRenderer.sendSync("openTab", number),
   version: ipcRenderer.sendSync("get-app-version", "app-version"),
   getDisplayMediaSelector: getDisplayMediaSelector,
   openSettingsWindow: () => ipcRenderer.send("openSettingsWindow"),

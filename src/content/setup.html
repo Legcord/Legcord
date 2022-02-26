@@ -1,3 +1,4 @@
+<!--- This is awful and should be replaced in later versions. Possibly based of current settings as of 3.1.0 version. If you have time please PR a better setup screen. --->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -42,7 +43,7 @@
       } else {
         console.log("Starting ArmCord Setup...");
         document.getElementById("express").addEventListener("click", function () {
-          window.armcordinternal.saveSettings(true, "stable", true, "cumcord");
+          window.armcordinternal.saveSettings("default", "stable", true, true, false, "cumcord", "acrylic");
           fade(document.getElementById("setup"));
                 setTimeout(function () {
                   window.armcordinternal.restart()
@@ -90,15 +91,15 @@
                   .getElementById("next")
                   .addEventListener("click", function () {
                     var mod = document.getElementById("mod").value;
-                    window.armcordinternal.saveSettings(true, branch, true, mod);
+                    window.armcordinternal.saveSettings("default", branch, true,true,false, mod, "acrylic");
                     fade(document.getElementById("setup"));
                     setTimeout(function () {
                       window.armcordinternal.restart();
                     }, 5000);
                   });
               } else {
-                //saveSettings(customTitlebarSetting: boolean, channelSetting: string, armcordCSPSetting: boolean, modsSetting: string)
-                window.armcordinternal.saveSettings(true, branch, true, "none");
+                //saveSettings(windowStyle: string, channelSetting: string, armcordCSPSetting: boolean, minimizeToTray:boolean, modsSetting: string)
+                window.armcordinternal.saveSettings("default", branch, true,true,false, "none", "acrylic");
                 fade(document.getElementById("setup"));
                 setTimeout(function () {
                   window.armcordinternal.restart()

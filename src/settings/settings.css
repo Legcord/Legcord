@@ -1,0 +1,157 @@
+/*MIT License
+
+Copyright (c) 2021 GooseMod
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.*/
+:root {
+  --background-primary: #282b30;
+  --background-secondary: rgba(255, 255, 255, 0.1);
+  --brand-experiment: #5865f2;
+  --header-primary: #fff;
+  --text-muted: #72767d;
+}
+
+@font-face {
+  font-family: Whitney;
+  font-weight: 400;
+  font-style: normal;
+  src: url(https://armcord.smartfridge.space/whitney_400.woff) format("woff");
+}
+
+html,
+body {
+  overflow: hidden;
+
+  margin: 0;
+  padding: 0;
+  margin: 2%;
+  background: var(--background-primary);
+}
+
+* {
+  font-family: "Whitney", sans-serif;
+
+  box-sizing: border-box;
+  cursor: default;
+}
+.left {
+    float:right;
+    vertical-align: right!important;
+}
+.switch {
+  vertical-align: middle;
+}
+.header {
+  color: white;
+  font-size: 1.5em;
+}
+.center {
+  text-align: center;
+}
+/*buttons*/
+button {
+    background-color: #7289da;
+    font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #ffffff;
+    padding: 4px;
+    border-radius: 5px;
+    margin-top: 5px;
+    
+    text-align: center;
+    border-style: none;
+    outline: none;
+}
+
+button:hover {
+    background-color: #687dc6;
+    border-style: none;
+    outline: none;
+    cursor: pointer;
+}
+.tgl {
+  display: none;
+}
+.tgl, .tgl:after, .tgl:before, .tgl *, .tgl *:after, .tgl *:before, .tgl + .tgl-btn {
+  box-sizing: border-box;
+}
+.tgl::-moz-selection, .tgl:after::-moz-selection, .tgl:before::-moz-selection, .tgl *::-moz-selection, .tgl *:after::-moz-selection, .tgl *:before::-moz-selection, .tgl + .tgl-btn::-moz-selection {
+  background: none;
+}
+.tgl::selection, .tgl:after::selection, .tgl:before::selection, .tgl *::selection, .tgl *:after::selection, .tgl *:before::selection, .tgl + .tgl-btn::selection {
+  background: none;
+}
+.tgl + .tgl-btn {
+  outline: 0;
+  display: block;
+  width: 4em;
+  height: 2em;
+  position: relative;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.tgl + .tgl-btn:after, .tgl + .tgl-btn:before {
+  position: relative;
+  display: block;
+  content: "";
+  width: 50%;
+  height: 100%;
+}
+.tgl + .tgl-btn:after {
+  left: 0;
+}
+.tgl + .tgl-btn:before {
+  display: none;
+}
+.tgl:checked + .tgl-btn:after {
+  left: 50%;
+}
+
+.tgl-light + .tgl-btn {
+  background: #5c5757;
+  border-radius: 2em;
+  padding: 2px;
+  transition: all 0.4s ease;
+}
+.tgl-light + .tgl-btn:after {
+  border-radius: 50%;
+  background: rgb(255, 255, 255);
+  transition: all 0.2s ease;
+}
+.tgl-light:checked + .tgl-btn {
+  background: #47ca5a;
+}
+select {
+  -webkit-appearance: button;
+  -moz-appearance: button;
+  background-color: #2c2f33;
+  background-position: center right;
+  background-repeat: no-repeat;
+  border: 1px solid #aaa;
+  border-radius: 2px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  font-size: 1.2em;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

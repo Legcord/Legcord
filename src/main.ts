@@ -11,30 +11,38 @@ import { getConfigUnsafe, setup } from "./utils";
 import "./extensions/mods";
 import "./extensions/plugin";
 import "./tray";
-import { mainWindow, createCustomWindow, createNativeWindow } from "./window";
+import { mainWindow, createCustomWindow, createNativeWindow, createGlasstronWindow, createTabsHost } from "./window";
 import "./shortcuts";
 export var contentPath: string;
 var channel: string;
 export var settings: any;
 export var customTitlebar: boolean;
-storage.has("settings", function (error, hasKey) {
-  if (error) throw error;
-
-  if (!hasKey) {
-    console.log("First run of the ArmCord. Starting setup.");
-    setup();
-    contentPath = path.join(__dirname, "/content/setup.html");
-    if (!contentPath.includes("ts-out")) {
-      contentPath = path.join(__dirname, "/ts-out/content/setup.html");
-    }
-  } else {
-    console.log("ArmCord has been run before. Skipping setup.");
-    contentPath = path.join(__dirname, "/content/splash.html");
-    if (!contentPath.includes("ts-out")) {
-      contentPath = path.join(__dirname, "/ts-out/content/splash.html");
-    }
+export var tabs: boolean;
+async function appendSwitch(){
+  if (await getConfigUnsafe("windowStyle") == "glasstron") {
+    console.log("Enabling transparency visuals.");
+    app.commandLine.appendSwitch("enable-transparent-visuals");
   }
-});
+}
+appendSwitch();
+  storage.has("settings", function (error, hasKey) {
+    if (error) throw error;
+
+    if (!hasKey) {
+      console.log("First run of the ArmCord. Starting setup.");
+      setup();
+      contentPath = path.join(__dirname, "/content/setup.html");
+      if (!contentPath.includes("ts-out")) {
+        contentPath = path.join(__dirname, "/ts-out/content/setup.html");
+      }
+    } else {
+      console.log("ArmCord has been run before. Skipping setup.");
+      contentPath = path.join(__dirname, "/content/splash.html");
+      if (!contentPath.includes("ts-out")) {
+        contentPath = path.join(__dirname, "/ts-out/content/splash.html");
+      }
+    }
+  });
 storage.get("settings", function (error, data: any) {
   if (error) throw error;
   console.log(data);
@@ -42,19 +50,33 @@ storage.get("settings", function (error, data: any) {
   settings = data;
 });
 app.whenReady().then(async () => {
-  if (await getConfigUnsafe("customTitlebar") == true) {
-    console.log("Creating custom titlebar window.");
-    customTitlebar = true;
-    createCustomWindow();
-  } else if (await getConfigUnsafe("customTitlebar") == "setup") {
-    //rare case of setup window
-    console.log("Creating setup window.");
-    customTitlebar = true;
-    createCustomWindow();
-  } else {
-    console.log("Creating native titlebar window.");
-    customTitlebar = false;
-    createNativeWindow();
+  switch (await getConfigUnsafe("windowStyle")) {
+    case "default":
+      createCustomWindow();
+      customTitlebar = true;
+      break;
+    case "native":
+      createNativeWindow();
+      break;
+    case "glasstron":
+      setTimeout(
+        createGlasstronWindow,
+        process.platform == "linux" ? 1000 : 0
+        // Electron has a bug on linux where it
+        // won't initialize properly when using
+        // transparency. To work around that, it
+        // is necessary to delay the window
+        // spawn function.
+      );
+      break;
+    case "tabs":
+      createTabsHost();
+      tabs = true;
+      break;
+    default:
+      createCustomWindow();
+      customTitlebar = true;
+      break;
   }
   session
     .fromPartition("some-partition")
@@ -68,19 +90,21 @@ app.whenReady().then(async () => {
         callback(true);
       }
     });
-  mainWindow.webContents.session.webRequest.onBeforeRequest(
-    (details, callback) => {
-      if (/api\/v\d\/science$/g.test(details.url))
-        return callback({ cancel: true });
-      return callback({});
-    }
-  );
-  app.on("activate", function () {
+  app.on("activate", async function () {
     if (BrowserWindow.getAllWindows().length === 0)
-      if (!settings.customTitlebar) {
-        createNativeWindow();
-      } else {
-        createCustomWindow();
+      switch (await getConfigUnsafe("windowStyle")) {
+        case "default":
+          createCustomWindow();
+          break;
+        case "native":
+          createNativeWindow();
+          break;
+        case "glasstron":
+          createGlasstronWindow();
+          break;
+        default:
+          createCustomWindow();
+          break;
       }
   });
 });
