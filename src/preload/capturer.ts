@@ -8,14 +8,20 @@ const desktopCapturer = {
 };
 const CANCEL_ID = 'desktop-capturer-selection__cancel';
 
+interface IPCSources {
+  id: string;
+  name: string;
+  thumbnail: HTMLCanvasElement;
+}
+
 export async function getDisplayMediaSelector() {
-  const sources = await desktopCapturer.getSources({
+  const sources: IPCSources[] = await desktopCapturer.getSources({
     types: ['screen', 'window'],
   });
   return `<div class="desktop-capturer-selection__scroller">
   <ul class="desktop-capturer-selection__list">
     ${sources
-      .map( //@ts-ignore i know it works
+      .map(
         ({ id, name, thumbnail }) => `
       <li class="desktop-capturer-selection__item">
         <button class="desktop-capturer-selection__btn" data-id="${id}" title="${name}">
@@ -148,7 +154,7 @@ window.navigator.mediaDevices.getDisplayMedia = () => new Promise(async (resolve
 });
 `;
 
-document.addEventListener("DOMContentLoaded", function(event) {     
+document.addEventListener("DOMContentLoaded", function() {
   addScript(screenShareJS);
   addStyle(screenShareCSS);
   console.log("Capturer injected.")

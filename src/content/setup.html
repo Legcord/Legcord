@@ -43,7 +43,15 @@
       } else {
         console.log("Starting ArmCord Setup...");
         document.getElementById("express").addEventListener("click", function () {
-          window.armcordinternal.saveSettings("default", "stable", true, true, false, "cumcord", "acrylic");
+          window.armcordinternal.saveSettings({
+            windowStyle: "default",
+            channel: "stable",
+            armcordCSP: true,
+            minimizeToTray: true,
+            automaticPatches: false,
+            mods: "cumcord",
+            blurType: "acrylic"
+          })
           fade(document.getElementById("setup"));
                 setTimeout(function () {
                   window.armcordinternal.restart()
@@ -91,15 +99,30 @@
                   .getElementById("next")
                   .addEventListener("click", function () {
                     var mod = document.getElementById("mod").value;
-                    window.armcordinternal.saveSettings("default", branch, true,true,false, mod, "acrylic");
+                    window.armcordinternal.saveSettings({
+                      windowStyle: "default",
+                      channel: branch,
+                      armcordCSP: true,
+                      minimizeToTray: true,
+                      automaticPatches: false,
+                      mods: mod,
+                      blurType: "acrylic"
+                    })
                     fade(document.getElementById("setup"));
                     setTimeout(function () {
                       window.armcordinternal.restart();
                     }, 5000);
                   });
               } else {
-                //saveSettings(windowStyle: string, channelSetting: string, armcordCSPSetting: boolean, minimizeToTray:boolean, modsSetting: string)
-                window.armcordinternal.saveSettings("default", branch, true,true,false, "none", "acrylic");
+                window.armcordinternal.saveSettings({
+                  windowStyle: "default",
+                  channel: branch,
+                  armcordCSP: true,
+                  minimizeToTray: true,
+                  automaticPatches: false,
+                  mods: "none",
+                  blurType: "acrylic"
+                })
                 fade(document.getElementById("setup"));
                 setTimeout(function () {
                   window.armcordinternal.restart()

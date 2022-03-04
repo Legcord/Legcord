@@ -45,9 +45,8 @@ export function registerIpc() {
     app.relaunch();
     app.exit();
   });
-  ipcMain.on("saveSettings", (event, ...args) => {
-    //@ts-ignore
-    saveSettings(...args);
+  ipcMain.on("saveSettings", (event, args) => {
+    saveSettings(args);
   });
   ipcMain.on("minimizeToTray", (event) => {
     console.log(settings.minimizeToTray);
