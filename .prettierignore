@@ -1,0 +1,11 @@
+# Some prettier-specific files so it doesn't die.
+**/*.png
+**/*.ico
+LICENSE
+.gitignore
+
+node_modules
+out/
+dist
+ts-out/
+ts-out

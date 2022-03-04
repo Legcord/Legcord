@@ -1,11 +1,11 @@
-import { ipcRenderer } from "electron";
-import { addStyle } from "../utils";
+import {ipcRenderer} from "electron";
+import {addStyle} from "../utils";
 import * as fs from "fs";
 import * as path from "path";
 export function injectTitlebar() {
-  document.addEventListener("DOMContentLoaded", function (event) {
-    var elem = document.createElement("div");
-    elem.innerHTML = `<nav class="titlebar">
+    document.addEventListener("DOMContentLoaded", function (event) {
+        var elem = document.createElement("div");
+        elem.innerHTML = `<nav class="titlebar">
           <div class="window-title" id="window-title"></div>
           <div id="window-controls-container">
               <div id="minimize"></div>
@@ -13,40 +13,40 @@ export function injectTitlebar() {
               <div id="quit"></div>
           </div>
         </nav>`;
-    elem.classList.add("withFrame-haYltI");
-    if (document.getElementById("app-mount") == null) {
-      document.body.appendChild(elem);
-    } else {
-      document.getElementById("app-mount")!.prepend(elem);
-    }
-    const cssPath = path.join(__dirname, "../", "/content/css/titlebar.css");
-    addStyle(fs.readFileSync(cssPath, "utf8"));
+        elem.classList.add("withFrame-haYltI");
+        if (document.getElementById("app-mount") == null) {
+            document.body.appendChild(elem);
+        } else {
+            document.getElementById("app-mount")!.prepend(elem);
+        }
+        const cssPath = path.join(__dirname, "../", "/content/css/titlebar.css");
+        addStyle(fs.readFileSync(cssPath, "utf8"));
 
-    var minimize = document.getElementById("minimize");
-    var maximize = document.getElementById("maximize");
-    var quit = document.getElementById("quit");
+        var minimize = document.getElementById("minimize");
+        var maximize = document.getElementById("maximize");
+        var quit = document.getElementById("quit");
 
-    minimize!.addEventListener("click", () => {
-      ipcRenderer.send("win-minimize");
+        minimize!.addEventListener("click", () => {
+            ipcRenderer.send("win-minimize");
+        });
+
+        maximize!.addEventListener("click", () => {
+            if (ipcRenderer.sendSync("win-isMaximized") == true) {
+                ipcRenderer.send("win-unmaximize");
+            } else {
+                ipcRenderer.send("win-maximize");
+            }
+        });
+
+        quit!.addEventListener("click", () => {
+            if (ipcRenderer.sendSync("minimizeToTray") === true) {
+                ipcRenderer.send("win-hide");
+            } else if (ipcRenderer.sendSync("minimizeToTray") === false) {
+                ipcRenderer.send("win-quit");
+            }
+        });
     });
-
-    maximize!.addEventListener("click", () => {
-      if (ipcRenderer.sendSync("win-isMaximized") == true) {
-        ipcRenderer.send("win-unmaximize");
-      } else {
-        ipcRenderer.send("win-maximize");
-      }
-    });
-
-    quit!.addEventListener("click", () => {
-      if (ipcRenderer.sendSync("minimizeToTray") === true) {
-        ipcRenderer.send("win-hide");
-      } else if (ipcRenderer.sendSync("minimizeToTray") === false) {
-        ipcRenderer.send("win-quit");
-      }
-    });
-  });
 }
 export function removeTitlebar() {
-  document.querySelector("#titlebar")!.remove();
+    document.querySelector("#titlebar")!.remove();
 }

@@ -1,88 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>ArmCord Settings</title>
+        <style>
+            @import url("settings.css");
+        </style>
+    </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>ArmCord Settings</title>
-  <style>
-    @import url("settings.css");
-  </style>
-</head>
+    <body>
+        <div class="switch">
+            <select name="theme" id="theme" class="left">
+                <option value="default">Default</option>
+                <option value="native">Native</option>
+                <option value="glasstron">Glasstron (experimental)</option>
+                <option value="tabs">Tabs (experimental)</option>
+            </select>
+            <p class="header">ArmCord theme:</p>
+        </div>
+        <br />
+        <div class="switch">
+            <label class="header">ArmCord CSP</label>
+            <input class="tgl tgl-light left" id="csp" type="checkbox" />
+            <label class="tgl-btn left" for="csp"></label>
+        </div>
+        <br />
+        <div class="switch">
+            <label class="header">Minimize to tray</label>
+            <input class="tgl tgl-light left" id="tray" type="checkbox" />
+            <label class="tgl-btn left" for="tray"></label>
+        </div>
+        <br />
+        <div class="switch">
+            <label class="header">Automatic Patches</label>
+            <input class="tgl tgl-light left" id="patches" type="checkbox" />
+            <label class="tgl-btn left" for="patches"></label>
+        </div>
+        <div class="switch">
+            <select name="channel" id="channel" class="left">
+                <option value="stable">Stable</option>
+                <option value="canary">Canary</option>
+                <option value="ptb">PTB</option>
+                <option value="foss">Fosscord</option>
+            </select>
+            <p class="header">Discord channel:</p>
+        </div>
+        <div class="switch">
+            <select name="mod" id="mod" class="left">
+                <option value="cumcord">Cumcord</option>
+                <option value="goosemod">GooseMod</option>
+                <option value="flicker">Flicker</option>
+            </select>
+            <p class="header">Client mod:</p>
+        </div>
+        <div class="switch">
+            <select name="blurType" id="blurType" class="left">
+                <option value="acrylic">Acrylic</option>
+                <option value="blurbehind">Blur Behind</option>
+                <option value="transparent">Transparent</option>
+                <option value="none">None</option>
+            </select>
+            <p class="header">Glasstron blur type:</p>
+        </div>
+        <button id="save" class="center">Save settings</button>
+    </body>
 
-<body>
-
-<div class="switch">
-    <select name="theme" id="theme" class="left">
-      <option value="default">Default</option>
-      <option value="native">Native</option>
-      <option value="glasstron">Glasstron (experimental)</option>
-      <option value="tabs">Tabs (experimental)</option>
-    </select>
-    <p class="header">ArmCord theme:</p>
-  </div>
-  </br>
-  <div class="switch">
-    <label class="header">ArmCord CSP</label>
-    <input class="tgl tgl-light left" id="csp" type="checkbox" />
-    <label class="tgl-btn left" for="csp"></label>
-  </div>
-  </br>
-  <div class="switch">
-    <label class="header">Minimize to tray</label>
-    <input class="tgl tgl-light left" id="tray" type="checkbox" />
-    <label class="tgl-btn left" for="tray"></label>
-  </div>
-  </br>
-  <div class="switch">
-    <label class="header">Automatic Patches</label>
-    <input class="tgl tgl-light left" id="patches" type="checkbox" />
-    <label class="tgl-btn left" for="patches"></label>
-  </div>
-  <div class="switch">
-    <select name="channel" id="channel" class="left">
-      <option value="stable">Stable</option>
-      <option value="canary">Canary</option>
-      <option value="ptb">PTB</option>
-      <option value="foss">Fosscord</option>
-    </select>
-    <p class="header">Discord channel:</p>
-  </div>
-  <div class="switch">
-    <select name="mod" id="mod" class="left">
-      <option value="cumcord">Cumcord</option>
-      <option value="goosemod">GooseMod</option>
-      <option value="flicker">Flicker</option>
-    </select>
-    <p class="header">Client mod:</p>
-  </div>
-  <div class="switch">
-    <select name="blurType" id="blurType" class="left">
-      <option value="acrylic">Acrylic</option>
-      <option value="blurbehind">Blur Behind</option>
-      <option value="transparent">Transparent</option>
-      <option value="none">None</option>
-    </select>
-    <p class="header">Glasstron blur type:</p>
-  </div>
-  <button id="save" class="center">Save settings</button>
-  
-</body>
-
-<script>
-  async function loadSettings() {
-    document.getElementById("csp").checked = await settings.get("armcordCSP");
-    document.getElementById("tray").checked = await settings.get("minimizeToTray");
-    document.getElementById("patches").value = await settings.get("automaticPatches");
-    document.getElementById("mod").value = await settings.get("mods");
-    document.getElementById("channel").value = await settings.get("channel");
-    document.getElementById("theme").value = await settings.get("windowStyle");
-    document.getElementById("blurType").value = await settings.get("blurType");
-  }
-  loadSettings()
-  document.getElementById("save").addEventListener("click", function() {
-    //function saveSettings(windowStyle: string, channelSetting: string, armcordCSPSetting: boolean, minimizeToTray: boolean, automaticPatches: boolean,modsSetting: string, blurType: string) 
-    settings.save(document.getElementById("theme").value, document.getElementById("channel").value, document.getElementById("csp").checked, document.getElementById("tray").checked, document.getElementById("patches").checked, document.getElementById("mod").value, document.getElementById("blurType").value);
-  });
-</script>
-
+    <script>
+        async function loadSettings() {
+            document.getElementById("csp").checked = await settings.get("armcordCSP");
+            document.getElementById("tray").checked = await settings.get("minimizeToTray");
+            document.getElementById("patches").value = await settings.get("automaticPatches");
+            document.getElementById("mod").value = await settings.get("mods");
+            document.getElementById("channel").value = await settings.get("channel");
+            document.getElementById("theme").value = await settings.get("windowStyle");
+            document.getElementById("blurType").value = await settings.get("blurType");
+        }
+        loadSettings();
+        document.getElementById("save").addEventListener("click", function () {
+            //function saveSettings(windowStyle: string, channelSetting: string, armcordCSPSetting: boolean, minimizeToTray: boolean, automaticPatches: boolean,modsSetting: string, blurType: string)
+            settings.save(
+                document.getElementById("theme").value,
+                document.getElementById("channel").value,
+                document.getElementById("csp").checked,
+                document.getElementById("tray").checked,
+                document.getElementById("patches").checked,
+                document.getElementById("mod").value,
+                document.getElementById("blurType").value
+            );
+        });
+    </script>
 </html>

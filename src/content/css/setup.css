@@ -2,68 +2,68 @@
 @import url("https://kckarnige.github.io/femboi_owo/discord-font.css");
 
 :root {
-  background-color: #2c2f33 !important;
-  --header-secondary: #b9bbbe !important;
-  --header-primary: #fff !important;
-  --background-tertiary: #202225 !important;
+    background-color: #2c2f33 !important;
+    --header-secondary: #b9bbbe !important;
+    --header-primary: #fff !important;
+    --background-tertiary: #202225 !important;
 }
 body {
-  background-color: #2c2f33;
-  color: white;
+    background-color: #2c2f33;
+    color: white;
 }
 
 p {
-  color: white;
-  text-align: center;
-  font-weight: 100;
-  font-family: Whitney, Helvetica Neue, Helvetica, Arial, sans-serif;
-  text-rendering: optimizeLegibility;
+    color: white;
+    text-align: center;
+    font-weight: 100;
+    font-family: Whitney, Helvetica Neue, Helvetica, Arial, sans-serif;
+    text-rendering: optimizeLegibility;
 }
 
 .logo {
-  font-size: 0px;
-  text-align: center;
-  transform: translateY(-105%);
+    font-size: 0px;
+    text-align: center;
+    transform: translateY(-105%);
 }
 
 .logo:before {
-  content: "ARM";
-  color: #7289da;
-  font-weight: normal;
-  font-family: Helvetica, sans-serif;
-  font-size: 32px;
+    content: "ARM";
+    color: #7289da;
+    font-weight: normal;
+    font-family: Helvetica, sans-serif;
+    font-size: 32px;
 }
 
 .logo:after {
-  content: "Cord";
-  color: #ffffff;
-  font-weight: normal;
-  font-family: Discordinated;
-  font-size: 32px;
+    content: "Cord";
+    color: #ffffff;
+    font-weight: normal;
+    font-family: Discordinated;
+    font-size: 32px;
 }
 
 span {
-  text-align: center;
+    text-align: center;
 }
 
 .logo {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  max-height: 204px;
-  max-width: 204px;
-  transform: translateY(5%);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 204px;
+    max-width: 204px;
+    transform: translateY(5%);
 }
 
 .container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  color: #fff;
-  transform: translate(-50%, -50%);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    color: #fff;
+    transform: translate(-50%, -50%);
 }
 button#express {
-  margin-right: 84px;
+    margin-right: 84px;
 }
 button {
     background-color: #7289da;
@@ -72,13 +72,13 @@ button {
     padding: 4px;
     border-radius: 5px;
     margin-top: 5px;
-    
+
     text-align: center;
     border-style: none;
     outline: none;
 }
 .setup-ask {
-  font-size: 20px;
+    font-size: 20px;
 }
 button:hover {
     background-color: #687dc6;
@@ -87,25 +87,25 @@ button:hover {
     cursor: pointer;
 }
 select {
-  -webkit-appearance: button;
-  -moz-appearance: button;
-  -webkit-padding-end: 20px;
-  -moz-padding-end: 20px;
-  -webkit-padding-start: 2px;
-  -moz-padding-start: 2px;
-  background-color: #2c2f33;
-  background-position: center right;
-  background-repeat: no-repeat;
-  border: 1px solid #aaa;
-  border-radius: 2px;
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
-  color: #fff;
-  font-size: inherit;
-  margin: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    -webkit-padding-end: 20px;
+    -moz-padding-end: 20px;
+    -webkit-padding-start: 2px;
+    -moz-padding-start: 2px;
+    background-color: #2c2f33;
+    background-position: center right;
+    background-repeat: no-repeat;
+    border: 1px solid #aaa;
+    border-radius: 2px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    color: #fff;
+    font-size: inherit;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .center {
-  text-align: center;
+    text-align: center;
 }

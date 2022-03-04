@@ -11,59 +11,55 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 import electron from "electron";
 import * as storage from "electron-json-storage";
 const otherMods = {
-  generic: {
-    electronProxy: require("util").types.isProxy(electron), // Many modern mods overwrite electron with a proxy with a custom BrowserWindow (copied from PowerCord)
-  },
+    generic: {
+        electronProxy: require("util").types.isProxy(electron) // Many modern mods overwrite electron with a proxy with a custom BrowserWindow (copied from PowerCord)
+    }
 };
 
 const unstrictCSP = () => {
-  console.log("Setting up CSP unstricter...");
+    console.log("Setting up CSP unstricter...");
 
-  const cspAllowAll = ["connect-src", "style-src", "img-src", "font-src"];
+    const cspAllowAll = ["connect-src", "style-src", "img-src", "font-src"];
 
-  const corsAllowUrls = [
-    "https://github.com/GooseMod/GooseMod/releases/download/dev/index.js",
-    "https://github-releases.githubusercontent.com/",
-    "https://api.goosemod.com/inject.js",
-    "https://raw.githubusercontent.com/Cumcord/Cumcord/stable/dist/build.js",
-    "https://raw.githubusercontent.com/Cumcord/Cumcord/master/dist/build.js",
-    "https://raw.githubusercontent.com/FlickerMod/dist/main/build.js",
-  ];
+    const corsAllowUrls = [
+        "https://github.com/GooseMod/GooseMod/releases/download/dev/index.js",
+        "https://github-releases.githubusercontent.com/",
+        "https://api.goosemod.com/inject.js",
+        "https://raw.githubusercontent.com/Cumcord/Cumcord/stable/dist/build.js",
+        "https://raw.githubusercontent.com/Cumcord/Cumcord/master/dist/build.js",
+        "https://raw.githubusercontent.com/FlickerMod/dist/main/build.js"
+    ];
 
-  electron.session.defaultSession.webRequest.onHeadersReceived(
-    ({ responseHeaders, url }, done) => {
-      let csp = responseHeaders!["content-security-policy"];
+    electron.session.defaultSession.webRequest.onHeadersReceived(({responseHeaders, url}, done) => {
+        let csp = responseHeaders!["content-security-policy"];
 
-      if (otherMods.generic.electronProxy) {
-        // Since patch v16, override other mod's onHeadersRecieved (Electron only allows 1 listener); because they rely on 0 CSP at all (GM just unrestricts some areas), remove it fully if we detect other mods
-        delete responseHeaders!["content-security-policy"];
-        csp = [];
-      }
-
-      if (csp) {
-        for (let p of cspAllowAll) {
-          csp[0] = csp[0].replace(`${p}`, `${p} * blob: data:`); // * does not include data: URIs
+        if (otherMods.generic.electronProxy) {
+            // Since patch v16, override other mod's onHeadersRecieved (Electron only allows 1 listener); because they rely on 0 CSP at all (GM just unrestricts some areas), remove it fully if we detect other mods
+            delete responseHeaders!["content-security-policy"];
+            csp = [];
         }
 
-        // Fix Discord's broken CSP which disallows unsafe-inline due to having a nonce (which they don't even use?)
-        csp[0] = csp[0].replace(/'nonce-.*?' /, "");
-      }
+        if (csp) {
+            for (let p of cspAllowAll) {
+                csp[0] = csp[0].replace(`${p}`, `${p} * blob: data:`); // * does not include data: URIs
+            }
 
-      if (corsAllowUrls.some((x) => url.startsWith(x))) {
-        responseHeaders!["access-control-allow-origin"] = ["*"];
-      }
+            // Fix Discord's broken CSP which disallows unsafe-inline due to having a nonce (which they don't even use?)
+            csp[0] = csp[0].replace(/'nonce-.*?' /, "");
+        }
 
-      done({ responseHeaders });
-    }
-  );
+        if (corsAllowUrls.some((x) => url.startsWith(x))) {
+            responseHeaders!["access-control-allow-origin"] = ["*"];
+        }
+
+        done({responseHeaders});
+    });
 };
 storage.get("settings", function (error, data: any) {
-  if (error) throw error;
-  if (data.armcordCSP) {
-    unstrictCSP();
-  } else {
-    console.log(
-      "ArmCord CSP is disabled. The CSP should be managed by third-party plugin."
-    );
-  }
+    if (error) throw error;
+    if (data.armcordCSP) {
+        unstrictCSP();
+    } else {
+        console.log("ArmCord CSP is disabled. The CSP should be managed by third-party plugin.");
+    }
 });
