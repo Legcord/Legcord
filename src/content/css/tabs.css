@@ -1,53 +1,53 @@
 @import url("https://kckarnige.github.io/femboi_owo/discord-font.css");
 :root {
-  --window-buttons: var(--header-secondary);
-  --cord-color: var(--header-primary);
-  --armcord-color: #7289da;
-  --titlebar-color: var(--background-tertiary);
+    --window-buttons: var(--header-secondary);
+    --cord-color: var(--header-primary);
+    --armcord-color: #7289da;
+    --titlebar-color: var(--background-tertiary);
 }
 .tabs {
-  display: block;
-  top: 0;
-  left: 0;
-  right: 0;
-  flex-shrink: 0;
-  overflow: hidden;
-  zoom: 1;
-  box-sizing: border-box;
-  width: 100%;
-  clear: both;
-  height: 30px;
-  line-height: 30px;
-  background-color: #202225;
-  -webkit-app-region: drag;
-  width: 100%;
-  user-select: none;
-  -webkit-user-select: none;
-  position: fixed;
-  z-index: 99999;
+    display: block;
+    top: 0;
+    left: 0;
+    right: 0;
+    flex-shrink: 0;
+    overflow: hidden;
+    zoom: 1;
+    box-sizing: border-box;
+    width: 100%;
+    clear: both;
+    height: 30px;
+    line-height: 30px;
+    background-color: #202225;
+    -webkit-app-region: drag;
+    width: 100%;
+    user-select: none;
+    -webkit-user-select: none;
+    position: fixed;
+    z-index: 99999;
 }
 
 .tabs #tabs-controls-container {
-  float: left;
-  width: 150px;
-  height: 100%;
-  line-height: 30px;
-  background-color: #202225;
-  -webkit-app-region: no-drag;
+    float: left;
+    width: 150px;
+    height: 100%;
+    line-height: 30px;
+    background-color: #202225;
+    -webkit-app-region: no-drag;
 }
 .tabs-buttons {
-  color: white;
-  background-color: inherit;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  transition: 0.3s;
-  font-size: 20px;
+    color: white;
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 20px;
 }
 .tabs-buttons:hover {
-  background-color: #4e515a;
+    background-color: #4e515a;
 }
 .withFrame-haYltI {
-  height: 30px !important;
+    height: 30px !important;
 }
