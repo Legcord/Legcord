@@ -16,54 +16,58 @@ export function addScript(scriptString: string) {
   script.textContent = scriptString;
   document.body.append(script);
 }
+
+export async function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export async function checkIfConfigIsNew() {
+  if (await getConfigUnsafe("automaticPatches") == undefined) {
+    firstRun = true;
+  }
+}
+
+export interface Settings {
+  windowStyle: string,
+  channel: string,
+  armcordCSP: boolean,
+  minimizeToTray: boolean,
+  automaticPatches: boolean,
+  mods: string,
+  blurType: string
+}
 export function setup() {
   console.log("Setting up temporary ArmCord settings.");
+  const defaults: Settings = {
+    windowStyle: "default",
+    channel: "stable",
+    armcordCSP: true,
+    minimizeToTray: true,
+    automaticPatches: false,
+    mods: "cumcord",
+    blurType: "acrylic",
+  }
   storage.set(
     "settings",
     {
-      windowStyle: "default",
-      channel: "stable",
+      ...defaults,
       doneSetup: true,
-      armcordCSP: true,
-      minimizeToTray: true,
-      automaticPatches: false,
-      mods: "cumcord",
-      blurType: "acrylic",
     },
     function (error) {
       if (error) throw error;
     }
   );
 }
-export async function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-export async function checkIfConfigIsNew() {
-  if (await getConfigUnsafe("automaticPatches") == undefined) {
-    firstRun = true;
-  }
-}
+
 export function saveSettings(
-  windowStyle: string,
-  channelSetting: string,
-  armcordCSPSetting: boolean,
-  minimizeToTray: boolean,
-  automaticPatches: boolean,
-  modsSetting: string,
-  blurType: string
+  settings: Settings
 ) {
   console.log("Setting up ArmCord settings.");
   storage.set(
     "settings",
     {
-      windowStyle: windowStyle,
-      channel: channelSetting,
-      doneSetup: true,
-      armcordCSP: armcordCSPSetting,
-      minimizeToTray: minimizeToTray,
-      automaticPatches: automaticPatches,
-      mods: modsSetting,
-      blurType: blurType
+      ...settings,
+      doneSetup: true
     },
     function (error) {
       if (error) throw error;

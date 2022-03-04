@@ -1,6 +1,6 @@
 import { BrowserWindow, shell, ipcMain } from "electron";
 import * as storage from "electron-json-storage"; 
-import {getConfigUnsafe, saveSettings} from "../utils";
+import {getConfigUnsafe, saveSettings, Settings} from "../utils";
 import path from "path";
 var settings:any;
 var isAlreadyCreated:boolean = false;
@@ -25,9 +25,9 @@ export function createSettingsWindow() {
       preload: path.join(__dirname, "preload.js"),
     },
   });
-  ipcMain.on("saveSettings", (event, ...args) => {
-    //@ts-ignore
-    saveSettings(...args);
+  ipcMain.on("saveSettings", (event, args: Settings) => {
+    console.log(args);
+    saveSettings(args);
   });
   ipcMain.handle("getSetting", (event, toGet: string) => {
     return getConfigUnsafe(toGet);
