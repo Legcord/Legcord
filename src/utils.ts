@@ -51,7 +51,7 @@ export function setup() {
         "settings",
         {
             ...defaults,
-            doneSetup: true
+            doneSetup: false
         },
         function (error) {
             if (error) throw error;

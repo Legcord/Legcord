@@ -8,7 +8,7 @@
     "watch": "tsc -w",
     "start": "npm run build && electron ./ts-out/main.js",
     "package": "npm run build && electron-builder",
-    "format": "prettier --write **/*",
+    "format": "prettier --write src/**/*",
     "postinstall": "husky install"
   },
   "repository": {
