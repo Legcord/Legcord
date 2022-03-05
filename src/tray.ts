@@ -22,7 +22,7 @@ app.whenReady().then(() => {
             label: "Support Discord Server",
             click: function () {
                 mainWindow.show();
-                mainWindow.loadURL("https://discord.gg/pZtWQBFjk6");
+                mainWindow.loadURL("https://discord.gg/TnhxcqynZ2");
             }
         },
         {
