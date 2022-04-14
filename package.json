@@ -34,7 +34,7 @@
   "dependencies": {
     "electron-context-menu": "^3.1.2",
     "electron-json-storage": "^4.5.0",
-    "electron-tabs": "^0.15.0",
+    "electron-tabs": "^0.17.0",
     "glasstron": "^0.1.1",
     "v8-compile-cache": "^2.3.0"
   },
