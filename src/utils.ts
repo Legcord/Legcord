@@ -22,8 +22,9 @@ export async function sleep(ms: number) {
 }
 
 export async function checkIfConfigIsNew() {
-    if ((await getConfigUnsafe("automaticPatches")) == undefined) {
-        firstRun = true;
+    if (await getConfigUnsafe("automaticPatches") == undefined) {
+        console.log("Outdated config")
+        setup()
     }
 }
 
@@ -88,7 +89,7 @@ export async function getConfigUnsafe(object: string) {
 }
 export function getVersion() {
     //to-do better way of doing this
-    return "3.1.0";
+    return "3.0.5";
 }
 export async function injectJS(inject: string) {
     const js = await (await fetch(`${inject}`)).text();

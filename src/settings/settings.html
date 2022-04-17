@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <title>ArmCord Settings</title>
         <style>
-            @import url("settings.css");
+            @import url("../content/css/settings.css");
         </style>
     </head>
 
@@ -13,8 +13,6 @@
             <select name="theme" id="theme" class="left">
                 <option value="default">Default</option>
                 <option value="native">Native</option>
-                <option value="glasstron">Glasstron (experimental)</option>
-                <option value="tabs">Tabs (experimental)</option>
             </select>
             <p class="header">ArmCord theme:</p>
         </div>
@@ -53,15 +51,7 @@
             </select>
             <p class="header">Client mod:</p>
         </div>
-        <div class="switch">
-            <select name="blurType" id="blurType" class="left">
-                <option value="acrylic">Acrylic</option>
-                <option value="blurbehind">Blur Behind</option>
-                <option value="transparent">Transparent</option>
-                <option value="none">None</option>
-            </select>
-            <p class="header">Glasstron blur type:</p>
-        </div>
+
         <button id="save" class="center">Save settings</button>
     </body>
 
@@ -73,7 +63,6 @@
             document.getElementById("mod").value = await settings.get("mods");
             document.getElementById("channel").value = await settings.get("channel");
             document.getElementById("theme").value = await settings.get("windowStyle");
-            document.getElementById("blurType").value = await settings.get("blurType");
         }
         loadSettings();
         document.getElementById("save").addEventListener("click", function () {
@@ -85,7 +74,7 @@
                 document.getElementById("tray").checked,
                 document.getElementById("patches").checked,
                 document.getElementById("mod").value,
-                document.getElementById("blurType").value
+                "acrylic"
             );
         });
     </script>

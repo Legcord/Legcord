@@ -2,14 +2,14 @@
 // I had to add most of the window creation code here to split both into seperete functions
 // WHY? Because I can't use the same code for both due to annoying bug with value `frame` not responding to variables
 // I'm sorry for this mess but I'm not sure how to fix it.
-import {BrowserWindow, shell, app, ipcMain} from "electron";
+import {BrowserWindow, shell, app, ipcMain, dialog} from "electron";
 import path from "path";
 import {contentPath} from "./main";
 import {checkIfConfigIsNew, firstRun, getConfigUnsafe} from "./utils";
 import {registerIpc} from "./ipc";
 import contextMenu from "electron-context-menu";
 export let mainWindow: BrowserWindow;
-import * as glasstron from "glasstron";
+
 
 let guestWindows: BrowserWindow[] = [];
 contextMenu({
@@ -37,7 +37,6 @@ function doAfterDefiningTheWindow() {
             mainWindow.hide();
         } else if (!(await getConfigUnsafe("minimizeToTray"))) {
             e.preventDefault();
-            app.exit();
             app.quit();
         }
     });
@@ -96,28 +95,9 @@ export function createNativeWindow() {
     });
     doAfterDefiningTheWindow();
 }
-export function createGlasstronWindow() {
-    mainWindow = new glasstron.BrowserWindow({
-        width: 300,
-        height: 350,
-        title: "ArmCord",
-        darkTheme: true,
-        icon: path.join(__dirname, "/assets/icon_transparent.png"),
-        frame: true,
-        autoHideMenuBar: true,
-        webPreferences: {
-            preload: path.join(__dirname, "preload/preload.js"),
-            spellcheck: true
-        }
-    });
 
-    //@ts-expect-error
-    mainWindow.blurType = getConfigUnsafe("blurType");
-    //@ts-expect-error
-    mainWindow.setBlur(true);
-    doAfterDefiningTheWindow();
-}
 export function createTabsHost() {
+    dialog.showErrorBox("READ THIS BEFORE USING THE APP", "ArmCord Tabs are highly experimental and should be only used for strict testing purposes. Please don't ask for support, however you can still report bugs!")
     guestWindows[1] = mainWindow;
     mainWindow = new BrowserWindow({
         width: 300,

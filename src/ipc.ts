@@ -33,7 +33,7 @@ export function registerIpc() {
         mainWindow.hide();
     });
     ipcMain.on("win-quit", (event, arg) => {
-        app.exit();
+        app.quit();
     });
     ipcMain.on("get-app-version", (event) => {
         event.returnValue = getVersion();

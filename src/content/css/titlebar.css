@@ -88,7 +88,7 @@
     content: "Cord";
     color: var(--cord-color) !important;
     font-weight: normal;
-    font-size: 14px;
+    font-size: 15px;
     font-family: Discordinated;
 }
 .window-title:before {
