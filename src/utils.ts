@@ -1,6 +1,6 @@
 import * as storage from "electron-json-storage";
 import * as fs from "fs";
-import {app} from "electron";
+import {app, dialog} from "electron";
 import path from "path";
 export var firstRun: boolean;
 
@@ -21,12 +21,16 @@ export async function sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export async function checkIfConfigIsNew() {
-    if ((await getConfigUnsafe("automaticPatches")) == undefined) {
-        firstRun = true;
+export async function checkIfConfigIsBroken() {
+    if ((await getConfigUnsafe("0")) == "d") {
+        console.log("Detected a corrupted config");
+        setup();
+        dialog.showErrorBox(
+            "Oops, something went wrong.",
+            "ArmCord has detected that your configuration file is corrupted, please restart the app and set your settings again. If this issue persists, report it on the support server/Github issues."
+        );
     }
 }
-
 export interface Settings {
     windowStyle: string;
     channel: string;

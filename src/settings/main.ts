@@ -1,18 +1,17 @@
-import {BrowserWindow, shell, ipcMain} from "electron";
-import * as storage from "electron-json-storage";
+import {BrowserWindow, shell, ipcMain, app} from "electron";
 import {getConfigUnsafe, saveSettings, Settings} from "../utils";
 import path from "path";
-var settings: any;
-var isAlreadyCreated: boolean = false;
-storage.get("settings", function (error, data: any) {
-    if (error) throw error;
-    console.log(data);
-    settings = data;
-});
 var settingsWindow: BrowserWindow;
+var instance: number = 0;
+
 export function createSettingsWindow() {
-    if (isAlreadyCreated) {
-        settingsWindow.show();
+    console.log("Creating a settings window.");
+    instance = instance + 1;
+    if (instance > 1) {
+        if (settingsWindow) {
+            settingsWindow.show();
+            settingsWindow.restore();
+        }
     } else {
         settingsWindow = new BrowserWindow({
             width: 500,
@@ -37,10 +36,10 @@ export function createSettingsWindow() {
             return {action: "deny"};
         });
         settingsWindow.loadURL(`file://${__dirname}/settings.html`);
-        settingsWindow.on("close", async (e) => {
-            e.preventDefault();
-            settingsWindow.hide();
+        settingsWindow.on("close", (event: Event) => {
+            ipcMain.removeHandler("getSetting");
+            ipcMain.removeAllListeners("saveSettings");
+            instance = 0;
         });
-        isAlreadyCreated = true;
     }
 }
