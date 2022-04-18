@@ -1,4 +1,3 @@
-import * as storage from "electron-json-storage";
 import * as fs from "fs";
 import {app, dialog} from "electron";
 import path from "path";
@@ -31,15 +30,7 @@ export async function checkIfConfigIsBroken() {
         );
     }
 }
-export interface Settings {
-    windowStyle: string;
-    channel: string;
-    armcordCSP: boolean;
-    minimizeToTray: boolean;
-    automaticPatches: boolean;
-    mods: string;
-    blurType: string;
-}
+
 export function setup() {
     console.log("Setting up temporary ArmCord settings.");
     const defaults: Settings = {
@@ -49,33 +40,26 @@ export function setup() {
         minimizeToTray: true,
         automaticPatches: false,
         mods: "cumcord",
-        blurType: "acrylic"
+        blurType: "acrylic",
+        doneSetup: false
     };
-    storage.set(
-        "settings",
+    setConfigBulk(
         {
             ...defaults,
-            doneSetup: false
         },
-        function (error) {
-            if (error) throw error;
-        }
+        
     );
 }
-
+//LEGACY WRAPPER
 export function saveSettings(settings: Settings) {
     console.log("Setting up ArmCord settings.");
-    storage.set(
-        "settings",
+    setConfigBulk(
         {
             ...settings,
-            doneSetup: true
         },
-        function (error) {
-            if (error) throw error;
-        }
     );
 }
+//LEGACY
 export async function getConfigUnsafe(object: string) {
     try {
         const userDataPath = app.getPath("userData");
@@ -102,4 +86,57 @@ export async function injectJS(inject: string) {
     el.appendChild(document.createTextNode(js));
 
     document.body.appendChild(el);
+}
+
+//ArmCord Settings/Storage manager
+export interface Settings {
+    windowStyle: string;
+    channel: string;
+    armcordCSP: boolean;
+    minimizeToTray: boolean;
+    automaticPatches: boolean;
+    mods: string;
+    blurType: string;
+    doneSetup: boolean;
+}
+export async function getConfig(object: string) {
+    try {
+        const userDataPath = app.getPath("userData");
+        const storagePath = path.join(userDataPath, "/storage/");
+        let rawdata = fs.readFileSync(storagePath + "settings.json", "utf-8");
+        let returndata = JSON.parse(rawdata);
+        console.log(returndata[object]);
+        return returndata[object];
+    } catch (e) {
+        console.log("Config probably doesn't exist yet. Returning setup value.");
+        firstRun = true;
+        return "setup";
+    }
+}
+export async function setConfig(object: string, toSet: any) {
+    try {
+        const userDataPath = app.getPath("userData");
+        const storagePath = path.join(userDataPath, "/storage/");
+        let rawdata = fs.readFileSync(storagePath + "settings.json", "utf-8");
+        let parsed = JSON.parse(rawdata);
+        parsed[object] = toSet;
+        let toSave = JSON.stringify(parsed)
+        fs.writeFileSync(storagePath + "settings.json", toSave, "utf-8")
+    } catch (e) {
+        console.log("Config probably doesn't exist yet. Returning setup value.");
+        firstRun = true;
+        return "setup";
+    }
+}
+export async function setConfigBulk(object: Settings) {
+    try {
+        const userDataPath = app.getPath("userData");
+        const storagePath = path.join(userDataPath, "/storage/");
+        let toSave = JSON.stringify(object)
+        fs.writeFileSync(storagePath + "settings.json", toSave, "utf-8")
+    } catch (e) {
+        console.log("Config probably doesn't exist yet. Returning setup value.");
+        firstRun = true;
+        return "setup";
+    }
 }
