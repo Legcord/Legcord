@@ -5,7 +5,7 @@
 import {BrowserWindow, shell, app, ipcMain, dialog} from "electron";
 import path from "path";
 import {contentPath} from "./main";
-import {checkIfConfigIsNew, firstRun, getConfigUnsafe} from "./utils";
+import {checkIfConfigIsBroken, firstRun, getConfigUnsafe} from "./utils";
 import {registerIpc} from "./ipc";
 import contextMenu from "electron-context-menu";
 export let mainWindow: BrowserWindow;
@@ -18,7 +18,7 @@ contextMenu({
 });
 
 function doAfterDefiningTheWindow() {
-    checkIfConfigIsNew();
+    checkIfConfigIsBroken();
     registerIpc();
     mainWindow.webContents.userAgent =
         "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36"; //fake useragent for screenshare to work
