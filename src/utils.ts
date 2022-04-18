@@ -2,7 +2,7 @@ import * as fs from "fs";
 import {app, dialog} from "electron";
 import path from "path";
 export var firstRun: boolean;
-
+export var contentPath: string;
 //utillity functions that are used all over the codebase or just too obscure to be put in the file used in
 export function addStyle(styleString: string) {
     const style = document.createElement("style");
@@ -43,14 +43,10 @@ export function setup() {
         blurType: "acrylic",
         doneSetup: false
     };
-    setConfigBulk(
-        {
-            ...defaults,
-        },
-        
-    );
+    setConfigBulk({
+        ...defaults
+    });
 }
-
 
 export function getVersion() {
     //to-do better way of doing this
@@ -67,6 +63,7 @@ export async function injectJS(inject: string) {
 }
 
 //ArmCord Settings/Storage manager
+
 export interface Settings {
     windowStyle: string;
     channel: string;
@@ -81,7 +78,8 @@ export async function getConfig(object: string) {
     try {
         const userDataPath = app.getPath("userData");
         const storagePath = path.join(userDataPath, "/storage/");
-        let rawdata = fs.readFileSync(storagePath + "settings.json", "utf-8");
+        const settingsFile = storagePath + "settings.json";
+        let rawdata = fs.readFileSync(settingsFile, "utf-8");
         let returndata = JSON.parse(rawdata);
         console.log(returndata[object]);
         return returndata[object];
@@ -95,11 +93,12 @@ export async function setConfig(object: string, toSet: any) {
     try {
         const userDataPath = app.getPath("userData");
         const storagePath = path.join(userDataPath, "/storage/");
-        let rawdata = fs.readFileSync(storagePath + "settings.json", "utf-8");
+        const settingsFile = storagePath + "settings.json";
+        let rawdata = fs.readFileSync(settingsFile, "utf-8");
         let parsed = JSON.parse(rawdata);
         parsed[object] = toSet;
-        let toSave = JSON.stringify(parsed)
-        fs.writeFileSync(storagePath + "settings.json", toSave, "utf-8")
+        let toSave = JSON.stringify(parsed);
+        fs.writeFileSync(settingsFile, toSave, "utf-8");
     } catch (e) {
         console.log("Config probably doesn't exist yet. Returning setup value.");
         firstRun = true;
@@ -110,11 +109,31 @@ export async function setConfigBulk(object: Settings) {
     try {
         const userDataPath = app.getPath("userData");
         const storagePath = path.join(userDataPath, "/storage/");
-        let toSave = JSON.stringify(object)
-        fs.writeFileSync(storagePath + "settings.json", toSave, "utf-8")
+        const settingsFile = storagePath + "settings.json";
+        let toSave = JSON.stringify(object);
+        fs.writeFileSync(settingsFile, toSave, "utf-8");
     } catch (e) {
         console.log("Config probably doesn't exist yet. Returning setup value.");
         firstRun = true;
         return "setup";
+    }
+}
+export async function checkIfConfigExists() {
+    const userDataPath = app.getPath("userData");
+    const storagePath = path.join(userDataPath, "/storage/");
+    const settingsFile = storagePath + "settings.json";
+    if (!fs.existsSync(settingsFile)) {
+        console.log("First run of the ArmCord. Starting setup.");
+        setup();
+        contentPath = path.join(__dirname, "/content/setup.html");
+        if (!contentPath.includes("ts-out")) {
+            contentPath = path.join(__dirname, "/ts-out/content/setup.html");
+        }
+    } else {
+        console.log("ArmCord has been run before. Skipping setup.");
+        contentPath = path.join(__dirname, "/content/splash.html");
+        if (!contentPath.includes("ts-out")) {
+            contentPath = path.join(__dirname, "/ts-out/content/splash.html");
+        }
     }
 }

@@ -4,8 +4,7 @@
 // I'm sorry for this mess but I'm not sure how to fix it.
 import {BrowserWindow, shell, app, ipcMain, dialog} from "electron";
 import path from "path";
-import {contentPath} from "./main";
-import {checkIfConfigIsBroken, firstRun, getConfig} from "./utils";
+import {checkIfConfigIsBroken, firstRun, getConfig, contentPath} from "./utils";
 import {registerIpc} from "./ipc";
 import contextMenu from "electron-context-menu";
 export let mainWindow: BrowserWindow;

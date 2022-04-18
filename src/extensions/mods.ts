@@ -9,7 +9,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 import electron from "electron";
-import * as storage from "electron-json-storage";
+import {getConfig} from "../utils";
 const otherMods = {
     generic: {
         electronProxy: require("util").types.isProxy(electron) // Many modern mods overwrite electron with a proxy with a custom BrowserWindow (copied from PowerCord)
@@ -55,9 +55,9 @@ const unstrictCSP = () => {
         done({responseHeaders});
     });
 };
-storage.get("settings", function (error, data: any) {
-    if (error) throw error;
-    if (data.armcordCSP) {
+
+electron.app.whenReady().then(async () => {
+    if (await getConfig("armcordCSP")) {
         unstrictCSP();
     } else {
         console.log("ArmCord CSP is disabled. The CSP should be managed by third-party plugin.");

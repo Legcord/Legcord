@@ -1,8 +1,8 @@
 //ipc stuff
 import {app, ipcMain, shell, desktopCapturer} from "electron";
 import {createTabsGuest, mainWindow} from "./window";
-import {setConfigBulk, getVersion} from "./utils";
-import {settings, customTitlebar, tabs} from "./main";
+import {setConfigBulk, getVersion, getConfig} from "./utils";
+import {customTitlebar, tabs} from "./main";
 import {createSettingsWindow} from "./settings/main";
 export function registerIpc() {
     ipcMain.on("get-app-path", (event, arg) => {
@@ -48,15 +48,14 @@ export function registerIpc() {
     ipcMain.on("saveSettings", (event, args) => {
         setConfigBulk(args);
     });
-    ipcMain.on("minimizeToTray", (event) => {
-        console.log(settings.minimizeToTray);
-        event.returnValue = settings.minimizeToTray;
+    ipcMain.on("minimizeToTray", async (event) => {
+        event.returnValue = await getConfig("minimizeToTray");
     });
-    ipcMain.on("channel", (event) => {
-        event.returnValue = settings.channel;
+    ipcMain.on("channel", async (event) => {
+        event.returnValue = await getConfig("channel");
     });
-    ipcMain.on("clientmod", (event, arg) => {
-        event.returnValue = settings.mods;
+    ipcMain.on("clientmod", async (event, arg) => {
+        event.returnValue = await getConfig("mods");
     });
     ipcMain.on("titlebar", (event, arg) => {
         event.returnValue = customTitlebar;
@@ -64,14 +63,14 @@ export function registerIpc() {
     ipcMain.on("tabs", (event, arg) => {
         event.returnValue = tabs;
     });
-    ipcMain.on("shouldPatch", (event, arg) => {
-        event.returnValue = settings.automaticPatches;
+    ipcMain.on("shouldPatch", async (event, arg) => {
+        event.returnValue = await getConfig("automaticPatches");
     });
     ipcMain.on("openSettingsWindow", (event, arg) => {
         createSettingsWindow();
     });
-    ipcMain.on("setting-armcordCSP", (event) => {
-        if (settings.armcordCSP) {
+    ipcMain.on("setting-armcordCSP", async (event) => {
+        if (await getConfig("armcordCSP")) {
             event.returnValue = true;
         } else {
             event.returnValue = false;

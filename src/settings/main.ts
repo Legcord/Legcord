@@ -1,4 +1,4 @@
-import {BrowserWindow, shell, ipcMain, app} from "electron";
+import {BrowserWindow, shell, ipcMain} from "electron";
 import {getConfig, setConfigBulk, Settings} from "../utils";
 import path from "path";
 var settingsWindow: BrowserWindow;
