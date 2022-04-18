@@ -21,7 +21,7 @@ export async function sleep(ms: number) {
 }
 
 export async function checkIfConfigIsBroken() {
-    if ((await getConfigUnsafe("0")) == "d") {
+    if ((await getConfig("0")) == "d") {
         console.log("Detected a corrupted config");
         setup();
         dialog.showErrorBox(
@@ -50,30 +50,8 @@ export function setup() {
         
     );
 }
-//LEGACY WRAPPER
-export function saveSettings(settings: Settings) {
-    console.log("Setting up ArmCord settings.");
-    setConfigBulk(
-        {
-            ...settings,
-        },
-    );
-}
-//LEGACY
-export async function getConfigUnsafe(object: string) {
-    try {
-        const userDataPath = app.getPath("userData");
-        const storagePath = path.join(userDataPath, "/storage/");
-        let rawdata = fs.readFileSync(storagePath + "settings.json", "utf-8");
-        let returndata = JSON.parse(rawdata);
-        console.log(returndata[object]);
-        return returndata[object];
-    } catch (e) {
-        console.log("Config probably doesn't exist yet. Returning setup value.");
-        firstRun = true;
-        return "setup";
-    }
-}
+
+
 export function getVersion() {
     //to-do better way of doing this
     return "3.1.0";

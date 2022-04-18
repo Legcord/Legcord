@@ -5,7 +5,7 @@
 import {BrowserWindow, shell, app, ipcMain, dialog} from "electron";
 import path from "path";
 import {contentPath} from "./main";
-import {checkIfConfigIsBroken, firstRun, getConfigUnsafe} from "./utils";
+import {checkIfConfigIsBroken, firstRun, getConfig} from "./utils";
 import {registerIpc} from "./ipc";
 import contextMenu from "electron-context-menu";
 export let mainWindow: BrowserWindow;
@@ -31,10 +31,10 @@ function doAfterDefiningTheWindow() {
         return callback({});
     });
     mainWindow.on("close", async (e) => {
-        if (await getConfigUnsafe("minimizeToTray")) {
+        if (await getConfig("minimizeToTray")) {
             e.preventDefault();
             mainWindow.hide();
-        } else if (!(await getConfigUnsafe("minimizeToTray"))) {
+        } else if (!(await getConfig("minimizeToTray"))) {
             e.preventDefault();
             app.quit();
         }

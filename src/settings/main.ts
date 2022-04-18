@@ -1,5 +1,5 @@
 import {BrowserWindow, shell, ipcMain, app} from "electron";
-import {getConfigUnsafe, saveSettings, Settings} from "../utils";
+import {getConfig, setConfigBulk, Settings} from "../utils";
 import path from "path";
 var settingsWindow: BrowserWindow;
 var instance: number = 0;
@@ -26,10 +26,10 @@ export function createSettingsWindow() {
         });
         ipcMain.on("saveSettings", (event, args: Settings) => {
             console.log(args);
-            saveSettings(args);
+            setConfigBulk(args);
         });
         ipcMain.handle("getSetting", (event, toGet: string) => {
-            return getConfigUnsafe(toGet);
+            return getConfig(toGet);
         });
         settingsWindow.webContents.setWindowOpenHandler(({url}) => {
             shell.openExternal(url);

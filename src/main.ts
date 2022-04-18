@@ -3,7 +3,7 @@ import {app, BrowserWindow, session, dialog} from "electron";
 import * as path from "path";
 import "v8-compile-cache";
 import * as storage from "electron-json-storage";
-import {getConfigUnsafe, setup} from "./utils";
+import {getConfig, setup} from "./utils";
 import "./extensions/mods";
 import "./extensions/plugin";
 import "./tray";
@@ -15,7 +15,7 @@ export var settings: any;
 export var customTitlebar: boolean;
 export var tabs: boolean;
 async function appendSwitch() {
-    if ((await getConfigUnsafe("windowStyle")) == "glasstron") {
+    if ((await getConfig("windowStyle")) == "glasstron") {
         console.log("Enabling transparency visuals.");
         app.commandLine.appendSwitch("enable-transparent-visuals");
     }
@@ -46,7 +46,7 @@ storage.get("settings", function (error, data: any) {
     settings = data;
 });
 app.whenReady().then(async () => {
-    switch (await getConfigUnsafe("windowStyle")) {
+    switch (await getConfig("windowStyle")) {
         case "default":
             createCustomWindow();
             customTitlebar = true;
@@ -79,7 +79,7 @@ app.whenReady().then(async () => {
     });
     app.on("activate", async function () {
         if (BrowserWindow.getAllWindows().length === 0)
-            switch (await getConfigUnsafe("windowStyle")) {
+            switch (await getConfig("windowStyle")) {
                 case "default":
                     createCustomWindow();
                     break;

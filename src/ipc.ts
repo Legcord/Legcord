@@ -1,7 +1,7 @@
 //ipc stuff
 import {app, ipcMain, shell, desktopCapturer} from "electron";
 import {createTabsGuest, mainWindow} from "./window";
-import {saveSettings, getVersion} from "./utils";
+import {setConfigBulk, getVersion} from "./utils";
 import {settings, customTitlebar, tabs} from "./main";
 import {createSettingsWindow} from "./settings/main";
 export function registerIpc() {
@@ -46,7 +46,7 @@ export function registerIpc() {
         app.exit();
     });
     ipcMain.on("saveSettings", (event, args) => {
-        saveSettings(args);
+        setConfigBulk(args);
     });
     ipcMain.on("minimizeToTray", (event) => {
         console.log(settings.minimizeToTray);
