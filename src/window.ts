@@ -17,7 +17,7 @@ contextMenu({
     showSearchWithGoogle: true
 });
 
-function doAfterDefiningTheWindow() {
+async function doAfterDefiningTheWindow() {
     checkIfConfigIsBroken();
     registerIpc();
     mainWindow.webContents.userAgent =
@@ -40,7 +40,9 @@ function doAfterDefiningTheWindow() {
         }
     });
     console.log(contentPath);
-    startServer()
+    if (await getConfig("inviteWebsocket") == true) {
+        startServer()
+    }
     try {
         mainWindow.loadFile(contentPath);
     } catch (e) {

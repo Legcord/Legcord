@@ -41,6 +41,7 @@ export function setup() {
         automaticPatches: false,
         mods: "cumcord",
         blurType: "acrylic",
+        inviteWebsocket: true,
         doneSetup: false
     };
     setConfigBulk({
@@ -72,6 +73,7 @@ export interface Settings {
     automaticPatches: boolean;
     mods: string;
     blurType: string;
+    inviteWebsocket: boolean;
     doneSetup: boolean;
 }
 export async function getConfig(object: string) {
