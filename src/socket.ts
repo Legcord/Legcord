@@ -23,7 +23,7 @@ import type {Server, WebSocket} from "ws";
 import {inviteWindow, createInviteWindow} from "./window";
 
 async function wsLog(message: string, ...args: unknown[]) {
-    console.log("WebSocket" + +message, ...args);
+    console.log("[WebSocket]" + message, ...args);
 }
 
 /** Generates an inclusive range (as `Array`) from `start` to `end`. */
