@@ -9,6 +9,7 @@ jobs:
         with:
           node-version: '18'
       - run: npm install
+      - run: npm run CIbuild
       - id: vars
         shell: bash
         run: |
