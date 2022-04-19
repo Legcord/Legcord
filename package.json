@@ -9,6 +9,7 @@
     "start": "npm run build && electron ./ts-out/main.js",
     "package": "npm run build && electron-builder",
     "format": "prettier --write src/**/*",
+    "CIbuild": "npm run build && electron-builder --linux zip && electron-builder --windows zip && electron-builder --macos zip",
     "postinstall": "husky install"
   },
   "repository": {
