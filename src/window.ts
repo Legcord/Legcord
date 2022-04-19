@@ -6,9 +6,10 @@ import {BrowserWindow, shell, app, ipcMain, dialog} from "electron";
 import path from "path";
 import {checkIfConfigIsBroken, firstRun, getConfig, contentPath} from "./utils";
 import {registerIpc} from "./ipc";
+import startServer from "./socket"
 import contextMenu from "electron-context-menu";
 export let mainWindow: BrowserWindow;
-
+export let inviteWindow: BrowserWindow;
 let guestWindows: BrowserWindow[] = [];
 contextMenu({
     showSaveImageAs: true,
@@ -39,6 +40,7 @@ function doAfterDefiningTheWindow() {
         }
     });
     console.log(contentPath);
+    startServer()
     try {
         mainWindow.loadFile(contentPath);
     } catch (e) {
@@ -164,4 +166,19 @@ export function createTabsGuest(number: number) {
 
         guestWindows[number].loadURL("https://discord.com/app");
     }
+}
+export function createInviteWindow() {
+    inviteWindow = new BrowserWindow({
+        width: 800,
+        height: 600,
+        title: "ArmCord Invite Manager",
+        darkTheme: true,
+        icon: path.join(__dirname, "/assets/icon_transparent.png"),
+        frame: true,
+        autoHideMenuBar: true,
+        webPreferences: {
+            spellcheck: true
+        }
+    });
+    inviteWindow.hide()
 }
