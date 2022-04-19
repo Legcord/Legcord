@@ -169,6 +169,9 @@ export default async function startServer() {
                     lock = false;
                     child.close();
                 })
+                child.on("close", (e) => {
+                    lock = false;
+                })
                 // Blocks requests to ArmCord's WS, to prevent loops.
                 child.webContents.session.webRequest.onBeforeRequest({
                     urls: ['ws://127.0.0.1:'+wsPort.toString()+'/*']
