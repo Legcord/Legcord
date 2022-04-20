@@ -23,6 +23,9 @@ app.whenReady().then(async () => {
         case "native":
             createNativeWindow();
             break;
+        case "discord":
+            createNativeWindow();
+            break;
         case "glasstron":
             dialog.showErrorBox(
                 "Glasstron is unsupported.",
