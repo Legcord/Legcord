@@ -133,8 +133,8 @@ jobs:
                 delete_release: true
                 tag_name: devbuild
                 repo: ArmCord/ArmCord
-                env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Create the release
               uses: softprops/action-gh-release@v1
               env:
