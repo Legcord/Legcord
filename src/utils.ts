@@ -83,7 +83,7 @@ export async function getConfig(object: string) {
         const settingsFile = storagePath + "settings.json";
         let rawdata = fs.readFileSync(settingsFile, "utf-8");
         let returndata = JSON.parse(rawdata);
-        console.log(returndata[object]);
+        console.log(object + ": " + returndata[object]);
         return returndata[object];
     } catch (e) {
         console.log("Config probably doesn't exist yet. Returning setup value.");
@@ -124,7 +124,12 @@ export async function checkIfConfigExists() {
     const userDataPath = app.getPath("userData");
     const storagePath = path.join(userDataPath, "/storage/");
     const settingsFile = storagePath + "settings.json";
+    
     if (!fs.existsSync(settingsFile)) {
+        if (!fs.existsSync(storagePath)) {
+            fs.mkdirSync(storagePath);
+            console.log("Created missing storage folder");
+        }
         console.log("First run of the ArmCord. Starting setup.");
         setup();
         contentPath = path.join(__dirname, "/content/setup.html");
