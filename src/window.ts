@@ -8,6 +8,7 @@ import {checkIfConfigIsBroken, firstRun, getConfig, contentPath} from "./utils";
 import {registerIpc} from "./ipc";
 import startServer from "./socket"
 import contextMenu from "electron-context-menu";
+export var icon: string;
 export let mainWindow: BrowserWindow;
 export let inviteWindow: BrowserWindow;
 let guestWindows: BrowserWindow[] = [];

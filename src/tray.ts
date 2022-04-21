@@ -6,7 +6,7 @@ import { createSettingsWindow } from "./settings/main";
 let tray: any = null;
 app.whenReady().then(async () => {
     if (await getConfig("windowStyle") == "discord") {
-        tray = new Tray(path.join(__dirname, "../", "/assets/ac_plug.png"));
+        tray = new Tray(path.join(__dirname, "../", "/assets/dsc-tray.png"));
         const contextMenu = Menu.buildFromTemplate([
             {
                 label: "Open ArmCord",
