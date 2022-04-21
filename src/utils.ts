@@ -21,7 +21,7 @@ export async function sleep(ms: number) {
 }
 
 export async function checkIfConfigIsBroken() {
-    if ((await getConfig("0")) == "d") {
+    if (await getConfig("0") == "d") {
         console.log("Detected a corrupted config");
         setup();
         dialog.showErrorBox(
