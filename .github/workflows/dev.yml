@@ -28,8 +28,6 @@ jobs:
             - name: Replace the version number
               run: cat src/utils.ts | sed -e 's/[[:digit:]]\.[[:digit:]]\.[[:digit:]]/DEV/g' | tee src/utils.ts > /dev/null
 
-            - run: cat src/utils.ts
-
             - name: Build
               run: npm run build && electron-builder --linux zip && electron-builder --arm64 --linux zip
 
@@ -63,8 +61,6 @@ jobs:
 
             - name: Replace the version number
               run: cat src/utils.ts | sed -e 's/[[:digit:]]\.[[:digit:]]\.[[:digit:]]/DEV/g' | tee src/utils.ts > /dev/null
-
-            - run: cat src/utils.ts
 
             - name: Build
               run: npm run build && electron-builder --macos zip
