@@ -1,6 +1,7 @@
 # Some prettier-specific files so it doesn't die.
 **/*.png
 **/*.ico
+**/*.woff
 LICENSE
 .gitignore
 
