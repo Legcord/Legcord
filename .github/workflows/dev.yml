@@ -25,6 +25,11 @@ jobs:
             - name: Install Electron-Builder
               run: npm install -g electron-builder
 
+            - name: Replace the version number
+              run: cat src/utils.ts | sed -e 's/[[:digit:]]\.[[:digit:]]\.[[:digit:]]/DEV/g' | tee src/utils.ts > /dev/null
+
+            - run: cat src/utils.ts
+
             - name: Build
               run: npm run build && electron-builder --linux zip && electron-builder --arm64 --linux zip
 
@@ -56,6 +61,11 @@ jobs:
             - name: Install Electron-Builder
               run: npm install -g electron-builder
 
+            - name: Replace the version number
+              run: cat src/utils.ts | sed -e 's/[[:digit:]]\.[[:digit:]]\.[[:digit:]]/DEV/g' | tee src/utils.ts > /dev/null
+
+            - run: cat src/utils.ts
+
             - name: Build
               run: npm run build && electron-builder --macos zip
               env:
@@ -83,6 +93,9 @@ jobs:
               
             - name: Install Electron-Builder
               run: npm install -g electron-builder
+
+            - name: Replace the version number
+              run: (Get-Content src/utils.ts) -replace "\d\.\d\.\d", "DEV" | Out-File src/utils.ts
 
             - name: Build
               run: npm run build && electron-builder --windows zip
@@ -121,23 +134,20 @@ jobs:
               with:
                   name: ArmCordLinuxArm64.zip
                   path: linux
-            - run: |
-                ls
-                ls windows
-                ls macos
-                ls linux
+
             - name: Get some values needed for the release
               id: vars
               shell: bash
               run: |
                 echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
             - uses: dev-drprasad/delete-tag-and-release@v0.2.0
               with:
                 delete_release: true
                 tag_name: devbuild
-                repo: ArmCord/ArmCord
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
             - name: Create the release
               uses: softprops/action-gh-release@v1
               env:
