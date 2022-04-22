@@ -12,6 +12,13 @@ export var settings: any;
 export var customTitlebar: boolean;
 export var tabs: boolean;
 
+if (process.platform == "linux") {
+    if (process.env.$XDG_SESSION_TYPE == "wayland") {
+        console.log("Wayland specific patches applied.")
+        app.commandLine.appendSwitch("enable-features=UseOzonePlatform");
+        app.commandLine.appendSwitch("ozone-platform=wayland");
+    }
+}
 checkIfConfigExists();
 
 app.whenReady().then(async () => {
