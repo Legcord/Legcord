@@ -1,134 +1,150 @@
-<!--- This is awful and should be replaced in later versions. Possibly based of current settings as of 3.1.0 version. If you have time please PR a better setup screen. --->
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css" />
         <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>ArmCord Setup</title>
         <style>
             @import url("css/setup.css");
         </style>
     </head>
-
     <body>
         <div class="container">
-            <h1 class="logo"></h1>
+            <div id="warning" class="hidden">
+                <p>You appear to be offline. Please connect to the internet and restart ArmCord Setup.</p>
+            </div>
             <div id="setup">
-                <p>Select what kind of setup you want to perform:</p>
-                <button id="express" class="center">Express setup</button>
-                <button id="full" class="center">Full setup</button>
+                <div id="logo" class="hidden">
+                    <p>ARM</p>
+                    <p>Cord</p>
+                </div>
+                <div id="page1" class="hidden">
+                    <p>Select the type of setup you want to perform.</p>
+                    <div id="buttons">
+                        <button id="express" class="center">Express</button>
+                        <button id="full" class="center">Full</button>
+                    </div>
+                </div>
+
+                <div id="page2" class="hidden">
+                    <p class="text-center setup-ask">Choose your Discord channel/instance:</p>
+                    <div class="center">
+                        <select name="channel" id="channel" class="dropdown-button">
+                            <option value="stable">Stable</option>
+                            <option value="canary">Canary</option>
+                            <option value="ptb">PTB</option>
+                            <option value="foss">Fosscord</option>
+                        </select>
+                    </div>
+                    <p class="text-center setup-ask">Should ArmCord handle client mods installation?</p>
+                    <div class="center">
+                        <select name="csp" id="csp" class="dropdown-button">
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+                    <div id="buttons">
+                        <button id="next" class="center">Next</button>
+                    </div>
+                </div>
+
+                <div id="page3" class="hidden">
+                    <p class="text-center setup-ask">Select a client mod you want to install:</p>
+                    <div class="center">
+                        <select name="mod" id="mod" class="dropdown-button">
+                            <option value="cumcord">Cumcord</option>
+                            <option value="goosemod">GooseMod</option>
+                            <option value="flicker">Flicker (Heavily WIP)</option>
+                        </select>
+                    </div>
+                    <p>
+                        Why not all of them? Having many client mods at the same time can cause issues. If you really
+                        want to do it though, check our documentation ;)
+                    </p>
+                    <div id="buttons">
+                        <button id="next" class="center">Next</button>
+                    </div>
+                </div>
             </div>
         </div>
+
         <script>
-            function fade(element) {
-                var op = 1; // initial opacity
-                var timer = setInterval(function () {
-                    if (op <= 0.1) {
-                        clearInterval(timer);
-                        element.style.display = "none";
-                    }
-                    element.style.opacity = op;
-                    element.style.filter = "alpha(opacity=" + op * 100 + ")";
-                    op -= op * 0.1;
-                }, 50);
+            // Accessors {{{
+            let options = {};
+
+            let logo = document.getElementById("logo");
+            logo.classList.remove("hidden");
+
+            let page1 = document.getElementById("page1");
+            page1.classList.remove("hidden");
+            page1.buttons = document.querySelectorAll("#page1 > #buttons > button");
+
+            // Connection check
+            let warning = document.getElementById("warning");
+            if (window.navigator.onLine === false) {
+                warning.classList.remove("hidden");
             }
 
-            if (window.navigator.onLine === false) {
-                document.getElementById("setup").innerHTML =
-                    "You appear to be offline. Please connect to the internet and restart ArmCord Setup.";
-            } else {
-                console.log("Starting ArmCord Setup...");
-                document.getElementById("express").addEventListener("click", function () {
+            let page2 = document.getElementById("page2");
+            let page3 = document.getElementById("page3");
+            // }}}
+
+            // Express
+            page1.buttons[0].addEventListener("click", () => {
+                window.armcordinternal.saveSettings({
+                    windowStyle: "default",
+                    channel: "stable",
+                    armcordCSP: true,
+                    minimizeToTray: true,
+                    automaticPatches: false,
+                    mods: "cumcord",
+                    blurType: "acrylic"
+                });
+                setTimeout(() => window.armcordinternal.restart(), 5000);
+            });
+
+            // Full
+            page1.buttons[1].addEventListener("click", () => {
+                page1.classList.add("hidden");
+                page2.classList.remove("hidden");
+            });
+
+            page2.buttons = document.querySelectorAll("#page2 > #buttons > button");
+            page2.buttons[0].addEventListener("click", () => {
+                options.channel = document.getElementById("channel").value;
+                options.csp = document.getElementById("csp").value;
+                page2.classList.add("hidden");
+
+                page3.buttons = document.querySelectorAll("#page3 > #buttons > button");
+                if (options.csp === "true") {
+                    page3.classList.remove("hidden");
+                    page3.buttons[0].addEventListener("click", () => {
+                        options.mod = document.getElementById("mod").value;
+                        window.armcordinternal.saveSettings({
+                            windowStyle: "default",
+                            channel: options.channel,
+                            armcordCSP: true,
+                            minimizeToTray: true,
+                            automaticPatches: false,
+                            mods: options.mod,
+                            blurType: "acrylic"
+                        });
+                        setTimeout(() => window.armcordinternal.restart(), 500);
+                    });
+                } else {
                     window.armcordinternal.saveSettings({
                         windowStyle: "default",
-                        channel: "stable",
+                        channel: options.channel,
                         armcordCSP: true,
                         minimizeToTray: true,
                         automaticPatches: false,
-                        mods: "cumcord",
-                        blurType: "acrylic",
-                        inviteWebsocket: true,
-                        doneSetup: true
+                        mods: "none",
+                        blurType: "acrylic"
                     });
-                    fade(document.getElementById("setup"));
-                    setTimeout(function () {
-                        window.armcordinternal.restart();
-                    }, 5000);
-                });
-                document.getElementById("full").addEventListener("click", function () {
-                    document.getElementById("setup").innerHTML = `
-        <p class="text-center setup-ask">Choose your Discord channel/instance:</p>
-    <div class="center">
-      <select name="channel" id="channel" class="dropdown-button">
-        <option value="stable">Stable</option>
-        <option value="canary">Canary</option>
-        <option value="ptb">PTB</option>
-        <option value="foss">Fosscord</option>
-      </select>
-      </div>
-      <p class="text-center setup-ask">Should ArmCord handle client mods installation?</p>
-    <div class="center">
-      <select name="csp" id="csp" class="dropdown-button">
-        <option value="true">Yes</option>
-        <option value="false">No</option>
-      </select>
-      </div>
-      <button id="next" class="center">Next</button>
-      `;
-                    document.getElementById("next").addEventListener("click", function () {
-                        var branch = document.getElementById("channel").value;
-                        var csp = document.getElementById("csp").value;
-                        if (csp === "true") {
-                            document.getElementById("setup").innerHTML = `
-        <p class="text-center setup-ask">Select a client mod you want to install:</p>
-    <div class="center">
-      <select name="mod" id="mod" class="dropdown-button">
-        <option value="cumcord">Cumcord</option>
-        <option value="goosemod">GooseMod</option>
-        <option value="flicker">Flicker (Heavily WIP)</option>
-      </select>
-      </div>
-      <p>Why not all of them? Having many client mods at the same time can cause issues. If you really want to do it though, check our documentation ;)</p>
-      <button id="next" class="center">Next</button>
-      `;
-                            document.getElementById("next").addEventListener("click", function () {
-                                var mod = document.getElementById("mod").value;
-                                window.armcordinternal.saveSettings({
-                                    windowStyle: "default",
-                                    channel: branch,
-                                    armcordCSP: true,
-                                    minimizeToTray: true,
-                                    automaticPatches: false,
-                                    mods: mod,
-                                    blurType: "acrylic",
-                                    inviteWebsocket: true,
-                                    doneSetup: true
-                                });
-                                fade(document.getElementById("setup"));
-                                setTimeout(function () {
-                                    window.armcordinternal.restart();
-                                }, 5000);
-                            });
-                        } else {
-                            window.armcordinternal.saveSettings({
-                                windowStyle: "default",
-                                channel: branch,
-                                armcordCSP: true,
-                                minimizeToTray: true,
-                                automaticPatches: false,
-                                mods: "none",
-                                blurType: "acrylic",
-                                inviteWebsocket: true,
-                                doneSetup: true
-                            });
-                            fade(document.getElementById("setup"));
-                            setTimeout(function () {
-                                window.armcordinternal.restart();
-                            }, 5000);
-                        }
-                    });
-                });
-            }
+                    setTimeout(() => window.armcordinternal.restart(), 500);
+                }
+            });
         </script>
     </body>
 </html>

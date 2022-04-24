@@ -68,8 +68,8 @@ async function doAfterDefiningTheWindow() {
 }
 export function createCustomWindow() {
     mainWindow = new BrowserWindow({
-        width: 300,
-        height: 350,
+        width: 390,
+        height: 470,
         title: "ArmCord",
         darkTheme: true,
         icon: path.join(__dirname, "/assets/icon_transparent.png"),
