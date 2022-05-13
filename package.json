@@ -36,7 +36,7 @@
   "dependencies": {
     "electron-context-menu": "^3.1.2",
     "v8-compile-cache": "^2.3.0",
-    "ws": "^8.5.0"
+    "ws": "^8.6.0"
   },
   "build": {
     "appId": "com.smartfridge.armcord",
