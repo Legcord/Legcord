@@ -68,3 +68,6 @@ Install it via an AUR helper tool like `yay`.
 [electron-discord-webapp](https://github.com/SpacingBat3/electron-discord-webapp)    
 [custom-electron-titlebar (css only)](https://github.com/AlexTorresSk/custom-electron-titlebar)    
 [electron-builder](https://electron.build)    
+# Sponsors
+ [![JetBrains supports ArmCord with free licenses to their software to core developers](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)](https://jb.gg/OpenSourceSupport)
+
