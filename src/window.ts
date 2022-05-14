@@ -4,7 +4,7 @@
 // I'm sorry for this mess but I'm not sure how to fix it.
 import {BrowserWindow, shell, app, ipcMain, dialog, clipboard} from "electron";
 import path from "path";
-import {checkIfConfigIsBroken, firstRun, getConfig, contentPath} from "./utils";
+import {checkIfConfigIsBroken, firstRun, getConfig, contentPath, isSetup} from "./utils";
 import {registerIpc} from "./ipc";
 import startServer from "./socket"
 import contextMenu from "electron-context-menu";
@@ -46,8 +46,12 @@ async function doAfterDefiningTheWindow() {
     if (await getConfig("inviteWebsocket") == true) {
         startServer()
     }
+    
     try {
         mainWindow.loadFile(contentPath);
+        if (isSetup) {
+            mainWindow.setSize(390, 470);
+        }
     } catch (e) {
         console.log(
             "Major error detected while starting up. User is most likely on Windows platform. Fallback to alternative startup."
@@ -55,12 +59,14 @@ async function doAfterDefiningTheWindow() {
         console.log(process.platform);
         if (process.platform === "win32") {
             if (firstRun) {
+                mainWindow.setSize(390, 470);
                 mainWindow.loadURL(`file://${__dirname}/content/setup.html`);
             } else {
                 mainWindow.loadURL(`file://${__dirname}/content/splash.html`);
             }
         } else {
             if (firstRun) {
+                mainWindow.setSize(390, 470);
                 mainWindow.loadURL(`file://${__dirname}/ts-out/content/setup.html`);
             } else {
                 mainWindow.loadURL(`file://${__dirname}/ts-out/content/splash.html`);
@@ -70,8 +76,8 @@ async function doAfterDefiningTheWindow() {
 }
 export function createCustomWindow() {
     mainWindow = new BrowserWindow({
-        width: 390,
-        height: 470,
+        width: 300,
+        height: 350,
         title: "ArmCord",
         darkTheme: true,
         icon: path.join(__dirname, "/assets/icon_transparent.png"),

@@ -2,6 +2,7 @@ import * as fs from "fs";
 import {app, dialog} from "electron";
 import path from "path";
 export var firstRun: boolean;
+export var isSetup: boolean;
 export var contentPath: string;
 //utillity functions that are used all over the codebase or just too obscure to be put in the file used in
 export function addStyle(styleString: string) {
@@ -21,7 +22,7 @@ export async function sleep(ms: number) {
 }
 
 export async function checkIfConfigIsBroken() {
-    if (await getConfig("0") == "d") {
+    if ((await getConfig("0")) == "d") {
         console.log("Detected a corrupted config");
         setup();
         dialog.showErrorBox(
@@ -39,6 +40,7 @@ export function setup() {
         armcordCSP: true,
         minimizeToTray: true,
         automaticPatches: false,
+        autoLaunch: true,
         mods: "cumcord",
         blurType: "acrylic",
         inviteWebsocket: true,
@@ -71,6 +73,7 @@ export interface Settings {
     armcordCSP: boolean;
     minimizeToTray: boolean;
     automaticPatches: boolean;
+    autoLaunch: boolean;
     mods: string;
     blurType: string;
     inviteWebsocket: boolean;
@@ -124,7 +127,7 @@ export async function checkIfConfigExists() {
     const userDataPath = app.getPath("userData");
     const storagePath = path.join(userDataPath, "/storage/");
     const settingsFile = storagePath + "settings.json";
-    
+
     if (!fs.existsSync(settingsFile)) {
         if (!fs.existsSync(storagePath)) {
             fs.mkdirSync(storagePath);
@@ -132,15 +135,26 @@ export async function checkIfConfigExists() {
         }
         console.log("First run of the ArmCord. Starting setup.");
         setup();
+        isSetup = true;
         contentPath = path.join(__dirname, "/content/setup.html");
         if (!contentPath.includes("ts-out")) {
             contentPath = path.join(__dirname, "/ts-out/content/setup.html");
         }
     } else {
-        console.log("ArmCord has been run before. Skipping setup.");
-        contentPath = path.join(__dirname, "/content/splash.html");
-        if (!contentPath.includes("ts-out")) {
-            contentPath = path.join(__dirname, "/ts-out/content/splash.html");
+        if (await getConfig("doneSetup") == false) {
+            console.log("First run of the ArmCord. Starting setup.");
+            setup();
+            isSetup = true;
+            contentPath = path.join(__dirname, "/content/setup.html");
+            if (!contentPath.includes("ts-out")) {
+                contentPath = path.join(__dirname, "/ts-out/content/setup.html");
+            }
+        } else {
+            console.log("ArmCord has been run before. Skipping setup.");
+            contentPath = path.join(__dirname, "/content/splash.html");
+            if (!contentPath.includes("ts-out")) {
+                contentPath = path.join(__dirname, "/ts-out/content/splash.html");
+            }
         }
     }
 }
