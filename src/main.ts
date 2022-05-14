@@ -7,7 +7,6 @@ import "./extensions/plugin";
 import "./tray";
 import {createCustomWindow, createNativeWindow, createTabsHost} from "./window";
 import "./shortcuts";
-import AutoLaunch from "easy-auto-launch";
 
 export var settings: any;
 export var customTitlebar: boolean;
@@ -26,16 +25,7 @@ if (process.platform == "linux") {
 }
 checkIfConfigExists();
 
-var AutoLauncher = new AutoLaunch({
-	name: 'ArmCord',
-});
-
 app.whenReady().then(async () => {
-    if (await getConfig("autoLaunch") == "true") {
-        AutoLauncher.enable()
-    } else {
-        AutoLauncher.disable()
-    }
     switch (await getConfig("windowStyle")) {
         case "default":
             createCustomWindow();
