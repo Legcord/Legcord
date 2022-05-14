@@ -28,6 +28,12 @@ app.whenReady().then(async () => {
         tray = new Tray(path.join(__dirname, "../", "/assets/ac_plug.png"));
         const contextMenu = Menu.buildFromTemplate([
             {
+                label: "ArmCord",
+            },
+            {
+                type: "separator"
+            },
+            {
                 label: "Open ArmCord",
                 click: function () {
                     mainWindow.show();
@@ -45,6 +51,9 @@ app.whenReady().then(async () => {
                     mainWindow.show();
                     mainWindow.loadURL("https://discord.gg/TnhxcqynZ2");
                 }
+            },
+            {
+                type: "separator"
             },
             {
                 label: "Quit ArmCord",

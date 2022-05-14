@@ -2,16 +2,18 @@
 // I had to add most of the window creation code here to split both into seperete functions
 // WHY? Because I can't use the same code for both due to annoying bug with value `frame` not responding to variables
 // I'm sorry for this mess but I'm not sure how to fix it.
-import {BrowserWindow, shell, app, ipcMain, dialog} from "electron";
+import {BrowserWindow, shell, app, ipcMain, dialog, clipboard} from "electron";
 import path from "path";
 import {checkIfConfigIsBroken, firstRun, getConfig, contentPath} from "./utils";
 import {registerIpc} from "./ipc";
 import startServer from "./socket"
 import contextMenu from "electron-context-menu";
+import os from "os";
 export var icon: string;
 export let mainWindow: BrowserWindow;
 export let inviteWindow: BrowserWindow;
 let guestWindows: BrowserWindow[] = [];
+
 contextMenu({
     showSaveImageAs: true,
     showCopyImageAddress: true,
@@ -22,7 +24,7 @@ async function doAfterDefiningTheWindow() {
     checkIfConfigIsBroken();
     registerIpc();
     mainWindow.webContents.userAgent =
-        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36"; //fake useragent for screenshare to work
+        `Mozilla/5.0 (X11; ${os.type()} ${os.arch()}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36`; //fake useragent for screenshare to work
     mainWindow.webContents.setWindowOpenHandler(({url}) => {
         shell.openExternal(url);
         return {action: "deny"};
