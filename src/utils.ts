@@ -40,7 +40,6 @@ export function setup() {
         armcordCSP: true,
         minimizeToTray: true,
         automaticPatches: false,
-        autoLaunch: true,
         mods: "cumcord",
         blurType: "acrylic",
         inviteWebsocket: true,
@@ -73,7 +72,6 @@ export interface Settings {
     armcordCSP: boolean;
     minimizeToTray: boolean;
     automaticPatches: boolean;
-    autoLaunch: boolean;
     mods: string;
     blurType: string;
     inviteWebsocket: boolean;
