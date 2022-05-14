@@ -28,7 +28,6 @@ checkIfConfigExists();
 
 var AutoLauncher = new AutoLaunch({
 	name: 'ArmCord',
-	path: '/Applications/ArmCord.app',
 });
 
 app.whenReady().then(async () => {
