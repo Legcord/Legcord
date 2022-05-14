@@ -34,6 +34,12 @@
             <input class="tgl tgl-light left" id="patches" type="checkbox" />
             <label class="tgl-btn left" for="patches"></label>
         </div>
+        <br />
+        <div class="switch">
+            <label class="header">Invite Websocket</label>
+            <input class="tgl tgl-light left" id="websocket" type="checkbox" />
+            <label class="tgl-btn left" for="websocket"></label>
+        </div>
         <div class="switch">
             <select name="channel" id="channel" class="left">
                 <option value="stable">Stable</option>
@@ -60,6 +66,7 @@
         async function loadSettings() {
             document.getElementById("csp").checked = await settings.get("armcordCSP");
             document.getElementById("tray").checked = await settings.get("minimizeToTray");
+            document.getElementById("websocket").checked = await settings.get("inviteWebsocket");
             document.getElementById("patches").value = await settings.get("automaticPatches");
             document.getElementById("mod").value = await settings.get("mods");
             document.getElementById("channel").value = await settings.get("channel");
@@ -76,7 +83,7 @@
                 automaticPatches: document.getElementById("patches").checked,
                 mods: document.getElementById("mod").value,
                 blurType: "acrylic",
-                inviteWebsocket: true,
+                inviteWebsocket: document.getElementById("websocket").checked,
                 doneSetup: true
             });
         });
