@@ -49,7 +49,8 @@ ArmCord is also available on the Snap store [here](https://snapcraft.io/armcord)
  Alternatively you can run ArmCord from source (npm, nodejs required):    
  1. Clone ArmCord repo: `git clone https://github.com/ArmCord/ArmCord.git`    
  2. Run `npm install` to install dependencies   
- 3. Compile/Package with `npm run package`    
+ 3. Build with `npm run build`   
+ 4. Compile/Package with `npm run package`    
 
 
 # FAQ
