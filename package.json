@@ -33,7 +33,7 @@
     "typescript": "^4.6.3"
   },
   "dependencies": {
-    "electron-context-menu": "https://github.com/ArmCord/electron-context-menu.git",
+    "electron-context-menu": "github:ArmCord/electron-context-menu",
     "v8-compile-cache": "^2.3.0",
     "ws": "^8.6.0"
   },
