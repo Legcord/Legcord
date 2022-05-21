@@ -35,12 +35,16 @@
  Check releases tab for precompiled packages for Linux, Windows and Mac OS. Alternatively use our Sourceforge mirror.  
  <a href="https://sourceforge.net/projects/armcord/files/latest/download"><img alt="Download ArmCord" src="https://a.fsdn.com/con/app/sf-download-button" width=276 height=48 srcset="https://a.fsdn.com/con/app/sf-download-button?button_size=2x 2x"></a>
 ### AUR Package
-Armcord is also available on the Arch User Repository (AUR) [here](https://aur.archlinux.org/packages/armcord-bin/).
+ArmCord is also available on the Arch User Repository (AUR) [here](https://aur.archlinux.org/packages/armcord-bin/).
 
 Install it via an AUR helper tool like `yay`.
 
 **Example:** `yay -S armcord-bin`
-
+### Snap package
+ArmCord is also available on the Snap store [here](https://snapcraft.io/armcord).   
+<a href="https://snapcraft.io/armcord">
+  <img alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" />
+</a>
 ### Manual:
  Alternatively you can run ArmCord from source (npm, nodejs required):    
  1. Clone ArmCord repo: `git clone https://github.com/ArmCord/ArmCord.git`    
