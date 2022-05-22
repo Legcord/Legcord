@@ -1,15 +1,43 @@
-.info-3pQQBb:last-child:before {
-    content: "ArmCord Version: 3.1.0" !important;
-    height: auto;
-    line-height: 16px;
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 12px;
-    text-transform: none;
-}
 .notice-2HEN-u {
     display: none;
 }
 .sidebar-1tnWFu {
-    border-top-left-radius: 8px !important;
+    border-top-left-radius: 8px;
+}
+.scroller-3X7KbA {
+    padding: 0;
+    padding-top: 4px;
+}
+
+[class^="socialLinks-"] + [class^="info-"] {
+    padding-right: 0;
+}
+#ac-ver {
+    text-transform: none;
+    cursor: pointer;
+    color: var(--text-muted);
+}
+#ac-ver:hover {
+    text-decoration: underline;
+    color: var(--text-normal);
+}
+
+/* Server List Scrollbar - https://github.com/kckarnige/server-scroll */
+.none-2-_0dP {
+    scrollbar-width: auto !important;
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
+    margin-right: 2px;
+}
+
+.none-2-_0dP:hover::-webkit-scrollbar {
+    width: 0.29em !important;
+    border-radius: 25px;
+    height: 0px !important;
+    background: transparent !important;
+}
+
+.none-2-_0dP::-webkit-scrollbar-thumb {
+    background: var(--background-accent);
+    border-radius: 25px;
 }

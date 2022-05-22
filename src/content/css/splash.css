@@ -112,3 +112,7 @@ video {
     color: var(--text-muted);
     white-space: pre;
 }
+
+img.logo {
+    width: 272px;
+}

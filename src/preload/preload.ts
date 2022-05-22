@@ -7,6 +7,8 @@ import {injectTitlebar} from "./titlebar";
 import {sleep, addStyle, injectJS} from "../utils";
 import {ipcRenderer} from "electron";
 import {injectTabs} from "./tabs";
+var version = ipcRenderer.sendSync("get-app-version", "app-version");
+
 declare global {
     interface Window {
         armcord: any;
@@ -48,3 +50,17 @@ if (window.location.href.indexOf("splash.html") > -1) {
         }
     });
 }
+
+// Settings info version injection (Stolen and modified from OpenAsar, mwuh ha ha ha ha >:D)
+setInterval(() => {
+    const host = document.getElementsByClassName("info-3pQQBb")[0];
+    if (!host || document.querySelector("#ac-ver")) return;
+    const el = document.createElement("span");
+    el.id = "ac-ver";
+    el.classList.add("text-xs-normal-3SiVjE", "line-18uChy");
+
+    el.textContent = `\nArmCord Version: ${version}`;
+    el.onclick = () => ipcRenderer.send("openSettingsWindow");
+
+    host.append(el);
+}, 2000);

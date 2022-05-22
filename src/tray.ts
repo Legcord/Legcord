@@ -1,11 +1,11 @@
-import { app, Menu, Tray } from "electron";
-import { mainWindow } from "./window";
-import { getConfig } from "./utils";
+import {app, Menu, Tray} from "electron";
+import {mainWindow} from "./window";
+import {getConfig} from "./utils";
 import * as path from "path";
-import { createSettingsWindow } from "./settings/main";
+import {createSettingsWindow} from "./settings/main";
 let tray: any = null;
 app.whenReady().then(async () => {
-    if (await getConfig("windowStyle") == "discord") {
+    if ((await getConfig("windowStyle")) == "discord") {
         tray = new Tray(path.join(__dirname, "../", "/assets/dsc-tray.png"));
         const contextMenu = Menu.buildFromTemplate([
             {
@@ -28,7 +28,7 @@ app.whenReady().then(async () => {
         tray = new Tray(path.join(__dirname, "../", "/assets/ac_plug.png"));
         const contextMenu = Menu.buildFromTemplate([
             {
-                label: "ArmCord",
+                label: "ArmCord"
             },
             {
                 type: "separator"

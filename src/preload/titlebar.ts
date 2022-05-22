@@ -2,15 +2,17 @@ import {ipcRenderer} from "electron";
 import {addStyle} from "../utils";
 import * as fs from "fs";
 import * as path from "path";
+import {platform} from "node:process";
 export function injectTitlebar() {
     document.addEventListener("DOMContentLoaded", function (event) {
         var elem = document.createElement("div");
         elem.innerHTML = `<nav class="titlebar">
           <div class="window-title" id="window-title"></div>
           <div id="window-controls-container">
-              <div id="minimize"></div>
-              <div id="maximize"></div>
-              <div id="quit"></div>
+              <div id="spacer"></div>
+              <div id="minimize"><div id="minimize-icon"></div></div>
+              <div id="maximize"><div id="maximize-icon"></div></div>
+              <div id="quit"><div id="quit-icon"></div></div>
           </div>
         </nav>`;
         elem.classList.add("withFrame-haYltI");
@@ -19,8 +21,11 @@ export function injectTitlebar() {
         } else {
             document.getElementById("app-mount")!.prepend(elem);
         }
-        const cssPath = path.join(__dirname, "../", "/content/css/titlebar.css");
-        addStyle(fs.readFileSync(cssPath, "utf8"));
+        const titlebarcssPath = path.join(__dirname, "../", "/content/css/titlebar.css");
+        const wordmarkcssPath = path.join(__dirname, "../", "/content/css/logos.css");
+        addStyle(fs.readFileSync(titlebarcssPath, "utf8"));
+        addStyle(fs.readFileSync(wordmarkcssPath, "utf8"));
+        document.body.setAttribute("armcord-platform", platform);
 
         var minimize = document.getElementById("minimize");
         var maximize = document.getElementById("maximize");
@@ -33,8 +38,10 @@ export function injectTitlebar() {
         maximize!.addEventListener("click", () => {
             if (ipcRenderer.sendSync("win-isMaximized") == true) {
                 ipcRenderer.send("win-unmaximize");
+                document.body.removeAttribute("isMaximized");
             } else {
                 ipcRenderer.send("win-maximize");
+                document.body.setAttribute("isMaximized", "");
             }
         });
 

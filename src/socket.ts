@@ -118,65 +118,68 @@ export default async function startServer() {
         ["Discord PTB", new URL("https://ptb.discord.com/app")],
         ["Fosscord", new URL("https://dev.fosscord.com/app")]
     ] as const;
-    
-    let wss = null, wsPort = 6463;
-    for(const port of range(6463, 6472)) {
+
+    let wss = null,
+        wsPort = 6463;
+    for (const port of range(6463, 6472)) {
         wss = await getServer(port);
-        if(wss !== null) {
-            void wsLog("ArmCord is listening at " + (port.toString()));
+        if (wss !== null) {
+            void wsLog("ArmCord is listening at " + port.toString());
             wsPort = port;
             break;
         }
     }
-    if(wss === null) return;
+    if (wss === null) return;
     let lock = false;
-    wss.on('connection', (wss, request) => {
-        const origin = request.headers.origin??'https://discord.com';
+    wss.on("connection", (wss, request) => {
+        const origin = request.headers.origin ?? "https://discord.com";
         let known = false;
-        for(const instance of knownInstancesList) {
-            if(instance[1].origin === origin)
-                known = true;
+        for (const instance of knownInstancesList) {
+            if (instance[1].origin === origin) known = true;
         }
-        if(!known) return;
+        if (!known) return;
         wss.send(JSON.stringify(messages.handShake));
-        wss.once('message', (data, isBinary) => {
-            if(lock) return;
+        wss.once("message", (data, isBinary) => {
+            if (lock) return;
             lock = true;
-            let parsedData:unknown = data;
-            if(!isBinary)
-                parsedData = data.toString();
-            if(isJsonSyntaxCorrect(parsedData as string))
-                parsedData = JSON.parse(parsedData as string);
-            if(isInviteResponse(parsedData)) {
+            let parsedData: unknown = data;
+            if (!isBinary) parsedData = data.toString();
+            if (isJsonSyntaxCorrect(parsedData as string)) parsedData = JSON.parse(parsedData as string);
+            if (isInviteResponse(parsedData)) {
                 // Replies to browser, so it finds the communication successful.
-                wss.send(JSON.stringify({
-                    cmd: parsedData.cmd,
-                    data: {
-                        invite: null,
-                        code: parsedData.args.code
-                    },
-                    evt: null,
-                    nonce: parsedData.nonce
-                }));
-                createInviteWindow()
+                wss.send(
+                    JSON.stringify({
+                        cmd: parsedData.cmd,
+                        data: {
+                            invite: null,
+                            code: parsedData.args.code
+                        },
+                        evt: null,
+                        nonce: parsedData.nonce
+                    })
+                );
+                createInviteWindow();
                 const child = inviteWindow;
-                if(child === undefined) return;
-                void child.loadURL(origin+'/invite/'+parsedData.args.code);
+                if (child === undefined) return;
+                void child.loadURL(origin + "/invite/" + parsedData.args.code);
                 child.webContents.once("did-finish-load", () => {
                     child.show();
                 });
                 child.webContents.once("will-navigate", () => {
                     lock = false;
                     child.close();
-                })
+                });
                 child.on("close", (e) => {
                     lock = false;
-                })
+                });
                 // Blocks requests to ArmCord's WS, to prevent loops.
-                child.webContents.session.webRequest.onBeforeRequest({
-                    urls: ['ws://127.0.0.1:'+wsPort.toString()+'/*']
-                }, (_details,callback) => callback({cancel: true}));
+                child.webContents.session.webRequest.onBeforeRequest(
+                    {
+                        urls: ["ws://127.0.0.1:" + wsPort.toString() + "/*"]
+                    },
+                    (_details, callback) => callback({cancel: true})
+                );
             }
-        })
-    })
+        });
+    });
 }

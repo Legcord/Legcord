@@ -6,7 +6,7 @@ import {BrowserWindow, shell, app, ipcMain, dialog, clipboard} from "electron";
 import path from "path";
 import {checkIfConfigIsBroken, firstRun, getConfig, contentPath, isSetup} from "./utils";
 import {registerIpc} from "./ipc";
-import startServer from "./socket"
+import startServer from "./socket";
 import contextMenu from "electron-context-menu";
 import os from "os";
 export var icon: string;
@@ -23,8 +23,7 @@ contextMenu({
 async function doAfterDefiningTheWindow() {
     checkIfConfigIsBroken();
     registerIpc();
-    mainWindow.webContents.userAgent =
-        `Mozilla/5.0 (X11; ${os.type()} ${os.arch()}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36`; //fake useragent for screenshare to work
+    mainWindow.webContents.userAgent = `Mozilla/5.0 (X11; ${os.type()} ${os.arch()}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36`; //fake useragent for screenshare to work
     mainWindow.webContents.setWindowOpenHandler(({url}) => {
         shell.openExternal(url);
         return {action: "deny"};
@@ -43,10 +42,10 @@ async function doAfterDefiningTheWindow() {
         }
     });
     console.log(contentPath);
-    if (await getConfig("inviteWebsocket") == true) {
-        startServer()
+    if ((await getConfig("inviteWebsocket")) == true) {
+        startServer();
     }
-    
+
     try {
         mainWindow.loadFile(contentPath);
         if (isSetup) {
@@ -191,5 +190,5 @@ export function createInviteWindow() {
             spellcheck: true
         }
     });
-    inviteWindow.hide()
+    inviteWindow.hide();
 }

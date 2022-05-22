@@ -1,6 +1,6 @@
 
 <div align="center">
-<img src="https://armcord.vercel.app/armcord_full_logo.png" width="720">
+<img src="https://armcord.vercel.app/armcord_full_logo.png" width="520">
  <br>ArmCord is a custom client designed to enhance your Discord experience while keeping everything lightweight. 
 </div>
 
@@ -72,7 +72,8 @@ ArmCord is also available on the Snap store [here](https://snapcraft.io/armcord)
 [GooseMod Extension](https://github.com/GooseMod/extension)    
 [electron-discord-webapp](https://github.com/SpacingBat3/electron-discord-webapp)    
 [custom-electron-titlebar (css only)](https://github.com/AlexTorresSk/custom-electron-titlebar)    
-[electron-builder](https://electron.build)    
+[electron-builder](https://electron.build)  
+[OpenAsar (~~stole~~ borrowed code for adding items to the settings modal seemlessly)](https://github.com/GooseMod/OpenAsar)     
 # Sponsors
  [![JetBrains supports ArmCord with free licenses to their software to core developers](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)](https://jb.gg/OpenSourceSupport)
 

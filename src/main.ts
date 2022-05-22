@@ -14,7 +14,7 @@ export var tabs: boolean;
 
 if (process.platform == "linux") {
     if (process.env.$XDG_SESSION_TYPE == "wayland") {
-        console.log("Wayland specific patches applied.")
+        console.log("Wayland specific patches applied.");
         app.commandLine.appendSwitch("ozone-platform=wayland");
         if (process.env.$XDG_CURRENT_DESKTOP == "GNOME") {
             app.commandLine.appendSwitch("enable-features=UseOzonePlatform,WaylandWindowDecorations");

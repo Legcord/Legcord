@@ -1,10 +1,3 @@
-@import url("https://armcord.smartfridge.space/logofont.css");
-:root {
-    --window-buttons: var(--header-secondary);
-    --cord-color: var(--header-primary);
-    --armcord-color: #7289da;
-    --titlebar-color: var(--background-tertiary);
-}
 .titlebar {
     display: block;
     top: 0;
@@ -18,7 +11,6 @@
     clear: both;
     height: 30px;
     line-height: 30px;
-    background-color: #202225;
     -webkit-app-region: drag;
     width: 100%;
     user-select: none;
@@ -26,12 +18,10 @@
     position: fixed;
     z-index: 99999;
 }
-.titlebar #window-title {
-    width: 30%;
-    height: 100%;
-    line-height: 30px;
-    float: left;
-    padding: 0 0 0 1em;
+
+.container-2RRFHK {
+    padding-top: 30px;
+    top: -30px;
 }
 
 .titlebar #window-controls-container {
@@ -39,7 +29,6 @@
     width: 150px;
     height: 100%;
     line-height: 30px;
-    background-color: #202225;
     -webkit-app-region: no-drag;
 }
 
@@ -48,61 +37,115 @@
 .titlebar #window-controls-container #quit {
     float: left;
     height: 100%;
-    width: 33%;
+    width: 33.1%;
     text-align: center;
-    color: #f7f7f7;
+    color: var(--interactive-normal);
     cursor: default;
 }
+.titlebar #window-controls-container #spacer {
+    pointer-events: none;
+}
 
-.titlebar #window-controls-container #minimize:hover {
+/* ArmCord on Linux */
+[armcord-platform="linux"] .titlebar #window-controls-container #minimize:hover {
     background-color: #99aab5;
 }
-.titlebar #window-controls-container #maximize:hover {
+[armcord-platform="linux"] .titlebar #window-controls-container #maximize:hover {
     background-color: #99aab5;
 }
-.titlebar #window-controls-container #quit:hover {
+[armcord-platform="linux"] .titlebar #window-controls-container #quit:hover {
     background-color: #f04747;
 }
-.titlebar #window-controls-container #quit {
-    background-color: #f7f7f7;
+
+/* ArmCord on Windows */
+[armcord-platform="win32"] .titlebar #window-controls-container #minimize:hover {
+    background-color: var(--background-modifier-hover);
+    transition: 0.2s ease;
+}
+[armcord-platform="win32"] .titlebar #window-controls-container #maximize:hover {
+    background-color: var(--background-modifier-hover);
+    transition: 0.2s ease;
+}
+[armcord-platform="win32"] .titlebar #window-controls-container #minimize:hover #minimize-icon {
+    background-color: var(--interactive-hover);
+    transition: 0.2s ease;
+}
+[armcord-platform="win32"] .titlebar #window-controls-container #maximize:hover #maximize-icon {
+    background-color: var(--interactive-hover);
+    transition: 0.2s ease;
+}
+[armcord-platform="win32"] .titlebar #window-controls-container #quit:hover {
+    background-color: #e81123;
+    transition: 0.2s ease;
+}
+[armcord-platform="win32"] .titlebar #window-controls-container #quit:hover #quit-icon {
+    background-color: #ffffff;
+    transition: 0.1s ease;
+}
+[armcord-platform="win32"] .titlebar #window-controls-container #minimize {
+    background-color: transparent;
+    transition: 0.1s ease;
+}
+[armcord-platform="win32"] .titlebar #window-controls-container #maximize {
+    background-color: transparent;
+    transition: 0.1s ease;
+}
+[armcord-platform="win32"] .titlebar #window-controls-container #quit {
+    background-color: transparent;
+    transition: 0.1s ease;
+}
+[armcord-platform="win32"] .titlebar #window-controls-container #quit:active {
+    background-color: #f1707a;
+    transition: 0.1s ease;
+}
+[armcord-platform="win32"] .titlebar #window-controls-container #quit:active #quit-icon {
+    background-color: #000000cc;
+    transition: 0.1s ease;
+}
+
+.titlebar #window-controls-container #quit-icon {
+    background-color: var(--interactive-normal);
+    display: list-item;
     -webkit-mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6.279 5.5L11 10.221l-.779.779L5.5 6.279.779 11 0 10.221 4.721 5.5 0 .779.779 0 5.5 4.721 10.221 0 11 .779 6.279 5.5z' fill='%23000'/%3E%3C/svg%3E")
         no-repeat 50% 50%;
     mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6.279 5.5L11 10.221l-.779.779L5.5 6.279.779 11 0 10.221 4.721 5.5 0 .779.779 0 5.5 4.721 10.221 0 11 .779 6.279 5.5z' fill='%23000'/%3E%3C/svg%3E")
         no-repeat 50% 50%;
 }
-.titlebar #window-controls-container #minimize {
-    background-color: #f7f7f7;
+.titlebar #window-controls-container #minimize-icon {
+    background-color: var(--interactive-normal);
+    display: list-item;
     -webkit-mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 4.399V5.5H0V4.399h11z' fill='%23000'/%3E%3C/svg%3E")
         no-repeat 50% 50%;
     mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 4.399V5.5H0V4.399h11z' fill='%23000'/%3E%3C/svg%3E")
         no-repeat 50% 50%;
 }
-.titlebar #window-controls-container #maximize {
-    background-color: #f7f7f7;
+.titlebar #window-controls-container #maximize-icon {
+    background-color: var(--interactive-normal);
+    display: list-item;
     -webkit-mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 0v11H0V0h11zM9.899 1.101H1.1V9.9h8.8V1.1z' fill='%23000'/%3E%3C/svg%3E")
         no-repeat 50% 50%;
     mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 0v11H0V0h11zM9.899 1.101H1.1V9.9h8.8V1.1z' fill='%23000'/%3E%3C/svg%3E")
         no-repeat 50% 50%;
 }
-.window-title:after {
-    content: "Cord";
-    color: var(--cord-color) !important;
-    font-weight: normal;
-    font-size: 14px;
-    font-family: Discordinated;
+
+[isMaximized] .titlebar #window-controls-container #maximize-icon {
+    background-color: var(--interactive-normal);
+    display: list-item;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' width='11' height='11'%3E%3Cstyle%3E%3C/style%3E%3Cpath fill-rule='evenodd' d='m6 0h24v24h-6v6h-24v-24h6zm3 6h15v15h3v-18h-18zm-6 21h18v-18h-18z'/%3E%3C/svg%3E")
+        no-repeat 50% 50%;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' width='11' height='11'%3E%3Cstyle%3E%3C/style%3E%3Cpath fill-rule='evenodd' d='m6 0h24v24h-6v6h-24v-24h6zm3 6h15v15h3v-18h-18zm-6 21h18v-18h-18z'/%3E%3C/svg%3E")
+        no-repeat 50% 50%;
 }
-.window-title:before {
-    content: "ARM";
-    color: var(--armcord-color);
-    font-weight: normal;
-    font-size: 14px;
-    font-family: Helvetica, sans-serif;
-}
+
 .window-title {
-    font-size: 0px !important;
-    margin-left: initial !important;
-    transform: translate(10px, 0px);
+    content: var(--wordmark-svg);
+    height: 10px;
+    margin-left: initial;
+    transform: translate(9px, 9.5px);
+    float: left;
+    padding: 0;
 }
+
 .withFrame-haYltI {
     height: 30px !important;
 }

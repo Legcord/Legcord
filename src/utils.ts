@@ -139,7 +139,7 @@ export async function checkIfConfigExists() {
             contentPath = path.join(__dirname, "/ts-out/content/setup.html");
         }
     } else {
-        if (await getConfig("doneSetup") == false) {
+        if ((await getConfig("doneSetup")) == false) {
             console.log("First run of the ArmCord. Starting setup.");
             setup();
             isSetup = true;
