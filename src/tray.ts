@@ -25,7 +25,7 @@ app.whenReady().then(async () => {
         tray.setToolTip("Discord");
         tray.setContextMenu(contextMenu);
     } else {
-        var trayIcon = await getConfig("trayIcon") ?? "ac_plug_colored";
+        var trayIcon = (await getConfig("trayIcon")) ?? "ac_plug_colored";
         tray = new Tray(path.join(__dirname, "../", `/assets/${trayIcon}.png`));
         const contextMenu = Menu.buildFromTemplate([
             {
