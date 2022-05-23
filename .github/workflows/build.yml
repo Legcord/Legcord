@@ -158,7 +158,7 @@ jobs:
                     // do whatever filtering you want here, I'm just uploading all the files
                     console.log('uploading', file);
 
-                    if (fs.lstat(`./linux/${file}`).isDirectory()) {
+                    if (fs.statSync(`./linux/${file}`).isDirectory()) {
                       console.log("directory, skipping")
                     } else {
                     await github.repos.uploadReleaseAsset({
@@ -172,7 +172,7 @@ jobs:
                   for (let file of await fs.readdir('windows')) {
                     // do whatever filtering you want here, I'm just uploading all the files
                     console.log('uploading', file);
-                    if (fs.lstat(`./windows/${file}`).isDirectory()) {
+                    if (fs.statSync(`./windows/${file}`).isDirectory()) {
                       console.log("directory, skipping")
                     } else {
                     await github.repos.uploadReleaseAsset({
@@ -187,7 +187,7 @@ jobs:
                     // do whatever filtering you want here, I'm just uploading all the files
                     console.log('uploading', file);
 
-                    if (fs.lstat(`./macos/${file}`).isDirectory()) {
+                    if (fs.statSync(`./macos/${file}`).isDirectory()) {
                       console.log("directory, skipping")
                     } else {
                     await github.repos.uploadReleaseAsset({
