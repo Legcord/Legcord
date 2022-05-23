@@ -130,7 +130,7 @@ jobs:
             - uses: dev-drprasad/delete-tag-and-release@v0.2.0
               with:
                 delete_release: true
-                tag_name: ${{ steps.vars.outputs.releaseTag }}
+                tag_name: v3.0.6
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Create Release
@@ -187,3 +187,5 @@ jobs:
                       data: await fs.readFile(`./macos/${file}`)
                     });            
                   }
+              env:
+                releaseTag: ${{ steps.vars.outputs.releaseTag }}
