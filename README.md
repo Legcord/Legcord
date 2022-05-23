@@ -73,7 +73,7 @@ ArmCord is also available on the Snap store [here](https://snapcraft.io/armcord)
 [electron-discord-webapp](https://github.com/SpacingBat3/electron-discord-webapp)    
 [custom-electron-titlebar (css only)](https://github.com/AlexTorresSk/custom-electron-titlebar)    
 [electron-builder](https://electron.build)  
-[OpenAsar (~~stole~~ borrowed code for adding custom build info seemlessly)](https://github.com/GooseMod/OpenAsar)     
+[OpenAsar](https://github.com/GooseMod/OpenAsar)     
 # Sponsors
  [![JetBrains supports ArmCord with free licenses to their software to core developers](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)](https://jb.gg/OpenSourceSupport)
 
