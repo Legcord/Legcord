@@ -85,6 +85,8 @@ jobs:
 
             - name: Build
               run: npm run build && electron-builder --windows
+              env:
+                GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Delete unpacked builds
               run: rm -rf dist/windows-unpacked
             - name: Upload artifact
