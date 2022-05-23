@@ -88,7 +88,7 @@ jobs:
               env:
                 GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Delete unpacked builds
-              run: rm -rf dist/windows-unpacked
+              run: rd /s /q "dist\windows-unpacked"
             - name: Upload artifact
               uses: actions/upload-artifact@v2
               with:
