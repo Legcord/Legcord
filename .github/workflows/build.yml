@@ -158,34 +158,45 @@ jobs:
                     // do whatever filtering you want here, I'm just uploading all the files
                     console.log('uploading', file);
 
+                    if (fs.lstatSync(`./linux/${file}`).isDirectory()) {
+                      console.log("directory, skipping")
+                    } else {
                     await github.repos.uploadReleaseAsset({
                       owner, repo,
                       release_id: release.data.id,
                       name: file,
                       data: await fs.readFile(`./linux/${file}`)
-                    });            
+                    });          
+                    }
                   }
                   for (let file of await fs.readdir('windows')) {
                     // do whatever filtering you want here, I'm just uploading all the files
                     console.log('uploading', file);
-
+                    if (fs.lstatSync(`./windows/${file}`).isDirectory()) {
+                      console.log("directory, skipping")
+                    } else {
                     await github.repos.uploadReleaseAsset({
                       owner, repo,
                       release_id: release.data.id,
                       name: file,
                       data: await fs.readFile(`./windows/${file}`)
-                    });            
+                    });          
+                    }
                   }
                   for (let file of await fs.readdir('macos')) {
                     // do whatever filtering you want here, I'm just uploading all the files
                     console.log('uploading', file);
 
+                    if (fs.lstatSync(`./macos/${file}`).isDirectory()) {
+                      console.log("directory, skipping")
+                    } else {
                     await github.repos.uploadReleaseAsset({
                       owner, repo,
                       release_id: release.data.id,
                       name: file,
                       data: await fs.readFile(`./macos/${file}`)
-                    });            
+                    });          
+                    }
                   }
               env:
                 releaseTag: ${{ steps.vars.outputs.releaseTag }}
