@@ -121,11 +121,6 @@ jobs:
                   name: ArmCordLinux
                   path: linux
 
-            - uses: actions/download-artifact@v2
-              with:
-                  name: ArmCordLinuxArm64
-                  path: linux
-
             - name: Get some values needed for the release
               id: vars
               shell: bash
