@@ -1,39 +1,190 @@
-name: Build/release
+name: Release build
 on: 
   push:
     branches:
       - stable
 
+env:
+  FORCE_COLOR: true
+
 jobs:
-  release:
-    runs-on: ${{ matrix.os }}
+    build-linux:
+        runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+        steps:
+            - uses: actions/setup-node@v3
+              with:
+                node-version: '18'
 
-    steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v1
+            - name: Checkout code
+              uses: actions/checkout@v2
 
-      - name: Install Node.js, NPM and Yarn
-        uses: actions/setup-node@v1
-        with:
-          node-version: 17
+            - name: Install Node dependencies
+              run: npm install
 
-      - name: Build/release Electron app
-        uses: samuelmeuli/action-electron-builder@v1
-        with:
-          # GitHub token, automatically provided to the action
-          # (No need to define this secret in the repo settings)
-          github_token: ${{ secrets.github_token }}
-          # skip npm run build as there's no script like that 
-          skip_build: false
-          # If the commit is tagged with a version (e.g. "v1.0.0"),
-          # release the app after building
-          release: ${{ startsWith(github.ref, 'refs/tags/v') }} #disabled for now as it caused problems (nvm)
-      - name: Archive production builds
-        uses: actions/upload-artifact@v2
-        with:
-          name: dist folder
-          path: dist/**
+            - name: Install Electron-Builder
+              run: npm install -g electron-builder
+
+            - name: Build
+              run: npm run build && electron-builder --linux && electron-builder --arm64 --linux && electron-builder --armv7l --linux
+            - name: Delete unpacked builds
+              run: rm -rf dist/linux-unpacked && rm -rf dist/linux-arm64-unpacked
+            - name: Upload artifact
+              uses: actions/upload-artifact@v2
+              with:
+                  name: ArmCordLinux
+                  path: dist/
+
+
+    build-mac:
+        runs-on: macos-latest
+
+        steps:
+            - uses: actions/setup-node@v3
+              with:
+                node-version: '18'
+
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Install Node dependencies
+              run: npm install
+              
+            - name: Install Electron-Builder
+              run: npm install -g electron-builder
+
+            - name: Build
+              run: npm run build && electron-builder --macos
+              env:
+                GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Delete unpacked builds
+              run: rm -rf dist/macos-unpacked
+
+            - name: Upload artifact
+              uses: actions/upload-artifact@v2
+              with:
+                  name: ArmCordMac
+                  path: dist/
+
+    build-windows:
+        runs-on: windows-latest
+
+        steps:
+            - uses: actions/setup-node@v3
+              with:
+                node-version: '18'
+
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Install Node dependencies
+              run: npm install
+              
+            - name: Install Electron-Builder
+              run: npm install -g electron-builder
+
+            - name: Build
+              run: npm run build && electron-builder --windows
+            - name: Delete unpacked builds
+              run: rm -rf dist/windows-unpacked
+            - name: Upload artifact
+              uses: actions/upload-artifact@v2
+              with:
+                  name: ArmCordWindows
+                  path: dist/
+            
+
+    release:
+        runs-on: ubuntu-latest
+        needs: [build-linux, build-mac, build-windows]
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - uses: actions/download-artifact@v2
+              with:
+                  name: ArmCordMac
+                  path: macos
+
+            - uses: actions/download-artifact@v2
+              with:
+                  name: ArmCordWindows
+                  path: windows
+
+            - uses: actions/download-artifact@v2
+              with:
+                  name: ArmCordLinux
+                  path: linux
+
+            - uses: actions/download-artifact@v2
+              with:
+                  name: ArmCordLinuxArm64
+                  path: linux
+
+            - name: Get some values needed for the release
+              id: vars
+              shell: bash
+              run: |
+                echo "::set-output name=releaseTag::$(git describe --tags --abbrev=0)"
+
+            - uses: dev-drprasad/delete-tag-and-release@v0.2.0
+              with:
+                delete_release: true
+                tag_name: ${{ steps.vars.outputs.releaseTag }}
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Create Release
+              uses: actions/github-script@v2
+              with:
+                github-token: ${{secrets.GITHUB_TOKEN}}
+                script: |
+                  console.log('environment', process.versions);
+                  
+                  const fs = require('fs').promises;
+                  
+                  const { repo: { owner, repo }, sha } = context;
+                  console.log({ owner, repo, sha });
+
+                  const release = await github.repos.createRelease({
+                    owner, repo,
+                    tag_name: process.env.releaseTag,
+                    draft: true,
+                    target_commitish: sha
+                  });
+
+                  console.log('created release', { release });
+              
+                  for (let file of await fs.readdir('linux')) {
+                    // do whatever filtering you want here, I'm just uploading all the files
+                    console.log('uploading', file);
+
+                    await github.repos.uploadReleaseAsset({
+                      owner, repo,
+                      release_id: release.data.id,
+                      name: file,
+                      data: await fs.readFile(`./linux/${file}`)
+                    });            
+                  }
+                  for (let file of await fs.readdir('windows')) {
+                    // do whatever filtering you want here, I'm just uploading all the files
+                    console.log('uploading', file);
+
+                    await github.repos.uploadReleaseAsset({
+                      owner, repo,
+                      release_id: release.data.id,
+                      name: file,
+                      data: await fs.readFile(`./windows/${file}`)
+                    });            
+                  }
+                  for (let file of await fs.readdir('macos')) {
+                    // do whatever filtering you want here, I'm just uploading all the files
+                    console.log('uploading', file);
+
+                    await github.repos.uploadReleaseAsset({
+                      owner, repo,
+                      release_id: release.data.id,
+                      name: file,
+                      data: await fs.readFile(`./macos/${file}`)
+                    });            
+                  }
