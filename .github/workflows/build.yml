@@ -29,6 +29,8 @@ jobs:
               run: npm run build && electron-builder --linux && electron-builder --arm64 --linux && electron-builder --armv7l --linux
               env:
                 GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: List all files in the dist directory
+              run: ls dist
             - name: Delete unpacked builds
               run: rm -rf dist/linux-unpacked && rm -rf dist/linux-arm64-unpacked && rm -rf dist/linux-armv7l-unpacked
             - name: Upload artifact
@@ -59,6 +61,8 @@ jobs:
               run: npm run build && electron-builder --macos
               env:
                 GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: List all files in the dist directory
+              run: ls dist
             - name: Delete unpacked builds
               run: rm -rf dist/macos-unpacked
 
@@ -140,7 +144,7 @@ jobs:
                 script: |
                   console.log('environment', process.versions);
                   
-                  const fs = require('fs').promises;
+                  const fs = require('fs');
                   
                   const { repo: { owner, repo }, sha } = context;
                   console.log({ owner, repo, sha });
