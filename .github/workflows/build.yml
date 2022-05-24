@@ -145,7 +145,7 @@ jobs:
                 script: |
                   console.log('environment', process.versions);
                   
-                  const fs = require('fs');
+                  const fs = require('fs').promises;
                   
                   const { repo: { owner, repo }, sha } = context;
                   console.log({ owner, repo, sha });
