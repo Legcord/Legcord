@@ -30,7 +30,7 @@ jobs:
               env:
                 GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: List all files in the dist directory
-              run: ls dist
+              run: ls -l dist
             - name: Delete unpacked builds
               run: rm -rf dist/linux-unpacked && rm -rf dist/linux-arm64-unpacked && rm -rf dist/linux-armv7l-unpacked
             - name: Upload artifact
@@ -62,7 +62,7 @@ jobs:
               env:
                 GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: List all files in the dist directory
-              run: ls dist
+              run: ls -l dist
             - name: Delete unpacked builds
               run: rm -rf dist/macos-unpacked
 
@@ -124,7 +124,8 @@ jobs:
               with:
                   name: ArmCordLinux
                   path: linux
-
+            - name: Delete unwanted directories
+              run: ls -d  linux/*/ | xargs rm -rf && ls -d  macos/*/ | xargs rm -rf && ls -d  windows/*/ | xargs rm -rf
             - name: Get some values needed for the release
               id: vars
               shell: bash
@@ -161,45 +162,32 @@ jobs:
                   for (let file of await fs.readdir('linux')) {
                     // do whatever filtering you want here, I'm just uploading all the files
                     console.log('uploading', file);
-                    if (await fs.stat(`./linux/${file}`).isDirectory()) {
-                      console.log("directory, skipping")
-                    } else {
                     await github.repos.uploadReleaseAsset({
                       owner, repo,
                       release_id: release.data.id,
                       name: file,
                       data: await fs.readFile(`./linux/${file}`)
-                    });          
-                    }
+                    });    
                   }
                   for (let file of await fs.readdir('windows')) {
                     // do whatever filtering you want here, I'm just uploading all the files
                     console.log('uploading', file);
-                    if (await fs.stat(`./windows/${file}`).isDirectory()) {
-                      console.log("directory, skipping")
-                    } else {
                     await github.repos.uploadReleaseAsset({
                       owner, repo,
                       release_id: release.data.id,
                       name: file,
                       data: await fs.readFile(`./windows/${file}`)
-                    });          
-                    }
+                    });    
                   }
                   for (let file of await fs.readdir('macos')) {
                     // do whatever filtering you want here, I'm just uploading all the files
                     console.log('uploading', file);
-
-                    if (await fs.stat(`./macos/${file}`).isDirectory()) {
-                      console.log("directory, skipping")
-                    } else {
                     await github.repos.uploadReleaseAsset({
                       owner, repo,
                       release_id: release.data.id,
                       name: file,
                       data: await fs.readFile(`./macos/${file}`)
-                    });          
-                    }
+                    });    
                   }
               env:
                 releaseTag: ${{ steps.vars.outputs.releaseTag }}
