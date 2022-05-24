@@ -124,7 +124,7 @@ jobs:
             - name: ls
               run: ls
             - name: Delete unwanted directories
-              run: ls -d linux/*/ | xargs rm -rf && ls -d macos/*/ | xargs rm -rf && ls -d windows/*/ | xargs rm -rf
+              run: rm -rf {linux,macos,windows}/*/
             - name: Get some values needed for the release
               id: vars
               shell: bash
