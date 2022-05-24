@@ -107,9 +107,6 @@ jobs:
         needs: [build-linux, build-mac, build-windows]
 
         steps:
-            - name: Checkout code
-              uses: actions/checkout@v2
-
             - uses: actions/download-artifact@v2
               with:
                   name: ArmCordMac
@@ -124,8 +121,10 @@ jobs:
               with:
                   name: ArmCordLinux
                   path: linux
+            - name: ls
+              run: ls
             - name: Delete unwanted directories
-              run: ls -d  linux/*/ | xargs rm -rf && ls -d  macos/*/ | xargs rm -rf && ls -d  windows/*/ | xargs rm -rf
+              run: ls -d linux/*/ | xargs rm -rf && ls -d macos/*/ | xargs rm -rf && ls -d windows/*/ | xargs rm -rf
             - name: Get some values needed for the release
               id: vars
               shell: bash
