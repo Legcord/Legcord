@@ -13,6 +13,7 @@ export var icon: string;
 export let mainWindow: BrowserWindow;
 export let inviteWindow: BrowserWindow;
 let guestWindows: BrowserWindow[] = [];
+var osType = os.type()
 
 contextMenu({
     showSaveImageAs: true,
@@ -24,7 +25,12 @@ async function doAfterDefiningTheWindow() {
     var ignoreProtocolWarning = await getConfig("ignoreProtocolWarning");
     checkIfConfigIsBroken();
     registerIpc();
-    mainWindow.webContents.userAgent = `Mozilla/5.0 (X11; ${os.type()} ${os.arch()}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36`; //fake useragent for screenshare to work
+    
+    // A little sloppy but it works :p
+    if (osType == 'Windows_NT') {
+        osType = "Windows " + os.release().split('.')[0] + " (" + os.release() + ")";
+    }
+    mainWindow.webContents.userAgent = `Mozilla/5.0 (X11; ${osType} ${os.arch()}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36`; //fake useragent for screenshare to work
     mainWindow.webContents.setWindowOpenHandler(({url}) => {
         if (url.startsWith("https:" || url.startsWith("http:") || url.startsWith("mailto:"))) {
             shell.openExternal(url);
