@@ -24,5 +24,9 @@
     "settings-theme-default": "Domyślny",
     "settings-theme-native": "Natywny",
     "settings-patches": "Automatyczne łatki",
-    "settings-invitewebsocket": "Wsparcie linków discord.gg"
+    "settings-invitewebsocket": "Wsparcie linków discord.gg",
+    "settings-prfmMode": "Performance mode:",
+    "settings-prfmMode-performance": "Performance",
+    "settings-prfmMode-battery": "Battery",
+    "settings-none": "None"
 }
