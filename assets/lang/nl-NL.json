@@ -24,5 +24,9 @@
     "settings-theme-tabs": "Tabs (experimenteel)",
     "settings-theme-default": "Standaard",
     "settings-theme-native": "Native",
-    "settings-invitewebsocket": "discord.gg support"
+    "settings-invitewebsocket": "discord.gg support",
+    "settings-none": "None",
+    "settings-prfmMode": "Performance mode:",
+    "settings-prfmMode-performance": "Performance",
+    "settings-prfmMode-battery": "Battery"
 }
