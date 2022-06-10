@@ -7,7 +7,7 @@
     "no": "Nie",
     "next": "Dalej",
     "setup_question4": "Wybierz modyfikację klienta którą chcesz zainstalować:",
-    "setup_question4_clientmodnotice": "Dlaczego nie wszystkie na raz? Posiadanie wielu modyfikacji może spowodować wiele błędów. Jeśli jednak nalegasz możesz sprawdzić naszą dokumentację.",
+    "setup_question4_clientmodnotice": "Dlaczego nie wszystkie na raz? Posiadanie wielu modyfikacji może spowodować wiele błędów. Jeśli jednak nalegasz możesz sprawdzić naszego Discorda.",
     "loading_screen_start": "Ładowanie ArmCord…",
     "loading_screen_offline": "Wydaje nam się, że nie jesteś połączony z Internetem. Połącz się z internetem i spróbuj ponownie.",
     "setup_question1_answer1": "Ekspresowa konfiguracja",
@@ -24,9 +24,9 @@
     "settings-theme-default": "Domyślny",
     "settings-theme-native": "Natywny",
     "settings-patches": "Automatyczne łatki",
-    "settings-invitewebsocket": "Wsparcie linków discord.gg",
-    "settings-prfmMode": "Performance mode:",
-    "settings-prfmMode-performance": "Performance",
-    "settings-prfmMode-battery": "Battery",
-    "settings-none": "None"
+    "settings-invitewebsocket": "Websocket dla zaproszeń",
+    "settings-prfmMode": "Tryb wydajności:",
+    "settings-prfmMode-performance": "Wydajny",
+    "settings-prfmMode-battery": "Bateria",
+    "settings-none": "Nic/Brak"
 }
