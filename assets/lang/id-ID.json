@@ -24,5 +24,9 @@
     "settings-invitewebsocket": "discord.gg support",
     "settings-mod": "Client mod:",
     "settings-save": "Save settings",
-    "settings-updater": "Check for updates"
+    "settings-updater": "Check for updates",
+    "settings-prfmMode": "Performance mode:",
+    "settings-prfmMode-performance": "Performance",
+    "settings-prfmMode-battery": "Battery",
+    "settings-none": "None"
 }
