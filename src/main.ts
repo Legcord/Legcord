@@ -1,7 +1,7 @@
 // Modules to control application life and create native browser window
 import {app, BrowserWindow, session, dialog} from "electron";
 import "v8-compile-cache";
-import {getConfig, setup, checkIfConfigExists} from "./utils";
+import {getConfig, setup, checkIfConfigExists, injectElectronFlags} from "./utils";
 import "./extensions/mods";
 import "./extensions/plugin";
 import "./tray";
@@ -11,6 +11,7 @@ import "./shortcuts";
 export var settings: any;
 export var customTitlebar: boolean;
 export var tabs: boolean;
+
 
 if (process.platform == "linux") {
     if (process.env.$XDG_SESSION_TYPE == "wayland") {
@@ -24,7 +25,7 @@ if (process.platform == "linux") {
     }
 }
 checkIfConfigExists();
-
+injectElectronFlags();
 app.whenReady().then(async () => {
     switch (await getConfig("windowStyle")) {
         case "default":

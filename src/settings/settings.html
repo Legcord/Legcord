@@ -58,7 +58,14 @@
             </select>
             <p class="header">Client mod:</p>
         </div>
-
+        <div class="switch">
+            <select name="prfmMode" id="prfmMode" class="left">
+                <option value="performance">Performance</option>
+                <option value="battery">Battery</option>
+                <option value="none">None</option>
+            </select>
+            <p class="header">Performance mode:</p>
+        </div>
         <button id="save" class="center">Save settings</button>
     </body>
 
@@ -71,6 +78,7 @@
             document.getElementById("mod").value = await settings.get("mods");
             document.getElementById("channel").value = await settings.get("channel");
             document.getElementById("theme").value = await settings.get("windowStyle");
+            document.getElementById("performanceMode").value = await settings.get("performanceMode");
         }
         loadSettings();
         document.getElementById("save").addEventListener("click", function () {
@@ -84,6 +92,7 @@
                 mods: document.getElementById("mod").value,
                 blurType: "acrylic",
                 inviteWebsocket: document.getElementById("websocket").checked,
+                performanceMode: document.getElementById("prfmMode").value,
                 doneSetup: true
             });
         });
