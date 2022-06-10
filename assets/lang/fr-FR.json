@@ -24,5 +24,9 @@
     "settings-theme-glasstron": "Glasstron (experimental)",
     "settings-theme-native": "Native",
     "settings-patches": "Automatic Patches",
-    "settings-invitewebsocket": "discord.gg support"
+    "settings-invitewebsocket": "discord.gg support",
+    "settings-prfmMode": "Performance mode:",
+    "settings-prfmMode-performance": "Performance",
+    "settings-prfmMode-battery": "Battery",
+    "settings-none": "None"
 }
