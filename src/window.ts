@@ -119,7 +119,7 @@ export function createCustomWindow() {
         height: 350,
         title: "ArmCord",
         darkTheme: true,
-        icon: path.join(__dirname, "/assets/icon_transparent.png"),
+        icon: path.join(__dirname, "../", "/assets/ac_icon_transparent.png"),
         frame: false,
         autoHideMenuBar: true,
         webPreferences: {
@@ -135,7 +135,7 @@ export function createNativeWindow() {
         height: 350,
         title: "ArmCord",
         darkTheme: true,
-        icon: path.join(__dirname, "/assets/icon_transparent.png"),
+        icon: path.join(__dirname, "../", "/assets/ac_icon_transparent.png"),
         frame: true,
         autoHideMenuBar: true,
         webPreferences: {
@@ -157,7 +157,7 @@ export function createTabsHost() {
         height: 350,
         title: "ArmCord",
         darkTheme: true,
-        icon: path.join(__dirname, "/assets/icon_transparent.png"),
+        icon: path.join(__dirname, "../", "/assets/ac_icon_transparent.png"),
         frame: true,
         autoHideMenuBar: true,
         webPreferences: {
@@ -186,7 +186,7 @@ export function createTabsGuest(number: number) {
             height: 600,
             title: "ArmCord Guest Window " + number,
             darkTheme: true,
-            icon: path.join(__dirname, "/assets/icon_transparent.png"),
+            icon: path.join(__dirname, "../", "/assets/ac_icon_transparent.png"),
             frame: true,
             autoHideMenuBar: true,
             webPreferences: {
@@ -223,7 +223,7 @@ export function createInviteWindow() {
         height: 600,
         title: "ArmCord Invite Manager",
         darkTheme: true,
-        icon: path.join(__dirname, "/assets/icon_transparent.png"),
+        icon: path.join(__dirname, "../", "/assets/ac_icon_transparent.png"),
         frame: true,
         autoHideMenuBar: true,
         webPreferences: {
