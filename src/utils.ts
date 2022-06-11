@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import {app, dialog} from "electron";
 import path from "path";
-import { defaultMaxListeners } from "events";
+import {defaultMaxListeners} from "events";
 export var firstRun: boolean;
 export var isSetup: boolean;
 export var contentPath: string;
@@ -88,8 +88,8 @@ export async function injectElectronFlags() {
     // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     // SOFTWARE.
     const presets = {
-        'performance': `--enable-gpu-rasterization --enable-zero-copy --ignore-gpu-blocklist --enable-hardware-overlays=single-fullscreen,single-on-top,underlay --enable-features=EnableDrDc,CanvasOopRasterization,BackForwardCache:TimeToLiveInBackForwardCacheInSeconds/300/should_ignore_blocklists/true/enable_same_site/true,ThrottleDisplayNoneAndVisibilityHiddenCrossOriginIframes,UseSkiaRenderer,WebAssemblyLazyCompilation --disable-features=Vulkan --force_high_performance_gpu`, // Performance
-        'battery': '--enable-features=TurnOffStreamingMediaCachingOnBattery --force_low_power_gpu' // Known to have better battery life for Chromium?
+        performance: `--enable-gpu-rasterization --enable-zero-copy --ignore-gpu-blocklist --enable-hardware-overlays=single-fullscreen,single-on-top,underlay --enable-features=EnableDrDc,CanvasOopRasterization,BackForwardCache:TimeToLiveInBackForwardCacheInSeconds/300/should_ignore_blocklists/true/enable_same_site/true,ThrottleDisplayNoneAndVisibilityHiddenCrossOriginIframes,UseSkiaRenderer,WebAssemblyLazyCompilation --disable-features=Vulkan --force_high_performance_gpu`, // Performance
+        battery: "--enable-features=TurnOffStreamingMediaCachingOnBattery --force_low_power_gpu" // Known to have better battery life for Chromium?
     };
     switch (await getConfig("performanceMode")) {
         case "performance":
@@ -104,6 +104,20 @@ export async function injectElectronFlags() {
             console.log("No performance modes set");
     }
 }
+export async function setLang(language: string) {
+    const userDataPath = app.getPath("userData");
+    const storagePath = path.join(userDataPath, "/storage/");
+    const langConfigFile = storagePath + "lang.json";
+    if (!fs.existsSync(langConfigFile)) {
+        fs.writeFileSync(langConfigFile, "{}", "utf-8");
+    }
+    let rawdata = fs.readFileSync(langConfigFile, "utf-8");
+    let parsed = JSON.parse(rawdata);
+    parsed["lang"] = language;
+    let toSave = JSON.stringify(parsed);
+    fs.writeFileSync(langConfigFile, toSave, "utf-8");
+}
+
 //ArmCord Settings/Storage manager
 
 export interface Settings {
@@ -113,7 +127,7 @@ export interface Settings {
     minimizeToTray: boolean;
     automaticPatches: boolean;
     mods: string;
-    performanceMode: string,
+    performanceMode: string;
     blurType: string;
     inviteWebsocket: boolean;
     doneSetup: boolean;

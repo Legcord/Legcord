@@ -4,11 +4,15 @@ import "./patch";
 import * as fs from "fs";
 import * as path from "path";
 import {injectTitlebar} from "./titlebar";
-import {sleep, addStyle, injectJS} from "../utils";
+import {sleep, addStyle, injectJS, addScript} from "../utils";
 import {ipcRenderer} from "electron";
 import {injectTabs} from "./tabs";
 var version = ipcRenderer.sendSync("get-app-version", "app-version");
-
+async function updateLang() {
+    addScript(`function getDiscordLang() {
+        {const _w=webpackChunkdiscord_app;let lang;_w.push([[Symbol()],{},e=>{for(const k in e.c){const m=e.c[k].exports;const mDef=m?.default&&m.__esModule?m.default:m;if(mDef?._chosenLocale&&!lang)lang=mDef}}]);_w.pop();window.armcord.setLang(lang._chosenLocale);return lang._chosenLocale;void 0}}
+        getDiscordLang();`);
+}
 declare global {
     interface Window {
         armcord: any;
@@ -30,7 +34,7 @@ if (window.location.href.indexOf("splash.html") > -1) {
     if (ipcRenderer.sendSync("tabs")) {
         injectTabs();
     }
-    sleep(5000).then(() => {
+    sleep(5000).then(async () => {
         const cssPath = path.join(__dirname, "../", "/content/css/discord.css");
         addStyle(fs.readFileSync(cssPath, "utf8"));
 
@@ -38,14 +42,17 @@ if (window.location.href.indexOf("splash.html") > -1) {
             case "goosemod":
                 injectJS(clientMods.goosemod);
                 console.log("Loading GooseMod...");
+                await updateLang();
                 break;
             case "cumcord":
                 injectJS(clientMods.cumcord);
                 console.log("Loading Cumcord...");
+                await updateLang();
                 break;
             case "flicker":
                 injectJS(clientMods.flicker);
                 console.log("Loading FlickerMod...");
+                await updateLang();
                 break;
         }
     });
