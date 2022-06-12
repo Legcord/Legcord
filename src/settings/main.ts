@@ -1,5 +1,5 @@
 import {BrowserWindow, shell, ipcMain} from "electron";
-import {getConfig, setConfigBulk, Settings} from "../utils";
+import {getConfig, setConfigBulk, Settings, getLang} from "../utils";
 import path from "path";
 var settingsWindow: BrowserWindow;
 var instance: number = 0;
@@ -31,6 +31,9 @@ export function createSettingsWindow() {
         ipcMain.handle("getSetting", (event, toGet: string) => {
             return getConfig(toGet);
         });
+        ipcMain.handle("getLang", (event, toGet: string) => {
+            return getLang(toGet);
+        });
         settingsWindow.webContents.setWindowOpenHandler(({url}) => {
             shell.openExternal(url);
             return {action: "deny"};
@@ -38,6 +41,7 @@ export function createSettingsWindow() {
         settingsWindow.loadURL(`file://${__dirname}/settings.html`);
         settingsWindow.on("close", (event: Event) => {
             ipcMain.removeHandler("getSetting");
+            ipcMain.removeHandler("getLang");
             ipcMain.removeAllListeners("saveSettings");
             instance = 0;
         });

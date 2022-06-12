@@ -117,7 +117,24 @@ export async function setLang(language: string) {
     let toSave = JSON.stringify(parsed);
     fs.writeFileSync(langConfigFile, toSave, "utf-8");
 }
-
+var language: string;
+export async function getLang(object: string) {
+    if (language == undefined) {
+        const userDataPath = app.getPath("userData");
+        const storagePath = path.join(userDataPath, "/storage/");
+        const langConfigFile = storagePath + "lang.json";
+        let rawdata = fs.readFileSync(langConfigFile, "utf-8");
+        let parsed = JSON.parse(rawdata);
+        language = parsed["lang"];
+    }
+    if (language.length == 2) {
+        language = language + "-" + language.toUpperCase();
+    }
+    const langPath = path.join(__dirname, "../", "/assets/lang/" + language + ".json");
+    let rawdata = fs.readFileSync(langPath, "utf-8");
+    let parsed = JSON.parse(rawdata);
+    return parsed[object];
+}
 //ArmCord Settings/Storage manager
 
 export interface Settings {

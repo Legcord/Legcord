@@ -1,7 +1,7 @@
 //ipc stuff
 import {app, ipcMain, shell, desktopCapturer} from "electron";
 import {createTabsGuest, mainWindow} from "./window";
-import {setConfigBulk, getVersion, getConfig, setLang} from "./utils";
+import {setConfigBulk, getVersion, getConfig, setLang, getLang} from "./utils";
 import {customTitlebar, tabs} from "./main";
 import {createSettingsWindow} from "./settings/main";
 export function registerIpc() {
@@ -13,6 +13,9 @@ export function registerIpc() {
     });
     ipcMain.on("setLang", (event, lang: string) => {
         setLang(lang);
+    });
+    ipcMain.on("getLang", (event, object: string) => {
+        getLang(object);
     });
     ipcMain.on("open-external-link", (event, href: string) => {
         shell.openExternal(href);

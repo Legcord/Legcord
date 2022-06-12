@@ -14,7 +14,7 @@
                 <option value="default">Default</option>
                 <option value="native">Native</option>
             </select>
-            <p class="header">ArmCord theme:</p>
+            <p class="header" id="settings-theme">ArmCord theme:</p>
         </div>
         <br />
         <div class="switch">
@@ -24,19 +24,19 @@
         </div>
         <br />
         <div class="switch">
-            <label class="header">Minimize to tray</label>
+            <label class="header" id="settings-tray">Minimize to tray</label>
             <input class="tgl tgl-light left" id="tray" type="checkbox" />
             <label class="tgl-btn left" for="tray"></label>
         </div>
         <br />
         <div class="switch">
-            <label class="header">Automatic Patches</label>
+            <label class="header" id="settings-patches">Automatic Patches</label>
             <input class="tgl tgl-light left" id="patches" type="checkbox" />
             <label class="tgl-btn left" for="patches"></label>
         </div>
         <br />
         <div class="switch">
-            <label class="header">Invite Websocket</label>
+            <label class="header" id="settings-invitewebsocket">Invite Websocket</label>
             <input class="tgl tgl-light left" id="websocket" type="checkbox" />
             <label class="tgl-btn left" for="websocket"></label>
         </div>
@@ -47,7 +47,7 @@
                 <option value="ptb">PTB</option>
                 <option value="foss">Fosscord</option>
             </select>
-            <p class="header">Discord channel:</p>
+            <p class="header" id="settings-channel">Discord channel:</p>
         </div>
         <div class="switch">
             <select name="mod" id="mod" class="left">
@@ -56,7 +56,7 @@
                 <option value="flicker">Flicker</option>
                 <option value="none">None</option>
             </select>
-            <p class="header">Client mod:</p>
+            <p class="header" id="settings-mod">Client mod:</p>
         </div>
         <div class="switch">
             <select name="prfmMode" id="prfmMode" class="left">
@@ -64,11 +64,33 @@
                 <option value="battery">Battery</option>
                 <option value="none">None</option>
             </select>
-            <p class="header">Performance mode:</p>
+            <p class="header" id="settings-prfmMode">Performance mode:</p>
         </div>
-        <button id="save" class="center">Save settings</button>
+        <button id="settings-save" class="center">Save settings</button>
     </body>
-
+    <script>
+        async function loadLang() {
+            document.getElementById("settings-save").innerHTML = await settings.getLang("settings-save");
+            document.getElementById("settings-mod").innerHTML = await settings.getLang("settings-mod");
+            document.getElementById("settings-channel").innerHTML = await settings.getLang("settings-channel");
+            document.getElementById("settings-invitewebsocket").innerHTML = await settings.getLang(
+                "settings-invitewebsocket"
+            );
+            document.getElementById("settings-patches").innerHTML = await settings.getLang("settings-patches");
+            document.getElementById("settings-tray").innerHTML = await settings.getLang("settings-tray");
+            document.getElementById("settings-theme").innerHTML = await settings.getLang("settings-theme");
+            //select stuff
+            document.getElementById("mod").options[3].text = await settings.getLang("settings-none");
+            document.getElementById("prfmMode").options[2].text = await settings.getLang("settings-none");
+            document.getElementById("prfmMode").options[1].text = await settings.getLang("settings-prfmMode-battery");
+            document.getElementById("prfmMode").options[0].text = await settings.getLang(
+                "settings-prfmMode-performance"
+            );
+            document.getElementById("theme").options[1].text = await settings.getLang("settings-theme-native");
+            document.getElementById("theme").options[0].text = await settings.getLang("settings-theme-default");
+        }
+        loadLang();
+    </script>
     <script>
         async function loadSettings() {
             document.getElementById("csp").checked = await settings.get("armcordCSP");
@@ -78,10 +100,10 @@
             document.getElementById("mod").value = await settings.get("mods");
             document.getElementById("channel").value = await settings.get("channel");
             document.getElementById("theme").value = await settings.get("windowStyle");
-            document.getElementById("performanceMode").value = await settings.get("performanceMode");
+            document.getElementById("prfmMode").value = await settings.get("performanceMode");
         }
         loadSettings();
-        document.getElementById("save").addEventListener("click", function () {
+        document.getElementById("settings-save").addEventListener("click", function () {
             //function saveSettings(windowStyle: string, channelSetting: string, armcordCSPSetting: boolean, minimizeToTray: boolean, automaticPatches: boolean,modsSetting: string, blurType: string)
             settings.save({
                 windowStyle: document.getElementById("theme").value,
