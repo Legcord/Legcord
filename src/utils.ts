@@ -130,7 +130,10 @@ export async function getLang(object: string) {
     if (language.length == 2) {
         language = language + "-" + language.toUpperCase();
     }
-    const langPath = path.join(__dirname, "../", "/assets/lang/" + language + ".json");
+    var langPath = path.join(__dirname, "../", "/assets/lang/" + language + ".json");
+    if (!fs.existsSync(langPath)) {
+        langPath = path.join(__dirname, "../", "/assets/lang/en-US.json");
+    }
     let rawdata = fs.readFileSync(langPath, "utf-8");
     let parsed = JSON.parse(rawdata);
     return parsed[object];
