@@ -7,7 +7,6 @@ import path from "path";
 import {checkIfConfigIsBroken, firstRun, getConfig, contentPath, isSetup, setConfig, setLang} from "./utils";
 import {registerIpc} from "./ipc";
 import startServer from "./socket";
-import {osLocale} from 'os-locale';
 import contextMenu from "electron-context-menu";
 import os from "os";
 export var icon: string;
