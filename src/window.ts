@@ -99,7 +99,7 @@ async function doAfterDefiningTheWindow() {
         console.log(process.platform);
         if (process.platform === "win32") {
             if (firstRun) {
-                // await setLang(Intl.DateTimeFormat().resolvedOptions().locale)
+                await setLang(Intl.DateTimeFormat().resolvedOptions().locale)
                 mainWindow.setSize(390, 470);
                 mainWindow.loadURL(`file://${__dirname}/content/setup.html`);
             } else {
