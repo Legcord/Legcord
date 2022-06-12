@@ -9,9 +9,13 @@ import {ipcRenderer} from "electron";
 import {injectTabs} from "./tabs";
 var version = ipcRenderer.sendSync("get-app-version", "app-version");
 async function updateLang() {
-    addScript(`function getDiscordLang() {
-        {const _w=webpackChunkdiscord_app;let lang;_w.push([[Symbol()],{},e=>{for(const k in e.c){const m=e.c[k].exports;const mDef=m?.default&&m.__esModule?m.default:m;if(mDef?._chosenLocale&&!lang)lang=mDef}}]);_w.pop();window.armcord.setLang(lang._chosenLocale);return lang._chosenLocale;void 0}}
-        getDiscordLang();`);
+    if (window.location.href.indexOf("setup.html") > -1) {
+        console.log("Setup, skipping lang update");
+    } else {
+        addScript(`function getDiscordLang() {
+            {const _w=webpackChunkdiscord_app;let lang;_w.push([[Symbol()],{},e=>{for(const k in e.c){const m=e.c[k].exports;const mDef=m?.default&&m.__esModule?m.default:m;if(mDef?._chosenLocale&&!lang)lang=mDef}}]);_w.pop();window.armcord.setLang(lang._chosenLocale);return lang._chosenLocale;void 0}}
+            getDiscordLang();`);
+    }
 }
 declare global {
     interface Window {

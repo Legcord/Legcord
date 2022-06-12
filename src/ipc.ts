@@ -60,6 +60,9 @@ export function registerIpc() {
     ipcMain.on("channel", async (event) => {
         event.returnValue = await getConfig("channel");
     });
+    ipcMain.handle("getLang", (event, toGet: string) => {
+        return getLang(toGet);
+    });
     ipcMain.on("clientmod", async (event, arg) => {
         event.returnValue = await getConfig("mods");
     });

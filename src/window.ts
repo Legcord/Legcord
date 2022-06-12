@@ -4,9 +4,10 @@
 // I'm sorry for this mess but I'm not sure how to fix it.
 import {BrowserWindow, shell, app, ipcMain, dialog, clipboard} from "electron";
 import path from "path";
-import {checkIfConfigIsBroken, firstRun, getConfig, contentPath, isSetup, setConfig} from "./utils";
+import {checkIfConfigIsBroken, firstRun, getConfig, contentPath, isSetup, setConfig, setLang} from "./utils";
 import {registerIpc} from "./ipc";
 import startServer from "./socket";
+import {osLocale} from 'os-locale';
 import contextMenu from "electron-context-menu";
 import os from "os";
 export var icon: string;
@@ -85,10 +86,10 @@ async function doAfterDefiningTheWindow() {
     if ((await getConfig("inviteWebsocket")) == true) {
         startServer();
     }
-
     try {
         mainWindow.loadFile(contentPath);
         if (isSetup) {
+            await setLang(Intl.DateTimeFormat().resolvedOptions().locale)
             mainWindow.setSize(390, 470);
         }
     } catch (e) {
@@ -98,6 +99,7 @@ async function doAfterDefiningTheWindow() {
         console.log(process.platform);
         if (process.platform === "win32") {
             if (firstRun) {
+                // await setLang(Intl.DateTimeFormat().resolvedOptions().locale)
                 mainWindow.setSize(390, 470);
                 mainWindow.loadURL(`file://${__dirname}/content/setup.html`);
             } else {
@@ -105,6 +107,7 @@ async function doAfterDefiningTheWindow() {
             }
         } else {
             if (firstRun) {
+                await setLang(Intl.DateTimeFormat().resolvedOptions().locale)
                 mainWindow.setSize(390, 470);
                 mainWindow.loadURL(`file://${__dirname}/ts-out/content/setup.html`);
             } else {

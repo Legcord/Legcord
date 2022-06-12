@@ -12,12 +12,14 @@
     <body>
         <div class="container">
             <div id="warning" class="hidden">
-                <p>You appear to be offline. Please connect to the internet and restart ArmCord Setup.</p>
+                <p id="setup_offline">
+                    You appear to be offline. Please connect to the internet and restart ArmCord Setup.
+                </p>
             </div>
             <div id="setup">
                 <div id="logo" class="hidden"></div>
                 <div id="page1" class="hidden">
-                    <p>Select the type of setup you want to perform.</p>
+                    <p id="setup_question1">Select the type of setup you want to perform.</p>
                     <div id="buttons">
                         <button id="express" class="center">Express</button>
                         <button id="full" class="center">Full</button>
@@ -25,7 +27,7 @@
                 </div>
 
                 <div id="page2" class="hidden">
-                    <p class="text-center setup-ask">Choose your Discord channel/instance:</p>
+                    <p class="text-center setup-ask" id="setup_question2">Choose your Discord channel/instance:</p>
                     <div class="center">
                         <select name="channel" id="channel" class="dropdown-button">
                             <option value="stable">Stable</option>
@@ -34,7 +36,9 @@
                             <option value="foss">Fosscord</option>
                         </select>
                     </div>
-                    <p class="text-center setup-ask">Should ArmCord handle client mods installation?</p>
+                    <p class="text-center setup-ask" id="setup_question3">
+                        Should ArmCord handle client mods installation?
+                    </p>
                     <div class="center">
                         <select name="csp" id="csp" class="dropdown-button">
                             <option value="true">Yes</option>
@@ -47,7 +51,7 @@
                 </div>
 
                 <div id="page3" class="hidden">
-                    <p class="text-center setup-ask">Select a client mod you want to install:</p>
+                    <p class="text-center setup-ask" id="setup_question4">Select a client mod you want to install:</p>
                     <div class="center">
                         <select name="mod" id="mod" class="dropdown-button">
                             <option value="cumcord">Cumcord</option>
@@ -55,7 +59,7 @@
                             <option value="flicker">Flicker (Heavily WIP)</option>
                         </select>
                     </div>
-                    <p class="text-center">
+                    <p class="text-center" id="setup_question4_clientmodnotice">
                         Why not all of them? Having many client mods at the same time can cause issues. If you really
                         want to do it though, check our Discord ;)
                     </p>
@@ -65,7 +69,25 @@
                 </div>
             </div>
         </div>
-
+        <script>
+            async function loadLang() {
+                document.getElementById("next").innerHTML = await armcord.getLang("next");
+                document.getElementById("setup_offline").innerHTML = await armcord.getLang("setup_offline");
+                document.getElementById("setup_question1").innerHTML = await armcord.getLang("setup_question1");
+                document.getElementById("express").innerHTML = await armcord.getLang("setup_question1_answer1");
+                document.getElementById("full").innerHTML = await armcord.getLang("setup_question1_answer2");
+                document.getElementById("setup_question2").innerHTML = await armcord.getLang("setup_question2");
+                document.getElementById("setup_question3").innerHTML = await armcord.getLang("setup_question3");
+                document.getElementById("setup_question4").innerHTML = await armcord.getLang("setup_question4");
+                document.getElementById("setup_question4_clientmodnotice").innerHTML = await armcord.getLang(
+                    "setup_question4_clientmodnotice"
+                );
+                //select stuff1
+                document.getElementById("csp").options[1].text = await armcord.getLang("no");
+                document.getElementById("csp").options[0].text = await armcord.getLang("yes");
+            }
+            loadLang();
+        </script>
         <script>
             document.onload = function () {
                 ipcRenderer.send("win-unmaximize");
