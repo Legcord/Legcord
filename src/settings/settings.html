@@ -104,7 +104,6 @@
         }
         loadSettings();
         document.getElementById("settings-save").addEventListener("click", function () {
-            //function saveSettings(windowStyle: string, channelSetting: string, armcordCSPSetting: boolean, minimizeToTray: boolean, automaticPatches: boolean,modsSetting: string, blurType: string)
             settings.save({
                 windowStyle: document.getElementById("theme").value,
                 channel: document.getElementById("channel").value,
@@ -112,7 +111,6 @@
                 minimizeToTray: document.getElementById("tray").checked,
                 automaticPatches: document.getElementById("patches").checked,
                 mods: document.getElementById("mod").value,
-                blurType: "acrylic",
                 inviteWebsocket: document.getElementById("websocket").checked,
                 performanceMode: document.getElementById("prfmMode").value,
                 doneSetup: true

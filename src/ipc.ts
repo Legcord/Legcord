@@ -1,15 +1,12 @@
 //ipc stuff
 import {app, ipcMain, shell, desktopCapturer} from "electron";
-import {createTabsGuest, mainWindow} from "./window";
+import {mainWindow} from "./window";
 import {setConfigBulk, getVersion, getConfig, setLang, getLang} from "./utils";
-import {customTitlebar, tabs} from "./main";
+import {customTitlebar} from "./main";
 import {createSettingsWindow} from "./settings/main";
 export function registerIpc() {
     ipcMain.on("get-app-path", (event, arg) => {
         event.reply("app-path", app.getAppPath());
-    });
-    ipcMain.on("openTab", (event, number: number) => {
-        createTabsGuest(number);
     });
     ipcMain.on("setLang", (event, lang: string) => {
         setLang(lang);
@@ -65,9 +62,6 @@ export function registerIpc() {
     });
     ipcMain.on("titlebar", (event, arg) => {
         event.returnValue = customTitlebar;
-    });
-    ipcMain.on("tabs", (event, arg) => {
-        event.returnValue = tabs;
     });
     ipcMain.on("shouldPatch", async (event, arg) => {
         event.returnValue = await getConfig("automaticPatches");

@@ -42,7 +42,6 @@ export function setup() {
         minimizeToTray: true,
         automaticPatches: false,
         mods: "cumcord",
-        blurType: "acrylic",
         performanceMode: "none",
         inviteWebsocket: true,
         doneSetup: false
@@ -148,7 +147,6 @@ export interface Settings {
     automaticPatches: boolean;
     mods: string;
     performanceMode: string;
-    blurType: string;
     inviteWebsocket: boolean;
     doneSetup: boolean;
 }

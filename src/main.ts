@@ -1,16 +1,15 @@
 // Modules to control application life and create native browser window
-import {app, BrowserWindow, session, dialog} from "electron";
+import {app, BrowserWindow, session} from "electron";
 import "v8-compile-cache";
-import {getConfig, setup, checkIfConfigExists, injectElectronFlags} from "./utils";
+import {getConfig, checkIfConfigExists, injectElectronFlags} from "./utils";
 import "./extensions/mods";
 import "./extensions/plugin";
 import "./tray";
-import {createCustomWindow, createNativeWindow, createTabsHost} from "./window";
+import {createCustomWindow, createNativeWindow} from "./window";
 import "./shortcuts";
 
 export var settings: any;
 export var customTitlebar: boolean;
-export var tabs: boolean;
 
 
 if (process.platform == "linux") {
@@ -38,17 +37,6 @@ app.whenReady().then(async () => {
         case "discord":
             createNativeWindow();
             break;
-        case "glasstron":
-            dialog.showErrorBox(
-                "Glasstron is unsupported.",
-                "This build doesn't include Glasstron functionality, please edit windowStyle value in your settings.json to something different (default for example)"
-            );
-            app.quit();
-            break;
-        case "tabs":
-            createTabsHost();
-            tabs = true;
-            break;
         default:
             createCustomWindow();
             customTitlebar = true;
@@ -73,16 +61,8 @@ app.whenReady().then(async () => {
                 case "native":
                     createNativeWindow();
                     break;
-                case "glasstron":
-                    dialog.showErrorBox(
-                        "Glasstron is unsupported.",
-                        "This build doesn't include Glasstron functionality, please edit windowStyle value in your settings.json to something different (default for example)"
-                    );
-                    app.quit();
-                    break;
-                case "tabs":
-                    createTabsHost();
-                    tabs = true;
+                case "discord":
+                    createNativeWindow();
                     break;
                 default:
                     createCustomWindow();
