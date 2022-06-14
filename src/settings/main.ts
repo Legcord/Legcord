@@ -38,7 +38,6 @@ export function createSettingsWindow() {
         settingsWindow.loadURL(`file://${__dirname}/settings.html`);
         settingsWindow.on("close", (event: Event) => {
             ipcMain.removeHandler("getSetting");
-            ipcMain.removeHandler("getLang");
             ipcMain.removeAllListeners("saveSettings");
             instance = 0;
         });
