@@ -14,7 +14,6 @@
     "setup_question4": "Select a client mod you want to install:",
     "setup_question4_clientmodnotice": "Why not all of them? Having many client mods at the same time can cause issues. If you really want to do it though, check our documentation.",
     "settings-theme": "ArmCord Theme:",
-    "settings-theme-glasstron": "Glasstron (experimental)",
     "settings-theme-tabs": "Tabs (experimental)",
     "settings-theme-default": "Default",
     "settings-theme-native": "Native",
