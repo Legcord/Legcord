@@ -14,9 +14,6 @@ export function registerIpc() {
     ipcMain.on("setLang", (event, lang: string) => {
         setLang(lang);
     });
-    ipcMain.on("getLang", (event, object: string) => {
-        getLang(object);
-    });
     ipcMain.on("open-external-link", (event, href: string) => {
         shell.openExternal(href);
     });
@@ -59,9 +56,6 @@ export function registerIpc() {
     });
     ipcMain.on("channel", async (event) => {
         event.returnValue = await getConfig("channel");
-    });
-    ipcMain.handle("getLang", (event, toGet: string) => {
-        return getLang(toGet);
     });
     ipcMain.on("clientmod", async (event, arg) => {
         event.returnValue = await getConfig("mods");
