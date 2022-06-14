@@ -38,10 +38,8 @@ export function injectTitlebar() {
         maximize!.addEventListener("click", () => {
             if (ipcRenderer.sendSync("win-isMaximized") == true) {
                 ipcRenderer.send("win-unmaximize");
-                document.body.removeAttribute("isMaximized");
             } else {
                 ipcRenderer.send("win-maximize");
-                document.body.setAttribute("isMaximized", "");
             }
         });
 

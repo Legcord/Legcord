@@ -81,6 +81,12 @@ async function doAfterDefiningTheWindow() {
             app.quit();
         }
     });
+    mainWindow.on('maximize',() =>{
+        mainWindow.webContents.executeJavaScript(`document.body.setAttribute("isMaximized", "");`)
+    })
+    mainWindow.on('unmaximize',() =>{
+        mainWindow.webContents.executeJavaScript(`document.body.removeAttribute("isMaximized");`)
+    })
     console.log(contentPath);
     if ((await getConfig("inviteWebsocket")) == true) {
         startServer();
