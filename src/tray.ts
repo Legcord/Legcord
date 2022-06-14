@@ -3,8 +3,13 @@ import {mainWindow} from "./window";
 import {getConfig} from "./utils";
 import * as path from "path";
 import {createSettingsWindow} from "./settings/main";
+import {platform} from "process";
 let tray: any = null;
+let defaultIcon = "ac_plug_colored";
 app.whenReady().then(async () => {
+    if (platform == "darwin") {
+        defaultIcon = "macos"
+    }
     if ((await getConfig("windowStyle")) == "discord") {
         tray = new Tray(path.join(__dirname, "../", "/assets/dsc-tray.png"));
         const contextMenu = Menu.buildFromTemplate([
@@ -25,7 +30,7 @@ app.whenReady().then(async () => {
         tray.setToolTip("Discord");
         tray.setContextMenu(contextMenu);
     } else {
-        var trayIcon = (await getConfig("trayIcon")) ?? "ac_plug_colored";
+        var trayIcon = (await getConfig("trayIcon")) ?? defaultIcon;
         tray = new Tray(path.join(__dirname, "../", `/assets/${trayIcon}.png`));
         const contextMenu = Menu.buildFromTemplate([
             {
