@@ -31,9 +31,6 @@ export function createSettingsWindow() {
         ipcMain.handle("getSetting", (event, toGet: string) => {
             return getConfig(toGet);
         });
-        ipcMain.handle("getLang", (event, toGet: string) => {
-            return getLang(toGet);
-        });
         settingsWindow.webContents.setWindowOpenHandler(({url}) => {
             shell.openExternal(url);
             return {action: "deny"};

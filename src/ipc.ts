@@ -14,6 +14,9 @@ export function registerIpc() {
     ipcMain.on("setLang", (event, lang: string) => {
         setLang(lang);
     });
+    ipcMain.handle("getLang", (event, toGet: string) => {
+        return getLang(toGet);
+    });
     ipcMain.on("open-external-link", (event, href: string) => {
         shell.openExternal(href);
     });
