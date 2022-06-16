@@ -4,7 +4,7 @@
 // I'm sorry for this mess but I'm not sure how to fix it.
 import {BrowserWindow, shell, app, dialog} from "electron";
 import path from "path";
-import {checkIfConfigIsBroken, firstRun, getConfig, contentPath, isSetup, setConfig, setLang} from "./utils";
+import {checkIfConfigIsBroken, firstRun, getConfig, contentPath, isSetup, setConfig, setLang, setWindowState} from "./utils";
 import {registerIpc} from "./ipc";
 import startServer from "./socket";
 import contextMenu from "electron-context-menu";
@@ -72,6 +72,12 @@ async function doAfterDefiningTheWindow() {
         return callback({});
     });
     mainWindow.on("close", async (e) => {
+        let [width, height] = mainWindow.getSize()
+        setWindowState({
+            width: width,
+            height: height,
+            isMaximized: mainWindow.isMaximized()
+        })
         if (await getConfig("minimizeToTray")) {
             e.preventDefault();
             mainWindow.hide();

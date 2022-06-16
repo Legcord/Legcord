@@ -1,6 +1,6 @@
 import {app, Menu, Tray} from "electron";
 import {mainWindow} from "./window";
-import {getConfig} from "./utils";
+import {getConfig, setWindowState} from "./utils";
 import * as path from "path";
 import {createSettingsWindow} from "./settings/main";
 import {platform} from "process";
@@ -22,6 +22,12 @@ app.whenReady().then(async () => {
             {
                 label: "Quit ArmCord",
                 click: function () {
+                    let [width, height] = mainWindow.getSize()
+        setWindowState({
+            width: width,
+            height: height,
+            isMaximized: mainWindow.isMaximized()
+        })
                     app.quit();
                 }
             }
@@ -64,6 +70,12 @@ app.whenReady().then(async () => {
             {
                 label: "Quit ArmCord",
                 click: function () {
+                    let [width, height] = mainWindow.getSize()
+        setWindowState({
+            width: width,
+            height: height,
+            isMaximized: mainWindow.isMaximized()
+        })
                     app.quit();
                 }
             }

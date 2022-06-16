@@ -1,7 +1,7 @@
 import * as fs from "fs";
-import {app, dialog} from "electron";
+import { app, dialog } from "electron";
 import path from "path";
-import {defaultMaxListeners} from "events";
+import { defaultMaxListeners } from "events";
 export var firstRun: boolean;
 export var isSetup: boolean;
 export var contentPath: string;
@@ -136,6 +136,33 @@ export async function getLang(object: string) {
     let rawdata = fs.readFileSync(langPath, "utf-8");
     let parsed = JSON.parse(rawdata);
     return parsed[object];
+}
+
+//ArmCord Window State manager
+export interface WindowState {
+    width: number;
+    height: number;
+    isMaximized: boolean;
+}
+export async function setWindowState(object: WindowState) {
+    const userDataPath = app.getPath("userData");
+    const storagePath = path.join(userDataPath, "/storage/");
+    const saveFile = storagePath + "window.json";
+    if (!fs.existsSync(saveFile)) {
+        fs.writeFileSync(saveFile, "{}", "utf-8");
+    }
+    let toSave = JSON.stringify(object);
+    fs.writeFileSync(saveFile, toSave, "utf-8");
+}
+export async function getWindowState(object: string) {
+    const userDataPath = app.getPath("userData");
+    const storagePath = path.join(userDataPath, "/storage/");
+    const settingsFile = storagePath + "window.json";
+    let rawdata = fs.readFileSync(settingsFile, "utf-8");
+    let returndata = JSON.parse(rawdata);
+    console.log(object + ": " + returndata[object]);
+    return returndata[object];
+
 }
 //ArmCord Settings/Storage manager
 

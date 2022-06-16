@@ -1,7 +1,7 @@
 //ipc stuff
 import {app, ipcMain, shell, desktopCapturer} from "electron";
 import {mainWindow} from "./window";
-import {setConfigBulk, getVersion, getConfig, setLang, getLang} from "./utils";
+import {setConfigBulk, getVersion, getConfig, setLang, getLang, getWindowState} from "./utils";
 import {customTitlebar} from "./main";
 import {createSettingsWindow} from "./settings/main";
 export function registerIpc() {
@@ -41,8 +41,22 @@ export function registerIpc() {
     ipcMain.on("get-app-version", (event) => {
         event.returnValue = getVersion();
     });
-    ipcMain.on("splashEnd", (event, arg) => {
-        mainWindow.setSize(800, 600);
+    ipcMain.on("splashEnd", async (event, arg) => {
+        try {
+        var width = await getWindowState("width") ?? 800;
+        var height= await getWindowState("height") ?? 600;
+        var isMaximized = await getWindowState("isMaximized") ?? false;
+        } catch (e) {
+            console.log("No window state file found. Fallbacking to default values.")
+            mainWindow.setSize(800, 600);
+        }
+        if (isMaximized) {
+            mainWindow.setSize(800, 600); //just so the whole thing doesn't cover whole screen 
+            mainWindow.maximize()
+        } else {
+            mainWindow.setSize(width, height);
+            console.log("Not maximized.")
+        }
     });
     ipcMain.on("restart", (event, arg) => {
         app.relaunch();
