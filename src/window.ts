@@ -2,10 +2,11 @@
 // I had to add most of the window creation code here to split both into seperete functions
 // WHY? Because I can't use the same code for both due to annoying bug with value `frame` not responding to variables
 // I'm sorry for this mess but I'm not sure how to fix it.
-import {BrowserWindow, shell, app, dialog} from "electron";
+import { BrowserWindow, shell, app, dialog } from "electron";
 import path from "path";
-import {checkIfConfigIsBroken, firstRun, getConfig, contentPath, isSetup, setConfig, setLang, setWindowState} from "./utils";
-import {registerIpc} from "./ipc";
+import { checkIfConfigIsBroken, firstRun, getConfig, contentPath, isSetup, setConfig, setLang, setWindowState } from "./utils";
+import { registerIpc } from "./ipc";
+import * as fs from "fs";
 import startServer from "./socket";
 import contextMenu from "electron-context-menu";
 import os from "os";
@@ -24,13 +25,13 @@ async function doAfterDefiningTheWindow() {
     var ignoreProtocolWarning = await getConfig("ignoreProtocolWarning");
     checkIfConfigIsBroken();
     registerIpc();
-    
+
     // A little sloppy but it works :p
     if (osType == 'Windows_NT') {
         osType = "Windows " + os.release().split('.')[0] + " (" + os.release() + ")";
     }
     mainWindow.webContents.userAgent = `Mozilla/5.0 (X11; ${osType} ${os.arch()}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36`; //fake useragent for screenshare to work
-    mainWindow.webContents.setWindowOpenHandler(({url}) => {
+    mainWindow.webContents.setWindowOpenHandler(({ url }) => {
         if (url.startsWith("https:" || url.startsWith("http:") || url.startsWith("mailto:"))) {
             shell.openExternal(url);
         } else {
@@ -48,7 +49,7 @@ async function doAfterDefiningTheWindow() {
                     checkboxChecked: false
                 };
 
-                dialog.showMessageBox(mainWindow, options).then(({response, checkboxChecked}) => {
+                dialog.showMessageBox(mainWindow, options).then(({ response, checkboxChecked }) => {
                     console.log(response, checkboxChecked);
                     if (checkboxChecked) {
                         if (response == 0) {
@@ -65,12 +66,31 @@ async function doAfterDefiningTheWindow() {
                 });
             }
         }
-        return {action: "deny"};
+        return { action: "deny" };
     });
     mainWindow.webContents.session.webRequest.onBeforeRequest((details, callback) => {
-        if (/api\/v\d\/science$/g.test(details.url)) return callback({cancel: true});
+        if (/api\/v\d\/science$/g.test(details.url)) return callback({ cancel: true });
         return callback({});
     });
+    const userDataPath = app.getPath("userData");
+    const themesFolder = userDataPath + "/themes/";
+    if (!fs.existsSync(themesFolder)) {
+        fs.mkdirSync(themesFolder);
+        console.log("Created missing theme folder");
+    }
+    mainWindow.webContents.on('did-finish-load', () => {
+        fs.readdirSync(themesFolder).forEach((file) => {
+            try {
+                const manifest = fs.readFileSync(`${themesFolder}/${file}/manifest.json`, "utf8");
+                var themeFile = JSON.parse(manifest);
+                mainWindow.webContents.send("themeLoader", fs.readFileSync(`${themesFolder}/${file}/${themeFile.theme}`, "utf-8"))
+                console.log(`%cLoaded ${themeFile.name} made by ${themeFile.author}`, "color:red");
+            } catch (err) {
+                console.error(err);
+            }
+        });
+    });
+
     mainWindow.on("close", async (e) => {
         let [width, height] = mainWindow.getSize()
         setWindowState({
@@ -86,10 +106,10 @@ async function doAfterDefiningTheWindow() {
             app.quit();
         }
     });
-    mainWindow.on('maximize',() =>{
+    mainWindow.on('maximize', () => {
         mainWindow.webContents.executeJavaScript(`document.body.setAttribute("isMaximized", "");`)
     })
-    mainWindow.on('unmaximize',() =>{
+    mainWindow.on('unmaximize', () => {
         mainWindow.webContents.executeJavaScript(`document.body.removeAttribute("isMaximized");`)
     })
     console.log(contentPath);

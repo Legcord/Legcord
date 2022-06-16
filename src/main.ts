@@ -11,7 +11,6 @@ import "./shortcuts";
 export var settings: any;
 export var customTitlebar: boolean;
 
-
 if (process.platform == "linux") {
     if (process.env.$XDG_SESSION_TYPE == "wayland") {
         console.log("Wayland specific patches applied.");

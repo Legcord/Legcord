@@ -52,6 +52,3 @@ export function injectTitlebar() {
         });
     });
 }
-export function removeTitlebar() {
-    document.querySelector("#titlebar")!.remove();
-}

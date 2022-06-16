@@ -28,6 +28,9 @@ const clientMods = {
 };
 
 console.log("ArmCord");
+ipcRenderer.on("themeLoader", (event, message) => {
+    addStyle(message);
+});
 if (window.location.href.indexOf("splash.html") > -1) {
     console.log("Skipping titlebar injection and client mod injection.");
 } else {
