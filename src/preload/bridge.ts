@@ -15,7 +15,6 @@ contextBridge.exposeInMainWorld("armcord", {
     },
     electron: process.versions.electron,
     channel: ipcRenderer.sendSync("channel"),
-    openTab: (number: number) => ipcRenderer.sendSync("openTab", number),
     setLang: (lang: string) => ipcRenderer.send("setLang", lang),
     getLang: (toGet: string) =>
         ipcRenderer.invoke("getLang", toGet).then((result) => {
