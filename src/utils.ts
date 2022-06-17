@@ -119,12 +119,17 @@ export async function setLang(language: string) {
 var language: string;
 export async function getLang(object: string) {
     if (language == undefined) {
-        const userDataPath = app.getPath("userData");
-        const storagePath = path.join(userDataPath, "/storage/");
-        const langConfigFile = storagePath + "lang.json";
-        let rawdata = fs.readFileSync(langConfigFile, "utf-8");
-        let parsed = JSON.parse(rawdata);
-        language = parsed["lang"];
+        try {
+            const userDataPath = app.getPath("userData");
+            const storagePath = path.join(userDataPath, "/storage/");
+            const langConfigFile = storagePath + "lang.json";
+            let rawdata = fs.readFileSync(langConfigFile, "utf-8");
+            let parsed = JSON.parse(rawdata);
+            language = parsed["lang"];
+        } catch (e) {
+            console.log("Language config file doesn't exist. Fallback to English.")
+            language = "en-US"
+        }
     }
     if (language.length == 2) {
         language = language + "-" + language.toUpperCase();
