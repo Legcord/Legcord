@@ -138,7 +138,7 @@ jobs:
             - uses: dev-drprasad/delete-tag-and-release@v0.2.0
               with:
                 delete_release: true
-                tag_name: v3.0.6
+                tag_name: v3.0.7
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Create Release
