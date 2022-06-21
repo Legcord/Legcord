@@ -45,6 +45,9 @@ ArmCord is also available on the Snap store [here](https://snapcraft.io/armcord)
 <a href="https://snapcraft.io/armcord">
   <img alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" />
 </a>
+### Pi-Apps
+ArmCord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).  
+[![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge.png?raw=true)](https://github.com/Botspot/pi-apps)
 ### Manual:
  Alternatively you can run ArmCord from source (npm, nodejs required):    
  1. Clone ArmCord repo: `git clone https://github.com/ArmCord/ArmCord.git`    
