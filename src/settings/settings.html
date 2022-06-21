@@ -96,7 +96,7 @@
             document.getElementById("csp").checked = await settings.get("armcordCSP");
             document.getElementById("tray").checked = await settings.get("minimizeToTray");
             document.getElementById("websocket").checked = await settings.get("inviteWebsocket");
-            document.getElementById("patches").value = await settings.get("automaticPatches");
+            document.getElementById("patches").checked = await settings.get("automaticPatches");
             document.getElementById("mod").value = await settings.get("mods");
             document.getElementById("channel").value = await settings.get("channel");
             document.getElementById("theme").value = await settings.get("windowStyle");
