@@ -1,6 +1,6 @@
 
 <div align="center">
-<img src="https://armcord.vercel.app/armcord_full_logo.png" width="520">
+<img src="https://armcord.vercel.app/logo.png" width="520">
  <br>ArmCord is a custom client designed to enhance your Discord experience while keeping everything lightweight. 
 </div>
 
