@@ -93,6 +93,5 @@ setInterval(() => {
 
     el.textContent = `\nArmCord Version: ${version}`;
     el.onclick = () => ipcRenderer.send("openSettingsWindow");
-
     host.append(el);
 }, 2000);

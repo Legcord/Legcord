@@ -1,11 +1,11 @@
-@import url("https://armcord.smartfridge.space/logofont.css");
-
 /* Meta {{{ */
 :root {
     --background-primary: #282b30;
     --background-secondary: rgba(255, 255, 255, 0.1);
     --background-modifier-hover: rgba(106, 116, 128, 0.16);
     --brand-experiment: #7289da;
+    --brand-experiment-560: #5c6fb1;
+    --brand-experiment-600: #4e5d94;
     --interactive-normal: #b9bbbe;
     --interactive-hover: #dcddde;
     --text-muted: #72767d;
@@ -109,7 +109,12 @@ body {
     height: 100%;
     width: 33%;
 }
-
+[armcord-platform="darwin"] .titlebar #window-controls-container {
+    margin-left: -26px;
+}
+[armcord-platform="darwin"] .titlebar #window-controls-container #minimize {
+    transform: translateX(5px);
+}
 /* }}} */
 
 /* Buttons {{{ */
@@ -130,10 +135,18 @@ button {
     border: none;
     border-radius: 4px;
     padding: 8px 20px;
+    transition: .17s ease;
 }
 button:hover {
-    filter: brightness(85%);
+    background: var(--brand-experiment-560);
     cursor: pointer;
+    transition: .17s ease;
+}
+
+button:active {
+    background: var(--brand-experiment-600);
+    cursor: pointer;
+    transition: .17s ease;
 }
 /* }}} */
 
@@ -157,5 +170,9 @@ select {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    text-align: center;
+}
+option {
+    text-align: left;
 }
 /* }}} */

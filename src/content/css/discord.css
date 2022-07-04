@@ -1,14 +1,16 @@
 .notice-2HEN-u {
     display: none;
 }
-.sidebar-1tnWFu {
+[customTitlebar] .sidebar-1tnWFu {
     border-top-left-radius: 8px;
 }
-.scroller-3X7KbA {
+[customTitlebar] .scroller-3X7KbA {
     padding: 0;
     padding-top: 4px;
 }
-
+* {
+    outline: none;
+}
 [class^="socialLinks-"] + [class^="info-"] {
     padding-right: 0;
 }

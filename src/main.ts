@@ -10,6 +10,7 @@ import "./shortcuts";
 
 export var settings: any;
 export var customTitlebar: boolean;
+export var clientName: "ArmCord";
 
 if (process.platform == "linux") {
     if (process.env.$XDG_SESSION_TYPE == "wayland") {
@@ -33,7 +34,7 @@ app.whenReady().then(async () => {
         case "native":
             createNativeWindow();
             break;
-        case "discord":
+        case "basic":
             createNativeWindow();
             break;
         default:
@@ -67,6 +68,7 @@ app.whenReady().then(async () => {
                     createCustomWindow();
                     break;
             }
+            console.log("userDataPath = " + app.getPath("userData"));
     });
 });
 

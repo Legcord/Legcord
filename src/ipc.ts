@@ -23,6 +23,9 @@ export function registerIpc() {
     ipcMain.on("win-isMaximized", (event, arg) => {
         event.returnValue = mainWindow.isMaximized();
     });
+    ipcMain.on("win-isNormal", (event, arg) => {
+        event.returnValue = mainWindow.isNormal();
+    });
     ipcMain.on("win-minimize", (event, arg) => {
         mainWindow.minimize();
     });
@@ -73,6 +76,9 @@ export function registerIpc() {
     });
     ipcMain.on("clientmod", async (event, arg) => {
         event.returnValue = await getConfig("mods");
+    });
+    ipcMain.on("trayIcon", async (event, arg) => {
+        event.returnValue = await getConfig("trayIcon");
     });
     ipcMain.on("titlebar", (event, arg) => {
         event.returnValue = customTitlebar;

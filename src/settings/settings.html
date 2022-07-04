@@ -66,7 +66,18 @@
             </select>
             <p class="header" id="settings-prfmMode">Performance mode:</p>
         </div>
-        <button id="settings-save" class="center">Save settings</button>
+        <div class="switch">
+            <select name="trayIcon" id="trayIcon" class="left">
+                <option value="ac_plug_colored">Default</option>
+                <option value="dsc-tray">Discord Icon</option>
+                <option value="ac_white_plug">White Icon</option>
+                <option value="ac_black_plug">Black Icon</option>
+                <option value="ac_white_plug_hollow">White Hollowed Icon</option>
+                <option value="ac_black_plug_hollow">Black Hollowed Icon</option>
+            </select>
+            <p class="header" id="settings-trayIcon">Tray icon:</p>
+        </div>
+        <button id="settings-save" class="center">Save Settings</button>
     </body>
     <script>
         async function loadLang() {
@@ -101,6 +112,7 @@
             document.getElementById("channel").value = await settings.get("channel");
             document.getElementById("theme").value = await settings.get("windowStyle");
             document.getElementById("prfmMode").value = await settings.get("performanceMode");
+            document.getElementById("trayIcon").value = await settings.get("trayIcon");
         }
         loadSettings();
         document.getElementById("settings-save").addEventListener("click", function () {
@@ -113,6 +125,7 @@
                 mods: document.getElementById("mod").value,
                 inviteWebsocket: document.getElementById("websocket").checked,
                 performanceMode: document.getElementById("prfmMode").value,
+                trayIcon: document.getElementById("trayIcon").value,
                 doneSetup: true
             });
         });

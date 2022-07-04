@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2021 GooseMod
+Copyright (c) 2022 GooseMod
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@ SOFTWARE.*/
 :root {
     --background-primary: #282b30;
     --background-secondary: rgba(255, 255, 255, 0.1);
-    --brand-experiment: #5865f2;
+    --brand-experiment: #7289da;
     --header-primary: #fff;
     --text-muted: #72767d;
 }

@@ -47,17 +47,106 @@
 }
 
 /* ArmCord on Linux */
+[armcord-platform="linux"] .container-2RRFHK {
+    padding-top: 45px;
+    top: -45px;
+}
+[armcord-platform="linux"] .titlebar {
+    height: 45px;
+    line-height: 45px;
+}
+[armcord-platform="linux"] .titlebar #window-controls-container {
+    line-height: 45px;
+    transform: translateY(-8px);
+}
 [armcord-platform="linux"] .titlebar #window-controls-container #minimize:hover {
-    background-color: #99aab5;
+    background-color: var(--background-modifier-hover);
+    transition: 0.2s ease;
 }
 [armcord-platform="linux"] .titlebar #window-controls-container #maximize:hover {
-    background-color: #99aab5;
+    background-color: var(--background-modifier-hover);
+    transition: 0.2s ease;
+}
+[armcord-platform="linux"] .titlebar #window-controls-container #minimize:hover #minimize-icon {
+    background-color: var(--interactive-hover);
+    transition: 0.2s ease;
+}
+[armcord-platform="linux"] .titlebar #window-controls-container #maximize:hover #maximize-icon {
+    background-color: var(--interactive-hover);
+    transition: 0.2s ease;
 }
 [armcord-platform="linux"] .titlebar #window-controls-container #quit:hover {
-    background-color: #f04747;
+    background-color: var(--brand-experiment-560);
+    transition: 0.2s ease;
+}
+[armcord-platform="linux"] .titlebar #window-controls-container #quit #quit-icon {
+    background-color: #ffffff;
+    display: list-item;
+    transition: 0.1s ease;
+    -webkit-mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='9' height='9' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6.279 5.5L11 10.221l-.779.779L5.5 6.279.779 11 0 10.221 4.721 5.5 0 .779.779 0 5.5 4.721 10.221 0 11 .779 6.279 5.5z' fill='%23000'/%3E%3C/svg%3E")
+        no-repeat 50% 50%;
+    mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='9' height='9' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6.279 5.5L11 10.221l-.779.779L5.5 6.279.779 11 0 10.221 4.721 5.5 0 .779.779 0 5.5 4.721 10.221 0 11 .779 6.279 5.5z' fill='%23000'/%3E%3C/svg%3E")
+        no-repeat 50% 50%;
+}
+[armcord-platform="linux"] .titlebar #window-controls-container #minimize-icon {
+    background-color: var(--interactive-normal);
+    display: list-item;
+    -webkit-mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='9' height='9' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 4.399V5.5H0V4.399h11z' fill='%23000'/%3E%3C/svg%3E")
+        no-repeat 50% 50%;
+    mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='9' height='9' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 4.399V5.5H0V4.399h11z' fill='%23000'/%3E%3C/svg%3E")
+        no-repeat 50% 50%;
+}
+[armcord-platform="linux"] .titlebar #window-controls-container #maximize-icon {
+    background-color: var(--interactive-normal);
+    display: list-item;
+    -webkit-mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='9' height='9' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 0v11H0V0h11zM9.899 1.101H1.1V9.9h8.8V1.1z' fill='%23000'/%3E%3C/svg%3E")
+        no-repeat 50% 50%;
+    mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='9' height='9' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 0v11H0V0h11zM9.899 1.101H1.1V9.9h8.8V1.1z' fill='%23000'/%3E%3C/svg%3E")
+        no-repeat 50% 50%;
+}
+
+[armcord-platform="linux"][isMaximized] .titlebar #window-controls-container #maximize-icon {
+    background-color: var(--interactive-normal);
+    display: list-item;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' width='9' height='9'%3E%3Cstyle%3E%3C/style%3E%3Cpath fill-rule='evenodd' d='m6 0h24v24h-6v6h-24v-24h6zm3 6h15v15h3v-18h-18zm-6 21h18v-18h-18z'/%3E%3C/svg%3E")
+        no-repeat 50% 50%;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' width='9' height='9'%3E%3Cstyle%3E%3C/style%3E%3Cpath fill-rule='evenodd' d='m6 0h24v24h-6v6h-24v-24h6zm3 6h15v15h3v-18h-18zm-6 21h18v-18h-18z'/%3E%3C/svg%3E")
+        no-repeat 50% 50%;
+}
+[armcord-platform="linux"] .titlebar #window-controls-container #minimize {
+    background-color: transparent;
+    transition: 0.1s ease;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' width='25' height='25'%3E%3Cstyle%3E.a%7Bfill:%23808080%7D%3C/style%3E%3Ccircle class='a' cx='15' cy='15' r='15'/%3E%3C/svg%3E")
+        no-repeat 50% 50%;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' width='25' height='25'%3E%3Cstyle%3E.a%7Bfill:%23808080%7D%3C/style%3E%3Ccircle class='a' cx='15' cy='15' r='15'/%3E%3C/svg%3E")
+        no-repeat 50% 50%;
+}
+[armcord-platform="linux"] .titlebar #window-controls-container #maximize {
+    background-color: transparent;
+    transition: 0.1s ease;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' width='25' height='25'%3E%3Cstyle%3E.a%7Bfill:%23808080%7D%3C/style%3E%3Ccircle class='a' cx='15' cy='15' r='15'/%3E%3C/svg%3E")
+        no-repeat 50% 50%;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' width='25' height='25'%3E%3Cstyle%3E.a%7Bfill:%23808080%7D%3C/style%3E%3Ccircle class='a' cx='15' cy='15' r='15'/%3E%3C/svg%3E")
+        no-repeat 50% 50%;
+}
+[armcord-platform="linux"] .titlebar #window-controls-container #quit {
+    background-color: var(--brand-experiment);
+    transition: 0.1s ease;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' width='25' height='25'%3E%3Cstyle%3E.a%7Bfill:%23808080%7D%3C/style%3E%3Ccircle class='a' cx='15' cy='15' r='15'/%3E%3C/svg%3E")
+        no-repeat 50% 50%;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' width='25' height='25'%3E%3Cstyle%3E.a%7Bfill:%23808080%7D%3C/style%3E%3Ccircle class='a' cx='15' cy='15' r='15'/%3E%3C/svg%3E")
+        no-repeat 50% 50%;
+    
+}
+[armcord-platform="linux"] .titlebar #window-controls-container #quit:active {
+    background-color: var(--brand-experiment-600);
+    transition: 0.1s ease;
 }
 
 /* ArmCord on Windows */
+[armcord-platform="win32"] .titlebar #window-controls-container {
+    width: 142px;
+}
 [armcord-platform="win32"] .titlebar #window-controls-container #minimize:hover {
     background-color: var(--background-modifier-hover);
     transition: 0.2s ease;
@@ -102,8 +191,7 @@
     background-color: #000000cc;
     transition: 0.1s ease;
 }
-
-.titlebar #window-controls-container #quit-icon {
+[armcord-platform="win32"] .titlebar #window-controls-container #quit-icon {
     background-color: var(--interactive-normal);
     display: list-item;
     -webkit-mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6.279 5.5L11 10.221l-.779.779L5.5 6.279.779 11 0 10.221 4.721 5.5 0 .779.779 0 5.5 4.721 10.221 0 11 .779 6.279 5.5z' fill='%23000'/%3E%3C/svg%3E")
@@ -111,7 +199,7 @@
     mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6.279 5.5L11 10.221l-.779.779L5.5 6.279.779 11 0 10.221 4.721 5.5 0 .779.779 0 5.5 4.721 10.221 0 11 .779 6.279 5.5z' fill='%23000'/%3E%3C/svg%3E")
         no-repeat 50% 50%;
 }
-.titlebar #window-controls-container #minimize-icon {
+[armcord-platform="win32"] .titlebar #window-controls-container #minimize-icon {
     background-color: var(--interactive-normal);
     display: list-item;
     -webkit-mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 4.399V5.5H0V4.399h11z' fill='%23000'/%3E%3C/svg%3E")
@@ -119,7 +207,7 @@
     mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 4.399V5.5H0V4.399h11z' fill='%23000'/%3E%3C/svg%3E")
         no-repeat 50% 50%;
 }
-.titlebar #window-controls-container #maximize-icon {
+[armcord-platform="win32"] .titlebar #window-controls-container #maximize-icon {
     background-color: var(--interactive-normal);
     display: list-item;
     -webkit-mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 0v11H0V0h11zM9.899 1.101H1.1V9.9h8.8V1.1z' fill='%23000'/%3E%3C/svg%3E")
@@ -128,7 +216,7 @@
         no-repeat 50% 50%;
 }
 
-[isMaximized] .titlebar #window-controls-container #maximize-icon {
+[armcord-platform="win32"][isMaximized] .titlebar #window-controls-container #maximize-icon {
     background-color: var(--interactive-normal);
     display: list-item;
     -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' width='11' height='11'%3E%3Cstyle%3E%3C/style%3E%3Cpath fill-rule='evenodd' d='m6 0h24v24h-6v6h-24v-24h6zm3 6h15v15h3v-18h-18zm-6 21h18v-18h-18z'/%3E%3C/svg%3E")
@@ -137,13 +225,137 @@
         no-repeat 50% 50%;
 }
 
-.window-title {
+/* ArmCord on MacOS (Why would you do this?) */
+[armcord-platform="darwin"] .container-2RRFHK {
+    padding-top: 45px;
+    top: -45px;
+}
+[armcord-platform="darwin"] .titlebar {
+    height: 45px;
+    line-height: 45px;
+}
+[armcord-platform="darwin"] .titlebar #window-controls-container {
+    float: left;
+    width: 150px;
+    height: 60%;
+    line-height: 45px;
+    -webkit-app-region: no-drag;
+    transform: translate(-78px, 4px);
+}
+
+[armcord-platform="darwin"] .titlebar #window-controls-container:hover #minimize #minimize-icon,
+[armcord-platform="darwin"] .titlebar #window-controls-container:hover #maximize #maximize-icon,
+[armcord-platform="darwin"] .titlebar #window-controls-container:hover #quit #quit-icon {
+    display: list-item;
+}
+
+[armcord-platform="darwin"] .titlebar #window-controls-container #quit #quit-icon {
+    background-color: #79282b;
+    -webkit-mask: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNS4yOTI4OSA2TDIuODE4MDEgMy41MjUxM0wzLjUyNTEyIDIuODE4MDJMNS45OTk5OSA1LjI5Mjg5TDguNDc0ODcgMi44MTgwMkw5LjE4MTk3IDMuNTI1MTNMNi43MDcxIDZMOS4xODE5NyA4LjQ3NDg3TDguNDc0ODcgOS4xODE5OEw1Ljk5OTk5IDYuNzA3MTFMMy41MjUxMiA5LjE4MTk4TDIuODE4MDEgOC40NzQ4N0w1LjI5Mjg5IDZaIiBmaWxsPSJyZ2JhKDEyOCwgNiwgMCwgMSkiLz48L3N2Zz4=")
+        no-repeat 50% 50%;
+    mask: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNS4yOTI4OSA2TDIuODE4MDEgMy41MjUxM0wzLjUyNTEyIDIuODE4MDJMNS45OTk5OSA1LjI5Mjg5TDguNDc0ODcgMi44MTgwMkw5LjE4MTk3IDMuNTI1MTNMNi43MDcxIDZMOS4xODE5NyA4LjQ3NDg3TDguNDc0ODcgOS4xODE5OEw1Ljk5OTk5IDYuNzA3MTFMMy41MjUxMiA5LjE4MTk4TDIuODE4MDEgOC40NzQ4N0w1LjI5Mjg5IDZaIiBmaWxsPSJyZ2JhKDEyOCwgNiwgMCwgMSkiLz48L3N2Zz4=")
+        no-repeat 50% 50%;
+        transform: translate(-0.3px, -11.7px);
+}
+[armcord-platform="darwin"] .titlebar #window-controls-container #minimize #minimize-icon {
+    background-color: #7d631b;
+    -webkit-mask: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTAgNS4zOTk5OUgyVjYuNTk5OTlIMTBWNS4zOTk5OVoiIGZpbGw9IiM5ODY4MDEiLz48L3N2Zz4=")
+        no-repeat 50% 50%;
+    mask: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTAgNS4zOTk5OUgyVjYuNTk5OTlIMTBWNS4zOTk5OVoiIGZpbGw9IiM5ODY4MDEiLz48L3N2Zz4=")
+        no-repeat 50% 50%;
+        transform: translate(-0px, -11.7px);
+}
+[armcord-platform="darwin"] .titlebar #window-controls-container #maximize #maximize-icon {
+    background-color: #1d7525;
+    -webkit-mask: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNOC41ODgyMyA2Ljk5MDE1TDUuMDA5NzkgMy40MTE3QzQuODU1ODMgMy4yNTc3NCA0Ljk1ODYgMi45OTQyMiA1LjE3NjE0IDIuOTg1MTRMOC45MTA0MiAyLjgyOTMxQzkuMDU2NTggMi44MjMyMSA5LjE3NjczIDIuOTQzMzUgOS4xNzA2MyAzLjA4OTUyTDkuMDE0NzkgNi44MjM4QzkuMDA1NzEgNy4wNDEzNCA4Ljc0MjE5IDcuMTQ0MTEgOC41ODgyMyA2Ljk5MDE1WiIgZmlsbD0iIzEyNUUxRSIvPjxwYXRoIGQ9Ik0zLjQxMTc3IDUuMDA5ODJMNi45OTAyMSA4LjU4ODI3QzcuMTQ0MTcgOC43NDIyMyA3LjA0MTQgOS4wMDU3NSA2LjgyMzg2IDkuMDE0ODNMMy4wODk1OCA5LjE3MDY2QzIuOTQzNDIgOS4xNzY3NiAyLjgyMzI3IDkuMDU2NjEgMi44MjkzNyA4LjkxMDQ1TDIuOTg1MjEgNS4xNzYxN0MyLjk5NDI5IDQuOTU4NjMgMy4yNTc4MSA0Ljg1NTg2IDMuNDExNzcgNS4wMDk4MloiIGZpbGw9IiMxMjVFMUUiLz48L3N2Zz4=")
+        no-repeat 50% 50%;
+    mask: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIiIGhlaWdodD0iMTIiIHZpZXdCb3g9IjAgMCAxMiAxMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNOC41ODgyMyA2Ljk5MDE1TDUuMDA5NzkgMy40MTE3QzQuODU1ODMgMy4yNTc3NCA0Ljk1ODYgMi45OTQyMiA1LjE3NjE0IDIuOTg1MTRMOC45MTA0MiAyLjgyOTMxQzkuMDU2NTggMi44MjMyMSA5LjE3NjczIDIuOTQzMzUgOS4xNzA2MyAzLjA4OTUyTDkuMDE0NzkgNi44MjM4QzkuMDA1NzEgNy4wNDEzNCA4Ljc0MjE5IDcuMTQ0MTEgOC41ODgyMyA2Ljk5MDE1WiIgZmlsbD0iIzEyNUUxRSIvPjxwYXRoIGQ9Ik0zLjQxMTc3IDUuMDA5ODJMNi45OTAyMSA4LjU4ODI3QzcuMTQ0MTcgOC43NDIyMyA3LjA0MTQgOS4wMDU3NSA2LjgyMzg2IDkuMDE0ODNMMy4wODk1OCA5LjE3MDY2QzIuOTQzNDIgOS4xNzY3NiAyLjgyMzI3IDkuMDU2NjEgMi44MjkzNyA4LjkxMDQ1TDIuOTg1MjEgNS4xNzYxN0MyLjk5NDI5IDQuOTU4NjMgMy4yNTc4MSA0Ljg1NTg2IDMuNDExNzcgNS4wMDk4MloiIGZpbGw9IiMxMjVFMUUiLz48L3N2Zz4=")
+        no-repeat 50% 50%;
+        transform: translate(-0.2px, -11.7px);
+}
+
+[armcord-platform="darwin"] .titlebar #window-controls-container #minimize {
+    background-color: #fac536;
+    border: 1px solid #da9e10;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' width='13' height='13'%3E%3Cstyle%3E.a%7Bfill:%23808080%7D%3C/style%3E%3Ccircle class='a' cx='15' cy='15' r='15'/%3E%3C/svg%3E")
+        no-repeat 50% 50%;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' width='13' height='13'%3E%3Cstyle%3E.a%7Bfill:%23808080%7D%3C/style%3E%3Ccircle class='a' cx='15' cy='15' r='15'/%3E%3C/svg%3E")
+        no-repeat 50% 50%;
+    transform: translateX(-21.5px);
+}
+[armcord-platform="darwin"] .titlebar #window-controls-container #maximize {
+    background-color: #39ea49;
+    border: 1px solid #13c11e;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' width='13' height='13'%3E%3Cstyle%3E.a%7Bfill:%23808080%7D%3C/style%3E%3Ccircle class='a' cx='15' cy='15' r='15'/%3E%3C/svg%3E")
+        no-repeat 50% 50%;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' width='13' height='13'%3E%3Cstyle%3E.a%7Bfill:%23808080%7D%3C/style%3E%3Ccircle class='a' cx='15' cy='15' r='15'/%3E%3C/svg%3E")
+        no-repeat 50% 50%;
+    transform: translateX(21.5px);
+}
+[armcord-platform="darwin"] .titlebar #window-controls-container #quit {
+    background-color: #f25056;
+    border: 1px solid #d52735;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' width='13' height='13'%3E%3Cstyle%3E.a%7Bfill:%23808080%7D%3C/style%3E%3Ccircle class='a' cx='15' cy='15' r='15'/%3E%3C/svg%3E")
+        no-repeat 50% 50%;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' width='13' height='13'%3E%3Cstyle%3E.a%7Bfill:%23808080%7D%3C/style%3E%3Ccircle class='a' cx='15' cy='15' r='15'/%3E%3C/svg%3E")
+        no-repeat 50% 50%;
+    
+}
+[armcord-platform="darwin"] .titlebar #window-controls-container:hover #maximize:active {
+    background-color: #13c11e;
+}
+[armcord-platform="darwin"] .titlebar #window-controls-container:hover #minimize:active {
+    background-color: #da9e10;
+}
+[armcord-platform="darwin"] .titlebar #window-controls-container:hover #quit:active {
+    background-color: #d52735;
+}
+[armcord-platform="darwin"] .titlebar #window-controls-container #spacer,
+[armcord-platform="darwin"] .titlebar #window-controls-container #minimize,
+[armcord-platform="darwin"] .titlebar #window-controls-container #maximize,
+[armcord-platform="darwin"] .titlebar #window-controls-container #quit {
+    float: right;
+    height: 80%;
+    width: 13%;
+    text-align: center;
+    color: transparent;
+    cursor: default;
+}
+
+[armcord-platform="darwin"] .titlebar #window-controls-container #minimize-icon,
+[armcord-platform="darwin"] .titlebar #window-controls-container #maximize-icon,
+[armcord-platform="darwin"] .titlebar #window-controls-container #quit-icon {
+    display: none;
+}
+
+[armcord-platform="darwin"] .titlebar #window-controls-container #spacer {
+    display: none;
+}
+
+[armcord-platform="darwin"] .window-title {
+    content: var(--wordmark-svg);
+    height: 10px;
+    left: 50%;
+    margin-right: 50%;
+    transform: translate(50%, 9.5px);
+    float: right;
+    padding: 0;
+}
+
+[armcord-platform="linux"] .window-title,
+[armcord-platform="win32"] .window-title {
     content: var(--wordmark-svg);
     height: 10px;
     margin-left: initial;
     transform: translate(9px, 9.5px);
     float: left;
     padding: 0;
+}
+
+[wordmark="discord"] .window-title {
+    content: var(--discord-wordmark-svg);
+    height: 11.7px;
+    width: 56px;
 }
 
 .withFrame-haYltI {

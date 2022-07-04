@@ -44,6 +44,7 @@ export function setup() {
         mods: "cumcord",
         performanceMode: "none",
         inviteWebsocket: true,
+        trayIcon: "ac_plug_colored",
         doneSetup: false
     };
     setConfigBulk({
@@ -52,8 +53,8 @@ export function setup() {
 }
 
 export function getVersion() {
-    //to-do better way of doing this
-    return "3.1.0";
+    //I'm too lazy to replace every mf reference so :p
+    return app.getVersion();
 }
 export async function injectJS(inject: string) {
     const js = await (await fetch(`${inject}`)).text();
@@ -180,6 +181,7 @@ export interface Settings {
     mods: string;
     performanceMode: string;
     inviteWebsocket: boolean;
+    trayIcon: string;
     doneSetup: boolean;
 }
 export async function getConfig(object: string) {
@@ -191,6 +193,17 @@ export async function getConfig(object: string) {
         let returndata = JSON.parse(rawdata);
         console.log(object + ": " + returndata[object]);
         return returndata[object];
+    } catch (e) {
+        console.log("Config probably doesn't exist yet. Returning setup value.");
+        firstRun = true;
+        return "setup";
+    }
+}
+export async function getConfigLocation() {
+    try {
+        const userDataPath = app.getPath("userData");
+        const storagePath = path.join(userDataPath, "/storage/");
+        return storagePath + "settings.json";
     } catch (e) {
         console.log("Config probably doesn't exist yet. Returning setup value.");
         firstRun = true;

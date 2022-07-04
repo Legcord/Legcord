@@ -6,6 +6,13 @@
         <style>
             @import url("css/splash.css");
         </style>
+        <script>
+            window.onbeforeunload = function(){
+                const style = document.createElement('style');
+                style.textContent = "body { display: none; }";
+                document.head.append(style);
+            };
+        </script>
     </head>
 
     <body>

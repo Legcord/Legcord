@@ -14,5 +14,10 @@ app.on("web-contents-created", (webContentsCreatedEvent, webContents) => {
         if (shift && control && !alt && !meta && code === "KeyR") {
             mainWindow.reload();
         }
+        // Shortcut: app reload
+        if (alt && control && !shift && !meta && code === "KeyR") {
+            app.relaunch();
+            app.exit();
+        }
     });
 });

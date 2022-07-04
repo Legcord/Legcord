@@ -1,87 +1,124 @@
+import * as fs from "fs";
 import { app, Menu, Tray } from "electron";
 import { mainWindow } from "./window";
-import { getConfig, setWindowState } from "./utils";
+import { getConfig, getConfigLocation, setWindowState } from "./utils";
 import * as path from "path";
 import { createSettingsWindow } from "./settings/main";
 import { platform } from "process";
 let tray: any = null;
 let defaultIcon = "ac_plug_colored";
 app.whenReady().then(async () => {
-    if (platform == "darwin") {
-        defaultIcon = "macos"
-    }
-    if ((await getConfig("windowStyle")) == "discord") {
-        tray = new Tray(path.join(__dirname, "../", "/assets/dsc-tray.png"));
-        const contextMenu = Menu.buildFromTemplate([
-            {
-                label: "Open ArmCord",
-                click: function () {
-                    mainWindow.show();
-                }
-            },
-            {
-                label: "Quit ArmCord",
-                click: function () {
-                    let [width, height] = mainWindow.getSize()
-                    setWindowState({
-                        width: width,
-                        height: height,
-                        isMaximized: mainWindow.isMaximized()
-                    })
-                    app.quit();
-                }
+    let finishedSetup = (await getConfig("doneSetup"));
+    if ((await getConfig("windowStyle")) == "basic") {
+        var clientName = (await getConfig("clientName")) ?? "ArmCord";
+        var trayIcon = (await getConfig("trayIcon")) ?? "ac_plug_colored";
+        tray = new Tray(path.join(__dirname, "../", `/assets/${trayIcon}.png`));
+        const contextMenu = function () {
+            if (finishedSetup == false) {
+                return Menu.buildFromTemplate([
+                    {
+                        label: `Finish the setup first!`,
+                        enabled: false
+                    },
+                    {
+                        label: `Quit ${clientName}`,
+                        click: async function () {
+                            fs.unlink(await getConfigLocation(), (err) => {
+                                if (err) throw err;
+                                console.log('Closed during setup. "settings.json" was deleted');
+                                app.quit();
+                              });
+                        }
+                    }
+                ]);
+            } else {
+                return Menu.buildFromTemplate([
+                    {
+                        label: `Open ${clientName}`,
+                        click: function () {
+                            mainWindow.show();
+                        }
+                    },
+                    {
+                        label: `Quit ${clientName}`,
+                        click: function () {
+                            let [width, height] = mainWindow.getSize()
+                            setWindowState({
+                                width: width,
+                                height: height,
+                                isMaximized: mainWindow.isMaximized()
+                            })
+                            app.quit();
+                        }
+                    }
+                ]);
             }
-        ]);
+        }
 
-        tray.setToolTip("Discord");
+        tray.setToolTip(clientName);
         tray.setContextMenu(contextMenu);
     } else {
-        var trayIcon = (await getConfig("trayIcon")) ?? defaultIcon;
+        var clientName = (await getConfig("clientName")) ?? "ArmCord";
+        var trayIcon = (await getConfig("trayIcon")) ?? "ac_plug_colored";
         tray = new Tray(path.join(__dirname, "../", `/assets/${trayIcon}.png`));
-        const contextMenu = Menu.buildFromTemplate([
-            {
-                label: "ArmCord"
-            },
-            {
-                type: "separator"
-            },
-            {
-                label: "Open ArmCord",
-                click: function () {
-                    mainWindow.show();
+        if (finishedSetup == false) {
+            const contextMenu = Menu.buildFromTemplate([
+                {
+                    label: `Finish the setup first!`,
+                    enabled: false
+                },
+                {
+                    label: `Quit ${clientName}`,
+                    click: async function () {
+                        fs.unlink(await getConfigLocation(), (err) => {
+                            if (err) throw err;
+                            console.log('Closed during setup. "settings.json" was deleted');
+                            app.quit();
+                          });
+                    }
                 }
-            },
-            {
-                label: "Open Settings",
-                click: function () {
-                    createSettingsWindow();
-                }
-            },
-            {
-                label: "Support Discord Server",
-                click: function () {
-                    mainWindow.show();
-                    mainWindow.loadURL("https://discord.gg/TnhxcqynZ2");
-                }
-            },
-            {
-                type: "separator"
-            },
-            {
-                label: "Quit ArmCord",
-                click: function () {
-                    let [width, height] = mainWindow.getSize()
-                    setWindowState({
-                        width: width,
-                        height: height,
-                        isMaximized: mainWindow.isMaximized()
-                    })
-                    app.quit();
-                }
+            ]);
+            tray.setContextMenu(contextMenu);            
+            } else {
+                const contextMenu = Menu.buildFromTemplate([
+                    {
+                        label: `${clientName} ` + app.getVersion(),
+                        enabled: false
+        
+                    },
+                    {
+                        type: "separator"
+                    },
+                    {
+                        label: "Open Settings",
+                        click: function () {
+                            createSettingsWindow();
+                        }
+                    },
+                    {
+                        label: "Support Discord Server",
+                        click: function () {
+                            mainWindow.show();
+                            mainWindow.loadURL("https://discord.gg/TnhxcqynZ2");
+                        }
+                    },
+                    {
+                        type: "separator"
+                    },
+                    {
+                        label: `Quit ${clientName}`,
+                        click: function () {
+                            app.quit();
+                        }
+                    }
+                ]);
+                tray.setContextMenu(contextMenu);     
             }
-        ]);
+        }
 
-        tray.setToolTip("ArmCord " + app.getVersion());
-        tray.setContextMenu(contextMenu);
+        tray.setToolTip(clientName);
+        tray.on('click', function(){
+              mainWindow.show()
+          });
     }
-});
+);

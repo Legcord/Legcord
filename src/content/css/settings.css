@@ -1,6 +1,6 @@
 /*MIT License
 
-Copyright (c) 2021 GooseMod
+Copyright (c) 2022 GooseMod
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -20,11 +20,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
 :root {
-    --background-primary: #282b30;
-    --background-secondary: rgba(255, 255, 255, 0.1);
-    --brand-experiment: #5865f2;
-    --header-primary: #fff;
+    --background-secondary: #2f3136;
+    --background-secondary-alt: #292b2f;
+    --background-floating: #18191c;
+    --background-modifier-hover: rgba(106, 116, 128, 0.16);
+    --brand-experiment: #7289da;
+    --brand-experiment-560: #5c6fb1;
+    --brand-experiment-600: #4e5d94;
+    --interactive-normal: #b9bbbe;
+    --interactive-hover: #dcddde;
     --text-muted: #72767d;
+    --font-primary: "Whitney";
+    --header-primary: #fff;
 }
 
 @font-face {
@@ -36,12 +43,19 @@ SOFTWARE.*/
 
 html,
 body {
-    overflow: hidden;
-
-    margin: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
     padding: 0;
     margin: 2%;
-    background: var(--background-primary);
+    background: var(--background-secondary);
+}
+body::-webkit-scrollbar {
+    width: 0.4em;
+    background: transparent;
+}
+body::-webkit-scrollbar-thumb {
+    background: var(--background-floating);
+    border-radius: 25px;
 }
 
 * {
@@ -58,31 +72,39 @@ body {
     vertical-align: middle;
 }
 .header {
-    color: white;
-    font-size: 1.5em;
+    color: var(--header-primary);
+    font-size: 1.46em;
 }
 .center {
     text-align: center;
+    left: 50%;
+    margin-right: 50%;
+    transform: translateX(50%);
+    float: right;
 }
 /*buttons*/
 button {
-    background-color: #7289da;
-    font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #ffffff;
-    padding: 4px;
-    border-radius: 5px;
-    margin-top: 5px;
-
-    text-align: center;
-    border-style: none;
+    background: var(--brand-experiment);
+    color: var(--header-primary);
     outline: none;
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+    transition: .17s ease;
+}
+button:hover {
+    background: var(--brand-experiment-560);
+    cursor: pointer;
+    transition: .17s ease;
 }
 
-button:hover {
-    background-color: #687dc6;
-    border-style: none;
-    outline: none;
+button:active {
+    background: var(--brand-experiment-600);
     cursor: pointer;
+    transition: .17s ease;
+}
+#save {
+    font-size: 15px;
 }
 .tgl {
     display: none;
@@ -135,42 +157,47 @@ button:hover {
     height: 100%;
 }
 .tgl + .tgl-btn:after {
-    left: 0;
+    left: 1px;
 }
 .tgl + .tgl-btn:before {
     display: none;
 }
 .tgl:checked + .tgl-btn:after {
-    left: 50%;
+    left: 56%;
 }
 
 .tgl-light + .tgl-btn {
-    background: #5c5757;
-    border-radius: 2em;
-    padding: 2px;
+    background: var(--text-muted);
+    border-radius: 25px;
+    padding: 4px;
     transition: all 0.4s ease;
 }
 .tgl-light + .tgl-btn:after {
-    border-radius: 50%;
+    border-radius: 50px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
     background: rgb(255, 255, 255);
     transition: all 0.2s ease;
 }
 .tgl-light:checked + .tgl-btn {
-    background: #47ca5a;
+    background: var(--brand-experiment);
 }
 select {
     -webkit-appearance: button;
     -moz-appearance: button;
-    background-color: #2c2f33;
+    background-color: var(--background-secondary-alt);
     background-position: center right;
     background-repeat: no-repeat;
-    border: 1px solid #aaa;
+    border: 1px solid var(--background-floating);
     border-radius: 2px;
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
     color: #fff;
     font-size: 1.2em;
     margin: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    outline: none !important;
 }

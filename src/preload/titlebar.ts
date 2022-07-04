@@ -2,7 +2,7 @@ import {ipcRenderer} from "electron";
 import {addStyle} from "../utils";
 import * as fs from "fs";
 import * as path from "path";
-import {platform} from "node:process";
+import os from "os";
 export function injectTitlebar() {
     document.addEventListener("DOMContentLoaded", function (event) {
         var elem = document.createElement("div");
@@ -25,8 +25,10 @@ export function injectTitlebar() {
         const wordmarkcssPath = path.join(__dirname, "../", "/content/css/logos.css");
         addStyle(fs.readFileSync(titlebarcssPath, "utf8"));
         addStyle(fs.readFileSync(wordmarkcssPath, "utf8"));
-        document.body.setAttribute("armcord-platform", platform);
+        document.body.setAttribute("customTitlebar", "");
+        document.body.setAttribute("armcord-platform", os.platform());
 
+        var titlebar = document.getElementsByClassName("titlebar")[0];
         var minimize = document.getElementById("minimize");
         var maximize = document.getElementById("maximize");
         var quit = document.getElementById("quit");
@@ -38,7 +40,8 @@ export function injectTitlebar() {
         maximize!.addEventListener("click", () => {
             if (ipcRenderer.sendSync("win-isMaximized") == true) {
                 ipcRenderer.send("win-unmaximize");
-            } else {
+                document.body.removeAttribute("isMaximized");
+            } else if (ipcRenderer.sendSync("win-isNormal") == true) {
                 ipcRenderer.send("win-maximize");
             }
         });
