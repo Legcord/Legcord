@@ -90,18 +90,18 @@ button {
     border: none;
     border-radius: 5px;
     padding: 8px;
-    transition: .17s ease;
+    transition: 0.17s ease;
 }
 button:hover {
     background: var(--brand-experiment-560);
     cursor: pointer;
-    transition: .17s ease;
+    transition: 0.17s ease;
 }
 
 button:active {
     background: var(--brand-experiment-600);
     cursor: pointer;
-    transition: .17s ease;
+    transition: 0.17s ease;
 }
 #save {
     font-size: 15px;

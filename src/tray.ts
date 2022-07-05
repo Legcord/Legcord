@@ -4,9 +4,7 @@ import { mainWindow } from "./window";
 import { getConfig, getConfigLocation, setWindowState } from "./utils";
 import * as path from "path";
 import { createSettingsWindow } from "./settings/main";
-import { platform } from "process";
 let tray: any = null;
-let defaultIcon = "ac_plug_colored";
 app.whenReady().then(async () => {
     let finishedSetup = (await getConfig("doneSetup"));
     if ((await getConfig("windowStyle")) == "basic") {
@@ -88,6 +86,12 @@ app.whenReady().then(async () => {
                     },
                     {
                         type: "separator"
+                    },
+                    {
+                        label: `Open ${clientName}`,
+                        click: function () {
+                            mainWindow.show();
+                        }
                     },
                     {
                         label: "Open Settings",

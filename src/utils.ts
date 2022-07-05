@@ -1,7 +1,6 @@
 import * as fs from "fs";
 import { app, dialog } from "electron";
 import path from "path";
-import { defaultMaxListeners } from "events";
 export var firstRun: boolean;
 export var isSetup: boolean;
 export var contentPath: string;
