@@ -1,34 +1,34 @@
 
 <div align="center">
-<img src="https://armcord.vercel.app/logo.png" width="520">
- <br>ArmCord is a custom client designed to enhance your Discord experience while keeping everything lightweight. 
+<img src="https://armcord.xyz/logo.svg" width="520">
+ <br>ArmCord is a custom Discord client designed to work on any pc and enhance your Discord experience. 
 </div>
 
 # Features
 
 - **Standalone client** 
 
-   ArmCord is built as standalone client, it doesn't rely on original Discord client.
+   ArmCord is built as a standalone client and doesn't rely on the original Discord client in anyway.
 
 
 - **Various mods built in**
  
-   Explore Cumcord/GooseMod/Flicker plugins and their features!
+   Enjoy Cumcord, GooseMod, Flicker, and their many features, or have a more vanilla experience, it's your choice!
 
 
-- **Made for Privacy**
+- **Made for Privacy™**
 
-   ArmCord automatically blocks Discord's trackers.
-
-
-- **Faster than normal Discord app**
-
-   ArmCord is using newer Electron than stock Discord app. This usually means increased performance and more stable experience.
+   ArmCord automatically blocks all of Discord's trackers; even without any client mods you can feel safe and secure!
 
 
-- **Designed to work anywhere**
+- **Much more stable**
 
-   ArmCord was initially created in mind to run on Arm64 Linux devices. We soon expanded our support to more platforms. We plan to support every platform that [Electron supports](https://www.electronjs.org/docs/latest/tutorial/support#supported-platforms).
+   ArmCord is using a newer build of Electron than the stock Discord app. This means you can have a much more stable and secure experience, along with slightly better performance.
+
+
+- **Cross-platform support!**
+
+   ArmCord was originally created for ARM64 Linux devices, since Discord doesn't support them. We soon decided to support every platform that [Electron supports](https://github.com/electron/electron#platform-support)!
   
 # How to run/install it?
 ### Recommended:
@@ -48,8 +48,10 @@ ArmCord is also available on the Snap store [here](https://snapcraft.io/armcord)
 ### Pi-Apps
 ArmCord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).  
 [![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge.png?raw=true)](https://github.com/Botspot/pi-apps)
-### Manual:
- Alternatively you can run ArmCord from source (npm, nodejs required):    
+
+
+### Compiling:
+ Alternatively you can run ArmCord from source (NodeJS and npm required):    
  1. Clone ArmCord repo: `git clone https://github.com/ArmCord/ArmCord.git`    
  2. Run `npm install` to install dependencies   
  3. Build with `npm run build`   
@@ -57,24 +59,29 @@ ArmCord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).
 
 
 # FAQ
-## 1. Will I get banned from using it?   
+## Will I get banned for using this?   
+- You are breaking [Discord ToS](https://discord.com/terms#software-in-discord%E2%80%99s-services) by using ArmCord, but no one has been banned from using it or any of the client mods included.
 
- - You are breaking Discord ToS if you decided to use client mods. But no one ever got banned from using ArmCord or any of the client mods included. If you wish to remove mods, check our documentation. 
-## 2. How does this work?   
+## Can I use this on anything other than ARM?
+- Yes! ArmCord should work normally under Windows, MacOS and Linux as long as it has Electron support.  
 
- - We are using official web app and adding some magic powder to make it all work!   
-## 3. Can I use this on other architectures or operating systems?
+## How does this work?   
+- We are using the official web app and adding some magic powder to make it all work!
 
- - Yes! ArmCord should work normally under Windows, Mac OS and Linux as long as it has NodeJS, npm and Electron support.   
-## 4. Where can I translate this?
- - Translations are done using our [Weblate page](https://hosted.weblate.org/projects/armcord/armcord/). They're pushed to this [repo](https://github.com/ArmCord/i18n).
+## Where can I find the source code?
+- The source code is on [GitHub](https://github.com/ArmCord/ArmCord/).
+
+## Where can I translate this?
+- Translations are done using our [Weblate page](https://hosted.weblate.org/projects/armcord/armcord/). They're pushed to this [repo](https://github.com/ArmCord/i18n).
+
 # Credits
-[ArmCord UI Elements and few features](https://github.com/kckarnige)   
+[ArmCord UI design, branding, and a few features](https://github.com/kckarnige)   
 [Cumcord](https://github.com/Cumcord/Cumcord)   
-[GooseMod](https://github.com/GooseMod/GooseMod) 
-[GooseMod Extension](https://github.com/GooseMod/extension)    
+[GooseMod](https://github.com/GooseMod/GooseMod)   
+[GooseMod Extension](https://github.com/GooseMod/extension)   
+[FlickerMod](https://github.com/FlickerMod)   
 [electron-discord-webapp](https://github.com/SpacingBat3/electron-discord-webapp)    
-[custom-electron-titlebar (css only)](https://github.com/AlexTorresSk/custom-electron-titlebar)    
+(Pre v3.0.6) [custom-electron-titlebar](https://github.com/AlexTorresSk/custom-electron-titlebar)    
 [electron-builder](https://electron.build)  
 [OpenAsar](https://github.com/GooseMod/OpenAsar)     
 # Sponsors
