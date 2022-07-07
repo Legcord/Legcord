@@ -1,6 +1,6 @@
 
 <div align="center">
-<img src="https://armcord.xyz/logo.svg" width="520">
+<img src="https://armcord.xyz/logo.png" width="520">
  <br>ArmCord is a custom Discord client designed to run smoother and enhance your Discord experience. 
 </div>
 
