@@ -1,7 +1,7 @@
 
 <div align="center">
 <img src="https://armcord.xyz/logo.svg" width="520">
- <br>ArmCord is a custom Discord client designed to work on any pc and enhance your Discord experience. 
+ <br>ArmCord is a custom Discord client designed to run smoother and enhance your Discord experience. 
 </div>
 
 # Features
