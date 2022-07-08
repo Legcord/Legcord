@@ -18,7 +18,7 @@
     <body>
         <div class="container">
             <video autoplay loop class="logo" id="splashscreen-armcord">
-                <source src="https://armcord.smartfridge.space/discord_loading.webm" type="video/webm" />
+                <source src="https://armcord.xyz/discord_loading.webm" type="video/webm" />
             </video>
             <p id="text-splashscreen"></p>
         </div>
@@ -38,7 +38,7 @@
                     if (data.version !== window.armcord.version) {
                         var elem = document.createElement("img");
                         elem.classList.add("logo");
-                        elem.src = "https://armcord.smartfridge.space/update.webp";
+                        elem.src = "https://armcord.xyz/update.webp";
                         document.body.prepend(elem);
                         document.getElementById("splashscreen-armcord").remove();
                         text.innerHTML = await armcord.getLang("loading_screen_update");
