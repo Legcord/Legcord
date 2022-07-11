@@ -26,5 +26,6 @@
     "settings-prfmMode": "mode kinerja:",
     "settings-prfmMode-performance": "kinerja",
     "settings-prfmMode-battery": "Baterai",
-    "settings-none": "tidak ada"
+    "settings-none": "tidak ada",
+    "settings-mobileMode": "Mobile mode"
 }
