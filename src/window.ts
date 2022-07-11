@@ -118,36 +118,14 @@ async function doAfterDefiningTheWindow() {
     })
     console.log(contentPath);
     if ((await getConfig("inviteWebsocket")) == true) {
-        startServer();
+        await startServer();
     }
-    try {
-        mainWindow.loadFile(contentPath);
-        if (isSetup) {
-            await setLang(Intl.DateTimeFormat().resolvedOptions().locale)
-            mainWindow.setSize(390, 470);
-        }
-    } catch (e) {
-        console.log(
-            "Major error detected while starting up. User is most likely on Windows platform. Fallback to alternative startup."
-        );
-        console.log(process.platform);
-        if (process.platform === "win32") {
-            if (firstRun) {
-                await setLang(Intl.DateTimeFormat().resolvedOptions().locale)
-                mainWindow.setSize(390, 470);
-                mainWindow.loadURL(`file://${__dirname}/content/setup.html`);
-            } else {
-                mainWindow.loadURL(`file://${__dirname}/content/splash.html`);
-            }
-        } else {
-            if (firstRun) {
-                await setLang(Intl.DateTimeFormat().resolvedOptions().locale)
-                mainWindow.setSize(390, 470);
-                mainWindow.loadURL(`file://${__dirname}/ts-out/content/setup.html`);
-            } else {
-                mainWindow.loadURL(`file://${__dirname}/ts-out/content/splash.html`);
-            }
-        }
+    if (firstRun) {
+        await setLang(Intl.DateTimeFormat().resolvedOptions().locale)
+        mainWindow.setSize(390, 470);
+        await mainWindow.loadFile(path.join(__dirname, "/content/setup.html"));
+    } else {
+        await mainWindow.loadFile(path.join(__dirname, "/content/splash.html"));
     }
 }
 export function createCustomWindow() {

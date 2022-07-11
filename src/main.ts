@@ -26,22 +26,25 @@ if (process.platform == "linux") {
 checkIfConfigExists();
 injectElectronFlags();
 app.whenReady().then(async () => {
-    switch (await getConfig("windowStyle")) {
-        case "default":
-            createCustomWindow();
-            customTitlebar = true;
-            break;
-        case "native":
-            createNativeWindow();
-            break;
-        case "basic":
-            createNativeWindow();
-            break;
-        default:
-            createCustomWindow();
-            customTitlebar = true;
-            break;
+    async function init() {
+        switch (await getConfig("windowStyle")) {
+            case "default":
+                createCustomWindow();
+                customTitlebar = true;
+                break;
+            case "native":
+                createNativeWindow();
+                break;
+            case "basic":
+                createNativeWindow();
+                break;
+            default:
+                createCustomWindow();
+                customTitlebar = true;
+                break;
+        }
     }
+    await init()
     session.fromPartition("some-partition").setPermissionRequestHandler((webContents, permission, callback) => {
         if (permission === "notifications") {
             // Approves the permissions request
@@ -54,24 +57,6 @@ app.whenReady().then(async () => {
     });
     app.on("activate", async function () {
         if (BrowserWindow.getAllWindows().length === 0)
-            switch (await getConfig("windowStyle")) {
-                case "default":
-                    createCustomWindow();
-                    break;
-                case "native":
-                    createNativeWindow();
-                    break;
-                case "discord":
-                    createNativeWindow();
-                    break;
-                default:
-                    createCustomWindow();
-                    break;
-            }
-            console.log("userDataPath = " + app.getPath("userData"));
+            await init()
     });
-});
-
-app.on("window-all-closed", function () {
-    if (process.platform !== "darwin") app.quit();
 });

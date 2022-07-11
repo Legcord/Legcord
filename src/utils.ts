@@ -105,9 +105,7 @@ export async function injectElectronFlags() {
     }
 }
 export async function setLang(language: string) {
-    const userDataPath = app.getPath("userData");
-    const storagePath = path.join(userDataPath, "/storage/");
-    const langConfigFile = storagePath + "lang.json";
+    const langConfigFile = path.join(app.getPath("userData"), "/storage/") + "lang.json";
     if (!fs.existsSync(langConfigFile)) {
         fs.writeFileSync(langConfigFile, "{}", "utf-8");
     }
@@ -150,7 +148,6 @@ export async function getLang(object: string) {
     } else {
         return parsed[object];
     }
-
 }
 
 //ArmCord Window State manager
@@ -175,9 +172,8 @@ export async function getWindowState(object: string) {
     const settingsFile = storagePath + "window.json";
     let rawdata = fs.readFileSync(settingsFile, "utf-8");
     let returndata = JSON.parse(rawdata);
-    console.log(object + ": " + returndata[object]);
+    console.log("[Window state manager] " + object + ": " + returndata[object]);
     return returndata[object];
-
 }
 //ArmCord Settings/Storage manager
 
@@ -194,60 +190,30 @@ export interface Settings {
     trayIcon: string;
     doneSetup: boolean;
 }
-export async function getConfig(object: string) {
-    try {
-        const userDataPath = app.getPath("userData");
-        const storagePath = path.join(userDataPath, "/storage/");
-        const settingsFile = storagePath + "settings.json";
-        let rawdata = fs.readFileSync(settingsFile, "utf-8");
-        let returndata = JSON.parse(rawdata);
-        console.log(object + ": " + returndata[object]);
-        return returndata[object];
-    } catch (e) {
-        console.log("Config probably doesn't exist yet. Returning setup value.");
-        firstRun = true;
-        return "setup";
-    }
+export function getConfigLocation() {
+    const userDataPath = app.getPath("userData");
+    const storagePath = path.join(userDataPath, "/storage/");
+    return storagePath + "settings.json";
 }
-export async function getConfigLocation() {
-    try {
-        const userDataPath = app.getPath("userData");
-        const storagePath = path.join(userDataPath, "/storage/");
-        return storagePath + "settings.json";
-    } catch (e) {
-        console.log("Config probably doesn't exist yet. Returning setup value.");
-        firstRun = true;
-        return "setup";
-    }
+export async function getConfig(object: string) {
+    let rawdata = fs.readFileSync(getConfigLocation(), "utf-8");
+    let returndata = JSON.parse(rawdata);
+    console.log("[Config manager] " + object + ": " + returndata[object]);
+    return returndata[object];
 }
 export async function setConfig(object: string, toSet: any) {
-    try {
-        const userDataPath = app.getPath("userData");
-        const storagePath = path.join(userDataPath, "/storage/");
-        const settingsFile = storagePath + "settings.json";
-        let rawdata = fs.readFileSync(settingsFile, "utf-8");
-        let parsed = JSON.parse(rawdata);
-        parsed[object] = toSet;
-        let toSave = JSON.stringify(parsed);
-        fs.writeFileSync(settingsFile, toSave, "utf-8");
-    } catch (e) {
-        console.log("Config probably doesn't exist yet. Returning setup value.");
-        firstRun = true;
-        return "setup";
-    }
+    let rawdata = fs.readFileSync(getConfigLocation(), "utf-8");
+    let parsed = JSON.parse(rawdata);
+    parsed[object] = toSet;
+    let toSave = JSON.stringify(parsed);
+    fs.writeFileSync(getConfigLocation(), toSave, "utf-8");
 }
 export async function setConfigBulk(object: Settings) {
-    try {
-        const userDataPath = app.getPath("userData");
-        const storagePath = path.join(userDataPath, "/storage/");
-        const settingsFile = storagePath + "settings.json";
-        let toSave = JSON.stringify(object);
-        fs.writeFileSync(settingsFile, toSave, "utf-8");
-    } catch (e) {
-        console.log("Config probably doesn't exist yet. Returning setup value.");
-        firstRun = true;
-        return "setup";
-    }
+    const userDataPath = app.getPath("userData");
+    const storagePath = path.join(userDataPath, "/storage/");
+    const settingsFile = storagePath + "settings.json";
+    let toSave = JSON.stringify(object);
+    fs.writeFileSync(settingsFile, toSave, "utf-8");
 }
 export async function checkIfConfigExists() {
     const userDataPath = app.getPath("userData");
@@ -261,26 +227,14 @@ export async function checkIfConfigExists() {
         }
         console.log("First run of the ArmCord. Starting setup.");
         setup();
-        isSetup = true;
-        contentPath = path.join(__dirname, "/content/setup.html");
-        if (!contentPath.includes("ts-out")) {
-            contentPath = path.join(__dirname, "/ts-out/content/setup.html");
-        }
+        firstRun = true;
     } else {
         if ((await getConfig("doneSetup")) == false) {
             console.log("First run of the ArmCord. Starting setup.");
             setup();
-            isSetup = true;
-            contentPath = path.join(__dirname, "/content/setup.html");
-            if (!contentPath.includes("ts-out")) {
-                contentPath = path.join(__dirname, "/ts-out/content/setup.html");
-            }
+            firstRun = true;
         } else {
             console.log("ArmCord has been run before. Skipping setup.");
-            contentPath = path.join(__dirname, "/content/splash.html");
-            if (!contentPath.includes("ts-out")) {
-                contentPath = path.join(__dirname, "/ts-out/content/splash.html");
-            }
         }
     }
 }

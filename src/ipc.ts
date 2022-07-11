@@ -50,7 +50,7 @@ export function registerIpc() {
         var height= await getWindowState("height") ?? 600;
         var isMaximized = await getWindowState("isMaximized") ?? false;
         } catch (e) {
-            console.log("No window state file found. Fallbacking to default values.")
+            console.log("[Window state manager] No window state file found. Fallbacking to default values.")
             mainWindow.setSize(800, 600);
         }
         if (isMaximized) {
@@ -58,7 +58,7 @@ export function registerIpc() {
             mainWindow.maximize()
         } else {
             mainWindow.setSize(width, height);
-            console.log("Not maximized.")
+            console.log("[Window state manager] Not maximized.")
         }
     });
     ipcMain.on("restart", (event, arg) => {
