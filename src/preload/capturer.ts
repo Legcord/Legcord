@@ -2,6 +2,8 @@
 //original https://github.com/electron/electron/issues/16513#issuecomment-602070250
 import {ipcRenderer} from "electron";
 import {addStyle, addScript} from "../utils";
+import fs from "fs";
+import path from "path";
 const desktopCapturer = {
     getSources: (opts: any) => ipcRenderer.invoke("DESKTOP_CAPTURER_GET_SOURCES", opts)
 };
@@ -41,76 +43,7 @@ export async function getDisplayMediaSelector() {
 }
 
 const screenShareCSS = `
-.desktop-capturer-selection {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: rgba(30,30,30,.75);
-  color: #FFFFFF;
-  z-index: 10000000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.desktop-capturer-selection__scroller {
-  width: 100%;
-  max-height: 100vh;
-  overflow-y: auto;
-}
-.desktop-capturer-selection__list {
-  max-width: calc(100% - 100px);
-  margin: 50px;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
-  overflow: hidden;
-  justify-content: center;
-}
-.desktop-capturer-selection__item {
-  display: flex;
-  margin: 4px;
-}
-.desktop-capturer-selection__btn {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  width: 145px;
-  margin: 0;
-  border: 0;
-  border-radius: 3px;
-  padding: 4px;
-  background: #2C2F33;
-  text-align: left;
-  @media (prefers-reduced-motion: no-preference) {
-    transition: background-color .15s, box-shadow .15s, color .15s;
-  }
-  color: #dedede;
-}
-.desktop-capturer-selection__btn:hover,
-.desktop-capturer-selection__btn:focus {
-  background: #7289DA;
-  box-shadow: 0 0 4px rgba(0,0,0,0.45), 0 0 2px rgba(0,0,0,0.25);
-  color: #fff;
-}
-.desktop-capturer-selection__thumbnail {
-  width: 100%;
-  height: 81px;
-  object-fit: cover;
-}
-.desktop-capturer-selection__name {
-  margin: 6px 0;
-  white-space: nowrap;
-  color: white;
-  text-overflow: ellipsis;
-  text-align: center;
-  overflow: hidden;
-}
-.desktop-capturer-selection__name--cancel {
-  margin: auto 0;
-}
+
 `;
 
 const screenShareJS = `
@@ -155,6 +88,7 @@ window.navigator.mediaDevices.getDisplayMedia = () => new Promise(async (resolve
 
 document.addEventListener("DOMContentLoaded", function () {
     addScript(screenShareJS);
-    addStyle(screenShareCSS);
+    const screenshareCss = path.join(__dirname, "../", "/content/css/screenshare.css");
+    addStyle(fs.readFileSync(screenshareCss, "utf8"));
     console.log("Capturer injected.");
 });

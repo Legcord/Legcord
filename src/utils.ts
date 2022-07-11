@@ -2,7 +2,6 @@ import * as fs from "fs";
 import { app, dialog } from "electron";
 import path from "path";
 export var firstRun: boolean;
-export var isSetup: boolean;
 export var contentPath: string;
 //utility functions that are used all over the codebase or just too obscure to be put in the file used in
 export function addStyle(styleString: string) {
