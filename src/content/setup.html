@@ -31,7 +31,6 @@
                             <option value="stable">Stable</option>
                             <option value="canary">Canary</option>
                             <option value="ptb">PTB</option>
-                            <option value="foss">Fosscord</option>
                         </select>
                     </div>
                     <p class="text-center setup-ask" id="setup_question3">
@@ -121,6 +120,7 @@
                     automaticPatches: false,
                     mods: "cumcord",
                     inviteWebsocket: true,
+                    mobileMode: false,
                     trayIcon: "ac_plug_colored",
                     performanceMode: "none"
                 });
@@ -148,8 +148,8 @@
                             windowStyle: "default",
                             channel: options.channel,
                             armcordCSP: true,
-                            autoLaunch: true,
                             minimizeToTray: true,
+                            mobileMode: false,
                             automaticPatches: false,
                             performanceMode: "none",
                             trayIcon: "ac_plug_colored",
@@ -165,7 +165,7 @@
                         armcordCSP: true,
                         minimizeToTray: true,
                         automaticPatches: false,
-                        autoLaunch: true,
+                        mobileMode: false,
                         mods: "none",
                         performanceMode: "none",
                         trayIcon: "ac_plug_colored",

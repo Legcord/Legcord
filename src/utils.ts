@@ -4,7 +4,7 @@ import path from "path";
 export var firstRun: boolean;
 export var isSetup: boolean;
 export var contentPath: string;
-//utillity functions that are used all over the codebase or just too obscure to be put in the file used in
+//utility functions that are used all over the codebase or just too obscure to be put in the file used in
 export function addStyle(styleString: string) {
     const style = document.createElement("style");
     style.textContent = styleString;
@@ -43,6 +43,7 @@ export function setup() {
         mods: "cumcord",
         performanceMode: "none",
         inviteWebsocket: true,
+        mobileMode: false,
         trayIcon: "ac_plug_colored",
         doneSetup: false
     };
@@ -140,7 +141,16 @@ export async function getLang(object: string) {
     }
     let rawdata = fs.readFileSync(langPath, "utf-8");
     let parsed = JSON.parse(rawdata);
-    return parsed[object];
+    if (parsed[object] == undefined) {
+        console.log(object + " is undefined in " + language)
+        langPath = path.join(__dirname, "../", "/assets/lang/en-US.json");
+        rawdata = fs.readFileSync(langPath, "utf-8");
+        parsed = JSON.parse(rawdata);
+        return parsed[object]
+    } else {
+        return parsed[object];
+    }
+
 }
 
 //ArmCord Window State manager
@@ -178,6 +188,7 @@ export interface Settings {
     minimizeToTray: boolean;
     automaticPatches: boolean;
     mods: string;
+    mobileMode: boolean,
     performanceMode: string;
     inviteWebsocket: boolean;
     trayIcon: string;

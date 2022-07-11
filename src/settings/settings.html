@@ -40,12 +40,17 @@
             <input class="tgl tgl-light left" id="websocket" type="checkbox" />
             <label class="tgl-btn left" for="websocket"></label>
         </div>
+        <br />
+        <div class="switch">
+            <label class="header" id="settings-mobileMode">Mobile mode</label>
+            <input class="tgl tgl-light left" id="mobile" type="checkbox" />
+            <label class="tgl-btn left" for="mobile"></label>
+        </div>
         <div class="switch">
             <select name="channel" id="channel" class="left">
                 <option value="stable">Stable</option>
                 <option value="canary">Canary</option>
                 <option value="ptb">PTB</option>
-                <option value="foss">Fosscord</option>
             </select>
             <p class="header" id="settings-channel">Discord channel:</p>
         </div>
@@ -89,6 +94,7 @@
             );
             document.getElementById("settings-patches").innerHTML = await settings.getLang("settings-patches");
             document.getElementById("settings-tray").innerHTML = await settings.getLang("settings-tray");
+            document.getElementById("settings-mobileMode").innerHTML = await settings.getLang("settings-mobileMode");
             document.getElementById("settings-theme").innerHTML = await settings.getLang("settings-theme");
             //select stuff
             document.getElementById("mod").options[3].text = await settings.getLang("settings-none");
@@ -107,6 +113,7 @@
             document.getElementById("csp").checked = await settings.get("armcordCSP");
             document.getElementById("tray").checked = await settings.get("minimizeToTray");
             document.getElementById("websocket").checked = await settings.get("inviteWebsocket");
+            document.getElementById("mobile").checked = await settings.get("mobileMode");
             document.getElementById("patches").value = await settings.get("automaticPatches");
             document.getElementById("mod").value = await settings.get("mods");
             document.getElementById("channel").value = await settings.get("channel");
@@ -123,6 +130,7 @@
                 minimizeToTray: document.getElementById("tray").checked,
                 automaticPatches: document.getElementById("patches").checked,
                 mods: document.getElementById("mod").value,
+                mobileMode: document.getElementById("mobile").checked,
                 inviteWebsocket: document.getElementById("websocket").checked,
                 performanceMode: document.getElementById("prfmMode").value,
                 trayIcon: document.getElementById("trayIcon").value,

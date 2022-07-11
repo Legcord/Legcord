@@ -18,6 +18,7 @@
     "settings-theme-native": "Native",
     "settings-tray": "Minimize to tray",
     "settings-patches": "Automatic Patches",
+    "settings-mobileMode": "Mobile mode",
     "settings-channel": "Discord channel:",
     "settings-invitewebsocket": "Invite Websocket",
     "settings-mod": "Client mod:",

@@ -83,6 +83,9 @@ export function registerIpc() {
     ipcMain.on("titlebar", (event, arg) => {
         event.returnValue = customTitlebar;
     });
+    ipcMain.on("mobileMode", async (event, arg) => {
+        event.returnValue = await getConfig("mobileMode");
+    });
     ipcMain.on("shouldPatch", async (event, arg) => {
         event.returnValue = await getConfig("automaticPatches");
     });
