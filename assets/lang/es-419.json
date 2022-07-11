@@ -26,5 +26,6 @@
     "settings-prfmMode-battery": "Batería",
     "settings-none": "Ninguna",
     "settings-save": "Guardar ajustes",
-    "settings-updater": "Buscar una actualización"
+    "settings-updater": "Buscar una actualización",
+    "settings-mobileMode": "Mobile mode"
 }

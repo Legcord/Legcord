@@ -26,5 +26,6 @@
     "settings-prfmMode-battery": "ذخیره برای باتری",
     "settings-none": "هیچکدام",
     "settings-save": "ذخیره تنظیمات",
-    "settings-updater": "بررسی برای بروزرسانی"
+    "settings-updater": "بررسی برای بروزرسانی",
+    "settings-mobileMode": "Mobile mode"
 }
