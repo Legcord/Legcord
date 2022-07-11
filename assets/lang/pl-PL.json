@@ -26,5 +26,6 @@
     "settings-prfmMode": "Tryb wydajności:",
     "settings-prfmMode-performance": "Wydajny",
     "settings-prfmMode-battery": "Bateria",
-    "settings-none": "Nic/Brak"
+    "settings-none": "Nic/Brak",
+    "settings-mobileMode": "Mobile mode"
 }
