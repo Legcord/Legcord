@@ -26,5 +26,6 @@
     "settings-none": "None",
     "settings-prfmMode": "Performance mode:",
     "settings-prfmMode-performance": "Performance",
-    "settings-prfmMode-battery": "Battery"
+    "settings-prfmMode-battery": "Battery",
+    "settings-mobileMode": "Mobile mode"
 }
