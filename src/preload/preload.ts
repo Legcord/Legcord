@@ -28,7 +28,7 @@ const clientMods = {
     flicker: "https://raw.githubusercontent.com/FlickerMod/dist/main/build.js"
 };
 
-console.log("ArmCord");
+console.log("ArmCord " + version);
 ipcRenderer.on("themeLoader", (event, message) => {
     addStyle(message);
 });

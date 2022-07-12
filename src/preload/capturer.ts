@@ -42,10 +42,6 @@ export async function getDisplayMediaSelector() {
 </div>`;
 }
 
-const screenShareCSS = `
-
-`;
-
 const screenShareJS = `
 window.navigator.mediaDevices.getDisplayMedia = () => new Promise(async (resolve, reject) => {
   try {

@@ -27,7 +27,8 @@ const unstrictCSP = () => {
         "https://api.goosemod.com/inject.js",
         "https://raw.githubusercontent.com/Cumcord/Cumcord/stable/dist/build.js",
         "https://raw.githubusercontent.com/Cumcord/Cumcord/master/dist/build.js",
-        "https://raw.githubusercontent.com/FlickerMod/dist/main/build.js"
+        "https://raw.githubusercontent.com/FlickerMod/dist/main/build.js",
+        "https://localhost:1234/dist.js"
     ];
 
     electron.session.defaultSession.webRequest.onHeadersReceived(({responseHeaders, url}, done) => {
