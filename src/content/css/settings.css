@@ -105,12 +105,10 @@ p {
     color: white;
     font-size: 1.2em;
     font-weight: lighter;
-    white-space: pre-line;
     bottom: 40px;
 }
 .dropdown {
     position: relative;
-    top: 40px !important;
     font-size: 25px;
 }
 .center {
@@ -238,4 +236,37 @@ select {
     text-overflow: ellipsis;
     white-space: nowrap;
     outline: none !important;
+}
+.acTheme {
+    height: 14em !important;
+}
+.acCSP {
+    height: 10em !important;
+}
+.acTray {
+    height: 8em !important;
+}
+.acPatches {
+    height: 10em !important;
+}
+.acWebsocket {
+    height: 10em !important;
+}
+.acMobileMode {
+    height: 11em !important;
+}
+.acAltPaste {
+    height: 11em !important;
+}
+.acChannel {
+    height: 21em !important;
+}
+.acClientMod {
+    height: 18em !important;
+}
+.acPrfmMode {
+    height: 10em !important;
+}
+.acTray {
+    height: 8em !important;
 }

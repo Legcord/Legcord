@@ -9,7 +9,7 @@
     </head>
 
     <body>
-        <div class="switch">
+        <div class="switch acTheme">
             <select name="theme" id="theme" class="left dropdown">
                 <option value="default">Default</option>
                 <option value="native">Native</option>
@@ -26,7 +26,7 @@
             </p>
         </div>
         <br />
-        <div class="switch">
+        <div class="switch acCSP">
             <label class="header2">ArmCord CSP</label>
             <input class="tgl tgl-light left" id="csp" type="checkbox" />
             <label class="tgl-btn left" for="csp"></label>
@@ -36,17 +36,17 @@
             </p>
         </div>
         <br />
-        <div class="switch">
+        <div class="switch acTray">
             <label class="header2" id="settings-tray">Minimize to tray</label>
             <input class="tgl tgl-light left" id="tray" type="checkbox" />
             <label class="tgl-btn left" for="tray"></label>
             <p class="description2">
-                If enabled, when you close the Discord window, ArmCord will sit back and relax in your system tray.
-                Otherwise it'll shutdown completely.
+                When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax
+                in your system tray for later.
             </p>
         </div>
         <br />
-        <div class="switch">
+        <div class="switch acPatches">
             <label class="header2" id="settings-patches">Automatic Patches</label>
             <input class="tgl tgl-light left" id="patches" type="checkbox" />
             <label class="tgl-btn left" for="patches"></label>
@@ -56,28 +56,39 @@
             </p>
         </div>
         <br />
-        <div class="switch">
+        <div class="switch acWebsocket">
             <label class="header2" id="settings-invitewebsocket">Invite Websocket</label>
             <input class="tgl tgl-light left" id="websocket" type="checkbox" />
             <label class="tgl-btn left" for="websocket"></label>
-            <p class="description2">short description, describing this great feature</p>
+            <p class="description2">
+                When enabled ArmCord will support Discord.gg links which means that if you open an invite link in your
+                browser, ArmCord will automatically accept the invite. Can be unresponsive at times.
+            </p>
         </div>
         <br />
-        <div class="switch">
+        <div class="switch acMobileMode">
             <label class="header2" id="settings-mobileMode">Mobile mode</label>
             <input class="tgl tgl-light left" id="mobile" type="checkbox" />
             <label class="tgl-btn left" for="mobile"></label>
-            <p class="description2">short description, describing this great feature</p>
+            <p class="description2">
+                If you're on a device with touch-screen this feature is for you! It activates Discord's hidden mobile
+                mode meant for phones and tablets. Only major feature missing is voice chat support. This is ideal for
+                users on PinePhone and similar.
+            </p>
         </div>
         <br />
-        <div class="switch">
+        <div class="switch acAltPaste">
             <label class="header2" id="settings-alternativePaste">Alternative paste</label>
             <input class="tgl tgl-light left" id="alternativePaste" type="checkbox" />
             <label class="tgl-btn left" for="alternativePaste"></label>
-            <p class="description2">to be used on gnome DE or when accelerator doesn't work on platform of choice</p>
+            <p class="description2">
+                If you're on Gnome on Linux or just simply can't paste images copied from other messages, then this is
+                for you. This enables alternative module for pasting images. Only enable this when you're experiencing
+                issues.
+            </p>
         </div>
         <br />
-        <div class="switch">
+        <div class="switch acChannel">
             <select name="channel" id="channel" class="left dropdown">
                 <option value="stable">Stable</option>
                 <option value="canary">Canary</option>
@@ -86,11 +97,24 @@
             </select>
             <div>
                 <p class="header" id="settings-channel">Discord channel:</p>
-                <p class="description">short description, describing this great feature</p>
+                <p class="description">
+                    You can use this setting to change current instance of Discord:
+                    <br />
+                    <b>Stable</b> - you're probably most familiar with this one. It's the one you see in default Discord
+                    client!
+                    <br />
+                    <b>Canary</b> - this is alpha test release of Discord. By using it you gain access to newest
+                    features and fixes.
+                    <br />
+                    <b>PTB</b> - public test build. Gets features earlier than stable but is a bit older than Canary.
+                    <br />
+                    <b>Hummus</b> - unofficial instance of Discord that takes you back to 2016! None of the client mods
+                    bundled with ArmCord work with it. It's run by community, so you take all the risk by using it.
+                </p>
             </div>
         </div>
         <br />
-        <div class="switch">
+        <div class="switch acClientMod">
             <select name="mod" id="mod" class="left dropdown">
                 <option value="cumcord">Cumcord</option>
                 <option value="goosemod">GooseMod</option>
@@ -98,20 +122,34 @@
                 <option value="none">None</option>
             </select>
             <p class="header" id="settings-mod">Client mod:</p>
-            <p class="description">short description, describing this great feature</p>
+            <p class="description">
+                Client mods are programs that allow you customize your Discord experience. They can change appearance of
+                the client, modify behaviours or add new features!
+                <br />
+                <b>Cumcord</b> - focuses on making the Discord plugin development experience easier. Minimal and
+                lightweight.
+                <br />
+                <b>GooseMod</b> - light, secure, and easy to use, with out of the box experience. Features a built-in
+                store for plugins.
+                <br />
+                <b>Flicker</b> - heavily work in progress, doesn't have a working UI.
+            </p>
         </div>
         <br />
-        <div class="switch">
+        <div class="switch acPrfmMode">
             <select name="prfmMode" id="prfmMode" class="left dropdown">
                 <option value="performance">Performance</option>
                 <option value="battery">Battery</option>
                 <option value="none">None</option>
             </select>
             <p class="header" id="settings-prfmMode">Performance mode:</p>
-            <p class="description">short description, describing this great feature</p>
+            <p class="description">
+                Performance mode is an experimental function that may either increase responsiveness and performance of
+                ArmCord or... decrease it. Please try every option and see which fits you the best.
+            </p>
         </div>
         <br />
-        <div class="switch">
+        <div class="switch acTray">
             <select name="trayIcon" id="trayIcon" class="left dropdown">
                 <option value="ac_plug_colored">Default</option>
                 <option value="dsc-tray">Discord Icon</option>
@@ -121,8 +159,9 @@
                 <option value="ac_black_plug_hollow">Black Hollowed Icon</option>
             </select>
             <p class="header" id="settings-trayIcon">Tray icon:</p>
-            <p class="description">short description, describing this great feature</p>
+            <p class="description">Set the icon which will appear in tray menu.</p>
         </div>
+        <br />
         <button id="settings-save" class="center">Save Settings</button>
     </body>
     <script>
