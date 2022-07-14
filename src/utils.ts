@@ -52,10 +52,15 @@ export function setup() {
     });
 }
 
+
+//I'm too lazy to replace every mf reference so :p
 export function getVersion() {
-    //I'm too lazy to replace every mf reference so :p
+    //Checks if the version # has 4 sections (3.1.0.0) instead of 3 (3.1.0) / Shitty way to check if Kernel Mod is installed
+    if ((('').split(app.getVersion()).length > 3) == true) {
+    return app.getVersion().split('.')[0] + "." + app.getVersion().split('.')[1] + "." + app.getVersion().split('.')[2] + " [Kernel Mod]";
+} else {
     return app.getVersion();
-}
+}}
 export async function injectJS(inject: string) {
     const js = await (await fetch(`${inject}`)).text();
 
