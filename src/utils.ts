@@ -39,6 +39,7 @@ export function setup() {
         armcordCSP: true,
         minimizeToTray: true,
         automaticPatches: false,
+        alternativePaste: false,
         mods: "cumcord",
         performanceMode: "none",
         inviteWebsocket: true,
@@ -182,6 +183,7 @@ export interface Settings {
     armcordCSP: boolean;
     minimizeToTray: boolean;
     automaticPatches: boolean;
+    alternativePaste: boolean;
     mods: string;
     mobileMode: boolean,
     performanceMode: string;

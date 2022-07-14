@@ -71,6 +71,13 @@
         </div>
         <br />
         <div class="switch">
+            <label class="header2" id="settings-alternativePaste">Alternative paste</label>
+            <input class="tgl tgl-light left" id="alternativePaste" type="checkbox" />
+            <label class="tgl-btn left" for="alternativePaste"></label>
+            <p class="description2">to be used on gnome DE or when accelerator doesn't work on platform of choice</p>
+        </div>
+        <br />
+        <div class="switch">
             <select name="channel" id="channel" class="left dropdown">
                 <option value="stable">Stable</option>
                 <option value="canary">Canary</option>
@@ -147,6 +154,7 @@
             document.getElementById("csp").checked = await settings.get("armcordCSP");
             document.getElementById("tray").checked = await settings.get("minimizeToTray");
             document.getElementById("websocket").checked = await settings.get("inviteWebsocket");
+            document.getElementById("alternativePaste").checked = await settings.get("alternativePaste");
             document.getElementById("mobile").checked = await settings.get("mobileMode");
             document.getElementById("patches").value = await settings.get("automaticPatches");
             document.getElementById("mod").value = await settings.get("mods");
@@ -162,6 +170,7 @@
                 channel: document.getElementById("channel").value,
                 armcordCSP: document.getElementById("csp").checked,
                 minimizeToTray: document.getElementById("tray").checked,
+                alternativePaste: document.getElementById("alternativePaste").checked,
                 automaticPatches: document.getElementById("patches").checked,
                 mods: document.getElementById("mod").value,
                 mobileMode: document.getElementById("mobile").checked,

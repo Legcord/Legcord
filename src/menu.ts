@@ -1,5 +1,6 @@
 import { Menu, app, clipboard, globalShortcut } from "electron";
 import {mainWindow} from "./window";
+import {getConfig} from "./utils";
 
 function paste(contents: any) {
     const contentTypes = clipboard.availableFormats().toString();
@@ -9,12 +10,21 @@ function paste(contents: any) {
     }
     contents.paste();
 }
-export function setMenu() {
-    globalShortcut.register("CmdOrCtrl+V", function () {
-        if (mainWindow.isFocused()) {
-            paste(mainWindow.webContents)
-        }
-    })
+export async function setMenu() {
+    if (await getConfig("alternativePaste") == true) {
+        mainWindow.on("focus", function () {
+            console.log("[Window state manager] Focus")
+            globalShortcut.register("CmdOrCtrl+V", function () {
+                if (mainWindow.isFocused()) {
+                    paste(mainWindow.webContents)
+                }
+            })
+        })
+        mainWindow.on("blur", function () {
+            console.log("[Window state manager] Defocus")
+            globalShortcut.unregister("CmdOrCtrl+V")
+        })
+    }
     var template: Electron.MenuItemConstructorOptions[] = [{
         label: "ArmCord",
         submenu: [
@@ -39,9 +49,11 @@ export function setMenu() {
             {type: "separator"},
             {label: "Cut", accelerator: "CmdOrCtrl+X", role: "cut"},
             {label: "Copy", accelerator: "CmdOrCtrl+C", role: "copy"},
-            {label: "Paste", accelerator: "CmdOrCtrl+V", click: function () {
+            {
+                label: "Paste", accelerator: "CmdOrCtrl+V", click: function () {
                     paste(mainWindow.webContents)
-                }},
+                }
+            },
             {label: "Select All", accelerator: "CmdOrCtrl+A", role: "selectAll"}
         ]
     }
