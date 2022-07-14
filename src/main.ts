@@ -6,7 +6,6 @@ import "./extensions/mods";
 import "./extensions/plugin";
 import "./tray";
 import {createCustomWindow, createNativeWindow} from "./window";
-import "./shortcuts";
 
 export var settings: any;
 export var customTitlebar: boolean;

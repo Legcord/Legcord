@@ -8,6 +8,7 @@
     "watch": "tsc -w",
     "start": "npm run build && electron ./ts-out/main.js",
     "package": "npm run build && electron-builder",
+    "packageQuick": "npm run build && electron-builder --dir",
     "format": "prettier --write src/**/*",
     "CIbuild": "npm run build && electron-builder --linux zip && electron-builder --windows zip && electron-builder --macos zip",
     "postinstall": "husky install"
@@ -26,7 +27,7 @@
     "@types/node": "^17.0.42",
     "@types/ws": "^8.5.3",
     "copyfiles": "^2.4.1",
-    "electron": "^19.0.7",
+    "electron": "^19.0.8",
     "electron-builder": "^23.0.3",
     "husky": "^8.0.1",
     "prettier": "^2.7.0",
