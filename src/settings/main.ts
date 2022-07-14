@@ -14,8 +14,8 @@ export function createSettingsWindow() {
         }
     } else {
         settingsWindow = new BrowserWindow({
-            width: 500,
-            height: 555,
+            width: 660,
+            height: 670,
             title: "ArmCord Settings",
             darkTheme: true,
             frame: true,

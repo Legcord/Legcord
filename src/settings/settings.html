@@ -10,70 +10,102 @@
 
     <body>
         <div class="switch">
-            <select name="theme" id="theme" class="left">
+            <select name="theme" id="theme" class="left dropdown">
                 <option value="default">Default</option>
                 <option value="native">Native</option>
             </select>
             <p class="header" id="settings-theme">ArmCord theme:</p>
+            <p class="description">
+                ArmCord "themes" are basically behaviour packs.
+                <br />
+                <b>Default</b> - this is how ArmCord looks when you first launch it. It includes recreation of Discord's
+                custom titlebar and ArmCord specific styles injected into Discord.
+                <br />
+                <b>Native</b> - uses native titlebar of OS you're currently running (e.g Windows 7/10). Functions more
+                similar to actual Discord app.
+            </p>
         </div>
         <br />
         <div class="switch">
-            <label class="header">ArmCord CSP</label>
+            <label class="header2">ArmCord CSP</label>
             <input class="tgl tgl-light left" id="csp" type="checkbox" />
             <label class="tgl-btn left" for="csp"></label>
+            <p class="description2">
+                ArmCord CSP is our system that manages loading custom content loading into the Discord app. Stuff like
+                client mods and themes depend on it. Disable if you want to get rid of mods and custom styles.
+            </p>
         </div>
         <br />
         <div class="switch">
-            <label class="header" id="settings-tray">Minimize to tray</label>
+            <label class="header2" id="settings-tray">Minimize to tray</label>
             <input class="tgl tgl-light left" id="tray" type="checkbox" />
             <label class="tgl-btn left" for="tray"></label>
+            <p class="description2">
+                If enabled, when you close the Discord window, ArmCord will sit back and relax in your system tray.
+                Otherwise it'll shutdown completely.
+            </p>
         </div>
         <br />
         <div class="switch">
-            <label class="header" id="settings-patches">Automatic Patches</label>
+            <label class="header2" id="settings-patches">Automatic Patches</label>
             <input class="tgl tgl-light left" id="patches" type="checkbox" />
             <label class="tgl-btn left" for="patches"></label>
+            <p class="description2">
+                Fetches automatic patches that are distributed if release turns out to have bugs after release. Usually
+                you don't have to keep this enabled, unless notified in support Discord.
+            </p>
         </div>
         <br />
         <div class="switch">
-            <label class="header" id="settings-invitewebsocket">Invite Websocket</label>
+            <label class="header2" id="settings-invitewebsocket">Invite Websocket</label>
             <input class="tgl tgl-light left" id="websocket" type="checkbox" />
             <label class="tgl-btn left" for="websocket"></label>
+            <p class="description2">short description, describing this great feature</p>
         </div>
         <br />
         <div class="switch">
-            <label class="header" id="settings-mobileMode">Mobile mode</label>
+            <label class="header2" id="settings-mobileMode">Mobile mode</label>
             <input class="tgl tgl-light left" id="mobile" type="checkbox" />
             <label class="tgl-btn left" for="mobile"></label>
+            <p class="description2">short description, describing this great feature</p>
         </div>
+        <br />
         <div class="switch">
-            <select name="channel" id="channel" class="left">
+            <select name="channel" id="channel" class="left dropdown">
                 <option value="stable">Stable</option>
                 <option value="canary">Canary</option>
                 <option value="ptb">PTB</option>
                 <option value="hummus">Hummus (unofficial)</option>
             </select>
-            <p class="header" id="settings-channel">Discord channel:</p>
+            <div>
+                <p class="header" id="settings-channel">Discord channel:</p>
+                <p class="description">short description, describing this great feature</p>
+            </div>
         </div>
+        <br />
         <div class="switch">
-            <select name="mod" id="mod" class="left">
+            <select name="mod" id="mod" class="left dropdown">
                 <option value="cumcord">Cumcord</option>
                 <option value="goosemod">GooseMod</option>
                 <option value="flicker">Flicker</option>
                 <option value="none">None</option>
             </select>
             <p class="header" id="settings-mod">Client mod:</p>
+            <p class="description">short description, describing this great feature</p>
         </div>
+        <br />
         <div class="switch">
-            <select name="prfmMode" id="prfmMode" class="left">
+            <select name="prfmMode" id="prfmMode" class="left dropdown">
                 <option value="performance">Performance</option>
                 <option value="battery">Battery</option>
                 <option value="none">None</option>
             </select>
             <p class="header" id="settings-prfmMode">Performance mode:</p>
+            <p class="description">short description, describing this great feature</p>
         </div>
+        <br />
         <div class="switch">
-            <select name="trayIcon" id="trayIcon" class="left">
+            <select name="trayIcon" id="trayIcon" class="left dropdown">
                 <option value="ac_plug_colored">Default</option>
                 <option value="dsc-tray">Discord Icon</option>
                 <option value="ac_white_plug">White Icon</option>
@@ -82,6 +114,7 @@
                 <option value="ac_black_plug_hollow">Black Hollowed Icon</option>
             </select>
             <p class="header" id="settings-trayIcon">Tray icon:</p>
+            <p class="description">short description, describing this great feature</p>
         </div>
         <button id="settings-save" class="center">Save Settings</button>
     </body>
