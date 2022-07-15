@@ -126,6 +126,7 @@ button {
     border: none;
     border-radius: 5px;
     padding: 8px;
+    margin-top: 10px;
     transition: 0.17s ease;
 }
 button:hover {
@@ -238,7 +239,7 @@ select {
     outline: none !important;
 }
 .acTheme {
-    height: 14em !important;
+    height: 15em !important;
 }
 .acCSP {
     height: 10em !important;
