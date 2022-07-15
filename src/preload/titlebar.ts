@@ -5,11 +5,6 @@ import * as path from "path";
 import os from "os";
 export function injectTitlebar() {
     document.addEventListener("DOMContentLoaded", function (event) {
-        if (window.armcord.channel == "hummus") {
-            window.alert(
-                "ArmCord Titlebar doesn't currently work well in Hummus, please change ArmCord style to native for better experience."
-            );
-        }
         var elem = document.createElement("div");
         elem.innerHTML = `<nav class="titlebar">
           <div class="window-title" id="window-title"></div>
