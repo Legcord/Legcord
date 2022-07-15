@@ -60,7 +60,6 @@ body::-webkit-scrollbar-thumb {
 
 * {
     font-family: "Whitney", sans-serif;
-
     box-sizing: border-box;
     cursor: default;
 }
@@ -78,6 +77,13 @@ p {
     border: 20px;
     border-color: var(--background-floating);
     border-style: solid;
+}
+.saveBar {
+    position: fixed;
+    bottom: 20px;
+    font-weight: bold;
+    z-index: 999;
+    font-size: 10px;
 }
 .header {
     color: var(--header-primary);
@@ -117,6 +123,11 @@ p {
     margin-right: 50%;
     transform: translateX(50%);
     float: right;
+}
+.advancedText {
+    color: var(--header-primary);
+    font-size: 1.5em;
+    font-weight: bold;
 }
 /*buttons*/
 button {
@@ -244,9 +255,6 @@ select {
 .acCSP {
     height: 10em !important;
 }
-.acTray {
-    height: 8em !important;
-}
 .acPatches {
     height: 10em !important;
 }
@@ -269,5 +277,5 @@ select {
     height: 10em !important;
 }
 .acTray {
-    height: 8em !important;
+    height: 7em !important;
 }

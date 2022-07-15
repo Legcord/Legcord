@@ -12,23 +12,6 @@
         <div class="saveBar">
             <button id="settings-save" class="center">Save Settings</button>
         </div>
-        <div class="switch acTheme">
-            <select name="theme" id="theme" class="left dropdown">
-                <option value="default">Default</option>
-                <option value="native">Native</option>
-            </select>
-            <p class="header" id="settings-theme">ArmCord theme:</p>
-            <p class="description">
-                ArmCord "themes" are basically behaviour packs.
-                <br />
-                <b>Default</b> - this is how ArmCord looks when you first launch it. It includes recreation of Discord's
-                custom titlebar and ArmCord specific styles injected into Discord.
-                <br />
-                <b>Native</b> - uses native titlebar of OS you're currently running (e.g Windows 7/10). Functions more
-                similar to actual Discord app.
-            </p>
-        </div>
-        <br />
         <div class="switch acCSP">
             <label class="header2">ArmCord CSP</label>
             <input class="tgl tgl-light left" id="csp" type="checkbox" />
@@ -56,27 +39,6 @@
             <p class="description2">
                 Fetches automatic patches that are distributed if release turns out to have bugs after release. Usually
                 you don't have to keep this enabled, unless notified in support Discord.
-            </p>
-        </div>
-        <br />
-        <div class="switch acWebsocket">
-            <label class="header2" id="settings-invitewebsocket">Invite Websocket</label>
-            <input class="tgl tgl-light left" id="websocket" type="checkbox" />
-            <label class="tgl-btn left" for="websocket"></label>
-            <p class="description2">
-                When enabled ArmCord will support Discord.gg links which means that if you open an invite link in your
-                browser, ArmCord will automatically accept the invite. Can be unresponsive at times.
-            </p>
-        </div>
-        <br />
-        <div class="switch acMobileMode">
-            <label class="header2" id="settings-mobileMode">Mobile mode</label>
-            <input class="tgl tgl-light left" id="mobile" type="checkbox" />
-            <label class="tgl-btn left" for="mobile"></label>
-            <p class="description2">
-                If you're on a device with touch-screen this feature is for you! It activates Discord's hidden mobile
-                mode meant for phones and tablets. Only major feature missing is voice chat support. This is ideal for
-                users on PinePhone and similar.
             </p>
         </div>
         <br />
@@ -117,25 +79,13 @@
             </div>
         </div>
         <br />
-        <div class="switch acClientMod">
-            <select name="mod" id="mod" class="left dropdown">
-                <option value="cumcord">Cumcord</option>
-                <option value="goosemod">GooseMod</option>
-                <option value="flicker">Flicker</option>
-                <option value="none">None</option>
-            </select>
-            <p class="header" id="settings-mod">Client mod:</p>
-            <p class="description">
-                Client mods are programs that allow you customize your Discord experience. They can change appearance of
-                the client, modify behaviours or add new features!
-                <br />
-                <b>Cumcord</b> - focuses on making the Discord plugin development experience easier. Minimal and
-                lightweight.
-                <br />
-                <b>GooseMod</b> - light, secure, and easy to use, with out of the box experience. Features a built-in
-                store for plugins.
-                <br />
-                <b>Flicker</b> - heavily work in progress, doesn't have a working UI.
+        <div class="switch acAltPaste">
+            <label class="header2" id="settings-cordwood">Cordwood client mod</label>
+            <input class="tgl tgl-light left" id="cordwood" type="checkbox" />
+            <label class="tgl-btn left" for="cordwood"></label>
+            <p class="description2">
+                Client mod for Hummus that focuses on making the plugin development experience easier. Minimal, light,
+                and easy to use
             </p>
         </div>
         <br />
