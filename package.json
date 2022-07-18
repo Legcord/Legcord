@@ -40,6 +40,17 @@
     "ws": "^8.8.0"
   },
   "build": {
+    "nsis": {
+      "include": "build/installer.nsh"
+    },
+    "files": [
+      "!*",
+      "assets",
+      "node_modules",
+      "ts-out",
+      "package.json",
+      "LICENSE"
+    ],
     "appId": "com.smartfridge.armcord",
     "productName": "ArmCord",
     "mac": {
