@@ -42,6 +42,7 @@ export function setup() {
         alternativePaste: false,
         mods: "cumcord",
         performanceMode: "none",
+        skipSplash: false,
         inviteWebsocket: true,
         mobileMode: false,
         trayIcon: "ac_plug_colored",
@@ -191,6 +192,7 @@ export interface Settings {
     alternativePaste: boolean;
     mods: string;
     mobileMode: boolean,
+    skipSplash: boolean,
     performanceMode: string;
     inviteWebsocket: boolean;
     trayIcon: string;

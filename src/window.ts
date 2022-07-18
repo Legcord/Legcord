@@ -126,7 +126,29 @@ async function doAfterDefiningTheWindow() {
         mainWindow.setSize(390, 470);
         await mainWindow.loadFile(path.join(__dirname, "/content/setup.html"));
     } else {
-        await mainWindow.loadFile(path.join(__dirname, "/content/splash.html"));
+        if (await getConfig("skipSplash") == true) {
+            switch (await getConfig("channel")) {
+                case "stable":
+                    mainWindow.loadURL("https://discord.com/app");
+                    break;
+                case "canary":
+                    mainWindow.loadURL("https://canary.discord.com/app");
+                    break;
+                case "ptb":
+                    mainWindow.loadURL("https://ptb.discord.com/app");
+                    break;
+                case "hummus":
+                    mainWindow.loadURL("https://hummus.sys42.net/");
+                    break;
+                case undefined:
+                    mainWindow.loadURL("https://discord.com/app");
+                    break;
+                default:
+                    mainWindow.loadURL("https://discord.com/app");
+            }
+        } else {
+            await mainWindow.loadFile(path.join(__dirname, "/content/splash.html"));
+        }
     }
 }
 export function createCustomWindow() {

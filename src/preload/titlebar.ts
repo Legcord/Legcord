@@ -54,3 +54,42 @@ export function injectTitlebar() {
         });
     });
 }
+export function injectHummusTitlebar() {
+    document.addEventListener("DOMContentLoaded", function (event) {
+        var elem = document.createElement("div");
+        elem.innerHTML = `
+        <button class="win-minimize" id="minimize"></button><button class="win-maximize" id="maximize"></button><button class="win-close" id="quit"></button>
+        `;
+        elem.classList.add("win-buttons");
+        elem.classList.add("win-buttons-light");
+        document.getElementsByClassName("titlebar")[0].appendChild(elem);
+        document.body.setAttribute("customTitlebar", "");
+        document.body.setAttribute("armcord-platform", os.platform());
+        addStyle(".chat>.title-wrap {width: 87% !important;}");
+        addStyle(".friends-header {width: 91% !important;}");
+        var minimize = document.getElementById("minimize");
+        var maximize = document.getElementById("maximize");
+        var quit = document.getElementById("quit");
+
+        minimize!.addEventListener("click", () => {
+            ipcRenderer.send("win-minimize");
+        });
+
+        maximize!.addEventListener("click", () => {
+            if (ipcRenderer.sendSync("win-isMaximized") == true) {
+                ipcRenderer.send("win-unmaximize");
+                document.body.removeAttribute("isMaximized");
+            } else if (ipcRenderer.sendSync("win-isNormal") == true) {
+                ipcRenderer.send("win-maximize");
+            }
+        });
+
+        quit!.addEventListener("click", () => {
+            if (ipcRenderer.sendSync("minimizeToTray") === true) {
+                ipcRenderer.send("win-hide");
+            } else if (ipcRenderer.sendSync("minimizeToTray") === false) {
+                ipcRenderer.send("win-quit");
+            }
+        });
+    });
+}

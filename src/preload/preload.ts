@@ -3,7 +3,7 @@ import "./capturer";
 import "./patch";
 import * as fs from "fs";
 import * as path from "path";
-import {injectTitlebar} from "./titlebar";
+import {injectHummusTitlebar, injectTitlebar} from "./titlebar";
 import {sleep, addStyle, injectJS, addScript} from "../utils";
 import {ipcRenderer} from "electron";
 import {injectMobileStuff} from "./mobile";
@@ -25,7 +25,8 @@ declare global {
 const clientMods = {
     goosemod: "https://api.goosemod.com/inject.js",
     cumcord: "https://raw.githubusercontent.com/Cumcord/Cumcord/stable/dist/build.js",
-    flicker: "https://raw.githubusercontent.com/FlickerMod/dist/main/build.js"
+    flicker: "https://raw.githubusercontent.com/FlickerMod/dist/main/build.js",
+    cordwood: "https://raw.githubusercontent.com/Cordwood/builds/master/index.js"
 };
 
 console.log("ArmCord " + version);
@@ -36,7 +37,11 @@ if (window.location.href.indexOf("splash.html") > -1) {
     console.log("Skipping titlebar injection and client mod injection.");
 } else {
     if (ipcRenderer.sendSync("titlebar")) {
-        injectTitlebar();
+        if (ipcRenderer.sendSync("channel")) {
+            injectHummusTitlebar();
+        } else {
+            injectTitlebar();
+        }
     }
     if (ipcRenderer.sendSync("mobileMode")) {
         injectMobileStuff();
@@ -59,6 +64,11 @@ if (window.location.href.indexOf("splash.html") > -1) {
             case "flicker":
                 injectJS(clientMods.flicker);
                 console.log("Loading FlickerMod...");
+                await updateLang();
+                break;
+            case "cordwood":
+                injectJS(clientMods.cordwood);
+                console.log("Loading Cordwood...");
                 await updateLang();
                 break;
         }

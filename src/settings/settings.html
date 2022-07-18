@@ -112,8 +112,9 @@
                     <b>PTB</b> - public test build. Receives features earlier than stable but is a bit older than
                     Canary.
                     <br />
-                    <b>Hummus</b> - unofficial instance of Discord that takes you back to 2016! None of the client mods
-                    bundled with ArmCord work with it. It's run by community, so you take all the risk by using it.
+                    <b>Hummus</b> - unofficial instance of Discord that takes you back to 2016! Only client mod
+                    available to run alongside with it is Cordwood. It's run by community, so you take all the risk by
+                    using it.
                 </p>
             </div>
         </div>
@@ -168,6 +169,13 @@
         <br />
         <br />
         <h1 class="center advancedText">⚠️Advanced user zone⚠️</h1>
+        <div class="switch acAltPaste">
+            <label class="header2" id="settings-skipSplash">Skip splash screen (experimental)</label>
+            <input class="tgl tgl-light left" id="skipSplash" type="checkbox" />
+            <label class="tgl-btn left" for="skipSplash"></label>
+            <p class="description2">Skips ArmCord splash screen when you start up the app.</p>
+        </div>
+        <br />
         <button id="settings-pluginsFolder" class="center">Open plugins folder</button>
         <br />
         <button id="settings-themesFolder" class="center">Open themes folder</button>
@@ -206,6 +214,7 @@
             document.getElementById("tray").checked = await settings.get("minimizeToTray");
             document.getElementById("websocket").checked = await settings.get("inviteWebsocket");
             document.getElementById("alternativePaste").checked = await settings.get("alternativePaste");
+            document.getElementById("skipSplash").checked = await settings.get("skipSplash");
             document.getElementById("mobile").checked = await settings.get("mobileMode");
             document.getElementById("patches").value = await settings.get("automaticPatches");
             document.getElementById("mod").value = await settings.get("mods");
@@ -222,6 +231,7 @@
                 armcordCSP: document.getElementById("csp").checked,
                 minimizeToTray: document.getElementById("tray").checked,
                 alternativePaste: document.getElementById("alternativePaste").checked,
+                skipSplash: document.getElementById("skipSplash").checked,
                 automaticPatches: document.getElementById("patches").checked,
                 mods: document.getElementById("mod").value,
                 mobileMode: document.getElementById("mobile").checked,

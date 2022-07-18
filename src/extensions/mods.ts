@@ -28,7 +28,7 @@ const unstrictCSP = () => {
         "https://raw.githubusercontent.com/Cumcord/Cumcord/stable/dist/build.js",
         "https://raw.githubusercontent.com/Cumcord/Cumcord/master/dist/build.js",
         "https://raw.githubusercontent.com/FlickerMod/dist/main/build.js",
-        "https://localhost:1234/dist.js"
+        "https://raw.githubusercontent.com/Cordwood/builds/master/index.js"
     ];
 
     electron.session.defaultSession.webRequest.onHeadersReceived(({responseHeaders, url}, done) => {
