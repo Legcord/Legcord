@@ -33,10 +33,10 @@
 }
 
 .none-2-_0dP:hover::-webkit-scrollbar {
-    width: 0.29em !important;
+    width: 0.30em !important;
     border-radius: 25px;
     height: 0px !important;
-    background: transparent !important;
+    background: transparent !important; 
 }
 
 .none-2-_0dP::-webkit-scrollbar-thumb {

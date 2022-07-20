@@ -21,6 +21,7 @@ contextBridge.exposeInMainWorld("armcord", {
             return result;
         }),
     version: ipcRenderer.sendSync("get-app-version", "app-version"),
+    packageVersion: ipcRenderer.sendSync("get-package-version", "app-version"),
     getDisplayMediaSelector: getDisplayMediaSelector,
     openSettingsWindow: () => ipcRenderer.send("openSettingsWindow")
 });

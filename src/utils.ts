@@ -53,14 +53,15 @@ export function setup() {
     });
 }
 
+//Get the version value from the "package.json" file
+export var packageVersion = require("../package.json").version;
 
-//I'm too lazy to replace every mf reference so :p
 export function getVersion() {
-    //Checks if the version # has 4 sections (3.1.0.0) instead of 3 (3.1.0) / Shitty way to check if Kernel Mod is installed
-    if (((app.getVersion()).split('.').length > 3) == true) {
-    return app.getVersion().split('.')[0] + "." + app.getVersion().split('.')[1] + "." + app.getVersion().split('.')[2] + " [Kernel Mod]";
+    //Checks if the app version # has 4 sections (3.1.0.0) instead of 3 (3.1.0) / Shitty way to check if Kernel Mod is installed
+    if ((app.getVersion() == packageVersion) == false) {
+    return `${packageVersion} [Kernel Mod]`;
 } else {
-    return app.getVersion();
+    return packageVersion;
 }}
 export async function injectJS(inject: string) {
     const js = await (await fetch(`${inject}`)).text();

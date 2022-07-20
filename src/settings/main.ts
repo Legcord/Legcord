@@ -29,6 +29,14 @@ export function createSettingsWindow() {
                 preload: path.join(__dirname, "preload.js")
             }
         });
+        async function settingsLoadPage () {
+            if ((await getConfig("channel")) == "hummus") {
+                settingsWindow.loadURL(`file://${__dirname}/hummus.html`)
+            } else {
+                settingsWindow.loadURL(`file://${__dirname}/settings.html`)
+            };
+        };
+
         ipcMain.on("saveSettings", (event, args: Settings) => {
             console.log(args);
             setConfigBulk(args);
@@ -67,7 +75,7 @@ export function createSettingsWindow() {
             shell.openExternal(url);
             return {action: "deny"};
         });
-        settingsWindow.loadURL(`file://${__dirname}/settings.html`);
+        settingsLoadPage();
         settingsWindow.on("close", (event: Event) => {
             ipcMain.removeHandler("getSetting");
             ipcMain.removeAllListeners("saveSettings");

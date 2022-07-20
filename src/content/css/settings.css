@@ -85,6 +85,10 @@ p {
     z-index: 999;
     font-size: 10px;
 }
+.saveBar > button {
+    width: 90px;
+}
+
 .header {
     color: var(--header-primary);
     font-size: 1.5em;
@@ -128,6 +132,7 @@ p {
     color: var(--header-primary);
     font-size: 1.5em;
     font-weight: bold;
+    width: max-content;
 }
 /*buttons*/
 button {
@@ -273,9 +278,12 @@ select {
 .acClientMod {
     height: 18em !important;
 }
+.acCordwood {
+    height: 8em !important;
+}
 .acPrfmMode {
     height: 10em !important;
 }
 .acTray {
-    height: 7em !important;
+    height: 8em !important;
 }
