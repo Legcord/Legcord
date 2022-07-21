@@ -141,10 +141,9 @@ async function doAfterDefiningTheWindow() {
                     mainWindow.loadURL("https://hummus.sys42.net/");
                     break;
                 case undefined:
-                    mainWindow.loadURL("https://discord.com/app");
-                    break;
                 default:
                     mainWindow.loadURL("https://discord.com/app");
+                    break;
             }
         } else {
             await mainWindow.loadFile(path.join(__dirname, "/content/splash.html"));
