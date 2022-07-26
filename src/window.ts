@@ -2,11 +2,11 @@
 // I had to add most of the window creation code here to split both into seperete functions
 // WHY? Because I can't use the same code for both due to annoying bug with value `frame` not responding to variables
 // I'm sorry for this mess but I'm not sure how to fix it.
-import { BrowserWindow, shell, app, dialog } from "electron";
+import {BrowserWindow, shell, app, dialog} from "electron";
 import path from "path";
-import { checkIfConfigIsBroken, firstRun, getConfig, contentPath, setConfig, setLang, setWindowState } from "./utils";
-import { registerIpc } from "./ipc";
-import { setMenu } from "./menu";
+import {checkIfConfigIsBroken, firstRun, getConfig, contentPath, setConfig, setLang, setWindowState} from "./utils";
+import {registerIpc} from "./ipc";
+import {setMenu} from "./menu";
 import * as fs from "fs";
 import startServer from "./socket";
 import contextMenu from "electron-context-menu";
@@ -14,7 +14,7 @@ import os from "os";
 export var icon: string;
 export let mainWindow: BrowserWindow;
 export let inviteWindow: BrowserWindow;
-var osType = os.type()
+var osType = os.type();
 
 contextMenu({
     showSaveImageAs: true,
@@ -27,16 +27,17 @@ async function doAfterDefiningTheWindow() {
     checkIfConfigIsBroken();
     registerIpc();
     if (await getConfig("mobileMode")) {
-        mainWindow.webContents.userAgent = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.149 Mobile Safari/537.36"
+        mainWindow.webContents.userAgent =
+            "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.149 Mobile Safari/537.36";
     } else {
         // A little sloppy but it works :p
-        if (osType == 'Windows_NT') {
-            osType = "Windows " + os.release().split('.')[0] + " (" + os.release() + ")";
+        if (osType == "Windows_NT") {
+            osType = "Windows " + os.release().split(".")[0] + " (" + os.release() + ")";
         }
         mainWindow.webContents.userAgent = `Mozilla/5.0 (X11; ${osType} ${os.arch()}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36`; //fake useragent for screenshare to work
     }
 
-    mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+    mainWindow.webContents.setWindowOpenHandler(({url}) => {
         if (url.startsWith("https:" || url.startsWith("http:") || url.startsWith("mailto:"))) {
             shell.openExternal(url);
         } else {
@@ -54,7 +55,7 @@ async function doAfterDefiningTheWindow() {
                     checkboxChecked: false
                 };
 
-                dialog.showMessageBox(mainWindow, options).then(({ response, checkboxChecked }) => {
+                dialog.showMessageBox(mainWindow, options).then(({response, checkboxChecked}) => {
                     console.log(response, checkboxChecked);
                     if (checkboxChecked) {
                         if (response == 0) {
@@ -71,10 +72,10 @@ async function doAfterDefiningTheWindow() {
                 });
             }
         }
-        return { action: "deny" };
+        return {action: "deny"};
     });
     mainWindow.webContents.session.webRequest.onBeforeRequest((details, callback) => {
-        if (/api\/v\d\/science$/g.test(details.url)) return callback({ cancel: true });
+        if (/api\/v\d\/science$/g.test(details.url)) return callback({cancel: true});
         return callback({});
     });
     const userDataPath = app.getPath("userData");
@@ -83,26 +84,29 @@ async function doAfterDefiningTheWindow() {
         fs.mkdirSync(themesFolder);
         console.log("Created missing theme folder");
     }
-    mainWindow.webContents.on('did-finish-load', () => {
+    mainWindow.webContents.on("did-finish-load", () => {
         fs.readdirSync(themesFolder).forEach((file) => {
             try {
                 const manifest = fs.readFileSync(`${themesFolder}/${file}/manifest.json`, "utf8");
                 var themeFile = JSON.parse(manifest);
-                mainWindow.webContents.send("themeLoader", fs.readFileSync(`${themesFolder}/${file}/${themeFile.theme}`, "utf-8"))
+                mainWindow.webContents.send(
+                    "themeLoader",
+                    fs.readFileSync(`${themesFolder}/${file}/${themeFile.theme}`, "utf-8")
+                );
                 console.log(`%cLoaded ${themeFile.name} made by ${themeFile.author}`, "color:red");
             } catch (err) {
                 console.error(err);
             }
         });
     });
-    setMenu()
+    setMenu();
     mainWindow.on("close", async (e) => {
-        let [width, height] = mainWindow.getSize()
+        let [width, height] = mainWindow.getSize();
         setWindowState({
             width: width,
             height: height,
             isMaximized: mainWindow.isMaximized()
-        })
+        });
         if (await getConfig("minimizeToTray")) {
             e.preventDefault();
             mainWindow.hide();
@@ -111,22 +115,30 @@ async function doAfterDefiningTheWindow() {
             app.quit();
         }
     });
-    mainWindow.on('maximize', () => {
-        mainWindow.webContents.executeJavaScript(`document.body.setAttribute("isMaximized", "");`)
-    })
-    mainWindow.on('unmaximize', () => {
-        mainWindow.webContents.executeJavaScript(`document.body.removeAttribute("isMaximized");`)
-    })
+
+    mainWindow.on("focus", () => {
+        mainWindow.webContents.executeJavaScript(`document.body.removeAttribute("unFocused");`);
+    });
+    mainWindow.on("blur", () => {
+        mainWindow.webContents.executeJavaScript(`document.body.setAttribute("unFocused", "");`);
+    });
+
+    mainWindow.on("maximize", () => {
+        mainWindow.webContents.executeJavaScript(`document.body.setAttribute("isMaximized", "");`);
+    });
+    mainWindow.on("unmaximize", () => {
+        mainWindow.webContents.executeJavaScript(`document.body.removeAttribute("isMaximized");`);
+    });
     console.log(contentPath);
     if ((await getConfig("inviteWebsocket")) == true) {
         await startServer();
     }
     if (firstRun) {
-        await setLang(Intl.DateTimeFormat().resolvedOptions().locale)
+        await setLang(Intl.DateTimeFormat().resolvedOptions().locale);
         mainWindow.setSize(390, 470);
         await mainWindow.loadFile(path.join(__dirname, "/content/setup.html"));
     } else {
-        if (await getConfig("skipSplash") == true) {
+        if ((await getConfig("skipSplash")) == true) {
             switch (await getConfig("channel")) {
                 case "stable":
                     mainWindow.loadURL("https://discord.com/app");

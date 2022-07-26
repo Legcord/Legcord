@@ -12,7 +12,6 @@
     height: 30px;
     line-height: 30px;
     -webkit-app-region: drag;
-    width: 100%;
     user-select: none;
     -webkit-user-select: none;
     position: fixed;
@@ -225,13 +224,22 @@
 }
 
 /* ArmCord on MacOS (Why would you do this?) */
+[armcord-platform="darwin"] .withFrame-haYltI {
+    height: 0px !important;
+}
+[armcord-platform="darwin"] .sidebar-1tnWFu {
+    border-top-left-radius: 0px !important;
+}
+[armcord-platform="darwin"] .scroller-3X7KbA {
+    padding-top: 35px !important;
+}
 [armcord-platform="darwin"] .container-2RRFHK {
-    padding-top: 45px;
-    top: -45px;
+    padding-top: 48px;
+    top: -48px;
 }
 [armcord-platform="darwin"] .titlebar {
-    height: 45px;
-    line-height: 45px;
+    height: 48px;
+    line-height: 48px;
 }
 [armcord-platform="darwin"] .titlebar #window-controls-container {
     float: left;
@@ -239,13 +247,20 @@
     height: 60%;
     line-height: 45px;
     -webkit-app-region: no-drag;
-    transform: translate(-78px, 4px);
+    transform: translate(-82px, 4px);
 }
 
 [armcord-platform="darwin"] .titlebar #window-controls-container:hover #minimize #minimize-icon,
 [armcord-platform="darwin"] .titlebar #window-controls-container:hover #maximize #maximize-icon,
 [armcord-platform="darwin"] .titlebar #window-controls-container:hover #quit #quit-icon {
     display: list-item;
+}
+
+[armcord-platform="darwin"][unFocused] .titlebar #window-controls-container #minimize,
+[armcord-platform="darwin"][unFocused] .titlebar #window-controls-container #maximize,
+[armcord-platform="darwin"][unFocused] .titlebar #window-controls-container #quit {
+    background-color: #d6d6d5 !important;
+    transition: background-color 0.1s ease-in;
 }
 
 [armcord-platform="darwin"] .titlebar #window-controls-container #quit #quit-icon {
@@ -275,6 +290,7 @@
 
 [armcord-platform="darwin"] .titlebar #window-controls-container #minimize {
     background-color: #fac536;
+    transition: background-color 0.1s ease-in;
     border: 1px solid #da9e10;
     -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' width='13' height='13'%3E%3Cstyle%3E.a%7Bfill:%23808080%7D%3C/style%3E%3Ccircle class='a' cx='15' cy='15' r='15'/%3E%3C/svg%3E")
         no-repeat 50% 50%;
@@ -284,6 +300,7 @@
 }
 [armcord-platform="darwin"] .titlebar #window-controls-container #maximize {
     background-color: #39ea49;
+    transition: background-color 0.1s ease-in;
     border: 1px solid #13c11e;
     -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' width='13' height='13'%3E%3Cstyle%3E.a%7Bfill:%23808080%7D%3C/style%3E%3Ccircle class='a' cx='15' cy='15' r='15'/%3E%3C/svg%3E")
         no-repeat 50% 50%;
@@ -293,6 +310,7 @@
 }
 [armcord-platform="darwin"] .titlebar #window-controls-container #quit {
     background-color: #f25056;
+    transition: background-color 0.1s ease-in;
     border: 1px solid #d52735;
     -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' width='13' height='13'%3E%3Cstyle%3E.a%7Bfill:%23808080%7D%3C/style%3E%3Ccircle class='a' cx='15' cy='15' r='15'/%3E%3C/svg%3E")
         no-repeat 50% 50%;
@@ -331,13 +349,7 @@
 }
 
 [armcord-platform="darwin"] .window-title {
-    content: var(--wordmark-svg);
-    height: 10px;
-    left: 50%;
-    margin-right: 50%;
-    transform: translate(50%, 9.5px);
-    float: right;
-    padding: 0;
+    display: none;
 }
 
 [armcord-platform="linux"] .window-title,

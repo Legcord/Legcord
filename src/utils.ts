@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import { app, dialog } from "electron";
+import {app, dialog} from "electron";
 import path from "path";
 export var firstRun: boolean;
 export var contentPath: string;
@@ -59,10 +59,11 @@ export var packageVersion = require("../package.json").version;
 export function getVersion() {
     //Checks if the app version # has 4 sections (3.1.0.0) instead of 3 (3.1.0) / Shitty way to check if Kernel Mod is installed
     if ((app.getVersion() == packageVersion) == false) {
-    return `${packageVersion} [Kernel Mod]`;
-} else {
-    return packageVersion;
-}}
+        return `${packageVersion} [Kernel Mod]`;
+    } else {
+        return packageVersion;
+    }
+}
 export async function injectJS(inject: string) {
     const js = await (await fetch(`${inject}`)).text();
 
@@ -133,8 +134,8 @@ export async function getLang(object: string) {
             let parsed = JSON.parse(rawdata);
             language = parsed["lang"];
         } catch (e) {
-            console.log("Language config file doesn't exist. Fallback to English.")
-            language = "en-US"
+            console.log("Language config file doesn't exist. Fallback to English.");
+            language = "en-US";
         }
     }
     if (language.length == 2) {
@@ -147,11 +148,11 @@ export async function getLang(object: string) {
     let rawdata = fs.readFileSync(langPath, "utf-8");
     let parsed = JSON.parse(rawdata);
     if (parsed[object] == undefined) {
-        console.log(object + " is undefined in " + language)
+        console.log(object + " is undefined in " + language);
         langPath = path.join(__dirname, "../", "/assets/lang/en-US.json");
         rawdata = fs.readFileSync(langPath, "utf-8");
         parsed = JSON.parse(rawdata);
-        return parsed[object]
+        return parsed[object];
     } else {
         return parsed[object];
     }
@@ -192,8 +193,8 @@ export interface Settings {
     automaticPatches: boolean;
     alternativePaste: boolean;
     mods: string;
-    mobileMode: boolean,
-    skipSplash: boolean,
+    mobileMode: boolean;
+    skipSplash: boolean;
     performanceMode: string;
     inviteWebsocket: boolean;
     trayIcon: string;

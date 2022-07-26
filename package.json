@@ -11,7 +11,9 @@
     "packageQuick": "npm run build && electron-builder --dir",
     "format": "prettier --write src/**/*",
     "CIbuild": "npm run build && electron-builder --linux zip && electron-builder --windows zip && electron-builder --macos zip",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "precommit-fix": "husky uninstall && node fixwarn.js",
+    "precommit-fix:format": "husky uninstall && npm run format"
   },
   "repository": {
     "type": "git",

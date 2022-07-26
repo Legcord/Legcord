@@ -49,19 +49,19 @@ export function registerIpc() {
     });
     ipcMain.on("splashEnd", async (event, arg) => {
         try {
-        var width = await getWindowState("width") ?? 800;
-        var height= await getWindowState("height") ?? 600;
-        var isMaximized = await getWindowState("isMaximized") ?? false;
+            var width = (await getWindowState("width")) ?? 800;
+            var height = (await getWindowState("height")) ?? 600;
+            var isMaximized = (await getWindowState("isMaximized")) ?? false;
         } catch (e) {
-            console.log("[Window state manager] No window state file found. Fallbacking to default values.")
+            console.log("[Window state manager] No window state file found. Fallbacking to default values.");
             mainWindow.setSize(800, 600);
         }
         if (isMaximized) {
-            mainWindow.setSize(800, 600); //just so the whole thing doesn't cover whole screen 
-            mainWindow.maximize()
+            mainWindow.setSize(800, 600); //just so the whole thing doesn't cover whole screen
+            mainWindow.maximize();
         } else {
             mainWindow.setSize(width, height);
-            console.log("[Window state manager] Not maximized.")
+            console.log("[Window state manager] Not maximized.");
         }
     });
     ipcMain.on("restart", (event, arg) => {
