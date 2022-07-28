@@ -12,7 +12,7 @@
     "format": "prettier --write src/**/*",
     "CIbuild": "npm run build && electron-builder --linux zip && electron-builder --windows zip && electron-builder --macos zip",
     "postinstall": "husky install",
-    "precommit-fix": "husky uninstall && node fixwarn.js",
+    "precommit-fix": "husky uninstall && echo [[Make sure to run 'npm run format' before commiting!]]",
     "precommit-fix:format": "husky uninstall && npm run format"
   },
   "repository": {
