@@ -8,6 +8,10 @@
     padding: 0;
     padding-top: 4px;
 }
+[customTitlebar] .backdrop-2ByYRN {
+    top: -30px;
+    padding-top: 30px;
+}
 * {
     outline: none;
 }
