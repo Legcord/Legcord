@@ -8,6 +8,10 @@
     padding: 0;
     padding-top: 4px;
 }
+[customTitlebar] .backdrop-2ByYRN {
+    top: -30px;
+    padding-top: 30px;
+}
 * {
     outline: none;
 }
@@ -33,7 +37,7 @@
 }
 
 .none-2-_0dP:hover::-webkit-scrollbar {
-    width: 0.29em !important;
+    width: 0.3em !important;
     border-radius: 25px;
     height: 0px !important;
     background: transparent !important;

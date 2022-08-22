@@ -64,9 +64,18 @@ export function injectHummusTitlebar() {
         elem.classList.add("win-buttons-light");
         document.getElementsByClassName("titlebar")[0].appendChild(elem);
         document.body.setAttribute("customTitlebar", "");
+        document.body.setAttribute("hummus", "");
         document.body.setAttribute("armcord-platform", os.platform());
-        addStyle(".chat>.title-wrap {width: 87% !important;}");
-        addStyle(".friends-header {width: 91% !important;}");
+        addStyle(`
+        html, body {
+            background-color: #1e2124;
+        }
+        
+        .friends-header,
+        .chat > .title-wrap {
+            float: right !important;
+            padding-right: 140px !important;
+        }`);
         var minimize = document.getElementById("minimize");
         var maximize = document.getElementById("maximize");
         var quit = document.getElementById("quit");

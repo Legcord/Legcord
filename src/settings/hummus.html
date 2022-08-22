@@ -5,6 +5,9 @@
         <title>ArmCord Settings</title>
         <style>
             @import url("../content/css/settings.css");
+            .acAdvSettings {
+                height: 19em !important;
+            }
         </style>
     </head>
 
@@ -79,7 +82,7 @@
             </div>
         </div>
         <br />
-        <div class="switch acAltPaste">
+        <div class="switch acCordwood">
             <label class="header2" id="settings-cordwood">Cordwood client mod</label>
             <input class="tgl tgl-light left" id="cordwood" type="checkbox" />
             <label class="tgl-btn left" for="cordwood"></label>
@@ -116,14 +119,16 @@
         </div>
         <br />
         <br />
-        <h1 class="center advancedText">⚠️Advanced user zone⚠️</h1>
-        <button id="settings-pluginsFolder" class="center">Open plugins folder</button>
-        <br />
-        <button id="settings-themesFolder" class="center">Open themes folder</button>
-        <br />
-        <button id="settings-storageFolder" class="center">Open storage folder</button>
-        <br />
-        <button id="settings-copyDebugInfo" class="center">Copy debug info</button>
+        <div class="switch acAdvSettings">
+            <h1 class="center advancedText">⚠️ Advanced User Zone ⚠️</h1>
+            <button id="settings-pluginsFolder" class="center">Open Plugins Folder</button>
+            <br />
+            <button id="settings-themesFolder" class="center">Open Themes Folder</button>
+            <br />
+            <button id="settings-storageFolder" class="center">Open Storage Folder</button>
+            <br />
+            <button id="settings-copyDebugInfo" class="center">Copy Debug Info</button>
+        </div>
     </body>
     <script>
         async function loadLang() {

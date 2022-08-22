@@ -43,7 +43,7 @@ app.whenReady().then(async () => {
                 break;
         }
     }
-    await init()
+    await init();
     session.fromPartition("some-partition").setPermissionRequestHandler((webContents, permission, callback) => {
         if (permission === "notifications") {
             // Approves the permissions request
@@ -55,7 +55,6 @@ app.whenReady().then(async () => {
         }
     });
     app.on("activate", async function () {
-        if (BrowserWindow.getAllWindows().length === 0)
-            await init()
+        if (BrowserWindow.getAllWindows().length === 0) await init();
     });
 });

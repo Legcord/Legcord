@@ -8,6 +8,7 @@ import {sleep, addStyle, injectJS, addScript} from "../utils";
 import {ipcRenderer} from "electron";
 import {injectMobileStuff} from "./mobile";
 var version = ipcRenderer.sendSync("get-app-version", "app-version");
+var channel = ipcRenderer.sendSync("channel");
 async function updateLang() {
     if (window.location.href.indexOf("setup.html") > -1) {
         console.log("Setup, skipping lang update");
@@ -37,7 +38,7 @@ if (window.location.href.indexOf("splash.html") > -1) {
     console.log("Skipping titlebar injection and client mod injection.");
 } else {
     if (ipcRenderer.sendSync("titlebar")) {
-        if (ipcRenderer.sendSync("channel")) {
+        if (channel == "hummus") {
             injectHummusTitlebar();
         } else {
             injectTitlebar();

@@ -11,7 +11,9 @@
     "packageQuick": "npm run build && electron-builder --dir",
     "format": "prettier --write src/**/*",
     "CIbuild": "npm run build && electron-builder --linux zip && electron-builder --windows zip && electron-builder --macos zip",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "precommit-fix": "husky uninstall && echo - && echo !Make sure to run 'npm run format' before commiting! | chalk --stdin yellow inverse && echo -",
+    "precommit-fix:format": "husky uninstall && npm run format"
   },
   "repository": {
     "type": "git",
@@ -31,7 +33,8 @@
     "electron-builder": "^23.0.3",
     "husky": "^8.0.1",
     "prettier": "^2.7.0",
-    "typescript": "^4.7.3"
+    "typescript": "^4.7.3",
+    "chalk-cli": "^5.0.0"
   },
   "dependencies": {
     "electron-context-menu": "github:ArmCord/electron-context-menu",
