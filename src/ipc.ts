@@ -1,7 +1,15 @@
 //ipc stuff
 import {app, ipcMain, shell, desktopCapturer} from "electron";
 import {mainWindow} from "./window";
-import {setConfigBulk, getVersion, getConfig, setLang, getLang, getWindowState, packageVersion} from "./utils";
+import {
+    setConfigBulk,
+    getVersion,
+    getConfig,
+    setLang,
+    getLang,
+    getWindowState,
+    packageVersion, getDisplayVersion
+} from "./utils";
 import {customTitlebar} from "./main";
 import {createSettingsWindow} from "./settings/main";
 export function registerIpc() {
@@ -44,10 +52,13 @@ export function registerIpc() {
     ipcMain.on("get-app-version", (event) => {
         event.returnValue = getVersion();
     });
+    ipcMain.on("displayVersion", (event) => {
+        event.returnValue = getDisplayVersion();
+    });
     ipcMain.on("get-package-version", (event) => {
         event.returnValue = packageVersion;
     });
-    ipcMain.on("splashEnd", async (event, arg) => {
+    ipcMain.on("splashEnd", async () => {
         try {
             var width = (await getWindowState("width")) ?? 800;
             var height = (await getWindowState("height")) ?? 600;

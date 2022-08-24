@@ -4,7 +4,15 @@
 // I'm sorry for this mess but I'm not sure how to fix it.
 import {BrowserWindow, shell, app, dialog} from "electron";
 import path from "path";
-import {checkIfConfigIsBroken, firstRun, getConfig, contentPath, setConfig, setLang, setWindowState} from "./utils";
+import {
+    checkIfConfigIsBroken,
+    firstRun,
+    getConfig,
+    contentPath,
+    setConfig,
+    setLang,
+    setWindowState
+} from "./utils";
 import {registerIpc} from "./ipc";
 import {setMenu} from "./menu";
 import * as fs from "fs";

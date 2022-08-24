@@ -57,6 +57,9 @@ export function setup() {
 export var packageVersion = require("../package.json").version;
 
 export function getVersion() {
+    return packageVersion;
+}
+export function getDisplayVersion() {
     //Checks if the app version # has 4 sections (3.1.0.0) instead of 3 (3.1.0) / Shitty way to check if Kernel Mod is installed
     if ((app.getVersion() == packageVersion) == false) {
         return `${packageVersion} [Kernel Mod]`;
@@ -157,7 +160,25 @@ export async function getLang(object: string) {
         return parsed[object];
     }
 }
-
+export async function getLangName() {
+    if (language == undefined) {
+        try {
+            const userDataPath = app.getPath("userData");
+            const storagePath = path.join(userDataPath, "/storage/");
+            const langConfigFile = storagePath + "lang.json";
+            let rawdata = fs.readFileSync(langConfigFile, "utf-8");
+            let parsed = JSON.parse(rawdata);
+            language = parsed["lang"];
+        } catch (e) {
+            console.log("Language config file doesn't exist. Fallback to English.");
+            language = "en-US";
+        }
+    }
+    if (language.length == 2) {
+        language = language + "-" + language.toUpperCase();
+    }
+    return language;
+}
 //ArmCord Window State manager
 export interface WindowState {
     width: number;

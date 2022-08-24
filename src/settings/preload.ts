@@ -1,4 +1,7 @@
 import {contextBridge, ipcRenderer} from "electron";
+import path from "path";
+import {addStyle} from "../utils";
+import fs from "fs";
 console.log("ArmCord Settings");
 
 contextBridge.exposeInMainWorld("settings", {
@@ -16,3 +19,7 @@ contextBridge.exposeInMainWorld("settings", {
     openStorageFolder: () => ipcRenderer.send("openStorageFolder"),
     copyDebugInfo: () => ipcRenderer.send("copyDebugInfo")
 });
+if (ipcRenderer.sendSync("getLangName") == "en-US") {
+    const cssPath = path.join(__dirname, "../", "/content/css/settingsEng.css");
+    addStyle(fs.readFileSync(cssPath, "utf8"));
+}

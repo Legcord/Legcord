@@ -7,7 +7,7 @@ import {injectHummusTitlebar, injectTitlebar} from "./titlebar";
 import {sleep, addStyle, injectJS, addScript} from "../utils";
 import {ipcRenderer} from "electron";
 import {injectMobileStuff} from "./mobile";
-var version = ipcRenderer.sendSync("get-app-version", "app-version");
+var version = ipcRenderer.sendSync("displayVersion");
 var channel = ipcRenderer.sendSync("channel");
 async function updateLang() {
     if (window.location.href.indexOf("setup.html") > -1) {
