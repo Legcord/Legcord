@@ -1,5 +1,5 @@
 import {BrowserWindow, shell, ipcMain, app, clipboard} from "electron";
-import {getConfig, setConfigBulk, Settings, getLang, getVersion, getConfigLocation} from "../utils";
+import {getConfig, setConfigBulk, Settings, getLang, getVersion, getConfigLocation, getLangName} from "../utils";
 import path from "path";
 import os from "os";
 import fs from "fs";
@@ -49,6 +49,9 @@ export function createSettingsWindow() {
         });
         ipcMain.on("openPluginsFolder", (event) => {
             shell.openPath(pluginsPath);
+        });
+        ipcMain.on("getLangName", async (event) => {
+            event.returnValue = await getLangName();
         });
         ipcMain.handle("getSetting", (event, toGet: string) => {
             return getConfig(toGet);

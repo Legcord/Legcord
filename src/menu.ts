@@ -1,6 +1,7 @@
 import {Menu, app, clipboard, globalShortcut} from "electron";
 import {mainWindow} from "./window";
 import {getConfig} from "./utils";
+import {createSettingsWindow} from "./settings/main";
 
 function paste(contents: any) {
     const contentTypes = clipboard.availableFormats().toString();
@@ -52,6 +53,13 @@ export async function setMenu() {
                     }
                 },
                 {
+                    label: "Open settings",
+                    accelerator: "CmdOrCtrl+Shift+'",
+                    click: function () {
+                        createSettingsWindow();
+                    }
+                },
+                {
                     label: "Quit",
                     accelerator: "CmdOrCtrl+Q",
                     click: function () {
@@ -76,6 +84,13 @@ export async function setMenu() {
                     }
                 },
                 {label: "Select All", accelerator: "CmdOrCtrl+A", role: "selectAll"}
+            ]
+        },
+        {
+            label: "Zoom",
+            submenu: [
+                {label: "Zoom in", accelerator: "CmdOrCtrl+Plus", role: "zoomIn"},
+                {label: "Zoom out", accelerator: "CmdOrCtrl+-", role: "zoomOut"},
             ]
         }
     ];
