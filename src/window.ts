@@ -23,17 +23,17 @@ import {tray} from "./tray";
 import {iconPath} from "./main";
 export let mainWindow: BrowserWindow;
 export let inviteWindow: BrowserWindow;
-var osType = os.type();
 
+var osType = os.type();
 contextMenu({
     showSaveImageAs: true,
     showCopyImageAddress: true,
-    showSearchWithGoogle: true
+    showSearchWithGoogle: true,
+    showSearchWithDuckDuckGo: true
 });
-
 async function doAfterDefiningTheWindow() {
     var ignoreProtocolWarning = await getConfig("ignoreProtocolWarning");
-    checkIfConfigIsBroken();
+    await checkIfConfigIsBroken();
     registerIpc();
     if (await getConfig("mobileMode")) {
         mainWindow.webContents.userAgent =
@@ -104,7 +104,6 @@ async function doAfterDefiningTheWindow() {
                 }
                 getFavicon()
             `)
-            console.log(app.getPath("temp"))
             var buf = new Buffer(faviconBase64.replace(/^data:image\/\w+;base64,/, ""), 'base64');
             fs.writeFileSync(path.join(app.getPath("temp"), "/", "tray.png"), buf, "utf-8");
             let trayPath = nativeImage.createFromPath(path.join(app.getPath("temp"), "/", "tray.png"));
@@ -133,10 +132,10 @@ async function doAfterDefiningTheWindow() {
             }
         });
     });
-    setMenu();
+    await setMenu();
     mainWindow.on("close", async (e) => {
         let [width, height] = mainWindow.getSize();
-        setWindowState({
+        await setWindowState({
             width: width,
             height: height,
             isMaximized: mainWindow.isMaximized()
@@ -175,22 +174,22 @@ async function doAfterDefiningTheWindow() {
         if ((await getConfig("skipSplash")) == true) {
             switch (await getConfig("channel")) {
                 case "stable":
-                    mainWindow.loadURL("https://discord.com/app");
+                    await mainWindow.loadURL("https://discord.com/app");
                     break;
                 case "canary":
-                    mainWindow.loadURL("https://canary.discord.com/app");
+                    await mainWindow.loadURL("https://canary.discord.com/app");
                     break;
                 case "ptb":
-                    mainWindow.loadURL("https://ptb.discord.com/app");
+                    await mainWindow.loadURL("https://ptb.discord.com/app");
                     break;
                 case "hummus":
-                    mainWindow.loadURL("https://hummus.sys42.net/");
+                    await mainWindow.loadURL("https://hummus.sys42.net/");
                     break;
                 case undefined:
-                    mainWindow.loadURL("https://discord.com/app");
+                    await mainWindow.loadURL("https://discord.com/app");
                     break;
                 default:
-                    mainWindow.loadURL("https://discord.com/app");
+                    await mainWindow.loadURL("https://discord.com/app");
             }
         } else {
             await mainWindow.loadFile(path.join(__dirname, "/content/splash.html"));

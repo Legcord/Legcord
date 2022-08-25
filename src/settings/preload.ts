@@ -26,3 +26,6 @@ if (ipcRenderer.sendSync("getLangName") == "en-US") {
         addStyle(fs.readFileSync(cssPath, "utf8"));
     });
 }
+ipcRenderer.on("themeLoader", (event, message) => {
+    addStyle(message);
+});
