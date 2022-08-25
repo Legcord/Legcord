@@ -20,7 +20,7 @@ import startServer from "./socket";
 import contextMenu from "electron-context-menu";
 import os from "os";
 import {tray} from "./tray";
-export var icon: string;
+import {iconPath} from "./main";
 export let mainWindow: BrowserWindow;
 export let inviteWindow: BrowserWindow;
 var osType = os.type();
@@ -203,7 +203,7 @@ export function createCustomWindow() {
         height: 350,
         title: "ArmCord",
         darkTheme: true,
-        icon: path.join(__dirname, "../", "/assets/ac_icon_transparent.png"),
+        icon: iconPath,
         frame: false,
         autoHideMenuBar: true,
         webPreferences: {
@@ -220,7 +220,7 @@ export function createNativeWindow() {
         height: 350,
         title: "ArmCord",
         darkTheme: true,
-        icon: path.join(__dirname, "../", "/assets/ac_icon_transparent.png"),
+        icon: iconPath,
         frame: true,
         autoHideMenuBar: true,
         webPreferences: {
@@ -238,7 +238,7 @@ export function createInviteWindow() {
         height: 600,
         title: "ArmCord Invite Manager",
         darkTheme: true,
-        icon: path.join(__dirname, "../", "/assets/ac_icon_transparent.png"),
+        icon: iconPath,
         frame: true,
         autoHideMenuBar: true,
         webPreferences: {
