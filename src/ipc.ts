@@ -1,5 +1,5 @@
 //ipc stuff
-import {app, ipcMain, shell, desktopCapturer} from "electron";
+import {app, ipcMain, shell, desktopCapturer,nativeImage} from "electron";
 import {mainWindow} from "./window";
 import {
     setConfigBulk,
@@ -12,6 +12,8 @@ import {
 } from "./utils";
 import {customTitlebar} from "./main";
 import {createSettingsWindow} from "./settings/main";
+import os from "os";
+import path from "path";
 export function registerIpc() {
     ipcMain.on("get-app-path", (event, arg) => {
         event.reply("app-path", app.getAppPath());
@@ -24,6 +26,21 @@ export function registerIpc() {
     });
     ipcMain.on("open-external-link", (event, href: string) => {
         shell.openExternal(href);
+    });
+    ipcMain.on("setPing", (event, pingCount: number) => {
+        switch (os.platform()) {
+            case "linux" ?? "macos":
+                app.setBadgeCount(pingCount)
+                break;
+            case "win32":
+                if (pingCount > 0) {
+                    var image = nativeImage.createFromPath(path.join(__dirname, "../", `/assets/ping.png`))
+                    mainWindow.setOverlayIcon(image, "badgeCount")
+                } else {
+                    mainWindow.setOverlayIcon(null, "badgeCount")
+                }
+                break;
+        }
     });
     ipcMain.on("win-maximize", (event, arg) => {
         mainWindow.maximize();

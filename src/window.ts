@@ -2,7 +2,7 @@
 // I had to add most of the window creation code here to split both into seperete functions
 // WHY? Because I can't use the same code for both due to annoying bug with value `frame` not responding to variables
 // I'm sorry for this mess but I'm not sure how to fix it.
-import {BrowserWindow, shell, app, dialog} from "electron";
+import {BrowserWindow, shell, app, dialog, nativeImage} from "electron";
 import path from "path";
 import {
     checkIfConfigIsBroken,
@@ -19,6 +19,7 @@ import * as fs from "fs";
 import startServer from "./socket";
 import contextMenu from "electron-context-menu";
 import os from "os";
+import {tray} from "./tray";
 export var icon: string;
 export let mainWindow: BrowserWindow;
 export let inviteWindow: BrowserWindow;
@@ -86,6 +87,31 @@ async function doAfterDefiningTheWindow() {
         if (/api\/v\d\/science$/g.test(details.url)) return callback({cancel: true});
         return callback({});
     });
+    if (await getConfig("trayIcon") == "default") {
+        mainWindow.webContents.on("page-favicon-updated", async (event) => {
+            var faviconBase64 = await mainWindow.webContents.executeJavaScript(`
+                var getFavicon = function(){
+                var favicon = undefined;
+                var nodeList = document.getElementsByTagName("link");
+                for (var i = 0; i < nodeList.length; i++)
+                {
+                    if((nodeList[i].getAttribute("rel") == "icon")||(nodeList[i].getAttribute("rel") == "shortcut icon"))
+                    {
+                        favicon = nodeList[i].getAttribute("href");
+                    }
+                }
+                return favicon;        
+                }
+                getFavicon()
+            `)
+            console.log(app.getPath("cache"))
+            var buf = new Buffer(faviconBase64.replace(/^data:image\/\w+;base64,/, ""), 'base64');
+            fs.writeFileSync(path.join(app.getPath("cache"), "/", "tray.png"), buf, "utf-8");
+            let trayPath = nativeImage.createFromPath(path.join(app.getPath("cache"), "/", "tray.png"));
+            if (process.platform === "darwin" && trayPath.getSize().height > 22) trayPath = trayPath.resize({height: 22});
+            tray.setImage(trayPath)
+        })
+    }
     const userDataPath = app.getPath("userData");
     const themesFolder = userDataPath + "/themes/";
     if (!fs.existsSync(themesFolder)) {

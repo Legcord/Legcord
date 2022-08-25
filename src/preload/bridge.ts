@@ -16,6 +16,8 @@ contextBridge.exposeInMainWorld("armcord", {
     electron: process.versions.electron,
     channel: ipcRenderer.sendSync("channel"),
     setLang: (lang: string) => ipcRenderer.send("setLang", lang),
+    setPingCount: (pingCount: number) => ipcRenderer.send("setPing", pingCount),
+    setTrayIcon: (favicon: string) => ipcRenderer.send("sendTrayIcon", favicon),
     getLang: (toGet: string) =>
         ipcRenderer.invoke("getLang", toGet).then((result) => {
             return result;

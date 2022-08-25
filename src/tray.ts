@@ -4,12 +4,15 @@ import {mainWindow} from "./window";
 import {getConfig, getConfigLocation, setWindowState} from "./utils";
 import * as path from "path";
 import {createSettingsWindow} from "./settings/main";
-let tray: any = null;
+export let tray: any = null;
 app.whenReady().then(async () => {
     let finishedSetup = await getConfig("doneSetup");
     var trayIcon = (await getConfig("trayIcon")) ?? "ac_plug_colored";
+    if (trayIcon = "default") {
+        trayIcon = "dsc-tray"
+    }
     let trayPath = nativeImage.createFromPath(path.join(__dirname, "../", `/assets/${trayIcon}.png`));
-    if (process.platform === "darwin" && trayPath.getSize().height > 22) trayPath = trayIcon.resize({height: 22});
+    if (process.platform === "darwin" && trayPath.getSize().height > 22) trayPath = trayPath.resize({height: 22});
     if ((await getConfig("windowStyle")) == "basic") {
         var clientName = (await getConfig("clientName")) ?? "ArmCord";
         tray = new Tray(trayPath);
