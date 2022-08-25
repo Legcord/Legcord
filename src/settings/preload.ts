@@ -1,5 +1,5 @@
 import {contextBridge, ipcRenderer} from "electron";
-import path from "path";
+import * as path from "path";
 import {addStyle} from "../utils";
 import fs from "fs";
 console.log("ArmCord Settings");

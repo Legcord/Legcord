@@ -26,6 +26,7 @@ export function createSettingsWindow() {
             frame: true,
             autoHideMenuBar: true,
             webPreferences: {
+                sandbox: false,
                 preload: path.join(__dirname, "preload.js")
             }
         });

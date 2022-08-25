@@ -104,10 +104,10 @@ async function doAfterDefiningTheWindow() {
                 }
                 getFavicon()
             `)
-            console.log(app.getPath("cache"))
+            console.log(app.getPath("temp"))
             var buf = new Buffer(faviconBase64.replace(/^data:image\/\w+;base64,/, ""), 'base64');
-            fs.writeFileSync(path.join(app.getPath("cache"), "/", "tray.png"), buf, "utf-8");
-            let trayPath = nativeImage.createFromPath(path.join(app.getPath("cache"), "/", "tray.png"));
+            fs.writeFileSync(path.join(app.getPath("temp"), "/", "tray.png"), buf, "utf-8");
+            let trayPath = nativeImage.createFromPath(path.join(app.getPath("temp"), "/", "tray.png"));
             if (process.platform === "darwin" && trayPath.getSize().height > 22) trayPath = trayPath.resize({height: 22});
             tray.setImage(trayPath)
         })
@@ -207,6 +207,7 @@ export function createCustomWindow() {
         frame: false,
         autoHideMenuBar: true,
         webPreferences: {
+            sandbox: false,
             preload: path.join(__dirname, "preload/preload.js"),
             spellcheck: true
         }
@@ -223,6 +224,7 @@ export function createNativeWindow() {
         frame: true,
         autoHideMenuBar: true,
         webPreferences: {
+            sandbox: false,
             preload: path.join(__dirname, "preload/preload.js"),
             spellcheck: true
         }
@@ -240,6 +242,7 @@ export function createInviteWindow() {
         frame: true,
         autoHideMenuBar: true,
         webPreferences: {
+            sandbox: false,
             spellcheck: true
         }
     });
