@@ -2,7 +2,7 @@
 // I had to add most of the window creation code here to split both into seperete functions
 // WHY? Because I can't use the same code for both due to annoying bug with value `frame` not responding to variables
 // I'm sorry for this mess but I'm not sure how to fix it.
-import {BrowserWindow, shell, app, dialog} from "electron";
+import {BrowserWindow, shell, app, dialog, nativeImage} from "electron";
 import path from "path";
 import {
     checkIfConfigIsBroken,
@@ -19,20 +19,21 @@ import * as fs from "fs";
 import startServer from "./socket";
 import contextMenu from "electron-context-menu";
 import os from "os";
-export var icon: string;
+import {tray} from "./tray";
+import {iconPath} from "./main";
 export let mainWindow: BrowserWindow;
 export let inviteWindow: BrowserWindow;
-var osType = os.type();
 
+var osType = os.type();
 contextMenu({
     showSaveImageAs: true,
     showCopyImageAddress: true,
-    showSearchWithGoogle: true
+    showSearchWithGoogle: true,
+    showSearchWithDuckDuckGo: true
 });
-
 async function doAfterDefiningTheWindow() {
     var ignoreProtocolWarning = await getConfig("ignoreProtocolWarning");
-    checkIfConfigIsBroken();
+    await checkIfConfigIsBroken();
     registerIpc();
     if (await getConfig("mobileMode")) {
         mainWindow.webContents.userAgent =
@@ -86,6 +87,30 @@ async function doAfterDefiningTheWindow() {
         if (/api\/v\d\/science$/g.test(details.url)) return callback({cancel: true});
         return callback({});
     });
+    if (await getConfig("trayIcon") == "default") {
+        mainWindow.webContents.on("page-favicon-updated", async (event) => {
+            var faviconBase64 = await mainWindow.webContents.executeJavaScript(`
+                var getFavicon = function(){
+                var favicon = undefined;
+                var nodeList = document.getElementsByTagName("link");
+                for (var i = 0; i < nodeList.length; i++)
+                {
+                    if((nodeList[i].getAttribute("rel") == "icon")||(nodeList[i].getAttribute("rel") == "shortcut icon"))
+                    {
+                        favicon = nodeList[i].getAttribute("href");
+                    }
+                }
+                return favicon;        
+                }
+                getFavicon()
+            `)
+            var buf = new Buffer(faviconBase64.replace(/^data:image\/\w+;base64,/, ""), 'base64');
+            fs.writeFileSync(path.join(app.getPath("temp"), "/", "tray.png"), buf, "utf-8");
+            let trayPath = nativeImage.createFromPath(path.join(app.getPath("temp"), "/", "tray.png"));
+            if (process.platform === "darwin" && trayPath.getSize().height > 22) trayPath = trayPath.resize({height: 22});
+            tray.setImage(trayPath)
+        })
+    }
     const userDataPath = app.getPath("userData");
     const themesFolder = userDataPath + "/themes/";
     if (!fs.existsSync(themesFolder)) {
@@ -107,10 +132,10 @@ async function doAfterDefiningTheWindow() {
             }
         });
     });
-    setMenu();
+    await setMenu();
     mainWindow.on("close", async (e) => {
         let [width, height] = mainWindow.getSize();
-        setWindowState({
+        await setWindowState({
             width: width,
             height: height,
             isMaximized: mainWindow.isMaximized()
@@ -149,22 +174,22 @@ async function doAfterDefiningTheWindow() {
         if ((await getConfig("skipSplash")) == true) {
             switch (await getConfig("channel")) {
                 case "stable":
-                    mainWindow.loadURL("https://discord.com/app");
+                    await mainWindow.loadURL("https://discord.com/app");
                     break;
                 case "canary":
-                    mainWindow.loadURL("https://canary.discord.com/app");
+                    await mainWindow.loadURL("https://canary.discord.com/app");
                     break;
                 case "ptb":
-                    mainWindow.loadURL("https://ptb.discord.com/app");
+                    await mainWindow.loadURL("https://ptb.discord.com/app");
                     break;
                 case "hummus":
-                    mainWindow.loadURL("https://hummus.sys42.net/");
+                    await mainWindow.loadURL("https://hummus.sys42.net/");
                     break;
                 case undefined:
-                    mainWindow.loadURL("https://discord.com/app");
+                    await mainWindow.loadURL("https://discord.com/app");
                     break;
                 default:
-                    mainWindow.loadURL("https://discord.com/app");
+                    await mainWindow.loadURL("https://discord.com/app");
             }
         } else {
             await mainWindow.loadFile(path.join(__dirname, "/content/splash.html"));
@@ -177,10 +202,11 @@ export function createCustomWindow() {
         height: 350,
         title: "ArmCord",
         darkTheme: true,
-        icon: path.join(__dirname, "../", "/assets/ac_icon_transparent.png"),
+        icon: iconPath,
         frame: false,
         autoHideMenuBar: true,
         webPreferences: {
+            sandbox: false,
             preload: path.join(__dirname, "preload/preload.js"),
             spellcheck: true
         }
@@ -193,10 +219,11 @@ export function createNativeWindow() {
         height: 350,
         title: "ArmCord",
         darkTheme: true,
-        icon: path.join(__dirname, "../", "/assets/ac_icon_transparent.png"),
+        icon: iconPath,
         frame: true,
         autoHideMenuBar: true,
         webPreferences: {
+            sandbox: false,
             preload: path.join(__dirname, "preload/preload.js"),
             spellcheck: true
         }
@@ -210,10 +237,11 @@ export function createInviteWindow() {
         height: 600,
         title: "ArmCord Invite Manager",
         darkTheme: true,
-        icon: path.join(__dirname, "../", "/assets/ac_icon_transparent.png"),
+        icon: iconPath,
         frame: true,
         autoHideMenuBar: true,
         webPreferences: {
+            sandbox: false,
             spellcheck: true
         }
     });

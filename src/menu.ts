@@ -60,6 +60,13 @@ export async function setMenu() {
                     }
                 },
                 {
+                    label: "Reload",
+                    accelerator: "CmdOrCtrl+R",
+                    click: function () {
+                        mainWindow.reload()
+                    }
+                },
+                {
                     label: "Quit",
                     accelerator: "CmdOrCtrl+Q",
                     click: function () {

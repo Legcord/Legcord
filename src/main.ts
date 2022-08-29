@@ -6,7 +6,8 @@ import "./extensions/mods";
 import "./extensions/plugin";
 import "./tray";
 import {createCustomWindow, createNativeWindow} from "./window";
-
+import path from "path";
+export var iconPath: string;
 export var settings: any;
 export var customTitlebar: boolean;
 export var clientName: "ArmCord";
@@ -25,6 +26,11 @@ if (process.platform == "linux") {
 checkIfConfigExists();
 injectElectronFlags();
 app.whenReady().then(async () => {
+    if (await getConfig("customIcon") !== undefined ?? null) {
+        iconPath = await getConfig("customIcon")
+    } else {
+        iconPath = path.join(__dirname, "../", "/assets/ac_icon_transparent.png")
+    }
     async function init() {
         switch (await getConfig("windowStyle")) {
             case "default":

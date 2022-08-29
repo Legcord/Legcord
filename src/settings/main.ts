@@ -1,8 +1,9 @@
 import {BrowserWindow, shell, ipcMain, app, clipboard} from "electron";
-import {getConfig, setConfigBulk, Settings, getLang, getVersion, getConfigLocation, getLangName} from "../utils";
+import {getConfig, setConfigBulk, Settings, getLang, getVersion, getConfigLocation, getLangName, sleep} from "../utils";
 import path from "path";
 import os from "os";
 import fs from "fs";
+import {mainWindow} from "../window";
 var settingsWindow: BrowserWindow;
 var instance: number = 0;
 const userDataPath = app.getPath("userData");
@@ -26,6 +27,7 @@ export function createSettingsWindow() {
             frame: true,
             autoHideMenuBar: true,
             webPreferences: {
+                sandbox: false,
                 preload: path.join(__dirname, "preload.js")
             }
         });
@@ -36,19 +38,42 @@ export function createSettingsWindow() {
                 settingsWindow.loadURL(`file://${__dirname}/settings.html`);
             }
         }
-
+        const userDataPath = app.getPath("userData");
+        const themesFolder = userDataPath + "/themes/";
+        if (!fs.existsSync(themesFolder)) {
+            fs.mkdirSync(themesFolder);
+            console.log("Created missing theme folder");
+        }
+        settingsWindow.webContents.on("did-finish-load", () => {
+            fs.readdirSync(themesFolder).forEach((file) => {
+                try {
+                    const manifest = fs.readFileSync(`${themesFolder}/${file}/manifest.json`, "utf8");
+                    var themeFile = JSON.parse(manifest);
+                    settingsWindow.webContents.send(
+                        "themeLoader",
+                        fs.readFileSync(`${themesFolder}/${file}/${themeFile.theme}`, "utf-8")
+                    );
+                    console.log(`%cLoaded ${themeFile.name} made by ${themeFile.author}`, "color:red");
+                } catch (err) {
+                    console.error(err);
+                }
+            });
+        });
         ipcMain.on("saveSettings", (event, args: Settings) => {
             console.log(args);
             setConfigBulk(args);
         });
-        ipcMain.on("openStorageFolder", (event) => {
+        ipcMain.on("openStorageFolder", async (event) => {
             shell.openPath(storagePath);
+            await sleep(1000);
         });
-        ipcMain.on("openThemesFolder", (event) => {
+        ipcMain.on("openThemesFolder", async (event) => {
             shell.openPath(themesPath);
+            await sleep(1000);
         });
-        ipcMain.on("openPluginsFolder", (event) => {
+        ipcMain.on("openPluginsFolder", async (event) => {
             shell.openPath(pluginsPath);
+            await sleep(1000);
         });
         ipcMain.on("getLangName", async (event) => {
             event.returnValue = await getLangName();

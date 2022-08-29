@@ -1,5 +1,5 @@
 import {contextBridge, ipcRenderer} from "electron";
-import path from "path";
+import * as path from "path";
 import {addStyle} from "../utils";
 import fs from "fs";
 console.log("ArmCord Settings");
@@ -20,6 +20,12 @@ contextBridge.exposeInMainWorld("settings", {
     copyDebugInfo: () => ipcRenderer.send("copyDebugInfo")
 });
 if (ipcRenderer.sendSync("getLangName") == "en-US") {
+    console.log("[Settings]: Lang " + ipcRenderer.sendSync("getLangName"));
     const cssPath = path.join(__dirname, "../", "/content/css/settingsEng.css");
-    addStyle(fs.readFileSync(cssPath, "utf8"));
+    document.addEventListener("DOMContentLoaded", function (event) {
+        addStyle(fs.readFileSync(cssPath, "utf8"));
+    });
 }
+ipcRenderer.on("themeLoader", (event, message) => {
+    addStyle(message);
+});

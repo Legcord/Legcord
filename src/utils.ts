@@ -45,7 +45,7 @@ export function setup() {
         skipSplash: false,
         inviteWebsocket: true,
         mobileMode: false,
-        trayIcon: "ac_plug_colored",
+        trayIcon: "default",
         doneSetup: false
     };
     setConfigBulk({
