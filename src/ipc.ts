@@ -1,5 +1,5 @@
 //ipc stuff
-import {app, ipcMain, shell, desktopCapturer,nativeImage} from "electron";
+import {app, ipcMain, shell, desktopCapturer, nativeImage} from "electron";
 import {mainWindow} from "./window";
 import {
     setConfigBulk,
@@ -8,7 +8,8 @@ import {
     setLang,
     getLang,
     getWindowState,
-    packageVersion, getDisplayVersion
+    packageVersion,
+    getDisplayVersion
 } from "./utils";
 import {customTitlebar} from "./main";
 import {createSettingsWindow} from "./settings/main";
@@ -30,14 +31,14 @@ export function registerIpc() {
     ipcMain.on("setPing", (event, pingCount: number) => {
         switch (os.platform()) {
             case "linux" ?? "macos":
-                app.setBadgeCount(pingCount)
+                app.setBadgeCount(pingCount);
                 break;
             case "win32":
                 if (pingCount > 0) {
-                    var image = nativeImage.createFromPath(path.join(__dirname, "../", `/assets/ping.png`))
-                    mainWindow.setOverlayIcon(image, "badgeCount")
+                    var image = nativeImage.createFromPath(path.join(__dirname, "../", `/assets/ping.png`));
+                    mainWindow.setOverlayIcon(image, "badgeCount");
                 } else {
-                    mainWindow.setOverlayIcon(null, "badgeCount")
+                    mainWindow.setOverlayIcon(null, "badgeCount");
                 }
                 break;
         }

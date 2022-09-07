@@ -2,7 +2,6 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>ArmCord Settings</title>
         <style>
             @import url("../content/css/settings.css");
             .acAdvSettings {
@@ -14,6 +13,9 @@
     <body>
         <div class="saveBar">
             <button id="settings-save" class="center">Save Settings</button>
+        </div>
+        <div class="restartBar">
+            <button id="settings-restart" class="center">Restart App</button>
         </div>
         <div class="switch acTheme">
             <select name="theme" id="theme" class="left dropdown">
@@ -159,13 +161,17 @@
         <br />
         <div class="switch acTray">
             <select name="trayIcon" id="trayIcon" class="left dropdown">
-                <option value="default">Default (dynamic)</option>
-                <option value="ac_plug_colored">Plug colored</option>
-                <option value="dsc-tray">Discord Icon</option>
-                <option value="ac_white_plug">White Icon</option>
-                <option value="ac_black_plug">Black Icon</option>
-                <option value="ac_white_plug_hollow">White Hollowed Icon</option>
-                <option value="ac_black_plug_hollow">Black Hollowed Icon</option>
+                <optgroup label="- Discord -">
+                    <option value="default">Default (Dynamic)</option>
+                    <option value="dsc-tray">Discord Icon</option>
+                </optgroup>
+                <optgroup label="- ArmCord -">
+                    <option value="ac_plug_colored">Colored Plug</option>
+                    <option value="ac_white_plug">White Plug</option>
+                    <option value="ac_white_plug_hollow">White Plug Alt</option>
+                    <option value="ac_black_plug">Black Plug</option>
+                    <option value="ac_black_plug_hollow">Black Plug Alt</option>
+                </optgroup>
             </select>
             <p class="header" id="settings-trayIcon">Tray icon</p>
             <p class="description">Set the icon which will appear in tray menu.</p>
@@ -191,6 +197,7 @@
     </body>
     <script>
         async function loadLang() {
+            document.getElementById("settings-restart").innerHTML = await settings.getLang("settings-restart");
             document.getElementById("settings-save").innerHTML = await settings.getLang("settings-save");
             document.getElementById("settings-mod").innerHTML = await settings.getLang("settings-mod");
             document.getElementById("settings-channel").innerHTML = await settings.getLang("settings-channel");
@@ -245,6 +252,15 @@
                 trayIcon: document.getElementById("trayIcon").value,
                 doneSetup: true
             });
+            if (
+                confirm(`Your settings have been saved!
+Some changes may require the app to restart before taking effect, would you like to do so now?`) == true
+            ) {
+                settings.restart();
+            }
+        });
+        document.getElementById("settings-restart").addEventListener("click", function () {
+            settings.restart();
         });
         document.getElementById("settings-pluginsFolder").addEventListener("click", function () {
             settings.openPluginsFolder();

@@ -63,7 +63,7 @@ export async function setMenu() {
                     label: "Reload",
                     accelerator: "CmdOrCtrl+R",
                     click: function () {
-                        mainWindow.reload()
+                        mainWindow.reload();
                     }
                 },
                 {
@@ -97,7 +97,7 @@ export async function setMenu() {
             label: "Zoom",
             submenu: [
                 {label: "Zoom in", accelerator: "CmdOrCtrl+Plus", role: "zoomIn"},
-                {label: "Zoom out", accelerator: "CmdOrCtrl+-", role: "zoomOut"},
+                {label: "Zoom out", accelerator: "CmdOrCtrl+-", role: "zoomOut"}
             ]
         }
     ];

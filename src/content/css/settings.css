@@ -81,12 +81,28 @@ p {
 .saveBar {
     position: fixed;
     bottom: 20px;
+    float: left;
+    left: 0;
+    font-weight: bold;
+    z-index: 999;
+    font-size: 10px;
+}
+.restartBar {
+    position: fixed;
+    bottom: 20px;
+    float: right;
+    right: 0;
     font-weight: bold;
     z-index: 999;
     font-size: 10px;
 }
 .saveBar > button {
     width: 90px;
+    transform: translateX(56%);
+}
+.restartBar > button {
+    width: 90px;
+    transform: translateX(50%);
 }
 
 .header {
@@ -237,6 +253,17 @@ button:active {
 }
 .tgl-light:checked + .tgl-btn {
     background: var(--brand-experiment);
+}
+
+select optgroup {
+    color: #fff6;
+    font-weight: 200;
+    font-style: italic;
+}
+select option {
+    color: #fff;
+    font-weight: 400;
+    font-style: normal;
 }
 select {
     -webkit-appearance: button;

@@ -53,5 +53,6 @@
     "settings-storageFolder": "Open storage folder",
     "settings-none": "None",
     "settings-save": "Save Settings",
+    "settings-restart": "Restart App",
     "settings-updater": "Check for updates"
 }

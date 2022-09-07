@@ -6,6 +6,8 @@ console.log("ArmCord Settings");
 
 contextBridge.exposeInMainWorld("settings", {
     save: (...args: any) => ipcRenderer.send("saveSettings", ...args),
+    restart: () => ipcRenderer.send("restart"),
+    saveAlert: (restartFunc: any) => ipcRenderer.send("saveAlert", restartFunc),
     getLang: (toGet: string) =>
         ipcRenderer.invoke("getLang", toGet).then((result) => {
             return result;

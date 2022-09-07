@@ -62,7 +62,11 @@ export function getVersion() {
 export function getDisplayVersion() {
     //Checks if the app version # has 4 sections (3.1.0.0) instead of 3 (3.1.0) / Shitty way to check if Kernel Mod is installed
     if ((app.getVersion() == packageVersion) == false) {
-        return `${packageVersion} [Kernel Mod]`;
+        if ((app.getVersion() == process.versions.electron) == true) {
+            return `Dev Build (${packageVersion})`;
+        } else {
+            return `${packageVersion} [Modified]`;
+        }
     } else {
         return packageVersion;
     }

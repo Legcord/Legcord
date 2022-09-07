@@ -1,5 +1,15 @@
 import {BrowserWindow, shell, ipcMain, app, clipboard} from "electron";
-import {getConfig, setConfigBulk, Settings, getLang, getVersion, getConfigLocation, getLangName, sleep} from "../utils";
+import {
+    getConfig,
+    setConfigBulk,
+    Settings,
+    getLang,
+    getVersion,
+    getConfigLocation,
+    getLangName,
+    sleep,
+    getDisplayVersion
+} from "../utils";
 import path from "path";
 import os from "os";
 import fs from "fs";
@@ -22,7 +32,7 @@ export function createSettingsWindow() {
         settingsWindow = new BrowserWindow({
             width: 660,
             height: 670,
-            title: "ArmCord Settings",
+            title: `ArmCord Settings | Version: ${getDisplayVersion()}`,
             darkTheme: true,
             frame: true,
             autoHideMenuBar: true,
