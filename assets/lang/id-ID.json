@@ -29,7 +29,7 @@
     "settings-none": "tidak ada",
     "settings-mobileMode": "Mobile mode",
     "settings-altPaste": "Alternative Paste",
-    "settings-theme-desc1": "ArmCord \"themes\" manage apps behaviour and looks.",
+    "settings-theme-desc1": "\"Tema\" ArmCord menata perilaku dan penampilan aplikasi.",
     "settings-theme-desc2": "this is how ArmCord looks when you first launch it. It includes recreation of Discord's\n                custom titlebar and ArmCord specific styles injected into Discord.",
     "settings-theme-desc3": "uses native titlebar of OS you're currently running (e.g Windows 7/10). Functions more\n                similar to actual Discord app on Linux.",
     "settings-tray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later.",
