@@ -4,15 +4,15 @@
         <meta charset="UTF-8" />
         <style>
             @import url("../content/css/settings.css");
-            .acAdvSettings {
-                height: 19em !important;
-            }
         </style>
     </head>
 
     <body>
         <div class="saveBar">
             <button id="settings-save" class="center">Save Settings</button>
+        </div>
+        <div class="restartBar">
+            <button id="settings-restart" class="center">Restart App</button>
         </div>
         <div class="switch acTheme">
             <select name="theme" id="theme" class="left dropdown">
@@ -32,40 +32,40 @@
         </div>
         <br />
         <div class="switch acCSP">
-            <label class="header2">ArmCord CSP</label>
+            <label class="header">ArmCord CSP</label>
             <input class="tgl tgl-light left" id="csp" type="checkbox" />
             <label class="tgl-btn left" for="csp"></label>
-            <p class="description2">
+            <p class="description">
                 ArmCord CSP is our system that manages loading custom content loading into the Discord app. Stuff like
                 client mods and themes depend on it. Disable if you want to get rid of mods and custom styles.
             </p>
         </div>
         <br />
         <div class="switch acTray">
-            <label class="header2" id="settings-tray">Minimize to tray</label>
+            <label class="header" id="settings-tray">Minimize to tray</label>
             <input class="tgl tgl-light left" id="tray" type="checkbox" />
             <label class="tgl-btn left" for="tray"></label>
-            <p class="description2">
+            <p class="description">
                 When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax
                 in your system tray for later.
             </p>
         </div>
         <br />
         <div class="switch acPatches">
-            <label class="header2" id="settings-patches">Automatic Patches</label>
+            <label class="header" id="settings-patches">Automatic Patches</label>
             <input class="tgl tgl-light left" id="patches" type="checkbox" />
             <label class="tgl-btn left" for="patches"></label>
-            <p class="description2">
+            <p class="description">
                 Fetches automatic patches that are distributed if release turns out to have bugs after release. Usually
                 you don't have to keep this enabled, unless notified in support Discord.
             </p>
         </div>
         <br />
         <div class="switch acAltPaste">
-            <label class="header2" id="settings-alternativePaste">Alternative paste</label>
+            <label class="header" id="settings-alternativePaste">Alternative paste</label>
             <input class="tgl tgl-light left" id="alternativePaste" type="checkbox" />
             <label class="tgl-btn left" for="alternativePaste"></label>
-            <p class="description2">
+            <p class="description">
                 If you're on Gnome on Linux or just simply can't paste images copied from other messages, then this is
                 for you. This enables alternative module for pasting images. Only enable this when you're experiencing
                 issues.
@@ -99,10 +99,10 @@
         </div>
         <br />
         <div class="switch acCordwood">
-            <label class="header2" id="settings-cordwood">Cordwood client mod</label>
+            <label class="header" id="settings-cordwood">Cordwood client mod</label>
             <input class="tgl tgl-light left" id="cordwood" type="checkbox" />
             <label class="tgl-btn left" for="cordwood"></label>
-            <p class="description2">
+            <p class="description">
                 Client mod for Hummus that focuses on making the plugin development experience easier. Minimal, light,
                 and easy to use
             </p>
@@ -123,13 +123,18 @@
         <br />
         <div class="switch acTray">
             <select name="trayIcon" id="trayIcon" class="left dropdown">
-                <option value="default">Default (Dynamic)</option>
-                <option value="ac_plug_colored">Plug colored</option>
-                <option value="dsc-tray">Discord Icon</option>
-                <option value="ac_white_plug">White Icon</option>
-                <option value="ac_black_plug">Black Icon</option>
-                <option value="ac_white_plug_hollow">White Hollowed Icon</option>
-                <option value="ac_black_plug_hollow">Black Hollowed Icon</option>
+                <optgroup label="- Discord -">
+                    <option value="default">Dynamic</option>
+                    <option value="dsc-tray">Discord Icon</option>
+                    <option value="clsc-dsc-tray">Classic Discord Icon</option>
+                </optgroup>
+                <optgroup label="- ArmCord -">
+                    <option value="ac_plug_colored">Colored Plug</option>
+                    <option value="ac_white_plug">White Plug</option>
+                    <option value="ac_white_plug_hollow">White Plug Alt</option>
+                    <option value="ac_black_plug">Black Plug</option>
+                    <option value="ac_black_plug_hollow">Black Plug Alt</option>
+                </optgroup>
             </select>
             <p class="header" id="settings-trayIcon">Tray icon:</p>
             <p class="description">Set the icon which will appear in tray menu.</p>
@@ -138,6 +143,13 @@
         <br />
         <div class="switch acAdvSettings">
             <h1 class="center advancedText">⚠️ Advanced User Zone ⚠️</h1>
+            <br>
+            <br>
+            <label class="header" id="settings-skipSplash">Skip Splash Screen (Experimental)</label>
+            <input class="tgl tgl-light left" id="skipSplash" type="checkbox" />
+            <label class="tgl-btn left" for="skipSplash"></label>
+            <p class="description">Skips ArmCord splash screen when you start up the app.</p>
+            <br />
             <button id="settings-pluginsFolder" class="center">Open Plugins Folder</button>
             <br />
             <button id="settings-themesFolder" class="center">Open Themes Folder</button>
@@ -181,27 +193,27 @@
             document.getElementById("trayIcon").value = await settings.get("trayIcon");
         }
         loadSettings();
-        document.getElementById("settings-save").addEventListener("click", async function () {
-            var cordwood;
-            if (document.getElementById("cordwood").checked) {
-                cordwood = true;
-            } else {
-                cordwood = false;
-            }
+        document.getElementById("settings-save").addEventListener("click", function () {
             settings.save({
                 windowStyle: document.getElementById("theme").value,
                 channel: document.getElementById("channel").value,
                 armcordCSP: document.getElementById("csp").checked,
                 minimizeToTray: document.getElementById("tray").checked,
                 alternativePaste: document.getElementById("alternativePaste").checked,
+                skipSplash: document.getElementById("skipSplash").checked,
                 automaticPatches: document.getElementById("patches").checked,
                 mods: cordwood,
-                mobileMode: await settings.get("mobileMode"),
-                inviteWebsocket: await settings.get("inviteWebsocket"),
+                mobileMode: document.getElementById("mobile").checked,
+                inviteWebsocket: document.getElementById("websocket").checked,
                 performanceMode: document.getElementById("prfmMode").value,
                 trayIcon: document.getElementById("trayIcon").value,
                 doneSetup: true
             });
+            alert(`Your settings have been saved!
+Some changes may require the app to restart before taking effect.`)
+        });
+        document.getElementById("settings-restart").addEventListener("click", function () {
+            settings.restart();
         });
         document.getElementById("settings-pluginsFolder").addEventListener("click", async function () {
             settings.openPluginsFolder();

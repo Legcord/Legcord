@@ -4,9 +4,6 @@
         <meta charset="UTF-8" />
         <style>
             @import url("../content/css/settings.css");
-            .acAdvSettings {
-                height: 26em !important;
-            }
         </style>
     </head>
 
@@ -35,50 +32,50 @@
         </div>
         <br />
         <div class="switch acCSP">
-            <label class="header2">ArmCord CSP</label>
+            <label class="header">ArmCord CSP</label>
             <input class="tgl tgl-light left" id="csp" type="checkbox" />
             <label class="tgl-btn left" for="csp"></label>
-            <p class="description2">
+            <p class="description">
                 ArmCord CSP is our system that manages loading custom content loading into the Discord app. Stuff like
                 client mods and themes depend on it. Disable if you want to get rid of mods and custom styles.
             </p>
         </div>
         <br />
         <div class="switch acTray">
-            <label class="header2" id="settings-tray">Minimize to tray</label>
+            <label class="header" id="settings-tray">Minimize to tray</label>
             <input class="tgl tgl-light left" id="tray" type="checkbox" />
             <label class="tgl-btn left" for="tray"></label>
-            <p class="description2">
+            <p class="description">
                 When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax
                 in your system tray for later.
             </p>
         </div>
         <br />
         <div class="switch acPatches">
-            <label class="header2" id="settings-patches">Automatic Patches</label>
+            <label class="header" id="settings-patches">Automatic Patches</label>
             <input class="tgl tgl-light left" id="patches" type="checkbox" />
             <label class="tgl-btn left" for="patches"></label>
-            <p class="description2">
+            <p class="description">
                 Fetches automatic patches that are distributed if release turns out to have bugs after release. Usually
                 you don't have to keep this enabled, unless notified in support Discord.
             </p>
         </div>
         <br />
         <div class="switch acWebsocket">
-            <label class="header2" id="settings-invitewebsocket">Invite Websocket</label>
+            <label class="header" id="settings-invitewebsocket">Invite Websocket</label>
             <input class="tgl tgl-light left" id="websocket" type="checkbox" />
             <label class="tgl-btn left" for="websocket"></label>
-            <p class="description2">
+            <p class="description">
                 When enabled ArmCord will support Discord.gg links which means that if you open an invite link in your
                 browser, ArmCord will automatically accept the invite. Can be unresponsive at times.
             </p>
         </div>
         <br />
         <div class="switch acMobileMode">
-            <label class="header2" id="settings-mobileMode">Mobile mode</label>
+            <label class="header" id="settings-mobileMode">Mobile mode</label>
             <input class="tgl tgl-light left" id="mobile" type="checkbox" />
             <label class="tgl-btn left" for="mobile"></label>
-            <p class="description2">
+            <p class="description">
                 If you're on a device with touch-screen this feature is for you! It activates Discord's hidden mobile
                 mode meant for phones and tablets. Only major feature missing is voice chat support. This is ideal for
                 users on PinePhone and similar.
@@ -86,10 +83,10 @@
         </div>
         <br />
         <div class="switch acAltPaste">
-            <label class="header2" id="settings-alternativePaste">Alternative paste</label>
+            <label class="header" id="settings-alternativePaste">Alternative paste</label>
             <input class="tgl tgl-light left" id="alternativePaste" type="checkbox" />
             <label class="tgl-btn left" for="alternativePaste"></label>
-            <p class="description2">
+            <p class="description">
                 If you're on Gnome on Linux or just simply can't paste images copied from other messages, then this is
                 for you. This enables alternative module for pasting images. Only enable this when you're experiencing
                 issues.
@@ -101,7 +98,7 @@
                 <option value="stable">Stable</option>
                 <option value="canary">Canary</option>
                 <option value="ptb">PTB</option>
-                <option value="hummus">Hummus (unofficial, experimental)</option>
+                <option value="hummus">Hummus (Experimental)</option>
             </select>
             <div>
                 <p class="header" id="settings-channel">Discord channel</p>
@@ -162,8 +159,9 @@
         <div class="switch acTray">
             <select name="trayIcon" id="trayIcon" class="left dropdown">
                 <optgroup label="- Discord -">
-                    <option value="default">Default (Dynamic)</option>
+                    <option value="default">Dynamic</option>
                     <option value="dsc-tray">Discord Icon</option>
+                    <option value="clsc-dsc-tray">Classic Discord Icon</option>
                 </optgroup>
                 <optgroup label="- ArmCord -">
                     <option value="ac_plug_colored">Colored Plug</option>
@@ -180,11 +178,12 @@
         <br />
         <div class="switch acAdvSettings">
             <h1 class="center advancedText">⚠️ Advanced User Zone ⚠️</h1>
-            <br />
-            <label class="header2" id="settings-skipSplash">Skip Splash Screen (Experimental)</label>
+            <br>
+            <br>
+            <label class="header" id="settings-skipSplash">Skip Splash Screen (Experimental)</label>
             <input class="tgl tgl-light left" id="skipSplash" type="checkbox" />
             <label class="tgl-btn left" for="skipSplash"></label>
-            <p class="description2">Skips ArmCord splash screen when you start up the app.</p>
+            <p class="description">Skips ArmCord splash screen when you start up the app.</p>
             <br />
             <button id="settings-pluginsFolder" class="center">Open Plugins Folder</button>
             <br />

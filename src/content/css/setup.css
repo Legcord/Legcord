@@ -90,7 +90,18 @@ body {
 }
 /* }}} */
 
-/* Logo {{{ */
+/* Titlebar {{{ */
+div {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    display: block;
+    font-weight: inherit;
+    font-style: inherit;
+    font-family: inherit;
+    font-size: 100%;
+    vertical-align: baseline;
+}
 #logo {
     display: flex;
     flex-direction: row;
@@ -100,20 +111,25 @@ body {
     width: 292px;
 }
 
-.titlebar #window-controls-container #maximize {
+
+[armcord-platform="win32"] .titlebar #window-controls-container #maximize,
+[armcord-platform="linux"] .titlebar #window-controls-container #maximize {
     display: none;
 }
 
-.titlebar #window-controls-container #spacer {
+[armcord-platform="win32"] .titlebar #window-controls-container #spacer,
+[armcord-platform="linux"] .titlebar #window-controls-container #spacer {
     float: left;
     height: 100%;
     width: 33%;
 }
-[armcord-platform="darwin"] .titlebar #window-controls-container {
-    margin-left: -26px;
+[armcord-platform="darwin"] .titlebar #window-controls-container #quit {
+    width: 18% !important;
 }
-[armcord-platform="darwin"] .titlebar #window-controls-container #minimize {
-    transform: translateX(5px);
+[armcord-platform="darwin"] .titlebar #window-controls-container #maximize,
+[armcord-platform="darwin"] .titlebar #window-controls-container #maximize #maximize-icon {
+    background-color: #d6d6d5 !important;
+    pointer-events: none;
 }
 /* }}} */
 

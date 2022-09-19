@@ -74,7 +74,8 @@ p {
     vertical-align: middle;
     border-radius: 10px;
     background: var(--background-floating);
-    border: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
     border-color: var(--background-floating);
     border-style: solid;
 }
@@ -109,33 +110,20 @@ p {
     color: var(--header-primary);
     font-size: 1.5em;
     position: relative;
-    bottom: 20px;
     font-weight: bold;
-}
-.header2 {
-    color: var(--header-primary);
-    font-size: 1.5em;
-    position: relative;
-    bottom: 0px;
-    font-weight: bold;
-}
-.description2 {
-    position: relative;
-    color: white;
-    font-size: 1.2em;
-    font-weight: lighter;
-    bottom: 15px;
+    top: 15px;
+    margin: auto;
 }
 .description {
     position: relative;
     color: white;
     font-size: 1.2em;
     font-weight: lighter;
-    bottom: 40px;
 }
 .dropdown {
     position: relative;
     font-size: 25px;
+    margin-top: 20px;
 }
 .center {
     text-align: center;
@@ -175,6 +163,9 @@ button:active {
 #save {
     font-size: 15px;
 }
+.acAdvSettings {
+    height: 400px !important;
+}
 .tgl {
     display: none;
 }
@@ -186,6 +177,7 @@ button:active {
 .tgl *:before,
 .tgl + .tgl-btn {
     box-sizing: border-box;
+    margin-top: 20px;
 }
 .tgl::-moz-selection,
 .tgl:after::-moz-selection,
