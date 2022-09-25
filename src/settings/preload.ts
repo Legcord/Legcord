@@ -6,6 +6,8 @@ console.log("ArmCord Settings");
 
 contextBridge.exposeInMainWorld("settings", {
     save: (...args: any) => ipcRenderer.send("saveSettings", ...args),
+    restart: () => ipcRenderer.send("restart"),
+    saveAlert: (restartFunc: any) => ipcRenderer.send("saveAlert", restartFunc),
     getLang: (toGet: string) =>
         ipcRenderer.invoke("getLang", toGet).then((result) => {
             return result;
@@ -19,13 +21,6 @@ contextBridge.exposeInMainWorld("settings", {
     openStorageFolder: () => ipcRenderer.send("openStorageFolder"),
     copyDebugInfo: () => ipcRenderer.send("copyDebugInfo")
 });
-if (ipcRenderer.sendSync("getLangName") == "en-US") {
-    console.log("[Settings]: Lang " + ipcRenderer.sendSync("getLangName"));
-    const cssPath = path.join(__dirname, "../", "/content/css/settingsEng.css");
-    document.addEventListener("DOMContentLoaded", function (event) {
-        addStyle(fs.readFileSync(cssPath, "utf8"));
-    });
-}
 ipcRenderer.on("themeLoader", (event, message) => {
     addStyle(message);
 });

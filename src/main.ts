@@ -26,10 +26,10 @@ if (process.platform == "linux") {
 checkIfConfigExists();
 injectElectronFlags();
 app.whenReady().then(async () => {
-    if (await getConfig("customIcon") !== undefined ?? null) {
-        iconPath = await getConfig("customIcon")
+    if ((await getConfig("customIcon")) !== undefined ?? null) {
+        iconPath = await getConfig("customIcon");
     } else {
-        iconPath = path.join(__dirname, "../", "/assets/ac_icon_transparent.png")
+        iconPath = path.join(__dirname, "../", "/assets/ac_icon_transparent.png");
     }
     async function init() {
         switch (await getConfig("windowStyle")) {

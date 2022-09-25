@@ -4,15 +4,7 @@
 // I'm sorry for this mess but I'm not sure how to fix it.
 import {BrowserWindow, shell, app, dialog, nativeImage} from "electron";
 import path from "path";
-import {
-    checkIfConfigIsBroken,
-    firstRun,
-    getConfig,
-    contentPath,
-    setConfig,
-    setLang,
-    setWindowState
-} from "./utils";
+import {checkIfConfigIsBroken, firstRun, getConfig, contentPath, setConfig, setLang, setWindowState} from "./utils";
 import {registerIpc} from "./ipc";
 import {setMenu} from "./menu";
 import * as fs from "fs";
@@ -28,8 +20,25 @@ var osType = os.type();
 contextMenu({
     showSaveImageAs: true,
     showCopyImageAddress: true,
-    showSearchWithGoogle: true,
-    showSearchWithDuckDuckGo: true
+    showSearchWithGoogle: false,
+    prepend: (defaultActions, parameters, browserWindow) => [
+        {
+            label: "Search with Google",
+            // Only show it when right-clicking text
+            visible: parameters.selectionText.trim().length > 0,
+            click: () => {
+                shell.openExternal(`https://google.com/search?q=${encodeURIComponent(parameters.selectionText)}`);
+            }
+        },
+        {
+            label: "Search with DuckDuckGo",
+            // Only show it when right-clicking text
+            visible: parameters.selectionText.trim().length > 0,
+            click: () => {
+                shell.openExternal(`https://duckduckgo.com/?q=${encodeURIComponent(parameters.selectionText)}`);
+            }
+        }
+    ]
 });
 async function doAfterDefiningTheWindow() {
     var ignoreProtocolWarning = await getConfig("ignoreProtocolWarning");
@@ -87,7 +96,7 @@ async function doAfterDefiningTheWindow() {
         if (/api\/v\d\/science$/g.test(details.url)) return callback({cancel: true});
         return callback({});
     });
-    if (await getConfig("trayIcon") == "default") {
+    if ((await getConfig("trayIcon")) == "default") {
         mainWindow.webContents.on("page-favicon-updated", async (event) => {
             var faviconBase64 = await mainWindow.webContents.executeJavaScript(`
                 var getFavicon = function(){
@@ -103,13 +112,14 @@ async function doAfterDefiningTheWindow() {
                 return favicon;        
                 }
                 getFavicon()
-            `)
-            var buf = new Buffer(faviconBase64.replace(/^data:image\/\w+;base64,/, ""), 'base64');
+            `);
+            var buf = new Buffer(faviconBase64.replace(/^data:image\/\w+;base64,/, ""), "base64");
             fs.writeFileSync(path.join(app.getPath("temp"), "/", "tray.png"), buf, "utf-8");
             let trayPath = nativeImage.createFromPath(path.join(app.getPath("temp"), "/", "tray.png"));
-            if (process.platform === "darwin" && trayPath.getSize().height > 22) trayPath = trayPath.resize({height: 22});
-            tray.setImage(trayPath)
-        })
+            if (process.platform === "darwin" && trayPath.getSize().height > 22)
+                trayPath = trayPath.resize({height: 22});
+            tray.setImage(trayPath);
+        });
     }
     const userDataPath = app.getPath("userData");
     const themesFolder = userDataPath + "/themes/";
