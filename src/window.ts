@@ -54,7 +54,19 @@ async function doAfterDefiningTheWindow() {
         }
         mainWindow.webContents.userAgent = `Mozilla/5.0 (X11; ${osType} ${os.arch()}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36`; //fake useragent for screenshare to work
     }
+    const gotTheLock = app.requestSingleInstanceLock()
 
+    if (!gotTheLock) {
+    app.quit()
+    } else {
+    app.on('second-instance', (event, commandLine, workingDirectory) => {
+        // i love stack overflow
+        if (mainWindow) {
+        mainWindow.restore()
+        mainWindow.focus()
+        }
+    })
+    }
     mainWindow.webContents.setWindowOpenHandler(({url}) => {
         if (url.startsWith("https:" || url.startsWith("http:") || url.startsWith("mailto:"))) {
             shell.openExternal(url);
