@@ -52,5 +52,6 @@
     "settings-advanced": "️Advanced user zone",
     "settings-pluginsFolder": "Open plugins folder",
     "settings-themesFolder": "Open themes folder",
-    "settings-storageFolder": "Open storage folder"
+    "settings-storageFolder": "Open storage folder",
+    "settings-restart": "Restart App"
 }
