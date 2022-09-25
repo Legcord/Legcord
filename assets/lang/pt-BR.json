@@ -52,5 +52,6 @@
     "settings-advanced": "Área para usuários avançados",
     "settings-pluginsFolder": "Abrir pasta de plugins",
     "settings-themesFolder": "Abrir pasta de temas",
-    "settings-storageFolder": "Abrir pasta de armazenamento"
+    "settings-storageFolder": "Abrir pasta de armazenamento",
+    "settings-restart": "Restart App"
 }
