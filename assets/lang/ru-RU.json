@@ -52,5 +52,6 @@
     "settings-mod-desc4": "heavily work in progress, doesn't have a working UI.",
     "settings-trayIcon": "Tray icon",
     "settings-trayIcon-desc": "Set the icon which will appear in tray menu.",
-    "settings-advanced": "️Advanced user zone"
+    "settings-advanced": "️Advanced user zone",
+    "settings-restart": "Restart App"
 }
