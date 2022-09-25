@@ -52,5 +52,6 @@
     "settings-trayIcon": "Tray icon",
     "settings-trayIcon-desc": "Set the icon which will appear in tray menu.",
     "settings-advanced": "️Advanced user zone",
-    "settings-pluginsFolder": "Open plugins folder"
+    "settings-pluginsFolder": "Open plugins folder",
+    "settings-restart": "Restart App"
 }
