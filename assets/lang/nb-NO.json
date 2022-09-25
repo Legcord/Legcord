@@ -52,5 +52,6 @@
     "settings-advanced": "Sone for avanserte brukere",
     "settings-pluginsFolder": "Åpne programtilleggsmappen",
     "settings-themesFolder": "Åpne draktmappen",
-    "settings-storageFolder": "Åpne lagringsmappen"
+    "settings-storageFolder": "Åpne lagringsmappen",
+    "settings-restart": "Restart App"
 }
