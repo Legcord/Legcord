@@ -7,6 +7,7 @@
     "build": "tsc && copyfiles -u 1 src/**/*.html src/**/**/*.css ts-out/ && copyfiles package.json ts-out/ && copyfiles assets/**/** ts-out/",
     "watch": "tsc -w",
     "start": "npm run build && electron ./ts-out/main.js",
+    "startNoSandbox": "npm run build && electron ./ts-out/main.js --no-sandbox",
     "package": "npm run build && electron-builder",
     "packageQuick": "npm run build && electron-builder --dir",
     "format": "prettier --write src/**/*",

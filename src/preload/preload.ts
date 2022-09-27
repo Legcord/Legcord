@@ -4,7 +4,7 @@ import "./patch";
 import * as fs from "fs";
 import * as path from "path";
 import {injectHummusTitlebar, injectTitlebar} from "./titlebar";
-import {sleep, addStyle, injectJS, addScript} from "../utils";
+import {sleep, addStyle, injectJS} from "../utils";
 import {ipcRenderer} from "electron";
 import {injectMobileStuff} from "./mobile";
 var version = ipcRenderer.sendSync("displayVersion");
@@ -13,10 +13,9 @@ async function updateLang() {
     if (window.location.href.indexOf("setup.html") > -1) {
         console.log("Setup, skipping lang update");
     } else {
-        // addScript(`function getDiscordLang() {
-        //     {const _w=webpackChunkdiscord_app;let lang;_w.push([[Symbol()],{},e=>{for(const k in e.c){const m=e.c[k].exports;const mDef=m?.default&&m.__esModule?m.default:m;if(mDef?._chosenLocale&&!lang)lang=mDef}}]);_w.pop();window.armcord.setLang(lang._chosenLocale);return lang._chosenLocale;void 0}}
-        //     getDiscordLang();`);
-        // haha get patched kid
+        const value = `; ${document.cookie}`;
+        const parts: any = value.split(`; locale=`);
+        if (parts.length === 2) ipcRenderer.send("setLang", parts.pop().split(";").shift());
     }
 }
 declare global {
