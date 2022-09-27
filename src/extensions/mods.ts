@@ -21,15 +21,7 @@ const unstrictCSP = () => {
 
     const cspAllowAll = ["connect-src", "style-src", "img-src", "font-src"];
 
-    const corsAllowUrls = [
-        "https://github.com/GooseMod/GooseMod/releases/download/dev/index.js",
-        "https://github-releases.githubusercontent.com/",
-        "https://api.goosemod.com/inject.js",
-        "https://raw.githubusercontent.com/Cumcord/Cumcord/stable/dist/build.js",
-        "https://raw.githubusercontent.com/Cumcord/Cumcord/master/dist/build.js",
-        "https://raw.githubusercontent.com/FlickerMod/dist/main/build.js",
-        "https://raw.githubusercontent.com/Cordwood/builds/master/index.js"
-    ];
+    const corsAllowUrls = ["https://raw.githubusercontent.com/Cordwood/builds/master/index.js"];
 
     electron.session.defaultSession.webRequest.onHeadersReceived(({responseHeaders, url}, done) => {
         let csp = responseHeaders!["content-security-policy"];

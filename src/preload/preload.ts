@@ -13,9 +13,10 @@ async function updateLang() {
     if (window.location.href.indexOf("setup.html") > -1) {
         console.log("Setup, skipping lang update");
     } else {
-        addScript(`function getDiscordLang() {
-            {const _w=webpackChunkdiscord_app;let lang;_w.push([[Symbol()],{},e=>{for(const k in e.c){const m=e.c[k].exports;const mDef=m?.default&&m.__esModule?m.default:m;if(mDef?._chosenLocale&&!lang)lang=mDef}}]);_w.pop();window.armcord.setLang(lang._chosenLocale);return lang._chosenLocale;void 0}}
-            getDiscordLang();`);
+        // addScript(`function getDiscordLang() {
+        //     {const _w=webpackChunkdiscord_app;let lang;_w.push([[Symbol()],{},e=>{for(const k in e.c){const m=e.c[k].exports;const mDef=m?.default&&m.__esModule?m.default:m;if(mDef?._chosenLocale&&!lang)lang=mDef}}]);_w.pop();window.armcord.setLang(lang._chosenLocale);return lang._chosenLocale;void 0}}
+        //     getDiscordLang();`);
+        // haha get patched kid
     }
 }
 declare global {
@@ -25,8 +26,6 @@ declare global {
 }
 const clientMods = {
     goosemod: "https://api.goosemod.com/inject.js",
-    cumcord: "https://raw.githubusercontent.com/Cumcord/Cumcord/stable/dist/build.js",
-    flicker: "https://raw.githubusercontent.com/FlickerMod/dist/main/build.js",
     cordwood: "https://raw.githubusercontent.com/Cordwood/builds/master/index.js"
 };
 
@@ -55,16 +54,6 @@ if (window.location.href.indexOf("splash.html") > -1) {
             case "goosemod":
                 injectJS(clientMods.goosemod);
                 console.log("Loading GooseMod...");
-                await updateLang();
-                break;
-            case "cumcord":
-                injectJS(clientMods.cumcord);
-                console.log("Loading Cumcord...");
-                await updateLang();
-                break;
-            case "flicker":
-                injectJS(clientMods.flicker);
-                console.log("Loading FlickerMod...");
                 await updateLang();
                 break;
             case "cordwood":

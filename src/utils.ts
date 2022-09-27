@@ -40,7 +40,7 @@ export function setup() {
         minimizeToTray: true,
         automaticPatches: false,
         alternativePaste: false,
-        mods: "cumcord",
+        mods: "none",
         performanceMode: "none",
         skipSplash: false,
         inviteWebsocket: true,

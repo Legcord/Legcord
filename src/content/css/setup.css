@@ -111,7 +111,6 @@ div {
     width: 292px;
 }
 
-
 [armcord-platform="win32"] .titlebar #window-controls-container #maximize,
 [armcord-platform="linux"] .titlebar #window-controls-container #maximize {
     display: none;
