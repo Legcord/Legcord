@@ -34,6 +34,11 @@
 ### Recommended:
  Check releases tab for precompiled packages for Linux, Windows and Mac OS. Alternatively use our Sourceforge mirror.  
  <a href="https://sourceforge.net/projects/armcord/files/latest/download"><img alt="Download ArmCord" src="https://a.fsdn.com/con/app/sf-download-button" width=276 height=48 srcset="https://a.fsdn.com/con/app/sf-download-button?button_size=2x 2x"></a>
+### Winget Package
+ArmCord is also available on the [winget-pkgs](https://github.com/microsoft/winget-pkgs) repository:
+```
+winget install ArmCord.ArmCord
+```
 ### AUR Package
 ArmCord is also available on the Arch User Repository (AUR) [here](https://aur.archlinux.org/packages/armcord-bin/).
 
