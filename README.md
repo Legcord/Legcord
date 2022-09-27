@@ -39,6 +39,14 @@ ArmCord is also available on the [winget-pkgs](https://github.com/microsoft/wing
 ```
 winget install ArmCord.ArmCord
 ```
+### Scoop package
+ArmCord is also available on [Scoop extras](https://github.com/ScoopInstaller/Extras) repo:
+```
+scoop bucket add extras
+```
+```
+scoop install armcord
+```
 ### AUR Package
 ArmCord is also available on the Arch User Repository (AUR) [here](https://aur.archlinux.org/packages/armcord-bin/).
 
