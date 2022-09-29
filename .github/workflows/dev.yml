@@ -17,7 +17,7 @@ jobs:
                 node-version: '18'
 
             - name: Checkout code
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
 
             - name: Install Node dependencies
               run: npm install
@@ -51,7 +51,7 @@ jobs:
                 node-version: '18'
 
             - name: Checkout code
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
 
             - name: Install Node dependencies
               run: npm install
@@ -82,7 +82,7 @@ jobs:
                 node-version: '18'
 
             - name: Checkout code
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
 
             - name: Install Node dependencies
               run: npm install
@@ -109,7 +109,7 @@ jobs:
 
         steps:
             - name: Checkout code
-              uses: actions/checkout@v2
+              uses: actions/checkout@v3
 
             - uses: actions/download-artifact@v2
               with:
