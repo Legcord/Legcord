@@ -32,7 +32,7 @@
     "settings-channel-desc4": "public test build. Receives features earlier than stable but is a bit older than Canary.",
     "settings-altPaste": "Alternative Paste",
     "settings-storageFolder": "Open storage folder",
-    "settings-theme-desc2": "this is how ArmCord looks when you first launch it. It includes recreation of Discord's\n                custom titlebar and ArmCord specific styles injected into Discord.",
+    "settings-theme-desc2": "voilà à quoi ressemble ArmCord quand vous le lancez pour la première fois. Cela inclu une reconstitution de la barre de titre de Discord, ainsi que le style spécifique de ArmCord administré sur Discord",
     "settings-theme-desc3": "uses native titlebar of OS you're currently running (e.g Windows 7/10). Functions more\n                similar to actual Discord app on Linux.",
     "settings-csp-desc": "ArmCord CSP is our system that manages loading custom content loading into the Discord app. Stuff like\n                client mods and themes depend on it. Disable if you want to get rid of mods and custom styles.",
     "settings-tray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later.",
