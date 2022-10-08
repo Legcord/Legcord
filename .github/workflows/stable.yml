@@ -20,7 +20,7 @@ jobs:
               uses: actions/checkout@v2
 
             - name: Install pnpm
-              run: npm i -g pnpm
+              run: npm i -g pnpm && pnpm setup
 
             - name: Install Node dependencies
               run: pnpm install -g cargo-cp-artifact && pnpm install
@@ -55,7 +55,7 @@ jobs:
               uses: actions/checkout@v2
 
             - name: Install pnpm
-              run: npm i -g pnpm
+              run: npm i -g pnpm && pnpm setup
 
             - name: Install Node dependencies
               run: pnpm install -g cargo-cp-artifact && pnpm install
@@ -90,7 +90,7 @@ jobs:
               uses: actions/checkout@v2
 
             - name: Install pnpm
-              run: npm i -g pnpm
+              run: npm i -g pnpm && pnpm setup
 
             - name: Install Node dependencies
               run: pnpm install -g cargo-cp-artifact && pnpm install
