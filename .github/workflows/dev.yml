@@ -23,7 +23,7 @@ jobs:
               run: npm i -g pnpm
 
             - name: Install Node dependencies
-              run: pnpm install
+              run: pnpm install -g cargo-cp-artifact && pnpm install
 
             - name: Install Electron-Builder
               run: pnpm install -g electron-builder
@@ -60,7 +60,7 @@ jobs:
               run: npm i -g pnpm
 
             - name: Install Node dependencies
-              run: pnpm install
+              run: pnpm install -g cargo-cp-artifact && pnpm install
 
             - name: Install Electron-Builder
               run: pnpm install -g electron-builder
@@ -97,7 +97,7 @@ jobs:
               run: pnpm install
 
             - name: Install Electron-Builder
-              run: pnpm install -g electron-builder
+              run: pnpm install -g cargo-cp-artifact && pnpm install
 
             - name: Replace the version number
               run: (Get-Content src/utils.ts) -replace "\d\.\d\.\d", "DEV" | Out-File src/utils.ts
