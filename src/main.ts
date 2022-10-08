@@ -5,7 +5,7 @@ import {getConfig, checkIfConfigExists, injectElectronFlags} from "./utils";
 import "./extensions/mods";
 import "./extensions/plugin";
 import "./tray";
-import {createCustomWindow, createNativeWindow} from "./window";
+import {createCustomWindow, createNativeWindow, createTransparentWindow} from "./window";
 import path from "path";
 export var iconPath: string;
 export var settings: any;
@@ -39,6 +39,9 @@ app.whenReady().then(async () => {
                 break;
             case "native":
                 createNativeWindow();
+                break;
+            case "transparent":
+                createTransparentWindow();
                 break;
             case "basic":
                 createNativeWindow();

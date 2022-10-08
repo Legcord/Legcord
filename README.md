@@ -64,9 +64,9 @@ ArmCord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).
 
 
 ### Compiling:
- Alternatively you can run ArmCord from source (NodeJS and npm required):    
+ Alternatively you can run ArmCord from source (NodeJS and pnpm required):    
  1. Clone ArmCord repo: `git clone https://github.com/ArmCord/ArmCord.git`    
- 2. Run `npm install` to install dependencies   
+ 2. Run `pnpm install` to install dependencies   
  3. Build with `npm run build`   
  4. Compile/Package with `npm run package`    
 

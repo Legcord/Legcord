@@ -4,7 +4,16 @@
 // I'm sorry for this mess but I'm not sure how to fix it.
 import {BrowserWindow, shell, app, dialog, nativeImage} from "electron";
 import path from "path";
-import {checkIfConfigIsBroken, firstRun, getConfig, contentPath, setConfig, setLang, setWindowState} from "./utils";
+import {
+    checkIfConfigIsBroken,
+    firstRun,
+    getConfig,
+    contentPath,
+    setConfig,
+    setLang,
+    setWindowState,
+    transparency
+} from "./utils";
 import {registerIpc} from "./ipc";
 import {setMenu} from "./menu";
 import * as fs from "fs";
@@ -12,6 +21,7 @@ import startServer from "./socket";
 import contextMenu from "electron-context-menu";
 import os from "os";
 import {tray} from "./tray";
+import vibe from "@pyke/vibe";
 import {iconPath} from "./main";
 export let mainWindow: BrowserWindow;
 export let inviteWindow: BrowserWindow;
@@ -41,6 +51,11 @@ contextMenu({
     ]
 });
 async function doAfterDefiningTheWindow() {
+    if (transparency) {
+        vibe.applyEffect(mainWindow, "acrylic");
+        vibe.setDarkMode(mainWindow);
+        mainWindow.show();
+    }
     var ignoreProtocolWarning = await getConfig("ignoreProtocolWarning");
     await checkIfConfigIsBroken();
     registerIpc();
@@ -54,18 +69,18 @@ async function doAfterDefiningTheWindow() {
         }
         mainWindow.webContents.userAgent = `Mozilla/5.0 (X11; ${osType} ${os.arch()}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36`; //fake useragent for screenshare to work
     }
-    const gotTheLock = app.requestSingleInstanceLock()
+    const gotTheLock = app.requestSingleInstanceLock();
 
     if (!gotTheLock) {
-    app.quit()
+        app.quit();
     } else {
-    app.on('second-instance', (event, commandLine, workingDirectory) => {
-        // i love stack overflow
-        if (mainWindow) {
-        mainWindow.restore()
-        mainWindow.focus()
-        }
-    })
+        app.on("second-instance", (event, commandLine, workingDirectory) => {
+            // i love stack overflow
+            if (mainWindow) {
+                mainWindow.restore();
+                mainWindow.focus();
+            }
+        });
     }
     mainWindow.webContents.setWindowOpenHandler(({url}) => {
         if (url.startsWith("https:" || url.startsWith("http:") || url.startsWith("mailto:"))) {
@@ -252,7 +267,25 @@ export function createNativeWindow() {
     });
     doAfterDefiningTheWindow();
 }
-
+export function createTransparentWindow() {
+    mainWindow = new BrowserWindow({
+        width: 300,
+        height: 350,
+        title: "ArmCord",
+        darkTheme: true,
+        icon: iconPath,
+        frame: true,
+        backgroundColor: "#00000000",
+        show: false,
+        autoHideMenuBar: true,
+        webPreferences: {
+            sandbox: false,
+            preload: path.join(__dirname, "preload/preload.js"),
+            spellcheck: true
+        }
+    });
+    doAfterDefiningTheWindow();
+}
 export function createInviteWindow() {
     inviteWindow = new BrowserWindow({
         width: 800,

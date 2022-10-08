@@ -19,11 +19,14 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v2
 
+            - name: Install pnpm
+              run: npm i -g pnpm
+
             - name: Install Node dependencies
-              run: npm install
+              run: pnpm install
 
             - name: Install Electron-Builder
-              run: npm install -g electron-builder
+              run: pnpm install -g electron-builder
 
             - name: Replace the version number
               run: cat src/utils.ts | sed -e 's/[[:digit:]]\.[[:digit:]]\.[[:digit:]]/DEV/g' | tee src/utils.ts > /dev/null
@@ -53,11 +56,14 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v2
 
+            - name: Install pnpm
+              run: npm i -g pnpm
+
             - name: Install Node dependencies
-              run: npm install
-              
+              run: pnpm install
+
             - name: Install Electron-Builder
-              run: npm install -g electron-builder
+              run: pnpm install -g electron-builder
 
             - name: Replace the version number
               run: cat src/utils.ts | sed -e 's/[[:digit:]]\.[[:digit:]]\.[[:digit:]]/DEV/g' | tee src/utils.ts > /dev/null
@@ -84,11 +90,14 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v2
 
+            - name: Install pnpm
+              run: npm i -g pnpm
+
             - name: Install Node dependencies
-              run: npm install
-              
+              run: pnpm install
+
             - name: Install Electron-Builder
-              run: npm install -g electron-builder
+              run: pnpm install -g electron-builder
 
             - name: Replace the version number
               run: (Get-Content src/utils.ts) -replace "\d\.\d\.\d", "DEV" | Out-File src/utils.ts

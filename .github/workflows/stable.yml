@@ -19,11 +19,14 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v2
 
+            - name: Install pnpm
+              run: npm i -g pnpm
+
             - name: Install Node dependencies
-              run: npm install
+              run: pnpm install
 
             - name: Install Electron-Builder
-              run: npm install -g electron-builder
+              run: pnpm install -g electron-builder
 
             - name: Build
               run: npm run build && electron-builder --linux && electron-builder --arm64 --linux && electron-builder --armv7l --linux
@@ -51,11 +54,14 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v2
 
+            - name: Install pnpm
+              run: npm i -g pnpm
+
             - name: Install Node dependencies
-              run: npm install
-              
+              run: pnpm install
+
             - name: Install Electron-Builder
-              run: npm install -g electron-builder
+              run: pnpm install -g electron-builder
 
             - name: Build
               run: npm run build && electron-builder --macos
@@ -83,11 +89,14 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v2
 
+            - name: Install pnpm
+              run: npm i -g pnpm
+
             - name: Install Node dependencies
-              run: npm install
-              
+              run: pnpm install
+
             - name: Install Electron-Builder
-              run: npm install -g electron-builder
+              run: pnpm install -g electron-builder
 
             - name: Build
               run: npm run build && electron-builder --windows

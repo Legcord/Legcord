@@ -20,9 +20,8 @@ app.whenReady().then(async () => {
         }
     };
 
-    if (process.platform == "darwin" && trayPath.getSize().height > 22) 
-        trayPath = trayPath.resize({height: 22});
-    
+    if (process.platform == "darwin" && trayPath.getSize().height > 22) trayPath = trayPath.resize({height: 22});
+
     if ((await getConfig("windowStyle")) == "basic") {
         var clientName = (await getConfig("clientName")) ?? "ArmCord";
         tray = new Tray(trayPath);
@@ -32,13 +31,13 @@ app.whenReady().then(async () => {
                     {
                         label: `Finish the setup first!`,
                         enabled: false
-                    }, {
+                    },
+                    {
                         label: `Quit ${clientName}`,
                         click: async function () {
                             fs.unlink(await getConfigLocation(), (err) => {
-                                if (err) 
-                                    throw err;
-                                
+                                if (err) throw err;
+
                                 console.log('Closed during setup. "settings.json" was deleted');
                                 app.quit();
                             });
@@ -52,7 +51,8 @@ app.whenReady().then(async () => {
                         click: function () {
                             mainWindow.show();
                         }
-                    }, {
+                    },
+                    {
                         label: `Quit ${clientName}`,
                         click: function () {
                             let [width, height] = mainWindow.getSize();
@@ -74,13 +74,13 @@ app.whenReady().then(async () => {
                 {
                     label: `Finish the setup first!`,
                     enabled: false
-                }, {
+                },
+                {
                     label: `Quit ${clientName}`,
                     click: async function () {
                         fs.unlink(await getConfigLocation(), (err) => {
-                            if (err) 
-                                throw err;
-                            
+                            if (err) throw err;
+
                             console.log('Closed during setup. "settings.json" was deleted');
                             app.quit();
                         });
@@ -109,15 +109,18 @@ app.whenReady().then(async () => {
                     click: function () {
                         createSettingsWindow();
                     }
-                }, {
+                },
+                {
                     label: "Support Discord Server",
                     click: function () {
                         mainWindow.show();
                         mainWindow.loadURL("https://discord.gg/TnhxcqynZ2");
                     }
-                }, {
+                },
+                {
                     type: "separator"
-                }, {
+                },
+                {
                     label: `Quit ${clientName}`,
                     click: function () {
                         app.quit();
@@ -126,7 +129,8 @@ app.whenReady().then(async () => {
             ]);
             tray.setContextMenu(contextMenu);
         }
-    } tray.setToolTip(clientName);
+    }
+    tray.setToolTip(clientName);
     tray.on("click", function () {
         mainWindow.show();
     });
