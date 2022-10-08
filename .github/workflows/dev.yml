@@ -19,8 +19,11 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v2
 
+            - name: Install bash
+              run: sudo apt install -y bash
+
             - name: Install pnpm
-              run: npm i -g pnpm && pnpm setup
+              run: npm i -g pnpm && /bin/bash pnpm setup
 
             - name: Install Node dependencies
               run: pnpm install -g cargo-cp-artifact && pnpm install
@@ -57,7 +60,7 @@ jobs:
               uses: actions/checkout@v2
 
             - name: Install pnpm
-              run: npm i -g pnpm && pnpm setup
+              run: npm i -g pnpm && pnpm setup && source /Users/runner/.bashrc
 
             - name: Install Node dependencies
               run: pnpm install -g cargo-cp-artifact && pnpm install
@@ -91,7 +94,7 @@ jobs:
               uses: actions/checkout@v2
 
             - name: Install pnpm
-              run: npm i -g pnpm && pnpm setup
+              run: npm i -g pnpm && pnpm setup && powershell
 
             - name: Install Node dependencies
               run: pnpm install
