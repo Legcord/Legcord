@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@pyke/vibe': ^0.3.0
+  '@pyke/vibe': ^0.3.1
   '@types/node': ^17.0.42
   '@types/ws': ^8.5.3
   chalk-cli: ^5.0.0
@@ -17,7 +17,7 @@ specifiers:
   ws: ^8.8.0
 
 dependencies:
-  '@pyke/vibe': 0.3.0_electron@20.3.1
+  '@pyke/vibe': 0.3.1_electron@20.3.1
   electron-context-menu: github.com/ArmCord/electron-context-menu/280c81398c02a063f46e3285a9708d8db1a7ce32
   os-locale: 6.0.2
   v8-compile-cache: 2.3.0
@@ -120,13 +120,13 @@ packages:
       - supports-color
     dev: true
 
-  /@pyke/vibe/0.3.0_electron@20.3.1:
-    resolution: {integrity: sha512-BuW7szBpTcrVppRufv3fJ9jMyrTculBUG2xWuc5BKOIEZc3I47Bc3CV4+/7Eycj86Exdxi+ZYGNZC6C8XrfIFg==}
-    os: [win32]
+  /@pyke/vibe/0.3.1_electron@20.3.1:
+    resolution: {integrity: sha512-qgYtiN3cjJUdzBPHYXHILLiug//g1QXw7jLtDCi6HqCPxeIcn8zMslGlAAwS5i9e14UrHaSTUWkLEFEhWidfeQ==}
     requiresBuild: true
     peerDependencies:
       electron: '>=11.0'
     dependencies:
+      cargo-cp-artifact: 0.1.6
       electron: 20.3.1
     dev: false
 
@@ -505,6 +505,11 @@ packages:
     resolution: {integrity: sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==}
     engines: {node: '>=10'}
     dev: true
+
+  /cargo-cp-artifact/0.1.6:
+    resolution: {integrity: sha512-CQw0doK/aaF7j041666XzuilHxqMxaKkn+I5vmBsd8SAwS0cO5CqVEVp0xJwOKstyqWZ6WK4Ww3O6p26x/Goyg==}
+    hasBin: true
+    dev: false
 
   /chalk-cli/5.0.0:
     resolution: {integrity: sha512-b0TQHOxLsDYV1u00VLsQU+LHxvn7zHpF3YBdbDq6sCfMFEckE0dySV6i8V4U8m2X+aKRX+olpUv424Cq1WcCRQ==}
