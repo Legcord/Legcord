@@ -72,5 +72,6 @@
         "AppImage"
       ]
     }
-  }
+  },
+  "packageManager": "pnpm@7.13.4"
 }
