@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/armcord/armcord#readme",
   "devDependencies": {
-    "@types/node": "^17.0.42",
+    "@types/node": "^18.8.4",
     "@types/ws": "^8.5.3",
     "chalk-cli": "^5.0.0",
     "copyfiles": "^2.4.1",
