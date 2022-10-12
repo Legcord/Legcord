@@ -21,7 +21,6 @@ import startServer from "./socket";
 import contextMenu from "electron-context-menu";
 import os from "os";
 import {tray} from "./tray";
-import vibe from "@pyke/vibe";
 import {iconPath} from "./main";
 export let mainWindow: BrowserWindow;
 export let inviteWindow: BrowserWindow;
@@ -51,10 +50,12 @@ contextMenu({
     ]
 });
 async function doAfterDefiningTheWindow() {
-    if (transparency) {
-        vibe.applyEffect(mainWindow, "acrylic");
-        vibe.setDarkMode(mainWindow);
-        mainWindow.show();
+    if (transparency && process.platform === "win32") {
+        import("@pyke/vibe").then(vibe => {
+            vibe.applyEffect(mainWindow, "acrylic");
+            vibe.setDarkMode(mainWindow);
+            mainWindow.show();
+        });    
     }
     var ignoreProtocolWarning = await getConfig("ignoreProtocolWarning");
     await checkIfConfigIsBroken();

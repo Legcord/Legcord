@@ -1,7 +1,6 @@
 import * as fs from "fs";
 import {app, dialog} from "electron";
 import path from "path";
-import vibe from "@pyke/vibe";
 export var firstRun: boolean;
 export var contentPath: string;
 export var transparency: boolean;
@@ -120,10 +119,12 @@ export async function injectElectronFlags() {
         default:
             console.log("No performance modes set");
     }
-    if ((await getConfig("windowStyle")) == "transparent") {
-        console.log("Transparent mode enabled");
-        vibe.setup(app);
-        transparency = true;
+    if ((await getConfig("windowStyle")) == "transparent" && process.platform === "win32") {
+        import("@pyke/vibe").then(vibe => {
+            console.log("Transparent mode enabled");
+            vibe.setup(app);
+            transparency = true;
+        });
     }
 }
 export async function setLang(language: string) {
