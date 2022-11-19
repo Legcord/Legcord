@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@pyke/vibe': ^0.3.1
+  '@pyke/vibe': github:pykeio/vibe
   '@types/node': ^17.0.42
   '@types/node-fetch': ^2.6.2
   '@types/ws': ^8.5.3
@@ -20,7 +20,7 @@ specifiers:
   ws: ^8.8.0
 
 dependencies:
-  '@pyke/vibe': 0.3.1_electron@20.3.1
+  '@pyke/vibe': github.com/pykeio/vibe/11984868ce9e007859ed91ff159c7f7f0a34e7ae_electron@20.3.1
   electron-context-menu: github.com/ArmCord/electron-context-menu/280c81398c02a063f46e3285a9708d8db1a7ce32
   extract-zip: 2.0.1
   node-fetch: 2.6.7
@@ -125,16 +125,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
-
-  /@pyke/vibe/0.3.1_electron@20.3.1:
-    resolution: {integrity: sha512-qgYtiN3cjJUdzBPHYXHILLiug//g1QXw7jLtDCi6HqCPxeIcn8zMslGlAAwS5i9e14UrHaSTUWkLEFEhWidfeQ==}
-    requiresBuild: true
-    peerDependencies:
-      electron: '>=11.0'
-    dependencies:
-      cargo-cp-artifact: 0.1.6
-      electron: 20.3.1
-    dev: false
 
   /@sindresorhus/is/0.14.0:
     resolution: {integrity: sha512-9NET910DNaIPngYnLLPeg+Ogzqsi9uM4mSboU5y6p8S5DzMTVEsJZrawi+BoDNUVBa2DhJqQYUFvMDfgU062LQ==}
@@ -2285,4 +2275,17 @@ packages:
       cli-truncate: 2.1.0
       electron-dl: 3.3.1
       electron-is-dev: 2.0.0
+    dev: false
+
+  github.com/pykeio/vibe/11984868ce9e007859ed91ff159c7f7f0a34e7ae_electron@20.3.1:
+    resolution: {tarball: https://codeload.github.com/pykeio/vibe/tar.gz/11984868ce9e007859ed91ff159c7f7f0a34e7ae}
+    id: github.com/pykeio/vibe/11984868ce9e007859ed91ff159c7f7f0a34e7ae
+    name: '@pyke/vibe'
+    version: 0.3.1
+    requiresBuild: true
+    peerDependencies:
+      electron: '>=11.0'
+    dependencies:
+      cargo-cp-artifact: 0.1.6
+      electron: 20.3.1
     dev: false
