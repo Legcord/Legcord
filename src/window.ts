@@ -55,7 +55,7 @@ async function doAfterDefiningTheWindow() {
             vibe.applyEffect(mainWindow, "acrylic");
             vibe.setDarkMode(mainWindow);
             mainWindow.show();
-        });    
+        });
     }
     var ignoreProtocolWarning = await getConfig("ignoreProtocolWarning");
     await checkIfConfigIsBroken();
@@ -84,6 +84,9 @@ async function doAfterDefiningTheWindow() {
         });
     }
     mainWindow.webContents.setWindowOpenHandler(({url}) => {
+        // Allow about:blank (used by Vencord QuickCss popup)
+        if (url === "about:blank") return { action: "allow" };
+
         if (url.startsWith("https:" || url.startsWith("http:") || url.startsWith("mailto:"))) {
             shell.openExternal(url);
         } else {
@@ -137,7 +140,7 @@ async function doAfterDefiningTheWindow() {
                         favicon = nodeList[i].getAttribute("href");
                     }
                 }
-                return favicon;        
+                return favicon;
                 }
                 getFavicon()
             `);
