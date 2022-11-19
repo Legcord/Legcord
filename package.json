@@ -43,6 +43,7 @@
     "electron-context-menu": "github:ArmCord/electron-context-menu",
     "extract-zip": "^2.0.1",
     "node-fetch": "v2",
+    "arrpc": "file:./src/arrpc",
     "os-locale": "^6.0.2",
     "v8-compile-cache": "^2.3.0",
     "ws": "^8.8.0"

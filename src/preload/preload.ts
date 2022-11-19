@@ -5,7 +5,7 @@ import "./patch";
 import * as fs from "fs";
 import * as path from "path";
 import {injectHummusTitlebar, injectTitlebar} from "./titlebar";
-import {sleep, addStyle} from "../utils";
+import {sleep, addStyle, addScript} from "../utils";
 import {injectMobileStuff} from "./mobile";
 var version = ipcRenderer.sendSync("displayVersion");
 var channel = ipcRenderer.sendSync("channel");
@@ -42,6 +42,41 @@ if (window.location.href.indexOf("splash.html") > -1) {
         injectMobileStuff();
     }
     sleep(5000).then(async () => {
+        addScript(`
+        const dispatch = (() => {
+            let Dispatcher;
+          
+            return function (event) {
+              Dispatcher ??= window.Vencord?.Webpack.Common.FluxDispatcher
+              if (!Dispatcher) {
+                const cache = webpackChunkdiscord_app.push([[Symbol()], {}, w => w]).c;
+                webpackChunkdiscord_app.pop()
+          
+                outer:
+                for (const id in cache) {
+                  const mod = cache[id].exports;
+                  for (const exp in mod) {
+                    if (mod[exp]?.isDispatching) {
+                      Dispatcher = mod[exp];
+                      break outer;
+                    }
+                  }
+                }
+              }
+              if (!Dispatcher) 
+                return; // failed to find, your choice if and how u wanna handle this
+          
+              return Dispatcher.dispatch(event);
+            };
+          })();
+          const ws = new WebSocket('ws://localhost:1337'); // connect to arRPC bridge
+          ws.onmessage = x => {
+            msg = JSON.parse(x.data);
+            console.log(msg);
+          
+            dispatch({ type: "LOCAL_ACTIVITY_UPDATE", ...msg }); // set RPC status
+          };
+        `);
         const cssPath = path.join(__dirname, "../", "/content/css/discord.css");
         addStyle(fs.readFileSync(cssPath, "utf8"));
         await updateLang();

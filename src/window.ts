@@ -205,7 +205,9 @@ async function doAfterDefiningTheWindow() {
     });
     console.log(contentPath);
     if ((await getConfig("inviteWebsocket")) == true) {
-        await startServer();
+        //@ts-ignore
+        import("arrpc")
+        //await startServer();
     }
     if (firstRun) {
         await setLang(Intl.DateTimeFormat().resolvedOptions().locale);

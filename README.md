@@ -13,7 +13,7 @@
 
 - **Various mods built in**
  
-   Enjoy Cumcord, GooseMod, Flicker, and their many features, or have a more vanilla experience, it's your choice!
+   Enjoy Vencord, Shelter and their many features, or have a more vanilla experience, it's your choice!
 
 
 - **Made for Privacy™**
