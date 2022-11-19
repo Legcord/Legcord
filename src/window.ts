@@ -53,7 +53,7 @@ async function doAfterDefiningTheWindow() {
     if (transparency && process.platform === "win32") {
         import("@pyke/vibe").then(vibe => {
             vibe.applyEffect(mainWindow, "acrylic");
-            vibe.setDarkMode(mainWindow);
+            vibe.forceTheme(mainWindow, 'dark');
             mainWindow.show();
         });
     }

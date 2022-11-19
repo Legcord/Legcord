@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@pyke/vibe': github:pykeio/vibe
+  '@pyke/vibe': github:pykeio/vibe#11984868ce9e007859ed91ff159c7f7f0a34e7ae
   '@types/node': ^17.0.42
   '@types/node-fetch': ^2.6.2
   '@types/ws': ^8.5.3

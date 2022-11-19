@@ -39,7 +39,7 @@
     "typescript": "^4.7.3"
   },
   "dependencies": {
-    "@pyke/vibe": "github:pykeio/vibe",
+    "@pyke/vibe": "github:pykeio/vibe#11984868ce9e007859ed91ff159c7f7f0a34e7ae",
     "electron-context-menu": "github:ArmCord/electron-context-menu",
     "extract-zip": "^2.0.1",
     "node-fetch": "v2",
