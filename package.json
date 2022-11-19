@@ -40,12 +40,13 @@
   },
   "dependencies": {
     "@pyke/vibe": "github:pykeio/vibe#11984868ce9e007859ed91ff159c7f7f0a34e7ae",
+    "arrpc": "file:./src/arrpc",
     "electron-context-menu": "github:ArmCord/electron-context-menu",
     "extract-zip": "^2.0.1",
     "node-fetch": "v2",
-    "arrpc": "file:./src/arrpc",
     "os-locale": "^6.0.2",
     "v8-compile-cache": "^2.3.0",
+    "whatwg-url": "^11.0.0",
     "ws": "^8.8.0"
   },
   "build": {
