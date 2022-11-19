@@ -12,7 +12,7 @@ app.whenReady().then(() => {
             const manifest = fs.readFileSync(`${userDataPath}/plugins/${file}/manifest.json`, "utf8");
             var pluginFile = JSON.parse(manifest);
             session.defaultSession.loadExtension(`${userDataPath}/plugins/${file}`);
-            console.log(`%cLoaded ${pluginFile.name} made by ${pluginFile.author}`, "color:red");
+            console.log(`[Mod loader] Loaded ${pluginFile.name} made by ${pluginFile.author}`);
         } catch (err) {
             console.error(err);
         }

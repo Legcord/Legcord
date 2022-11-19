@@ -12,7 +12,7 @@ import {
     setConfig,
     setLang,
     setWindowState,
-    transparency
+    transparency,
 } from "./utils";
 import {registerIpc} from "./ipc";
 import {setMenu} from "./menu";

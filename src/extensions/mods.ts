@@ -21,7 +21,11 @@ const unstrictCSP = () => {
 
     const cspAllowAll = ["connect-src", "style-src", "img-src", "font-src"];
 
-    const corsAllowUrls = ["https://raw.githubusercontent.com/Cordwood/builds/master/index.js"];
+    const corsAllowUrls = [
+        "https://raw.githubusercontent.com/Cordwood/builds/master/index.js",
+        "https://github.com/Vendicated/Vencord/releases/download/devbuild/browser.js",
+        "https://cors.armcord.xyz/raw.githubusercontent.com/uwu/shelter-builds/main/shelter.js"
+    ];
 
     electron.session.defaultSession.webRequest.onHeadersReceived(({responseHeaders, url}, done) => {
         let csp = responseHeaders!["content-security-policy"];

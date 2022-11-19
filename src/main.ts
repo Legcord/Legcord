@@ -1,11 +1,10 @@
 // Modules to control application life and create native browser window
 import {app, BrowserWindow, session} from "electron";
 import "v8-compile-cache";
-import {getConfig, checkIfConfigExists, injectElectronFlags} from "./utils";
+import {getConfig, checkIfConfigExists, injectElectronFlags, installModLoader} from "./utils";
 import "./extensions/mods";
-import "./extensions/plugin";
 import "./tray";
-import {createCustomWindow, createNativeWindow, createTransparentWindow} from "./window";
+import {createCustomWindow, createNativeWindow, createTransparentWindow, mainWindow} from "./window";
 import path from "path";
 export var iconPath: string;
 export var settings: any;
@@ -53,6 +52,7 @@ app.whenReady().then(async () => {
         }
     }
     await init();
+    await installModLoader()
     session.fromPartition("some-partition").setPermissionRequestHandler((webContents, permission, callback) => {
         if (permission === "notifications") {
             // Approves the permissions request

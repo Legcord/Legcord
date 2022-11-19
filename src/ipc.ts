@@ -9,11 +9,14 @@ import {
     getLang,
     getWindowState,
     packageVersion,
-    getDisplayVersion
+    getDisplayVersion,
+    modInstallState,
+    installModLoader
 } from "./utils";
 import {customTitlebar} from "./main";
 import {createSettingsWindow} from "./settings/main";
 import os from "os";
+import fs from "fs"
 import path from "path";
 export function registerIpc() {
     ipcMain.on("get-app-path", (event, arg) => {
@@ -72,6 +75,9 @@ export function registerIpc() {
     });
     ipcMain.on("displayVersion", (event) => {
         event.returnValue = getDisplayVersion();
+    });
+    ipcMain.on("modInstallState", (event) => {
+        event.returnValue = modInstallState;
     });
     ipcMain.on("get-package-version", (event) => {
         event.returnValue = packageVersion;

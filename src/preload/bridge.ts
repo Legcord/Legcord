@@ -22,6 +22,7 @@ contextBridge.exposeInMainWorld("armcord", {
             return result;
         }),
     version: ipcRenderer.sendSync("get-app-version", "app-version"),
+    mods: ipcRenderer.sendSync("clientmod"),
     packageVersion: ipcRenderer.sendSync("get-package-version", "app-version"),
     getDisplayMediaSelector: getDisplayMediaSelector,
     splashEnd: () => ipcRenderer.send("splashEnd"),
@@ -31,6 +32,7 @@ contextBridge.exposeInMainWorld("armcord", {
 if (window.location.href.indexOf("splash.html") > -1 || window.location.href.indexOf("setup.html") > -1) {
     contextBridge.exposeInMainWorld("armcordinternal", {
         restart: () => ipcRenderer.send("restart"),
+        installState: ipcRenderer.sendSync("modInstallState"),
         saveSettings: (...args: any) => ipcRenderer.send("saveSettings", ...args)
     });
 }

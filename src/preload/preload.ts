@@ -1,11 +1,11 @@
+import {ipcRenderer} from "electron";
 import "./bridge";
 import "./capturer";
 import "./patch";
 import * as fs from "fs";
 import * as path from "path";
 import {injectHummusTitlebar, injectTitlebar} from "./titlebar";
-import {sleep, addStyle, injectJS} from "../utils";
-import {ipcRenderer} from "electron";
+import {sleep, addStyle} from "../utils";
 import {injectMobileStuff} from "./mobile";
 var version = ipcRenderer.sendSync("displayVersion");
 var channel = ipcRenderer.sendSync("channel");
@@ -23,10 +23,6 @@ declare global {
         armcord: any;
     }
 }
-const clientMods = {
-    goosemod: "https://api.goosemod.com/inject.js",
-    cordwood: "https://raw.githubusercontent.com/Cordwood/builds/master/index.js"
-};
 
 console.log("ArmCord " + version);
 ipcRenderer.on("themeLoader", (event, message) => {
@@ -48,19 +44,7 @@ if (window.location.href.indexOf("splash.html") > -1) {
     sleep(5000).then(async () => {
         const cssPath = path.join(__dirname, "../", "/content/css/discord.css");
         addStyle(fs.readFileSync(cssPath, "utf8"));
-
-        switch (ipcRenderer.sendSync("clientmod")) {
-            case "goosemod":
-                injectJS(clientMods.goosemod);
-                console.log("Loading GooseMod...");
-                await updateLang();
-                break;
-            case "cordwood":
-                injectJS(clientMods.cordwood);
-                console.log("Loading Cordwood...");
-                await updateLang();
-                break;
-        }
+        await updateLang();
     });
 }
 /*

@@ -47,6 +47,25 @@
                         console.log("ArmCord is up to date.");
                     }
                 }
+
+                function check() {
+                    if (armcordinternal.installState === "installing") {
+                        text.innerHTML = "Installing mods";
+                    } else if (armcordinternal.installState === "done") {
+                        return true;
+                    } else if (armcordinternal.installState === "modDownload") {
+                        text.innerHTML = "Updating " + armcord.mods;
+                    } else if (armcordinternal.installState === "none") {
+                        text.innerHTML = "Nothing to install. Starting ArmCord";
+                        return true;
+                    } else {
+                        return true;
+                    }
+                }
+
+                while (check() == false) {
+                    console.log("Installing");
+                }
                 setTimeout(() => {
                     window.armcord.splashEnd();
                     switch (window.armcord.channel) {
@@ -68,7 +87,7 @@
                         default:
                             window.location.replace("https://discord.com/app");
                     }
-                }, 5000);
+                }, 3000);
             }
         }
 
