@@ -113,11 +113,44 @@ jobs:
               with:
                   name: ArmCordWindows.zip
                   path: dist/ArmCord-3.1.0-win.zip
-            
+    build-windowsOnARM:
+        runs-on: windows-latest
+
+        steps:
+            - uses: actions/setup-node@v3
+              with:
+                node-version: '18'
+
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Set architecture
+              run: set npm_config_arch=arm64
+
+            - uses: pnpm/action-setup@v2 # Install pnpm using packageManager key in package.json
+
+            - name: Install Node dependencies
+              run: pnpm install -g cargo-cp-artifact && pnpm install
+
+            - name: Install Electron-Builder
+              run: pnpm install -g electron-builder
+
+            - name: Replace the version number
+              run: (Get-Content src/utils.ts) -replace "\d\.\d\.\d", "DEV" | Out-File src/utils.ts
+
+            - name: Build
+              run: npm run build && electron-builder --windows zip --arm64 
+              env:
+                GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Upload artifact
+              uses: actions/upload-artifact@v2
+              with:
+                  name: ArmCordWindowsArm64.zip
+                  path: dist\ArmCord-3.1.0-arm64-win.zip
 
     release:
         runs-on: ubuntu-latest
-        needs: [build-linux, build-mac, build-windows]
+        needs: [build-linux, build-mac, build-windows, build-windowsOnARM]
 
         steps:
             - name: Checkout code
@@ -142,6 +175,10 @@ jobs:
               with:
                   name: ArmCordLinuxArm64.zip
                   path: linux
+            - uses: actions/download-artifact@v2
+              with:
+                  name: ArmCordWindowsArm64.zip
+                  path: windows
 
             - name: Get some values needed for the release
               id: vars
@@ -171,3 +208,4 @@ jobs:
                       linux/ArmCord-3.1.0-arm64.zip
                       macos/ArmCord-3.1.0-mac.zip
                       windows/ArmCord-3.1.0-win.zip
+                      windows/ArmCord-3.1.0-arm64-win.zip
