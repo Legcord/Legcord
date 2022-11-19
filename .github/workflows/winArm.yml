@@ -1,8 +1,8 @@
-name: Publish to WinGet
-on:
-  release:
-    types: [released]
-
+name: Windows on ARM
+on: 
+  push:
+    branches:
+      - dev
 jobs:
     build-windowsOnARM:
         runs-on: windows-latest
