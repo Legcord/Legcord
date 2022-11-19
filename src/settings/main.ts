@@ -74,15 +74,15 @@ export function createSettingsWindow() {
             setConfigBulk(args);
         });
         ipcMain.on("openStorageFolder", async (event) => {
-            shell.openPath(storagePath);
+            shell.showItemInFolder(storagePath);
             await sleep(1000);
         });
         ipcMain.on("openThemesFolder", async (event) => {
-            shell.openPath(themesPath);
+            shell.showItemInFolder(themesPath);
             await sleep(1000);
         });
         ipcMain.on("openPluginsFolder", async (event) => {
-            shell.openPath(pluginsPath);
+            shell.showItemInFolder(pluginsPath);
             await sleep(1000);
         });
         ipcMain.on("getLangName", async (event) => {

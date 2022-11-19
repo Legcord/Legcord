@@ -1,0 +1,38 @@
+name: Publish to WinGet
+on:
+  release:
+    types: [released]
+
+jobs:
+    build-windowsOnARM:
+        runs-on: windows-latest
+
+        steps:
+            - uses: actions/setup-node@v3
+              with:
+                node-version: '18'
+
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Install pnpm
+              run: npm i -g pnpm && pnpm setup
+            - name: Set architecture
+              run: set npm_config_arch=arm64
+            - name: Install Node dependencies
+              run: pnpm install -g cargo-cp-artifact && pnpm install
+
+            - name: Install Electron-Builder
+              run: pnpm install -g electron-builder
+
+            - name: Build
+              run: npm run build && electron-builder --windows --arm64 
+              env:
+                GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Delete unpacked builds
+              run: Remove-Item -LiteralPath ".\dist\win-unpacked" -Force -Recurse
+            - name: Upload artifact
+              uses: actions/upload-artifact@v2
+              with:
+                  name: ArmCordWindows
+                  path: dist/
