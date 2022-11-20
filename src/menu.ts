@@ -1,4 +1,4 @@
-import {Menu, app, clipboard, globalShortcut} from "electron";
+import {BrowserWindow, Menu, app, clipboard, globalShortcut} from "electron";
 import {mainWindow} from "./window";
 import {getConfig} from "./utils";
 import {createSettingsWindow} from "./settings/main";
@@ -49,7 +49,7 @@ export async function setMenu() {
                     label: "Developer tools",
                     accelerator: "CmdOrCtrl+Shift+I",
                     click: function () {
-                        BrowserWindow.getFocusedWindow().toggleDevTools()
+                        BrowserWindow.getFocusedWindow()!.webContents.toggleDevTools();
                     }
                 },
                 {
