@@ -12,9 +12,7 @@
     "packageQuick": "npm run build && electron-builder --dir",
     "format": "prettier --write src/**/*",
     "CIbuild": "npm run build && electron-builder --linux zip && electron-builder --windows zip && electron-builder --macos zip",
-    "postinstall": "husky install",
-    "precommit-fix": "husky uninstall && echo - && echo !Make sure to run 'npm run format' before commiting! | chalk --stdin yellow inverse && echo -",
-    "precommit-fix:format": "husky uninstall && npm run format"
+    "prepare": "git config --local core.hooksPath .hooks/"
   },
   "repository": {
     "type": "git",
@@ -33,7 +31,6 @@
     "copyfiles": "^2.4.1",
     "electron": "^21.3.0",
     "electron-builder": "^23.6.0",
-    "husky": "^8.0.2",
     "prettier": "^2.7.1",
     "typescript": "^4.9.3"
   },
