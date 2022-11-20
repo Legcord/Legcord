@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import {app, dialog, session} from "electron";
 import path from "path";
-import fetch from "node-fetch"
+import fetch from "cross-fetch"
 import extract from "extract-zip"
 import util from "util"
 const streamPipeline = util.promisify(require('stream').pipeline)

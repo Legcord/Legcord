@@ -1,16 +1,20 @@
 const rgb = (r, g, b, msg) => `\x1b[38;2;${r};${g};${b}m${msg}\x1b[0m`;
 const log = (...args) => console.log(`[${rgb(88, 101, 242, "arRPC")} > ${rgb(254, 231, 92, "ipc")}]`, ...args);
-const path = require("path");
+
+const {join} = require("path");
 const {platform, env} = require("process");
 const {unlinkSync} = require("fs");
+
 const {createServer, createConnection} = require("net");
 
 const SOCKET_PATH =
     platform === "win32"
         ? "\\\\?\\pipe\\discord-ipc"
-        : path.join(env.XDG_RUNTIME_DIR || env.TMPDIR || env.TMP || env.TEMP || "/tmp", "discord-ipc");
+        : join(env.XDG_RUNTIME_DIR || env.TMPDIR || env.TMP || env.TEMP || "/tmp", "discord-ipc");
 
+// enums for various constants
 const Types = {
+    // types of packets
     HANDSHAKE: 0,
     FRAME: 1,
     CLOSE: 2,
@@ -19,12 +23,14 @@ const Types = {
 };
 
 const CloseCodes = {
+    // codes for closures
     CLOSE_NORMAL: 1000,
     CLOSE_UNSUPPORTED: 1003,
     CLOSE_ABNORMAL: 1006
 };
 
 const ErrorCodes = {
+    // codes for errors
     INVALID_CLIENTID: 4000,
     INVALID_ORIGIN: 4001,
     RATELIMITED: 4002,
@@ -120,7 +126,7 @@ const socketIsAvailable = async (socket) => {
     };
 
     const possibleOutcomes = Promise.race([
-        new Promise((res) => socket.on("error", res)), // errore
+        new Promise((res) => socket.on("error", res)), // errored
         new Promise((res, rej) => socket.on("pong", () => rej("socket ponged"))), // ponged
         new Promise((res, rej) => setTimeout(() => rej("timed out"), 1000)) // timed out
     ]).then(
@@ -209,6 +215,7 @@ class IPCServer {
 
             const ver = params.v ?? 1;
             const clientId = params.client_id ?? "";
+            // encoding is always json for ipc
 
             if (ver !== 1) {
                 log("unsupported version requested", ver);
@@ -251,5 +258,4 @@ class IPCServer {
         this.messageHandler(socket, msg);
     }
 }
-
 module.exports = {IPCServer};

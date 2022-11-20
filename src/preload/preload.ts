@@ -69,13 +69,10 @@ if (window.location.href.indexOf("splash.html") > -1) {
               return Dispatcher.dispatch(event);
             };
           })();
-          const ws = new WebSocket('ws://localhost:1337'); // connect to arRPC bridge
-          ws.onmessage = x => {
-            msg = JSON.parse(x.data);
-            console.log(msg);
-          
-            dispatch({ type: "LOCAL_ACTIVITY_UPDATE", ...msg }); // set RPC status
-          };
+          ArmCordRPC.listen((data) => {
+            console.log(data)
+            dispatch({ type: "LOCAL_ACTIVITY_UPDATE", ...data });
+          })
         `);
         const cssPath = path.join(__dirname, "../", "/content/css/discord.css");
         addStyle(fs.readFileSync(cssPath, "utf8"));

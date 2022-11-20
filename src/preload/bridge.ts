@@ -28,6 +28,13 @@ contextBridge.exposeInMainWorld("armcord", {
     splashEnd: () => ipcRenderer.send("splashEnd"),
     openSettingsWindow: () => ipcRenderer.send("openSettingsWindow")
 });
+let windowCallback: (arg0: object) => void;
+contextBridge.exposeInMainWorld("ArmCordRPC", {
+    listen: (callback: any) => (windowCallback = callback)
+});
+ipcRenderer.on("rpc", (event, data: object) => {
+    windowCallback(data);
+});
 //to be only used inside armcord internal setup/splash etc
 if (window.location.href.indexOf("splash.html") > -1 || window.location.href.indexOf("setup.html") > -1) {
     contextBridge.exposeInMainWorld("armcordinternal", {

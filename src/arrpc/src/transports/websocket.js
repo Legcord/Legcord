@@ -1,14 +1,15 @@
 const rgb = (r, g, b, msg) => `\x1b[38;2;${r};${g};${b}m${msg}\x1b[0m`;
 const log = (...args) => console.log(`[${rgb(88, 101, 242, "arRPC")} > ${rgb(235, 69, 158, "websocket")}]`, ...args);
-const ws = require("ws");
-const {createServer} = require("http");
-const querystring = require("querystring");
 
-const portRange = [6463, 6472];
+const {WebSocketServer} = require("ws");
+const {createServer} = require("http");
+const {parse} = require("querystring");
+var exportPort = 0000;
+const portRange = [6463, 6472]; // ports available/possible: 6463-6472
 
 class WSServer {
     constructor(messageHandler, connectionHandler) {
-        return new Promise(async (res) => {
+        return (async () => {
             this.messageHandler = messageHandler;
             this.connectionHandler = connectionHandler;
 
@@ -19,54 +20,60 @@ class WSServer {
 
             let http, wss;
             while (port <= portRange[1]) {
-                try {
-                    log("trying port", port);
+                log("trying port", port);
 
-                    http = createServer();
-                    http.on("error", (e) => {
-                        log("http error", e);
+                if (
+                    await new Promise((res) => {
+                        http = createServer();
+                        http.on("error", (e) => {
+                            // log('http error', e);
 
-                        if (e.code === "EADDRINUSE") {
-                            log(port, "in use!");
-                        }
-                    });
+                            if (e.code === "EADDRINUSE") {
+                                log(port, "in use!");
+                                res(false);
+                            }
+                        });
 
-                    wss = new ws.WebSocketServer({server: http});
-                    wss.on("error", (e) => {
-                        log("wss error", e);
-                    });
+                        wss = new WebSocketServer({server: http});
+                        wss.on("error", (e) => {
+                            // log('wss error', e);
+                        });
 
-                    wss.on("connection", this.onConnection);
+                        wss.on("connection", this.onConnection);
 
-                    http.listen(port, "127.0.0.1", () => {
-                        log("listening on", port);
+                        http.listen(port, "127.0.0.1", () => {
+                            log("listening on", port);
+                            exportPort = port;
+                            this.http = http;
+                            this.wss = wss;
 
-                        this.http = http;
-                        this.wss = wss;
-
-                        res(this);
-                    });
-                } catch (e) {
-                    log("failed to start", e);
-                }
-
-                break;
+                            res(true);
+                        });
+                    })
+                )
+                    break;
+                port++;
             }
-        });
+
+            return this;
+        })();
     }
 
     onConnection(socket, req) {
-        const params = querystring.parse(req.url.split("?")[1]);
+        const params = parse(req.url.split("?")[1]);
         const ver = parseInt(params.v ?? 1);
-        const encoding = params.encoding ?? "json";
+        const encoding = params.encoding ?? "json"; // json | etf (erlpack)
         const clientId = params.client_id ?? "";
 
         const origin = req.headers.origin ?? "";
 
         log(`new connection! origin:`, origin, JSON.parse(JSON.stringify(params)));
 
-        if (origin !== "") {
-            log("origin is defined, denying", origin);
+        if (
+            origin !== "" &&
+            !["https://discord.com", "https://ptb.discord.com", "https://canary.discord.com/"].includes(origin)
+        ) {
+            log("disallowed origin", origin);
 
             socket.close();
             return;
@@ -86,12 +93,12 @@ class WSServer {
             return;
         }
 
-        if (clientId === "") {
-            log("client id required");
+        /* if (clientId === '') {
+      log('client id required');
 
-            socket.close();
-            return;
-        }
+      socket.close();
+      return;
+    } */
 
         socket.clientId = clientId;
         socket.encoding = encoding;
@@ -120,5 +127,4 @@ class WSServer {
         this.messageHandler(socket, JSON.parse(msg));
     }
 }
-
-module.exports = {WSServer};
+module.exports = {WSServer, exportPort};
