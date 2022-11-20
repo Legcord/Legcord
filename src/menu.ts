@@ -49,7 +49,7 @@ export async function setMenu() {
                     label: "Developer tools",
                     accelerator: "CmdOrCtrl+Shift+I",
                     click: function () {
-                        mainWindow.webContents.toggleDevTools();
+                        BrowserWindow.getFocusedWindow().toggleDevTools()
                     }
                 },
                 {
