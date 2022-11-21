@@ -1,10 +1,10 @@
 import * as fs from "fs";
 import {app, dialog, session} from "electron";
 import path from "path";
-import fetch from "cross-fetch"
-import extract from "extract-zip"
-import util from "util"
-const streamPipeline = util.promisify(require('stream').pipeline)
+import fetch from "cross-fetch";
+import extract from "extract-zip";
+import util from "util";
+const streamPipeline = util.promisify(require("stream").pipeline);
 export var firstRun: boolean;
 export var contentPath: string;
 export var transparency: boolean;
@@ -77,7 +77,6 @@ export function getDisplayVersion() {
     }
 }
 export async function injectJS(inject: string) {
-    
     const js = await (await fetch(`${inject}`)).text();
 
     const el = document.createElement("script");
@@ -125,7 +124,7 @@ export async function injectElectronFlags() {
             console.log("No performance modes set");
     }
     if ((await getConfig("windowStyle")) == "transparent" && process.platform === "win32") {
-        import("@pyke/vibe").then(vibe => {
+        import("@pyke/vibe").then((vibe) => {
             console.log("Transparent mode enabled");
             vibe.setup(app);
             transparency = true;
@@ -287,65 +286,65 @@ export async function checkIfConfigExists() {
 // Mods
 async function updateModBundle() {
     try {
-    console.log("Downloading mod bundle")
-    const distFolder = app.getPath("userData") + "/plugins/loader/dist/";
-    while (!fs.existsSync(distFolder)){
-        //waiting
+        console.log("Downloading mod bundle");
+        const distFolder = app.getPath("userData") + "/plugins/loader/dist/";
+        while (!fs.existsSync(distFolder)) {
+            //waiting
+        }
+        var name: string = await getConfig("mods");
+        const clientMods = {
+            vencord: "https://github.com/Vendicated/Vencord/releases/download/devbuild/browser.js",
+            cordwood: "https://raw.githubusercontent.com/Cordwood/builds/master/index.js",
+            shelter: "https://raw.githubusercontent.com/uwu/shelter-builds/main/shelter.js"
+        };
+        var bundle: string = await (await fetch(clientMods[name as keyof typeof clientMods])).text();
+        fs.writeFileSync(distFolder + "bundle.js", bundle, "utf-8");
+    } catch (e) {
+        console.log("[Mod loader] Failed to install mods");
+        console.error(e);
+        dialog.showErrorBox(
+            "Oops, something went wrong.",
+            "ArmCord couldn't install mods, please check if you have stable internet connection and restart the app. If this issue persists, report it on the support server/Github issues."
+        );
     }
-    var name: string = await getConfig("mods")
-    const clientMods = {
-        vencord: "https://github.com/Vendicated/Vencord/releases/download/devbuild/browser.js",
-        cordwood: "https://raw.githubusercontent.com/Cordwood/builds/master/index.js",
-        shelter: "https://raw.githubusercontent.com/uwu/shelter-builds/main/shelter.js"
-    };
-    var bundle: string = await (await fetch(clientMods[name as keyof typeof clientMods])).text()
-    fs.writeFileSync(distFolder + "bundle.js", bundle, "utf-8");
-} catch (e) {
-    console.log("[Mod loader] Failed to install mods")
-    console.error(e)
-    dialog.showErrorBox(
-        "Oops, something went wrong.",
-        "ArmCord couldn't install mods, please check if you have stable internet connection and restart the app. If this issue persists, report it on the support server/Github issues."
-    );
-}
 }
 export var modInstallState: string;
 export async function installModLoader() {
-    if (await getConfig("mods") == "none") {
-        modInstallState = "none"
+    if ((await getConfig("mods")) == "none") {
+        modInstallState = "none";
         import("./extensions/plugin");
-        console.log("[Mod loader] Skipping")
+        console.log("[Mod loader] Skipping");
     } else {
         const pluginFolder = app.getPath("userData") + "/plugins/";
         if (!fs.existsSync(pluginFolder + "loader")) {
             try {
-                modInstallState = "installing"
+                modInstallState = "installing";
                 var zipPath = app.getPath("temp") + "/" + "loader.zip";
                 if (!fs.existsSync(pluginFolder)) {
                     fs.mkdirSync(pluginFolder);
                     console.log("[Mod loader] Created missing plugin folder");
                 }
-                var loaderZip = await fetch("https://armcord.xyz/loader.zip")
-                if (!loaderZip.ok) throw new Error(`unexpected response ${loaderZip.statusText}`)
-                await streamPipeline(loaderZip.body, fs.createWriteStream(zipPath))
-                await extract(zipPath, { dir: path.join(app.getPath("userData"), "plugins") })
-                modInstallState = "modDownload"
-                updateModBundle()
+                var loaderZip = await fetch("https://armcord.xyz/loader.zip");
+                if (!loaderZip.ok) throw new Error(`unexpected response ${loaderZip.statusText}`);
+                await streamPipeline(loaderZip.body, fs.createWriteStream(zipPath));
+                await extract(zipPath, {dir: path.join(app.getPath("userData"), "plugins")});
+                modInstallState = "modDownload";
+                updateModBundle();
                 import("./extensions/plugin");
-                modInstallState = "done"
-            } catch(e) {
-                console.log("[Mod loader] Failed to install modloader")
-                console.error(e)
+                modInstallState = "done";
+            } catch (e) {
+                console.log("[Mod loader] Failed to install modloader");
+                console.error(e);
                 dialog.showErrorBox(
                     "Oops, something went wrong.",
                     "ArmCord couldn't install internal mod loader, please check if you have stable internet connection and restart the app. If this issue persists, report it on the support server/Github issues."
                 );
             }
         } else {
-            modInstallState = "modDownload"
-            updateModBundle()
+            modInstallState = "modDownload";
+            updateModBundle();
             import("./extensions/plugin");
-            modInstallState = "done"
+            modInstallState = "done";
         }
     }
 }

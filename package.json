@@ -1,76 +1,76 @@
 {
-  "name": "ArmCord",
-  "version": "3.1.0",
-  "description": "ArmCord is a custom client designed to enhance your Discord experience while keeping everything lightweight.",
-  "main": "ts-out/main.js",
-  "scripts": {
-    "build": "tsc && copyfiles -u 1 src/**/*.html src/**/**/*.css ts-out/ && copyfiles package.json ts-out/ && copyfiles assets/**/** ts-out/",
-    "watch": "tsc -w",
-    "start": "npm run build && electron ./ts-out/main.js",
-    "startNoSandbox": "npm run build && electron ./ts-out/main.js --no-sandbox",
-    "package": "npm run build && electron-builder",
-    "packageQuick": "npm run build && electron-builder --dir",
-    "format": "prettier --write src/**/*",
-    "CIbuild": "npm run build && electron-builder --linux zip && electron-builder --windows zip && electron-builder --macos zip",
-    "prepare": "git config --local core.hooksPath .hooks/"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/armcord/armcord.git"
-  },
-  "author": "smartfrigde",
-  "license": "OSL-3.0",
-  "bugs": {
-    "url": "https://github.com/armcord/armcord/issues"
-  },
-  "homepage": "https://github.com/armcord/armcord#readme",
-  "devDependencies": {
-    "@types/node": "^18.11.9",
-    "@types/ws": "^8.5.3",
-    "chalk-cli": "^5.0.0",
-    "copyfiles": "^2.4.1",
-    "electron": "^21.3.0",
-    "electron-builder": "^23.6.0",
-    "prettier": "^2.7.1",
-    "typescript": "^4.9.3"
-  },
-  "dependencies": {
-    "@pyke/vibe": "github:pykeio/vibe#11984868ce9e007859ed91ff159c7f7f0a34e7ae",
-    "arrpc": "file:src/arrpc",
-    "cross-fetch": "^3.1.5",
-    "electron-context-menu": "github:ArmCord/electron-context-menu",
-    "extract-zip": "^2.0.1",
-    "v8-compile-cache": "^2.3.0",
-    "ws": "^8.11.0"
-  },
-  "build": {
-    "nsis": {
-      "include": "build/installer.nsh"
+    "name": "ArmCord",
+    "version": "3.1.0",
+    "description": "ArmCord is a custom client designed to enhance your Discord experience while keeping everything lightweight.",
+    "main": "ts-out/main.js",
+    "scripts": {
+        "build": "tsc && copyfiles -u 1 src/**/*.html src/**/**/*.css ts-out/ && copyfiles package.json ts-out/ && copyfiles assets/**/** ts-out/",
+        "watch": "tsc -w",
+        "start": "npm run build && electron ./ts-out/main.js",
+        "startNoSandbox": "npm run build && electron ./ts-out/main.js --no-sandbox",
+        "package": "npm run build && electron-builder",
+        "packageQuick": "npm run build && electron-builder --dir",
+        "format": "prettier --write src *.json",
+        "CIbuild": "npm run build && electron-builder --linux zip && electron-builder --windows zip && electron-builder --macos zip",
+        "prepare": "git config --local core.hooksPath .hooks/"
     },
-    "files": [
-      "!*",
-      "assets",
-      "node_modules",
-      "ts-out",
-      "package.json",
-      "LICENSE"
-    ],
-    "appId": "com.smartfridge.armcord",
-    "productName": "ArmCord",
-    "mac": {
-      "category": "Network"
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/armcord/armcord.git"
     },
-    "linux": {
-      "icon": "build/icon.icns",
-      "category": "Network",
-      "maintainer": "smartfridge@vivaldi.net",
-      "target": [
-        "deb",
-        "tar.gz",
-        "rpm",
-        "AppImage"
-      ]
-    }
-  },
-  "packageManager": "pnpm@7.13.4"
+    "author": "smartfrigde",
+    "license": "OSL-3.0",
+    "bugs": {
+        "url": "https://github.com/armcord/armcord/issues"
+    },
+    "homepage": "https://github.com/armcord/armcord#readme",
+    "devDependencies": {
+        "@types/node": "^18.11.9",
+        "@types/ws": "^8.5.3",
+        "chalk-cli": "^5.0.0",
+        "copyfiles": "^2.4.1",
+        "electron": "^21.3.0",
+        "electron-builder": "^23.6.0",
+        "prettier": "^2.7.1",
+        "typescript": "^4.9.3"
+    },
+    "dependencies": {
+        "@pyke/vibe": "github:pykeio/vibe#11984868ce9e007859ed91ff159c7f7f0a34e7ae",
+        "arrpc": "file:src/arrpc",
+        "cross-fetch": "^3.1.5",
+        "electron-context-menu": "github:ArmCord/electron-context-menu",
+        "extract-zip": "^2.0.1",
+        "v8-compile-cache": "^2.3.0",
+        "ws": "^8.11.0"
+    },
+    "build": {
+        "nsis": {
+            "include": "build/installer.nsh"
+        },
+        "files": [
+            "!*",
+            "assets",
+            "node_modules",
+            "ts-out",
+            "package.json",
+            "LICENSE"
+        ],
+        "appId": "com.smartfridge.armcord",
+        "productName": "ArmCord",
+        "mac": {
+            "category": "Network"
+        },
+        "linux": {
+            "icon": "build/icon.icns",
+            "category": "Network",
+            "maintainer": "smartfridge@vivaldi.net",
+            "target": [
+                "deb",
+                "tar.gz",
+                "rpm",
+                "AppImage"
+            ]
+        }
+    },
+    "packageManager": "pnpm@7.13.4"
 }
