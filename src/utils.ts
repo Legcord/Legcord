@@ -285,29 +285,34 @@ export async function checkIfConfigExists() {
 
 // Mods
 async function updateModBundle() {
-    try {
-        console.log("Downloading mod bundle");
-        const distFolder = app.getPath("userData") + "/plugins/loader/dist/";
-        while (!fs.existsSync(distFolder)) {
-            //waiting
+    if ((await getConfig("noBundleUpdates")) == undefined ?? false) {
+        try {
+            console.log("Downloading mod bundle");
+            const distFolder = app.getPath("userData") + "/plugins/loader/dist/";
+            while (!fs.existsSync(distFolder)) {
+                //waiting
+            }
+            var name: string = await getConfig("mods");
+            const clientMods = {
+                vencord: "https://github.com/Vendicated/Vencord/releases/download/devbuild/browser.js",
+                cordwood: "https://raw.githubusercontent.com/Cordwood/builds/master/index.js",
+                shelter: "https://raw.githubusercontent.com/uwu/shelter-builds/main/shelter.js"
+            };
+            var bundle: string = await (await fetch(clientMods[name as keyof typeof clientMods])).text();
+            fs.writeFileSync(distFolder + "bundle.js", bundle, "utf-8");
+        } catch (e) {
+            console.log("[Mod loader] Failed to install mods");
+            console.error(e);
+            dialog.showErrorBox(
+                "Oops, something went wrong.",
+                "ArmCord couldn't install mods, please check if you have stable internet connection and restart the app. If this issue persists, report it on the support server/Github issues."
+            );
         }
-        var name: string = await getConfig("mods");
-        const clientMods = {
-            vencord: "https://github.com/Vendicated/Vencord/releases/download/devbuild/browser.js",
-            cordwood: "https://raw.githubusercontent.com/Cordwood/builds/master/index.js",
-            shelter: "https://raw.githubusercontent.com/uwu/shelter-builds/main/shelter.js"
-        };
-        var bundle: string = await (await fetch(clientMods[name as keyof typeof clientMods])).text();
-        fs.writeFileSync(distFolder + "bundle.js", bundle, "utf-8");
-    } catch (e) {
-        console.log("[Mod loader] Failed to install mods");
-        console.error(e);
-        dialog.showErrorBox(
-            "Oops, something went wrong.",
-            "ArmCord couldn't install mods, please check if you have stable internet connection and restart the app. If this issue persists, report it on the support server/Github issues."
-        );
+    } else {
+        console.log("[Mod loader] Skipping mod bundle update");
     }
 }
+
 export var modInstallState: string;
 export async function installModLoader() {
     if ((await getConfig("mods")) == "none") {
