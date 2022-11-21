@@ -45,13 +45,13 @@ if (window.location.href.indexOf("splash.html") > -1) {
         addScript(`
         const dispatch = (() => {
             let Dispatcher;
-          
+
             return function (event) {
               Dispatcher ??= window.Vencord?.Webpack.Common.FluxDispatcher
               if (!Dispatcher) {
                 const cache = webpackChunkdiscord_app.push([[Symbol()], {}, w => w]).c;
                 webpackChunkdiscord_app.pop()
-          
+
                 outer:
                 for (const id in cache) {
                   const mod = cache[id].exports;
@@ -63,9 +63,9 @@ if (window.location.href.indexOf("splash.html") > -1) {
                   }
                 }
               }
-              if (!Dispatcher) 
+              if (!Dispatcher)
                 return; // failed to find, your choice if and how u wanna handle this
-          
+
               return Dispatcher.dispatch(event);
             };
           })();
@@ -114,3 +114,19 @@ setInterval(() => {
     el.onclick = () => ipcRenderer.send("openSettingsWindow");
     host.append(el);
 }, 2000);
+
+// dirty hack to make clicking notifications focus ArmCord
+addScript(`
+(() => {
+const originalSetter = Object.getOwnPropertyDescriptor(Notification.prototype, "onclick").set;
+Object.defineProperty(Notification.prototype, "onclick", {
+    set(onClick) {
+      originalSetter.call(this, function() {
+        onClick.apply(this, arguments);
+        armcord.window.show();
+      })
+    },
+    configurable: true
+});
+})();
+`);
