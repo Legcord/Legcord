@@ -12,7 +12,7 @@ import {
     setConfig,
     setLang,
     setWindowState,
-    transparency,
+    transparency
 } from "./utils";
 import {registerIpc} from "./ipc";
 import {setMenu} from "./menu";
@@ -51,9 +51,9 @@ contextMenu({
 });
 async function doAfterDefiningTheWindow() {
     if (transparency && process.platform === "win32") {
-        import("@pyke/vibe").then(vibe => {
+        import("@pyke/vibe").then((vibe) => {
             vibe.applyEffect(mainWindow, "acrylic");
-            vibe.forceTheme(mainWindow, 'dark');
+            vibe.forceTheme(mainWindow, "dark");
             mainWindow.show();
         });
     }
@@ -85,7 +85,7 @@ async function doAfterDefiningTheWindow() {
     }
     mainWindow.webContents.setWindowOpenHandler(({url}) => {
         // Allow about:blank (used by Vencord QuickCss popup)
-        if (url === "about:blank") return { action: "allow" };
+        if (url === "about:blank") return {action: "allow"};
 
         if (url.startsWith("https:" || url.startsWith("http:") || url.startsWith("mailto:"))) {
             shell.openExternal(url);
@@ -206,7 +206,7 @@ async function doAfterDefiningTheWindow() {
     console.log(contentPath);
     if ((await getConfig("inviteWebsocket")) == true) {
         //@ts-ignore
-        import("arrpc")
+        import("arrpc");
         //await startServer();
     }
     if (firstRun) {

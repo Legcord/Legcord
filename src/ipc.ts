@@ -16,7 +16,7 @@ import {
 import {customTitlebar} from "./main";
 import {createSettingsWindow} from "./settings/main";
 import os from "os";
-import fs from "fs"
+import fs from "fs";
 import path from "path";
 export function registerIpc() {
     ipcMain.on("get-app-path", (event, arg) => {

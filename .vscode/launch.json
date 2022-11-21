@@ -9,14 +9,9 @@
             "request": "launch",
             "name": "Debug ArmCord via NPM",
             "runtimeExecutable": "npm",
-            "runtimeArgs": [
-                "start",
-                "debug",
-            ],
+            "runtimeArgs": ["start", "debug"],
             "port": 9229,
-            "skipFiles": [
-                "<node_internals>/**"
-            ]
-        },
+            "skipFiles": ["<node_internals>/**"]
+        }
     ]
 }

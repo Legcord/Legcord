@@ -52,7 +52,7 @@ app.whenReady().then(async () => {
         }
     }
     await init();
-    await installModLoader()
+    await installModLoader();
     session.fromPartition("some-partition").setPermissionRequestHandler((webContents, permission, callback) => {
         if (permission === "notifications") {
             // Approves the permissions request
