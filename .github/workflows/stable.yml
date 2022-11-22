@@ -2,7 +2,7 @@ name: Release build
 on: 
   push:
     branches:
-      - stable
+      - dev
 
 env:
   FORCE_COLOR: true
@@ -12,15 +12,16 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            - uses: actions/setup-node@v3
-              with:
-                node-version: '18'
-
             - name: Checkout code
               uses: actions/checkout@v2
 
-            - name: Install pnpm
-              run: npm i -g pnpm && pnpm setup
+            - uses: pnpm/action-setup@v2 # Install pnpm using packageManager key in package.json
+
+            - name: Use Node.js 18
+              uses: actions/setup-node@v2
+              with:
+                  node-version: 18
+                  cache: "pnpm"
 
             - name: Install Node dependencies
               run: pnpm install -g cargo-cp-artifact && pnpm install
@@ -47,15 +48,16 @@ jobs:
         runs-on: macos-latest
 
         steps:
-            - uses: actions/setup-node@v3
-              with:
-                node-version: '18'
-
             - name: Checkout code
               uses: actions/checkout@v2
 
-            - name: Install pnpm
-              run: npm i -g pnpm && pnpm setup && source /Users/runner/.bashrc
+            - uses: pnpm/action-setup@v2 # Install pnpm using packageManager key in package.json
+
+            - name: Use Node.js 18
+              uses: actions/setup-node@v2
+              with:
+                  node-version: 18
+                  cache: "pnpm"
 
             - name: Install Node dependencies
               run: pnpm install -g cargo-cp-artifact && pnpm install
@@ -80,17 +82,17 @@ jobs:
 
     build-windows:
         runs-on: windows-latest
-
         steps:
-            - uses: actions/setup-node@v3
-              with:
-                node-version: '18'
-
             - name: Checkout code
               uses: actions/checkout@v2
 
-            - name: Install pnpm
-              run: npm i -g pnpm && pnpm setup
+            - uses: pnpm/action-setup@v2 # Install pnpm using packageManager key in package.json
+
+            - name: Use Node.js 18
+              uses: actions/setup-node@v2
+              with:
+                  node-version: 18
+                  cache: "pnpm"
 
             - name: Install Node dependencies
               run: pnpm install -g cargo-cp-artifact && pnpm install
@@ -109,23 +111,55 @@ jobs:
               with:
                   name: ArmCordWindows
                   path: dist/
-            
+    build-windowsOnARM:
+        runs-on: windows-latest
+        steps:
+            - uses: actions/setup-node@v3
+              with:
+                node-version: '18'
 
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Set architecture
+              run: set npm_config_arch=arm64
+
+            - uses: pnpm/action-setup@v2 # Install pnpm using packageManager key in package.json
+
+            - name: Install Node dependencies
+              run: pnpm install -g cargo-cp-artifact && pnpm install
+
+            - name: Install Electron-Builder
+              run: pnpm install -g electron-builder
+
+            - name: Build
+              run: npm run build && electron-builder --windows --arm64 
+              env:
+                GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            - name: Delete unpacked builds
+              run: Remove-Item -LiteralPath ".\dist\win-arm64-unpacked" -Force -Recurse
+            - name: Upload artifact
+              uses: actions/upload-artifact@v2
+              with:
+                  name: ArmCordWindowsArm64
+                  path: dist/
     release:
         runs-on: ubuntu-latest
-        needs: [build-linux, build-mac, build-windows]
+        needs: [build-linux, build-mac, build-windows, build-windowsOnARM]
 
         steps:
             - uses: actions/download-artifact@v2
               with:
                   name: ArmCordMac
                   path: macos
-
             - uses: actions/download-artifact@v2
               with:
                   name: ArmCordWindows
                   path: windows
-
+            - uses: actions/download-artifact@v2
+              with:
+                  name: ArmCordWindowsArm64
+                  path: windows
             - uses: actions/download-artifact@v2
               with:
                   name: ArmCordLinux
@@ -144,12 +178,6 @@ jobs:
               run: |
                 echo "::set-output name=releaseTag::$(git describe --tags --abbrev=0)"
 
-            - uses: dev-drprasad/delete-tag-and-release@v0.2.0
-              with:
-                delete_release: true
-                tag_name: v3.0.6
-              env:
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Create Release
               uses: actions/github-script@v2
               with:
