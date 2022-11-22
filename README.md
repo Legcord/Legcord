@@ -88,15 +88,14 @@ ArmCord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).
 - Translations are done using our [Weblate page](https://hosted.weblate.org/projects/armcord/armcord/). They're pushed to this [repo](https://github.com/ArmCord/i18n).
 
 # Credits
-[ArmCord UI design, branding, and a few features](https://github.com/kckarnige)   
-[Cumcord](https://github.com/Cumcord/Cumcord)   
-[GooseMod](https://github.com/GooseMod/GooseMod)   
-[GooseMod Extension](https://github.com/GooseMod/extension)   
-[FlickerMod](https://github.com/FlickerMod)   
-[electron-discord-webapp](https://github.com/SpacingBat3/electron-discord-webapp)    
-(Pre v3.0.6) [custom-electron-titlebar](https://github.com/AlexTorresSk/custom-electron-titlebar)    
-[electron-builder](https://electron.build)  
-[OpenAsar](https://github.com/GooseMod/OpenAsar)     
-# Sponsors
- [![JetBrains supports ArmCord with free licenses to their software to core developers](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)](https://jb.gg/OpenSourceSupport)
+[ArmCord UI design, branding, and a few features](https://github.com/kckarnige)
+[electron-discord-webapp](https://github.com/SpacingBat3/electron-discord-webapp)
+[OpenAsar](https://github.com/GooseMod/OpenAsar)
+[arRPC (for Rich Presence)](https://github.com/OpenAsar/arrpc)
+(pre v3.1.0) [Cumcord](https://github.com/Cumcord/Cumcord)
+(pre v3.1.0) [GooseMod](https://github.com/GooseMod/GooseMod)
+(pre v3.1.0) [GooseMod Extension](https://github.com/GooseMod/extension)
+(pre v3.1.0) [FlickerMod](https://github.com/FlickerMod)
+(Pre v3.0.6) [custom-electron-titlebar](https://github.com/AlexTorresSk/custom-electron-titlebar)
+[electron-builder](https://electron.build)
 
