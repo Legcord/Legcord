@@ -2,7 +2,7 @@ name: Release build
 on: 
   push:
     branches:
-      - dev
+      - stable
 
 env:
   FORCE_COLOR: true
