@@ -42,38 +42,23 @@ if (window.location.href.indexOf("splash.html") > -1) {
         injectMobileStuff();
     }
     sleep(5000).then(async () => {
+        // dirty hack to make clicking notifications focus ArmCord
         addScript(`
-        const dispatch = (() => {
-            let Dispatcher;
-
-            return function (event) {
-              Dispatcher ??= window.Vencord?.Webpack.Common.FluxDispatcher
-              if (!Dispatcher) {
-                const cache = webpackChunkdiscord_app.push([[Symbol()], {}, w => w]).c;
-                webpackChunkdiscord_app.pop()
-
-                outer:
-                for (const id in cache) {
-                  const mod = cache[id].exports;
-                  for (const exp in mod) {
-                    if (mod[exp]?.isDispatching) {
-                      Dispatcher = mod[exp];
-                      break outer;
-                    }
-                  }
-                }
-              }
-              if (!Dispatcher)
-                return; // failed to find, your choice if and how u wanna handle this
-
-              return Dispatcher.dispatch(event);
-            };
-          })();
-          ArmCordRPC.listen((data) => {
-            console.log(data)
-            dispatch({ type: "LOCAL_ACTIVITY_UPDATE", ...data });
-          })
+        (() => {
+        const originalSetter = Object.getOwnPropertyDescriptor(Notification.prototype, "onclick").set;
+        Object.defineProperty(Notification.prototype, "onclick", {
+            set(onClick) {
+            originalSetter.call(this, function() {
+                onClick.apply(this, arguments);
+                armcord.window.show();
+            })
+            },
+            configurable: true
+        });
+        })();
         `);
+
+        addScript(fs.readFileSync(path.join(__dirname, "../", "/content/js/rpc.js"), "utf8"));
         const cssPath = path.join(__dirname, "../", "/content/css/discord.css");
         addStyle(fs.readFileSync(cssPath, "utf8"));
         await updateLang();
@@ -114,19 +99,3 @@ setInterval(() => {
     el.onclick = () => ipcRenderer.send("openSettingsWindow");
     host.append(el);
 }, 2000);
-
-// dirty hack to make clicking notifications focus ArmCord
-addScript(`
-(() => {
-const originalSetter = Object.getOwnPropertyDescriptor(Notification.prototype, "onclick").set;
-Object.defineProperty(Notification.prototype, "onclick", {
-    set(onClick) {
-      originalSetter.call(this, function() {
-        onClick.apply(this, arguments);
-        armcord.window.show();
-      })
-    },
-    configurable: true
-});
-})();
-`);

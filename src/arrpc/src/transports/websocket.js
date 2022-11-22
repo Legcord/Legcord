@@ -4,14 +4,13 @@ const log = (...args) => console.log(`[${rgb(88, 101, 242, "arRPC")} > ${rgb(235
 const {WebSocketServer} = require("ws");
 const {createServer} = require("http");
 const {parse} = require("querystring");
-var exportPort = 0000;
+
 const portRange = [6463, 6472]; // ports available/possible: 6463-6472
 
 class WSServer {
-    constructor(messageHandler, connectionHandler) {
+    constructor(handlers) {
         return (async () => {
-            this.messageHandler = messageHandler;
-            this.connectionHandler = connectionHandler;
+            this.handlers = handlers;
 
             this.onConnection = this.onConnection.bind(this);
             this.onMessage = this.onMessage.bind(this);
@@ -43,7 +42,7 @@ class WSServer {
 
                         http.listen(port, "127.0.0.1", () => {
                             log("listening on", port);
-                            exportPort = port;
+
                             this.http = http;
                             this.wss = wss;
 
@@ -108,7 +107,8 @@ class WSServer {
         });
 
         socket.on("close", (e, r) => {
-            log("socket closed", e);
+            log("socket closed", e, r);
+            this.handlers.close(socket);
         });
 
         socket.on("message", this.onMessage.bind(this, socket));
@@ -119,12 +119,12 @@ class WSServer {
             socket._send(JSON.stringify(msg));
         };
 
-        this.connectionHandler(socket);
+        this.handlers.connection(socket);
     }
 
     onMessage(socket, msg) {
         log("message", JSON.parse(msg));
-        this.messageHandler(socket, JSON.parse(msg));
+        this.handlers.message(socket, JSON.parse(msg));
     }
 }
-module.exports = {WSServer, exportPort};
+module.exports = {WSServer};

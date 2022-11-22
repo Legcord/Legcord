@@ -4,9 +4,7 @@ const log = (...args) => console.log(`[${rgb(88, 101, 242, "arRPC")} > ${rgb(254
 const {join} = require("path");
 const {platform, env} = require("process");
 const {unlinkSync} = require("fs");
-
 const {createServer, createConnection} = require("net");
-
 const SOCKET_PATH =
     platform === "win32"
         ? "\\\\?\\pipe\\discord-ipc"
@@ -167,10 +165,9 @@ const getAvailableSocket = async (tries = 0) => {
 };
 
 class IPCServer {
-    constructor(messageHandler, connectionHandler) {
+    constructor(handers) {
         return new Promise(async (res) => {
-            this.messageHandler = messageHandler;
-            this.connectionHandler = connectionHandler;
+            this.handlers = handers;
 
             this.onConnection = this.onConnection.bind(this);
             this.onMessage = this.onMessage.bind(this);
@@ -237,6 +234,7 @@ class IPCServer {
 
             socket.on("close", (e) => {
                 log("socket closed", e);
+                this.handlers.close(socket);
             });
 
             socket.on("request", this.onMessage.bind(this, socket));
@@ -249,13 +247,13 @@ class IPCServer {
 
             socket.clientId = clientId;
 
-            this.connectionHandler(socket);
+            this.handlers.connection(socket);
         });
     }
 
     onMessage(socket, msg) {
         log("message", msg);
-        this.messageHandler(socket, msg);
+        this.handlers.message(socket, msg);
     }
 }
 module.exports = {IPCServer};

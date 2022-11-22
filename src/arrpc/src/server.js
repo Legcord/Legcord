@@ -1,23 +1,28 @@
 const rgb = (r, g, b, msg) => `\x1b[38;2;${r};${g};${b}m${msg}\x1b[0m`;
 const log = (...args) => console.log(`[${rgb(88, 101, 242, "arRPC")} > ${rgb(87, 242, 135, "bridge")}]`, ...args);
 
-const {IPCServer} = require("./transports/ipc.js");
 const {EventEmitter} = require("events");
+
+const {IPCServer} = require("./transports/ipc.js");
 const {WSServer} = require("./transports/websocket.js");
-const Bridge = require("./bridge.js");
-const fetch = require("cross-fetch");
-const lookupAsset = (name, assets) => {
-    return assets.find((x) => x.name === name)?.id;
-};
+
+let socketId = 0;
 class RPCServer extends EventEmitter {
     constructor() {
         super();
         return (async () => {
             this.onConnection = this.onConnection.bind(this);
             this.onMessage = this.onMessage.bind(this);
+            this.onClose = this.onClose.bind(this);
 
-            this.ipc = await new IPCServer(this.onMessage, this.onConnection);
-            this.ws = await new WSServer(this.onMessage, this.onConnection);
+            const handlers = {
+                connection: this.onConnection,
+                message: this.onMessage,
+                close: this.onClose
+            };
+
+            this.ipc = await new IPCServer(handlers);
+            this.ws = await new WSServer(handlers);
 
             return this;
         })();
@@ -33,7 +38,19 @@ class RPCServer extends EventEmitter {
             }
         });
 
+        socket.socketId = socketId++;
+
         this.emit("connection", socket);
+    }
+
+    onClose(socket) {
+        this.emit("activity", {
+            activity: null,
+            pid: socket.lastPid,
+            socketId: socket.socketId.toString()
+        });
+
+        this.emit("close", socket);
     }
 
     async onMessage(socket, {cmd, args, nonce}) {
@@ -41,19 +58,10 @@ class RPCServer extends EventEmitter {
 
         switch (cmd) {
             case "SET_ACTIVITY":
-                if (!socket.application) {
-                    // fetch info about application
-                    socket.application = await (
-                        await fetch(`https://discord.com/api/v9/oauth2/applications/${socket.clientId}/rpc`)
-                    ).json();
-                    socket.application.assets = await (
-                        await fetch(`https://discord.com/api/v9/oauth2/applications/${socket.clientId}/assets`)
-                    ).json();
-                    log("fetched app info for", socket.clientId, socket.application);
-                }
-
                 const {activity, pid} = args; // translate given parameters into what discord dispatch expects
                 const {buttons, timestamps, instance} = activity;
+
+                socket.lastPid = pid ?? socket.lastPid;
 
                 const metadata = {};
                 const extra = {};
@@ -70,27 +78,22 @@ class RPCServer extends EventEmitter {
                             timestamps[x] = Math.floor(1000 * timestamps[x]);
                     }
 
-                // lookup assets to ids
-                if (activity.assets?.large_image)
-                    activity.assets.large_image = lookupAsset(activity.assets.large_image, socket.application.assets);
-                if (activity.assets?.small_image)
-                    activity.assets.small_image = lookupAsset(activity.assets.small_image, socket.application.assets);
-
                 this.emit("activity", {
                     activity: {
-                        name: socket.application.name,
-                        application_id: socket.application.id,
+                        application_id: socket.clientId,
                         type: 0,
                         metadata,
                         flags: instance ? 1 << 0 : 0,
                         ...activity,
                         ...extra
                     },
-                    pid
+                    pid,
+                    socketId: socket.socketId.toString()
                 });
 
                 break;
 
+            case "GUILD_TEMPLATE_BROWSER":
             case "INVITE_BROWSER":
                 const {code} = args;
                 socket.send({
@@ -101,7 +104,11 @@ class RPCServer extends EventEmitter {
                     nonce
                 });
 
-                this.emit("invite", code);
+                this.emit(cmd === "INVITE_BROWSER" ? "invite" : "guild_template", code);
+                break;
+
+            case "DEEP_LINK":
+                this.emit("link", args.params);
                 break;
         }
     }

@@ -206,7 +206,7 @@ async function doAfterDefiningTheWindow() {
     console.log(contentPath);
     if ((await getConfig("inviteWebsocket")) == true) {
         //@ts-ignore
-        import("arrpc");
+        require("arrpc");
         //await startServer();
     }
     if (firstRun) {
