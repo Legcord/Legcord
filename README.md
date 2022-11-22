@@ -89,13 +89,12 @@ ArmCord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).
 
 # Credits
 - [ArmCord UI design, branding, and a few features](https://github.com/kckarnige)
-- [electron-discord-webapp](https://github.com/SpacingBat3/electron-discord-webapp)
 - [OpenAsar](https://github.com/GooseMod/OpenAsar)
 - [arRPC (for Rich Presence)](https://github.com/OpenAsar/arrpc)
 - (pre v3.1.0) [Cumcord](https://github.com/Cumcord/Cumcord)
 - (pre v3.1.0) [GooseMod](https://github.com/GooseMod/GooseMod)
 - (pre v3.1.0) [GooseMod Extension](https://github.com/GooseMod/extension)
 - (pre v3.1.0) [FlickerMod](https://github.com/FlickerMod)
-- (Pre v3.0.6) [custom-electron-titlebar](https://github.com/AlexTorresSk/custom-electron-titlebar)
+- (Pre v3.0.0) [custom-electron-titlebar](https://github.com/AlexTorresSk/custom-electron-titlebar)
 - [electron-builder](https://electron.build)
 
