@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import {app, Menu, Tray, nativeImage} from "electron";
-import {mainWindow} from "./window";
+import {createInviteWindow, mainWindow} from "./window";
 import {getConfig, getConfigLocation, setWindowState, getDisplayVersion} from "./utils";
 import * as path from "path";
 import {createSettingsWindow} from "./settings/main";
@@ -113,8 +113,7 @@ app.whenReady().then(async () => {
                 {
                     label: "Support Discord Server",
                     click: function () {
-                        mainWindow.show();
-                        mainWindow.loadURL("https://discord.gg/TnhxcqynZ2");
+                        createInviteWindow("TnhxcqynZ2");
                     }
                 },
                 {

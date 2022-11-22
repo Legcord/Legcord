@@ -17,7 +17,6 @@ import {
 import {registerIpc} from "./ipc";
 import {setMenu} from "./menu";
 import * as fs from "fs";
-import startServer from "./socket";
 import contextMenu from "electron-context-menu";
 import os from "os";
 import {tray} from "./tray";
@@ -292,7 +291,7 @@ export function createTransparentWindow() {
     });
     doAfterDefiningTheWindow();
 }
-export function createInviteWindow() {
+export function createInviteWindow(code: string) {
     inviteWindow = new BrowserWindow({
         width: 800,
         height: 600,
@@ -306,5 +305,16 @@ export function createInviteWindow() {
             spellcheck: true
         }
     });
-    inviteWindow.hide();
+    var formInviteURL = `https://discord.com/invite/${code}`;
+    inviteWindow.webContents.session.webRequest.onBeforeRequest((details, callback) => {
+        if (details.url.includes("ws://")) return callback({cancel: true});
+        return callback({});
+    });
+    inviteWindow.loadURL(formInviteURL);
+    inviteWindow.webContents.once("did-finish-load", () => {
+        inviteWindow.show();
+        inviteWindow.webContents.once("will-navigate", () => {
+            inviteWindow.close();
+        });
+    });
 }

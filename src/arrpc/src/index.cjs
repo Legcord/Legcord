@@ -11,13 +11,8 @@ async function run() {
     server.on("activity", (data) => mainWindow.webContents.send("rpc", data));
     server.on("invite", (code) => {
         console.log(code);
-        const {createInviteWindow, inviteWindow} = require("../../../ts-out/window.js");
-        const {exportPort} = require("./transports/websocket.js");
-        createInviteWindow();
-        const win = inviteWindow;
-        //doesnt work
-        win.loadURL("https://discord.com/invite/" + code);
-        win.show();
+        const {createInviteWindow} = require("../../../ts-out/window.js");
+        createInviteWindow(code);
     });
 }
 run();
