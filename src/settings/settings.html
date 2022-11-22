@@ -20,15 +20,20 @@
                 <option value="native" data-string="settings-theme-native">Native</option>
             </select>
             <p class="header" data-string="settings-theme">ArmCord theme</p>
-            <p class="description">
-                ArmCord "themes" manage apps behaviour and looks.
+            <div class="description">
+                <p data-string="settings-theme-desc1">ArmCord "themes" manage apps behaviour and looks.</p>
+                <b data-string="settings-theme-default">Default</b> -
+                <span data-string="settings-theme-desc2">
+                    this is how ArmCord looks when you first launch it. It includes recreation of Discord's custom
+                    titlebar and ArmCord specific styles injected into Discord.
+                </span>
                 <br />
-                <b>Default</b> - this is how ArmCord looks when you first launch it. It includes recreation of Discord's
-                custom titlebar and ArmCord specific styles injected into Discord.
-                <br />
-                <b>Native</b> - uses native titlebar of OS you're currently running (e.g Windows 7/10). Functions more
-                similar to actual Discord app on Linux.
-            </p>
+                <b data-string="settings-theme-native">Native</b> -
+                <span data-string="settings-theme-desc3">
+                    uses native titlebar of OS you're currently running (e.g Windows 7/10). Functions more similar to
+                    actual Discord app on Linux.
+                </span>
+            </div>
         </div>
         <br />
         <div class="switch acCSP">
@@ -45,7 +50,7 @@
             <label class="header" data-string="settings-tray">Minimize to tray</label>
             <input class="tgl tgl-light left" data-setting="minimizeToTray" type="checkbox" />
             <label class="tgl-btn left" for="tray"></label>
-            <p class="description">
+            <p class="description" data-string="settings-tray-desc">
                 When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax
                 in your system tray for later.
             </p>
@@ -55,7 +60,7 @@
             <label class="header" data-string="settings-patches">Automatic Patches</label>
             <input class="tgl tgl-light left" data-setting="automaticPatches" type="checkbox" />
             <label class="tgl-btn left" for="patches"></label>
-            <p class="description">
+            <p class="description" data-string="settings-patches-desk">
                 Fetches automatic patches that are distributed if release turns out to have bugs after release. Usually
                 you don't have to keep this enabled, unless notified in support Discord.
             </p>
@@ -66,6 +71,7 @@
             <input class="tgl tgl-light left" data-setting="inviteWebsocket" type="checkbox" />
             <label class="tgl-btn left" for="websocket"></label>
             <p class="description">
+                <!-- TODO add data-string -->
                 Uses <a target="_blank" href="https://github.com/OpenAsar/arrpc">arRPC</a> to support Discord RPC (Rich
                 Presence) with local programs on your machine. Work in progress.
             </p>
@@ -75,7 +81,7 @@
             <label class="header" data-string="settings-mobileMode">Mobile mode</label>
             <input class="tgl tgl-light left" data-setting="mobileMode" type="checkbox" />
             <label class="tgl-btn left" for="mobile"></label>
-            <p class="description">
+            <p class="description" data-string="settings-mobileMode-desc">
                 If you're on a device with touch-screen this feature is for you! It activates Discord's hidden mobile
                 mode meant for phones and tablets. Only major feature missing is voice chat support. This is ideal for
                 users on PinePhone and similar.
@@ -83,10 +89,10 @@
         </div>
         <br />
         <div class="switch acAltPaste">
-            <label class="header" data-string="settings-alternativePaste">Alternative paste</label>
+            <label class="header" data-string="settings-altPaste">Alternative paste</label>
             <input class="tgl tgl-light left" data-setting="alternativePaste" type="checkbox" />
             <label class="tgl-btn left" for="alternativePaste"></label>
-            <p class="description">
+            <p class="description" data-string="settings-altPaste-desc">
                 If you're on Gnome on Linux or just simply can't paste images copied from other messages, then this is
                 for you. This enables alternative module for pasting images. Only enable this when you're experiencing
                 issues.
@@ -102,22 +108,32 @@
             </select>
             <div>
                 <p class="header" data-string="settings-channel">Discord channel</p>
-                <p class="description">
-                    You can use this setting to change current instance of Discord:
+                <div class="description">
+                    <p data-string="settings-channel-desc1">
+                        You can use this setting to change current instance of Discord:
+                    </p>
+                    <b>Stable</b> -
+                    <span data-string="settings-channel-desc2">
+                        you're probably most familiar with this one. It's the one you see in default Discord client!
+                    </span>
                     <br />
-                    <b>Stable</b> - you're probably most familiar with this one. It's the one you see in default Discord
-                    client!
+                    <b>Canary</b> -
+                    <span data-string="settings-channel-desc3">
+                        this is alpha test release of Discord. By using it you gain access to the newest features and
+                        fixes.
+                    </span>
                     <br />
-                    <b>Canary</b> - this is alpha test release of Discord. By using it you gain access to the newest
-                    features and fixes.
+                    <b>PTB</b> -
+                    <span data-string="settings-channel-desc4">
+                        public test build. Receives features earlier than stable but is a bit older than Canary.
+                    </span>
                     <br />
-                    <b>PTB</b> - public test build. Receives features earlier than stable but is a bit older than
-                    Canary.
-                    <br />
-                    <b>Hummus</b> - unofficial instance of Discord that takes you back to 2016! Only client mod
-                    available to run alongside with it is Cordwood. It's run by community, so you take all the risk by
-                    using it.
-                </p>
+                    <b>Hummus</b> -
+                    <span data-string="settings-channel-desc5">
+                        unofficial instance of Discord that takes you back to 2016! Only client mod available to run
+                        alongside with it is Cordwood. It's run by community, so you take all the risk by using it.
+                    </span>
+                </div>
             </div>
         </div>
         <br />
@@ -128,14 +144,17 @@
                 <option value="none" data-string="settings-none">None</option>
             </select>
             <p class="header" data-string="settings-mod">Client mod</p>
-            <p class="description">
-                Client mods are programs that allow you customize your Discord experience. They can change appearance of
-                the client, modify behaviours or add new features!
-                <br />
+            <div class="description">
+                <p data-string="settings-mod-desc1">
+                    Client mods are programs that allow you customize your Discord experience. They can change
+                    appearance of the client, modify behaviours or add new features!
+                </p>
+                <!-- TODO: Translation -->
                 <b>Vencord</b> - lightweight, and easy to use client mod. Features a built-in store for plugins.
                 <br />
+                <!-- TODO: Translation -->
                 <b>Shelter</b> - is a new generation client mod built to be essentially bulletproof.
-            </p>
+            </div>
         </div>
         <br />
         <div class="switch acPrfmMode">
