@@ -9,65 +9,59 @@
 
     <body>
         <div class="saveBar">
-            <button data-string="settings-save" class="center" onclick="saveSettings()">Save Settings</button>
+            <button data-string="settings-save" class="center" onclick="saveSettings()"></button>
         </div>
+
         <div class="restartBar">
-            <button data-string="settings-restart" class="center" onclick="settings.restart()">Restart App</button>
+            <button data-string="settings-restart" class="center" onclick="settings.restart()"></button>
         </div>
+
         <div class="switch acTheme">
             <select name="theme" data-setting="windowStyle" class="left dropdown">
-                <option value="default" data-string="settings-theme-default">Default</option>
-                <option value="native" data-string="settings-theme-native">Native</option>
+                <option value="" disabled selected hidden data-string="settings-theme"></option>
+                <option value="default" data-string="settings-theme-default"></option>
+                <option value="native" data-string="settings-theme-native"></option>
             </select>
-            <p class="header" data-string="settings-theme">ArmCord theme</p>
+
+            <p class="header" data-string="settings-theme"></p>
+
             <div class="description">
-                <p data-string="settings-theme-desc1">ArmCord "themes" manage apps behaviour and looks.</p>
-                <b data-string="settings-theme-default">Default</b> -
-                <span data-string="settings-theme-desc2">
-                    this is how ArmCord looks when you first launch it. It includes recreation of Discord's custom
-                    titlebar and ArmCord specific styles injected into Discord.
-                </span>
+                <p data-string="settings-theme-desc1"></p>
+                <b data-string="settings-theme-default"></b> -
+                <span data-string="settings-theme-desc2"></span>
                 <br />
-                <b data-string="settings-theme-native">Native</b> -
-                <span data-string="settings-theme-desc3">
-                    uses native titlebar of OS you're currently running (e.g Windows 7/10). Functions more similar to
-                    actual Discord app on Linux.
-                </span>
+                <b data-string="settings-theme-native"></b> -
+                <span data-string="settings-theme-desc3"></span>
             </div>
         </div>
         <br />
+
         <div class="switch acCSP">
             <label class="header">ArmCord CSP</label>
             <input class="tgl tgl-light left" data-setting="armcordCSP" type="checkbox" />
             <label class="tgl-btn left" for="csp"></label>
-            <p class="description" data-string="settings-csp-desc">
-                ArmCord CSP is our system that manages loading custom content loading into the Discord app. Stuff like
-                client mods and themes depend on it. Disable if you want to get rid of mods and custom styles.
-            </p>
+            <p class="description" data-string="settings-csp-desc"></p>
         </div>
         <br />
+
         <div class="switch acTray">
-            <label class="header" data-string="settings-tray">Minimize to tray</label>
+            <label class="header" data-string="settings-tray"></label>
             <input class="tgl tgl-light left" data-setting="minimizeToTray" type="checkbox" />
             <label class="tgl-btn left" for="tray"></label>
-            <p class="description" data-string="settings-tray-desc">
-                When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax
-                in your system tray for later.
-            </p>
+            <p class="description" data-string="settings-tray-desc"></p>
         </div>
         <br />
+
         <div class="switch acPatches">
-            <label class="header" data-string="settings-patches">Automatic Patches</label>
+            <label class="header" data-string="settings-patches"></label>
             <input class="tgl tgl-light left" data-setting="automaticPatches" type="checkbox" />
             <label class="tgl-btn left" for="patches"></label>
-            <p class="description" data-string="settings-patches-desk">
-                Fetches automatic patches that are distributed if release turns out to have bugs after release. Usually
-                you don't have to keep this enabled, unless notified in support Discord.
-            </p>
+            <p class="description" data-string="settings-patches-desk"></p>
         </div>
         <br />
+
         <div class="switch acWebsocket">
-            <label class="header" data-string="settings-invitewebsocket">Rich Presence (Experimental)</label>
+            <label class="header" data-string="settings-invitewebsocket"></label>
             <input class="tgl tgl-light left" data-setting="inviteWebsocket" type="checkbox" />
             <label class="tgl-btn left" for="websocket"></label>
             <p class="description">
@@ -77,138 +71,125 @@
             </p>
         </div>
         <br />
+
         <div class="switch acMobileMode">
-            <label class="header" data-string="settings-mobileMode">Mobile mode</label>
+            <label class="header" data-string="settings-mobileMode"></label>
             <input class="tgl tgl-light left" data-setting="mobileMode" type="checkbox" />
             <label class="tgl-btn left" for="mobile"></label>
-            <p class="description" data-string="settings-mobileMode-desc">
-                If you're on a device with touch-screen this feature is for you! It activates Discord's hidden mobile
-                mode meant for phones and tablets. Only major feature missing is voice chat support. This is ideal for
-                users on PinePhone and similar.
-            </p>
+            <p class="description" data-string="settings-mobileMode-desc"></p>
         </div>
         <br />
+
         <div class="switch acAltPaste">
-            <label class="header" data-string="settings-altPaste">Alternative paste</label>
+            <label class="header" data-string="settings-altPaste"></label>
             <input class="tgl tgl-light left" data-setting="alternativePaste" type="checkbox" />
             <label class="tgl-btn left" for="alternativePaste"></label>
-            <p class="description" data-string="settings-altPaste-desc">
-                If you're on Gnome on Linux or just simply can't paste images copied from other messages, then this is
-                for you. This enables alternative module for pasting images. Only enable this when you're experiencing
-                issues.
-            </p>
+            <p class="description" data-string="settings-altPaste-desc"></p>
         </div>
         <br />
+
         <div class="switch acChannel">
             <select name="channel" data-setting="channel" class="left dropdown">
-                <option value="stable">Stable</option>
+                <option value="stable" selected>Stable</option>
                 <option value="canary">Canary</option>
                 <option value="ptb">PTB</option>
-                <option value="hummus">Hummus (Experimental)</option>
+                <option value="hummus" data-string="settings-channel-hummus"></option>
             </select>
+
             <div>
-                <p class="header" data-string="settings-channel">Discord channel</p>
+                <p class="header" data-string="settings-channel"></p>
                 <div class="description">
-                    <p data-string="settings-channel-desc1">
-                        You can use this setting to change current instance of Discord:
-                    </p>
-                    <b>Stable</b> -
-                    <span data-string="settings-channel-desc2">
-                        you're probably most familiar with this one. It's the one you see in default Discord client!
-                    </span>
+                    <p data-string="settings-channel-desc1"></p>
+                    <b>Stable</b> - <span data-string="settings-channel-desc2"></span>
                     <br />
-                    <b>Canary</b> -
-                    <span data-string="settings-channel-desc3">
-                        this is alpha test release of Discord. By using it you gain access to the newest features and
-                        fixes.
-                    </span>
+                    <b>Canary</b> - <span data-string="settings-channel-desc3"></span>
                     <br />
                     <b>PTB</b> -
-                    <span data-string="settings-channel-desc4">
-                        public test build. Receives features earlier than stable but is a bit older than Canary.
-                    </span>
+                    <span data-string="settings-channel-desc4"></span>
                     <br />
-                    <b>Hummus</b> -
-                    <span data-string="settings-channel-desc5">
-                        unofficial instance of Discord that takes you back to 2016! Only client mod available to run
-                        alongside with it is Cordwood. It's run by community, so you take all the risk by using it.
-                    </span>
+                    <b>Hummus</b> -<span data-string="settings-channel-desc5"></span>
                 </div>
             </div>
         </div>
         <br />
+
         <div class="switch acClientMod">
-            <select name="mod" data-string="mod" data-setting="mods" class="left dropdown">
+            <select name="mod" data-setting="mods" class="left dropdown">
+                <option value="none" data-string="settings-none" selected></option>
                 <option value="vencord">Vencord</option>
                 <option value="shelter">Shelter</option>
-                <option value="none" data-string="settings-none">None</option>
             </select>
-            <p class="header" data-string="settings-mod">Client mod</p>
+
+            <p class="header" data-string="settings-mod"></p>
             <div class="description">
-                <p data-string="settings-mod-desc1">
-                    Client mods are programs that allow you customize your Discord experience. They can change
-                    appearance of the client, modify behaviours or add new features!
-                </p>
-                <!-- TODO: Translation -->
-                <b>Vencord</b> - lightweight, and easy to use client mod. Features a built-in store for plugins.
+                <p data-string="settings-mod-desc1"></p>
+                <b>Vencord</b> - <span data-string="settings-mod-vencord"></span>
                 <br />
-                <!-- TODO: Translation -->
-                <b>Shelter</b> - is a new generation client mod built to be essentially bulletproof.
+                <b>Shelter</b> - <span data-string="settings-mod-shelter"></span>
             </div>
         </div>
         <br />
+
         <div class="switch acPrfmMode">
             <select name="prfmMode" data-setting="performanceMode" class="left dropdown">
-                <option value="performance" data-string="settings-prfmMode-performance">Performance</option>
-                <option value="battery" data-string="settings-prfmMode-battery">Battery</option>
-                <option value="none" data-string="settings-none">None</option>
+                <option value="none" data-string="settings-none" selected></option>
+                <option value="performance" data-string="settings-prfmMode-performance"></option>
+                <option value="battery" data-string="settings-prfmMode-battery"></option>
             </select>
-            <p class="header" data-string="settings-prfmMode">Performance mode</p>
-            <!-- FIXME: Add data-string once this string's name has been fixed -->
-            <p class="description">
-                Performance mode is an experimental function that may either increase responsiveness and performance of
-                ArmCord or... decrease it. Please try every option and see which fits you the best.
-            </p>
+
+            <p class="header" data-string="settings-prfmMode"></p>
+            <p class="description" data-string="settings-prfmMode-desc"></p>
         </div>
         <br />
+
         <div class="switch acTray">
             <select name="trayIcon" data-setting="trayIcon" class="left dropdown">
                 <optgroup label="- Discord -">
-                    <option value="default">Dynamic</option>
-                    <option value="dsc-tray">Discord Icon</option>
-                    <option value="clsc-dsc-tray">Classic Discord Icon</option>
+                    <option data-string="settings-trayIcon-dynamic" value="default" selected></option>
+                    <option data-string="settings-trayIcon-normal" value="dsc-tray"></option>
+                    <option data-string="settings-trayIcon-normal" value="clsc-dsc-tray"></option>
                 </optgroup>
+
                 <optgroup label="- ArmCord -">
-                    <option value="ac_plug_colored">Colored Plug</option>
-                    <option value="ac_white_plug">White Plug</option>
-                    <option value="ac_white_plug_hollow">White Plug Alt</option>
-                    <option value="ac_black_plug">Black Plug</option>
-                    <option value="ac_black_plug_hollow">Black Plug Alt</option>
+                    <option data-string="settings-trayIcon-colored-plug" value="ac_plug_colored"></option>
+                    <option data-string="settings-trayIcon-white-plug" value="ac_white_plug"></option>
+                    <option data-string="settings-trayIcon-white-plug-alt" value="ac_white_plug_hollow"></option>
+                    <option data-string="settings-trayIcon-black-plug" value="ac_black_plug"></option>
+                    <option data-string="settings-trayIcon-black-plug-alt" value="ac_black_plug_hollow"></option>
                 </optgroup>
             </select>
-            <p class="header" data-string="settings-trayIcon">Tray icon</p>
-            <p class="description" data-string="settings-trayIcon-desc">Set the icon which will appear in tray menu.</p>
+
+            <p class="header" data-string="settings-trayIcon"></p>
+            <p class="description" data-string="settings-trayIcon-desc"></p>
         </div>
         <br />
         <br />
+
         <div class="switch acAdvSettings">
-            <h1 data-string="settings-advanced" class="center advancedText">⚠️ Advanced User Zone ⚠️</h1>
+            <h1 data-string="settings-advanced" class="center advancedText"></h1>
             <br />
             <br />
-            <label class="header" data-string="settings-skipSplash">Skip Splash Screen (Experimental)</label>
-            <input class="tgl tgl-light left" data-setting="skipSplash" type="checkbox" />
-            <label class="tgl-btn left" for="skipSplash"></label>
-            <p class="description">Skips ArmCord splash screen when you start up the app.</p>
+
+            <div>
+                <label class="header" data-string="settings-skipSplash"></label>
+                <input class="tgl tgl-light left" data-setting="skipSplash" type="checkbox" />
+                <label class="tgl-btn left" for="skipSplash"></label>
+                <p data-string="settings-skipSplash-desc" class="description"></p>
+            </div>
             <br />
-            <button data-string="settings-pluginsFolder" data-open="Plugins" class="center">Open Plugins Folder</button>
+
+            <button data-string="settings-pluginsFolder" data-open="Plugins" class="center"></button>
             <br />
-            <button data-string="settings-themesFolder" data-open="Themes" class="center">Open Themes Folder</button>
+            <button data-string="settings-themesFolder" data-open="Themes" class="center"></button>
             <br />
-            <button data-string="settings-storageFolder" data-open="Storage" class="center">Open Storage Folder</button>
+            <button data-string="settings-storageFolder" data-open="Storage" class="center"></button>
             <br />
-            <button id="settings-copyDebugInfo" class="center" onclick="settings.copyDebugInfo()">
-                Copy Debug Info
-            </button>
+            <button
+                data-string="settings-copyDebugInfo"
+                id="settings-copyDebugInfo"
+                class="center"
+                onclick="settings.copyDebugInfo()"
+            ></button>
         </div>
     </body>
 
@@ -231,12 +212,9 @@
             obj.doneSetup = true;
             settings.save(obj);
 
-            if (
-                confirm(`Your settings have been saved!
-Some changes may require the app to restart before taking effect, would you like to do so now?`) == true
-            ) {
-                settings.restart();
-            }
+            const doRestart = confirm(`Your settings have been saved!
+Some changes may require the app to restart before taking effect, would you like to do so now?`);
+            if (doRestart) settings.restart();
         }
 
         document.querySelectorAll("[data-open]").forEach((e) => {
