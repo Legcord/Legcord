@@ -38,7 +38,7 @@
 
         <div class="switch acCSP">
             <label class="header">ArmCord CSP</label>
-            <input class="tgl tgl-light left" data-setting="armcordCSP" type="checkbox" />
+            <input id="csp" class="tgl tgl-light left" data-setting="armcordCSP" type="checkbox" />
             <label class="tgl-btn left" for="csp"></label>
             <p class="description" data-string="settings-csp-desc"></p>
         </div>
@@ -46,7 +46,7 @@
 
         <div class="switch acTray">
             <label class="header" data-string="settings-tray"></label>
-            <input class="tgl tgl-light left" data-setting="minimizeToTray" type="checkbox" />
+            <input id="tray" class="tgl tgl-light left" data-setting="minimizeToTray" type="checkbox" />
             <label class="tgl-btn left" for="tray"></label>
             <p class="description" data-string="settings-tray-desc"></p>
         </div>
@@ -54,7 +54,7 @@
 
         <div class="switch acPatches">
             <label class="header" data-string="settings-patches"></label>
-            <input class="tgl tgl-light left" data-setting="automaticPatches" type="checkbox" />
+            <input id="patches" class="tgl tgl-light left" data-setting="automaticPatches" type="checkbox" />
             <label class="tgl-btn left" for="patches"></label>
             <p class="description" data-string="settings-patches-desk"></p>
         </div>
@@ -62,7 +62,7 @@
 
         <div class="switch acWebsocket">
             <label class="header" data-string="settings-invitewebsocket"></label>
-            <input class="tgl tgl-light left" data-setting="inviteWebsocket" type="checkbox" />
+            <input id="websocket" class="tgl tgl-light left" data-setting="inviteWebsocket" type="checkbox" />
             <label class="tgl-btn left" for="websocket"></label>
             <p class="description">
                 <!-- TODO add data-string -->
@@ -74,7 +74,7 @@
 
         <div class="switch acMobileMode">
             <label class="header" data-string="settings-mobileMode"></label>
-            <input class="tgl tgl-light left" data-setting="mobileMode" type="checkbox" />
+            <input id="mobile" class="tgl tgl-light left" data-setting="mobileMode" type="checkbox" />
             <label class="tgl-btn left" for="mobile"></label>
             <p class="description" data-string="settings-mobileMode-desc"></p>
         </div>
@@ -82,7 +82,7 @@
 
         <div class="switch acAltPaste">
             <label class="header" data-string="settings-altPaste"></label>
-            <input class="tgl tgl-light left" data-setting="alternativePaste" type="checkbox" />
+            <input id="alternativePaste" class="tgl tgl-light left" data-setting="alternativePaste" type="checkbox" />
             <label class="tgl-btn left" for="alternativePaste"></label>
             <p class="description" data-string="settings-altPaste-desc"></p>
         </div>
@@ -172,7 +172,7 @@
 
             <div>
                 <label class="header" data-string="settings-skipSplash"></label>
-                <input class="tgl tgl-light left" data-setting="skipSplash" type="checkbox" />
+                <input id="skipSplash" class="tgl tgl-light left" data-setting="skipSplash" type="checkbox" />
                 <label class="tgl-btn left" for="skipSplash"></label>
                 <p data-string="settings-skipSplash-desc" class="description"></p>
             </div>
@@ -207,7 +207,9 @@
 
         function saveSettings() {
             const elements = Array.from(document.querySelectorAll("[data-setting]"));
-            const obj = Object.fromEntries(elements.map((e) => [e.dataset.setting, e.checked ?? e.value]));
+            const obj = Object.fromEntries(
+                elements.map((e) => [e.dataset.setting, e.tagName === "SELECT" ? e.value : e.checked])
+            );
 
             obj.doneSetup = true;
             settings.save(obj);
