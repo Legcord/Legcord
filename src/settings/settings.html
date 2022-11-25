@@ -9,264 +9,218 @@
 
     <body>
         <div class="saveBar">
-            <button id="settings-save" class="center">Save Settings</button>
+            <button data-string="settings-save" class="center" onclick="saveSettings()"></button>
         </div>
+
         <div class="restartBar">
-            <button id="settings-restart" class="center">Restart App</button>
+            <button data-string="settings-restart" class="center" onclick="settings.restart()"></button>
         </div>
+
         <div class="switch acTheme">
-            <select name="theme" id="theme" class="left dropdown">
-                <option value="default">Default</option>
-                <option value="native">Native</option>
+            <select name="theme" data-setting="windowStyle" class="left dropdown">
+                <option value="" disabled selected hidden data-string="settings-theme"></option>
+                <option value="default" data-string="settings-theme-default"></option>
+                <option value="native" data-string="settings-theme-native"></option>
             </select>
-            <p class="header" id="settings-theme">ArmCord theme</p>
-            <p class="description">
-                ArmCord "themes" manage apps behaviour and looks.
+
+            <p class="header" data-string="settings-theme"></p>
+
+            <div class="description">
+                <p data-string="settings-theme-desc1"></p>
+                <b data-string="settings-theme-default"></b> -
+                <span data-string="settings-theme-desc2"></span>
                 <br />
-                <b>Default</b> - this is how ArmCord looks when you first launch it. It includes recreation of Discord's
-                custom titlebar and ArmCord specific styles injected into Discord.
-                <br />
-                <b>Native</b> - uses native titlebar of OS you're currently running (e.g Windows 7/10). Functions more
-                similar to actual Discord app on Linux.
-            </p>
+                <b data-string="settings-theme-native"></b> -
+                <span data-string="settings-theme-desc3"></span>
+            </div>
         </div>
         <br />
+
         <div class="switch acCSP">
             <label class="header">ArmCord CSP</label>
-            <input class="tgl tgl-light left" id="csp" type="checkbox" />
+            <input id="csp" class="tgl tgl-light left" data-setting="armcordCSP" type="checkbox" />
             <label class="tgl-btn left" for="csp"></label>
-            <p class="description">
-                ArmCord CSP is our system that manages loading custom content loading into the Discord app. Stuff like
-                client mods and themes depend on it. Disable if you want to get rid of mods and custom styles.
-            </p>
+            <p class="description" data-string="settings-csp-desc"></p>
         </div>
         <br />
+
         <div class="switch acTray">
-            <label class="header" id="settings-tray">Minimize to tray</label>
-            <input class="tgl tgl-light left" id="tray" type="checkbox" />
+            <label class="header" data-string="settings-tray"></label>
+            <input id="tray" class="tgl tgl-light left" data-setting="minimizeToTray" type="checkbox" />
             <label class="tgl-btn left" for="tray"></label>
-            <p class="description">
-                When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax
-                in your system tray for later.
-            </p>
+            <p class="description" data-string="settings-tray-desc"></p>
         </div>
         <br />
+
         <div class="switch acPatches">
-            <label class="header" id="settings-patches">Automatic Patches</label>
-            <input class="tgl tgl-light left" id="patches" type="checkbox" />
+            <label class="header" data-string="settings-patches"></label>
+            <input id="patches" class="tgl tgl-light left" data-setting="automaticPatches" type="checkbox" />
             <label class="tgl-btn left" for="patches"></label>
-            <p class="description">
-                Fetches automatic patches that are distributed if release turns out to have bugs after release. Usually
-                you don't have to keep this enabled, unless notified in support Discord.
-            </p>
+            <p class="description" data-string="settings-patches-desk"></p>
         </div>
         <br />
+
         <div class="switch acWebsocket">
-            <label class="header" id="settings-invitewebsocket">Rich Presence (Experimental)</label>
-            <input class="tgl tgl-light left" id="websocket" type="checkbox" />
+            <label class="header" data-string="settings-invitewebsocket"></label>
+            <input id="websocket" class="tgl tgl-light left" data-setting="inviteWebsocket" type="checkbox" />
             <label class="tgl-btn left" for="websocket"></label>
             <p class="description">
+                <!-- TODO add data-string -->
                 Uses <a target="_blank" href="https://github.com/OpenAsar/arrpc">arRPC</a> to support Discord RPC (Rich
                 Presence) with local programs on your machine. Work in progress.
             </p>
         </div>
         <br />
+
         <div class="switch acMobileMode">
-            <label class="header" id="settings-mobileMode">Mobile mode</label>
-            <input class="tgl tgl-light left" id="mobile" type="checkbox" />
+            <label class="header" data-string="settings-mobileMode"></label>
+            <input id="mobile" class="tgl tgl-light left" data-setting="mobileMode" type="checkbox" />
             <label class="tgl-btn left" for="mobile"></label>
-            <p class="description">
-                If you're on a device with touch-screen this feature is for you! It activates Discord's hidden mobile
-                mode meant for phones and tablets. Only major feature missing is voice chat support. This is ideal for
-                users on PinePhone and similar.
-            </p>
+            <p class="description" data-string="settings-mobileMode-desc"></p>
         </div>
         <br />
+
         <div class="switch acAltPaste">
-            <label class="header" id="settings-alternativePaste">Alternative paste</label>
-            <input class="tgl tgl-light left" id="alternativePaste" type="checkbox" />
+            <label class="header" data-string="settings-altPaste"></label>
+            <input id="alternativePaste" class="tgl tgl-light left" data-setting="alternativePaste" type="checkbox" />
             <label class="tgl-btn left" for="alternativePaste"></label>
-            <p class="description">
-                If you're on Gnome on Linux or just simply can't paste images copied from other messages, then this is
-                for you. This enables alternative module for pasting images. Only enable this when you're experiencing
-                issues.
-            </p>
+            <p class="description" data-string="settings-altPaste-desc"></p>
         </div>
         <br />
+
         <div class="switch acChannel">
-            <select name="channel" id="channel" class="left dropdown">
-                <option value="stable">Stable</option>
+            <select name="channel" data-setting="channel" class="left dropdown">
+                <option value="stable" selected>Stable</option>
                 <option value="canary">Canary</option>
                 <option value="ptb">PTB</option>
-                <option value="hummus">Hummus (Experimental)</option>
+                <option value="hummus" data-string="settings-channel-hummus"></option>
             </select>
+
             <div>
-                <p class="header" id="settings-channel">Discord channel</p>
-                <p class="description">
-                    You can use this setting to change current instance of Discord:
+                <p class="header" data-string="settings-channel"></p>
+                <div class="description">
+                    <p data-string="settings-channel-desc1"></p>
+                    <b>Stable</b> - <span data-string="settings-channel-desc2"></span>
                     <br />
-                    <b>Stable</b> - you're probably most familiar with this one. It's the one you see in default Discord
-                    client!
+                    <b>Canary</b> - <span data-string="settings-channel-desc3"></span>
                     <br />
-                    <b>Canary</b> - this is alpha test release of Discord. By using it you gain access to the newest
-                    features and fixes.
+                    <b>PTB</b> -
+                    <span data-string="settings-channel-desc4"></span>
                     <br />
-                    <b>PTB</b> - public test build. Receives features earlier than stable but is a bit older than
-                    Canary.
-                    <br />
-                    <b>Hummus</b> - unofficial instance of Discord that takes you back to 2016! Only client mod
-                    available to run alongside with it is Cordwood. It's run by community, so you take all the risk by
-                    using it.
-                </p>
+                    <b>Hummus</b> -<span data-string="settings-channel-desc5"></span>
+                </div>
             </div>
         </div>
         <br />
+
         <div class="switch acClientMod">
-            <select name="mod" id="mod" class="left dropdown">
+            <select name="mod" data-setting="mods" class="left dropdown">
+                <option value="none" data-string="settings-none" selected></option>
                 <option value="vencord">Vencord</option>
                 <option value="shelter">Shelter</option>
-                <option value="none">None</option>
             </select>
-            <p class="header" id="settings-mod">Client mod</p>
-            <p class="description">
-                Client mods are programs that allow you customize your Discord experience. They can change appearance of
-                the client, modify behaviours or add new features!
+
+            <p class="header" data-string="settings-mod"></p>
+            <div class="description">
+                <p data-string="settings-mod-desc1"></p>
+                <b>Vencord</b> - <span data-string="settings-mod-vencord"></span>
                 <br />
-                <b>Vencord</b> - lightweight, and easy to use client mod. Features a built-in store for plugins.
-                <br />
-                <b>Shelter</b> - is a new generation client mod built to be essentially bulletproof.
-            </p>
+                <b>Shelter</b> - <span data-string="settings-mod-shelter"></span>
+            </div>
         </div>
         <br />
+
         <div class="switch acPrfmMode">
-            <select name="prfmMode" id="prfmMode" class="left dropdown">
-                <option value="performance">Performance</option>
-                <option value="battery">Battery</option>
-                <option value="none">None</option>
+            <select name="prfmMode" data-setting="performanceMode" class="left dropdown">
+                <option value="none" data-string="settings-none" selected></option>
+                <option value="performance" data-string="settings-prfmMode-performance"></option>
+                <option value="battery" data-string="settings-prfmMode-battery"></option>
             </select>
-            <p class="header" id="settings-prfmMode">Performance mode</p>
-            <p class="description">
-                Performance mode is an experimental function that may either increase responsiveness and performance of
-                ArmCord or... decrease it. Please try every option and see which fits you the best.
-            </p>
+
+            <p class="header" data-string="settings-prfmMode"></p>
+            <p class="description" data-string="settings-prfmMode-desc"></p>
         </div>
         <br />
+
         <div class="switch acTray">
-            <select name="trayIcon" id="trayIcon" class="left dropdown">
+            <select name="trayIcon" data-setting="trayIcon" class="left dropdown">
                 <optgroup label="- Discord -">
-                    <option value="default">Dynamic</option>
-                    <option value="dsc-tray">Discord Icon</option>
-                    <option value="clsc-dsc-tray">Classic Discord Icon</option>
+                    <option data-string="settings-trayIcon-dynamic" value="default" selected></option>
+                    <option data-string="settings-trayIcon-normal" value="dsc-tray"></option>
+                    <option data-string="settings-trayIcon-normal" value="clsc-dsc-tray"></option>
                 </optgroup>
+
                 <optgroup label="- ArmCord -">
-                    <option value="ac_plug_colored">Colored Plug</option>
-                    <option value="ac_white_plug">White Plug</option>
-                    <option value="ac_white_plug_hollow">White Plug Alt</option>
-                    <option value="ac_black_plug">Black Plug</option>
-                    <option value="ac_black_plug_hollow">Black Plug Alt</option>
+                    <option data-string="settings-trayIcon-colored-plug" value="ac_plug_colored"></option>
+                    <option data-string="settings-trayIcon-white-plug" value="ac_white_plug"></option>
+                    <option data-string="settings-trayIcon-white-plug-alt" value="ac_white_plug_hollow"></option>
+                    <option data-string="settings-trayIcon-black-plug" value="ac_black_plug"></option>
+                    <option data-string="settings-trayIcon-black-plug-alt" value="ac_black_plug_hollow"></option>
                 </optgroup>
             </select>
-            <p class="header" id="settings-trayIcon">Tray icon</p>
-            <p class="description">Set the icon which will appear in tray menu.</p>
+
+            <p class="header" data-string="settings-trayIcon"></p>
+            <p class="description" data-string="settings-trayIcon-desc"></p>
         </div>
         <br />
         <br />
+
         <div class="switch acAdvSettings">
-            <h1 class="center advancedText">⚠️ Advanced User Zone ⚠️</h1>
+            <h1 data-string="settings-advanced" class="center advancedText"></h1>
             <br />
             <br />
-            <label class="header" id="settings-skipSplash">Skip Splash Screen (Experimental)</label>
-            <input class="tgl tgl-light left" id="skipSplash" type="checkbox" />
-            <label class="tgl-btn left" for="skipSplash"></label>
-            <p class="description">Skips ArmCord splash screen when you start up the app.</p>
+
+            <div>
+                <label class="header" data-string="settings-skipSplash"></label>
+                <input id="skipSplash" class="tgl tgl-light left" data-setting="skipSplash" type="checkbox" />
+                <label class="tgl-btn left" for="skipSplash"></label>
+                <p data-string="settings-skipSplash-desc" class="description"></p>
+            </div>
             <br />
-            <button id="settings-pluginsFolder" class="center">Open Plugins Folder</button>
+
+            <button data-string="settings-pluginsFolder" data-open="Plugins" class="center"></button>
             <br />
-            <button id="settings-themesFolder" class="center">Open Themes Folder</button>
+            <button data-string="settings-themesFolder" data-open="Themes" class="center"></button>
             <br />
-            <button id="settings-storageFolder" class="center">Open Storage Folder</button>
+            <button data-string="settings-storageFolder" data-open="Storage" class="center"></button>
             <br />
-            <button id="settings-copyDebugInfo" class="center">Copy Debug Info</button>
+            <button
+                data-string="settings-copyDebugInfo"
+                id="settings-copyDebugInfo"
+                class="center"
+                onclick="settings.copyDebugInfo()"
+            ></button>
         </div>
     </body>
+
     <script>
-        async function loadLang() {
-            document.getElementById("settings-restart").innerHTML = await settings.getLang("settings-restart");
-            document.getElementById("settings-save").innerHTML = await settings.getLang("settings-save");
-            document.getElementById("settings-mod").innerHTML = await settings.getLang("settings-mod");
-            document.getElementById("settings-channel").innerHTML = await settings.getLang("settings-channel");
-            document.getElementById("settings-invitewebsocket").innerHTML = await settings.getLang(
-                "settings-invitewebsocket"
+        document.querySelectorAll("[data-string]").forEach(async (el) => {
+            el.textContent = await settings.getLang(el.dataset.string);
+        });
+
+        const elements = document.querySelectorAll("[data-setting]");
+        elements.forEach(async (e) => {
+            const value = await settings.get(e.dataset.setting);
+            if (e.tagName == "SELECT") e.value = value;
+            else e.checked = value;
+        });
+
+        function saveSettings() {
+            const elements = Array.from(document.querySelectorAll("[data-setting]"));
+            const obj = Object.fromEntries(
+                elements.map((e) => [e.dataset.setting, e.tagName === "SELECT" ? e.value : e.checked])
             );
-            document.getElementById("settings-patches").innerHTML = await settings.getLang("settings-patches");
-            document.getElementById("settings-tray").innerHTML = await settings.getLang("settings-tray");
-            document.getElementById("settings-mobileMode").innerHTML = await settings.getLang("settings-mobileMode");
-            document.getElementById("settings-theme").innerHTML = await settings.getLang("settings-theme");
-            //select stuff
-            document.getElementById("mod").options[3].text = await settings.getLang("settings-none");
-            document.getElementById("prfmMode").options[2].text = await settings.getLang("settings-none");
-            document.getElementById("prfmMode").options[1].text = await settings.getLang("settings-prfmMode-battery");
-            document.getElementById("prfmMode").options[0].text = await settings.getLang(
-                "settings-prfmMode-performance"
-            );
-            document.getElementById("theme").options[1].text = await settings.getLang("settings-theme-native");
-            document.getElementById("theme").options[0].text = await settings.getLang("settings-theme-default");
+
+            obj.doneSetup = true;
+            settings.save(obj);
+
+            const doRestart = confirm(`Your settings have been saved!
+Some changes may require the app to restart before taking effect, would you like to do so now?`);
+            if (doRestart) settings.restart();
         }
-        loadLang();
-    </script>
-    <script>
-        async function loadSettings() {
-            document.getElementById("csp").checked = await settings.get("armcordCSP");
-            document.getElementById("tray").checked = await settings.get("minimizeToTray");
-            document.getElementById("websocket").checked = await settings.get("inviteWebsocket");
-            document.getElementById("alternativePaste").checked = await settings.get("alternativePaste");
-            document.getElementById("skipSplash").checked = await settings.get("skipSplash");
-            document.getElementById("mobile").checked = await settings.get("mobileMode");
-            document.getElementById("patches").value = await settings.get("automaticPatches");
-            document.getElementById("mod").value = await settings.get("mods");
-            document.getElementById("channel").value = await settings.get("channel");
-            document.getElementById("theme").value = await settings.get("windowStyle");
-            document.getElementById("prfmMode").value = await settings.get("performanceMode");
-            document.getElementById("trayIcon").value = await settings.get("trayIcon");
-        }
-        loadSettings();
-        document.getElementById("settings-save").addEventListener("click", function () {
-            settings.save({
-                windowStyle: document.getElementById("theme").value,
-                channel: document.getElementById("channel").value,
-                armcordCSP: document.getElementById("csp").checked,
-                minimizeToTray: document.getElementById("tray").checked,
-                alternativePaste: document.getElementById("alternativePaste").checked,
-                skipSplash: document.getElementById("skipSplash").checked,
-                automaticPatches: document.getElementById("patches").checked,
-                mods: document.getElementById("mod").value,
-                mobileMode: document.getElementById("mobile").checked,
-                inviteWebsocket: document.getElementById("websocket").checked,
-                performanceMode: document.getElementById("prfmMode").value,
-                trayIcon: document.getElementById("trayIcon").value,
-                doneSetup: true
-            });
-            if (
-                confirm(`Your settings have been saved!
-Some changes may require the app to restart before taking effect, would you like to do so now?`) == true
-            ) {
-                settings.restart();
-            }
-        });
-        document.getElementById("settings-restart").addEventListener("click", function () {
-            settings.restart();
-        });
-        document.getElementById("settings-pluginsFolder").addEventListener("click", function () {
-            settings.openPluginsFolder();
-        });
-        document.getElementById("settings-themesFolder").addEventListener("click", function () {
-            settings.openThemesFolder();
-        });
-        document.getElementById("settings-storageFolder").addEventListener("click", function () {
-            settings.openStorageFolder();
-        });
-        document.getElementById("settings-copyDebugInfo").addEventListener("click", function () {
-            settings.copyDebugInfo();
+
+        document.querySelectorAll("[data-open]").forEach((e) => {
+            e.addEventListener("click", settings[`open${e.dataset.open}Folder`]);
         });
     </script>
 </html>
