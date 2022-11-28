@@ -4,7 +4,7 @@ import {getConfig} from "../utils";
 const unstrictCSP = async () => {
     console.log("Setting up CSP unstricter...");
 
-    const cspAllowAll = ["style-src", "connect-src", "img-src", "font-src", "media-src", "worker-src"];
+    const cspAllowAll = ["style-src", "connect-src", "img-src", "font-src", "media-src", "child-src"];
 
     const isVencord = await getConfig("mods").then((s) => s.includes("vencord"));
     electron.session.defaultSession.webRequest.onHeadersReceived(({responseHeaders}, done) => {
