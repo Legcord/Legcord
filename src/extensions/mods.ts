@@ -1,29 +1,52 @@
 import electron from "electron";
 import {getConfig} from "../utils";
 
+interface PolicyResult {
+    [key: string]: string[];
+}
+
+const parsePolicy = (policy: string): PolicyResult => {
+    const result: PolicyResult = {};
+    policy.split(";").forEach((directive) => {
+        const [directiveKey, ...directiveValue] = directive.trim().split(/\s+/g);
+        if (directiveKey && !Object.prototype.hasOwnProperty.call(result, directiveKey)) {
+            result[directiveKey] = directiveValue;
+        }
+    });
+    return result;
+};
+
+const stringifyPolicy = (policy: PolicyResult): string =>
+    Object.entries(policy)
+        .filter(([, values]) => values?.length)
+        .map((directive) => directive.flat().join(" "))
+        .join("; ");
+
 const unstrictCSP = async () => {
     console.log("Setting up CSP unstricter...");
 
-    const cspAllowAll = ["style-src", "connect-src", "img-src", "font-src", "media-src"];
+    const cspAllowAll = ["style-src", "connect-src", "img-src", "font-src", "media-src", "worker-src"];
 
     const isVencord = await getConfig("mods").then((s) => s.includes("vencord"));
     electron.session.defaultSession.webRequest.onHeadersReceived(({responseHeaders}, done) => {
-        let csp = responseHeaders!["content-security-policy"];
+        let cspHeaders = responseHeaders!["content-security-policy"];
 
-        if (csp) {
+        if (cspHeaders) {
+            const csp = parsePolicy(cspHeaders[0]);
+
             for (const directive of cspAllowAll) {
-                csp[0] = csp[0].replace(new RegExp(`${directive}.+?;`), `${directive} * blob: data: 'unsafe-inline';`);
+                csp[directive] = ["*", "blob:", "data:", "'unsafe-inline'"];
             }
 
             if (isVencord) {
                 // unpkg and cdnjs are used for QuickCss and some plugins' dependencies (e.g. GifEncoder & APNG for FakeNitro)
-                csp[0] = csp[0].replace(
-                    /script-src.+?(?=;)/,
-                    "$& 'unsafe-eval' https://unpkg.com https://cdnjs.cloudflare.com"
-                );
+                csp["script-src"] ??= [];
+                csp["script-src"].push("'unsafe-eval'", "https://unpkg.com", "https://cdnjs.cloudflare.com");
             }
             // Fix Discord's broken CSP which disallows unsafe-inline due to having a nonce (which they don't even use?)
-            csp[0] = csp[0].replace(/'nonce-.+?' /, "");
+            csp["script-src"] = csp["script-src"]?.filter((value) => !value.includes("nonce-"));
+
+            cspHeaders[0] = stringifyPolicy(csp);
         }
 
         done({responseHeaders});
