@@ -48,7 +48,9 @@ scoop bucket add extras
 scoop install armcord
 ```
 ### AUR Package
-ArmCord is also available on the Arch User Repository (AUR) [here](https://aur.archlinux.org/packages/armcord-bin/).
+ArmCord is also available on the Arch User Repository (AUR):
+- [armcord-bin](https://aur.archlinux.org/packages/armcord-bin) - ArmCord Release ~ Static binary from release, may be outdated
+- [armcord-git](https://aur.archlinux.org/packages/armcord-git) - ArmCord Dev ~ Latest devbuild built from source (takes ~1 minute) using the system electron
 
 Install it via an AUR helper tool like `yay`.
 
