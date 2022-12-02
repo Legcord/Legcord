@@ -1,5 +1,6 @@
 import {BrowserWindow, shell, ipcMain, app, clipboard} from "electron";
 import {
+    checkForDataFolder,
     getConfig,
     setConfigBulk,
     Settings,
@@ -16,6 +17,7 @@ import fs from "fs";
 import {mainWindow} from "../window";
 var settingsWindow: BrowserWindow;
 var instance: number = 0;
+checkForDataFolder();
 const userDataPath = app.getPath("userData");
 const storagePath = path.join(userDataPath, "/storage/");
 const themesPath = path.join(userDataPath, "/themes/");

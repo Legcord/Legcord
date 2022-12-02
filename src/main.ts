@@ -1,7 +1,7 @@
 // Modules to control application life and create native browser window
 import {app, BrowserWindow, session} from "electron";
 import "v8-compile-cache";
-import {getConfig, checkIfConfigExists, injectElectronFlags, installModLoader} from "./utils";
+import {checkForDataFolder, getConfig, checkIfConfigExists, injectElectronFlags, installModLoader} from "./utils";
 import "./extensions/mods";
 import "./tray";
 import {createCustomWindow, createNativeWindow, createTransparentWindow, mainWindow} from "./window";
@@ -22,6 +22,7 @@ if (process.platform == "linux") {
         }
     }
 }
+checkForDataFolder();
 checkIfConfigExists();
 injectElectronFlags();
 app.whenReady().then(async () => {
