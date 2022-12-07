@@ -4,7 +4,9 @@ const log = (...args) => console.log(`[${rgb(88, 101, 242, "arRPC")} > ${rgb(254
 const {join} = require("path");
 const {platform, env} = require("process");
 const {unlinkSync} = require("fs");
+
 const {createServer, createConnection} = require("net");
+
 const SOCKET_PATH =
     platform === "win32"
         ? "\\\\?\\pipe\\discord-ipc"
@@ -210,9 +212,19 @@ class IPCServer {
         socket.once("handshake", (params) => {
             log("handshake:", params);
 
-            const ver = params.v ?? 1;
+            const ver = parseInt(params.v ?? 1);
             const clientId = params.client_id ?? "";
             // encoding is always json for ipc
+
+            socket.close = (code = CloseCodes.CLOSE_NORMAL, message = "") => {
+                socket.end(
+                    encode(Types.CLOSE, {
+                        code,
+                        message
+                    })
+                );
+                socket.destroy();
+            };
 
             if (ver !== 1) {
                 log("unsupported version requested", ver);

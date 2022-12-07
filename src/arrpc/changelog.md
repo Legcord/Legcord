@@ -1,5 +1,16 @@
 # arRPC Changelog
 
+## v3.0.0 [26-11-2022]
+
+-   **Added Process Scanning.** Now scans for detectable/verified games and tells Discord the app, allowing process detection whilst maintaining privacy (Discord does not see any/all processes, just the name and app ID).
+-   **Fixed RPC not fully working with more apps/libraries.** Now responds with a mock/fake arRPC user and the proper config, replies with confirmation, and supports blank activites fully.
+-   **Fixed a few minor Bridge bugs.** Fixed catchup not working with several apps.
+
+## v2.2.1 [24-11-2022]
+
+-   IPC: Fix version given as string not being accepted
+-   IPC: Fix socket closing
+
 ## v2.2.0 [20-11-2022]
 
 -   Server: Move all looking up/fetching to client

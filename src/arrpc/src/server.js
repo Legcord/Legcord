@@ -1,10 +1,8 @@
-const rgb = (r, g, b, msg) => `\x1b[38;2;${r};${g};${b}m${msg}\x1b[0m`;
-const log = (...args) => console.log(`[${rgb(88, 101, 242, "arRPC")} > ${rgb(87, 242, 135, "bridge")}]`, ...args);
-
 const {EventEmitter} = require("events");
 
 const {IPCServer} = require("./transports/ipc.js");
 const {WSServer} = require("./transports/websocket.js");
+const {ProcessServer} = require("./process/index.js");
 
 let socketId = 0;
 class RPCServer extends EventEmitter {
@@ -23,6 +21,7 @@ class RPCServer extends EventEmitter {
 
             this.ipc = await new IPCServer(handlers);
             this.ws = await new WSServer(handlers);
+            this.process = await new ProcessServer(handlers);
 
             return this;
         })();
@@ -34,7 +33,23 @@ class RPCServer extends EventEmitter {
             evt: "READY",
 
             data: {
-                v: 1
+                v: 1,
+
+                // needed otherwise some stuff errors out parsing json strictly
+                user: {
+                    // mock user data using arRPC app/bot
+                    id: "1045800378228281345",
+                    username: "arRPC",
+                    discriminator: "0000",
+                    avatar: "cfefa4d9839fb4bdf030f91c2a13e95c",
+                    flags: 0,
+                    premium_type: 0
+                },
+                config: {
+                    api_endpoint: "//discord.com/api",
+                    cdn_host: "cdn.discordapp.com",
+                    environment: "production"
+                }
             }
         });
 
@@ -59,6 +74,14 @@ class RPCServer extends EventEmitter {
         switch (cmd) {
             case "SET_ACTIVITY":
                 const {activity, pid} = args; // translate given parameters into what discord dispatch expects
+
+                if (!activity)
+                    return this.emit("activity", {
+                        activity: null,
+                        pid,
+                        socketId: socket.socketId.toString()
+                    });
+
                 const {buttons, timestamps, instance} = activity;
 
                 socket.lastPid = pid ?? socket.lastPid;
@@ -91,6 +114,13 @@ class RPCServer extends EventEmitter {
                     socketId: socket.socketId.toString()
                 });
 
+                socket.send?.({
+                    cmd,
+                    data: null,
+                    evt: null,
+                    nonce
+                });
+
                 break;
 
             case "GUILD_TEMPLATE_BROWSER":
@@ -104,7 +134,7 @@ class RPCServer extends EventEmitter {
                     nonce
                 });
 
-                this.emit(cmd === "INVITE_BROWSER" ? "invite" : "guild_template", code);
+                this.emit(cmd === "INVITE_BROWSER" ? "invite" : "guild-template", code);
                 break;
 
             case "DEEP_LINK":

@@ -71,6 +71,7 @@ Then just use apps with Discord RPC like normal and they _should_ work!
     -   [ ] Erlpack
 -   [ ] HTTP Server
 -   [x] IPC
+-   [x] Process Scanning
 
 ### Commands
 
