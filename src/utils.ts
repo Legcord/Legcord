@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import {app, dialog, session} from "electron";
+import {app, dialog, Rectangle} from "electron";
 import path from "path";
 import fetch from "cross-fetch";
 import extract from "extract-zip";
@@ -199,6 +199,8 @@ export async function getLangName() {
 export interface WindowState {
     width: number;
     height: number;
+    x: number;
+    y: number;
     isMaximized: boolean;
 }
 export async function setWindowState(object: WindowState) {
@@ -217,7 +219,8 @@ export async function getWindowState(object: string) {
     const settingsFile = storagePath + "window.json";
     let rawdata = fs.readFileSync(settingsFile, "utf-8");
     let returndata = JSON.parse(rawdata);
-    console.log("[Window state manager] " + object + ": " + returndata[object]);
+    console.log(returndata);
+    console.log("[Window state manager] " + returndata);
     return returndata[object];
 }
 //ArmCord Settings/Storage manager

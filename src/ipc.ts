@@ -1,5 +1,5 @@
 //ipc stuff
-import {app, ipcMain, shell, desktopCapturer, nativeImage} from "electron";
+import {app, ipcMain, shell, desktopCapturer, nativeImage, screen} from "electron";
 import {mainWindow} from "./window";
 import {
     setConfigBulk,
@@ -87,6 +87,8 @@ export function registerIpc() {
             var width = (await getWindowState("width")) ?? 800;
             var height = (await getWindowState("height")) ?? 600;
             var isMaximized = (await getWindowState("isMaximized")) ?? false;
+            var xValue = await getWindowState("x");
+            var yValue = await getWindowState("y");
         } catch (e) {
             console.log("[Window state manager] No window state file found. Fallbacking to default values.");
             mainWindow.setSize(800, 600);
@@ -96,6 +98,7 @@ export function registerIpc() {
             mainWindow.maximize();
         } else {
             mainWindow.setSize(width, height);
+            mainWindow.setPosition(xValue, yValue);
             console.log("[Window state manager] Not maximized.");
         }
     });
