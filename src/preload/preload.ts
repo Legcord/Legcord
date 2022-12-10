@@ -4,7 +4,7 @@ import "./capturer";
 import "./patch";
 import * as fs from "fs";
 import * as path from "path";
-import {injectHummusTitlebar, injectTitlebar} from "./titlebar";
+import {injectHummusTitlebar, injectTitlebar,fixTitlebar} from "./titlebar";
 import {sleep, addStyle, addScript} from "../utils";
 import {injectMobileStuff} from "./mobile";
 var version = ipcRenderer.sendSync("displayVersion");
