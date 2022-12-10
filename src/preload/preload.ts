@@ -61,6 +61,15 @@ if (window.location.href.indexOf("splash.html") > -1) {
         addScript(fs.readFileSync(path.join(__dirname, "../", "/content/js/rpc.js"), "utf8"));
         const cssPath = path.join(__dirname, "../", "/content/css/discord.css");
         addStyle(fs.readFileSync(cssPath, "utf8"));
+                if (document.getElementById("window-controls-container") == null) {
+            console.warn("Titlebar didn't inject, retrying...");
+            if (ipcRenderer.sendSync("titlebar")) {
+                if (channel == "hummus") {
+                    injectHummusTitlebar();
+                } else {
+                    fixTitlebar();
+                }
+            }}
         await updateLang();
     });
 }
