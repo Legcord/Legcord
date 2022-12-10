@@ -6,7 +6,7 @@
 
     ArmCordRPC.listen(async (data) => {
         msg = data; //already parsed
-        console.log(msg);
+        //console.log(msg);
 
         if (!Dispatcher) {
             const wpRequire = window.webpackChunkdiscord_app.push([[Symbol()], {}, (x) => x]);
