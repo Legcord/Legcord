@@ -1,5 +1,5 @@
 //ipc stuff
-import {app, ipcMain, shell, desktopCapturer, nativeImage} from "electron";
+import {app, ipcMain, shell, desktopCapturer, nativeImage, screen} from "electron";
 import {mainWindow} from "./window";
 import {
     setConfigBulk,
@@ -84,19 +84,29 @@ export function registerIpc() {
     });
     ipcMain.on("splashEnd", async () => {
         try {
-            var width = (await getWindowState("width")) ?? 800;
-            var height = (await getWindowState("height")) ?? 600;
-            var isMaximized = (await getWindowState("isMaximized")) ?? false;
+            var bounds = await getWindowState();
+            if (bounds) {
+                const area = screen.getDisplayMatching(bounds).workArea;
+                // If the saved position still valid (the window is entirely inside the display area), use it.
+                if (
+                    (bounds.x >= area.x &&
+                        bounds.y >= area.y &&
+                        bounds.x + bounds.width <= area.x + area.width &&
+                        bounds.y + bounds.height <= area.y + area.height &&
+                        bounds.width <= area.width) ||
+                    bounds.height <= area.height
+                ) {
+                    mainWindow.setBounds(bounds);
+                    //   if (bounds["isMaximized]"]) {
+                    //     mainWindow.maximize();
+                    //   }
+                } else {
+                    mainWindow.setSize(800, 600);
+                }
+            }
         } catch (e) {
             console.log("[Window state manager] No window state file found. Fallbacking to default values.");
             mainWindow.setSize(800, 600);
-        }
-        if (isMaximized) {
-            mainWindow.setSize(800, 600); //just so the whole thing doesn't cover whole screen
-            mainWindow.maximize();
-        } else {
-            mainWindow.setSize(width, height);
-            console.log("[Window state manager] Not maximized.");
         }
     });
     ipcMain.on("restart", (event, arg) => {

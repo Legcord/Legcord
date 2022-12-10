@@ -178,7 +178,9 @@ async function doAfterDefiningTheWindow() {
         await setWindowState({
             width: width,
             height: height,
-            isMaximized: mainWindow.isMaximized()
+            isMaximized: mainWindow.isMaximized(),
+            x: mainWindow.getPosition()[0],
+            y: mainWindow.getPosition()[1]
         });
         if (await getConfig("minimizeToTray")) {
             e.preventDefault();

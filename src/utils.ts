@@ -1,9 +1,10 @@
 import * as fs from "fs";
-import {app, dialog, session} from "electron";
+import {app, dialog, Rectangle} from "electron";
 import path from "path";
 import fetch from "cross-fetch";
 import extract from "extract-zip";
 import util from "util";
+import {mainWindow} from "./window";
 const streamPipeline = util.promisify(require("stream").pipeline);
 export var firstRun: boolean;
 export var contentPath: string;
@@ -199,6 +200,8 @@ export async function getLangName() {
 export interface WindowState {
     width: number;
     height: number;
+    x: number;
+    y: number;
     isMaximized: boolean;
 }
 export async function setWindowState(object: WindowState) {
@@ -208,17 +211,19 @@ export async function setWindowState(object: WindowState) {
     if (!fs.existsSync(saveFile)) {
         fs.writeFileSync(saveFile, "{}", "utf-8");
     }
-    let toSave = JSON.stringify(object);
+    var isMaximized = mainWindow.isMaximized();
+    let toSave = JSON.stringify({object});
     fs.writeFileSync(saveFile, toSave, "utf-8");
 }
-export async function getWindowState(object: string) {
+export async function getWindowState() {
     const userDataPath = app.getPath("userData");
     const storagePath = path.join(userDataPath, "/storage/");
     const settingsFile = storagePath + "window.json";
     let rawdata = fs.readFileSync(settingsFile, "utf-8");
     let returndata = JSON.parse(rawdata);
-    console.log("[Window state manager] " + object + ": " + returndata[object]);
-    return returndata[object];
+    console.log(returndata);
+    console.log("[Window state manager] " + returndata);
+    return returndata;
 }
 //ArmCord Settings/Storage manager
 

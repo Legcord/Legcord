@@ -56,7 +56,13 @@ app.whenReady().then(async () => {
                         label: `Quit ${clientName}`,
                         click: function () {
                             let [width, height] = mainWindow.getSize();
-                            setWindowState({width: width, height: height, isMaximized: mainWindow.isMaximized()});
+                            setWindowState({
+                                width: width,
+                                height: height,
+                                isMaximized: mainWindow.isMaximized(),
+                                x: mainWindow.getPosition()[0],
+                                y: mainWindow.getPosition()[1]
+                            });
                             app.quit();
                         }
                     }
