@@ -11,6 +11,7 @@ specifiers:
   electron: ^21.3.0
   electron-builder: ^23.6.0
   electron-context-menu: github:ArmCord/electron-context-menu
+  electron-window-state: ^5.0.3
   extract-zip: ^2.0.1
   prettier: ^2.7.1
   typescript: ^4.9.3
@@ -22,6 +23,7 @@ dependencies:
   arrpc: file:src/arrpc
   cross-fetch: 3.1.5
   electron-context-menu: github.com/ArmCord/electron-context-menu/280c81398c02a063f46e3285a9708d8db1a7ce32
+  electron-window-state: 5.0.3
   extract-zip: 2.0.1
   v8-compile-cache: 2.3.0
   ws: 8.11.0
@@ -883,6 +885,14 @@ packages:
       - supports-color
     dev: true
 
+  /electron-window-state/5.0.3:
+    resolution: {integrity: sha512-1mNTwCfkolXl3kMf50yW3vE2lZj0y92P/HYWFBrb+v2S/pCka5mdwN3cagKm458A7NjndSwijynXgcLWRodsVg==}
+    engines: {node: '>=8.0.0'}
+    dependencies:
+      jsonfile: 4.0.0
+      mkdirp: 0.5.6
+    dev: false
+
   /electron/21.3.0:
     resolution: {integrity: sha512-MGRpshN8fBcx4IRuBABIsGDv0tB/MclIFsyFHFFXsBCUc+vIXaE/E6vuWaniGIFSz5WyeuapfTH5IeRb+7yIfw==}
     engines: {node: '>= 10.17.0'}
@@ -1504,7 +1514,6 @@ packages:
 
   /minimist/1.2.7:
     resolution: {integrity: sha512-bzfL1YUZsP41gmu/qjrEk0Q6i2ix/cVeAhbCbqH9u3zYutS1cLg00qhrD0M2MVdCcx4Sc0UpP2eBWo9rotpq6g==}
-    dev: true
 
   /minipass/3.3.4:
     resolution: {integrity: sha512-I9WPbWHCGu8W+6k1ZiGpPu0GkoKBeorkfKNuAFBNS1HNFJvke82sxvI5bzcCNpWPorkOO5QQ+zomzzwRxejXiw==}
@@ -1520,6 +1529,13 @@ packages:
       minipass: 3.3.4
       yallist: 4.0.0
     dev: true
+
+  /mkdirp/0.5.6:
+    resolution: {integrity: sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==}
+    hasBin: true
+    dependencies:
+      minimist: 1.2.7
+    dev: false
 
   /mkdirp/1.0.4:
     resolution: {integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==}
@@ -2234,7 +2250,7 @@ packages:
   file:src/arrpc:
     resolution: {directory: src/arrpc, type: directory}
     name: arrpc
-    version: 1.1.0
+    version: 2.2.0
     dependencies:
       ws: 8.11.0
     transitivePeerDependencies:

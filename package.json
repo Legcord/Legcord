@@ -31,6 +31,7 @@
         "copyfiles": "^2.4.1",
         "electron": "^21.3.0",
         "electron-builder": "^23.6.0",
+        "husky": "^3.1.0",
         "prettier": "^2.7.1",
         "typescript": "^4.9.3"
     },
@@ -39,6 +40,7 @@
         "arrpc": "file:src/arrpc",
         "cross-fetch": "^3.1.5",
         "electron-context-menu": "github:ArmCord/electron-context-menu",
+        "electron-window-state": "^5.0.3",
         "extract-zip": "^2.0.1",
         "v8-compile-cache": "^2.3.0",
         "ws": "^8.11.0"
