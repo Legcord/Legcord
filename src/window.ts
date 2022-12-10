@@ -12,7 +12,9 @@ import {
     setConfig,
     setLang,
     setWindowState,
-    transparency
+    transparency,
+    sleep,
+    modInstallState
 } from "./utils";
 import {registerIpc} from "./ipc";
 import {setMenu} from "./menu";
@@ -74,10 +76,13 @@ async function doAfterDefiningTheWindow() {
     if (!gotTheLock) {
         app.quit();
     } else {
-        app.on("second-instance", (event, commandLine, workingDirectory) => {
-            // i love stack overflow
+        app.on("second-instance", (event, commandLine, workingDirectory, additionalData) => {
+            // Print out data received from the second instance.
+            console.log(additionalData);
+
+            // Someone tried to run a second instance, we should focus our window.
             if (mainWindow) {
-                mainWindow.restore();
+                if (mainWindow.isMinimized()) mainWindow.restore();
                 mainWindow.focus();
             }
         });
@@ -214,30 +219,35 @@ async function doAfterDefiningTheWindow() {
         await setLang(Intl.DateTimeFormat().resolvedOptions().locale);
         mainWindow.setSize(390, 470);
         await mainWindow.loadFile(path.join(__dirname, "/content/setup.html"));
-    } else {
-        if ((await getConfig("skipSplash")) == true) {
-            switch (await getConfig("channel")) {
+    } else if ((await getConfig("skipSplash")) == true) {
+        while (modInstallState == "installing") {
+            sleep(1000);
+        }
+        mainWindow.loadURL("data:text/html,%3Ch1%3ELoading%21%3C%2Fh1%3E");
+        mainWindow.webContents.executeJavaScript(`
+            window.armcord.splashEnd();
+            switch (window.armcord.channel) {
                 case "stable":
-                    await mainWindow.loadURL("https://discord.com/app");
+                    window.location.replace("https://discord.com/app");
                     break;
                 case "canary":
-                    await mainWindow.loadURL("https://canary.discord.com/app");
+                    window.location.replace("https://canary.discord.com/app");
                     break;
                 case "ptb":
-                    await mainWindow.loadURL("https://ptb.discord.com/app");
+                    window.location.replace("https://ptb.discord.com/app");
                     break;
                 case "hummus":
-                    await mainWindow.loadURL("https://hummus.sys42.net/");
+                    window.location.replace("https://hummus.sys42.net/");
                     break;
                 case undefined:
-                    await mainWindow.loadURL("https://discord.com/app");
+                    window.location.replace("https://discord.com/app");
                     break;
                 default:
-                    await mainWindow.loadURL("https://discord.com/app");
+                    window.location.replace("https://discord.com/app");
             }
-        } else {
-            await mainWindow.loadFile(path.join(__dirname, "/content/splash.html"));
-        }
+            `);
+    } else {
+        await mainWindow.loadFile(path.join(__dirname, "/content/splash.html"));
     }
 }
 export function createCustomWindow() {
