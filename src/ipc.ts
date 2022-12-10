@@ -84,29 +84,22 @@ export function registerIpc() {
     });
     ipcMain.on("splashEnd", async () => {
         try {
-            var bounds = await getWindowState();
-            if (bounds) {
-                const area = screen.getDisplayMatching(bounds).workArea;
-                // If the saved position still valid (the window is entirely inside the display area), use it.
-                if (
-                    (bounds.x >= area.x &&
-                        bounds.y >= area.y &&
-                        bounds.x + bounds.width <= area.x + area.width &&
-                        bounds.y + bounds.height <= area.y + area.height &&
-                        bounds.width <= area.width) ||
-                    bounds.height <= area.height
-                ) {
-                    mainWindow.setBounds(bounds);
-                    //   if (bounds["isMaximized]"]) {
-                    //     mainWindow.maximize();
-                    //   }
-                } else {
-                    mainWindow.setSize(800, 600);
-                }
-            }
+            var width = (await getWindowState("width")) ?? 800;
+            var height = (await getWindowState("height")) ?? 600;
+            var isMaximized = (await getWindowState("isMaximized")) ?? false;
+            var xValue = await getWindowState("x");
+            var yValue = await getWindowState("y");
         } catch (e) {
             console.log("[Window state manager] No window state file found. Fallbacking to default values.");
             mainWindow.setSize(800, 600);
+        }
+        if (isMaximized) {
+            mainWindow.setSize(800, 600); //just so the whole thing doesn't cover whole screen
+            mainWindow.maximize();
+        } else {
+            mainWindow.setSize(width, height);
+            mainWindow.setPosition(xValue, yValue);
+            console.log("[Window state manager] Not maximized.");
         }
     });
     ipcMain.on("restart", (event, arg) => {

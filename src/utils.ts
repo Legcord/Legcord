@@ -4,7 +4,6 @@ import path from "path";
 import fetch from "cross-fetch";
 import extract from "extract-zip";
 import util from "util";
-import {mainWindow} from "./window";
 const streamPipeline = util.promisify(require("stream").pipeline);
 export var firstRun: boolean;
 export var contentPath: string;
@@ -211,11 +210,10 @@ export async function setWindowState(object: WindowState) {
     if (!fs.existsSync(saveFile)) {
         fs.writeFileSync(saveFile, "{}", "utf-8");
     }
-    var isMaximized = mainWindow.isMaximized();
-    let toSave = JSON.stringify({object});
+    let toSave = JSON.stringify(object);
     fs.writeFileSync(saveFile, toSave, "utf-8");
 }
-export async function getWindowState() {
+export async function getWindowState(object: string) {
     const userDataPath = app.getPath("userData");
     const storagePath = path.join(userDataPath, "/storage/");
     const settingsFile = storagePath + "window.json";
@@ -223,7 +221,7 @@ export async function getWindowState() {
     let returndata = JSON.parse(rawdata);
     console.log(returndata);
     console.log("[Window state manager] " + returndata);
-    return returndata;
+    return returndata[object];
 }
 //ArmCord Settings/Storage manager
 
