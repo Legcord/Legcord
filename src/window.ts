@@ -24,6 +24,8 @@ import {iconPath} from "./main";
 export let mainWindow: BrowserWindow;
 export let inviteWindow: BrowserWindow;
 
+const windowStateKeeper = require("electron-window-state");
+
 var osType = os.type();
 contextMenu({
     showSaveImageAs: true,
@@ -49,6 +51,18 @@ contextMenu({
     ]
 });
 async function doAfterDefiningTheWindow() {
+    let mainWindowState = windowStateKeeper({
+        defaultWidth: 300,
+        defaultHeight: 350
+    });
+    if (await getConfig("skipSplash")) {
+        if (mainWindowState.x) {
+            mainWindow.setPosition(mainWindowState.x, mainWindowState.y);
+        }
+        mainWindow.setSize(mainWindowState.width, mainWindowState.height);
+        mainWindowState.manage(mainWindow);
+    }
+
     if (transparency && process.platform === "win32") {
         import("@pyke/vibe").then((vibe) => {
             vibe.applyEffect(mainWindow, "acrylic");
@@ -214,27 +228,16 @@ async function doAfterDefiningTheWindow() {
         await mainWindow.loadFile(path.join(__dirname, "/content/setup.html"));
     } else {
         if ((await getConfig("skipSplash")) == true) {
-            switch (await getConfig("channel")) {
-                case "stable":
-                    await mainWindow.loadURL("https://discord.com/app");
-                    break;
-                case "canary":
-                    await mainWindow.loadURL("https://canary.discord.com/app");
-                    break;
-                case "ptb":
-                    await mainWindow.loadURL("https://ptb.discord.com/app");
-                    break;
-                case "hummus":
-                    await mainWindow.loadURL("https://hummus.sys42.net/");
-                    break;
-                case undefined:
-                    await mainWindow.loadURL("https://discord.com/app");
-                    break;
-                default:
-                    await mainWindow.loadURL("https://discord.com/app");
-            }
+            await mainWindow.loadFile(path.join(__dirname, "/content/skipsplash.html"));
         } else {
             await mainWindow.loadFile(path.join(__dirname, "/content/splash.html"));
+            setTimeout(() => {
+                if (mainWindowState.x) {
+                    mainWindow.setPosition(mainWindowState.x, mainWindowState.y, true);
+                }
+                mainWindow.setSize(mainWindowState.width, mainWindowState.height, true);
+                mainWindowState.manage(mainWindow);
+            }, 3000);
         }
     }
 }
@@ -246,6 +249,7 @@ export function createCustomWindow() {
         darkTheme: true,
         icon: iconPath,
         frame: false,
+        backgroundColor: "#202225",
         autoHideMenuBar: true,
         webPreferences: {
             sandbox: false,
@@ -263,6 +267,7 @@ export function createNativeWindow() {
         darkTheme: true,
         icon: iconPath,
         frame: true,
+        backgroundColor: "#202225",
         autoHideMenuBar: true,
         webPreferences: {
             sandbox: false,

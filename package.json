@@ -41,7 +41,8 @@
         "electron-context-menu": "github:ArmCord/electron-context-menu",
         "extract-zip": "^2.0.1",
         "v8-compile-cache": "^2.3.0",
-        "ws": "^8.11.0"
+        "ws": "^8.11.0",
+        "electron-window-state": "^5.0.3"
     },
     "build": {
         "nsis": {
