@@ -5,13 +5,7 @@ const unstrictCSP = () => {
     console.log("Setting up CSP unstricter...");
 
     electron.session.defaultSession.webRequest.onHeadersReceived(({responseHeaders}, done) => {
-        const cspHeaders = Object.keys(responseHeaders!).filter((name) =>
-          name.toLowerCase().startsWith("content-security-policy")
-        );
-
-        for (const header of cspHeaders)
-            delete responseHeaders![header];
-
+        delete responseHeaders!["content-security-policy"];
         done({ responseHeaders });
     });
 };
