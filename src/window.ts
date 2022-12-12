@@ -71,23 +71,17 @@ async function doAfterDefiningTheWindow() {
         }
         mainWindow.webContents.userAgent = `Mozilla/5.0 (X11; ${osType} ${os.arch()}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36`; //fake useragent for screenshare to work
     }
-    const gotTheLock = app.requestSingleInstanceLock();
+    app.on("second-instance", (event, commandLine, workingDirectory, additionalData) => {
+        // Print out data received from the second instance.
+        console.log(additionalData);
 
-    if (!gotTheLock) {
-        app.quit();
-    } else {
-        app.on("second-instance", (event, commandLine, workingDirectory, additionalData) => {
-            // Print out data received from the second instance.
-            console.log(additionalData);
-
-            // Someone tried to run a second instance, we should focus our window.
-            if (mainWindow) {
-                if (mainWindow.isMinimized()) mainWindow.restore();
-                mainWindow.show();
-                mainWindow.focus();
-            }
-        });
-    }
+        // Someone tried to run a second instance, we should focus our window.
+        if (mainWindow) {
+            if (mainWindow.isMinimized()) mainWindow.restore();
+            mainWindow.show();
+            mainWindow.focus();
+        }
+    });
     mainWindow.webContents.setWindowOpenHandler(({url}) => {
         // Allow about:blank (used by Vencord QuickCss popup)
         if (url === "about:blank") return {action: "allow"};
