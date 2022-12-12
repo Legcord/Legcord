@@ -6,7 +6,7 @@ const unstrictCSP = () => {
 
     electron.session.defaultSession.webRequest.onHeadersReceived(({responseHeaders}, done) => {
         delete responseHeaders!["content-security-policy"];
-        done({ responseHeaders });
+        done({responseHeaders});
     });
 };
 
