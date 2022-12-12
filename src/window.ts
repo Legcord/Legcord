@@ -253,6 +253,7 @@ export function createCustomWindow() {
         darkTheme: true,
         icon: iconPath,
         frame: false,
+        backgroundColor: "#202225",
         autoHideMenuBar: true,
         webPreferences: {
             sandbox: false,
@@ -270,6 +271,7 @@ export function createNativeWindow() {
         darkTheme: true,
         icon: iconPath,
         frame: true,
+        backgroundColor: "#202225",
         autoHideMenuBar: true,
         webPreferences: {
             sandbox: false,
