@@ -70,5 +70,7 @@
     "settings-startMinimized": "Start minimized",
     "settings-startMinimized-desc": "ArmCord starts in background and remains out of your way.",
     "settings-forceNativeCrash": "Force native crash",
-    "settings-crashesFolder": "Open native crashes folder"
+    "settings-crashesFolder": "Open native crashes folder",
+    "settings-disableAutogain": "Disable autogain",
+    "settings-disableAutogain-desc": "Disables autogain."
 }
