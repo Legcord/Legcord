@@ -22,6 +22,8 @@
     "settings-csp-desc": "ArmCord CSP is our system that manages loading custom content loading into the Discord app. Stuff like\n                client mods and themes depend on it. Disable if you want to get rid of mods and custom styles.",
     "settings-tray": "Minimize to tray",
     "settings-tray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later.",
+    "settings-startMinimized": "Start minimized",
+    "settings-startMinimized-desc": "ArmCord starts in background and remains out of your way.",
     "settings-patches": "Automatic Patches",
     "settings-patches-desk": "Fetches automatic patches that are distributed if release turns out to have bugs after release. Usually\n                you don't have to keep this enabled, unless notified in support Discord.",
     "settings-mobileMode": "Mobile mode",

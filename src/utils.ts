@@ -49,6 +49,7 @@ export function setup() {
         performanceMode: "none",
         skipSplash: false,
         inviteWebsocket: true,
+        startMinimized: false,
         mobileMode: false,
         trayIcon: "default",
         doneSetup: false
@@ -244,6 +245,7 @@ export interface Settings {
     mobileMode: boolean;
     skipSplash: boolean;
     performanceMode: string;
+    startMinimized: boolean;
     inviteWebsocket: boolean;
     trayIcon: string;
     doneSetup: boolean;

@@ -51,11 +51,18 @@ contextMenu({
     ]
 });
 async function doAfterDefiningTheWindow() {
+    if (await getConfig("startMinimized")) {
+        mainWindow.hide();
+    } else {
+        mainWindow.show();
+    }
     if (transparency && process.platform === "win32") {
-        import("@pyke/vibe").then((vibe) => {
+        import("@pyke/vibe").then(async (vibe) => {
             vibe.applyEffect(mainWindow, "acrylic");
             vibe.forceTheme(mainWindow, "dark");
-            mainWindow.show();
+            if ((await getConfig("startMinimized")) == false) {
+                mainWindow.show();
+            }
         });
     }
     var ignoreProtocolWarning = await getConfig("ignoreProtocolWarning");
@@ -251,12 +258,18 @@ async function doAfterDefiningTheWindow() {
     } else {
         await mainWindow.loadFile(path.join(__dirname, "/content/splash.html"));
     }
+    if (await getConfig("startMinimized")) {
+        mainWindow.hide();
+    } else {
+        mainWindow.show();
+    }
 }
 export function createCustomWindow() {
     mainWindow = new BrowserWindow({
         width: 300,
         height: 350,
         title: "ArmCord",
+        show: false,
         darkTheme: true,
         icon: iconPath,
         frame: false,
@@ -276,6 +289,7 @@ export function createNativeWindow() {
         title: "ArmCord",
         darkTheme: true,
         icon: iconPath,
+        show: false,
         frame: true,
         autoHideMenuBar: true,
         webPreferences: {
