@@ -59,6 +59,7 @@
     "settings-trayIcon-black-plug-alt": "Black Plug Alt",
     "settings-advanced": "Advanced user zone",
     "settings-pluginsFolder": "Open plugins folder",
+    "settings-crashesFolder": "Open native crashes folder",
     "settings-themesFolder": "Open themes folder",
     "settings-storageFolder": "Open storage folder",
     "settings-none": "None",
@@ -68,5 +69,6 @@
     "settings-updater": "Check for updates",
     "settings-skipSplash": "Skip Splash Screen (Experimental)",
     "settings-skipSplash-desc": "Skips ArmCord splash screen when you start up the app.",
-    "settings-copyDebugInfo": "Copy Debug Info"
+    "settings-copyDebugInfo": "Copy Debug Info",
+    "settings-forceNativeCrash": "Force native crash"
 }

@@ -1,15 +1,27 @@
 // Modules to control application life and create native browser window
-import {app, BrowserWindow, session} from "electron";
+import {app, BrowserWindow, crashReporter, session} from "electron";
 import "v8-compile-cache";
-import {checkForDataFolder, getConfig, checkIfConfigExists, injectElectronFlags, installModLoader} from "./utils";
+import {
+    checkForDataFolder,
+    getConfig,
+    checkIfConfigExists,
+    injectElectronFlags,
+    installModLoader,
+    getConfigLocation
+} from "./utils";
 import "./extensions/mods";
 import "./tray";
+import fs from "fs";
 import {createCustomWindow, createNativeWindow, createTransparentWindow, mainWindow} from "./window";
 import path from "path";
 export var iconPath: string;
 export var settings: any;
 export var customTitlebar: boolean;
 export var clientName: "ArmCord";
+
+// Your data now belongs to CCP
+let settingsFile = fs.readFileSync(getConfigLocation(), "utf-8");
+crashReporter.start({uploadToServer: false, extra: {settingsFile}});
 
 if (process.platform == "linux") {
     if (process.env.$XDG_SESSION_TYPE == "wayland") {
@@ -22,6 +34,7 @@ if (process.platform == "linux") {
         }
     }
 }
+
 checkForDataFolder();
 checkIfConfigExists();
 injectElectronFlags();

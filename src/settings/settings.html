@@ -191,11 +191,20 @@
             <br />
             <button data-string="settings-storageFolder" data-open="Storage" class="center"></button>
             <br />
+            <button data-string="settings-crashesFolder" data-open="Crashes" class="center"></button>
+            <br />
             <button
                 data-string="settings-copyDebugInfo"
                 id="settings-copyDebugInfo"
                 class="center"
                 onclick="settings.copyDebugInfo()"
+            ></button>
+            <br />
+            <button
+                data-string="settings-forceNativeCrash"
+                id="settings-forceNativeCrash"
+                class="center"
+                onclick="settings.crash()"
             ></button>
         </div>
     </body>

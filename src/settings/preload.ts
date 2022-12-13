@@ -11,7 +11,9 @@ contextBridge.exposeInMainWorld("settings", {
     openThemesFolder: () => ipcRenderer.send("openThemesFolder"),
     openPluginsFolder: () => ipcRenderer.send("openPluginsFolder"),
     openStorageFolder: () => ipcRenderer.send("openStorageFolder"),
-    copyDebugInfo: () => ipcRenderer.send("copyDebugInfo")
+    openCrashesFolder: () => ipcRenderer.send("openCrashesFolder"),
+    copyDebugInfo: () => ipcRenderer.send("copyDebugInfo"),
+    crash: () => ipcRenderer.send("crash")
 });
 
 ipcRenderer.on("themeLoader", (event, message) => {
