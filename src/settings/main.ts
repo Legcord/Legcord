@@ -15,6 +15,7 @@ import path from "path";
 import os from "os";
 import fs from "fs";
 import {mainWindow} from "../window";
+import {crash} from "process";
 var settingsWindow: BrowserWindow;
 var instance: number = 0;
 //checkForDataFolder();
@@ -88,8 +89,15 @@ export function createSettingsWindow() {
             shell.showItemInFolder(pluginsPath);
             await sleep(1000);
         });
+        ipcMain.on("openCrashesFolder", async (event) => {
+            shell.showItemInFolder(path.join(app.getPath("temp"), app.getName() + " Crashes"));
+            await sleep(1000);
+        });
         ipcMain.on("getLangName", async (event) => {
             event.returnValue = await getLangName();
+        });
+        ipcMain.on("crash", async (event) => {
+            process.crash();
         });
         ipcMain.handle("getSetting", (event, toGet: string) => {
             return getConfig(toGet);

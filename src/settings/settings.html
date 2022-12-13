@@ -52,6 +52,14 @@
         </div>
         <br />
 
+        <div class="switch acMinimized">
+            <label class="header" data-string="settings-startMinimized"></label>
+            <input id="startMinimized" class="tgl tgl-light left" data-setting="startMinimized" type="checkbox" />
+            <label class="tgl-btn left" for="startMinimized"></label>
+            <p class="description" data-string="settings-startMinimized-desc"></p>
+        </div>
+        <br />
+
         <div class="switch acPatches">
             <label class="header" data-string="settings-patches"></label>
             <input id="patches" class="tgl tgl-light left" data-setting="automaticPatches" type="checkbox" />
@@ -85,6 +93,14 @@
             <input id="alternativePaste" class="tgl tgl-light left" data-setting="alternativePaste" type="checkbox" />
             <label class="tgl-btn left" for="alternativePaste"></label>
             <p class="description" data-string="settings-altPaste-desc"></p>
+        </div>
+        <br />
+
+        <div class="switch acAutogain">
+            <label class="header" data-string="settings-disableAutogain"></label>
+            <input id="disableAutogain" class="tgl tgl-light left" data-setting="disableAutogain" type="checkbox" />
+            <label class="tgl-btn left" for="disableAutogain"></label>
+            <p class="description" data-string="settings-disableAutogain-desc"></p>
         </div>
         <br />
 
@@ -183,11 +199,20 @@
             <br />
             <button data-string="settings-storageFolder" data-open="Storage" class="center"></button>
             <br />
+            <button data-string="settings-crashesFolder" data-open="Crashes" class="center"></button>
+            <br />
             <button
                 data-string="settings-copyDebugInfo"
                 id="settings-copyDebugInfo"
                 class="center"
                 onclick="settings.copyDebugInfo()"
+            ></button>
+            <br />
+            <button
+                data-string="settings-forceNativeCrash"
+                id="settings-forceNativeCrash"
+                class="center"
+                onclick="settings.crash()"
             ></button>
         </div>
     </body>
