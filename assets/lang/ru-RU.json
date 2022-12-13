@@ -66,5 +66,7 @@
     "settings-trayIcon-black-plug-alt": "Черный штекер Alt",
     "settings-experimental": "Экспериментальный",
     "settings-skipSplash": "Пропустить экран-заставку (экспериментальный)",
-    "settings-skipSplash-desc": "Пропускает экран-заставку ArmCord при запуске приложения."
+    "settings-skipSplash-desc": "Пропускает экран-заставку ArmCord при запуске приложения.",
+    "settings-startMinimized": "Start minimized",
+    "settings-startMinimized-desc": "ArmCord starts in background and remains out of your way."
 }
