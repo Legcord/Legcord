@@ -19,7 +19,6 @@ export var settings: any;
 export var customTitlebar: boolean;
 export var clientName: "ArmCord";
 
-
 if (!app.requestSingleInstanceLock()) {
     // kill if 2nd instance
     app.quit();
