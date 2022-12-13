@@ -66,5 +66,7 @@
     "settings-trayIcon-black-plug": "Black Plug",
     "settings-trayIcon-black-plug-alt": "Black Plug Alt",
     "settings-skipSplash": "Skip Splash Screen (Experimental)",
-    "settings-copyDebugInfo": "Copy Debug Info"
+    "settings-copyDebugInfo": "Copy Debug Info",
+    "settings-startMinimized": "Start minimized",
+    "settings-startMinimized-desc": "ArmCord starts in background and remains out of your way."
 }
