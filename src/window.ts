@@ -156,8 +156,8 @@ async function doAfterDefiningTheWindow() {
             let trayPath = nativeImage.createFromPath(path.join(app.getPath("temp"), "/", "tray.png"));
             if (process.platform === "darwin" && trayPath.getSize().height > 22)
                 trayPath = trayPath.resize({height: 22});
-            if (process.platform === "win32" && trayPath.getSize().height > 64)
-                trayPath = trayPath.resize({height: 64});
+            if (process.platform === "win32" && trayPath.getSize().height > 32)
+                trayPath = trayPath.resize({height: 32});
             tray.setImage(trayPath);
         });
     }
