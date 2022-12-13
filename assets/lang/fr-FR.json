@@ -66,5 +66,7 @@
     "settings-trayIcon-black-plug-alt": "Black Plug Alt",
     "settings-experimental": "Experimental",
     "settings-skipSplash": "Skip Splash Screen (Experimental)",
-    "settings-skipSplash-desc": "Skips ArmCord splash screen when you start up the app."
+    "settings-skipSplash-desc": "Skips ArmCord splash screen when you start up the app.",
+    "settings-startMinimized": "Start minimized",
+    "settings-startMinimized-desc": "ArmCord starts in background and remains out of your way."
 }
