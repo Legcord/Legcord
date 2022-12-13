@@ -68,5 +68,7 @@
     "settings-skipSplash-desc": "当您启动ArmCord时跳过启动画面.",
     "settings-copyDebugInfo": "复制Debug信息",
     "settings-startMinimized": "Start minimized",
-    "settings-startMinimized-desc": "ArmCord starts in background and remains out of your way."
+    "settings-startMinimized-desc": "ArmCord starts in background and remains out of your way.",
+    "settings-crashesFolder": "Open native crashes folder",
+    "settings-forceNativeCrash": "Force native crash"
 }
