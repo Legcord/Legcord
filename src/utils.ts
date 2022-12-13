@@ -141,7 +141,7 @@ export async function setLang(language: string) {
     let rawdata = fs.readFileSync(langConfigFile, "utf-8");
     let parsed = JSON.parse(rawdata);
     parsed["lang"] = language;
-    let toSave = JSON.stringify(parsed);
+    let toSave = JSON.stringify(parsed, null, 4);
     fs.writeFileSync(langConfigFile, toSave, "utf-8");
 }
 var language: string;
@@ -209,10 +209,7 @@ export async function setWindowState(object: WindowState) {
     const userDataPath = app.getPath("userData");
     const storagePath = path.join(userDataPath, "/storage/");
     const saveFile = storagePath + "window.json";
-    if (!fs.existsSync(saveFile)) {
-        fs.writeFileSync(saveFile, "{}", "utf-8");
-    }
-    let toSave = JSON.stringify(object);
+    let toSave = JSON.stringify(object, null, 4);
     fs.writeFileSync(saveFile, toSave, "utf-8");
 }
 export async function getWindowState(object: string) {
@@ -267,11 +264,11 @@ export async function setConfig(object: string, toSet: any) {
     let rawdata = fs.readFileSync(getConfigLocation(), "utf-8");
     let parsed = JSON.parse(rawdata);
     parsed[object] = toSet;
-    let toSave = JSON.stringify(parsed);
+    let toSave = JSON.stringify(parsed, null, 4);
     fs.writeFileSync(getConfigLocation(), toSave, "utf-8");
 }
 export async function setConfigBulk(object: Settings) {
-    let toSave = JSON.stringify(object);
+    let toSave = JSON.stringify(object, null, 4);
     fs.writeFileSync(getConfigLocation(), toSave, "utf-8");
 }
 export async function checkIfConfigExists() {
