@@ -50,6 +50,7 @@ export function setup() {
         skipSplash: false,
         inviteWebsocket: true,
         startMinimized: false,
+        disableAutogain: false,
         mobileMode: false,
         trayIcon: "default",
         doneSetup: false
@@ -247,6 +248,7 @@ export interface Settings {
     performanceMode: string;
     startMinimized: boolean;
     inviteWebsocket: boolean;
+    disableAutogain: boolean;
     trayIcon: string;
     doneSetup: boolean;
 }

@@ -57,7 +57,9 @@ if (window.location.href.indexOf("splash.html") > -1) {
         });
         })();
         `);
-
+        if (ipcRenderer.sendSync("disableAutogain")) {
+            addScript(fs.readFileSync(path.join(__dirname, "../", "/content/js/disableAutogain.js"), "utf8"));
+        }
         addScript(fs.readFileSync(path.join(__dirname, "../", "/content/js/rpc.js"), "utf8"));
         const cssPath = path.join(__dirname, "../", "/content/css/discord.css");
         addStyle(fs.readFileSync(cssPath, "utf8"));

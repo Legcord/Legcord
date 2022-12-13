@@ -121,6 +121,9 @@ export function registerIpc() {
     ipcMain.on("trayIcon", async (event, arg) => {
         event.returnValue = await getConfig("trayIcon");
     });
+    ipcMain.on("disableAutogain", async (event, arg) => {
+        event.returnValue = await getConfig("disableAutogain");
+    });
     ipcMain.on("titlebar", (event, arg) => {
         event.returnValue = customTitlebar;
     });
