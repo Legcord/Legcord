@@ -38,6 +38,7 @@ export function createSettingsWindow() {
             title: `ArmCord Settings | Version: ${getDisplayVersion()}`,
             darkTheme: true,
             frame: true,
+            backgroundColor: "#2f3136",
             autoHideMenuBar: true,
             webPreferences: {
                 sandbox: false,

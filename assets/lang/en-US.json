@@ -19,6 +19,7 @@
     "settings-theme-desc3": "uses native titlebar of OS you're currently running (e.g Windows 7/10). Functions more\n                similar to actual Discord app on Linux.",
     "settings-theme-default": "Default",
     "settings-theme-native": "Native",
+    "settings-theme-transparent": "Transparent (Experimental)",
     "settings-csp-desc": "ArmCord CSP is our system that manages loading custom content loading into the Discord app. Stuff like\n                client mods and themes depend on it. Disable if you want to get rid of mods and custom styles.",
     "settings-tray": "Minimize to tray",
     "settings-tray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later.",
