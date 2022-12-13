@@ -72,5 +72,6 @@
     "settings-crashesFolder": "Open native crashes folder",
     "settings-forceNativeCrash": "Force native crash",
     "settings-disableAutogain": "Disable autogain",
-    "settings-disableAutogain-desc": "Disables autogain."
+    "settings-disableAutogain-desc": "Disables autogain.",
+    "settings-theme-transparent": "Transparent (Experimental)"
 }
