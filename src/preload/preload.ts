@@ -4,7 +4,7 @@ import "./capturer";
 import "./patch";
 import * as fs from "fs";
 import * as path from "path";
-import {injectHummusTitlebar, injectTitlebar,fixTitlebar} from "./titlebar";
+import {injectHummusTitlebar, injectTitlebar, fixTitlebar} from "./titlebar";
 import {sleep, addStyle, addScript} from "../utils";
 import {injectMobileStuff} from "./mobile";
 var version = ipcRenderer.sendSync("displayVersion");
@@ -61,7 +61,7 @@ if (window.location.href.indexOf("splash.html") > -1) {
         addScript(fs.readFileSync(path.join(__dirname, "../", "/content/js/rpc.js"), "utf8"));
         const cssPath = path.join(__dirname, "../", "/content/css/discord.css");
         addStyle(fs.readFileSync(cssPath, "utf8"));
-                if (document.getElementById("window-controls-container") == null) {
+        if (document.getElementById("window-controls-container") == null) {
             console.warn("Titlebar didn't inject, retrying...");
             if (ipcRenderer.sendSync("titlebar")) {
                 if (channel == "hummus") {
@@ -69,7 +69,8 @@ if (window.location.href.indexOf("splash.html") > -1) {
                 } else {
                     fixTitlebar();
                 }
-            }}
+            }
+        }
         await updateLang();
     });
 }

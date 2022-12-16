@@ -37,6 +37,8 @@
     "settings-invitewebsocket-desc": "Uses <a target=\"_blank\" href=\"https://github.com/OpenAsar/arrpc\">arRPC</a> to support Discord RPC (Rich Presence) with local programs on your machine. Work in progress.",
     "settings-altPaste": "Alternative Paste",
     "settings-altPaste-desc": "If you're on Gnome on Linux or just simply can't paste images copied from other messages, then this is\n                for you. This enables alternative module for pasting images. Only enable this when you're experiencing\n                issues.",
+    "settings-startMinimized": "Start minimized",
+    "settings-startMinimized-desc": "ArmCord starts in background and remains out of your way.",
     "settings-mod": "Client mod",
     "settings-mod-desc1": "Client mods are programs that allow you customize your Discord experience. They can change appearance of\n                the client, modify behaviours or add new features!",
     "settings-mod-vencord": "lightweight, and easy to use client mod. Features a built-in store for plugins.",

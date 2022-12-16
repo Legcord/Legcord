@@ -51,11 +51,18 @@ contextMenu({
     ]
 });
 async function doAfterDefiningTheWindow() {
+    if (await getConfig("startMinimized")) {
+        mainWindow.hide();
+    } else {
+        mainWindow.show();
+    }
     if (transparency && process.platform === "win32") {
-        import("@pyke/vibe").then((vibe) => {
+        import("@pyke/vibe").then(async (vibe) => {
             vibe.applyEffect(mainWindow, "acrylic");
             vibe.forceTheme(mainWindow, "dark");
-            mainWindow.show();
+            if ((await getConfig("startMinimized")) == false) {
+                mainWindow.show();
+            }
         });
     }
     var ignoreProtocolWarning = await getConfig("ignoreProtocolWarning");
@@ -90,8 +97,9 @@ async function doAfterDefiningTheWindow() {
     mainWindow.webContents.setWindowOpenHandler(({url}) => {
         // Allow about:blank (used by Vencord QuickCss popup)
         if (url === "about:blank") return {action: "allow"};
-
-        if (url.startsWith("https:" || url.startsWith("http:") || url.startsWith("mailto:"))) {
+        // Allow Discord stream popout
+        if (url === "https://discord.com/popout") return {action: "allow"};
+        if (url.startsWith("https:") || url.startsWith("http:") || url.startsWith("mailto:")) {
             shell.openExternal(url);
         } else {
             if (ignoreProtocolWarning) {
@@ -153,6 +161,8 @@ async function doAfterDefiningTheWindow() {
             let trayPath = nativeImage.createFromPath(path.join(app.getPath("temp"), "/", "tray.png"));
             if (process.platform === "darwin" && trayPath.getSize().height > 22)
                 trayPath = trayPath.resize({height: 22});
+            if (process.platform === "win32" && trayPath.getSize().height > 32)
+                trayPath = trayPath.resize({height: 32});
             tray.setImage(trayPath);
         });
     }
@@ -249,6 +259,11 @@ async function doAfterDefiningTheWindow() {
     } else {
         await mainWindow.loadFile(path.join(__dirname, "/content/splash.html"));
     }
+    if (await getConfig("startMinimized")) {
+        mainWindow.hide();
+    } else {
+        mainWindow.show();
+    }
 }
 export function createCustomWindow() {
     mainWindow = new BrowserWindow({
@@ -256,6 +271,7 @@ export function createCustomWindow() {
         height: 350,
         title: "ArmCord",
         darkTheme: true,
+        show: false,
         icon: iconPath,
         frame: false,
         autoHideMenuBar: true,
@@ -274,6 +290,7 @@ export function createNativeWindow() {
         title: "ArmCord",
         darkTheme: true,
         icon: iconPath,
+        show: false,
         frame: true,
         autoHideMenuBar: true,
         webPreferences: {

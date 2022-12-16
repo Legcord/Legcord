@@ -46,6 +46,7 @@ export function setup() {
         automaticPatches: false,
         alternativePaste: false,
         mods: "none",
+        startMinimized: false,
         performanceMode: "none",
         skipSplash: false,
         inviteWebsocket: true,
@@ -242,6 +243,7 @@ export interface Settings {
     alternativePaste: boolean;
     mods: string;
     mobileMode: boolean;
+    startMinimized: boolean;
     skipSplash: boolean;
     performanceMode: string;
     inviteWebsocket: boolean;
