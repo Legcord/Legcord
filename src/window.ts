@@ -245,9 +245,6 @@ async function doAfterDefiningTheWindow() {
                 case "ptb":
                     window.location.replace("https://ptb.discord.com/app");
                     break;
-                case "hummus":
-                    window.location.replace("https://hummus.sys42.net/");
-                    break;
                 case undefined:
                     window.location.replace("https://discord.com/app");
                     break;

@@ -46,11 +46,7 @@ export function createSettingsWindow() {
             }
         });
         async function settingsLoadPage() {
-            if ((await getConfig("channel")) == "hummus") {
-                settingsWindow.loadURL(`file://${__dirname}/hummus.html`);
-            } else {
-                settingsWindow.loadURL(`file://${__dirname}/settings.html`);
-            }
+            settingsWindow.loadURL(`file://${__dirname}/settings.html`);
         }
         const userDataPath = app.getPath("userData");
         const themesFolder = userDataPath + "/themes/";

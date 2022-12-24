@@ -4,7 +4,7 @@ import "./capturer";
 import "./patch";
 import * as fs from "fs";
 import * as path from "path";
-import {fixTitlebar, injectHummusTitlebar, injectTitlebar} from "./titlebar";
+import {fixTitlebar, injectTitlebar} from "./titlebar";
 import {sleep, addStyle, addScript} from "../utils";
 import {injectMobileStuff} from "./mobile";
 window.localStorage.setItem("hideNag", "true");
@@ -33,11 +33,7 @@ if (window.location.href.indexOf("splash.html") > -1) {
     console.log("Skipping titlebar injection and client mod injection.");
 } else {
     if (ipcRenderer.sendSync("titlebar")) {
-        if (channel == "hummus") {
-            injectHummusTitlebar();
-        } else {
-            injectTitlebar();
-        }
+        injectTitlebar();
     }
     if (ipcRenderer.sendSync("mobileMode")) {
         injectMobileStuff();
@@ -67,11 +63,7 @@ if (window.location.href.indexOf("splash.html") > -1) {
         if (document.getElementById("window-controls-container") == null) {
             console.warn("Titlebar didn't inject, retrying...");
             if (ipcRenderer.sendSync("titlebar")) {
-                if (channel == "hummus") {
-                    injectHummusTitlebar();
-                } else {
-                    fixTitlebar();
-                }
+                fixTitlebar();
             }
         }
         await updateLang();
