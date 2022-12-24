@@ -7,6 +7,7 @@ import * as path from "path";
 import {fixTitlebar, injectHummusTitlebar, injectTitlebar} from "./titlebar";
 import {sleep, addStyle, addScript} from "../utils";
 import {injectMobileStuff} from "./mobile";
+window.localStorage.setItem("hideNag", "true");
 var version = ipcRenderer.sendSync("displayVersion");
 var channel = ipcRenderer.sendSync("channel");
 async function updateLang() {
