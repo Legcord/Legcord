@@ -28,8 +28,8 @@
     color: var(--text-normal);
 }
 
-[class|=listItem]:has([data-list-item-id="guildsnav___app-download-button"]),
-[class|=listItem]:has(+ [class|=listItem] [data-list-item-id="guildsnav___app-download-button"])  {
+[class|="listItem"]:has([data-list-item-id="guildsnav___app-download-button"]),
+[class|="listItem"]:has(+ [class|="listItem"] [data-list-item-id="guildsnav___app-download-button"]) {
     display: none;
 }
 /* Server List Scrollbar - https://github.com/kckarnige/server-scroll */
