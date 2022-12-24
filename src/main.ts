@@ -24,8 +24,7 @@ if (!app.requestSingleInstanceLock()) {
     app.quit();
 } else {
     // Your data now belongs to CCP
-    let settingsFile = fs.readFileSync(getConfigLocation(), "utf-8");
-    crashReporter.start({uploadToServer: false, extra: {settingsFile}});
+    crashReporter.start({uploadToServer: false});
 
     if (process.platform == "linux") {
         if (process.env.XDG_SESSION_TYPE == "wayland") {
