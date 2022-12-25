@@ -5,7 +5,7 @@ interface IPCSources {
     thumbnail: HTMLCanvasElement;
 }
 async function addDisplays() {
-    ipcRenderer.on("getSources", (event, arg) => {
+    ipcRenderer.once("getSources", (event, arg) => {
         var sources: IPCSources[] = arg;
         console.log(sources);
         const selectionElem = document.createElement("div");
@@ -45,8 +45,6 @@ async function addDisplays() {
                     }
                 } catch (err) {
                     console.error(err);
-                } finally {
-                    ipcRenderer.sendSync("closeScreenshareWindow");
                 }
             });
         });
