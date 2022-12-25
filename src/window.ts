@@ -231,7 +231,7 @@ async function doAfterDefiningTheWindow() {
         tray.setImage(trayPath);
     } else if ((await getConfig("skipSplash")) == true) {
         while (modInstallState == "installing") {
-            sleep(1000);
+            await sleep(1000);
         }
         mainWindow.loadURL("data:text/html,%3Ch1%3ELoading%21%3C%2Fh1%3E");
         mainWindow.webContents.executeJavaScript(`

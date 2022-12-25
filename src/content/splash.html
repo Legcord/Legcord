@@ -63,9 +63,7 @@
                     }
                 }
 
-                while (check() == false) {
-                    console.log("Installing");
-                }
+                while (check() === false) await new Promise((r) => setTimeout(r, 10));
                 setTimeout(() => {
                     window.armcord.splashEnd();
                     switch (window.armcord.channel) {
