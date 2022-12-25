@@ -1,6 +1,6 @@
 import {ipcRenderer} from "electron";
 import "./bridge";
-import "./capturer";
+//import "./capturer";
 import "./patch";
 import * as fs from "fs";
 import * as path from "path";

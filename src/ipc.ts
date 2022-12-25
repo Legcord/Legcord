@@ -143,5 +143,4 @@ export function registerIpc() {
             event.returnValue = false;
         }
     });
-    ipcMain.handle("DESKTOP_CAPTURER_GET_SOURCES", (event, opts) => desktopCapturer.getSources(opts));
 }

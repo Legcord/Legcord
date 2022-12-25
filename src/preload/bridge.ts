@@ -1,5 +1,4 @@
 import {contextBridge, ipcRenderer} from "electron";
-import {getDisplayMediaSelector} from "./capturer";
 import {injectTitlebar} from "./titlebar";
 
 contextBridge.exposeInMainWorld("armcord", {
@@ -24,7 +23,6 @@ contextBridge.exposeInMainWorld("armcord", {
     version: ipcRenderer.sendSync("get-app-version", "app-version"),
     mods: ipcRenderer.sendSync("clientmod"),
     packageVersion: ipcRenderer.sendSync("get-package-version", "app-version"),
-    getDisplayMediaSelector: getDisplayMediaSelector,
     splashEnd: () => ipcRenderer.send("splashEnd"),
     openSettingsWindow: () => ipcRenderer.send("openSettingsWindow")
 });
