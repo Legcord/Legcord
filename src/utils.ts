@@ -337,12 +337,14 @@ export var modInstallState: string;
 export async function installModLoader() {
     if ((await getConfig("mods")) == "none") {
         modInstallState = "none";
+        fs.rmSync(app.getPath("userData") + "/plugins/loader", {recursive: true, force: true});
         import("./extensions/plugin");
         console.log("[Mod loader] Skipping");
     } else {
         const pluginFolder = app.getPath("userData") + "/plugins/";
-        if (!fs.existsSync(pluginFolder + "loader")) {
+        if (!fs.existsSync(pluginFolder + "loader") || !fs.existsSync(pluginFolder + "loader/dist/" + "bundle.css")) {
             try {
+                fs.rmSync(app.getPath("userData") + "/plugins/loader", {recursive: true, force: true});
                 modInstallState = "installing";
                 var zipPath = app.getPath("temp") + "/" + "loader.zip";
                 if (!fs.existsSync(pluginFolder)) {
