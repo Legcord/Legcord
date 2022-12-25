@@ -51,6 +51,7 @@ export function setup() {
         inviteWebsocket: true,
         startMinimized: false,
         disableAutogain: false,
+        useLegacyCapturer: false,
         mobileMode: false,
         trayIcon: "default",
         doneSetup: false
@@ -244,6 +245,7 @@ export interface Settings {
     skipSplash: boolean;
     performanceMode: string;
     startMinimized: boolean;
+    useLegacyCapturer: boolean;
     inviteWebsocket: boolean;
     disableAutogain: boolean;
     trayIcon: string;

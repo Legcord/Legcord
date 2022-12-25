@@ -118,6 +118,9 @@ export function registerIpc() {
     ipcMain.on("clientmod", async (event, arg) => {
         event.returnValue = await getConfig("mods");
     });
+    ipcMain.on("legacyCapturer", async (event, arg) => {
+        event.returnValue = await getConfig("useLegacyCapturer");
+    });
     ipcMain.on("trayIcon", async (event, arg) => {
         event.returnValue = await getConfig("trayIcon");
     });
@@ -143,4 +146,5 @@ export function registerIpc() {
             event.returnValue = false;
         }
     });
+    ipcMain.handle("DESKTOP_CAPTURER_GET_SOURCES", (event, opts) => desktopCapturer.getSources(opts));
 }

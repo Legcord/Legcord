@@ -1,6 +1,5 @@
 import {ipcRenderer} from "electron";
 import "./bridge";
-//import "./capturer";
 import "./patch";
 import * as fs from "fs";
 import * as path from "path";
@@ -8,6 +7,10 @@ import {fixTitlebar, injectTitlebar} from "./titlebar";
 import {sleep, addStyle, addScript} from "../utils";
 import {injectMobileStuff} from "./mobile";
 window.localStorage.setItem("hideNag", "true");
+if (ipcRenderer.sendSync("legacyCapturer")) {
+    console.warn("Using legacy capturer module");
+    import("./capturer");
+}
 var version = ipcRenderer.sendSync("displayVersion");
 var channel = ipcRenderer.sendSync("channel");
 async function updateLang() {

@@ -130,7 +130,10 @@ async function doAfterDefiningTheWindow() {
         }
         return {action: "deny"};
     });
-    import("./screenshare/main");
+    if ((await getConfig("useLegacyCapturer")) == false) {
+        console.log("Starting screenshare module...");
+        import("./screenshare/main");
+    }
     mainWindow.webContents.session.webRequest.onBeforeRequest((details, callback) => {
         if (/api\/v\d\/science$/g.test(details.url)) return callback({cancel: true});
         return callback({});
