@@ -71,5 +71,7 @@
     "settings-forceNativeCrash": "Forcer le crash natif",
     "settings-disableAutogain": "Désactiver le gain automatique",
     "settings-disableAutogain-desc": "Désactive le gain automatique.",
-    "settings-theme-transparent": "Transparent (Expérimental)"
+    "settings-theme-transparent": "Transparent (Expérimental)",
+    "settings-useLegacyCapturer": "Use legacy capturer",
+    "settings-useLegacyCapturer-desc": "Use legacy screenshare module, instead of the new one. If you're experiencing issues with screen sharing, try enabling this."
 }
