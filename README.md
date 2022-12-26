@@ -36,11 +36,17 @@
    ArmCord was originally created for ARM64 Linux devices, since Discord doesn't support them. We soon decided to support every platform that [Electron supports](https://github.com/electron/electron#platform-support)!
   
 # How to run/install it?
-### Recommended:
- Check **releases tab** for precompiled packages for Linux, Windows and Mac OS. Alternatively use our Sourceforge mirror.  
- <a href="https://sourceforge.net/projects/armcord/files/latest/download"><img alt="Download ArmCord" src="https://a.fsdn.com/con/app/sf-download-button" width=276 height=48 srcset="https://a.fsdn.com/con/app/sf-download-button?button_size=2x 2x"></a>
+
 ## Packaging status
 [![Packaging status](https://repology.org/badge/vertical-allrepos/armcord.svg)](https://repology.org/project/armcord/versions)
+### Debian, Ubuntu, Raspbian repository
+ArmCord is available on our official repositories for `apt` package manager. By using this method you'll receive automatic updates and get all the dependencies. Run the following commands to install ArmCord from them:
+```sh
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F1710089DA28B361
+echo "deb [arch=amd64] https://eu.armcord.xyz/apt-repo stable main" | sudo tee /etc/apt/sources.list.d/armcord.list
+sudo apt update
+sudo apt install armcord
+```
 ### Winget Package
 ArmCord is also available on the [winget-pkgs](https://github.com/microsoft/winget-pkgs) repository:
 ```
@@ -56,7 +62,7 @@ scoop install armcord
 ```
 ### AUR Package
 ArmCord is also available on the Arch User Repository (AUR):
-- [armcord-bin](https://aur.archlinux.org/packages/armcord-bin) - ArmCord Release ~ Static binary from release, may be outdated
+- [armcord-bin](https://aur.archlinux.org/packages/armcord-bin) - ArmCord Release ~ Static binary from release, stable release only
 - [armcord-git](https://aur.archlinux.org/packages/armcord-git) - ArmCord Dev ~ Latest devbuild built from source (takes ~1 minute) using the system electron
 
 Install it via an AUR helper tool like `yay`.
@@ -71,6 +77,9 @@ ArmCord is also available on the Snap store [here](https://snapcraft.io/armcord)
 ArmCord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).  
 [![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge.png?raw=true)](https://github.com/Botspot/pi-apps)
 
+### Pre-built binaries:
+ Check **releases tab** for precompiled packages for Linux, Windows and Mac OS. Alternatively use our Sourceforge mirror.  
+ <a href="https://sourceforge.net/projects/armcord/files/latest/download"><img alt="Download ArmCord" src="https://a.fsdn.com/con/app/sf-download-button" width=276 height=48 srcset="https://a.fsdn.com/con/app/sf-download-button?button_size=2x 2x"></a>
 
 ### Compiling:
  Alternatively you can run ArmCord from source ([NodeJS](https://nodejs.dev), [pnpm](https://pnpm.io/installation#using-npm) and [rust toolchain](https://www.rust-lang.org/tools/install) are required):    
@@ -81,6 +90,9 @@ ArmCord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).
 
 
 # FAQ
+## Do you have a support Discord?
+
+[![](https://dcbadge.vercel.app/api/server/TnhxcqynZ2)](https://discord.gg/TnhxcqynZ2)
 ## Will I get banned for using this?   
 - You are breaking [Discord ToS](https://discord.com/terms#software-in-discord%E2%80%99s-services) by using ArmCord, but no one has been banned from using it or any of the client mods included.
 
