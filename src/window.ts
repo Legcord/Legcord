@@ -134,10 +134,12 @@ async function doAfterDefiningTheWindow() {
         console.log("Starting screenshare module...");
         import("./screenshare/main");
     }
-    mainWindow.webContents.session.webRequest.onBeforeRequest((details, callback) => {
-        if (/api\/v\d\/science$/g.test(details.url)) return callback({cancel: true});
-        return callback({});
-    });
+
+    mainWindow.webContents.session.webRequest.onBeforeRequest(
+        {urls: ["https://*/api/v*/science", "https://sentry.io/*", "https://*.nel.cloudflare.com/*"]},
+        (_, callback) => callback({cancel: true})
+    );
+
     if ((await getConfig("trayIcon")) == "default") {
         mainWindow.webContents.on("page-favicon-updated", async (event) => {
             var faviconBase64 = await mainWindow.webContents.executeJavaScript(`
