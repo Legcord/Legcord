@@ -43,7 +43,7 @@
 ArmCord is available on our official repositories for `apt` package manager. By using this method you'll receive automatic updates and get all the dependencies. Run the following commands to install ArmCord from them:
 ```sh
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F1710089DA28B361
-echo "deb [arch=amd64] https://eu.armcord.xyz/apt-repo stable main" | sudo tee /etc/apt/sources.list.d/armcord.list
+echo "deb [arch=$(dpkg --print-architecture)] https://eu.armcord.xyz/apt-repo stable main" | sudo tee /etc/apt/sources.list.d/armcord.list
 sudo apt update
 sudo apt install armcord
 ```
