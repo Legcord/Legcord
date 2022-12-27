@@ -135,10 +135,11 @@ async function doAfterDefiningTheWindow() {
         }
         return {action: "deny"};
     });
-    mainWindow.webContents.session.webRequest.onBeforeRequest((details, callback) => {
-        if (/api\/v\d\/science$/g.test(details.url)) return callback({cancel: true});
-        return callback({});
-    });
+    mainWindow.webContents.session.webRequest.onBeforeRequest(
+        {urls: ["https://*/api/v*/science", "https://sentry.io/*", "https://*.nel.cloudflare.com/*"]},
+        (_, callback) => callback({cancel: true})
+    );
+
     if ((await getConfig("trayIcon")) == "default") {
         mainWindow.webContents.on("page-favicon-updated", async (event) => {
             var faviconBase64 = await mainWindow.webContents.executeJavaScript(`
@@ -229,6 +230,10 @@ async function doAfterDefiningTheWindow() {
         await setLang(Intl.DateTimeFormat().resolvedOptions().locale);
         mainWindow.setSize(390, 470);
         await mainWindow.loadFile(path.join(__dirname, "/content/setup.html"));
+        let trayPath = nativeImage.createFromPath(path.join(__dirname, "../", `/assets/ac_plug_colored.png`));
+        if (process.platform === "darwin" && trayPath.getSize().height > 22) trayPath = trayPath.resize({height: 22});
+        if (process.platform === "win32" && trayPath.getSize().height > 32) trayPath = trayPath.resize({height: 32});
+        tray.setImage(trayPath);
     } else if ((await getConfig("skipSplash")) == true) {
         while (modInstallState == "installing") {
             sleep(1000);
