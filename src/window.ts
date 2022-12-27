@@ -140,7 +140,7 @@ async function doAfterDefiningTheWindow() {
         (_, callback) => callback({cancel: true})
     );
 
-    if ((await getConfig("trayIcon")) == "default") {
+    if ((await getConfig("trayIcon")) == "default" || (await getConfig("dynamicIcon"))) {
         mainWindow.webContents.on("page-favicon-updated", async (event) => {
             var faviconBase64 = await mainWindow.webContents.executeJavaScript(`
                 var getFavicon = function(){
@@ -164,7 +164,11 @@ async function doAfterDefiningTheWindow() {
                 trayPath = trayPath.resize({height: 22});
             if (process.platform === "win32" && trayPath.getSize().height > 32)
                 trayPath = trayPath.resize({height: 32});
-            tray.setImage(trayPath);
+            if ((await getConfig("trayIcon")) == "default") {
+                tray.setImage(trayPath);
+            } else if (await getConfig("dynamicIcon")) {
+                mainWindow.setIcon(trayPath);
+            }
         });
     }
     const userDataPath = app.getPath("userData");

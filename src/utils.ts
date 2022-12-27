@@ -50,6 +50,7 @@ export function setup() {
         skipSplash: false,
         inviteWebsocket: true,
         startMinimized: false,
+        dynamicIcon: false,
         disableAutogain: false,
         useLegacyCapturer: false,
         mobileMode: false,
@@ -241,6 +242,7 @@ export interface Settings {
     automaticPatches: boolean;
     alternativePaste: boolean;
     mods: string;
+    dynamicIcon: boolean;
     mobileMode: boolean;
     skipSplash: boolean;
     performanceMode: string;
