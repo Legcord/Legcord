@@ -73,6 +73,8 @@ ArmCord is also available on the Snap store [here](https://snapcraft.io/armcord)
 <a href="https://snapcraft.io/armcord">
   <img alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" />
 </a>
+### FreeBSD
+You can also get ArmCord running on FreeBSD by following [this instructions](https://gist.github.com/aaxyi/4d29c982ac85d5d26f98a51040b5de37).
 ### Pi-Apps
 ArmCord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).  
 [![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge.png?raw=true)](https://github.com/Botspot/pi-apps)
