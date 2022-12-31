@@ -47,6 +47,17 @@ echo "deb [arch=$(dpkg --print-architecture)] https://eu.armcord.xyz/apt-repo st
 sudo apt update
 sudo apt install armcord
 ```
+### Snap package
+ArmCord is also available on the Snap store [here](https://snapcraft.io/armcord).   
+<a href="https://snapcraft.io/armcord">
+<img alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" />
+</a>  
+
+Similar to `armcord-git` on AUR, you can install the latest dev builds through snaps by running this command:
+```shell
+sudo snap install armcord --channel=latest/edge
+```
+Snapd will automatically update the app including developer builds.
 ### Winget Package
 ArmCord is also available on the [winget-pkgs](https://github.com/microsoft/winget-pkgs) repository:
 ```
@@ -68,11 +79,6 @@ ArmCord is also available on the Arch User Repository (AUR):
 Install it via an AUR helper tool like `yay`.
 
 **Example:** `yay -S armcord-bin`
-### Snap package
-ArmCord is also available on the Snap store [here](https://snapcraft.io/armcord).   
-<a href="https://snapcraft.io/armcord">
-  <img alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" />
-</a>
 ### FreeBSD
 You can also get ArmCord running on FreeBSD by following [this instructions](https://gist.github.com/aaxyi/4d29c982ac85d5d26f98a51040b5de37).
 ### Pi-Apps
