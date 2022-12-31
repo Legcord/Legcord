@@ -45,38 +45,38 @@ jobs:
                   name: ArmCordLinuxArm64.zip
                   path: dist/ArmCord-3.2.0-arm64.zip
     build-snap:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v2
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout code
+            uses: actions/checkout@v2
 
-        - uses: pnpm/action-setup@v2 # Install pnpm using packageManager key in package.json
+          - uses: pnpm/action-setup@v2 # Install pnpm using packageManager key in package.json
 
-        - name: Use Node.js 18
-          uses: actions/setup-node@v2
-          with:
-            node-version: 18
-            cache: "pnpm"
+          - name: Use Node.js 18
+            uses: actions/setup-node@v2
+            with:
+              node-version: 18
+              cache: "pnpm"
 
-        - name: Install Node dependencies
-          run: pnpm install -g cargo-cp-artifact && pnpm install
+          - name: Install Node dependencies
+            run: pnpm install -g cargo-cp-artifact && pnpm install
 
-        - name: Install Electron-Builder
-          run: pnpm install -g electron-builder
+          - name: Install Electron-Builder
+            run: pnpm install -g electron-builder
 
-        - name: Replace the version number
-          run: cat src/utils.ts | sed -e 's/[[:digit:]]\.[[:digit:]]\.[[:digit:]]/DEV/g' | tee src/utils.ts > /dev/null
+          - name: Replace the version number
+            run: cat src/utils.ts | sed -e 's/[[:digit:]]\.[[:digit:]]\.[[:digit:]]/DEV/g' | tee src/utils.ts > /dev/null
 
-        - name: Build
-          run: npm run build && electron-builder --linux snap --config.snap.grade=devel
+          - name: Build
+            run: npm run build && electron-builder --linux snap --config.snap.grade=devel
 
-        - name: Publish
-        - uses: snapcore/action-publish@v1
-          env:
-            SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAP_STORE_LOGIN }}
-          with:
-            snap: dist/ArmCord_3.2.0_amd64.snap
-            release: edge
+          - name: Publish
+          - uses: snapcore/action-publish@v1
+            env:
+              SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAP_STORE_LOGIN }}
+            with:
+              snap: dist/ArmCord_3.2.0_amd64.snap
+              release: edge
     build-mac:
         runs-on: macos-latest
         steps:
