@@ -69,6 +69,7 @@ jobs:
 
         - name: Build
           run: npm run build && electron-builder --linux snap --config.snap.grade=devel
+
         - name: Publish
         - uses: snapcore/action-publish@v1
           env:
