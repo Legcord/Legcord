@@ -25,21 +25,22 @@ if (!app.requestSingleInstanceLock()) {
 } else {
     // Your data now belongs to CCP
     crashReporter.start({uploadToServer: false});
-    if (process.env.USE_WAYLAND == "0") {
-        console.log("Wayland patches disabled.");
-    } else {
-        if (process.platform == "linux") {
-            if (process.env.XDG_SESSION_TYPE == "wayland") {
-                console.log("Wayland specific patches applied.");
-                app.commandLine.appendSwitch("ozone-platform=wayland");
-                if (process.env.XDG_CURRENT_DESKTOP == "GNOME") {
-                    app.commandLine.appendSwitch("enable-features=UseOzonePlatform,WaylandWindowDecorations");
-                } else {
-                    app.commandLine.appendSwitch("enable-features=UseOzonePlatform");
-                }
+    if (process.platform == "linux") {
+        if (process.env.XDG_SESSION_TYPE == "wayland") {
+            // Just using the native Wayland backend doesn't enable PipeWire capture, we need to enable it explicitly.
+            app.commandLine.appendSwitch('enable-features', 'WebRTCPipeWireCapturer');
+            console.log("Wayland detected, using PipeWire for video capture.");
+            if (process.env.USE_WAYLAND == "0") {
+                console.log("Wayland patches disabled.");
+            } else {
+                console.log("Using native Wayland, not Xwayland. Disable with USE_WAYLAND=0 if you find issues.");
+                app.commandLine.appendSwitch('ozone-platform', 'wayland');
+                // The Wayland spec doesn't require SSDs, so lets enable self-drawn window decorations. 
+                // Ideally they shouldn't be drawn if xdg-decoration is supported, but there's not a simple way to check for that using TS afaik. -Oro
+                app.commandLine.appendSwitch('enable-features', 'UseOzonePlatform,WaylandWindowDecorations');
+              }
             }
         }
-    }
 
     checkForDataFolder();
     checkIfConfigExists();
