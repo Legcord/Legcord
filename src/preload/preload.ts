@@ -1,16 +1,19 @@
 import {ipcRenderer} from "electron";
-import "./bridge";
-import "./patch";
 import * as fs from "fs";
 import * as path from "path";
-import {fixTitlebar, injectTitlebar} from "./titlebar";
-import {sleep, addStyle, addScript} from "../utils";
+import {addScript, addStyle, sleep} from "../utils";
+import "./bridge";
 import {injectMobileStuff} from "./mobile";
+import "./patch";
+import {fixTitlebar, injectTitlebar} from "./titlebar";
+
 window.localStorage.setItem("hideNag", "true");
+
 if (ipcRenderer.sendSync("legacyCapturer")) {
     console.warn("Using legacy capturer module");
     import("./capturer");
 }
+
 var version = ipcRenderer.sendSync("displayVersion");
 var channel = ipcRenderer.sendSync("channel");
 async function updateLang() {
@@ -72,38 +75,15 @@ if (window.location.href.indexOf("splash.html") > -1) {
         await updateLang();
     });
 }
-/*
-MIT License
 
-Copyright (c) 2022 GooseNest
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-*/
 // Settings info version injection
 setInterval(() => {
-    const host = document.getElementsByClassName("info-3pQQBb")[0];
-    if (!host || document.querySelector("#ac-ver")) return;
-    const el = document.createElement("span");
+    const host = document.querySelector("nav > [class|=side] [class|=info]");
+    if (!host || host.querySelector("#ac-ver")) return;
+    const el = host.firstChild!.cloneNode() as HTMLSpanElement;
     el.id = "ac-ver";
-    el.classList.add("text-xs-normal-3SiVjE", "line-18uChy");
 
-    el.textContent = `\nArmCord Version: ${version}`;
+    el.textContent = `ArmCord Version: ${version}`;
     el.onclick = () => ipcRenderer.send("openSettingsWindow");
     host.append(el);
 }, 2000);
