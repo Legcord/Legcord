@@ -1,10 +1,11 @@
+import "./bridge";
+import "./patch";
+
 import {ipcRenderer} from "electron";
 import * as fs from "fs";
 import * as path from "path";
 import {addScript, addStyle, sleep} from "../utils";
-import "./bridge";
 import {injectMobileStuff} from "./mobile";
-import "./patch";
 import {fixTitlebar, injectTitlebar} from "./titlebar";
 
 window.localStorage.setItem("hideNag", "true");
