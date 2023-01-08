@@ -36,7 +36,7 @@ if (!app.requestSingleInstanceLock()) {
                 console.log("Using native Wayland, not Xwayland. Disable with USE_WAYLAND=0 if you find issues.");
                 app.commandLine.appendSwitch('ozone-platform', 'wayland');
                 // The Wayland spec doesn't require SSDs, so lets enable self-drawn window decorations. 
-                // Ideally they shouldn't be drawn if xdg-decoration is supported, but there's not a simple way to check for that using TS afaik. -Oro
+                // If SSDs are supported on the compositor, Electron will let the compositor handle the decorations.
                 app.commandLine.appendSwitch('enable-features', 'UseOzonePlatform,WaylandWindowDecorations');
               }
             }
