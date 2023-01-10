@@ -26,12 +26,12 @@ if (!app.requestSingleInstanceLock()) {
     // Your data now belongs to CCP
     crashReporter.start({uploadToServer: false});
 
-    if (process.platform == "linux" && process.env.XDG_SESSION_TYPE == "wayland") {
+    if (process.platform === "linux" && process.env.XDG_SESSION_TYPE === "wayland") {
             // Just using the native Wayland backend doesn't enable PipeWire capture, we need to enable it explicitly.
             app.commandLine.appendSwitch('enable-features', 'WebRTCPipeWireCapturer');
             console.log("Wayland detected, using PipeWire for video capture.");
             // Some people might want to disable the Wayland backend for one reason or another, such as for Wayland-specific bugs.
-            if (process.env.USE_WAYLAND == "0") {
+            if (process.env.USE_WAYLAND === "0") {
                 console.log("Wayland backend disabled.");
             } else {
                 console.log("Using native Wayland, not Xwayland. Disable with USE_WAYLAND=0 if you find issues.");
