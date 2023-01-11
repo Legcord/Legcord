@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@pyke/vibe': github:pykeio/vibe#11984868ce9e007859ed91ff159c7f7f0a34e7ae
+  '@pyke/vibe': github:pykeio/vibe#3c61074414cbed96ad51870e4dde379b16d9da6d
   '@types/node': ^18.11.9
   '@types/ws': ^8.5.3
   arrpc: file:src/arrpc
@@ -18,7 +18,7 @@ specifiers:
   ws: ^8.11.0
 
 dependencies:
-  '@pyke/vibe': github.com/pykeio/vibe/11984868ce9e007859ed91ff159c7f7f0a34e7ae_electron@22.0.0
+  '@pyke/vibe': github.com/pykeio/vibe/3c61074414cbed96ad51870e4dde379b16d9da6d_electron@22.0.0
   arrpc: file:src/arrpc
   cross-fetch: 3.1.5
   electron-context-menu: github.com/ArmCord/electron-context-menu/280c81398c02a063f46e3285a9708d8db1a7ce32
@@ -2203,11 +2203,11 @@ packages:
       electron-is-dev: 2.0.0
     dev: false
 
-  github.com/pykeio/vibe/11984868ce9e007859ed91ff159c7f7f0a34e7ae_electron@22.0.0:
-    resolution: {tarball: https://codeload.github.com/pykeio/vibe/tar.gz/11984868ce9e007859ed91ff159c7f7f0a34e7ae}
-    id: github.com/pykeio/vibe/11984868ce9e007859ed91ff159c7f7f0a34e7ae
+  github.com/pykeio/vibe/3c61074414cbed96ad51870e4dde379b16d9da6d_electron@22.0.0:
+    resolution: {tarball: https://codeload.github.com/pykeio/vibe/tar.gz/3c61074414cbed96ad51870e4dde379b16d9da6d}
+    id: github.com/pykeio/vibe/3c61074414cbed96ad51870e4dde379b16d9da6d
     name: '@pyke/vibe'
-    version: 0.3.1
+    version: 0.4.0
     requiresBuild: true
     peerDependencies:
       electron: '>=11.0'
