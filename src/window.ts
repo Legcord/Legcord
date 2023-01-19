@@ -58,7 +58,7 @@ async function doAfterDefiningTheWindow() {
     }
     if (transparency && process.platform === "win32") {
         import("@pyke/vibe").then(async (vibe) => {
-            vibe.applyEffect(mainWindow, "acrylic");
+            vibe.applyEffect(mainWindow, "unified-acrylic");
             vibe.forceTheme(mainWindow, "dark");
             if ((await getConfig("startMinimized")) == false) {
                 mainWindow.show();
