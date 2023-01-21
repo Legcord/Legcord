@@ -25,8 +25,8 @@ if (!app.requestSingleInstanceLock()) {
 } else {
     // Your data now belongs to CCP
     crashReporter.start({uploadToServer: false});
-    // We use toLowerCase to account for desktops where XDG_SESSION_TYPE might be Wayland and not wayland.
-    if (process.platform.toLowerCase() === "linux" && process.env.XDG_SESSION_TYPE.toLowerCase() === "wayland") {
+    // We can't use toLowerCase to account for desktops where XDG_SESSION_TYPE might be Wayland and not wayland, due to a build error.
+    if (process.platform.toLowerCase() === "linux" && process.env.XDG_SESSION_TYPE === "wayland") {
             // Just using the native Wayland backend doesn't enable PipeWire capture, we need to enable it explicitly.
             app.commandLine.appendSwitch('enable-features', 'WebRTCPipeWireCapturer');
             console.log("Wayland detected, using PipeWire for video capture.");
