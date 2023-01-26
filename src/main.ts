@@ -25,15 +25,15 @@ if (!app.requestSingleInstanceLock()) {
 } else {
     // Your data now belongs to CCP
     crashReporter.start({uploadToServer: false});
-    if (process.platform.toLowerCase() === "linux" && process.env.XDG_SESSION_TYPE?.toLowerCase() === "wayland") {
+    if (process.platform === "linux" && process.env.XDG_SESSION_TYPE?.toLowerCase() === "wayland") {
         app.commandLine.appendSwitch("enable-features=WebRTCPipeWireCapturer");
         console.log("Wayland detected, using PipeWire for video capture.");
         if (process.env.USE_WAYLAND === "0") {
             console.log("Wayland backend disabled.");
         } else {
             console.log("Using native Wayland, not Xwayland. Disable with USE_WAYLAND=0 if you find issues.");
-            app.commandLine.appendSwitch("ozone-platform=wayland");
             app.commandLine.appendSwitch("enable-features=UseOzonePlatform,WaylandWindowDecorations");
+            app.commandLine.appendSwitch("ozone-platform=wayland");
         }
     }
 
