@@ -31,6 +31,7 @@ contextMenu({
     showSaveImageAs: true,
     showCopyImageAddress: true,
     showSearchWithGoogle: false,
+    showSearchWithDuckDuckGo: false,
     prepend: (defaultActions, parameters, browserWindow) => [
         {
             label: "Search with Google",
@@ -58,7 +59,7 @@ async function doAfterDefiningTheWindow() {
     }
     if (transparency && process.platform === "win32") {
         import("@pyke/vibe").then(async (vibe) => {
-            vibe.applyEffect(mainWindow, "unified-acrylic");
+            vibe.applyEffect(mainWindow, "acrylic");
             vibe.forceTheme(mainWindow, "dark");
             if ((await getConfig("startMinimized")) == false) {
                 mainWindow.show();
