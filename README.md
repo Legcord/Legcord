@@ -41,7 +41,7 @@
 [![Packaging status](https://repology.org/badge/vertical-allrepos/armcord.svg)](https://repology.org/project/armcord/versions)
 
 ### Windows
-<a href="ms-windows-store://pdp/?ProductId=9PFHLJFD7KJT&mode=mini">
+<a href="https://microsoft.com/store/apps/9PFHLJFD7KJT">
    <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Download ArmCord" />
 </a>
 
