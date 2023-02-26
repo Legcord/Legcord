@@ -17,4 +17,4 @@ const getProcesses = () =>
             );
         })
     );
-module.exports = getProcesses;
+module.exports = {getProcesses};
