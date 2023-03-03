@@ -25,6 +25,9 @@ if (!app.requestSingleInstanceLock()) {
 } else {
     // Your data now belongs to CCP
     crashReporter.start({uploadToServer: false});
+    /* Using appendSwitch properly causes ArmCord to segfault,
+       So we will leave the responsibility of enabling Wayland
+       And PipeWire video capture to packagers.
     // We use toLowerCase to account for desktops where XDG_SESSION_TYPE might be Wayland and not wayland.
     if (process.platform === "linux" && process.env.XDG_SESSION_TYPE?.toLowerCase() === "wayland") {
             // Just using the native Wayland backend doesn't enable PipeWire capture, we need to enable it explicitly.
@@ -41,6 +44,7 @@ if (!app.requestSingleInstanceLock()) {
                 app.commandLine.appendSwitch("enable-features=UseOzonePlatform,WaylandWindowDecorations");
               }
         }
+    */
 
     checkForDataFolder();
     checkIfConfigExists();
