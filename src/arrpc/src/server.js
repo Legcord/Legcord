@@ -1,8 +1,10 @@
+const rgb = (r, g, b, msg) => `\x1b[38;2;${r};${g};${b}m${msg}\x1b[0m`;
+const log = (...args) => console.log(`[${rgb(88, 101, 242, "arRPC")} > ${rgb(87, 242, 135, "bridge")}]`, ...args);
 const {EventEmitter} = require("events");
 
-const {IPCServer} = require("./transports/ipc.js");
-const {WSServer} = require("./transports/websocket.js");
-const {ProcessServer} = require("./process/index.js");
+const IPCServer = require("./transports/ipc.js");
+const WSServer = require("./transports/websocket.js");
+const ProcessServer = require("./process/index.js");
 
 let socketId = 0;
 class RPCServer extends EventEmitter {
@@ -143,4 +145,4 @@ class RPCServer extends EventEmitter {
         }
     }
 }
-module.exports = {RPCServer};
+module.exports = RPCServer;

@@ -268,4 +268,4 @@ class IPCServer {
         this.handlers.message(socket, msg);
     }
 }
-module.exports = {IPCServer};
+module.exports = IPCServer;

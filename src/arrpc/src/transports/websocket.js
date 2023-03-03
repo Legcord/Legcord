@@ -25,7 +25,7 @@ class WSServer {
                     await new Promise((res) => {
                         http = createServer();
                         http.on("error", (e) => {
-                            // log("http error", e);
+                            // log('http error', e);
 
                             if (e.code === "EADDRINUSE") {
                                 log(port, "in use!");
@@ -35,7 +35,7 @@ class WSServer {
 
                         wss = new WebSocketServer({server: http});
                         wss.on("error", (e) => {
-                            // log("wss error", e);
+                            // log('wss error', e);
                         });
 
                         wss.on("connection", this.onConnection);
@@ -92,8 +92,8 @@ class WSServer {
             return;
         }
 
-        /* if (clientId === "") {
-      log("client id required");
+        /* if (clientId === '') {
+      log('client id required');
 
       socket.close();
       return;
@@ -127,4 +127,4 @@ class WSServer {
         this.handlers.message(socket, JSON.parse(msg));
     }
 }
-module.exports = {WSServer};
+module.exports = WSServer;

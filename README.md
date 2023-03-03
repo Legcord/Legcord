@@ -39,11 +39,19 @@
 
 ## Packaging status
 [![Packaging status](https://repology.org/badge/vertical-allrepos/armcord.svg)](https://repology.org/project/armcord/versions)
+
+### Windows
+<a href="https://microsoft.com/store/apps/9PFHLJFD7KJT">
+   <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Download ArmCord" />
+</a>
+
+If you're using older version of Windows, you need to use [pre-built installers](https://www.armcord.xyz/download).
+
 ### Debian, Ubuntu, Raspbian repository
 ArmCord is available on our official repositories for `apt` package manager. By using this method you'll receive automatic updates and get all the dependencies. Run the following commands to install ArmCord from them:
 ```sh
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F1710089DA28B361
-echo "deb [arch=$(dpkg --print-architecture)] https://eu.armcord.xyz/apt-repo stable main" | sudo tee /etc/apt/sources.list.d/armcord.list
+curl -fsSL https://eu.armcord.xyz/pgp-key.public | sudo gpg --dearmor -o /usr/share/keyrings/armcord.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/armcord.gpg] https://eu.armcord.xyz/apt-repo stable main" | sudo tee /etc/apt/sources.list.d/armcord.list
 sudo apt update
 sudo apt install armcord
 ```
