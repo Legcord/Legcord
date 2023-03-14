@@ -88,7 +88,7 @@ Install it via an AUR helper tool like `yay`.
 
 **Example:** `yay -S armcord-bin`
 ### FreeBSD
-You can also get ArmCord running on FreeBSD by following [this instructions](https://gist.github.com/aaxyi/4d29c982ac85d5d26f98a51040b5de37).
+You can also get ArmCord running on FreeBSD by following [this instructions](https://gist.github.com/aaxyria/4d29c982ac85d5d26f98a51040b5de37).
 ### Pi-Apps
 ArmCord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).  
 [![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge.png?raw=true)](https://github.com/Botspot/pi-apps)
