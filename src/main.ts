@@ -25,21 +25,21 @@ if (!app.requestSingleInstanceLock()) {
 } else {
     // Your data now belongs to CCP
     crashReporter.start({uploadToServer: false});
-    if (process.env.USE_WAYLAND == "0") {
-        console.log("Wayland patches disabled.");
-    } else {
-        if (process.platform == "linux") {
-            if (process.env.XDG_SESSION_TYPE == "wayland") {
-                console.log("Wayland specific patches applied.");
-                app.commandLine.appendSwitch("ozone-platform=wayland");
-                if (process.env.XDG_CURRENT_DESKTOP == "GNOME") {
-                    app.commandLine.appendSwitch("enable-features=UseOzonePlatform,WaylandWindowDecorations");
-                } else {
-                    app.commandLine.appendSwitch("enable-features=UseOzonePlatform");
-                }
-            }
-        }
-    }
+    // if (process.env.USE_WAYLAND == "0") {
+    //     console.log("Wayland patches disabled.");
+    // } else {
+    //     if (process.platform == "linux") {
+    //         if (process.env.XDG_SESSION_TYPE == "wayland") {
+    //             console.log("Wayland specific patches applied.");
+    //             app.commandLine.appendSwitch("ozone-platform=wayland");
+    //             if (process.env.XDG_CURRENT_DESKTOP == "GNOME") {
+    //                 app.commandLine.appendSwitch("enable-features=UseOzonePlatform,WaylandWindowDecorations");
+    //             } else {
+    //                 app.commandLine.appendSwitch("enable-features=UseOzonePlatform");
+    //             }
+    //         }
+    //     }
+    // }
 
     checkForDataFolder();
     checkIfConfigExists();
