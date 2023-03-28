@@ -48,7 +48,7 @@
 If you're using older version of Windows, you need to use [pre-built installers](https://www.armcord.xyz/download).
 
 ### Linux
-<a href='https://flathub.org/apps/xyz.armcord.ArmCord'><img width='240' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.svg'/></a>
+<a href='https://flathub.org/apps/details/xyz.armcord.ArmCord'><img width='240' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.svg'/></a>
 
 ### Debian, Ubuntu, Raspbian repository
 ArmCord is available on our official repositories for `apt` package manager. By using this method you'll receive automatic updates and get all the dependencies. Run the following commands to install ArmCord from them:
