@@ -94,7 +94,7 @@ async function doAfterDefiningTheWindow() {
         // Allow about:blank (used by Vencord QuickCss popup)
         if (url === "about:blank") return {action: "allow"};
         // Allow Discord stream popout
-        if (url === "https://discord.com/popout") || (url === "https://canary.discord.com/popout") || (url === "https://ptb.discord.com/popout") return {action: "allow"};
+        if ((url === "https://discord.com/popout") || (url === "https://canary.discord.com/popout") || (url === "https://ptb.discord.com/popout")) return {action: "allow"};
         if (url.startsWith("https:") || url.startsWith("http:") || url.startsWith("mailto:")) {
             shell.openExternal(url);
         } else {
