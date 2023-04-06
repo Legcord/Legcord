@@ -47,7 +47,7 @@
 
 If you're using older version of Windows, you need to use [pre-built installers](https://www.armcord.xyz/download).
 
-### Linux
+### Flatpak
 <a href='https://flathub.org/apps/details/xyz.armcord.ArmCord'><img width='240' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.svg'/></a>
 
 ### Debian, Ubuntu, Raspbian repository
