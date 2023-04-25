@@ -6,6 +6,7 @@ import {
     getConfig,
     checkIfConfigExists,
     injectElectronFlags,
+    setConfig,
     installModLoader,
     getConfigLocation
 } from "./utils";
@@ -18,7 +19,21 @@ export var iconPath: string;
 export var settings: any;
 export var customTitlebar: boolean;
 export var clientName: "ArmCord";
-
+async function args() {
+    var argNum = 2;
+    if (process.argv[0] == "electron") argNum++;
+    var args = process.argv[argNum];
+    if (args == undefined) return;
+    if (args.startsWith("--")) return; //electron flag
+    if (args.includes("=")) {
+        var e = args.split("=");
+        await setConfig(e[0], e[1]);
+        console.log("Setting " + e[0] + " to " + e[1]);
+        app.relaunch();
+        app.exit();
+    }
+}
+args(); // i want my top level awaits
 if (!app.requestSingleInstanceLock()) {
     // kill if 2nd instance
     app.quit();
