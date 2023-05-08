@@ -4,7 +4,6 @@ import {createInviteWindow, mainWindow} from "./window";
 import {getConfig, getConfigLocation, getDisplayVersion, setWindowState} from "./utils";
 import * as path from "path";
 import {createSettingsWindow} from "./settings/main";
-import {clientName} from "./main";
 export let tray: any = null;
 app.whenReady().then(async () => {
     let finishedSetup = await getConfig("doneSetup");

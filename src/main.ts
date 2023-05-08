@@ -17,7 +17,6 @@ import path from "path";
 export let iconPath: string;
 export let settings: any;
 export let customTitlebar: boolean;
-export let clientName: "ArmCord";
 async function args(): Promise<void> {
     let argNum = 2;
     if (process.argv[0] == "electron") argNum++;
