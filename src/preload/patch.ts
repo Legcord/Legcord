@@ -4,16 +4,16 @@
 import {ipcRenderer} from "electron";
 import {injectJS} from "../utils";
 
-var patchEndpoint = "https://patch.armcord.xyz/";
-var version = ipcRenderer.sendSync("get-app-version", "app-version");
+const patchEndpoint = "https://patch.armcord.xyz";
+const version = ipcRenderer.sendSync("get-app-version", "app-version");
 if (ipcRenderer.sendSync("shouldPatch")) {
     document.addEventListener("DOMContentLoaded", function () {
-        fetch(patchEndpoint + version + "/info.json", {cache: "no-store"}) //lmao
+        fetch(`${patchEndpoint}/${version}/info.json`, {cache: "no-store"}) //lmao
             .then((res) => res.json())
             .then((res) => {
                 if (res.patch == true) {
                     console.log("Found a patch. Injecting...");
-                    injectJS(patchEndpoint + version + "/patch.js");
+                    injectJS(`${patchEndpoint}/${version}/patch.js`);
                 } else {
                     console.log("No patches have been found.");
                 }

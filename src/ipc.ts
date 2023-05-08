@@ -1,44 +1,42 @@
 //ipc stuff
-import {app, ipcMain, shell, desktopCapturer, nativeImage, screen} from "electron";
+import {app, desktopCapturer, ipcMain, nativeImage, shell} from "electron";
 import {mainWindow} from "./window";
 import {
-    setConfigBulk,
-    getVersion,
     getConfig,
-    setLang,
-    getLang,
-    getWindowState,
-    packageVersion,
     getDisplayVersion,
+    getLang,
+    getVersion,
+    getWindowState,
     modInstallState,
-    installModLoader
+    packageVersion,
+    setConfigBulk,
+    setLang
 } from "./utils";
 import {customTitlebar} from "./main";
 import {createSettingsWindow} from "./settings/main";
 import os from "os";
-import fs from "fs";
 import path from "path";
-export function registerIpc() {
-    ipcMain.on("get-app-path", (event, arg) => {
+export function registerIpc(): void {
+    ipcMain.on("get-app-path", (event) => {
         event.reply("app-path", app.getAppPath());
     });
-    ipcMain.on("setLang", (event, lang: string) => {
+    ipcMain.on("setLang", (_event, lang: string) => {
         setLang(lang);
     });
-    ipcMain.handle("getLang", (event, toGet: string) => {
+    ipcMain.handle("getLang", (_event, toGet: string) => {
         return getLang(toGet);
     });
-    ipcMain.on("open-external-link", (event, href: string) => {
+    ipcMain.on("open-external-link", (_event, href: string) => {
         shell.openExternal(href);
     });
-    ipcMain.on("setPing", (event, pingCount: number) => {
+    ipcMain.on("setPing", (_event, pingCount: number) => {
         switch (os.platform()) {
             case "linux" ?? "macos":
                 app.setBadgeCount(pingCount);
                 break;
             case "win32":
                 if (pingCount > 0) {
-                    var image = nativeImage.createFromPath(path.join(__dirname, "../", `/assets/ping.png`));
+                    let image = nativeImage.createFromPath(path.join(__dirname, "../", `/assets/ping.png`));
                     mainWindow.setOverlayIcon(image, "badgeCount");
                 } else {
                     mainWindow.setOverlayIcon(null, "badgeCount");
@@ -46,28 +44,28 @@ export function registerIpc() {
                 break;
         }
     });
-    ipcMain.on("win-maximize", (event, arg) => {
+    ipcMain.on("win-maximize", () => {
         mainWindow.maximize();
     });
-    ipcMain.on("win-isMaximized", (event, arg) => {
+    ipcMain.on("win-isMaximized", (event) => {
         event.returnValue = mainWindow.isMaximized();
     });
-    ipcMain.on("win-isNormal", (event, arg) => {
+    ipcMain.on("win-isNormal", (event) => {
         event.returnValue = mainWindow.isNormal();
     });
-    ipcMain.on("win-minimize", (event, arg) => {
+    ipcMain.on("win-minimize", () => {
         mainWindow.minimize();
     });
-    ipcMain.on("win-unmaximize", (event, arg) => {
+    ipcMain.on("win-unmaximize", () => {
         mainWindow.unmaximize();
     });
-    ipcMain.on("win-show", (event, arg) => {
+    ipcMain.on("win-show", () => {
         mainWindow.show();
     });
-    ipcMain.on("win-hide", (event, arg) => {
+    ipcMain.on("win-hide", () => {
         mainWindow.hide();
     });
-    ipcMain.on("win-quit", (event, arg) => {
+    ipcMain.on("win-quit", () => {
         app.exit();
     });
     ipcMain.on("get-app-version", (event) => {
@@ -83,14 +81,19 @@ export function registerIpc() {
         event.returnValue = packageVersion;
     });
     ipcMain.on("splashEnd", async () => {
+        let width = 800,
+            height = 600,
+            isMaximized = true,
+            xValue = 0,
+            yValue = 0;
         try {
-            var width = (await getWindowState("width")) ?? 800;
-            var height = (await getWindowState("height")) ?? 600;
-            var isMaximized = (await getWindowState("isMaximized")) ?? false;
-            var xValue = await getWindowState("x");
-            var yValue = await getWindowState("y");
-        } catch (e) {
-            console.log("[Window state manager] No window state file found. Fallbacking to default values.");
+            width = (await getWindowState("width")) ?? 800;
+            height = (await getWindowState("height")) ?? 600;
+            isMaximized = (await getWindowState("isMaximized")) ?? false;
+            xValue = await getWindowState("x");
+            yValue = await getWindowState("y");
+        } catch (_e) {
+            console.log("[Window state manager] No window state file found. Falling back to default values.");
             mainWindow.setSize(800, 600);
         }
         if (isMaximized) {
@@ -102,11 +105,11 @@ export function registerIpc() {
             console.log("[Window state manager] Not maximized.");
         }
     });
-    ipcMain.on("restart", (event, arg) => {
+    ipcMain.on("restart", () => {
         app.relaunch();
         app.exit();
     });
-    ipcMain.on("saveSettings", (event, args) => {
+    ipcMain.on("saveSettings", (_event, args) => {
         setConfigBulk(args);
     });
     ipcMain.on("minimizeToTray", async (event) => {
@@ -115,28 +118,28 @@ export function registerIpc() {
     ipcMain.on("channel", async (event) => {
         event.returnValue = await getConfig("channel");
     });
-    ipcMain.on("clientmod", async (event, arg) => {
+    ipcMain.on("clientmod", async (event) => {
         event.returnValue = await getConfig("mods");
     });
-    ipcMain.on("legacyCapturer", async (event, arg) => {
+    ipcMain.on("legacyCapturer", async (event) => {
         event.returnValue = await getConfig("useLegacyCapturer");
     });
-    ipcMain.on("trayIcon", async (event, arg) => {
+    ipcMain.on("trayIcon", async (event) => {
         event.returnValue = await getConfig("trayIcon");
     });
-    ipcMain.on("disableAutogain", async (event, arg) => {
+    ipcMain.on("disableAutogain", async (event) => {
         event.returnValue = await getConfig("disableAutogain");
     });
-    ipcMain.on("titlebar", (event, arg) => {
+    ipcMain.on("titlebar", (event) => {
         event.returnValue = customTitlebar;
     });
-    ipcMain.on("mobileMode", async (event, arg) => {
+    ipcMain.on("mobileMode", async (event) => {
         event.returnValue = await getConfig("mobileMode");
     });
-    ipcMain.on("shouldPatch", async (event, arg) => {
+    ipcMain.on("shouldPatch", async (event) => {
         event.returnValue = await getConfig("automaticPatches");
     });
-    ipcMain.on("openSettingsWindow", (event, arg) => {
+    ipcMain.on("openSettingsWindow", () => {
         createSettingsWindow();
     });
     ipcMain.on("setting-armcordCSP", async (event) => {
@@ -146,5 +149,5 @@ export function registerIpc() {
             event.returnValue = false;
         }
     });
-    ipcMain.handle("DESKTOP_CAPTURER_GET_SOURCES", (event, opts) => desktopCapturer.getSources(opts));
+    ipcMain.handle("DESKTOP_CAPTURER_GET_SOURCES", (_event, opts) => desktopCapturer.getSources(opts));
 }

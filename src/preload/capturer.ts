@@ -1,6 +1,6 @@
 //Fixed context isolation version https://github.com/getferdi/ferdi/blob/develop/src/webview/screenshare.ts
 //original https://github.com/electron/electron/issues/16513#issuecomment-602070250
-import {addStyle, addScript} from "../utils";
+import {addScript, addStyle} from "../utils";
 import fs from "fs";
 import path from "path";
 

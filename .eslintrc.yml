@@ -1,0 +1,35 @@
+extends: eslint-config-dmitmel/presets/node
+env:
+    browser: true
+plugins: ["prettier"]
+
+settings:
+    node:
+        tryExtensions: [".tsx", ".ts", ".jsx", ".js", ".json", ".node"]
+
+ignorePatterns: ["src/arrpc/**"]
+
+rules:
+    prettier/prettier:
+        - error
+    node/no-unsupported-features/es-syntax:
+        - error
+        - ignores:
+              - modules
+
+overrides:
+    - files: "**/*.ts*"
+      extends:
+          - eslint-config-dmitmel/presets/typescript-addon
+      parserOptions:
+          project: "tsconfig.json"
+          sourceType: module
+      rules:
+          eqeqeq: 0
+          require-await: 0
+          no-undefined: 0
+          node/no-unsupported-features/es-syntax: 0
+          "@typescript-eslint/no-dynamic-delete": 0
+          "@typescript-eslint/no-explicit-any": 0
+          "@typescript-eslint/no-non-null-asserted-optional-chain": 0
+          "@typescript-eslint/naming-convention": 0

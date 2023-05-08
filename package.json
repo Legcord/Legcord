@@ -3,6 +3,9 @@
     "version": "3.2.0",
     "description": "ArmCord is a custom client designed to enhance your Discord experience while keeping everything lightweight.",
     "main": "ts-out/main.js",
+    "engines": {
+        "node": ">=18.0.0"
+    },
     "scripts": {
         "build": "tsc && copyfiles -u 1 src/**/*.html src/**/**/*.css src/**/**/*.js ts-out/ && copyfiles package.json ts-out/ && copyfiles assets/**/** ts-out/",
         "watch": "tsc -w",
@@ -11,6 +14,7 @@
         "package": "npm run build && electron-builder",
         "packageQuick": "npm run build && electron-builder --dir",
         "format": "prettier --write src *.json",
+        "lint": "eslint src --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore",
         "CIbuild": "npm run build && electron-builder --linux zip && electron-builder --windows zip && electron-builder --macos zip",
         "prepare": "git config --local core.hooksPath .hooks/"
     },
@@ -27,10 +31,16 @@
     "devDependencies": {
         "@types/node": "^18.11.9",
         "@types/ws": "^8.5.3",
+        "@typescript-eslint/eslint-plugin": "^5.59.2",
+        "@typescript-eslint/parser": "^5.59.2",
         "chalk-cli": "^5.0.0",
         "copyfiles": "^2.4.1",
         "electron": "^24.1.2",
         "electron-builder": "^23.6.0",
+        "eslint": "^8.40.0",
+        "eslint-config-dmitmel": "github:dmitmel/eslint-config-dmitmel",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-prettier": "^4.2.1",
         "prettier": "^2.7.1",
         "typescript": "^4.9.3"
     },

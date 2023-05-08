@@ -1,13 +1,13 @@
 import * as fs from "fs";
-import {app, Menu, Tray, nativeImage} from "electron";
+import {Menu, Tray, app, nativeImage} from "electron";
 import {createInviteWindow, mainWindow} from "./window";
-import {getConfig, getConfigLocation, setWindowState, getDisplayVersion} from "./utils";
+import {getConfig, getConfigLocation, getDisplayVersion, setWindowState} from "./utils";
 import * as path from "path";
 import {createSettingsWindow} from "./settings/main";
 export let tray: any = null;
 app.whenReady().then(async () => {
     let finishedSetup = await getConfig("doneSetup");
-    var trayIcon = (await getConfig("trayIcon")) ?? "ac_plug_colored";
+    let trayIcon = (await getConfig("trayIcon")) ?? "ac_plug_colored";
     let trayPath = nativeImage.createFromPath(path.join(__dirname, "../", `/assets/${trayIcon}.png`));
     let trayVerIcon;
     trayVerIcon = function () {
@@ -18,14 +18,15 @@ app.whenReady().then(async () => {
         } else if (process.platform == "linux") {
             return trayPath.resize({height: 24});
         }
+        return undefined;
     };
 
     if (process.platform == "darwin" && trayPath.getSize().height > 22) trayPath = trayPath.resize({height: 22});
 
+    let clientName = (await getConfig("clientName")) ?? "ArmCord";
     if ((await getConfig("windowStyle")) == "basic") {
-        var clientName = (await getConfig("clientName")) ?? "ArmCord";
         tray = new Tray(trayPath);
-        const contextMenu = function () {
+        function contextMenu(): Electron.Menu {
             if (finishedSetup == false) {
                 return Menu.buildFromTemplate([
                     {
@@ -34,7 +35,7 @@ app.whenReady().then(async () => {
                     },
                     {
                         label: `Quit ${clientName}`,
-                        click: async function () {
+                        async click() {
                             fs.unlink(await getConfigLocation(), (err) => {
                                 if (err) throw err;
 
@@ -48,17 +49,17 @@ app.whenReady().then(async () => {
                 return Menu.buildFromTemplate([
                     {
                         label: `Open ${clientName}`,
-                        click: function () {
+                        click() {
                             mainWindow.show();
                         }
                     },
                     {
                         label: `Quit ${clientName}`,
-                        click: function () {
+                        click() {
                             let [width, height] = mainWindow.getSize();
                             setWindowState({
-                                width: width,
-                                height: height,
+                                width,
+                                height,
                                 isMaximized: mainWindow.isMaximized(),
                                 x: mainWindow.getPosition()[0],
                                 y: mainWindow.getPosition()[1]
@@ -68,12 +69,11 @@ app.whenReady().then(async () => {
                     }
                 ]);
             }
-        };
+        }
 
         tray.setToolTip(clientName);
         tray.setContextMenu(contextMenu);
     } else {
-        var clientName = (await getConfig("clientName")) ?? "ArmCord";
         tray = new Tray(trayPath);
         if (finishedSetup == false) {
             const contextMenu = Menu.buildFromTemplate([
@@ -83,7 +83,7 @@ app.whenReady().then(async () => {
                 },
                 {
                     label: `Quit ${clientName}`,
-                    click: async function () {
+                    async click() {
                         fs.unlink(await getConfigLocation(), (err) => {
                             if (err) throw err;
 
@@ -97,7 +97,7 @@ app.whenReady().then(async () => {
         } else {
             const contextMenu = Menu.buildFromTemplate([
                 {
-                    label: `${clientName} ` + getDisplayVersion(),
+                    label: `${clientName} ${getDisplayVersion()}`,
                     icon: trayVerIcon(),
                     enabled: false
                 },
@@ -106,19 +106,19 @@ app.whenReady().then(async () => {
                 },
                 {
                     label: `Open ${clientName}`,
-                    click: function () {
+                    click() {
                         mainWindow.show();
                     }
                 },
                 {
                     label: "Open Settings",
-                    click: function () {
+                    click() {
                         createSettingsWindow();
                     }
                 },
                 {
                     label: "Support Discord Server",
-                    click: function () {
+                    click() {
                         createInviteWindow("TnhxcqynZ2");
                     }
                 },
@@ -127,7 +127,7 @@ app.whenReady().then(async () => {
                 },
                 {
                     label: `Quit ${clientName}`,
-                    click: function () {
+                    click() {
                         app.quit();
                     }
                 }

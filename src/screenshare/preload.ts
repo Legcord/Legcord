@@ -1,16 +1,15 @@
-import {IpcMain, ipcRenderer} from "electron";
+import {ipcRenderer} from "electron";
 interface IPCSources {
     id: string;
     name: string;
     thumbnail: HTMLCanvasElement;
 }
-async function addDisplays() {
-    ipcRenderer.once("getSources", (event, arg) => {
-        var sources: IPCSources[] = arg;
+async function addDisplays(): Promise<void> {
+    ipcRenderer.once("getSources", (_event, arg) => {
+        let sources: IPCSources[] = arg;
         console.log(sources);
         const selectionElem = document.createElement("div");
-        //@ts-ignore
-        selectionElem.classList = ["desktop-capturer-selection"];
+        selectionElem.classList.add("desktop-capturer-selection");
         selectionElem.innerHTML = `<div class="desktop-capturer-selection__scroller">
     <ul class="desktop-capturer-selection__list">
       ${sources
@@ -39,7 +38,7 @@ async function addDisplays() {
                     const id = button.getAttribute("data-id");
                     const title = button.getAttribute("title");
                     if (id === "${CANCEL_ID}") {
-                        new Error("Cancelled by user");
+                        throw new Error("Cancelled by user");
                     } else {
                         ipcRenderer.sendSync("selectScreenshareSource", id, title);
                     }

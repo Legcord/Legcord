@@ -1,31 +1,31 @@
 import * as fs from "fs";
-import {app, dialog, Rectangle} from "electron";
+import {app, dialog} from "electron";
 import path from "path";
 import fetch from "cross-fetch";
 import extract from "extract-zip";
 import util from "util";
 const streamPipeline = util.promisify(require("stream").pipeline);
-export var firstRun: boolean;
-export var contentPath: string;
-export var transparency: boolean;
+export let firstRun: boolean;
+export let contentPath: string;
+export let transparency: boolean;
 //utility functions that are used all over the codebase or just too obscure to be put in the file used in
-export function addStyle(styleString: string) {
+export function addStyle(styleString: string): void {
     const style = document.createElement("style");
     style.textContent = styleString;
     document.head.append(style);
 }
 
-export function addScript(scriptString: string) {
-    var script = document.createElement("script");
+export function addScript(scriptString: string): void {
+    let script = document.createElement("script");
     script.textContent = scriptString;
     document.body.append(script);
 }
 
-export async function sleep(ms: number) {
+export async function sleep(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export async function checkIfConfigIsBroken() {
+export async function checkIfConfigIsBroken(): Promise<void> {
     if ((await getConfig("0")) == "d") {
         console.log("Detected a corrupted config");
         setup();
@@ -36,7 +36,7 @@ export async function checkIfConfigIsBroken() {
     }
 }
 
-export function setup() {
+export function setup(): void {
     console.log("Setting up temporary ArmCord settings.");
     const defaults: Settings = {
         windowStyle: "default",
@@ -55,7 +55,9 @@ export function setup() {
         useLegacyCapturer: false,
         mobileMode: false,
         trayIcon: "default",
-        doneSetup: false
+        doneSetup: false,
+        clientName: "ArmCord",
+        customIcon: path.join(__dirname, "../", "/assets/ac_icon_transparent.png")
     };
     setConfigBulk({
         ...defaults
@@ -63,12 +65,12 @@ export function setup() {
 }
 
 //Get the version value from the "package.json" file
-export var packageVersion = require("../package.json").version;
+export const packageVersion = require("../package.json").version;
 
-export function getVersion() {
+export function getVersion(): string {
     return packageVersion;
 }
-export function getDisplayVersion() {
+export function getDisplayVersion(): string {
     //Checks if the app version # has 4 sections (3.1.0.0) instead of 3 (3.1.0) / Shitty way to check if Kernel Mod is installed
     if ((app.getVersion() == packageVersion) == false) {
         if ((app.getVersion() == process.versions.electron) == true) {
@@ -80,7 +82,7 @@ export function getDisplayVersion() {
         return packageVersion;
     }
 }
-export async function injectJS(inject: string) {
+export async function injectJS(inject: string): Promise<void> {
     const js = await (await fetch(`${inject}`)).text();
 
     const el = document.createElement("script");
@@ -89,7 +91,7 @@ export async function injectJS(inject: string) {
 
     document.body.appendChild(el);
 }
-export async function injectElectronFlags() {
+export async function injectElectronFlags(): Promise<void> {
     //     MIT License
 
     // Copyright (c) 2022 GooseNest
@@ -135,43 +137,43 @@ export async function injectElectronFlags() {
         });
     }
 }
-export async function setLang(language: string) {
-    const langConfigFile = path.join(app.getPath("userData"), "/storage/") + "lang.json";
+export async function setLang(language: string): Promise<void> {
+    const langConfigFile = `${path.join(app.getPath("userData"), "/storage/")}lang.json`;
     if (!fs.existsSync(langConfigFile)) {
         fs.writeFileSync(langConfigFile, "{}", "utf-8");
     }
     let rawdata = fs.readFileSync(langConfigFile, "utf-8");
     let parsed = JSON.parse(rawdata);
-    parsed["lang"] = language;
+    parsed.lang = language;
     let toSave = JSON.stringify(parsed, null, 4);
     fs.writeFileSync(langConfigFile, toSave, "utf-8");
 }
-var language: string;
-export async function getLang(object: string) {
+let language: string;
+export async function getLang(object: string): Promise<string> {
     if (language == undefined) {
         try {
             const userDataPath = app.getPath("userData");
             const storagePath = path.join(userDataPath, "/storage/");
-            const langConfigFile = storagePath + "lang.json";
+            const langConfigFile = `${storagePath}lang.json`;
             let rawdata = fs.readFileSync(langConfigFile, "utf-8");
             let parsed = JSON.parse(rawdata);
-            language = parsed["lang"];
-        } catch (e) {
+            language = parsed.lang;
+        } catch (_e) {
             console.log("Language config file doesn't exist. Fallback to English.");
             language = "en-US";
         }
     }
     if (language.length == 2) {
-        language = language + "-" + language.toUpperCase();
+        language = `${language}-${language.toUpperCase()}`;
     }
-    var langPath = path.join(__dirname, "../", "/assets/lang/" + language + ".json");
+    let langPath = path.join(__dirname, "../", `/assets/lang/${language}.json`);
     if (!fs.existsSync(langPath)) {
         langPath = path.join(__dirname, "../", "/assets/lang/en-US.json");
     }
     let rawdata = fs.readFileSync(langPath, "utf-8");
     let parsed = JSON.parse(rawdata);
     if (parsed[object] == undefined) {
-        console.log(object + " is undefined in " + language);
+        console.log(`${object} is undefined in ${language}`);
         langPath = path.join(__dirname, "../", "/assets/lang/en-US.json");
         rawdata = fs.readFileSync(langPath, "utf-8");
         parsed = JSON.parse(rawdata);
@@ -180,22 +182,22 @@ export async function getLang(object: string) {
         return parsed[object];
     }
 }
-export async function getLangName() {
+export async function getLangName(): Promise<string> {
     if (language == undefined) {
         try {
             const userDataPath = app.getPath("userData");
             const storagePath = path.join(userDataPath, "/storage/");
-            const langConfigFile = storagePath + "lang.json";
+            const langConfigFile = `${storagePath}lang.json`;
             let rawdata = fs.readFileSync(langConfigFile, "utf-8");
             let parsed = JSON.parse(rawdata);
-            language = parsed["lang"];
-        } catch (e) {
+            language = parsed.lang;
+        } catch (_e) {
             console.log("Language config file doesn't exist. Fallback to English.");
             language = "en-US";
         }
     }
     if (language.length == 2) {
-        language = language + "-" + language.toUpperCase();
+        language = `${language}-${language.toUpperCase()}`;
     }
     return language;
 }
@@ -207,26 +209,26 @@ export interface WindowState {
     y: number;
     isMaximized: boolean;
 }
-export async function setWindowState(object: WindowState) {
+export async function setWindowState(object: WindowState): Promise<void> {
     const userDataPath = app.getPath("userData");
     const storagePath = path.join(userDataPath, "/storage/");
-    const saveFile = storagePath + "window.json";
+    const saveFile = `${storagePath}window.json`;
     let toSave = JSON.stringify(object, null, 4);
     fs.writeFileSync(saveFile, toSave, "utf-8");
 }
-export async function getWindowState(object: string) {
+export async function getWindowState<K extends keyof WindowState>(object: K): Promise<WindowState[K]> {
     const userDataPath = app.getPath("userData");
     const storagePath = path.join(userDataPath, "/storage/");
-    const settingsFile = storagePath + "window.json";
+    const settingsFile = `${storagePath}window.json`;
     let rawdata = fs.readFileSync(settingsFile, "utf-8");
     let returndata = JSON.parse(rawdata);
     console.log(returndata);
-    console.log("[Window state manager] " + returndata);
+    console.log(`[Window state manager] ${returndata}`);
     return returndata[object];
 }
 //ArmCord Settings/Storage manager
 
-export function checkForDataFolder() {
+export function checkForDataFolder(): void {
     const dataPath = path.join(path.dirname(app.getPath("exe")), "armcord-data");
     if (fs.existsSync(dataPath) && fs.statSync(dataPath).isDirectory()) {
         console.log("Found armcord-data folder. Running in portable mode.");
@@ -235,6 +237,14 @@ export function checkForDataFolder() {
 }
 
 export interface Settings {
+    // Referenced for detecting a broken config.
+    "0"?: string;
+    // Referenced once for disabling mod updating.
+    noBundleUpdates?: boolean;
+    // Only used for external url warning dialog.
+    ignoreProtocolWarning?: boolean;
+    customIcon: string;
+
     windowStyle: string;
     channel: string;
     armcordCSP: boolean;
@@ -252,33 +262,34 @@ export interface Settings {
     disableAutogain: boolean;
     trayIcon: string;
     doneSetup: boolean;
+    clientName: string;
 }
-export function getConfigLocation() {
+export function getConfigLocation(): string {
     const userDataPath = app.getPath("userData");
     const storagePath = path.join(userDataPath, "/storage/");
-    return storagePath + "settings.json";
+    return `${storagePath}settings.json`;
 }
-export async function getConfig(object: string) {
+export async function getConfig<K extends keyof Settings>(object: K): Promise<Settings[K]> {
     let rawdata = fs.readFileSync(getConfigLocation(), "utf-8");
     let returndata = JSON.parse(rawdata);
-    console.log("[Config manager] " + object + ": " + returndata[object]);
+    console.log(`[Config manager] ${object}: ${returndata[object]}`);
     return returndata[object];
 }
-export async function setConfig(object: string, toSet: any) {
+export async function setConfig<K extends keyof Settings>(object: K, toSet: Settings[K]): Promise<void> {
     let rawdata = fs.readFileSync(getConfigLocation(), "utf-8");
     let parsed = JSON.parse(rawdata);
     parsed[object] = toSet;
     let toSave = JSON.stringify(parsed, null, 4);
     fs.writeFileSync(getConfigLocation(), toSave, "utf-8");
 }
-export async function setConfigBulk(object: Settings) {
+export async function setConfigBulk(object: Settings): Promise<void> {
     let toSave = JSON.stringify(object, null, 4);
     fs.writeFileSync(getConfigLocation(), toSave, "utf-8");
 }
-export async function checkIfConfigExists() {
+export async function checkIfConfigExists(): Promise<void> {
     const userDataPath = app.getPath("userData");
     const storagePath = path.join(userDataPath, "/storage/");
-    const settingsFile = storagePath + "settings.json";
+    const settingsFile = `${storagePath}settings.json`;
 
     if (!fs.existsSync(settingsFile)) {
         if (!fs.existsSync(storagePath)) {
@@ -288,27 +299,25 @@ export async function checkIfConfigExists() {
         console.log("First run of the ArmCord. Starting setup.");
         setup();
         firstRun = true;
+    } else if ((await getConfig("doneSetup")) == false) {
+        console.log("First run of the ArmCord. Starting setup.");
+        setup();
+        firstRun = true;
     } else {
-        if ((await getConfig("doneSetup")) == false) {
-            console.log("First run of the ArmCord. Starting setup.");
-            setup();
-            firstRun = true;
-        } else {
-            console.log("ArmCord has been run before. Skipping setup.");
-        }
+        console.log("ArmCord has been run before. Skipping setup.");
     }
 }
 
 // Mods
-async function updateModBundle() {
+async function updateModBundle(): Promise<void> {
     if ((await getConfig("noBundleUpdates")) == undefined ?? false) {
         try {
             console.log("Downloading mod bundle");
-            const distFolder = app.getPath("userData") + "/plugins/loader/dist/";
+            const distFolder = `${app.getPath("userData")}/plugins/loader/dist/`;
             while (!fs.existsSync(distFolder)) {
                 //waiting
             }
-            var name: string = await getConfig("mods");
+            let name: string = await getConfig("mods");
             const clientMods = {
                 vencord: "https://github.com/Vendicated/Vencord/releases/download/devbuild/browser.js",
                 cordwood: "https://raw.githubusercontent.com/Cordwood/builds/master/index.js",
@@ -319,10 +328,10 @@ async function updateModBundle() {
                 cordwood: "https://armcord.xyz/placeholder.css",
                 shelter: "https://armcord.xyz/placeholder.css"
             };
-            var bundle: string = await (await fetch(clientMods[name as keyof typeof clientMods])).text();
-            fs.writeFileSync(distFolder + "bundle.js", bundle, "utf-8");
-            var css: string = await (await fetch(clientModsCss[name as keyof typeof clientModsCss])).text();
-            fs.writeFileSync(distFolder + "bundle.css", css, "utf-8");
+            let bundle: string = await (await fetch(clientMods[name as keyof typeof clientMods])).text();
+            fs.writeFileSync(`${distFolder}bundle.js`, bundle, "utf-8");
+            let css: string = await (await fetch(clientModsCss[name as keyof typeof clientModsCss])).text();
+            fs.writeFileSync(`${distFolder}bundle.css`, css, "utf-8");
         } catch (e) {
             console.log("[Mod loader] Failed to install mods");
             console.error(e);
@@ -336,25 +345,25 @@ async function updateModBundle() {
     }
 }
 
-export var modInstallState: string;
-export async function installModLoader() {
+export let modInstallState: string;
+export async function installModLoader(): Promise<void> {
     if ((await getConfig("mods")) == "none") {
         modInstallState = "none";
-        fs.rmSync(app.getPath("userData") + "/plugins/loader", {recursive: true, force: true});
+        fs.rmSync(`${app.getPath("userData")}/plugins/loader`, {recursive: true, force: true});
         import("./extensions/plugin");
         console.log("[Mod loader] Skipping");
     } else {
-        const pluginFolder = app.getPath("userData") + "/plugins/";
-        if (!fs.existsSync(pluginFolder + "loader") || !fs.existsSync(pluginFolder + "loader/dist/" + "bundle.css")) {
+        const pluginFolder = `${app.getPath("userData")}/plugins/`;
+        if (!fs.existsSync(`${pluginFolder}loader`) || !fs.existsSync(`${pluginFolder}loader/dist/bundle.css`)) {
             try {
-                fs.rmSync(app.getPath("userData") + "/plugins/loader", {recursive: true, force: true});
+                fs.rmSync(`${app.getPath("userData")}/plugins/loader`, {recursive: true, force: true});
                 modInstallState = "installing";
-                var zipPath = app.getPath("temp") + "/" + "loader.zip";
+                let zipPath = `${app.getPath("temp")}/loader.zip`;
                 if (!fs.existsSync(pluginFolder)) {
                     fs.mkdirSync(pluginFolder);
                     console.log("[Mod loader] Created missing plugin folder");
                 }
-                var loaderZip = await fetch("https://armcord.xyz/loader.zip");
+                let loaderZip = await fetch("https://armcord.xyz/loader.zip");
                 if (!loaderZip.ok) throw new Error(`unexpected response ${loaderZip.statusText}`);
                 await streamPipeline(loaderZip.body, fs.createWriteStream(zipPath));
                 await extract(zipPath, {dir: path.join(app.getPath("userData"), "plugins")});

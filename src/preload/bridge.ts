@@ -9,7 +9,7 @@ interface IPCSources {
     name: string;
     thumbnail: HTMLCanvasElement;
 }
-async function getDisplayMediaSelector() {
+async function getDisplayMediaSelector(): Promise<string> {
     const sources: IPCSources[] = await desktopCapturer.getSources({
         types: ["screen", "window"]
     });
@@ -54,7 +54,7 @@ contextBridge.exposeInMainWorld("armcord", {
         ipcRenderer.invoke("getLang", toGet).then((result) => {
             return result;
         }),
-    getDisplayMediaSelector: getDisplayMediaSelector,
+    getDisplayMediaSelector,
     version: ipcRenderer.sendSync("get-app-version", "app-version"),
     mods: ipcRenderer.sendSync("clientmod"),
     packageVersion: ipcRenderer.sendSync("get-package-version", "app-version"),
@@ -63,9 +63,11 @@ contextBridge.exposeInMainWorld("armcord", {
 });
 let windowCallback: (arg0: object) => void;
 contextBridge.exposeInMainWorld("ArmCordRPC", {
-    listen: (callback: any) => (windowCallback = callback)
+    listen: (callback: any) => {
+        windowCallback = callback;
+    }
 });
-ipcRenderer.on("rpc", (event, data: object) => {
+ipcRenderer.on("rpc", (_event, data: object) => {
     windowCallback(data);
 });
 //to be only used inside armcord internal setup/splash etc

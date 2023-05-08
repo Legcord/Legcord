@@ -15,9 +15,8 @@ if (ipcRenderer.sendSync("legacyCapturer")) {
     import("./capturer");
 }
 
-var version = ipcRenderer.sendSync("displayVersion");
-var channel = ipcRenderer.sendSync("channel");
-async function updateLang() {
+const version = ipcRenderer.sendSync("displayVersion");
+async function updateLang(): Promise<void> {
     if (window.location.href.indexOf("setup.html") > -1) {
         console.log("Setup, skipping lang update");
     } else {
@@ -32,8 +31,8 @@ declare global {
     }
 }
 
-console.log("ArmCord " + version);
-ipcRenderer.on("themeLoader", (event, message) => {
+console.log(`ArmCord ${version}`);
+ipcRenderer.on("themeLoader", (_event, message) => {
     addStyle(message);
 });
 if (window.location.href.indexOf("splash.html") > -1) {

@@ -2,19 +2,19 @@
 // I had to add most of the window creation code here to split both into seperete functions
 // WHY? Because I can't use the same code for both due to annoying bug with value `frame` not responding to variables
 // I'm sorry for this mess but I'm not sure how to fix it.
-import {BrowserWindow, shell, app, dialog, nativeImage} from "electron";
+import {BrowserWindow, app, dialog, nativeImage, shell} from "electron";
 import path from "path";
 import {
     checkIfConfigIsBroken,
+    contentPath,
     firstRun,
     getConfig,
-    contentPath,
+    modInstallState,
     setConfig,
     setLang,
     setWindowState,
-    transparency,
     sleep,
-    modInstallState
+    transparency
 } from "./utils";
 import {registerIpc} from "./ipc";
 import {setMenu} from "./menu";
@@ -26,13 +26,13 @@ import {iconPath} from "./main";
 export let mainWindow: BrowserWindow;
 export let inviteWindow: BrowserWindow;
 
-var osType = os.type();
+let osType = os.type();
 contextMenu({
     showSaveImageAs: true,
     showCopyImageAddress: true,
     showSearchWithGoogle: false,
     showSearchWithDuckDuckGo: false,
-    prepend: (defaultActions, parameters, browserWindow) => [
+    prepend: (_defaultActions, parameters) => [
         {
             label: "Search with Google",
             // Only show it when right-clicking text
@@ -51,7 +51,7 @@ contextMenu({
         }
     ]
 });
-async function doAfterDefiningTheWindow() {
+async function doAfterDefiningTheWindow(): Promise<void> {
     if (await getConfig("startMinimized")) {
         mainWindow.hide();
     } else {
@@ -66,7 +66,7 @@ async function doAfterDefiningTheWindow() {
             }
         });
     }
-    var ignoreProtocolWarning = await getConfig("ignoreProtocolWarning");
+    let ignoreProtocolWarning = await getConfig("ignoreProtocolWarning");
     await checkIfConfigIsBroken();
     registerIpc();
     if (await getConfig("mobileMode")) {
@@ -75,11 +75,11 @@ async function doAfterDefiningTheWindow() {
     } else {
         // A little sloppy but it works :p
         if (osType == "Windows_NT") {
-            osType = "Windows " + os.release().split(".")[0] + " (" + os.release() + ")";
+            osType = `Windows ${os.release().split(".")[0]} (${os.release()})`;
         }
         mainWindow.webContents.userAgent = `Mozilla/5.0 (X11; ${osType} ${os.arch()}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36`; //fake useragent for screenshare to work
     }
-    app.on("second-instance", (event, commandLine, workingDirectory, additionalData) => {
+    app.on("second-instance", (_event, _commandLine, _workingDirectory, additionalData) => {
         // Print out data received from the second instance.
         console.log(additionalData);
 
@@ -102,37 +102,33 @@ async function doAfterDefiningTheWindow() {
             return {action: "allow"};
         if (url.startsWith("https:") || url.startsWith("http:") || url.startsWith("mailto:")) {
             shell.openExternal(url);
+        } else if (ignoreProtocolWarning) {
+            shell.openExternal(url);
         } else {
-            if (ignoreProtocolWarning) {
-                shell.openExternal(url);
-            } else {
-                const options = {
-                    type: "question",
-                    buttons: ["Yes, please", "No, I don't"],
-                    defaultId: 1,
-                    title: url,
-                    message: `Do you want to open ${url}?`,
-                    detail: "This url was detected to not use normal browser protocols. It could mean that this url leads to a local program on your computer. Please check if you recognise it, before proceeding!",
-                    checkboxLabel: "Remember my answer and ignore this warning for future sessions",
-                    checkboxChecked: false
-                };
+            const options = {
+                type: "question",
+                buttons: ["Yes, please", "No, I don't"],
+                defaultId: 1,
+                title: url,
+                message: `Do you want to open ${url}?`,
+                detail: "This url was detected to not use normal browser protocols. It could mean that this url leads to a local program on your computer. Please check if you recognise it, before proceeding!",
+                checkboxLabel: "Remember my answer and ignore this warning for future sessions",
+                checkboxChecked: false
+            };
 
-                dialog.showMessageBox(mainWindow, options).then(({response, checkboxChecked}) => {
-                    console.log(response, checkboxChecked);
-                    if (checkboxChecked) {
-                        if (response == 0) {
-                            setConfig("ignoreProtocolWarning", true);
-                        } else {
-                            setConfig("ignoreProtocolWarning", false);
-                        }
-                    }
+            dialog.showMessageBox(mainWindow, options).then(({response, checkboxChecked}) => {
+                console.log(response, checkboxChecked);
+                if (checkboxChecked) {
                     if (response == 0) {
-                        shell.openExternal(url);
+                        setConfig("ignoreProtocolWarning", true);
                     } else {
-                        return;
+                        setConfig("ignoreProtocolWarning", false);
                     }
-                });
-            }
+                }
+                if (response == 0) {
+                    shell.openExternal(url);
+                }
+            });
         }
         return {action: "deny"};
     });
@@ -147,8 +143,8 @@ async function doAfterDefiningTheWindow() {
     );
 
     if ((await getConfig("trayIcon")) == "default" || (await getConfig("dynamicIcon"))) {
-        mainWindow.webContents.on("page-favicon-updated", async (event) => {
-            var faviconBase64 = await mainWindow.webContents.executeJavaScript(`
+        mainWindow.webContents.on("page-favicon-updated", async () => {
+            let faviconBase64 = await mainWindow.webContents.executeJavaScript(`
                 var getFavicon = function(){
                 var favicon = undefined;
                 var nodeList = document.getElementsByTagName("link");
@@ -163,7 +159,7 @@ async function doAfterDefiningTheWindow() {
                 }
                 getFavicon()
             `);
-            var buf = new Buffer(faviconBase64.replace(/^data:image\/\w+;base64,/, ""), "base64");
+            let buf = Buffer.from(faviconBase64.replace(/^data:image\/\w+;base64,/, ""), "base64");
             fs.writeFileSync(path.join(app.getPath("temp"), "/", "tray.png"), buf, "utf-8");
             let trayPath = nativeImage.createFromPath(path.join(app.getPath("temp"), "/", "tray.png"));
             if (process.platform === "darwin" && trayPath.getSize().height > 22)
@@ -178,7 +174,7 @@ async function doAfterDefiningTheWindow() {
         });
     }
     const userDataPath = app.getPath("userData");
-    const themesFolder = userDataPath + "/themes/";
+    const themesFolder = `${userDataPath}/themes/`;
     if (!fs.existsSync(themesFolder)) {
         fs.mkdirSync(themesFolder);
         console.log("Created missing theme folder");
@@ -187,7 +183,7 @@ async function doAfterDefiningTheWindow() {
         fs.readdirSync(themesFolder).forEach((file) => {
             try {
                 const manifest = fs.readFileSync(`${themesFolder}/${file}/manifest.json`, "utf8");
-                var themeFile = JSON.parse(manifest);
+                let themeFile = JSON.parse(manifest);
                 mainWindow.webContents.send(
                     "themeLoader",
                     fs.readFileSync(`${themesFolder}/${file}/${themeFile.theme}`, "utf-8")
@@ -202,8 +198,8 @@ async function doAfterDefiningTheWindow() {
     mainWindow.on("close", async (e) => {
         let [width, height] = mainWindow.getSize();
         await setWindowState({
-            width: width,
-            height: height,
+            width,
+            height,
             isMaximized: mainWindow.isMaximized(),
             x: mainWindow.getPosition()[0],
             y: mainWindow.getPosition()[1]
@@ -232,12 +228,11 @@ async function doAfterDefiningTheWindow() {
     });
     console.log(contentPath);
     if ((await getConfig("inviteWebsocket")) == true) {
-        //@ts-ignore
         require("arrpc");
         //await startServer();
     }
     if (firstRun) {
-        await setLang(Intl.DateTimeFormat().resolvedOptions().locale);
+        await setLang(new Intl.DateTimeFormat().resolvedOptions().locale);
         mainWindow.setSize(390, 470);
         await mainWindow.loadFile(path.join(__dirname, "/content/setup.html"));
         let trayPath = nativeImage.createFromPath(path.join(__dirname, "../", `/assets/ac_plug_colored.png`));
@@ -245,6 +240,8 @@ async function doAfterDefiningTheWindow() {
         if (process.platform === "win32" && trayPath.getSize().height > 32) trayPath = trayPath.resize({height: 32});
         tray.setImage(trayPath);
     } else if ((await getConfig("skipSplash")) == true) {
+        // It's modified elsewhere.
+        // eslint-disable-next-line no-unmodified-loop-condition
         while (modInstallState == "installing") {
             await sleep(1000);
         }
@@ -277,7 +274,7 @@ async function doAfterDefiningTheWindow() {
         mainWindow.show();
     }
 }
-export function createCustomWindow() {
+export function createCustomWindow(): void {
     mainWindow = new BrowserWindow({
         width: 300,
         height: 350,
@@ -296,7 +293,7 @@ export function createCustomWindow() {
     });
     doAfterDefiningTheWindow();
 }
-export function createNativeWindow() {
+export function createNativeWindow(): void {
     mainWindow = new BrowserWindow({
         width: 300,
         height: 350,
@@ -315,7 +312,7 @@ export function createNativeWindow() {
     });
     doAfterDefiningTheWindow();
 }
-export function createTransparentWindow() {
+export function createTransparentWindow(): void {
     mainWindow = new BrowserWindow({
         width: 300,
         height: 350,
@@ -334,7 +331,7 @@ export function createTransparentWindow() {
     });
     doAfterDefiningTheWindow();
 }
-export function createInviteWindow(code: string) {
+export function createInviteWindow(code: string): void {
     inviteWindow = new BrowserWindow({
         width: 800,
         height: 600,
@@ -348,7 +345,7 @@ export function createInviteWindow(code: string) {
             spellcheck: true
         }
     });
-    var formInviteURL = `https://discord.com/invite/${code}`;
+    let formInviteURL = `https://discord.com/invite/${code}`;
     inviteWindow.webContents.session.webRequest.onBeforeRequest((details, callback) => {
         if (details.url.includes("ws://")) return callback({cancel: true});
         return callback({});
