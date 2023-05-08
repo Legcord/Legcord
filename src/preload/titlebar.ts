@@ -3,9 +3,9 @@ import {addStyle} from "../utils";
 import * as fs from "fs";
 import * as path from "path";
 import os from "os";
-export function injectTitlebar() {
-    document.addEventListener("DOMContentLoaded", function (event) {
-        var elem = document.createElement("div");
+export function injectTitlebar(): void {
+    document.addEventListener("DOMContentLoaded", function (_event) {
+        const elem = document.createElement("div");
         elem.innerHTML = `<nav class="titlebar">
           <div class="window-title" id="window-title"></div>
           <div id="window-controls-container">
@@ -28,9 +28,9 @@ export function injectTitlebar() {
         document.body.setAttribute("customTitlebar", "");
         document.body.setAttribute("armcord-platform", os.platform());
 
-        var minimize = document.getElementById("minimize");
-        var maximize = document.getElementById("maximize");
-        var quit = document.getElementById("quit");
+        const minimize = document.getElementById("minimize");
+        const maximize = document.getElementById("maximize");
+        const quit = document.getElementById("quit");
 
         minimize!.addEventListener("click", () => {
             ipcRenderer.send("win-minimize");
@@ -55,8 +55,8 @@ export function injectTitlebar() {
     });
 }
 
-export function fixTitlebar() {
-    var elem = document.createElement("div");
+export function fixTitlebar(): void {
+    const elem = document.createElement("div");
     elem.innerHTML = `<nav class="titlebar">
                     <div class="window-title" id="window-title"></div>
                     <div id="window-controls-container">
@@ -72,9 +72,9 @@ export function fixTitlebar() {
     } else {
         document.getElementById("app-mount")!.prepend(elem);
     }
-    var minimize = document.getElementById("minimize");
-    var maximize = document.getElementById("maximize");
-    var quit = document.getElementById("quit");
+    const minimize = document.getElementById("minimize");
+    const maximize = document.getElementById("maximize");
+    const quit = document.getElementById("quit");
 
     minimize!.addEventListener("click", () => {
         ipcRenderer.send("win-minimize");

@@ -1,8 +1,8 @@
-import {BrowserWindow, desktopCapturer, DesktopCapturerSource, ipcMain, session, shell} from "electron";
+import {BrowserWindow, desktopCapturer, ipcMain, session} from "electron";
 import path from "path";
 import {iconPath} from "../main";
-var capturerWindow: BrowserWindow;
-function registerCustomHandler() {
+let capturerWindow: BrowserWindow;
+function registerCustomHandler(): void {
     session.defaultSession.setDisplayMediaRequestHandler(async (request, callback) => {
         console.log(request);
         const sources = await desktopCapturer.getSources({
@@ -23,11 +23,11 @@ function registerCustomHandler() {
                 preload: path.join(__dirname, "preload.js")
             }
         });
-        ipcMain.once("selectScreenshareSource", (event, id, name) => {
+        ipcMain.once("selectScreenshareSource", (_event, id, name) => {
             //console.log(sources[id]);
             //console.log(id);
             capturerWindow.close();
-            var result = {id, name, width: 9999, height: 9999};
+            let result = {id, name, width: 9999, height: 9999};
             callback({video: result});
         });
         capturerWindow.loadURL(`file://${__dirname}/picker.html`);

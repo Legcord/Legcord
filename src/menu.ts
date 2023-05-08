@@ -3,7 +3,7 @@ import {mainWindow} from "./window";
 import {getConfig} from "./utils";
 import {createSettingsWindow} from "./settings/main";
 
-function paste(contents: any) {
+function paste(contents: any): void {
     const contentTypes = clipboard.availableFormats().toString();
     //Workaround: fix pasting the images.
     if (contentTypes.includes("image/") && contentTypes.includes("text/html")) {
@@ -11,7 +11,7 @@ function paste(contents: any) {
     }
     contents.paste();
 }
-export async function setMenu() {
+export async function setMenu(): Promise<void> {
     if ((await getConfig("alternativePaste")) == true) {
         mainWindow.on("focus", function () {
             console.log("[Window state manager] Focus");
@@ -39,7 +39,7 @@ export async function setMenu() {
             globalShortcut.unregister("CmdOrCtrl+V");
         });
     }
-    var template: Electron.MenuItemConstructorOptions[] = [
+    let template: Electron.MenuItemConstructorOptions[] = [
         {
             label: "ArmCord",
             submenu: [
@@ -48,28 +48,28 @@ export async function setMenu() {
                 {
                     label: "Developer tools",
                     accelerator: "CmdOrCtrl+Shift+I",
-                    click: function () {
+                    click() {
                         BrowserWindow.getFocusedWindow()!.webContents.toggleDevTools();
                     }
                 },
                 {
                     label: "Open settings",
                     accelerator: "CmdOrCtrl+Shift+'",
-                    click: function () {
+                    click() {
                         createSettingsWindow();
                     }
                 },
                 {
                     label: "Reload",
                     accelerator: "CmdOrCtrl+R",
-                    click: function () {
+                    click() {
                         mainWindow.reload();
                     }
                 },
                 {
                     label: "Quit",
                     accelerator: "CmdOrCtrl+Q",
-                    click: function () {
+                    click() {
                         app.quit();
                     }
                 }
@@ -86,7 +86,7 @@ export async function setMenu() {
                 {
                     label: "Paste",
                     accelerator: "CmdOrCtrl+V",
-                    click: function () {
+                    click() {
                         paste(mainWindow.webContents);
                     }
                 },

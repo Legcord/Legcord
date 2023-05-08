@@ -1,34 +1,33 @@
 // Modules to control application life and create native browser window
-import {app, BrowserWindow, crashReporter, session} from "electron";
+import {BrowserWindow, app, crashReporter, session} from "electron";
 import "v8-compile-cache";
 import {
+    Settings,
     checkForDataFolder,
-    getConfig,
     checkIfConfigExists,
+    getConfig,
     injectElectronFlags,
-    setConfig,
     installModLoader,
-    getConfigLocation
+    setConfig
 } from "./utils";
 import "./extensions/mods";
 import "./tray";
-import fs from "fs";
-import {createCustomWindow, createNativeWindow, createTransparentWindow, mainWindow} from "./window";
+import {createCustomWindow, createNativeWindow, createTransparentWindow} from "./window";
 import path from "path";
-export var iconPath: string;
-export var settings: any;
-export var customTitlebar: boolean;
-export var clientName: "ArmCord";
-async function args() {
-    var argNum = 2;
+export let iconPath: string;
+export let settings: any;
+export let customTitlebar: boolean;
+export let clientName: "ArmCord";
+async function args(): Promise<void> {
+    let argNum = 2;
     if (process.argv[0] == "electron") argNum++;
-    var args = process.argv[argNum];
+    let args = process.argv[argNum];
     if (args == undefined) return;
     if (args.startsWith("--")) return; //electron flag
     if (args.includes("=")) {
-        var e = args.split("=");
-        await setConfig(e[0], e[1]);
-        console.log("Setting " + e[0] + " to " + e[1]);
+        let e = args.split("=");
+        await setConfig(e[0] as keyof Settings, e[1]);
+        console.log(`Setting ${e[0]} to ${e[1]}`);
         app.relaunch();
         app.exit();
     }
@@ -70,7 +69,7 @@ if (!app.requestSingleInstanceLock()) {
         } else {
             iconPath = path.join(__dirname, "../", "/assets/ac_icon_transparent.png");
         }
-        async function init() {
+        async function init(): Promise<void> {
             switch (await getConfig("windowStyle")) {
                 case "default":
                     createCustomWindow();
@@ -93,7 +92,7 @@ if (!app.requestSingleInstanceLock()) {
         }
         await init();
         await installModLoader();
-        session.fromPartition("some-partition").setPermissionRequestHandler((webContents, permission, callback) => {
+        session.fromPartition("some-partition").setPermissionRequestHandler((_webContents, permission, callback) => {
             if (permission === "notifications") {
                 // Approves the permissions request
                 callback(true);

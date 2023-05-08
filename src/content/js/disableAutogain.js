@@ -65,7 +65,7 @@ function disableAutogain(constraints) {
 
 function patchFunction(object, name, createNewFunction) {
     if (name in object) {
-        var original = object[name];
+        const original = object[name];
         object[name] = createNewFunction(original);
     }
 }
