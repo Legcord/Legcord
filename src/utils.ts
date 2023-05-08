@@ -158,7 +158,7 @@ export async function getLang(object: string): Promise<string> {
             let rawdata = fs.readFileSync(langConfigFile, "utf-8");
             let parsed = JSON.parse(rawdata);
             language = parsed.lang;
-        } catch (e) {
+        } catch (_e) {
             console.log("Language config file doesn't exist. Fallback to English.");
             language = "en-US";
         }
@@ -191,7 +191,7 @@ export async function getLangName(): Promise<string> {
             let rawdata = fs.readFileSync(langConfigFile, "utf-8");
             let parsed = JSON.parse(rawdata);
             language = parsed.lang;
-        } catch (e) {
+        } catch (_e) {
             console.log("Language config file doesn't exist. Fallback to English.");
             language = "en-US";
         }
@@ -354,11 +354,11 @@ export async function installModLoader(): Promise<void> {
         console.log("[Mod loader] Skipping");
     } else {
         const pluginFolder = `${app.getPath("userData")}/plugins/`;
-        if (!fs.existsSync(`${pluginFolder}loader`) || !fs.existsSync(`${pluginFolder}loader/dist/` + `bundle.css`)) {
+        if (!fs.existsSync(`${pluginFolder}loader`) || !fs.existsSync(`${pluginFolder}loader/dist/bundle.css`)) {
             try {
                 fs.rmSync(`${app.getPath("userData")}/plugins/loader`, {recursive: true, force: true});
                 modInstallState = "installing";
-                let zipPath = `${app.getPath("temp")}/` + `loader.zip`;
+                let zipPath = `${app.getPath("temp")}/loader.zip`;
                 if (!fs.existsSync(pluginFolder)) {
                     fs.mkdirSync(pluginFolder);
                     console.log("[Mod loader] Created missing plugin folder");
