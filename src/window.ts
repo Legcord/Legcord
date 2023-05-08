@@ -127,7 +127,6 @@ async function doAfterDefiningTheWindow(): Promise<void> {
                 }
                 if (response == 0) {
                     shell.openExternal(url);
-                } else {
                 }
             });
         }

@@ -24,8 +24,8 @@ app.whenReady().then(async () => {
 
     if (process.platform == "darwin" && trayPath.getSize().height > 22) trayPath = trayPath.resize({height: 22});
 
+    let clientName = (await getConfig("clientName")) ?? "ArmCord";
     if ((await getConfig("windowStyle")) == "basic") {
-        let clientName = (await getConfig("clientName")) ?? "ArmCord";
         tray = new Tray(trayPath);
         function contextMenu(): Electron.Menu {
             if (finishedSetup == false) {
@@ -75,7 +75,6 @@ app.whenReady().then(async () => {
         tray.setToolTip(clientName);
         tray.setContextMenu(contextMenu);
     } else {
-        let clientName = (await getConfig("clientName")) ?? "ArmCord";
         tray = new Tray(trayPath);
         if (finishedSetup == false) {
             const contextMenu = Menu.buildFromTemplate([
