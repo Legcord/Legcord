@@ -82,23 +82,23 @@ export function registerIpc(): void {
         event.returnValue = packageVersion;
     });
     ipcMain.on("splashEnd", async () => {
-        let width = 800,
+        let width = 835,
             height = 600,
             isMaximized = true,
             xValue = 0,
             yValue = 0;
         try {
-            width = (await getWindowState("width")) ?? 800;
+            width = (await getWindowState("width")) ?? 835;
             height = (await getWindowState("height")) ?? 600;
             isMaximized = (await getWindowState("isMaximized")) ?? false;
             xValue = await getWindowState("x");
             yValue = await getWindowState("y");
         } catch (_e) {
             console.log("[Window state manager] No window state file found. Falling back to default values.");
-            mainWindow.setSize(800, 600);
+            mainWindow.setSize(835, 600);
         }
         if (isMaximized) {
-            mainWindow.setSize(800, 600); //just so the whole thing doesn't cover whole screen
+            mainWindow.setSize(835, 600); //just so the whole thing doesn't cover whole screen
             mainWindow.maximize();
         } else {
             mainWindow.setSize(width, height);
