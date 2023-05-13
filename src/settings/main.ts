@@ -50,6 +50,9 @@ export function createSettingsWindow(): void {
             fs.mkdirSync(themesFolder);
             console.log("Created missing theme folder");
         }
+        if (!fs.existsSync(`${userDataPath}/disabled.txt`)) {
+            fs.writeFileSync(path.join(userDataPath, "/disabled.txt"), "");
+        }
         settingsWindow.webContents.on("did-finish-load", () => {
             fs.readdirSync(themesFolder).forEach((file) => {
                 try {

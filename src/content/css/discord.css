@@ -29,3 +29,9 @@
 [class|="listItem"]:has(+ [class|="listItem"] [data-list-item-id="guildsnav___app-download-button"]) {
     display: none;
 }
+
+div#themes:after,
+div#armcord:after {
+    content: url("https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/ac_white_plug16x.png");
+    margin-right: 5px;
+}

@@ -60,6 +60,13 @@ export async function setMenu(): Promise<void> {
                     }
                 },
                 {
+                    label: "Fullscreen",
+                    accelerator: "F11",
+                    click() {
+                        mainWindow.fullScreen = !mainWindow.fullScreen;
+                    }
+                },
+                {
                     label: "Reload",
                     accelerator: "CmdOrCtrl+R",
                     click() {

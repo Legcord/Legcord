@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            :root {
+                --background-secondary: #2f3136;
+                --background-secondary-alt: #292b2f;
+                --background-floating: #18191c;
+                --background-modifier-hover: rgba(106, 116, 128, 0.16);
+                --brand-experiment: #7289da;
+                --brand-experiment-560: #5c6fb1;
+                --brand-experiment-600: #4e5d94;
+                --interactive-normal: #b9bbbe;
+                --interactive-hover: #dcddde;
+                --text-muted: #72767d;
+                --font-primary: "Whitney";
+                --header-primary: #fff;
+            }
+
+            html {
+                font-size: 22px;
+            }
+
+            body {
+                padding: 1rem;
+
+                background: var(--background-secondary);
+            }
+
+            @font-face {
+                font-family: Whitney;
+                font-weight: 200;
+                font-style: normal;
+                src: url(https://armcord.xyz/whitney_400.woff) format("woff");
+            }
+
+            * {
+                font-family: "Whitney", sans-serif;
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+                cursor: default;
+            }
+
+            .card {
+                background-color: var(--background-floating);
+                color: white;
+                padding: 1rem;
+                border-color: var(--background-floating);
+                border-style: solid;
+                border-radius: 10px;
+            }
+
+            .cards {
+                max-width: 1200px;
+                margin: 0 auto;
+                display: grid;
+                grid-gap: 1rem;
+                justify-content: space-evenly;
+            }
+
+            /* Screen larger than 600px? 2 column */
+            @media (min-width: 600px) {
+                .cards {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+
+            /* Screen larger than 900px? 3 columns */
+            @media (min-width: 900px) {
+                .cards {
+                    grid-template-columns: repeat(3, 1fr);
+                }
+            }
+
+            .flex-box {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            /* switches */
+            .tgl {
+                display: none;
+            }
+
+            .tgl::-moz-selection,
+            .tgl:after::-moz-selection,
+            .tgl:before::-moz-selection,
+            .tgl *::-moz-selection,
+            .tgl *:after::-moz-selection,
+            .tgl *:before::-moz-selection,
+            .tgl + .tgl-btn::-moz-selection {
+                background: none;
+            }
+
+            .tgl::selection,
+            .tgl:after::selection,
+            .tgl:before::selection,
+            .tgl *::selection,
+            .tgl *:after::selection,
+            .tgl *:before::selection,
+            .tgl + .tgl-btn::selection {
+                background: none;
+            }
+
+            .tgl + .tgl-btn {
+                outline: 0;
+                display: block;
+                width: 3em;
+                position: relative;
+                cursor: pointer;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+
+            .tgl + .tgl-btn:after,
+            .tgl + .tgl-btn:before {
+                position: relative;
+                display: block;
+                content: "";
+                width: 50%;
+                height: 100%;
+            }
+
+            .tgl + .tgl-btn:after {
+                left: 1px;
+            }
+
+            .tgl + .tgl-btn:before {
+                display: none;
+            }
+
+            .tgl:checked + .tgl-btn:after {
+                left: 56%;
+            }
+
+            .tgl-light + .tgl-btn {
+                background: var(--text-muted);
+                border-radius: 25px;
+                padding: 4px;
+                transition: all 0.4s ease;
+            }
+
+            .tgl-light + .tgl-btn:after {
+                border-radius: 50px;
+                position: relative;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 24px;
+                height: 24px;
+                background: rgb(255, 255, 255);
+                transition: all 0.2s ease;
+            }
+
+            .tgl-light:checked + .tgl-btn {
+                background: var(--brand-experiment);
+            }
+
+            input[type="text"],
+            select {
+                width: 100%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                display: inline-block;
+                border: 1px solid #72767d;
+                background-color: #46484d;
+                color: white;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+
+            #download {
+                margin-top: 3px;
+                height: 50px;
+                vertical-align: middle;
+                text-align: right;
+                z-index: 99;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="flex-box">
+            <input
+                type="text"
+                id="themeLink"
+                name="themeLink"
+                title="BetterDiscord theme format"
+                placeholder="https://raw.githubusercontent.com/... [.css]"
+            />
+            <img id="download" src="https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/Download.png" />
+        </div>
+        <br />
+        <div class="cards" id="cardBox"></div>
+    </body>
+</html>

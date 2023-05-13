@@ -16,6 +16,7 @@ import {customTitlebar} from "./main";
 import {createSettingsWindow} from "./settings/main";
 import os from "os";
 import path from "path";
+import {createTManagerWindow} from "./themeManager/main";
 export function registerIpc(): void {
     ipcMain.on("get-app-path", (event) => {
         event.reply("app-path", app.getAppPath());
@@ -141,6 +142,9 @@ export function registerIpc(): void {
     });
     ipcMain.on("openSettingsWindow", () => {
         createSettingsWindow();
+    });
+    ipcMain.on("openManagerWindow", () => {
+        createTManagerWindow();
     });
     ipcMain.on("setting-armcordCSP", async (event) => {
         if (await getConfig("armcordCSP")) {

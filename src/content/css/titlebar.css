@@ -36,7 +36,7 @@
 .titlebar #window-controls-container #quit {
     float: left;
     height: 100%;
-    width: 33.1%;
+    width: 33.3%;
     text-align: center;
     color: var(--interactive-normal);
     cursor: default;

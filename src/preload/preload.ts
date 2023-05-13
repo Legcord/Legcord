@@ -1,5 +1,6 @@
 import "./bridge";
 import "./patch";
+import "./optimizer";
 
 import {ipcRenderer} from "electron";
 import * as fs from "fs";
@@ -78,12 +79,33 @@ if (window.location.href.indexOf("splash.html") > -1) {
 
 // Settings info version injection
 setInterval(() => {
-    const host = document.querySelector("nav > [class|=side] [class|=info]");
-    if (!host || host.querySelector("#ac-ver")) return;
-    const el = host.firstChild!.cloneNode() as HTMLSpanElement;
-    el.id = "ac-ver";
+    const host = document.querySelector<HTMLDivElement>("nav > [class|=side] [class|=info]");
+    if (!host || host.querySelector("#ac-ver")) {
+        return;
+    }
 
+    const el = host.firstElementChild!.cloneNode() as HTMLSpanElement;
+    el.id = "ac-ver";
     el.textContent = `ArmCord Version: ${version}`;
     el.onclick = () => ipcRenderer.send("openSettingsWindow");
     host.append(el);
-}, 2000);
+    let advanced = document
+        .querySelector('[class*="socialLinks-"]')!
+        .parentElement!.querySelector(
+            '[class*="header"] + [class*="item"] + [class*="item"] + [class*="item"] + [class*="item"] + [class*="item"] + [class*="item"] + [class*="item"] + [class*="item"] + [class*="item"]'
+        );
+    if (!advanced) return;
+    if (advanced.nextSibling instanceof Element && advanced.nextSibling.className.includes("item")) {
+        advanced = advanced.nextSibling;
+    }
+    const acSettings = advanced.cloneNode(true) as HTMLElement;
+    const tManager = advanced.cloneNode(true) as HTMLElement;
+    acSettings.textContent = "ArmCord";
+    acSettings.id = "armcord";
+    acSettings.onclick = () => ipcRenderer.send("openSettingsWindow");
+    tManager.textContent = "Themes";
+    tManager.id = "themes";
+    tManager.onclick = () => ipcRenderer.send("openManagerWindow");
+    advanced.insertAdjacentElement("afterend", acSettings);
+    advanced.insertAdjacentElement("afterend", tManager);
+}, 1000);

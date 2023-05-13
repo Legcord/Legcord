@@ -179,16 +179,28 @@ async function doAfterDefiningTheWindow(): Promise<void> {
         fs.mkdirSync(themesFolder);
         console.log("Created missing theme folder");
     }
+    if (!fs.existsSync(`${userDataPath}/disabled.txt`)) {
+        fs.writeFileSync(path.join(userDataPath, "/disabled.txt"), "");
+    }
     mainWindow.webContents.on("did-finish-load", () => {
         fs.readdirSync(themesFolder).forEach((file) => {
             try {
                 const manifest = fs.readFileSync(`${themesFolder}/${file}/manifest.json`, "utf8");
                 let themeFile = JSON.parse(manifest);
-                mainWindow.webContents.send(
-                    "themeLoader",
-                    fs.readFileSync(`${themesFolder}/${file}/${themeFile.theme}`, "utf-8")
-                );
-                console.log(`%cLoaded ${themeFile.name} made by ${themeFile.author}`, "color:red");
+                if (
+                    fs
+                        .readFileSync(path.join(userDataPath, "/disabled.txt"))
+                        .toString()
+                        .includes(themeFile.name.replace(" ", "-"))
+                ) {
+                    console.log(`%cSkipped ${themeFile.name} made by ${themeFile.author}`, "color:red");
+                } else {
+                    mainWindow.webContents.send(
+                        "themeLoader",
+                        fs.readFileSync(`${themesFolder}/${file}/${themeFile.theme}`, "utf-8")
+                    );
+                    console.log(`%cLoaded ${themeFile.name} made by ${themeFile.author}`, "color:red");
+                }
             } catch (err) {
                 console.error(err);
             }
