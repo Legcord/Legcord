@@ -129,13 +129,15 @@ export function createTManagerWindow(): void {
         });
         ipcMain.on("addToDisabled", async (_event, name: string) => {
             fs.appendFileSync(path.join(userDataPath, "/disabled.txt"), name + "\n");
+            sleep(1000);
         });
         ipcMain.on("disabled", async (e) => {
             e.returnValue = fs.readFileSync(path.join(userDataPath, "/disabled.txt")).toString();
         });
         ipcMain.on("removeFromDisabled", async (_event, name: string) => {
             var e = await fs.readFileSync(path.join(userDataPath, "/disabled.txt")).toString();
-            fs.writeFileSync(path.join(userDataPath, "/disabled.txt"), e.replace(name + "\n", ""));
+            fs.writeFileSync(path.join(userDataPath, "/disabled.txt"), e.replace(name, ""));
+            sleep(1000);
         });
         ipcMain.on("installBDTheme", async (_event, link: string) => {
             try {
