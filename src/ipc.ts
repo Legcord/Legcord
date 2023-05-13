@@ -105,6 +105,9 @@ export function registerIpc(): void {
             mainWindow.setPosition(xValue, yValue);
             console.log("[Window state manager] Not maximized.");
         }
+        if (await getConfig("startMinimized")) {
+            mainWindow.hide();
+        }
     });
     ipcMain.on("restart", () => {
         app.relaunch();
