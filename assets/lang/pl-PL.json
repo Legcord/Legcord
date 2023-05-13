@@ -75,5 +75,7 @@
     "settings-useLegacyCapturer": "Używaj starszej metody przechwytywania",
     "settings-useLegacyCapturer-desc": "Używaj starszego modułu udostępniania ekranu, zamiast nowego. Jeżeli doświadczasz problemy z udostępnianiem ekranu, możesz spróbować włączyć tą opcję.",
     "settings-dynamicIcon": "Dynamiczna ikona",
-    "settings-dynamicIcon-desc": "Naśladując zachowanie Discorda na systemie Windows, ta opcja pokazuje ilość nieprzeczytanych wiadomości/oznaczeń na ikonie aplikacji ArmCorda, zamiast w trayu."
+    "settings-dynamicIcon-desc": "Naśladując zachowanie Discorda na systemie Windows, ta opcja pokazuje ilość nieprzeczytanych wiadomości/oznaczeń na ikonie aplikacji ArmCorda, zamiast w trayu.",
+    "settings-spellcheck": "Spellcheck",
+    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them."
 }
