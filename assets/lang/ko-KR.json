@@ -75,5 +75,7 @@
     "settings-useLegacyCapturer": "레거시 캡처 프로그램 사용",
     "settings-useLegacyCapturer-desc": "새로운 화면 공유 모듈 대신 레거시 화면 공유 모듈을 사용하세요. 화면 공유에 문제가 있는 경우 이를 활성화해 보세요.",
     "settings-dynamicIcon": "다이내믹 아이콘",
-    "settings-dynamicIcon-desc": "윈도우즈에서 디스코드의 동작에 따라 트레이 대신 ArmCord 아이콘에 읽지 않은 메시지/핑 수가 표시됩니다."
+    "settings-dynamicIcon-desc": "윈도우즈에서 디스코드의 동작에 따라 트레이 대신 ArmCord 아이콘에 읽지 않은 메시지/핑 수가 표시됩니다.",
+    "settings-spellcheck": "Spellcheck",
+    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them."
 }
