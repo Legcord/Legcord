@@ -75,5 +75,7 @@
     "settings-useLegacyCapturer": "Использование устаревшего устройства захвата",
     "settings-useLegacyCapturer-desc": "Использовать устаревший модуль screenshare вместо нового. Если у вас возникли проблемы с общим доступом к экрану, попробуйте включить эту функцию.",
     "settings-dynamicIcon": "Динамическая иконка",
-    "settings-dynamicIcon-desc": "Следуя поведению Discord в Windows, это показывает, что непрочитанные сообщения / пинги рассчитывают на значок ArmCord, а не на его трей."
+    "settings-dynamicIcon-desc": "Следуя поведению Discord в Windows, это показывает, что непрочитанные сообщения / пинги рассчитывают на значок ArmCord, а не на его трей.",
+    "settings-spellcheck": "Spellcheck",
+    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them."
 }
