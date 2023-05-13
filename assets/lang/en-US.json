@@ -33,6 +33,8 @@
     "settings-mobileMode-desc": "If you're on a device with touch-screen this feature is for you! It activates Discord's hidden mobile\n                mode meant for phones and tablets. Only major feature missing is voice chat support. This is ideal for\n                users on PinePhone and similar.",
     "settings-dynamicIcon": "Dynamic icon",
     "settings-dynamicIcon-desc": "Following Discord's behaviour on Windows, this shows unread messages/pings count on ArmCord's icon instead of it's tray.",
+    "settings-spellcheck": "Spellcheck",
+    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them.",
     "settings-channel": "Discord channel",
     "settings-channel-desc1": "You can use this setting to change current instance of Discord:",
     "settings-channel-desc2": "you're probably most familiar with this one. It's the one you see in default Discord\n                    client!",

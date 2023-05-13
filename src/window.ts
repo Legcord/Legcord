@@ -286,7 +286,7 @@ async function doAfterDefiningTheWindow(): Promise<void> {
         mainWindow.show();
     }
 }
-export function createCustomWindow(): void {
+export async function createCustomWindow(): Promise<void> {
     mainWindow = new BrowserWindow({
         width: 300,
         height: 350,
@@ -300,12 +300,12 @@ export function createCustomWindow(): void {
         webPreferences: {
             sandbox: false,
             preload: path.join(__dirname, "preload/preload.js"),
-            spellcheck: true
+            spellcheck: await getConfig("spellcheck")
         }
     });
     doAfterDefiningTheWindow();
 }
-export function createNativeWindow(): void {
+export async function createNativeWindow(): Promise<void> {
     mainWindow = new BrowserWindow({
         width: 300,
         height: 350,
@@ -319,12 +319,12 @@ export function createNativeWindow(): void {
         webPreferences: {
             sandbox: false,
             preload: path.join(__dirname, "preload/preload.js"),
-            spellcheck: true
+            spellcheck: await getConfig("spellcheck")
         }
     });
     doAfterDefiningTheWindow();
 }
-export function createTransparentWindow(): void {
+export async function createTransparentWindow(): Promise<void> {
     mainWindow = new BrowserWindow({
         width: 300,
         height: 350,
@@ -338,12 +338,12 @@ export function createTransparentWindow(): void {
         webPreferences: {
             sandbox: false,
             preload: path.join(__dirname, "preload/preload.js"),
-            spellcheck: true
+            spellcheck: await getConfig("spellcheck")
         }
     });
     doAfterDefiningTheWindow();
 }
-export function createInviteWindow(code: string): void {
+export async function createInviteWindow(code: string): Promise<void> {
     inviteWindow = new BrowserWindow({
         width: 800,
         height: 600,
@@ -354,7 +354,7 @@ export function createInviteWindow(code: string): void {
         autoHideMenuBar: true,
         webPreferences: {
             sandbox: false,
-            spellcheck: true
+            spellcheck: await getConfig("spellcheck")
         }
     });
     let formInviteURL = `https://discord.com/invite/${code}`;

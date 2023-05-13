@@ -46,6 +46,7 @@ export function setup(): void {
         automaticPatches: false,
         alternativePaste: false,
         mods: "none",
+        spellcheck: true,
         performanceMode: "none",
         skipSplash: false,
         inviteWebsocket: true,
@@ -251,6 +252,7 @@ export interface Settings {
     minimizeToTray: boolean;
     automaticPatches: boolean;
     alternativePaste: boolean;
+    spellcheck: boolean;
     mods: string;
     dynamicIcon: boolean;
     mobileMode: boolean;
