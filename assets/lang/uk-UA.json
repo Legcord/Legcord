@@ -75,5 +75,7 @@
     "settings-skipSplash": "Skip Splash Screen (Experimental)",
     "settings-skipSplash-desc": "Skips ArmCord splash screen when you start up the app.",
     "settings-copyDebugInfo": "Copy Debug Info",
-    "settings-forceNativeCrash": "Force native crash"
+    "settings-forceNativeCrash": "Force native crash",
+    "settings-spellcheck": "Spellcheck",
+    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them."
 }
