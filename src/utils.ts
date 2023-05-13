@@ -57,7 +57,7 @@ export function setup(): void {
         trayIcon: "default",
         doneSetup: false,
         clientName: "ArmCord",
-        customIcon: path.join(__dirname, "../", "/assets/ac_icon_transparent.png")
+        customIcon: path.join(__dirname, "../", "/assets/desktop.png")
     };
     setConfigBulk({
         ...defaults

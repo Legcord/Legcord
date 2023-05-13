@@ -66,7 +66,7 @@ if (!app.requestSingleInstanceLock()) {
         if ((await getConfig("customIcon")) !== undefined ?? null) {
             iconPath = await getConfig("customIcon");
         } else {
-            iconPath = path.join(__dirname, "../", "/assets/ac_icon_transparent.png");
+            iconPath = path.join(__dirname, "../", "/assets/desktop.png");
         }
         async function init(): Promise<void> {
             switch (await getConfig("windowStyle")) {
