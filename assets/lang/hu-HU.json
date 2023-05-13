@@ -75,5 +75,7 @@
     "settings-skipSplash": "Indítóképernyő kihagyása (kísérleti)",
     "settings-skipSplash-desc": "Az alkalmazás indításakor kihagyja az ArmCord indítóképernyőt.",
     "settings-copyDebugInfo": "Hibakeresési infó másolása",
-    "settings-forceNativeCrash": "A natív összeomlás kényszerítése"
+    "settings-forceNativeCrash": "A natív összeomlás kényszerítése",
+    "settings-spellcheck": "Spellcheck",
+    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them."
 }
