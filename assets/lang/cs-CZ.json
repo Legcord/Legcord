@@ -75,5 +75,7 @@
     "settings-skipSplash": "Přeskočit úvodní obrazovku (Experimentální)",
     "settings-skipSplash-desc": "Při spuštění aplikace přeskočí úvodní obrazovku ArmCord.",
     "settings-copyDebugInfo": "Kopírovat informace o ladění",
-    "settings-forceNativeCrash": "Vynutit nativní havárii"
+    "settings-forceNativeCrash": "Vynutit nativní havárii",
+    "settings-spellcheck": "Spellcheck",
+    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them."
 }
