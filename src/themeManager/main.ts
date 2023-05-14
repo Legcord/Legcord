@@ -1,4 +1,4 @@
-import {BrowserWindow, app, ipcMain, shell, dialog} from "electron";
+import {BrowserWindow, app, dialog, ipcMain, shell} from "electron";
 import {sleep} from "../utils";
 import path from "path";
 import fs from "fs";
@@ -141,22 +141,22 @@ export function createTManagerWindow(): void {
             mainWindow.webContents.reload();
         });
         ipcMain.on("addToDisabled", async (_event, name: string) => {
-            fs.appendFileSync(path.join(userDataPath, "/disabled.txt"), name + "\n");
+            fs.appendFileSync(path.join(userDataPath, "/disabled.txt"), `${name}\n`);
             sleep(1000);
         });
         ipcMain.on("disabled", async (e) => {
             e.returnValue = fs.readFileSync(path.join(userDataPath, "/disabled.txt")).toString();
         });
         ipcMain.on("removeFromDisabled", async (_event, name: string) => {
-            var e = await fs.readFileSync(path.join(userDataPath, "/disabled.txt")).toString();
+            let e = await fs.readFileSync(path.join(userDataPath, "/disabled.txt")).toString();
             fs.writeFileSync(path.join(userDataPath, "/disabled.txt"), e.replace(name, ""));
             sleep(1000);
         });
         ipcMain.on("installBDTheme", async (_event, link: string) => {
             try {
-                var code = await (await fetch(link)).text();
-                var manifest = parseBDManifest(code);
-                var themePath = path.join(themesFolder, manifest.name?.replace(" ", "-") + "-BD");
+                let code = await (await fetch(link)).text();
+                let manifest = parseBDManifest(code);
+                let themePath = path.join(themesFolder, `${manifest.name?.replace(" ", "-")}-BD`);
                 if (!fs.existsSync(themePath)) {
                     fs.mkdirSync(themePath);
                     console.log(`Created ${manifest.name} folder`);
