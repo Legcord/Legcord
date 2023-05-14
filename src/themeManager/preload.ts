@@ -16,7 +16,6 @@ ipcRenderer.on("themeManifest", (_event, json) => {
                 <label class="tgl-btn left" for="${id}"></label>
             </div>
             <p>${manifest.description}</p>
-
         </div>
         `
     );
@@ -24,6 +23,32 @@ ipcRenderer.on("themeManifest", (_event, json) => {
         document.getElementById("themeInfoModal")!.style.display = "block";
         document.getElementById("themeInfoName")!.textContent = `${manifest.name} by ${manifest.author}`;
         document.getElementById("themeInfoDesc")!.textContent = `${manifest.description}\n\n${manifest.version}`;
+        if (manifest.supportsArmCordTitlebar !== undefined) {
+            document.getElementById(
+                "themeInfoButtons"
+            )!.innerHTML += `<img class="themeInfoIcon" id="removeTheme" alt="Remove the theme" src="https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/Trash.png"></img>
+                           <img class="themeInfoIcon" id="updateTheme" alt="Update your theme" src="https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/UpgradeArrow.png"></img>
+                           <img class="themeInfoIcon" id="compatibility" alt="Supports ArmCord Titlebar" src=""></img>`;
+            console.log("e");
+            if (manifest.supportsArmCordTitlebar == true) {
+                (document.getElementById(`compatibility`) as HTMLImageElement).src =
+                    "https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/Window.png";
+            } else {
+                (document.getElementById(`compatibility`) as HTMLImageElement).src =
+                    "https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/WindowUnsupported.png";
+            }
+            document.getElementById("removeTheme")!.addEventListener("click", () => {
+                ipcRenderer.send("", id + "-BD");
+                document.getElementById("themeInfoModal")!.style.display = "none";
+                document.getElementById("themeInfoButtons")!.innerHTML = "";
+            });
+            document.getElementById(`updateTheme`)!.addEventListener("click", () => {
+                console.log("Updating " + manifest.name);
+                ipcRenderer.send("installBDTheme", manifest.updateSrc);
+                document.getElementById("themeInfoModal")!.style.display = "none";
+                document.getElementById("themeInfoButtons")!.innerHTML = "";
+            });
+        }
         if (manifest.source != undefined)
             document.getElementById(
                 "themeInfoButtons"

@@ -18,6 +18,8 @@ interface ThemeManifest {
     patreon?: string;
     website?: string;
     source?: string;
+    updateSrc?: string;
+    supportsArmCordTitlebar?: boolean;
 }
 function parseBDManifest(content: string) {
     const metaReg = /@([^ ]*) (.*)/g;
@@ -161,6 +163,9 @@ export function createTManagerWindow(): void {
                     fs.mkdirSync(themePath);
                     console.log(`Created ${manifest.name} folder`);
                 }
+                manifest.updateSrc = link;
+                if (code.includes(".titlebar")) manifest.supportsArmCordTitlebar = true;
+                else manifest.supportsArmCordTitlebar = false;
                 fs.writeFileSync(path.join(themePath, "manifest.json"), JSON.stringify(manifest));
                 fs.writeFileSync(path.join(themePath, "src.css"), code);
                 dialog.showMessageBoxSync({

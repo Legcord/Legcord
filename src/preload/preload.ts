@@ -100,12 +100,17 @@ setInterval(() => {
     }
     const acSettings = advanced.cloneNode(true) as HTMLElement;
     const tManager = advanced.cloneNode(true) as HTMLElement;
+    const fQuit = advanced.cloneNode(true) as HTMLElement;
     acSettings.textContent = "ArmCord";
     acSettings.id = "armcord";
     acSettings.onclick = () => ipcRenderer.send("openSettingsWindow");
     tManager.textContent = "Themes";
     tManager.id = "themes";
     tManager.onclick = () => ipcRenderer.send("openManagerWindow");
+    fQuit.textContent = "Force Quit";
+    fQuit.id = "forceQuit";
+    fQuit.onclick = () => ipcRenderer.send("win-quit");
     advanced.insertAdjacentElement("afterend", acSettings);
     advanced.insertAdjacentElement("afterend", tManager);
+    advanced.insertAdjacentElement("afterend", fQuit);
 }, 1000);
