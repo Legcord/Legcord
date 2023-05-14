@@ -2,7 +2,7 @@ import {BrowserWindow, app, ipcMain, shell, dialog} from "electron";
 import {sleep} from "../utils";
 import path from "path";
 import fs from "fs";
-import {mainWindow} from "../window";
+import {createInviteWindow, mainWindow} from "../window";
 let themeWindow: BrowserWindow;
 let instance = 0;
 interface ThemeManifest {
@@ -108,6 +108,19 @@ export function createTManagerWindow(): void {
                 preload: path.join(__dirname, "preload.js")
             }
         });
+        //setWindowHandler doesn't work for some reason
+        themeWindow.webContents.on("will-navigate", function (e, url) {
+            /* If url isn't the actual page */
+            if (url != themeWindow.webContents.getURL()) {
+                e.preventDefault();
+                if (url.startsWith("https://discord.gg/")) {
+                    createInviteWindow(url.replace("https://discord.gg/", ""));
+                } else {
+                    shell.openExternal(url);
+                }
+            }
+        });
+
         async function managerLoadPage(): Promise<void> {
             themeWindow.loadFile(`${__dirname}/manager.html`);
         }
@@ -168,13 +181,13 @@ export function createTManagerWindow(): void {
             fs.readdirSync(themesFolder).forEach((file) => {
                 try {
                     const manifest = fs.readFileSync(`${themesFolder}/${file}/manifest.json`, "utf8");
-                    console.log(manifest);
                     themeWindow.webContents.send("themeManifest", manifest);
                 } catch (err) {
                     console.error(err);
                 }
             });
         });
+
         managerLoadPage();
         themeWindow.on("close", () => {
             instance = 0;

@@ -10,6 +10,7 @@
         "build": "tsc && copyfiles -u 1 src/**/*.html src/**/**/*.css src/**/**/*.js ts-out/ && copyfiles package.json ts-out/ && copyfiles assets/**/** ts-out/",
         "watch": "tsc -w",
         "start": "npm run build && electron ./ts-out/main.js",
+        "startThemeManager": "npm run build && electron ./ts-out/main.js themes",
         "startWayland": "npm run build && electron ./ts-out/main.js --ozone-platform-hint=auto --enable-features=WebRTCPipeWireCapturer",
         "package": "npm run build && electron-builder",
         "packageQuick": "npm run build && electron-builder --dir",

@@ -14,6 +14,7 @@ import "./extensions/mods";
 import "./tray";
 import {createCustomWindow, createNativeWindow, createTransparentWindow} from "./window";
 import path from "path";
+import {createTManagerWindow} from "./themeManager/main";
 export let iconPath: string;
 export let settings: any;
 export let customTitlebar: boolean;
@@ -29,6 +30,10 @@ async function args(): Promise<void> {
         console.log(`Setting ${e[0]} to ${e[1]}`);
         app.relaunch();
         app.exit();
+    } else if (args == "themes") {
+        app.whenReady().then(async () => {
+            createTManagerWindow();
+        });
     }
 }
 args(); // i want my top level awaits
