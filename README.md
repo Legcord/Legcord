@@ -14,6 +14,10 @@
  
    Enjoy [Vencord](https://github.com/Vendicated/Vencord), [Shelter](https://github.com/uwu/shelter) and their many features, or have a more vanilla experience, it's your choice!
 
+- **Themes**
+
+   ArmCord natively supports theming of the entire app, you can easily import BetterDiscord themes and manage them
+
 - **Made for Privacy™**
 
    ArmCord automatically blocks all of Discord's trackers; even without any client mods you can feel safe and secure!
