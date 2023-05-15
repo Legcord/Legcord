@@ -1,5 +1,9 @@
-import {ipcRenderer} from "electron";
+import {ipcRenderer, contextBridge} from "electron";
 import {sleep} from "../utils";
+contextBridge.exposeInMainWorld("themes", {
+    install: (url: string) => ipcRenderer.send("installBDTheme", url),
+    uninstall: (id: string) => ipcRenderer.send("uninstallTheme", id)
+});
 ipcRenderer.on("themeManifest", (_event, json) => {
     let manifest = JSON.parse(json);
     console.log(manifest);
@@ -26,9 +30,9 @@ ipcRenderer.on("themeManifest", (_event, json) => {
         if (manifest.supportsArmCordTitlebar !== undefined) {
             document.getElementById(
                 "themeInfoButtons"
-            )!.innerHTML += `<img class="themeInfoIcon" id="removeTheme" alt="Remove the theme" src="https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/Trash.png"></img>
-                           <img class="themeInfoIcon" id="updateTheme" alt="Update your theme" src="https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/UpgradeArrow.png"></img>
-                           <img class="themeInfoIcon" id="compatibility" alt="Supports ArmCord Titlebar" src=""></img>`;
+            )!.innerHTML += `<img class="themeInfoIcon" id="removeTheme" onclick="themes.uninstall('${id}')" title="Remove the theme" src="https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/Trash.png"></img>
+                           <img class="themeInfoIcon" id="updateTheme" onclick="themes.install('${manifest.updateSrc}')" title="Update your theme" src="https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/UpgradeArrow.png"></img>
+                           <img class="themeInfoIcon" id="compatibility" title="Supports ArmCord Titlebar" src=""></img>`;
             console.log("e");
             if (manifest.supportsArmCordTitlebar == true) {
                 (document.getElementById(`compatibility`) as HTMLImageElement).src =
@@ -37,17 +41,6 @@ ipcRenderer.on("themeManifest", (_event, json) => {
                 (document.getElementById(`compatibility`) as HTMLImageElement).src =
                     "https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/WindowUnsupported.png";
             }
-            document.getElementById("removeTheme")!.addEventListener("click", () => {
-                ipcRenderer.send("", id + "-BD");
-                document.getElementById("themeInfoModal")!.style.display = "none";
-                document.getElementById("themeInfoButtons")!.innerHTML = "";
-            });
-            document.getElementById(`updateTheme`)!.addEventListener("click", () => {
-                console.log("Updating " + manifest.name);
-                ipcRenderer.send("installBDTheme", manifest.updateSrc);
-                document.getElementById("themeInfoModal")!.style.display = "none";
-                document.getElementById("themeInfoButtons")!.innerHTML = "";
-            });
         }
         if (manifest.source != undefined)
             document.getElementById(

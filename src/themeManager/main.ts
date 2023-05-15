@@ -154,6 +154,18 @@ export function createTManagerWindow(): void {
             fs.writeFileSync(path.join(userDataPath, "/disabled.txt"), e.replace(name, ""));
             sleep(1000);
         });
+        ipcMain.on("uninstallTheme", async (_event, id: string) => {
+            let themePath = path.join(themesFolder, id);
+            if (fs.existsSync(themePath)) {
+                fs.rmdirSync(themePath, {recursive: true});
+                console.log(`Removed ${id} folder`);
+            } else if (fs.existsSync(path.join(themesFolder, `${id}-BD`))) {
+                fs.rmdirSync(path.join(themesFolder, `${id}-BD`), {recursive: true});
+                console.log(`Removed ${id} folder`);
+            }
+            themeWindow.webContents.reload();
+            mainWindow.webContents.reload();
+        });
         ipcMain.on("installBDTheme", async (_event, link: string) => {
             try {
                 let code = await (await fetch(link)).text();
