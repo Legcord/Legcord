@@ -30,9 +30,9 @@
     display: none;
 }
 
-div#themes:after,
-div#armcord:after,
-div#forceQuit:after {
+div#acThemes:after,
+div#acSettings:after,
+div#acForceQuit:after {
     content: url("https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/ac_white_plug16x.png");
     margin-right: 5px;
 }
