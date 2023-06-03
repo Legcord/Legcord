@@ -172,6 +172,16 @@ async function doAfterDefiningTheWindow(): Promise<void> {
                 mainWindow.setIcon(trayPath);
             }
         });
+
+        mainWindow.webContents.on("page-title-updated", async (e, title) => {
+            const armCordSuffix = " - ArmCord"; /* identify */
+            if (!title.endsWith(armCordSuffix)) {
+                e.preventDefault();
+                await mainWindow.webContents.executeJavaScript(
+                    `document.title = '${(title.split(" | ")[1] ?? title) + armCordSuffix}'`
+                );
+            }
+        });
     }
     const userDataPath = app.getPath("userData");
     const themesFolder = `${userDataPath}/themes/`;
