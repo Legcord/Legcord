@@ -3,7 +3,6 @@
     "loading_screen_offline": "ดูเหมือนว่าคุณออฟไลน์อยู่ โปรดเชื่อมต่ออินเทอร์เน็ตและลองใหม่อีกครั้ง",
     "loading_screen_update": "ArmCord เวอร์ชันใหม่พร้อมใช้งานแล้ว โปรดอัปเดตเป็นเวอร์ชันล่าสุด",
     "setup_question1": "เลือกประเภทการติดตั้งที่คุณต้องการ:",
-    "setup_question1_answer2": "ติดตั้งเต็มรูปแบบ",
     "setup_offline": "ดูเหมือนว่าคุณออฟไลน์อยู่ โปรดเชื่อมต่ออินเทอร์เน็ตและลองเริ่ม ArmCord ใหม่อีกครั้ง",
     "setup_question2": "เลือกช่อง/อินสแตนส์ Discord:",
     "setup_question3": "ต้องการให้ ArmCord จัดการการติดตั้งมอดของไคลเอนต์หรือไม่?",
@@ -75,5 +74,8 @@
     "settings-dynamicIcon": "Dynamic icon",
     "settings-dynamicIcon-desc": "Following Discord's behaviour on Windows, this shows unread messages/pings count on ArmCord's icon instead of it's tray.",
     "settings-spellcheck": "Spellcheck",
-    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them."
+    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them.",
+    "setup_question5": "Do you want to use a tray icon?",
+    "settings-mintoTray": "Minimize to tray",
+    "settings-mintoTray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later."
 }
