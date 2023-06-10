@@ -9,7 +9,6 @@
     "settings-invitewebsocket": "Rikas läsnäolo (kokeellinen)",
     "settings-prfmMode-performance": "Suorituskyky",
     "setup_question1": "Valitse minkälaisen määrityksen haluat suorittaa:",
-    "setup_question1_answer2": "Täysi määritys",
     "loading_screen_start": "Käynnistetään ArmCord…",
     "loading_screen_offline": "Vaikuttaa siltä, ettet ole yhteydessä verkkoon. Yhdistä Internetiin ja yritä uudelleen.",
     "loading_screen_update": "Uusi versio ArmCordista on saatavilla. Päivitä uusimpaan versioon.",
@@ -75,5 +74,8 @@
     "settings-skipSplash": "Skip Splash Screen (Experimental)",
     "settings-skipSplash-desc": "Skips ArmCord splash screen when you start up the app.",
     "settings-copyDebugInfo": "Copy Debug Info",
-    "settings-forceNativeCrash": "Force native crash"
+    "settings-forceNativeCrash": "Force native crash",
+    "setup_question5": "Do you want to use a tray icon?",
+    "settings-mintoTray": "Minimize to tray",
+    "settings-mintoTray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later."
 }
