@@ -6,7 +6,6 @@
     "yes": "Sí",
     "setup_question2": "Escoge tu version de Discord:",
     "setup_question3": "Dejar que ArmCord se encargue de la instalacion de modificaciones?",
-    "setup_question1_answer2": "Instalación completa",
     "setup_offline": "Parece que no estás conectado a la Internet. Por favor conectate a la Internet e reinicia el instalador de ArmCord.",
     "no": "No",
     "next": "Siguiente",
@@ -75,5 +74,8 @@
     "settings-dynamicIcon": "Dynamic icon",
     "settings-dynamicIcon-desc": "Following Discord's behaviour on Windows, this shows unread messages/pings count on ArmCord's icon instead of it's tray.",
     "settings-spellcheck": "Spellcheck",
-    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them."
+    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them.",
+    "setup_question5": "Do you want to use a tray icon?",
+    "settings-mintoTray": "Minimize to tray",
+    "settings-mintoTray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later."
 }
