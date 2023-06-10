@@ -2,7 +2,7 @@
 // I had to add most of the window creation code here to split both into seperete functions
 // WHY? Because I can't use the same code for both due to annoying bug with value `frame` not responding to variables
 // I'm sorry for this mess but I'm not sure how to fix it.
-import {BrowserWindow, app, dialog, nativeImage, shell} from "electron";
+import {BrowserWindow, MessageBoxOptions, app, dialog, nativeImage, shell} from "electron";
 import path from "path";
 import {
     checkIfConfigIsBroken,
@@ -106,7 +106,7 @@ async function doAfterDefiningTheWindow(): Promise<void> {
         } else if (ignoreProtocolWarning) {
             shell.openExternal(url);
         } else {
-            const options = {
+            const options: MessageBoxOptions = {
                 type: "question",
                 buttons: ["Yes, please", "No, I don't"],
                 defaultId: 1,

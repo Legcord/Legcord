@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import {Menu, Tray, app, dialog, nativeImage} from "electron";
+import {Menu, MessageBoxOptions, Tray, app, dialog, nativeImage} from "electron";
 import {createInviteWindow, mainWindow} from "./window";
 import {getConfig, getConfigLocation, getDisplayVersion, setConfig, setWindowState} from "./utils";
 import * as path from "path";
@@ -145,7 +145,7 @@ app.whenReady().then(async () => {
     } else {
         if ((await getConfig("tray")) == undefined) {
             if (process.platform == "win32") {
-                const options = {
+                const options: MessageBoxOptions = {
                     type: "question",
                     buttons: ["Yes, please", "No, I don't"],
                     defaultId: 1,
