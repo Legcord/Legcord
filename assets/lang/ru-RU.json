@@ -3,7 +3,6 @@
     "loading_screen_offline": "Видимо, вы не в сети. Подключитесь к Интернету и повторите попытку.",
     "loading_screen_update": "Доступна новая версия ArmCord. Пожалуйста, обновитесь до последней версии.",
     "setup_question1": "Выберите, какую установку вы хотите выполнить:",
-    "setup_question1_answer2": "Полная Насторойка",
     "setup_offline": "Видимо, вы не в сети. Подключитесь к Интернету и перезапустите ArmCord.",
     "setup_question2": "Выберите свой канал/экземпляр Discord:",
     "setup_question3": "Должен ли ArmCord заниматься установкой клиентских модов?",
@@ -75,5 +74,8 @@
     "settings-dynamicIcon": "Динамическая иконка",
     "settings-dynamicIcon-desc": "Следуя поведению Discord в Windows, это показывает, что непрочитанные сообщения / пинги рассчитывают на значок ArmCord, а не на его трей.",
     "settings-spellcheck": "Spellcheck",
-    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them."
+    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them.",
+    "setup_question5": "Do you want to use a tray icon?",
+    "settings-mintoTray": "Minimize to tray",
+    "settings-mintoTray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later."
 }
