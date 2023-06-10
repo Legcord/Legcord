@@ -144,7 +144,7 @@ app.whenReady().then(async () => {
         });
     } else {
         if ((await getConfig("tray")) == undefined) {
-            if (process.platform == "win32") {
+            if (process.platform == "linux") {
                 const options: MessageBoxOptions = {
                     type: "question",
                     buttons: ["Yes, please", "No, I don't"],
