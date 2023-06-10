@@ -74,5 +74,8 @@
     "settings-copyDebugInfo": "Copy Debug Info",
     "settings-forceNativeCrash": "Force native crash",
     "settings-spellcheck": "Spellcheck",
-    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them."
+    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them.",
+    "setup_question5": "Do you want to use a tray icon?",
+    "settings-mintoTray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later.",
+    "settings-mintoTray": "Minimize to tray"
 }
