@@ -18,13 +18,9 @@ if (ipcRenderer.sendSync("legacyCapturer")) {
 
 const version = ipcRenderer.sendSync("displayVersion");
 async function updateLang(): Promise<void> {
-    if (window.location.href.indexOf("setup.html") > -1) {
-        console.log("Setup, skipping lang update");
-    } else {
-        const value = `; ${document.cookie}`;
-        const parts: any = value.split(`; locale=`);
-        if (parts.length === 2) ipcRenderer.send("setLang", parts.pop().split(";").shift());
-    }
+    const value = `; ${document.cookie}`;
+    const parts: any = value.split(`; locale=`);
+    if (parts.length === 2) ipcRenderer.send("setLang", parts.pop().split(";").shift());
 }
 declare global {
     interface Window {

@@ -33,7 +33,11 @@ export function injectTitlebar(): void {
         const quit = document.getElementById("quit");
 
         minimize!.addEventListener("click", () => {
-            ipcRenderer.send("win-minimize");
+            if (window.location.href.indexOf("setup.html") > -1) {
+                ipcRenderer.send("setup-minimize");
+            } else {
+                ipcRenderer.send("win-minimize");
+            }
         });
 
         maximize!.addEventListener("click", () => {
@@ -46,10 +50,14 @@ export function injectTitlebar(): void {
         });
 
         quit!.addEventListener("click", () => {
-            if (ipcRenderer.sendSync("minimizeToTray") === true) {
-                ipcRenderer.send("win-hide");
-            } else if (ipcRenderer.sendSync("minimizeToTray") === false) {
-                ipcRenderer.send("win-quit");
+            if (window.location.href.indexOf("setup.html") > -1) {
+                ipcRenderer.send("setup-quit");
+            } else {
+                if (ipcRenderer.sendSync("minimizeToTray") === true) {
+                    ipcRenderer.send("win-hide");
+                } else if (ipcRenderer.sendSync("minimizeToTray") === false) {
+                    ipcRenderer.send("win-quit");
+                }
             }
         });
     });

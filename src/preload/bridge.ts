@@ -74,7 +74,6 @@ ipcRenderer.on("rpc", (_event, data: object) => {
 if (window.location.href.indexOf("splash.html") > -1 || window.location.href.indexOf("setup.html") > -1) {
     contextBridge.exposeInMainWorld("armcordinternal", {
         restart: () => ipcRenderer.send("restart"),
-        installState: ipcRenderer.sendSync("modInstallState"),
-        saveSettings: (...args: any) => ipcRenderer.send("saveSettings", ...args)
+        installState: ipcRenderer.sendSync("modInstallState")
     });
 }

@@ -52,6 +52,7 @@ export function setup(): void {
         inviteWebsocket: true,
         startMinimized: false,
         dynamicIcon: false,
+        tray: true,
         disableAutogain: false,
         useLegacyCapturer: false,
         mobileMode: false,
@@ -260,6 +261,7 @@ export interface Settings {
     performanceMode: string;
     startMinimized: boolean;
     useLegacyCapturer: boolean;
+    tray: boolean;
     inviteWebsocket: boolean;
     disableAutogain: boolean;
     trayIcon: string;
