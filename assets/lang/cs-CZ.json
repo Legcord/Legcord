@@ -5,7 +5,6 @@
     "loading_screen_offline": "Zdá se, že jste offline. Připojte se k internetu a zkuste to znovu.",
     "loading_screen_update": "Je nová verze ArmCordu k dispozici. Prosím aktualizujte na nejnovější verzi.",
     "setup_question1": "Vyberte, jaký druh instalace chcete provést:",
-    "setup_question1_answer2": "Plná instalace",
     "setup_offline": "Zdá se, že jste offline. Připojte se k internetu a restartujte ArmCord.",
     "setup_question2": "Vyberte svůj Discord kanál/instanci:",
     "setup_question3": "Měl by ArmCord nainstalovat klientské mody?",
@@ -75,5 +74,8 @@
     "settings-copyDebugInfo": "Kopírovat informace o ladění",
     "settings-forceNativeCrash": "Vynutit nativní havárii",
     "settings-spellcheck": "Spellcheck",
-    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them."
+    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them.",
+    "setup_question5": "Do you want to use a tray icon?",
+    "settings-mintoTray": "Minimize to tray",
+    "settings-mintoTray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later."
 }
