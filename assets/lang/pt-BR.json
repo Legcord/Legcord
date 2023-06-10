@@ -4,7 +4,6 @@
     "loading_screen_offline": "Você parece estar offline. Por favor, conecte-se à internet e tente novamente.",
     "loading_screen_update": "Uma nova versão do ArmCord está disponível. Por favor, atualize para a versão mais recente.",
     "setup_question1": "Selecione que tipo de instação você deseja fazer:",
-    "setup_question1_answer2": "Instalação completa",
     "setup_offline": "Você parece estar offline. Por favor, conecte-se à internet e tente novamente.",
     "setup_question2": "Escolha o canal/instância do seu Discord:",
     "setup_question3": "O ArmCord deve lidar com a instalação de mods do cliente?",
@@ -75,5 +74,8 @@
     "settings-dynamicIcon": "Ícone dinâmico",
     "settings-dynamicIcon-desc": "Seguindo o comportamento do Discord no Windows, isto mostra a contagem de mensagens não lidas/menções no ícone do ArmCord ao invés da bandeja.",
     "settings-spellcheck": "Spellcheck",
-    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them."
+    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them.",
+    "setup_question5": "Do you want to use a tray icon?",
+    "settings-mintoTray": "Minimize to tray",
+    "settings-mintoTray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later."
 }
