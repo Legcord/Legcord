@@ -3,7 +3,6 @@
     "loading_screen_offline": "Du verkar vara offline. Var snäll och anslut till internet och försök igen.",
     "loading_screen_update": "En ny version av ArmCord är tillgänglig. Var snäll och uppdatera till den senaste versionen.",
     "setup_question1": "Välj typ av setup du vill genomföra:",
-    "setup_question1_answer2": "Full Setup",
     "setup_offline": "Du verkar vara offline. Var snäll och anslut till internet och starta om ArmCord.",
     "setup_question2": "Välj din Discord kanal:",
     "setup_question3": "Ska ArmCord ta hand om installationen av moddade klienter?",
@@ -75,5 +74,8 @@
     "settings-dynamicIcon": "Dynamic icon",
     "settings-dynamicIcon-desc": "Following Discord's behaviour on Windows, this shows unread messages/pings count on ArmCord's icon instead of it's tray.",
     "settings-spellcheck": "Spellcheck",
-    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them."
+    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them.",
+    "setup_question5": "Do you want to use a tray icon?",
+    "settings-mintoTray": "Minimize to tray",
+    "settings-mintoTray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later."
 }
