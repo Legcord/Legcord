@@ -74,5 +74,8 @@
     "settings-dynamicIcon": "Icona dinamica",
     "settings-dynamicIcon-desc": "Seguendo il comportamento di Discord su Windows, questo mostra il numero di messaggi/ping non letti sull'icona di ArmCord anziché sulla barra delle applicazioni.",
     "settings-spellcheck": "Controllo ortografico",
-    "settings-spellcheck-desc": "Ti aiuta a correggere le parole errate evidenziandole."
+    "settings-spellcheck-desc": "Ti aiuta a correggere le parole errate evidenziandole.",
+    "setup_question5": "Do you want to use a tray icon?",
+    "settings-mintoTray": "Minimize to tray",
+    "settings-mintoTray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later."
 }
