@@ -5,9 +5,12 @@ import {getConfig, getConfigLocation, getDisplayVersion, setWindowState} from ".
 import * as path from "path";
 import {createSettingsWindow} from "./settings/main";
 export let tray: any = null;
+let trayIcon = "ac_plug_colored";
 app.whenReady().then(async () => {
     let finishedSetup = await getConfig("doneSetup");
-    let trayIcon = (await getConfig("trayIcon")) ?? "ac_plug_colored";
+    if ((await getConfig("trayIcon")) != "default") {
+        trayIcon = await getConfig("trayIcon");
+    }
     let trayPath = nativeImage.createFromPath(path.join(__dirname, "../", `/assets/${trayIcon}.png`));
     let trayVerIcon;
     trayVerIcon = function () {
