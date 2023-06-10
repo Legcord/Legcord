@@ -1,6 +1,5 @@
 {
     "setup_question1": "Selecteer wat voor soort setup je wilt starten:",
-    "setup_question1_answer2": "Volledige Setup",
     "setup_question3": "Moet ArmCord client mods installeren?",
     "yes": "Ja",
     "no": "Nee",
@@ -75,5 +74,8 @@
     "settings-dynamicIcon": "Dynamic icon",
     "settings-dynamicIcon-desc": "Following Discord's behaviour on Windows, this shows unread messages/pings count on ArmCord's icon instead of it's tray.",
     "settings-spellcheck": "Spellcheck",
-    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them."
+    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them.",
+    "setup_question5": "Do you want to use a tray icon?",
+    "settings-mintoTray": "Minimize to tray",
+    "settings-mintoTray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later."
 }
