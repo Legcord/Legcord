@@ -63,7 +63,15 @@ if (!app.requestSingleInstanceLock()) {
               }
         }
     */
+    // work around chrome 66 disabling autoplay by default
+    app.commandLine.appendSwitch("autoplay-policy", "no-user-gesture-required");
 
+    // WinRetrieveSuggestionsOnlyOnDemand: Work around electron 13 bug w/ async spellchecking on Windows.
+    // HardwareMediaKeyHandling,MediaSessionService: Prevent Discord from registering as a media service.
+    app.commandLine.appendSwitch(
+        "disable-features",
+        "WinRetrieveSuggestionsOnlyOnDemand,HardwareMediaKeyHandling,MediaSessionService"
+    );
     checkForDataFolder();
     checkIfConfigExists();
     injectElectronFlags();
