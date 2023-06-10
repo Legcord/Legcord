@@ -3,7 +3,6 @@
     "loading_screen_offline": "tampaknya anda sedang offline. Silahkan sambungkan ke internet dan coba lagi.",
     "loading_screen_update": "versi terbaru ArmCord tersedia. Silahkan perbaharui ke versi terbaru.",
     "setup_question1": "pilih jenis pengaturan yang ingin anda tampilkan:",
-    "setup_question1_answer2": "pengaturan penuh",
     "setup_question2": "pilih saluran Discord anda/instansi:",
     "setup_offline": "tampaknya anda sedang offline. silahkan sambungkan ke internet dan muat ulang ArmCord.",
     "setup_question3": "bolehkah ArmCord menangani pemasangan mods klien?",
@@ -75,5 +74,8 @@
     "settings-dynamicIcon": "Dynamic icon",
     "settings-dynamicIcon-desc": "Following Discord's behaviour on Windows, this shows unread messages/pings count on ArmCord's icon instead of it's tray.",
     "settings-spellcheck": "Spellcheck",
-    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them."
+    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them.",
+    "setup_question5": "Do you want to use a tray icon?",
+    "settings-mintoTray": "Minimize to tray",
+    "settings-mintoTray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later."
 }
