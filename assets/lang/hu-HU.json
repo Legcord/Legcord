@@ -1,10 +1,8 @@
 {
-    "setup_question1_answer1": "Gyors telepítés",
     "loading_screen_start": "ArmCord indítása…",
     "loading_screen_offline": "Úgy tűnik offline vagy. Kérlek csatlakozz az internetre és próbáld újra.",
     "loading_screen_update": "Egy új verzió elérhető az ArmCord-hoz. Kérlek frissítsd a legújabb verzióra.",
     "setup_question1": "Válaszd ki, hogy milyen beállítást szeretnél végrehajtani:",
-    "setup_question1_answer2": "Teljes telepítés",
     "setup_offline": "Úgy tűnik, offline vagy. Kérlek csatlakozz az internetre, és indítsd újra az ArmCord-ot.",
     "setup_question2": "Válaszd ki a Discord frissítési csatornáját:",
     "setup_question3": "Az ArmCord kezelje a kliens modok telepítését?",
@@ -12,7 +10,6 @@
     "no": "Nem",
     "next": "Következő",
     "setup_question4": "Válaszd ki a telepíteni kívánt kliens modot:",
-    "setup_question4_clientmodnotice": "Miért nem mindegyik? Ha egyszerre több kliens mod is van, az problémákat okozhat. Ha mégis meg akarod csinálni, nézd meg Discordunkat.",
     "settings-theme": "ArmCord téma",
     "settings-theme-desc1": "Az ArmCord „témái” kezelik az alkalmazások viselkedését és megjelenését.",
     "settings-theme-desc2": "így néz ki az ArmCord, amikor először elindítja. Ez magában foglalja a Discord \n                egyéni címsorát és ArmCord-specifikus stílusok beillesztve a Discordba.",

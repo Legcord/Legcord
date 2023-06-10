@@ -1,6 +1,5 @@
 {
     "setup_question1": "Selecteer wat voor soort setup je wilt starten:",
-    "setup_question1_answer1": "Express Setup",
     "setup_question1_answer2": "Volledige Setup",
     "setup_question3": "Moet ArmCord client mods installeren?",
     "yes": "Ja",
@@ -9,7 +8,6 @@
     "loading_screen_start": "ArmCord starten…",
     "next": "Volgende",
     "setup_question4": "Selecteer een client mod om te installeren:",
-    "setup_question4_clientmodnotice": "Waarom niet allemaal? Meerdere client mods installeren kan problemen veroorzaken. Als je dit echt wilt doen, kan je de documentatie bekijken.",
     "loading_screen_offline": "Het lijkt erop alsof je offline bent. Verbind met het Internet en probeer opnieuw.",
     "loading_screen_update": "Een nieuwe versie van ArmCord is beschikbaar. Update alstublieft naar de nieuwste versie.",
     "setup_question2": "Kies je Discord kanaal/instantie:",
