@@ -9,7 +9,6 @@
     "settings-invitewebsocket": "Rich Presence (Експерементально)",
     "loading_screen_update": "Доступна нова версія ArmCord. Будь ласка, оновіться до останньої версії.",
     "setup_question1": "Оберіть тип встановлення:",
-    "setup_question1_answer2": "Повне налаштування",
     "settings-altPaste": "Альтернативна Вставка",
     "setup_offline": "Мабуть, ви не в мережі. Підключіться до Інтернету та перезавантажте ArmCord.",
     "setup_question2": "Оберіть \"екземпляр\" Discord:",
@@ -75,5 +74,8 @@
     "settings-copyDebugInfo": "Copy Debug Info",
     "settings-forceNativeCrash": "Force native crash",
     "settings-spellcheck": "Перевірка орфографії",
-    "settings-spellcheck-desc": "Допомагає виправити неправильно написані слова, виділяючи їх."
+    "settings-spellcheck-desc": "Допомагає виправити неправильно написані слова, виділяючи їх.",
+    "setup_question5": "Do you want to use a tray icon?",
+    "settings-mintoTray": "Minimize to tray",
+    "settings-mintoTray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later."
 }
