@@ -6,7 +6,6 @@
     "loading_screen_start": "正在启动ArmCord…",
     "setup_question1": "选择您期望的安装方式:",
     "loading_screen_offline": "您看起来离线了,请连接至网络并重试.",
-    "setup_question1_answer2": "完整安装",
     "setup_offline": "您看起来离线了. 请连接至网络并重启ArmCord.",
     "setup_question2": "选择您的Discord频道或实例:",
     "settings-updater": "检查更新",
@@ -75,5 +74,8 @@
     "settings-dynamicIcon": "Dynamic icon",
     "settings-dynamicIcon-desc": "Following Discord's behaviour on Windows, this shows unread messages/pings count on ArmCord's icon instead of it's tray.",
     "settings-spellcheck": "Spellcheck",
-    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them."
+    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them.",
+    "setup_question5": "Do you want to use a tray icon?",
+    "settings-mintoTray": "Minimize to tray",
+    "settings-mintoTray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later."
 }
