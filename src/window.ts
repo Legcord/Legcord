@@ -168,7 +168,8 @@ async function doAfterDefiningTheWindow(): Promise<void> {
                 trayPath = trayPath.resize({height: 32});
             if ((await getConfig("trayIcon")) == "default") {
                 tray.setImage(trayPath);
-            } else if (await getConfig("dynamicIcon")) {
+            }
+            if (await getConfig("dynamicIcon")) {
                 mainWindow.setIcon(trayPath);
             }
         });
