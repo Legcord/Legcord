@@ -74,5 +74,8 @@
     "settings-copyDebugInfo": "Hibakeresési infó másolása",
     "settings-forceNativeCrash": "A natív összeomlás kényszerítése",
     "settings-spellcheck": "Helyesírás ellenőrzés",
-    "settings-spellcheck-desc": "Segít abban, hogy kijelölve kiemelje a helytelenül leírt szavakat, segít megjavítani őket."
+    "settings-spellcheck-desc": "Segít abban, hogy kijelölve kiemelje a helytelenül leírt szavakat, segít megjavítani őket.",
+    "setup_question5": "Do you want to use a tray icon?",
+    "settings-mintoTray": "Minimize to tray",
+    "settings-mintoTray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later."
 }
