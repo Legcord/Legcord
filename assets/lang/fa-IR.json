@@ -3,7 +3,6 @@
     "loading_screen_offline": "به نظر می‌رسد شما آفلاین هستید. لطفا به اینترنت متصل شده و سپس دوباره تلاش کنید.",
     "loading_screen_update": "نسخه جدید ArmCord در دسترس است. لطفا به آخرین نسخه بروزرسانی کنید.",
     "setup_question1": "انتخاب کنید که چگونه میخواهید نصب کنید:",
-    "setup_question1_answer2": "راه‌اندازی کامل",
     "setup_offline": "به نظر می‌رسد شما آفلاین هستید. لطفا به اینترنت وصل شده و سپس نصب ArmCord را از ابتدا شروع کنید.",
     "setup_question2": "نوع دیسکورد را انتخاب کنید:",
     "setup_question3": "آیا میخواهید ArmCord تغییرات کلاینت را خودکار اعمال کند؟",
@@ -75,5 +74,8 @@
     "settings-dynamicIcon": "Dynamic icon",
     "settings-dynamicIcon-desc": "Following Discord's behaviour on Windows, this shows unread messages/pings count on ArmCord's icon instead of it's tray.",
     "settings-spellcheck": "Spellcheck",
-    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them."
+    "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them.",
+    "setup_question5": "Do you want to use a tray icon?",
+    "settings-mintoTray": "Minimize to tray",
+    "settings-mintoTray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later."
 }
