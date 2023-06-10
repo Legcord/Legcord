@@ -74,5 +74,8 @@
     "settings-dynamicIcon": "다이내믹 아이콘",
     "settings-dynamicIcon-desc": "윈도우즈에서 디스코드의 동작에 따라 트레이 대신 ArmCord 아이콘에 읽지 않은 메시지/핑 수가 표시됩니다.",
     "settings-spellcheck": "맞춤법검사",
-    "settings-spellcheck-desc": "철자가 틀린 단어를 강조 표시하여 수정할 수 있도록 도와줍니다."
+    "settings-spellcheck-desc": "철자가 틀린 단어를 강조 표시하여 수정할 수 있도록 도와줍니다.",
+    "setup_question5": "Do you want to use a tray icon?",
+    "settings-mintoTray": "Minimize to tray",
+    "settings-mintoTray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later."
 }
