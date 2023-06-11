@@ -93,9 +93,6 @@ if (!app.requestSingleInstanceLock()) {
                 case "transparent":
                     createTransparentWindow();
                     break;
-                case "basic":
-                    createNativeWindow();
-                    break;
                 default:
                     createCustomWindow();
                     customTitlebar = true;
