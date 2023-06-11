@@ -27,116 +27,65 @@ app.whenReady().then(async () => {
     if (process.platform == "darwin" && trayPath.getSize().height > 22) trayPath = trayPath.resize({height: 22});
     if (await getConfig("tray")) {
         let clientName = (await getConfig("clientName")) ?? "ArmCord";
-        if ((await getConfig("windowStyle")) == "basic") {
-            tray = new Tray(trayPath);
-            function contextMenu(): Electron.Menu {
-                if (finishedSetup == false) {
-                    return Menu.buildFromTemplate([
-                        {
-                            label: `Finish the setup first!`,
-                            enabled: false
-                        },
-                        {
-                            label: `Quit ${clientName}`,
-                            async click() {
-                                fs.unlink(await getConfigLocation(), (err) => {
-                                    if (err) throw err;
+        tray = new Tray(trayPath);
+        if (finishedSetup == false) {
+            const contextMenu = Menu.buildFromTemplate([
+                {
+                    label: `Finish the setup first!`,
+                    enabled: false
+                },
+                {
+                    label: `Quit ${clientName}`,
+                    async click() {
+                        fs.unlink(await getConfigLocation(), (err) => {
+                            if (err) throw err;
 
-                                    console.log('Closed during setup. "settings.json" was deleted');
-                                    app.quit();
-                                });
-                            }
-                        }
-                    ]);
-                } else {
-                    return Menu.buildFromTemplate([
-                        {
-                            label: `Open ${clientName}`,
-                            click() {
-                                mainWindow.show();
-                            }
-                        },
-                        {
-                            label: `Quit ${clientName}`,
-                            click() {
-                                let [width, height] = mainWindow.getSize();
-                                setWindowState({
-                                    width,
-                                    height,
-                                    isMaximized: mainWindow.isMaximized(),
-                                    x: mainWindow.getPosition()[0],
-                                    y: mainWindow.getPosition()[1]
-                                });
-                                app.quit();
-                            }
-                        }
-                    ]);
+                            console.log('Closed during setup. "settings.json" was deleted');
+                            app.quit();
+                        });
+                    }
                 }
-            }
-
-            tray.setToolTip(clientName);
+            ]);
             tray.setContextMenu(contextMenu);
         } else {
-            tray = new Tray(trayPath);
-            if (finishedSetup == false) {
-                const contextMenu = Menu.buildFromTemplate([
-                    {
-                        label: `Finish the setup first!`,
-                        enabled: false
-                    },
-                    {
-                        label: `Quit ${clientName}`,
-                        async click() {
-                            fs.unlink(await getConfigLocation(), (err) => {
-                                if (err) throw err;
-
-                                console.log('Closed during setup. "settings.json" was deleted');
-                                app.quit();
-                            });
-                        }
+            const contextMenu = Menu.buildFromTemplate([
+                {
+                    label: `${clientName} ${getDisplayVersion()}`,
+                    icon: trayVerIcon(),
+                    enabled: false
+                },
+                {
+                    type: "separator"
+                },
+                {
+                    label: `Open ${clientName}`,
+                    click() {
+                        mainWindow.show();
                     }
-                ]);
-                tray.setContextMenu(contextMenu);
-            } else {
-                const contextMenu = Menu.buildFromTemplate([
-                    {
-                        label: `${clientName} ${getDisplayVersion()}`,
-                        icon: trayVerIcon(),
-                        enabled: false
-                    },
-                    {
-                        type: "separator"
-                    },
-                    {
-                        label: `Open ${clientName}`,
-                        click() {
-                            mainWindow.show();
-                        }
-                    },
-                    {
-                        label: "Open Settings",
-                        click() {
-                            createSettingsWindow();
-                        }
-                    },
-                    {
-                        label: "Support Discord Server",
-                        click() {
-                            createInviteWindow("TnhxcqynZ2");
-                        }
-                    },
-                    {
-                        type: "separator"
-                    },
-                    {
-                        label: `Quit ${clientName}`,
-                        click() {
-                            app.quit();
-                        }
+                },
+                {
+                    label: "Open Settings",
+                    click() {
+                        createSettingsWindow();
                     }
-                ]);
-                tray.setContextMenu(contextMenu);
-            }
+                },
+                {
+                    label: "Support Discord Server",
+                    click() {
+                        createInviteWindow("TnhxcqynZ2");
+                    }
+                },
+                {
+                    type: "separator"
+                },
+                {
+                    label: `Quit ${clientName}`,
+                    click() {
+                        app.quit();
+                    }
+                }
+            ]);
+            tray.setContextMenu(contextMenu);
         }
         tray.setToolTip(clientName);
         tray.on("click", function () {
