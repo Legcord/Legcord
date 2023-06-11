@@ -2,7 +2,7 @@
     "loading_screen_update": "Una nuova versione di ArmCord è disponibile. Per favore aggiorna all'ultima versione.",
     "loading_screen_start": "Avvio di Armcord…",
     "loading_screen_offline": "Sembri essere offline. Per favore connettiti all'Internet e riprova.",
-    "setup_question1": "Seleziona quale tipo di setup vuoi eseguire:",
+    "setup_question1": "Benvenuto nella configurazione di ArmCord",
     "setup_question2": "Seleziona il tuo canale/istanza di Discord:",
     "setup_question3": "ArmCord dovrebbe gestire l'installazione di client mod?",
     "yes": "Sì",
@@ -10,7 +10,7 @@
     "next": "Avanti",
     "setup_question4": "Seleziona una client mod che vuoi installare:",
     "setup_offline": "Sembri essere offline. Per favore connettiti ad Internet e riavvia la configurazione di ArmCord.",
-    "settings-tray": "Riduci ad icona",
+    "settings-tray": "Icona",
     "settings-channel": "Canale Discord",
     "settings-save": "Salva Impostazioni",
     "settings-updater": "Controlla gli aggiornamenti",
@@ -35,7 +35,7 @@
     "settings-channel-desc2": "probabilmente hai più familiarità con questo. È quello che vedi in Discord nel client\n                      predefinito!",
     "settings-channel-desc3": "questa è la versione di test alfa di Discord. Usandolo si ottiene l'accesso alle più recenti\n                     funzionalità e correzioni.",
     "settings-channel-desc4": "build di prova pubblica. Riceve le funzionalità prima di stable ma è un po' più vecchio di Canary.",
-    "settings-tray-desc": "Se disabilitato, ArmCord si chiuderà come qualsiasi altra finestra quando è chiusa, altrimenti si siederà e si rilasserà\n                 nella barra delle applicazioni per dopo.",
+    "settings-tray-desc": "Il menu della barra delle applicazioni di ArmCord è un luogo in cui puoi accedere facilmente e rapidamente alle impostazioni di ArmCord e ti consente di aprire rapidamente la finestra di Discord.",
     "settings-invitewebsocket-desc": "Utilizza <a target=\"_blank\" href=\"https://github.com/OpenAsar/arrpc\">arRPC</a> per supportare Discord RPC (Rich Presence) con programmi locali sulla tua macchina. Lavori in corso.",
     "settings-altPaste": "Incolla alternativo",
     "settings-altPaste-desc": "Se sei su Gnome su Linux o semplicemente non puoi incollare immagini copiate da altri messaggi, allora questo è\n                 per te. Ciò abilita un modulo alternativo per incollare le immagini. Abilitalo solo quando stai sperimentando\n                 problemi.",
@@ -75,7 +75,7 @@
     "settings-dynamicIcon-desc": "Seguendo il comportamento di Discord su Windows, questo mostra il numero di messaggi/ping non letti sull'icona di ArmCord anziché sulla barra delle applicazioni.",
     "settings-spellcheck": "Controllo ortografico",
     "settings-spellcheck-desc": "Ti aiuta a correggere le parole errate evidenziandole.",
-    "setup_question5": "Do you want to use a tray icon?",
-    "settings-mintoTray": "Minimize to tray",
-    "settings-mintoTray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later."
+    "setup_question5": "Vuoi usare un'icona nella barra delle applicazioni?",
+    "settings-mintoTray": "Riduci a icona nel barra delle applicazioni",
+    "settings-mintoTray-desc": "Se disabilitato, ArmCord si chiuderà come qualsiasi altra finestra quando è chiusa, altrimenti si siederà e si rilasserà\n                 nella barra delle applicazioni per dopo."
 }
