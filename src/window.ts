@@ -9,6 +9,7 @@ import {
     contentPath,
     firstRun,
     getConfig,
+    getWindowState,
     modInstallState,
     setConfig,
     setLang,
@@ -26,7 +27,6 @@ import {iconPath} from "./main";
 import {createSetupWindow} from "./setup/main";
 export let mainWindow: BrowserWindow;
 export let inviteWindow: BrowserWindow;
-
 let osType = os.type();
 contextMenu({
     showSaveImageAs: true,
@@ -53,10 +53,11 @@ contextMenu({
     ]
 });
 async function doAfterDefiningTheWindow(): Promise<void> {
-    if (await getConfig("startMinimized")) {
-        mainWindow.hide();
-    } else {
-        mainWindow.show();
+    if ((await getWindowState("isMaximized")) ?? false) {
+        mainWindow.setSize(835, 600); //just so the whole thing doesn't cover whole screen
+        mainWindow.maximize();
+        mainWindow.webContents.executeJavaScript(`document.body.setAttribute("isMaximized", "");`);
+        mainWindow.hide(); // please don't flashbang the user
     }
     if (transparency && process.platform === "win32") {
         import("@pyke/vibe").then(async (vibe) => {
@@ -167,8 +168,10 @@ async function doAfterDefiningTheWindow(): Promise<void> {
                 trayPath = trayPath.resize({height: 22});
             if (process.platform === "win32" && trayPath.getSize().height > 32)
                 trayPath = trayPath.resize({height: 32});
-            if ((await getConfig("trayIcon")) == "default") {
-                tray.setImage(trayPath);
+            if (await getConfig("tray")) {
+                if ((await getConfig("trayIcon")) == "default") {
+                    tray.setImage(trayPath);
+                }
             }
             if (await getConfig("dynamicIcon")) {
                 mainWindow.setIcon(trayPath);
@@ -259,15 +262,9 @@ async function doAfterDefiningTheWindow(): Promise<void> {
         await setLang(new Intl.DateTimeFormat().resolvedOptions().locale);
         createSetupWindow();
         mainWindow.close();
-    } else if ((await getConfig("skipSplash")) == true) {
-        // It's modified elsewhere.
-        // eslint-disable-next-line no-unmodified-loop-condition
-        while (modInstallState == "installing") {
-            await sleep(1000);
-        }
-        mainWindow.loadURL("data:text/html,%3Ch1%3ELoading%21%3C%2Fh1%3E");
-        mainWindow.webContents.executeJavaScript(`
-            window.armcord.splashEnd();
+    }
+    mainWindow.loadURL("data:text/html,%3Ch1%3ELoading%21%3C%2Fh1%3E");
+    mainWindow.webContents.executeJavaScript(`
             switch (window.armcord.channel) {
                 case "stable":
                     window.location.replace("https://discord.com/app");
@@ -285,19 +282,16 @@ async function doAfterDefiningTheWindow(): Promise<void> {
                     window.location.replace("https://discord.com/app");
             }
             `);
-    } else {
-        await mainWindow.loadFile(path.join(__dirname, "/content/splash.html"));
-    }
-    if (await getConfig("startMinimized")) {
-        mainWindow.hide();
-    } else {
+    if (await getConfig("skipSplash")) {
         mainWindow.show();
     }
 }
 export async function createCustomWindow(): Promise<void> {
     mainWindow = new BrowserWindow({
-        width: 300,
-        height: 350,
+        width: (await getWindowState("width")) ?? 835,
+        height: (await getWindowState("height")) ?? 600,
+        x: await getWindowState("x"),
+        y: await getWindowState("y"),
         title: "ArmCord",
         show: false,
         darkTheme: true,
@@ -315,8 +309,10 @@ export async function createCustomWindow(): Promise<void> {
 }
 export async function createNativeWindow(): Promise<void> {
     mainWindow = new BrowserWindow({
-        width: 300,
-        height: 350,
+        width: (await getWindowState("width")) ?? 835,
+        height: (await getWindowState("height")) ?? 600,
+        x: await getWindowState("x"),
+        y: await getWindowState("y"),
         title: "ArmCord",
         darkTheme: true,
         icon: iconPath,
@@ -334,8 +330,10 @@ export async function createNativeWindow(): Promise<void> {
 }
 export async function createTransparentWindow(): Promise<void> {
     mainWindow = new BrowserWindow({
-        width: 300,
-        height: 350,
+        width: (await getWindowState("width")) ?? 835,
+        height: (await getWindowState("height")) ?? 600,
+        x: await getWindowState("x"),
+        y: await getWindowState("y"),
         title: "ArmCord",
         darkTheme: true,
         icon: iconPath,

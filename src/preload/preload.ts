@@ -32,18 +32,16 @@ console.log(`ArmCord ${version}`);
 ipcRenderer.on("themeLoader", (_event, message) => {
     addStyle(message);
 });
-if (window.location.href.indexOf("splash.html") > -1) {
-    console.log("Skipping titlebar injection and client mod injection.");
-} else {
-    if (ipcRenderer.sendSync("titlebar")) {
-        injectTitlebar();
-    }
-    if (ipcRenderer.sendSync("mobileMode")) {
-        injectMobileStuff();
-    }
-    sleep(5000).then(async () => {
-        // dirty hack to make clicking notifications focus ArmCord
-        addScript(`
+
+if (ipcRenderer.sendSync("titlebar")) {
+    injectTitlebar();
+}
+if (ipcRenderer.sendSync("mobileMode")) {
+    injectMobileStuff();
+}
+sleep(5000).then(async () => {
+    // dirty hack to make clicking notifications focus ArmCord
+    addScript(`
         (() => {
         const originalSetter = Object.getOwnPropertyDescriptor(Notification.prototype, "onclick").set;
         Object.defineProperty(Notification.prototype, "onclick", {
@@ -57,21 +55,20 @@ if (window.location.href.indexOf("splash.html") > -1) {
         });
         })();
         `);
-        if (ipcRenderer.sendSync("disableAutogain")) {
-            addScript(fs.readFileSync(path.join(__dirname, "../", "/content/js/disableAutogain.js"), "utf8"));
+    if (ipcRenderer.sendSync("disableAutogain")) {
+        addScript(fs.readFileSync(path.join(__dirname, "../", "/content/js/disableAutogain.js"), "utf8"));
+    }
+    addScript(fs.readFileSync(path.join(__dirname, "../", "/content/js/rpc.js"), "utf8"));
+    const cssPath = path.join(__dirname, "../", "/content/css/discord.css");
+    addStyle(fs.readFileSync(cssPath, "utf8"));
+    if (document.getElementById("window-controls-container") == null) {
+        console.warn("Titlebar didn't inject, retrying...");
+        if (ipcRenderer.sendSync("titlebar")) {
+            fixTitlebar();
         }
-        addScript(fs.readFileSync(path.join(__dirname, "../", "/content/js/rpc.js"), "utf8"));
-        const cssPath = path.join(__dirname, "../", "/content/css/discord.css");
-        addStyle(fs.readFileSync(cssPath, "utf8"));
-        if (document.getElementById("window-controls-container") == null) {
-            console.warn("Titlebar didn't inject, retrying...");
-            if (ipcRenderer.sendSync("titlebar")) {
-                fixTitlebar();
-            }
-        }
-        await updateLang();
-    });
-}
+    }
+    await updateLang();
+});
 
 // Settings info version injection
 setInterval(() => {

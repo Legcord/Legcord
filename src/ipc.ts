@@ -17,6 +17,7 @@ import {createSettingsWindow} from "./settings/main";
 import os from "os";
 import path from "path";
 import {createTManagerWindow} from "./themeManager/main";
+import {splashWindow} from "./splash/main";
 export function registerIpc(): void {
     ipcMain.on("get-app-path", (event) => {
         event.reply("app-path", app.getAppPath());
@@ -82,31 +83,11 @@ export function registerIpc(): void {
         event.returnValue = packageVersion;
     });
     ipcMain.on("splashEnd", async () => {
-        let width = 835,
-            height = 600,
-            isMaximized = true,
-            xValue = 0,
-            yValue = 0;
-        try {
-            width = (await getWindowState("width")) ?? 835;
-            height = (await getWindowState("height")) ?? 600;
-            isMaximized = (await getWindowState("isMaximized")) ?? false;
-            xValue = await getWindowState("x");
-            yValue = await getWindowState("y");
-        } catch (_e) {
-            console.log("[Window state manager] No window state file found. Falling back to default values.");
-            mainWindow.setSize(835, 600);
-        }
-        if (isMaximized) {
-            mainWindow.setSize(835, 600); //just so the whole thing doesn't cover whole screen
-            mainWindow.maximize();
-        } else {
-            mainWindow.setSize(width, height);
-            mainWindow.setPosition(xValue, yValue);
-            console.log("[Window state manager] Not maximized.");
-        }
+        splashWindow.close();
         if (await getConfig("startMinimized")) {
             mainWindow.hide();
+        } else {
+            mainWindow.show();
         }
     });
     ipcMain.on("restart", () => {

@@ -8,13 +8,16 @@ import {
     getConfig,
     injectElectronFlags,
     installModLoader,
-    setConfig
+    modInstallState,
+    setConfig,
+    sleep
 } from "./utils";
 import "./extensions/mods";
 import "./tray";
-import {createCustomWindow, createNativeWindow, createTransparentWindow} from "./window";
+import {createCustomWindow, createNativeWindow, createTransparentWindow, mainWindow} from "./window";
 import path from "path";
 import {createTManagerWindow} from "./themeManager/main";
+import {createSplashWindow} from "./splash/main";
 export let iconPath: string;
 export let settings: any;
 export let customTitlebar: boolean;
@@ -82,6 +85,9 @@ if (!app.requestSingleInstanceLock()) {
             iconPath = path.join(__dirname, "../", "/assets/desktop.png");
         }
         async function init(): Promise<void> {
+            if ((await getConfig("skipSplash")) == false) {
+                createSplashWindow();
+            }
             switch (await getConfig("windowStyle")) {
                 case "default":
                     createCustomWindow();
