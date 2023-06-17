@@ -21,6 +21,11 @@ import {createSplashWindow} from "./splash/main";
 export let iconPath: string;
 export let settings: any;
 export let customTitlebar: boolean;
+app.on("render-process-gone", (event, webContents, details) => {
+    if (details.reason == "crashed") {
+        app.relaunch();
+    }
+});
 async function args(): Promise<void> {
     let argNum = 2;
     if (process.argv[0] == "electron") argNum++;

@@ -198,28 +198,30 @@ async function doAfterDefiningTheWindow(): Promise<void> {
         fs.writeFileSync(path.join(userDataPath, "/disabled.txt"), "");
     }
     mainWindow.webContents.on("did-finish-load", () => {
-        fs.readdirSync(themesFolder).forEach((file) => {
-            try {
-                const manifest = fs.readFileSync(`${themesFolder}/${file}/manifest.json`, "utf8");
-                let themeFile = JSON.parse(manifest);
-                if (
-                    fs
-                        .readFileSync(path.join(userDataPath, "/disabled.txt"))
-                        .toString()
-                        .includes(themeFile.name.replace(" ", "-"))
-                ) {
-                    console.log(`%cSkipped ${themeFile.name} made by ${themeFile.author}`, "color:red");
-                } else {
-                    mainWindow.webContents.send(
-                        "themeLoader",
-                        fs.readFileSync(`${themesFolder}/${file}/${themeFile.theme}`, "utf-8")
-                    );
-                    console.log(`%cLoaded ${themeFile.name} made by ${themeFile.author}`, "color:red");
+        if (!mainWindow.webContents.isLoading()) {
+            fs.readdirSync(themesFolder).forEach((file) => {
+                try {
+                    const manifest = fs.readFileSync(`${themesFolder}/${file}/manifest.json`, "utf8");
+                    let themeFile = JSON.parse(manifest);
+                    if (
+                        fs
+                            .readFileSync(path.join(userDataPath, "/disabled.txt"))
+                            .toString()
+                            .includes(themeFile.name.replace(" ", "-"))
+                    ) {
+                        console.log(`%cSkipped ${themeFile.name} made by ${themeFile.author}`, "color:red");
+                    } else {
+                        mainWindow.webContents.send(
+                            "themeLoader",
+                            fs.readFileSync(`${themesFolder}/${file}/${themeFile.theme}`, "utf-8")
+                        );
+                        console.log(`%cLoaded ${themeFile.name} made by ${themeFile.author}`, "color:red");
+                    }
+                } catch (err) {
+                    console.error(err);
                 }
-            } catch (err) {
-                console.error(err);
-            }
-        });
+            });
+        }
     });
     await setMenu();
     mainWindow.on("close", async (e) => {
@@ -370,9 +372,11 @@ export async function createInviteWindow(code: string): Promise<void> {
     });
     inviteWindow.loadURL(formInviteURL);
     inviteWindow.webContents.once("did-finish-load", () => {
-        inviteWindow.show();
-        inviteWindow.webContents.once("will-navigate", () => {
-            inviteWindow.close();
-        });
+        if (!mainWindow.webContents.isLoading()) {
+            inviteWindow.show();
+            inviteWindow.webContents.once("will-navigate", () => {
+                inviteWindow.close();
+            });
+        }
     });
 }
