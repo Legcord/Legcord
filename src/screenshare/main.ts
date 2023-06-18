@@ -28,7 +28,11 @@ function registerCustomHandler(): void {
             //console.log(id);
             capturerWindow.close();
             let result = {id, name, width: 9999, height: 9999};
-            callback({video: result});
+            if (process.platform === "win32") {
+                callback({video: result, audio: "loopback"});
+            } else {
+                callback({video: result});
+            }
         });
         capturerWindow.loadURL(`file://${__dirname}/picker.html`);
         capturerWindow.webContents.send("getSources", sources);
