@@ -240,6 +240,13 @@
 [armcord-platform="darwin"] .titlebar {
     height: 48px;
     line-height: 48px;
+    width: 150px !important;
+}
+[armcord-platform="darwin"] section.theme-dark.container-ZMc96U.themed-Hp1KC_ {
+    -webkit-app-region: drag;
+}
+[armcord-platform="darwin"] .searchBar-3TnChZ {
+    -webkit-app-region: drag;
 }
 [armcord-platform="darwin"] .titlebar #window-controls-container {
     float: left;
