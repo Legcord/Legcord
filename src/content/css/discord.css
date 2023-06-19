@@ -36,3 +36,11 @@ div#acForceQuit:after {
     content: url("https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/ac_white_plug16x.png");
     margin-right: 5px;
 }
+.container-3jbRo5.info-1hMolH.browserNotice-1u-Y5o {
+    visibility: hidden;
+    display: block !important;
+}
+.container-3jbRo5.info-1hMolH.browserNotice-1u-Y5o:after {
+    content: "You can modify global keybinds using the keybind maker on the left sidebar";
+    visibility: visible;
+}
