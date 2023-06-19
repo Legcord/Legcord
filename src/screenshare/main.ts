@@ -1,10 +1,18 @@
 import {BrowserWindow, desktopCapturer, ipcMain, session} from "electron";
 import path from "path";
 import {iconPath} from "../main";
+import {getSinks, isAudioSupported} from "./audio";
 let capturerWindow: BrowserWindow;
 function registerCustomHandler(): void {
     session.defaultSession.setDisplayMediaRequestHandler(async (request, callback) => {
         console.log(request);
+        if (process.platform == "linux") {
+            let isAudio = isAudioSupported();
+            if (isAudio) {
+                console.log("audio supported");
+                getSinks();
+            }
+        }
         const sources = await desktopCapturer.getSources({
             types: ["screen", "window"]
         });
