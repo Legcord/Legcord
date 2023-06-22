@@ -18,6 +18,7 @@ import os from "os";
 import path from "path";
 import {createTManagerWindow} from "./themeManager/main";
 import {splashWindow} from "./splash/main";
+import {createKeybindWindow} from "./keybindMaker/main";
 export function registerIpc(): void {
     ipcMain.on("get-app-path", (event) => {
         event.reply("app-path", app.getAppPath());
@@ -129,6 +130,9 @@ export function registerIpc(): void {
     });
     ipcMain.on("openManagerWindow", () => {
         createTManagerWindow();
+    });
+    ipcMain.on("openKeybindWindow", () => {
+        createKeybindWindow();
     });
     ipcMain.on("setting-armcordCSP", async (event) => {
         if (await getConfig("armcordCSP")) {

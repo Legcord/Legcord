@@ -32,7 +32,8 @@
 
 div#acThemes:after,
 div#acSettings:after,
-div#acForceQuit:after {
+div#acForceQuit:after,
+div#acKeybinds:after {
     content: url("https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/ac_white_plug16x.png");
     margin-right: 5px;
 }
