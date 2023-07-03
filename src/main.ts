@@ -5,11 +5,14 @@ import {
     Settings,
     checkForDataFolder,
     checkIfConfigExists,
+    firstRun,
     getConfig,
     injectElectronFlags,
     installModLoader,
     modInstallState,
     setConfig,
+    setLang,
+    setWindowState,
     sleep
 } from "./utils";
 import "./extensions/mods";
@@ -18,6 +21,7 @@ import {createCustomWindow, createNativeWindow, createTransparentWindow, mainWin
 import path from "path";
 import {createTManagerWindow} from "./themeManager/main";
 import {createSplashWindow} from "./splash/main";
+import {createSetupWindow} from "./setup/main";
 export let iconPath: string;
 export let settings: any;
 export let customTitlebar: boolean;
@@ -92,6 +96,10 @@ if (!app.requestSingleInstanceLock()) {
         async function init(): Promise<void> {
             if ((await getConfig("skipSplash")) == false) {
                 createSplashWindow();
+            }
+            if (firstRun == true) {
+                await setLang(new Intl.DateTimeFormat().resolvedOptions().locale);
+                createSetupWindow();
             }
             switch (await getConfig("windowStyle")) {
                 case "default":

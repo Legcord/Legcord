@@ -222,9 +222,11 @@ export async function getWindowState<K extends keyof WindowState>(object: K): Pr
     const userDataPath = app.getPath("userData");
     const storagePath = path.join(userDataPath, "/storage/");
     const settingsFile = `${storagePath}window.json`;
+    if (!fs.existsSync(settingsFile)) {
+        fs.writeFileSync(settingsFile, "{}", "utf-8");
+    }
     let rawdata = fs.readFileSync(settingsFile, "utf-8");
     let returndata = JSON.parse(rawdata);
-    console.log(returndata);
     console.log(`[Window state manager] ${returndata}`);
     return returndata[object];
 }

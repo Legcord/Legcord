@@ -136,6 +136,7 @@
                         automaticPatches: false,
                         mobileMode: false,
                         spellcheck: true,
+                        skipSplash: false,
                         disableAutogain: false,
                         mods: options.mod,
                         dynamicIcon: false,
@@ -145,7 +146,8 @@
                         alternativePaste: false,
                         performanceMode: "none",
                         trayIcon: "default",
-                        inviteWebsocket: true
+                        inviteWebsocket: true,
+                        doneSetup: true
                     });
                     setTimeout(() => window.armcordinternal.restart(), 500);
                 });

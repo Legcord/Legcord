@@ -261,8 +261,6 @@ async function doAfterDefiningTheWindow(): Promise<void> {
         //await startServer();
     }
     if (firstRun) {
-        await setLang(new Intl.DateTimeFormat().resolvedOptions().locale);
-        createSetupWindow();
         mainWindow.close();
     }
     mainWindow.loadURL("data:text/html,%3Ch1%3ELoading%21%3C%2Fh1%3E");
