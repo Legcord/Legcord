@@ -1,9 +1,13 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@pyke/vibe':
     specifier: github:pykeio/vibe#3c61074414cbed96ad51870e4dde379b16d9da6d
-    version: github.com/pykeio/vibe/3c61074414cbed96ad51870e4dde379b16d9da6d(electron@25.1.0)
+    version: github.com/pykeio/vibe/3c61074414cbed96ad51870e4dde379b16d9da6d(electron@25.3.0)
   arrpc:
     specifier: file:src/arrpc
     version: file:src/arrpc
@@ -43,11 +47,14 @@ devDependencies:
     specifier: ^2.4.1
     version: 2.4.1
   electron:
-    specifier: ^25.1.0
-    version: 25.1.0
+    specifier: ^25.3.0
+    version: 25.3.0
   electron-builder:
     specifier: ^23.6.0
     version: 23.6.0
+  electron-nightly:
+    specifier: 27.0.0-nightly.20230711
+    version: 27.0.0-nightly.20230711
   eslint:
     specifier: ^8.40.0
     version: 8.40.0
@@ -1154,6 +1161,19 @@ packages:
     resolution: {integrity: sha512-3X99K852Yoqu9AcW50qz3ibYBWY79/pBhlMCab8ToEWS48R0T9tyxRiQhwylE7zQdXrMnx2JKqUJyMPmt5FBqA==}
     dev: false
 
+  /electron-nightly@27.0.0-nightly.20230711:
+    resolution: {integrity: sha512-JBTc1lIJH0vofa1kdEfBrAlHpRWy3SW9gdNy0ga8R6FB4ZxaOyhe6dr0j/UYyKDE3OfesazJ0qALHK8634aCEA==}
+    engines: {node: '>= 12.20.55'}
+    hasBin: true
+    requiresBuild: true
+    dependencies:
+      '@electron/get': 2.0.2
+      '@types/node': 18.15.11
+      extract-zip: 2.0.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /electron-osx-sign@0.6.0:
     resolution: {integrity: sha512-+hiIEb2Xxk6eDKJ2FFlpofCnemCbjbT5jz+BKGpVBrRNT3kWTGs4DfNX6IzGwgi33hUcXF+kFs9JW+r6Wc1LRg==}
     engines: {node: '>=4.0.0'}
@@ -1184,8 +1204,8 @@ packages:
       - supports-color
     dev: true
 
-  /electron@25.1.0:
-    resolution: {integrity: sha512-VKk4G/0euO7ysMKQKHXmI4d3/qR4uHsAtVFXK2WfQUVxBmc160OAm2R6PN9/EXmgXEioKQBtbc2/lvWyYpDbuA==}
+  /electron@25.3.0:
+    resolution: {integrity: sha512-cyqotxN+AroP5h2IxUsJsmehYwP5LrFAOO7O7k9tILME3Sa1/POAg3shrhx4XEnaAMyMqMLxzGvkzCVxzEErnA==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     requiresBuild: true
@@ -2947,7 +2967,6 @@ packages:
   file:src/arrpc:
     resolution: {directory: src/arrpc, type: directory}
     name: arrpc
-    version: 3.0.0
     dependencies:
       ws: 8.11.0
     transitivePeerDependencies:
@@ -2977,7 +2996,7 @@ packages:
       eslint: 8.40.0
     dev: true
 
-  github.com/pykeio/vibe/3c61074414cbed96ad51870e4dde379b16d9da6d(electron@25.1.0):
+  github.com/pykeio/vibe/3c61074414cbed96ad51870e4dde379b16d9da6d(electron@25.3.0):
     resolution: {tarball: https://codeload.github.com/pykeio/vibe/tar.gz/3c61074414cbed96ad51870e4dde379b16d9da6d}
     id: github.com/pykeio/vibe/3c61074414cbed96ad51870e4dde379b16d9da6d
     name: '@pyke/vibe'
@@ -2987,5 +3006,5 @@ packages:
       electron: '>=11.0'
     dependencies:
       cargo-cp-artifact: 0.1.7
-      electron: 25.1.0
+      electron: 25.3.0
     dev: false
