@@ -77,5 +77,6 @@
     "settings-spellcheck-desc": "Segít abban, hogy kijelölve kiemelje a helytelenül leírt szavakat, segít megjavítani őket.",
     "setup_question5": "Do you want to use a tray icon?",
     "settings-mintoTray": "Minimize to tray",
-    "settings-mintoTray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later."
+    "settings-mintoTray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later.",
+    "settings-theme-desc4": "transparent window with native titlebar, you need a compatible theme to run this. Windows only."
 }
