@@ -1,7 +1,7 @@
 import {contextBridge, ipcRenderer} from "electron";
 import {addStyle} from "../utils";
 console.log("ArmCord Settings");
-
+console.log(process.platform);
 contextBridge.exposeInMainWorld("settings", {
     save: (...args: any) => ipcRenderer.send("saveSettings", ...args),
     restart: () => ipcRenderer.send("restart"),
@@ -13,7 +13,8 @@ contextBridge.exposeInMainWorld("settings", {
     openStorageFolder: () => ipcRenderer.send("openStorageFolder"),
     openCrashesFolder: () => ipcRenderer.send("openCrashesFolder"),
     copyDebugInfo: () => ipcRenderer.send("copyDebugInfo"),
-    crash: () => ipcRenderer.send("crash")
+    crash: () => ipcRenderer.send("crash"),
+    os: process.platform
 });
 
 ipcRenderer.on("themeLoader", (_event, message) => {

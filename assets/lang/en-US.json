@@ -15,6 +15,7 @@
     "settings-theme-desc1": "ArmCord \"themes\" manage apps behaviour and looks.",
     "settings-theme-desc2": "this is how ArmCord looks when you first launch it. It includes recreation of Discord's\n                custom titlebar and ArmCord specific styles injected into Discord.",
     "settings-theme-desc3": "uses native titlebar of OS you're currently running (e.g Windows 7/10). Functions more\n                similar to actual Discord app on Linux.",
+    "settings-theme-desc4": "transparent window with native titlebar, you need a compatible theme to run this. Windows only.",
     "settings-theme-default": "Default",
     "settings-theme-native": "Native",
     "settings-theme-transparent": "Transparent (Experimental)",

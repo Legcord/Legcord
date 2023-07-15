@@ -77,12 +77,21 @@ class RPCServer extends EventEmitter {
             case "SET_ACTIVITY":
                 const {activity, pid} = args; // translate given parameters into what discord dispatch expects
 
-                if (!activity)
+                if (!activity) {
+                    // Activity clear
+                    socket.send?.({
+                        cmd,
+                        data: null,
+                        evt: null,
+                        nonce
+                    });
+
                     return this.emit("activity", {
                         activity: null,
                         pid,
                         socketId: socket.socketId.toString()
                     });
+                }
 
                 const {buttons, timestamps, instance} = activity;
 

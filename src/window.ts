@@ -60,13 +60,10 @@ async function doAfterDefiningTheWindow(): Promise<void> {
         mainWindow.hide(); // please don't flashbang the user
     }
     if (transparency && process.platform === "win32") {
-        import("@pyke/vibe").then(async (vibe) => {
-            vibe.applyEffect(mainWindow, "acrylic");
-            vibe.forceTheme(mainWindow, "dark");
-            if ((await getConfig("startMinimized")) == false) {
-                mainWindow.show();
-            }
-        });
+        mainWindow.setBackgroundMaterial("auto");
+        if ((await getConfig("startMinimized")) == false) {
+            mainWindow.show();
+        }
     }
     let ignoreProtocolWarning = await getConfig("ignoreProtocolWarning");
     await checkIfConfigIsBroken();

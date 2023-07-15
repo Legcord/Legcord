@@ -21,6 +21,7 @@
                 <option value="" disabled selected hidden data-string="settings-theme"></option>
                 <option value="default" data-string="settings-theme-default"></option>
                 <option value="native" data-string="settings-theme-native"></option>
+                <option value="transparent" windows-exclusive data-string="settings-theme-transparent"></option>
             </select>
 
             <p class="header" data-string="settings-theme"></p>
@@ -32,6 +33,9 @@
                 <br />
                 <b data-string="settings-theme-native"></b> -
                 <span data-string="settings-theme-desc3"></span>
+                <br />
+                <b data-string="settings-theme-transparent"></b> -
+                <span data-string="settings-theme-desc4"></span>
             </div>
         </div>
         <br />
@@ -262,7 +266,11 @@
             if (e.tagName == "SELECT") e.value = value;
             else e.checked = value;
         });
-
+        if (settings.os !== "win32") {
+            document.querySelectorAll("[windows-exclusive]").forEach(async (el) => {
+                el.disabled = true;
+            });
+        }
         function saveSettings() {
             const elements = Array.from(document.querySelectorAll("[data-setting]"));
             const obj = Object.fromEntries(

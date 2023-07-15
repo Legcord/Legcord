@@ -132,11 +132,7 @@ export async function injectElectronFlags(): Promise<void> {
             console.log("No performance modes set");
     }
     if ((await getConfig("windowStyle")) == "transparent" && process.platform === "win32") {
-        import("@pyke/vibe").then((vibe) => {
-            console.log("Transparent mode enabled");
-            vibe.setup(app);
-            transparency = true;
-        });
+        transparency = true;
     }
 }
 export async function setLang(language: string): Promise<void> {
