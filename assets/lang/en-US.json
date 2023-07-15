@@ -27,7 +27,7 @@
     "settings-patches": "Automatic Patches",
     "settings-useLegacyCapturer": "Use legacy capturer",
     "settings-useLegacyCapturer-desc": "Use legacy screenshare module, instead of the new one. If you're experiencing issues with screen sharing, try enabling this.",
-    "settings-patches-desk": "Fetches automatic patches that are distributed if release turns out to have bugs after release. Usually\n                you don't have to keep this enabled, unless notified in support Discord.",
+    "settings-patches-desk": "Fetches patches distributed if a release turns out to have bugs. Usually\n                doesn't need to be turned on continuously (unless notified in support Discord).",
     "settings-mobileMode": "Mobile mode",
     "settings-mobileMode-desc": "If you're on a device with touch-screen this feature is for you! It activates Discord's hidden mobile\n                mode meant for phones and tablets. Only major feature missing is voice chat support. This is ideal for\n                users on PinePhone and similar.",
     "settings-dynamicIcon": "Dynamic icon",
