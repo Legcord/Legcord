@@ -8,11 +8,11 @@
     "setup_question4": "Wybierz modyfikację klienta którą chcesz zainstalować:",
     "loading_screen_start": "Ładowanie ArmCord…",
     "loading_screen_offline": "Wydaje nam się, że nie jesteś połączony z Internetem. Połącz się z internetem i spróbuj ponownie.",
-    "setup_question1": "Wybierz w jaki sposób chcesz skonfigurować ArmCord:",
+    "setup_question1": "Witaj w konfiguracji ArmCord'a",
     "setup_offline": "Wydaje nam się, że nie jesteś połączony z internetem. Połącz się z internetem i uruchom ponownie konfiguracje ArmCord.",
     "settings-channel": "Kanał Discorda",
     "settings-updater": "Sprawdź aktualizacje",
-    "settings-tray": "Zminimalizuj do zasobnika zadań",
+    "settings-tray": "Zminimalizuj do ikony zasobnika",
     "settings-save": "Zapisz Ustawienia",
     "settings-mod": "Modyfikacja klienta",
     "settings-theme": "Motyw ArmCord",
@@ -30,7 +30,7 @@
     "settings-theme-desc3": "używa natywnego paska zadań twojego systemu(np. Windows 7/10). Funkcjonuje\n                bliżej do normalnego Discorda na Linuxie.",
     "settings-csp-desc": "ArmCord CSP to nasz autorski system który zarządza ładowaniem niestandardowych rzeczy do klienta. Na przykład\n                modyfikacje klienta lub motywy wymagają jego obecności. Wyłącz jeśli chcesz się pozbyć modyfikacji i motywów Discorda.",
     "settings-tray-desc": "Kiedy wyłączone, ArmCord zamknie swoje okno jak każda inna aplikacje, jednak gdy jest włączone usiądzie i odpocznie\n                w pasku zadań.",
-    "settings-patches-desk": "Ściąga automatyczne łatki, które są rozprowadzane jeśli wersja okaże się mięc błędy. Najczęśćiej\n                nie musisz mieć tego włączonego, chyba że poproszony/a na Discordzie.",
+    "settings-patches-desk": "Ściąga automatyczne łatki, które są rozprowadzane jeśli wersja okaże się mieć błędy. Najczęśćiej\n                nie musisz mieć tego włączonego, chyba że poproszony/a na Discordzie wsparcia.",
     "settings-mobileMode-desc": "Jeśli jesteś na urządzeniu z dotykowym ekranem, ta opcja jest dla ciebie! Aktywuje ona ukryty tryb Discord\n                przeznaczony na telefony i tablety. Jedyna większa brakująca funkcja to kanał głosowy. Jest to idealne rozwiązanie dla\n                użytkowników PinePhone i podobnych.",
     "settings-channel-desc1": "Możesz użyć tej opcji aby zmienić obecny kanał Discorda:",
     "settings-channel-desc2": "jesteś najpewniej najbardziej zapoznany z tym. Jest on używany w domyślnym oficjalnym kliencie\n                    Discorda!",
@@ -75,8 +75,8 @@
     "settings-dynamicIcon-desc": "Naśladując zachowanie Discorda na systemie Windows, ta opcja pokazuje ilość nieprzeczytanych wiadomości/oznaczeń na ikonie aplikacji ArmCorda, zamiast w trayu.",
     "settings-spellcheck": "Spellcheck",
     "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them.",
-    "setup_question5": "Do you want to use a tray icon?",
+    "setup_question5": "Chcesz używać ikony zasobnika?",
     "settings-mintoTray": "Minimize to tray",
     "settings-mintoTray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later.",
-    "settings-theme-desc4": "transparent window with native titlebar, you need a compatible theme to run this. Windows only."
+    "settings-theme-desc4": "przeźroczyste okno z natywnym paskiem zadań, potrzebujesz kompatybilny motyw żeby to działało. Tylko dla Windows'a."
 }
