@@ -77,5 +77,6 @@
     "settings-spellcheck-desc": "Допомагає виправити неправильно написані слова, виділяючи їх.",
     "setup_question5": "Ви бажаєте використовувати піктограму в треї?",
     "settings-mintoTray": "Згорнути в трей",
-    "settings-mintoTray-desc": "Коли вимкнено, ArmCord закриється, як і будь-яке інше вікно, інакше він візьме і буде відпочивати\n                в системному треї до кращих часів."
+    "settings-mintoTray-desc": "Коли вимкнено, ArmCord закриється, як і будь-яке інше вікно, інакше він візьме і буде відпочивати\n                в системному треї до кращих часів.",
+    "settings-theme-desc4": "transparent window with native titlebar, you need a compatible theme to run this. Windows only."
 }
