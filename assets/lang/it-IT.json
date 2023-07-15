@@ -77,5 +77,6 @@
     "settings-spellcheck-desc": "Ti aiuta a correggere le parole errate evidenziandole.",
     "setup_question5": "Vuoi usare un'icona nella barra delle applicazioni?",
     "settings-mintoTray": "Riduci a icona nel barra delle applicazioni",
-    "settings-mintoTray-desc": "Se disabilitato, ArmCord si chiuderà come qualsiasi altra finestra quando è chiusa, altrimenti si siederà e si rilasserà\n                 nella barra delle applicazioni per dopo."
+    "settings-mintoTray-desc": "Se disabilitato, ArmCord si chiuderà come qualsiasi altra finestra quando è chiusa, altrimenti si siederà e si rilasserà\n                 nella barra delle applicazioni per dopo.",
+    "settings-theme-desc4": "transparent window with native titlebar, you need a compatible theme to run this. Windows only."
 }
