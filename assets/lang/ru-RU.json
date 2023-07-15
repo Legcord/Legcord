@@ -77,5 +77,6 @@
     "settings-spellcheck-desc": "Помогает исправить неправильно написанные слова, выделяя их.",
     "setup_question5": "Вы хотите использовать значок в трее?",
     "settings-mintoTray": "Свернуть в трей",
-    "settings-mintoTray-desc": "При отключении ArmCord будет закрываться как любое другое окно при закрытии, в противном случае он будет сидеть и отдыхать\n                в системном трее."
+    "settings-mintoTray-desc": "При отключении ArmCord будет закрываться как любое другое окно при закрытии, в противном случае он будет сидеть и отдыхать\n                в системном трее.",
+    "settings-theme-desc4": "transparent window with native titlebar, you need a compatible theme to run this. Windows only."
 }
