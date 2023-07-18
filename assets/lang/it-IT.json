@@ -29,13 +29,13 @@
     "settings-theme-desc2": "ecco come appare ArmCord quando lo avvii per la prima volta. Include la ricreazione di Discord\n                 barra del titolo personalizzata e stili specifici di ArmCord inseriti in Discord.",
     "settings-theme-desc3": "utilizza la barra del titolo nativa del sistema operativo attualmente in esecuzione (ad esempio Windows 7/10). Funzioni più\n                 simile all'attuale app Discord su Linux.",
     "settings-csp-desc": "ArmCord CSP è il nostro sistema che gestisce il caricamento di contenuti personalizzati nell'app Discord. Cose come\n                 le mod e i temi del client dipendono da questo. Disabilita se vuoi sbarazzarti di mod e stili personalizzati.",
-    "settings-patches-desk": "Recupera le patch automatiche che vengono distribuite se il rilascio risulta avere bug dopo il rilascio. Generalmente\n                 non è necessario mantenerlo abilitato, a meno che non venga notificato al supporto Discord.",
+    "settings-patches-desk": "Recupera le patch distribuite se una versione risulta avere dei bug. Generalmente\n                 non ha bisogno di essere acceso continuamente (a meno che non venga notificato nel supporto Discord).",
     "settings-mobileMode-desc": "Se sei su un dispositivo con touch-screen questa funzione è per te! Attiva sul cellulare la modalità nascosta \n                 di Discord pensata per telefoni e tablet. L'unica caratteristica importante che manca è il supporto della chat vocale. Questo è l'ideale per\n                 utenti su PinePhone e simili.",
     "settings-channel-desc1": "Puoi utilizzare questa impostazione per modificare l'istanza corrente di Discord:",
     "settings-channel-desc2": "probabilmente hai più familiarità con questo. È quello che vedi in Discord nel client\n                      predefinito!",
     "settings-channel-desc3": "questa è la versione di test alfa di Discord. Usandolo si ottiene l'accesso alle più recenti\n                     funzionalità e correzioni.",
     "settings-channel-desc4": "build di prova pubblica. Riceve le funzionalità prima di stable ma è un po' più vecchio di Canary.",
-    "settings-tray-desc": "Il menu della barra delle applicazioni di ArmCord è un luogo in cui puoi accedere facilmente e rapidamente alle impostazioni di ArmCord e ti consente di aprire rapidamente la finestra di Discord.",
+    "settings-tray-desc": "Se disabilitato, ArmCord si chiuderà come qualsiasi altra finestra quando è chiuso, altrimenti si siederà e si rilasserà nella barra delle applicazioni per dopo.",
     "settings-invitewebsocket-desc": "Utilizza <a target=\"_blank\" href=\"https://github.com/OpenAsar/arrpc\">arRPC</a> per supportare Discord RPC (Rich Presence) con programmi locali sulla tua macchina. Lavori in corso.",
     "settings-altPaste": "Incolla alternativo",
     "settings-altPaste-desc": "Se sei su Gnome su Linux o semplicemente non puoi incollare immagini copiate da altri messaggi, allora questo è\n                 per te. Ciò abilita un modulo alternativo per incollare le immagini. Abilitalo solo quando stai sperimentando\n                 problemi.",
@@ -68,7 +68,7 @@
     "settings-forceNativeCrash": "Forza crash nativo",
     "settings-disableAutogain": "Disabilita il guadagno automatico",
     "settings-disableAutogain-desc": "Disabilita il guadagno automatico.",
-    "settings-theme-transparent": "Trasparente (sperimentale)",
+    "settings-theme-transparent": "Trasparente",
     "settings-useLegacyCapturer": "Usa l'acquisitore legacy",
     "settings-useLegacyCapturer-desc": "Usa il modulo di condivisione dello schermo precedente, invece di quello nuovo. Se riscontri problemi con la condivisione dello schermo, prova ad abilitarla.",
     "settings-dynamicIcon": "Icona dinamica",
@@ -78,5 +78,5 @@
     "setup_question5": "Vuoi usare un'icona nella barra delle applicazioni?",
     "settings-mintoTray": "Riduci a icona nel barra delle applicazioni",
     "settings-mintoTray-desc": "Se disabilitato, ArmCord si chiuderà come qualsiasi altra finestra quando è chiusa, altrimenti si siederà e si rilasserà\n                 nella barra delle applicazioni per dopo.",
-    "settings-theme-desc4": "transparent window with native titlebar, you need a compatible theme to run this. Windows only."
+    "settings-theme-desc4": "finestra trasparente con barra del titolo nativa, è necessario un tema compatibile per eseguirlo. Solo Windows."
 }
