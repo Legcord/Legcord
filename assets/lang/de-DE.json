@@ -46,7 +46,7 @@
     "settings-tray-desc": "Wenn es deaktiviert ist, schließt sich ArmCord wie jedes andere Fenster, wenn es geschlossen wird, andernfalls minimiert es sich in die Taskleiste.",
     "settings-spellcheck-desc": "Hilft dir, falsch geschriebene Wörter zu korrigieren, indem es sie hervorhebt.",
     "settings-tray": "Tray",
-    "settings-channel-desc2": "Du bist wahrscheinlich am meisten mit diesem hier vertraut.\nEs ist die, die du im Standard-Discord siehst.",
+    "settings-channel-desc2": "Du bist wahrscheinlich am meisten mit diesem hier vertraut.\nEs ist die stabilste Version von Discord.",
     "settings-channel-desc1": "Du kannst diese Einstellung verwenden, um die aktuelle Instanz von Discord zu ändern:",
     "settings-channel-desc3": "Dies ist die Alpha-Testversion von Discord. Durch die Verwendung dieser Version erhältst du Zugang zu\nden neuesten Funktionen und Fehlerbehebungen.",
     "settings-invitewebsocket": "Rich Presence (Experimentell)",
