@@ -30,7 +30,7 @@
                 text.innerHTML = await internal.getLang("loading_screen_offline");
             } else {
                 text.innerHTML = await internal.getLang("loading_screen_start");
-                if (window.internal.version === "3.2.1") {
+                if (window.internal.version === "3.3.0") {
                     console.log("Running a development build of ArmCord. Skipping updater.");
                 } else {
                     const response = await fetch("https://armcord.xyz/latest.json");
