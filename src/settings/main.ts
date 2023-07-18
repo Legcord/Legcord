@@ -54,21 +54,28 @@ export function createSettingsWindow(): void {
             fs.writeFileSync(path.join(userDataPath, "/disabled.txt"), "");
         }
         settingsWindow.webContents.on("did-finish-load", () => {
-            if (!settingsWindow.webContents.isLoading()) {
-                fs.readdirSync(themesFolder).forEach((file) => {
-                    try {
-                        const manifest = fs.readFileSync(`${themesFolder}/${file}/manifest.json`, "utf8");
-                        let themeFile = JSON.parse(manifest);
+            fs.readdirSync(themesFolder).forEach((file) => {
+                try {
+                    const manifest = fs.readFileSync(`${themesFolder}/${file}/manifest.json`, "utf8");
+                    let themeFile = JSON.parse(manifest);
+                    if (
+                        fs
+                            .readFileSync(path.join(userDataPath, "/disabled.txt"))
+                            .toString()
+                            .includes(themeFile.name.replace(" ", "-"))
+                    ) {
+                        console.log(`%cSkipped ${themeFile.name} made by ${themeFile.author}`, "color:red");
+                    } else {
                         settingsWindow.webContents.send(
                             "themeLoader",
                             fs.readFileSync(`${themesFolder}/${file}/${themeFile.theme}`, "utf-8")
                         );
                         console.log(`%cLoaded ${themeFile.name} made by ${themeFile.author}`, "color:red");
-                    } catch (err) {
-                        console.error(err);
                     }
-                });
-            }
+                } catch (err) {
+                    console.error(err);
+                }
+            });
         });
         ipcMain.on("saveSettings", (_event, args: Settings) => {
             console.log(args);

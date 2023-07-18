@@ -195,16 +195,15 @@ export function createTManagerWindow(): void {
             }
         });
         themeWindow.webContents.on("did-finish-load", () => {
-            if (!themeWindow.webContents.isLoading()) {
-                fs.readdirSync(themesFolder).forEach((file) => {
-                    try {
-                        const manifest = fs.readFileSync(`${themesFolder}/${file}/manifest.json`, "utf8");
-                        themeWindow.webContents.send("themeManifest", manifest);
-                    } catch (err) {
-                        console.error(err);
-                    }
-                });
-            }
+            fs.readdirSync(themesFolder).forEach((file) => {
+                try {
+                    const manifest = fs.readFileSync(`${themesFolder}/${file}/manifest.json`, "utf8");
+                    console.log(manifest);
+                    themeWindow.webContents.send("themeManifest", manifest);
+                } catch (err) {
+                    console.error(err);
+                }
+            });
         });
 
         managerLoadPage();
