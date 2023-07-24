@@ -27,6 +27,7 @@ import {iconPath} from "./main";
 import {createSetupWindow} from "./setup/main";
 export let mainWindow: BrowserWindow;
 export let inviteWindow: BrowserWindow;
+let forceQuit = false;
 let osType = os.type();
 contextMenu({
     showSaveImageAs: true,
@@ -88,6 +89,9 @@ async function doAfterDefiningTheWindow(): Promise<void> {
             mainWindow.show();
             mainWindow.focus();
         }
+    });
+    app.on("activate", function () {
+        app.show();
     });
     mainWindow.webContents.setWindowOpenHandler(({url}) => {
         // Allow about:blank (used by Vencord QuickCss popup)
@@ -220,23 +224,35 @@ async function doAfterDefiningTheWindow(): Promise<void> {
     });
     await setMenu();
     mainWindow.on("close", async (e) => {
-        let [width, height] = mainWindow.getSize();
-        await setWindowState({
-            width,
-            height,
-            isMaximized: mainWindow.isMaximized(),
-            x: mainWindow.getPosition()[0],
-            y: mainWindow.getPosition()[1]
-        });
-        if (await getConfig("minimizeToTray")) {
-            e.preventDefault();
-            mainWindow.hide();
-        } else if (!(await getConfig("minimizeToTray"))) {
-            e.preventDefault();
-            app.quit();
+        if (process.platform === "darwin" && forceQuit) {
+            mainWindow.close();
+        } else {
+            let [width, height] = mainWindow.getSize();
+            await setWindowState({
+                width,
+                height,
+                isMaximized: mainWindow.isMaximized(),
+                x: mainWindow.getPosition()[0],
+                y: mainWindow.getPosition()[1]
+            });
+            if (await getConfig("minimizeToTray")) {
+                e.preventDefault();
+                mainWindow.hide();
+            } else if (!(await getConfig("minimizeToTray"))) {
+                e.preventDefault();
+                app.quit();
+            }
         }
     });
-
+    if (process.platform === "darwin") {
+        app.on("before-quit", function (event) {
+            if (!forceQuit) {
+                event.preventDefault();
+                forceQuit = true;
+                app.quit();
+            }
+        });
+    }
     mainWindow.on("focus", () => {
         mainWindow.webContents.executeJavaScript(`document.body.removeAttribute("unFocused");`);
     });
