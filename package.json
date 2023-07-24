@@ -11,6 +11,7 @@
         "watch": "tsc -w",
         "start": "npm run build && electron ./ts-out/main.js",
         "startThemeManager": "npm run build && electron ./ts-out/main.js themes",
+        "startKeybindManager": "npm run build && electron ./ts-out/main.js keybinds",
         "startWayland": "npm run build && electron ./ts-out/main.js --ozone-platform-hint=auto --enable-features=WebRTCPipeWireCapturer,WaylandWindowDecorations",
         "package": "npm run build && electron-builder",
         "packageQuick": "npm run build && electron-builder --dir",

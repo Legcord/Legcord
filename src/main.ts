@@ -22,6 +22,7 @@ import path from "path";
 import {createTManagerWindow} from "./themeManager/main";
 import {createSplashWindow} from "./splash/main";
 import {createSetupWindow} from "./setup/main";
+import {createKeybindWindow} from "./keybindMaker/main";
 export let iconPath: string;
 export let settings: any;
 export let customTitlebar: boolean;
@@ -45,6 +46,10 @@ async function args(): Promise<void> {
     } else if (args == "themes") {
         app.whenReady().then(async () => {
             createTManagerWindow();
+        });
+    } else if (args == "keybinds") {
+        app.whenReady().then(async () => {
+            createKeybindWindow();
         });
     }
 }

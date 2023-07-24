@@ -11,6 +11,7 @@ import {
     getConfig,
     getWindowState,
     modInstallState,
+    registerGlobalKeybinds,
     setConfig,
     setLang,
     setWindowState,
@@ -198,6 +199,7 @@ async function doAfterDefiningTheWindow(): Promise<void> {
     if (!fs.existsSync(`${userDataPath}/disabled.txt`)) {
         fs.writeFileSync(path.join(userDataPath, "/disabled.txt"), "");
     }
+    registerGlobalKeybinds();
     mainWindow.webContents.on("did-finish-load", () => {
         fs.readdirSync(themesFolder).forEach((file) => {
             try {

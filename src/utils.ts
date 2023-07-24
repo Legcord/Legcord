@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import {app, dialog} from "electron";
+import {app, dialog, globalShortcut} from "electron";
 import path from "path";
 import fetch from "cross-fetch";
 import extract from "extract-zip";
@@ -44,6 +44,7 @@ export function setup(): void {
         armcordCSP: true,
         minimizeToTray: true,
         automaticPatches: false,
+        keybinds: [],
         alternativePaste: false,
         mods: "none",
         spellcheck: true,
@@ -244,7 +245,6 @@ export interface Settings {
     // Only used for external url warning dialog.
     ignoreProtocolWarning?: boolean;
     customIcon: string;
-
     windowStyle: string;
     channel: string;
     armcordCSP: boolean;
@@ -260,6 +260,7 @@ export interface Settings {
     startMinimized: boolean;
     useLegacyCapturer: boolean;
     tray: boolean;
+    keybinds: Array<string>;
     inviteWebsocket: boolean;
     disableAutogain: boolean;
     trayIcon: string;
@@ -285,7 +286,17 @@ export async function setConfig<K extends keyof Settings>(object: K, toSet: Sett
     fs.writeFileSync(getConfigLocation(), toSave, "utf-8");
 }
 export async function setConfigBulk(object: Settings): Promise<void> {
-    let toSave = JSON.stringify(object, null, 4);
+    let existingData = {};
+    try {
+        const existingDataBuffer = fs.readFileSync(getConfigLocation(), "utf-8");
+        existingData = JSON.parse(existingDataBuffer.toString());
+    } catch (error) {
+        // Ignore errors when the file doesn't exist or parsing fails
+    }
+    // Merge the existing data with the new data
+    const mergedData = {...existingData, ...object};
+    // Write the merged data back to the file
+    const toSave = JSON.stringify(mergedData, null, 4);
     fs.writeFileSync(getConfigLocation(), toSave, "utf-8");
 }
 export async function checkIfConfigExists(): Promise<void> {
@@ -388,4 +399,13 @@ export async function installModLoader(): Promise<void> {
             modInstallState = "done";
         }
     }
+}
+
+export async function registerGlobalKeybinds() {
+    const keybinds = await getConfig("keybinds");
+    keybinds.forEach((keybind) => {
+        globalShortcut.register(keybind, () => {
+            console.log(keybind);
+        });
+    });
 }

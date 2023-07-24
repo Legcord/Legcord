@@ -1,5 +1,6 @@
-import {BrowserWindow, app, shell} from "electron";
+import {BrowserWindow, app, globalShortcut, ipcMain, shell} from "electron";
 import path from "path";
+import {getConfig, registerGlobalKeybinds, setConfig} from "../utils";
 let keybindWindow: BrowserWindow;
 let instance = 0;
 
@@ -13,7 +14,7 @@ export function createKeybindWindow(): void {
         }
     } else {
         keybindWindow = new BrowserWindow({
-            width: 660,
+            width: 720,
             height: 670,
             title: `ArmCord Global Keybinds Maker`,
             darkTheme: true,
@@ -26,12 +27,40 @@ export function createKeybindWindow(): void {
             }
         });
         async function makerLoadPage(): Promise<void> {
+            globalShortcut.unregisterAll();
             keybindWindow.loadURL(`file://${__dirname}/maker.html`);
         }
         keybindWindow.webContents.setWindowOpenHandler(({url}) => {
             shell.openExternal(url);
             return {action: "deny"};
         });
+        ipcMain.on("addKeybind", async (_event, keybind) => {
+            var keybinds = await getConfig("keybinds");
+            keybind.replace(" ", "Space");
+            if (keybinds.includes(keybind)) return;
+            keybinds.push(keybind);
+            await setConfig("keybinds", keybinds);
+            keybindWindow.webContents.reload();
+        });
+        ipcMain.on("removeKeybind", async (_event, keybind) => {
+            var keybinds = await getConfig("keybinds");
+            const index = keybinds.indexOf(keybind);
+            keybinds.splice(index, 1);
+            await setConfig("keybinds", keybinds);
+            keybindWindow.webContents.reload();
+        });
+        keybindWindow.webContents.on("did-finish-load", async () => {
+            for (const keybind of await getConfig("keybinds")) {
+                console.log(keybind);
+                keybindWindow.webContents.send("keybindCombo", keybind);
+            }
+        });
+        keybindWindow.on("close", () => {
+            registerGlobalKeybinds();
+        });
         makerLoadPage();
+        keybindWindow.on("close", () => {
+            instance = 0;
+        });
     }
 }
