@@ -147,4 +147,5 @@ ArmCord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).
 - (pre v3.1.0) [FlickerMod](https://github.com/FlickerMod)
 - (Pre v3.0.0) [custom-electron-titlebar](https://github.com/AlexTorresSk/custom-electron-titlebar)
 - [electron-builder](https://electron.build)
-
+  
+Discord is trademark of Discord Inc. ArmCord is not affiliated with or endorsed by Discord Inc. 
