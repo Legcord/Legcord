@@ -1,6 +1,6 @@
 
 <div align="center">
-<img src="https://armcord.xyz/logo.png" width="520">
+<img src="https://armcord.app/logo.png" width="520">
  <br>ArmCord is a custom client designed to enhance your Discord experience while keeping everything lightweight. 
 </div>
 
@@ -49,7 +49,7 @@
    <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Download ArmCord" />
 </a>
 
-If you're using an older version of Windows, you need to use [pre-built installers](https://www.armcord.xyz/download).
+If you're using an older version of Windows, you need to use [pre-built installers](https://www.armcord.app/download).
 
 ### Flatpak
 <a href='https://flathub.org/apps/details/xyz.armcord.ArmCord'><img width='240' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.svg'/></a>
@@ -57,8 +57,8 @@ If you're using an older version of Windows, you need to use [pre-built installe
 ### Debian, Ubuntu and Raspbian repository
 ArmCord is available on our official repositories for `apt` package manager. By using this method you'll receive automatic updates and get all the dependencies. Run the following commands to install ArmCord from them:
 ```sh
-curl -fsSL https://eu.armcord.xyz/pgp-key.public | sudo gpg --dearmor -o /usr/share/keyrings/armcord.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/armcord.gpg] https://eu.armcord.xyz/apt-repo stable main" | sudo tee /etc/apt/sources.list.d/armcord.list
+curl -fsSL https://eu.armcord.app/pgp-key.public | sudo gpg --dearmor -o /usr/share/keyrings/armcord.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/armcord.gpg] https://eu.armcord.app/apt-repo stable main" | sudo tee /etc/apt/sources.list.d/armcord.list
 sudo apt update
 sudo apt install armcord
 ```

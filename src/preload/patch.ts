@@ -4,7 +4,7 @@
 import {ipcRenderer} from "electron";
 import {injectJS} from "../utils";
 
-const patchEndpoint = "https://patch.armcord.xyz";
+const patchEndpoint = "https://patch.armcord.app";
 const version = ipcRenderer.sendSync("get-app-version", "app-version");
 if (ipcRenderer.sendSync("shouldPatch")) {
     document.addEventListener("DOMContentLoaded", function () {

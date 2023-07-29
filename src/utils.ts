@@ -338,8 +338,8 @@ async function updateModBundle(): Promise<void> {
             };
             const clientModsCss = {
                 vencord: "https://github.com/Vendicated/Vencord/releases/download/devbuild/browser.css",
-                cordwood: "https://armcord.xyz/placeholder.css",
-                shelter: "https://armcord.xyz/placeholder.css"
+                cordwood: "https://armcord.app/placeholder.css",
+                shelter: "https://armcord.app/placeholder.css"
             };
             let bundle: string = await (await fetch(clientMods[name as keyof typeof clientMods])).text();
             fs.writeFileSync(`${distFolder}bundle.js`, bundle, "utf-8");
@@ -376,7 +376,7 @@ export async function installModLoader(): Promise<void> {
                     fs.mkdirSync(pluginFolder);
                     console.log("[Mod loader] Created missing plugin folder");
                 }
-                let loaderZip = await fetch("https://armcord.xyz/loader.zip");
+                let loaderZip = await fetch("https://armcord.app/loader.zip");
                 if (!loaderZip.ok) throw new Error(`unexpected response ${loaderZip.statusText}`);
                 await streamPipeline(loaderZip.body, fs.createWriteStream(zipPath));
                 await extract(zipPath, {dir: path.join(app.getPath("userData"), "plugins")});
