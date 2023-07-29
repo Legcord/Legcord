@@ -26,7 +26,6 @@ function removeSettings() {
 document.addEventListener("DOMContentLoaded", function (_event) {
     const elem = document.createElement("div");
     elem.innerHTML = html;
-    elem.classList.add("withFrame-haYltI");
     if (document.getElementById("app-mount") == null) {
         document.body.appendChild(elem);
     } else {
