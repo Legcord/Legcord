@@ -1,13 +1,14 @@
 import "./bridge";
 import "./patch";
 import "./optimizer";
-
+import "./settings";
 import {ipcRenderer} from "electron";
 import * as fs from "fs";
 import * as path from "path";
 import {addScript, addStyle, sleep} from "../utils";
 import {injectMobileStuff} from "./mobile";
 import {fixTitlebar, injectTitlebar} from "./titlebar";
+import {injectSettings} from "./settings";
 
 window.localStorage.setItem("hideNag", "true");
 
@@ -95,9 +96,9 @@ setInterval(() => {
     const tManager = advanced.cloneNode(true) as HTMLElement;
     const fQuit = advanced.cloneNode(true) as HTMLElement;
     const keybindMaker = advanced.cloneNode(true) as HTMLElement;
-    acSettings.textContent = "ArmCord";
+    acSettings.textContent = "ArmCord Settings";
     acSettings.id = "acSettings";
-    acSettings.onclick = () => ipcRenderer.send("openSettingsWindow");
+    acSettings.onclick = () => injectSettings();
     tManager.textContent = "Themes";
     tManager.id = "acThemes";
     tManager.onclick = () => ipcRenderer.send("openManagerWindow");

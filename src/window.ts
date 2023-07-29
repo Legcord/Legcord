@@ -313,6 +313,7 @@ export async function createCustomWindow(): Promise<void> {
         backgroundColor: "#202225",
         autoHideMenuBar: true,
         webPreferences: {
+            webviewTag: true,
             sandbox: false,
             preload: path.join(__dirname, "preload/preload.js"),
             spellcheck: await getConfig("spellcheck")
@@ -334,6 +335,7 @@ export async function createNativeWindow(): Promise<void> {
         backgroundColor: "#202225",
         autoHideMenuBar: true,
         webPreferences: {
+            webviewTag: true,
             sandbox: false,
             preload: path.join(__dirname, "preload/preload.js"),
             spellcheck: await getConfig("spellcheck")
@@ -356,6 +358,7 @@ export async function createTransparentWindow(): Promise<void> {
         autoHideMenuBar: true,
         webPreferences: {
             sandbox: false,
+            webviewTag: true,
             preload: path.join(__dirname, "preload/preload.js"),
             spellcheck: await getConfig("spellcheck")
         }

@@ -1,5 +1,5 @@
 import {contextBridge, ipcRenderer} from "electron";
-import {addStyle} from "../utils";
+//import {addStyle} from "../utils";
 console.log("ArmCord Settings");
 console.log(process.platform);
 contextBridge.exposeInMainWorld("settings", {
@@ -18,5 +18,5 @@ contextBridge.exposeInMainWorld("settings", {
 });
 
 ipcRenderer.on("themeLoader", (_event, message) => {
-    addStyle(message);
+    //addStyle(message);
 });
