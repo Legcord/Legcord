@@ -55,7 +55,10 @@
     },
     "build": {
         "nsis": {
-            "include": "build/installer.nsh"
+            "include": "build/installer.nsh",
+            "allowToChangeInstallationDirectory": true,
+            "license": "LICENSE",
+            "oneClick": false
         },
         "files": [
             "!*",
