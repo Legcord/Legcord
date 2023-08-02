@@ -70,7 +70,12 @@ class WSServer {
 
         if (
             origin !== "" &&
-            !["https://discord.com", "https://ptb.discord.com", "https://canary.discord.com"].includes(origin)
+            ![
+                "https://discord.com",
+                "https://ptb.discord.com",
+                "https://canary.discord.com",
+                "https://replugged.dev"
+            ].includes(origin)
         ) {
             log("disallowed origin", origin);
 
