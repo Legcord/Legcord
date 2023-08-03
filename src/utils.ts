@@ -54,6 +54,8 @@ export function setup(): void {
         startMinimized: false,
         dynamicIcon: false,
         tray: true,
+        customJsBundle: "https://armcord.app/placeholder.js",
+        customCssBundle: "https://armcord.app/placeholder.css",
         disableAutogain: false,
         useLegacyCapturer: false,
         mobileMode: false,
@@ -257,6 +259,8 @@ export interface Settings {
     mobileMode: boolean;
     skipSplash: boolean;
     performanceMode: string;
+    customJsBundle: RequestInfo | URL;
+    customCssBundle: RequestInfo | URL;
     startMinimized: boolean;
     useLegacyCapturer: boolean;
     tray: boolean;
@@ -334,12 +338,14 @@ async function updateModBundle(): Promise<void> {
             const clientMods = {
                 vencord: "https://github.com/Vendicated/Vencord/releases/download/devbuild/browser.js",
                 cordwood: "https://raw.githubusercontent.com/Cordwood/builds/master/index.js",
-                shelter: "https://raw.githubusercontent.com/uwu/shelter-builds/main/shelter.js"
+                shelter: "https://raw.githubusercontent.com/uwu/shelter-builds/main/shelter.js",
+                custom: await getConfig("customJsBundle")
             };
             const clientModsCss = {
                 vencord: "https://github.com/Vendicated/Vencord/releases/download/devbuild/browser.css",
                 cordwood: "https://armcord.app/placeholder.css",
-                shelter: "https://armcord.app/placeholder.css"
+                shelter: "https://armcord.app/placeholder.css",
+                custom: await getConfig("customCssBundle")
             };
             let bundle: string = await (await fetch(clientMods[name as keyof typeof clientMods])).text();
             fs.writeFileSync(`${distFolder}bundle.js`, bundle, "utf-8");
@@ -401,7 +407,7 @@ export async function installModLoader(): Promise<void> {
     }
 }
 
-export async function registerGlobalKeybinds() {
+export async function registerGlobalKeybinds(): Promise<void> {
     const keybinds = await getConfig("keybinds");
     keybinds.forEach((keybind) => {
         globalShortcut.register(keybind, () => {
