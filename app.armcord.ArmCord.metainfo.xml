@@ -33,9 +33,9 @@
     <release version="3.1.7" date="2023-03-14"/>
     <release version="3.1.6" date="2023-02-26"/>
   </releases>
-  <url type="homepage">https://armcord.xyz</url>
+  <url type="homepage">https://armcord.app</url>
   <url type="bugtracker">https://github.com/ArmCord/ArmCord/issues</url>
-  <url type="faq">https://www.armcord.xyz/faq</url>
+  <url type="faq">https://www.armcord.app/faq</url>
   <url type="help">https://github.com/ArmCord/ArmCord/issues</url>
   <url type="translate">https://hosted.weblate.org/projects/armcord/armcord/</url>
   <url type="vcs-browser">https://github.com/ArmCord/ArmCord</url>
