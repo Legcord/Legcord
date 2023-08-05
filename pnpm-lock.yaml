@@ -41,8 +41,8 @@ devDependencies:
     specifier: ^2.4.1
     version: 2.4.1
   electron:
-    specifier: ^25.3.2
-    version: 25.3.2
+    specifier: 26.0.0-beta.11
+    version: 26.0.0-beta.11
   electron-builder:
     specifier: ^24.6.3
     version: 24.6.3
@@ -1024,8 +1024,8 @@ packages:
       - supports-color
     dev: true
 
-  /electron@25.3.2:
-    resolution: {integrity: sha512-xiktJvXraaE/ARf2OVHFyTze1TksSbsbJgOaBtdIiBvUduez6ipATEPIec8Msz1n6eQ+xqYb6YF8tDuIZtJSPw==}
+  /electron@26.0.0-beta.11:
+    resolution: {integrity: sha512-QejgSimxMxl4C3oOVGqKPn9T50PHt//i9JZPN3mOKviyawpfA3yI8SbtDhXW0d+6f+GGHIg0Eo7deppki3be/Q==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     requiresBuild: true
@@ -1453,7 +1453,7 @@ packages:
       es6-error: 4.1.1
       matcher: 3.0.0
       roarr: 2.15.4
-      semver: 7.3.8
+      semver: 7.5.4
       serialize-error: 7.0.1
     dev: true
     optional: true

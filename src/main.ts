@@ -60,26 +60,11 @@ if (!app.requestSingleInstanceLock()) {
 } else {
     // Your data now belongs to CCP
     crashReporter.start({uploadToServer: false});
-    /* Using appendSwitch properly causes ArmCord to segfault,
-       So we will leave the responsibility of enabling Wayland
-       And PipeWire video capture to packagers.
-    // We use toLowerCase to account for desktops where XDG_SESSION_TYPE might be Wayland and not wayland.
+    // enable webrtc capturer for wayland
     if (process.platform === "linux" && process.env.XDG_SESSION_TYPE?.toLowerCase() === "wayland") {
-            // Just using the native Wayland backend doesn't enable PipeWire capture, we need to enable it explicitly.
-            app.commandLine.appendSwitch("enable-features=WebRTCPipeWireCapturer");
-            console.log("Wayland detected, using PipeWire for video capture.");
-            // Some people might want to disable the Wayland backend for one reason or another, such as for Wayland-specific bugs.
-            if (process.env.USE_WAYLAND === "0") {
-                console.log("Wayland backend disabled.");
-            } else {
-                console.log("Using native Wayland, not Xwayland. Disable with USE_WAYLAND=0 if you find issues.");
-                app.commandLine.appendSwitch("ozone-platform=auto");
-                // The Wayland spec doesn't require SSDs, so lets enable self-drawn window decorations. 
-                // If SSDs are supported on the compositor, Electron will let the compositor handle the decorations.
-                app.commandLine.appendSwitch("enable-features=UseOzonePlatform,WaylandWindowDecorations");
-              }
-        }
-    */
+        app.commandLine.appendSwitch("enable-features=WebRTCPipeWireCapturer");
+        console.log("Wayland detected, using PipeWire for video capture.");
+    }
     // work around chrome 66 disabling autoplay by default
     app.commandLine.appendSwitch("autoplay-policy", "no-user-gesture-required");
 
