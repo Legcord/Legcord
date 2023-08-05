@@ -347,6 +347,7 @@ async function updateModBundle(): Promise<void> {
                 shelter: "https://armcord.app/placeholder.css",
                 custom: await getConfig("customCssBundle")
             };
+            console.log(clientMods[name as keyof typeof clientMods]);
             let bundle: string = await (await fetch(clientMods[name as keyof typeof clientMods])).text();
             fs.writeFileSync(`${distFolder}bundle.js`, bundle, "utf-8");
             let css: string = await (await fetch(clientModsCss[name as keyof typeof clientModsCss])).text();

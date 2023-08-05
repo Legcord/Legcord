@@ -61,7 +61,7 @@ async function doAfterDefiningTheWindow(): Promise<void> {
         mainWindow.webContents.executeJavaScript(`document.body.setAttribute("isMaximized", "");`);
         mainWindow.hide(); // please don't flashbang the user
     }
-    if (transparency && process.platform === "win32") {
+    if ((await getConfig("windowStyle")) == "transparency" && process.platform === "win32") {
         mainWindow.setBackgroundMaterial("mica");
         if ((await getConfig("startMinimized")) == false) {
             mainWindow.show();
