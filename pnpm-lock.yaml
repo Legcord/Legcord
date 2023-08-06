@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 dependencies:
   arrpc:
     specifier: file:src/arrpc
@@ -41,8 +37,8 @@ devDependencies:
     specifier: ^2.4.1
     version: 2.4.1
   electron:
-    specifier: 26.0.0-beta.11
-    version: 26.0.0-beta.11
+    specifier: 25.4.0
+    version: 25.4.0
   electron-builder:
     specifier: ^24.6.3
     version: 24.6.3
@@ -440,7 +436,7 @@ packages:
       debug: 4.3.4
       globby: 11.1.0
       is-glob: 4.0.3
-      semver: 7.3.8
+      semver: 7.5.4
       tsutils: 3.21.0(typescript@4.9.3)
       typescript: 4.9.3
     transitivePeerDependencies:
@@ -461,7 +457,7 @@ packages:
       '@typescript-eslint/typescript-estree': 5.59.2(typescript@4.9.3)
       eslint: 8.40.0
       eslint-scope: 5.1.1
-      semver: 7.3.8
+      semver: 7.5.4
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -558,7 +554,7 @@ packages:
       minimatch: 5.1.6
       read-config-file: 6.3.2
       sanitize-filename: 1.6.3
-      semver: 7.3.8
+      semver: 7.5.4
       tar: 6.1.12
       temp-file: 3.4.0
     transitivePeerDependencies:
@@ -1024,8 +1020,8 @@ packages:
       - supports-color
     dev: true
 
-  /electron@26.0.0-beta.11:
-    resolution: {integrity: sha512-QejgSimxMxl4C3oOVGqKPn9T50PHt//i9JZPN3mOKviyawpfA3yI8SbtDhXW0d+6f+GGHIg0Eo7deppki3be/Q==}
+  /electron@25.4.0:
+    resolution: {integrity: sha512-VLTRxDhL4UvQbqM7pTNENnJo62cdAPZT92N+B7BZQ5Xfok1wuVPEewIjBot4K7U3EpLUuHn1veeLzho3ihiP+Q==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     requiresBuild: true
@@ -2619,6 +2615,7 @@ packages:
   file:src/arrpc:
     resolution: {directory: src/arrpc, type: directory}
     name: arrpc
+    version: 3.0.0
     dependencies:
       ws: 8.11.0
     transitivePeerDependencies:
@@ -2647,3 +2644,7 @@ packages:
     dependencies:
       eslint: 8.40.0
     dev: true
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false

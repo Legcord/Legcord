@@ -1,6 +1,6 @@
 {
     "name": "ArmCord",
-    "version": "3.2.2",
+    "version": "3.2.3",
     "description": "ArmCord is a custom client designed to enhance your Discord experience while keeping everything lightweight.",
     "main": "ts-out/main.js",
     "engines": {
@@ -36,7 +36,7 @@
         "@typescript-eslint/eslint-plugin": "^5.59.2",
         "@typescript-eslint/parser": "^5.59.2",
         "copyfiles": "^2.4.1",
-        "electron": "26.0.0-beta.11",
+        "electron": "25.4.0",
         "electron-builder": "^24.6.3",
         "eslint": "^8.40.0",
         "eslint-config-dmitmel": "github:dmitmel/eslint-config-dmitmel",
