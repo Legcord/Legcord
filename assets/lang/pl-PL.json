@@ -78,5 +78,7 @@
     "setup_question5": "Chcesz używać ikony zasobnika?",
     "settings-mintoTray": "Zminimalizuj do zasobnika systemowego",
     "settings-mintoTray-desc": "Po wyłączeniu ArmCord zamknie się jak każde inne okno po zamknięciu, w przeciwnym razie usiądzie i zrelaksuje się\n                w zasobniku systemowym na później.",
-    "settings-theme-desc4": "przeźroczyste okno z natywnym paskiem zadań, potrzebujesz kompatybilny motyw żeby to działało. Tylko dla Windows'a."
+    "settings-theme-desc4": "przeźroczyste okno z natywnym paskiem zadań, potrzebujesz kompatybilny motyw żeby to działało. Tylko dla Windows'a.",
+    "settings-MultiInstance": "Multi Instance",
+    "settings-MultiInstance-desc": "When enabled you'll be able to start up many instances of ArmCord."
 }
