@@ -78,5 +78,7 @@
     "setup_question5": "Apakah kamu mau menggunakan ikon baki?",
     "settings-mintoTray": "Perkecil ke baki",
     "settings-mintoTray-desc": "Saat dinonaktifkan, ArmCord akan keluar seperti jendela lain saat dikeluarkan, jika tidak maka akan bersantai\n                di baki sistem untuk nanti.",
-    "settings-theme-desc4": "transparent window with native titlebar, you need a compatible theme to run this. Windows only."
+    "settings-theme-desc4": "transparent window with native titlebar, you need a compatible theme to run this. Windows only.",
+    "settings-MultiInstance": "Multi Instance",
+    "settings-MultiInstance-desc": "When enabled you'll be able to start up many instances of ArmCord."
 }
