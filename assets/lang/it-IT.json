@@ -78,5 +78,7 @@
     "setup_question5": "Vuoi usare un'icona nella barra delle applicazioni?",
     "settings-mintoTray": "Riduci a icona nel barra delle applicazioni",
     "settings-mintoTray-desc": "Se disabilitato, ArmCord si chiuderà come qualsiasi altra finestra quando è chiusa, altrimenti si siederà e si rilasserà\n                 nella barra delle applicazioni per dopo.",
-    "settings-theme-desc4": "finestra trasparente con barra del titolo nativa, è necessario un tema compatibile per eseguirlo. Solo Windows."
+    "settings-theme-desc4": "finestra trasparente con barra del titolo nativa, è necessario un tema compatibile per eseguirlo. Solo Windows.",
+    "settings-MultiInstance": "Multi Instance",
+    "settings-MultiInstance-desc": "When enabled you'll be able to start up many instances of ArmCord."
 }
