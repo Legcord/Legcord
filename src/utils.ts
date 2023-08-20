@@ -46,6 +46,7 @@ export function setup(): void {
         automaticPatches: false,
         keybinds: [],
         alternativePaste: false,
+        multiInstance: false,
         mods: "none",
         spellcheck: true,
         performanceMode: "none",
@@ -253,6 +254,7 @@ export interface Settings {
     minimizeToTray: boolean;
     automaticPatches: boolean;
     alternativePaste: boolean;
+    multiInstance: boolean;
     spellcheck: boolean;
     mods: string;
     dynamicIcon: boolean;
@@ -277,6 +279,12 @@ export function getConfigLocation(): string {
     return `${storagePath}settings.json`;
 }
 export async function getConfig<K extends keyof Settings>(object: K): Promise<Settings[K]> {
+    let rawdata = fs.readFileSync(getConfigLocation(), "utf-8");
+    let returndata = JSON.parse(rawdata);
+    console.log(`[Config manager] ${object}: ${returndata[object]}`);
+    return returndata[object];
+}
+export function getConfigSync<K extends keyof Settings>(object: K) {
     let rawdata = fs.readFileSync(getConfigLocation(), "utf-8");
     let returndata = JSON.parse(rawdata);
     console.log(`[Config manager] ${object}: ${returndata[object]}`);

@@ -7,6 +7,7 @@ import {
     checkIfConfigExists,
     firstRun,
     getConfig,
+    getConfigSync,
     injectElectronFlags,
     installModLoader,
     modInstallState,
@@ -54,10 +55,12 @@ async function args(): Promise<void> {
     }
 }
 args(); // i want my top level awaits
-if (!app.requestSingleInstanceLock()) {
+if (!app.requestSingleInstanceLock() && getConfigSync("multiInstance") == (false ?? undefined)) {
+    // if value isn't set after 3.2.4
     // kill if 2nd instance
     app.quit();
 } else {
+    app.commandLine.appendSwitch("disable-features", "WidgetLayering"); // fix dev tools layers
     // Your data now belongs to CCP
     crashReporter.start({uploadToServer: false});
     // enable webrtc capturer for wayland
