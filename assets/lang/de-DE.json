@@ -78,5 +78,7 @@
     "settings-updater": "Auf Updates überprüfen",
     "settings-skipSplash": "Splash-Screen überspringen (experimentell)",
     "settings-skipSplash-desc": "Überspringt den ArmCord-Startbildschirm beim Starten der Anwendung.",
-    "settings-forceNativeCrash": "Nativen Absturz erzwingen"
+    "settings-forceNativeCrash": "Nativen Absturz erzwingen",
+    "settings-MultiInstance": "Multi Instance",
+    "settings-MultiInstance-desc": "When enabled you'll be able to start up many instances of ArmCord."
 }
