@@ -1,9 +1,5 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 dependencies:
   arrpc:
     specifier: file:src/arrpc
@@ -440,7 +436,7 @@ packages:
       debug: 4.3.4
       globby: 11.1.0
       is-glob: 4.0.3
-      semver: 7.3.8
+      semver: 7.5.4
       tsutils: 3.21.0(typescript@4.9.3)
       typescript: 4.9.3
     transitivePeerDependencies:
@@ -461,7 +457,7 @@ packages:
       '@typescript-eslint/typescript-estree': 5.59.2(typescript@4.9.3)
       eslint: 8.40.0
       eslint-scope: 5.1.1
-      semver: 7.3.8
+      semver: 7.5.4
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -558,7 +554,7 @@ packages:
       minimatch: 5.1.6
       read-config-file: 6.3.2
       sanitize-filename: 1.6.3
-      semver: 7.3.8
+      semver: 7.5.4
       tar: 6.1.12
       temp-file: 3.4.0
     transitivePeerDependencies:
@@ -1026,7 +1022,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
-
   /electron@26.0.0:
     resolution: {integrity: sha512-x57bdCaDvgnlc41VOm/UWihJCCiI3OxJKiBgB/e5F7Zd6avo+61mO6IzQS7Bu/k/a1KPjou25EUORR6UPKznBQ==}
     engines: {node: '>= 12.20.55'}
@@ -2635,6 +2630,7 @@ packages:
   file:src/arrpc:
     resolution: {directory: src/arrpc, type: directory}
     name: arrpc
+    version: 3.0.0
     dependencies:
       ws: 8.11.0
     transitivePeerDependencies:
@@ -2663,3 +2659,7 @@ packages:
     dependencies:
       eslint: 8.40.0
     dev: true
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
