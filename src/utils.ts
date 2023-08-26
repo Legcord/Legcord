@@ -343,23 +343,27 @@ async function updateModBundle(): Promise<void> {
                 //waiting
             }
             let name: string = await getConfig("mods");
-            const clientMods = {
-                vencord: "https://github.com/Vendicated/Vencord/releases/download/devbuild/browser.js",
-                cordwood: "https://raw.githubusercontent.com/Cordwood/builds/master/index.js",
-                shelter: "https://raw.githubusercontent.com/uwu/shelter-builds/main/shelter.js",
-                custom: await getConfig("customJsBundle")
-            };
-            const clientModsCss = {
-                vencord: "https://github.com/Vendicated/Vencord/releases/download/devbuild/browser.css",
-                cordwood: "https://armcord.app/placeholder.css",
-                shelter: "https://armcord.app/placeholder.css",
-                custom: await getConfig("customCssBundle")
-            };
-            console.log(clientMods[name as keyof typeof clientMods]);
-            let bundle: string = await (await fetch(clientMods[name as keyof typeof clientMods])).text();
-            fs.writeFileSync(`${distFolder}bundle.js`, bundle, "utf-8");
-            let css: string = await (await fetch(clientModsCss[name as keyof typeof clientModsCss])).text();
-            fs.writeFileSync(`${distFolder}bundle.css`, css, "utf-8");
+            if (name == "custom") {
+                // aspy fix
+                let bundle: string = await (await fetch(await getConfig("customJsBundle"))).text();
+                fs.writeFileSync(`${distFolder}bundle.js`, bundle, "utf-8");
+                let css: string = await (await fetch(await getConfig("customCssBundle"))).text();
+                fs.writeFileSync(`${distFolder}bundle.css`, css, "utf-8");
+            } else {
+                const clientMods = {
+                    vencord: "https://github.com/Vendicated/Vencord/releases/download/devbuild/browser.js",
+                    shelter: "https://raw.githubusercontent.com/uwu/shelter-builds/main/shelter.js"
+                };
+                const clientModsCss = {
+                    vencord: "https://github.com/Vendicated/Vencord/releases/download/devbuild/browser.css",
+                    shelter: "https://armcord.app/placeholder.css"
+                };
+                console.log(clientMods[name as keyof typeof clientMods]);
+                let bundle: string = await (await fetch(clientMods[name as keyof typeof clientMods])).text();
+                fs.writeFileSync(`${distFolder}bundle.js`, bundle, "utf-8");
+                let css: string = await (await fetch(clientModsCss[name as keyof typeof clientModsCss])).text();
+                fs.writeFileSync(`${distFolder}bundle.css`, css, "utf-8");
+            }
         } catch (e) {
             console.log("[Mod loader] Failed to install mods");
             console.error(e);

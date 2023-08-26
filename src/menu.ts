@@ -61,10 +61,7 @@ export async function setMenu(): Promise<void> {
                 },
                 {
                     label: "Fullscreen",
-                    accelerator: "F11",
-                    click() {
-                        mainWindow.fullScreen = !mainWindow.fullScreen;
-                    }
+                    role: "togglefullscreen"
                 },
                 {
                     label: "Reload",
