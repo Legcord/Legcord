@@ -66,7 +66,7 @@ jobs:
               run: pnpm install -g electron-builder
 
             - name: Build
-              run: npm run build && electron-builder --macos
+              run: npm run build && electron-builder --macos --x64 --arm64
               env:
                 GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: List all files in the dist directory
