@@ -79,6 +79,6 @@
     "settings-mintoTray": "Minimera till systembrickan",
     "settings-mintoTray-desc": "Ifall inaktiverad, Så kommer ArmCord stängas likadant som andra fönster, annar så kommer den hänga \n                i din system tray tills vidare.",
     "settings-theme-desc4": "transparent fönster med inbyggt titelfält, du behöver ett kompatibelt tema för detta. Windows specifikt.",
-    "settings-MultiInstance": "Multi Instance",
-    "settings-MultiInstance-desc": "When enabled you'll be able to start up many instances of ArmCord."
+    "settings-MultiInstance": "Multi instans",
+    "settings-MultiInstance-desc": "När detta är aktiverat kommer du att kunna starta många instanser av ArmCord."
 }
