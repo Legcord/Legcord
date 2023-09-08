@@ -79,6 +79,6 @@
     "settings-mintoTray": "Свернуть в трей",
     "settings-mintoTray-desc": "При отключении ArmCord будет закрываться как любое другое окно при закрытии, в противном случае он будет сидеть и отдыхать\n                в системном трее.",
     "settings-theme-desc4": "прозрачное окно с нативной строкой заголовка, вам нужна совместимая тема для этого. Только для Windows.",
-    "settings-MultiInstance": "Multi Instance",
-    "settings-MultiInstance-desc": "When enabled you'll be able to start up many instances of ArmCord."
+    "settings-MultiInstance": "Множество Экземпляров",
+    "settings-MultiInstance-desc": "Когда включено, вы можете запустить множество экземпляров ArmCord."
 }
