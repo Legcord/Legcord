@@ -1,17 +1,17 @@
 
 <div align="center">
 <img src="https://armcord.app/logo.png" width="520">
- <br>ArmCord is a custom client designed to enhance your Discord experience while keeping everything lightweight. 
+ <br>ArmCord is a custom client designed to enhance your Discord experience while keeping everything lightweight.
 </div>
 
 # Features
 
-- **Standalone client** 
+- **Standalone client**
 
    ArmCord is built as a standalone client and doesn't rely on the original Discord client in any way.
 
 - **Various mods built-in**
- 
+
    Enjoy [Vencord](https://github.com/Vendicated/Vencord), [Shelter](https://github.com/uwu/shelter) and their many features, or have a more vanilla experience, it's your choice!
 
 - **Themes**
@@ -25,7 +25,7 @@
 - **Supports Rich Presence**
 
    Unlike other clients, ArmCord supports rich presence (game activity) out of the box thanks to [arRPC](https://arrpc.openasar.dev).
-   
+
 - **Mobile support**
 
    ArmCord has **experimental** mobile support for phones running Linux such as the PinePhone. While this is still far from an ideal solution, we're slowly trying to improve it.
@@ -38,7 +38,7 @@
 - **Cross-platform support!**
 
    ArmCord was originally created for ARM64 Linux devices since Discord doesn't support them. We soon decided to support every platform that [Electron supports](https://github.com/electron/electron#platform-support)!
-  
+
 # How to run/install it?
 
 ## Packaging status
@@ -63,16 +63,18 @@ sudo apt update
 sudo apt install armcord
 ```
 ### Snap package
-ArmCord is also available on the Snap store [here](https://snapcraft.io/armcord).   
+ArmCord is also available on the Snap store [here](https://snapcraft.io/armcord).
 <a href="https://snapcraft.io/armcord">
 <img alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" />
-</a>  
+</a>
 
 Similar to `armcord-git` on AUR, you can install the latest dev builds through snaps by running this command:
 ```shell
 sudo snap install armcord --channel=latest/edge
 ```
 Snapd will automatically update the app including developer builds.
+
+NOTE: The snap package currently doesn't support the Arm64 architecture.  Use the flatpak or apt package instead.
 ### Winget Package
 ArmCord is also available on the [winget-pkgs](https://github.com/microsoft/winget-pkgs) repository:
 ```
@@ -97,35 +99,35 @@ Install it via an AUR helper tool like `yay`.
 ### FreeBSD
 You can also get ArmCord running on FreeBSD by following [these instructions](https://gist.github.com/txxlchains/4d29c982ac85d5d26f98a51040b5de37).
 ### Pi-Apps
-ArmCord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).  
+ArmCord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).
 [![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge.png?raw=true)](https://github.com/Botspot/pi-apps)
 
 ### Pre-built binaries:
- Check the **releases tab** for precompiled packages for Linux, Windows, and Mac OS. Alternatively, use our Sourceforge mirror.  
+ Check the **releases tab** for precompiled packages for Linux, Windows, and Mac OS. Alternatively, use our Sourceforge mirror.
  <a href="https://sourceforge.net/projects/armcord/files/latest/download"><img alt="Download ArmCord" src="https://a.fsdn.com/con/app/sf-download-button" width=276 height=48 srcset="https://a.fsdn.com/con/app/sf-download-button?button_size=2x 2x"></a>
 
 ### Compiling:
- Alternatively, you can run ArmCord from source ([NodeJS](https://nodejs.dev), [pnpm](https://pnpm.io/installation#using-npm), and [rust toolchain](https://www.rust-lang.org/tools/install) are required):    
- 1. Clone ArmCord repo: `git clone https://github.com/ArmCord/ArmCord.git`    
- 2. Run `pnpm install` to install dependencies   
- 3. Build with `npm run build`   
- 4. Compile/Package with `npm run package`    
+ Alternatively, you can run ArmCord from source ([NodeJS](https://nodejs.dev), [pnpm](https://pnpm.io/installation#using-npm), and [rust toolchain](https://www.rust-lang.org/tools/install) are required):
+ 1. Clone ArmCord repo: `git clone https://github.com/ArmCord/ArmCord.git`
+ 2. Run `pnpm install` to install dependencies
+ 3. Build with `npm run build`
+ 4. Compile/Package with `npm run package`
 
 
 # FAQ
 ## Do you have a support Discord?
 
 [![](https://dcbadge.vercel.app/api/server/TnhxcqynZ2)](https://discord.gg/TnhxcqynZ2)
-## Will I get banned for using this?   
+## Will I get banned for using this?
 - You are breaking [Discord ToS](https://discord.com/terms#software-in-discord%E2%80%99s-services) by using ArmCord, but no one has been banned from using it or any of the client mods included.
 
 ## Can I use this on anything other than ARM?
-- Yes! ArmCord should work normally under Windows, MacOS, and Linux as long as it has Electron support.  
+- Yes! ArmCord should work normally under Windows, MacOS, and Linux as long as it has Electron support.
 
 ## How can I access the settings?
 - Either right-click on the tray icon and click `Open Settings` or open Discord settings and scroll down the sidebar until you see information about versions. Click on the ArmCord version and the settings window will pop out.
 
-## How does this work?   
+## How does this work?
 - We are using the official web app and wrapping it up in Electron. While you may think this is lame and done like thousands of times before, what makes us unique is that we actually strive for creating a customized experience. You can very easily load themes and mods with no installers/injectors. You can even make the client have transparency effects and follow the fluent design of Windows! At its core, it's just a simple web wrapper, however, we applied many patches to make this work well for you <3
 
 ## Why is macOS support lacking?
@@ -147,5 +149,5 @@ ArmCord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).
 - (pre v3.1.0) [FlickerMod](https://github.com/FlickerMod)
 - (Pre v3.0.0) [custom-electron-titlebar](https://github.com/AlexTorresSk/custom-electron-titlebar)
 - [electron-builder](https://electron.build)
-  
-Discord is trademark of Discord Inc. ArmCord is not affiliated with or endorsed by Discord Inc. 
+
+Discord is trademark of Discord Inc. ArmCord is not affiliated with or endorsed by Discord Inc.
