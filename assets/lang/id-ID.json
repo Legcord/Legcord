@@ -29,8 +29,8 @@
     "settings-theme-desc1": "\"Tema\" ArmCord menata perilaku dan penampilan aplikasi.",
     "settings-theme-desc2": "beginilah ArmCord terlihat saat kamu memulainya pertama kali. Terlihat bar judul\n                kustom Discord dan ragam spesifik ArmCord yang diinjeksi ke Discord.",
     "settings-theme-desc3": "menggunakan bar judul bawaan dari OS yang kamu gunakan (contoh Windows 7/10). Berfungsi mirip\n                seperti aplikasi Discord di Linux.",
-    "settings-tray-desc": "Menu baki ArmCord adalah tempat untuk kamu dapat mengakses setelan ArmCord secara mudah dan cepat, dan memudahkan kamu untuk membuka jendela Discord.",
-    "settings-patches-desk": "Dapatkan patch otomatis yang didistribusikan jika suatu rilis mempunyai bug setelah dirilis. Biasanya\n                kamu tidak perlu mengaktifkan ini, kecuali diberitahu di server Discord.",
+    "settings-tray-desc": "Ketika dinonaktifkan, ArmCord akan menutup seperti jendela lain ketika ditutup, jika tidak, ia akan duduk dan bersantai di baki sistem Anda untuk nanti.",
+    "settings-patches-desk": "Mengambil patch yang didistribusikan jika sebuah rilis ternyata memiliki bug. Biasanya \n                tidak perlu dinyalakan terus menerus (kecuali jika diberitahukan dalam dukungan Discord).",
     "settings-csp-desc": "ArmCord CSP merupakan sistem kami yang mengatur pemuatan konten kustom ke aplikasi Discord. Hal seperti\n                modifikasi klien dan tema bergantung ke fitur ini. Nonaktifkan jika kamu mau menghilangkan modifikasi dan tema kustom.",
     "settings-invitewebsocket-desc": "Menggunakan <a target=\"_blank\" href=\"https://github.com/OpenAsar/arrpc\">arRPC</a> untuk mendukung Discord RPC (Rich Presence) dengan program lokal di perangkat anda. WIP.",
     "settings-mobileMode-desc": "Jika perangkat kamu mempunyai layar sentuh, fitur ini untukmu! Fitur ini mengaktifkan mode\n                tersembunyi Discord yang diperuntukkan untuk telepon dan tablet. Obrolan suara tidak tersedia di mode ini. \n                Mode ini ideal untuk pengguna di PinePhone dan sejenisnya.",
@@ -68,7 +68,7 @@
     "settings-forceNativeCrash": "Paksa kegagalan native",
     "settings-disableAutogain": "Matikan gain otomatis",
     "settings-disableAutogain-desc": "Mematikan gain otomatis.",
-    "settings-theme-transparent": "Transparan (Eksperimental)",
+    "settings-theme-transparent": "Transparan",
     "settings-useLegacyCapturer": "Gunakan penangkap layar lama",
     "settings-useLegacyCapturer-desc": "Gunakan modul penangkap layar lama dibanding yang lebih baru. Jika kamu mendapatkan isu dengan berbagi layar, coba nyalakan ini.",
     "settings-dynamicIcon": "Ikon dinamis",
@@ -78,7 +78,7 @@
     "setup_question5": "Apakah kamu mau menggunakan ikon baki?",
     "settings-mintoTray": "Perkecil ke baki",
     "settings-mintoTray-desc": "Saat dinonaktifkan, ArmCord akan keluar seperti jendela lain saat dikeluarkan, jika tidak maka akan bersantai\n                di baki sistem untuk nanti.",
-    "settings-theme-desc4": "transparent window with native titlebar, you need a compatible theme to run this. Windows only.",
-    "settings-MultiInstance": "Multi Instance",
-    "settings-MultiInstance-desc": "When enabled you'll be able to start up many instances of ArmCord."
+    "settings-theme-desc4": "jendela transparan dengan bilah judul asli, Anda memerlukan tema yang kompatibel untuk menjalankannya. Hanya untuk Windows.",
+    "settings-MultiInstance": "Multi Instans",
+    "settings-MultiInstance-desc": "Ketika diaktifkan, Anda akan dapat memulai banyak contoh ArmCord."
 }
