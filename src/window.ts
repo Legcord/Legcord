@@ -5,7 +5,6 @@
 import {BrowserWindow, MessageBoxOptions, app, dialog, nativeImage, shell} from "electron";
 import path from "path";
 import {
-    checkIfConfigIsBroken,
     contentPath,
     firstRun,
     getConfig,
@@ -68,7 +67,6 @@ async function doAfterDefiningTheWindow(): Promise<void> {
         }
     }
     let ignoreProtocolWarning = await getConfig("ignoreProtocolWarning");
-    await checkIfConfigIsBroken();
     registerIpc();
     if (await getConfig("mobileMode")) {
         mainWindow.webContents.userAgent =

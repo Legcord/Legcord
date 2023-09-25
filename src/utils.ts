@@ -26,7 +26,12 @@ export async function sleep(ms: number): Promise<void> {
 }
 
 export async function checkIfConfigIsBroken(): Promise<void> {
-    if ((await getConfig("0")) == "d") {
+    try {
+        let rawdata = fs.readFileSync(getConfigLocation(), "utf-8");
+        JSON.parse(rawdata);
+        console.log("Config is fine");
+    } catch (e) {
+        console.error(e);
         console.log("Detected a corrupted config");
         setup();
         dialog.showErrorBox(

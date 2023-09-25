@@ -6,6 +6,7 @@ import {
     checkForDataFolder,
     checkIfConfigExists,
     firstRun,
+    checkIfConfigIsBroken,
     getConfig,
     getConfigSync,
     injectElectronFlags,
@@ -70,7 +71,7 @@ if (!app.requestSingleInstanceLock() && getConfigSync("multiInstance") == (false
     }
     // work around chrome 66 disabling autoplay by default
     app.commandLine.appendSwitch("autoplay-policy", "no-user-gesture-required");
-
+    checkIfConfigIsBroken();
     // WinRetrieveSuggestionsOnlyOnDemand: Work around electron 13 bug w/ async spellchecking on Windows.
     // HardwareMediaKeyHandling,MediaSessionService: Prevent Discord from registering as a media service.
     app.commandLine.appendSwitch(
