@@ -75,10 +75,10 @@
     "settings-dynamicIcon-desc": "Following Discord's behaviour on Windows, this shows unread messages/pings count on ArmCord's icon instead of it's tray.",
     "settings-spellcheck": "Spellcheck",
     "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them.",
-    "setup_question5": "Do you want to use a tray icon?",
+    "setup_question5": "¿Quieres utilizar un ícono en la barra de tareas?",
     "settings-mintoTray": "Minimize to tray",
     "settings-mintoTray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later.",
-    "settings-theme-desc4": "transparent window with native titlebar, you need a compatible theme to run this. Windows only.",
+    "settings-theme-desc4": "ventana transparente con barra de tareas nativa, necesitarás un tema compatible para ello. Exclusivo de Windows.",
     "settings-MultiInstance": "Multi Instance",
     "settings-MultiInstance-desc": "When enabled you'll be able to start up many instances of ArmCord."
 }
