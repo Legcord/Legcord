@@ -41,8 +41,8 @@ devDependencies:
     specifier: ^2.4.1
     version: 2.4.1
   electron:
-    specifier: 26.1.0
-    version: 26.1.0
+    specifier: 27.0.0-beta.9
+    version: 27.0.0-beta.9
   electron-builder:
     specifier: ^24.6.3
     version: 24.6.3
@@ -51,7 +51,7 @@ devDependencies:
     version: 8.40.0
   eslint-config-dmitmel:
     specifier: github:dmitmel/eslint-config-dmitmel
-    version: github.com/dmitmel/eslint-config-dmitmel/690f1b1121d342fcc8ee511ca9f2af7502f53db6(eslint@8.40.0)
+    version: github.com/dmitmel/eslint-config-dmitmel/d97129ec35235415c6ae6a42299f55cdbb5d75fd(eslint@8.40.0)
   eslint-plugin-node:
     specifier: ^11.1.0
     version: 11.1.0(eslint@8.40.0)
@@ -1027,8 +1027,8 @@ packages:
       - supports-color
     dev: true
 
-  /electron@26.1.0:
-    resolution: {integrity: sha512-qEh19H09Pysn3ibms5nZ0haIh5pFoOd7/5Ww7gzmAwDQOulRi8Sa2naeueOyIb1GKpf+6L4ix3iceYRAuA5r5Q==}
+  /electron@27.0.0-beta.9:
+    resolution: {integrity: sha512-4h78B843eYU2oh2yMjrwYtl5aVMiFdpurIwtoZvXpfTwyuKiEOQaylmLbi4+sPg1rCmqW/VLv9hfVlOqHDNj/Q==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     requiresBuild: true
@@ -2652,11 +2652,11 @@ packages:
       electron-is-dev: 2.0.0
     dev: false
 
-  github.com/dmitmel/eslint-config-dmitmel/690f1b1121d342fcc8ee511ca9f2af7502f53db6(eslint@8.40.0):
-    resolution: {tarball: https://codeload.github.com/dmitmel/eslint-config-dmitmel/tar.gz/690f1b1121d342fcc8ee511ca9f2af7502f53db6}
-    id: github.com/dmitmel/eslint-config-dmitmel/690f1b1121d342fcc8ee511ca9f2af7502f53db6
+  github.com/dmitmel/eslint-config-dmitmel/d97129ec35235415c6ae6a42299f55cdbb5d75fd(eslint@8.40.0):
+    resolution: {tarball: https://codeload.github.com/dmitmel/eslint-config-dmitmel/tar.gz/d97129ec35235415c6ae6a42299f55cdbb5d75fd}
+    id: github.com/dmitmel/eslint-config-dmitmel/d97129ec35235415c6ae6a42299f55cdbb5d75fd
     name: eslint-config-dmitmel
-    version: 8.2.2
+    version: 8.3.0
     engines: {node: '>=8.10.0'}
     peerDependencies:
       eslint: '>=8.17.0'
