@@ -79,6 +79,6 @@
     "settings-mintoTray": "트레이로 최소화",
     "settings-mintoTray-desc": "비활성화하면 ArmCord는 닫을 때 다른 창처럼 닫히지만, 그렇지 않으면 시스템 트레이에 편안하게\n                나중에 사용할 수 있도록 시스템 트레이에 보관됩니다.",
     "settings-theme-desc4": "기본 제목 표시줄이 있는 투명 창을 실행하려면 호환되는 테마가 필요합니다. 윈도우만 해당됩니다.",
-    "settings-MultiInstance": "Multi Instance",
-    "settings-MultiInstance-desc": "When enabled you'll be able to start up many instances of ArmCord."
+    "settings-MultiInstance": "다중 인스턴스",
+    "settings-MultiInstance-desc": "활성화되면 ArmCord의 많은 인스턴스를 시작할 수 있습니다."
 }
