@@ -60,7 +60,7 @@
     "settings-prfmMode-performance": "Leistung",
     "settings-prfmMode-battery": "Batterie",
     "settings-disableAutogain": "Autogain deaktivieren",
-    "settings-disableAutogain-desc": "Deaktiviert Autogain",
+    "settings-disableAutogain-desc": "Deaktiviert Autogain.",
     "settings-trayIcon": "Tray-Symbol",
     "settings-trayIcon-desc": "Lege das Symbol fest, das im Tray-Menü erscheinen soll.",
     "settings-trayIcon-dynamic": "Dynamisch",
@@ -79,6 +79,6 @@
     "settings-skipSplash": "Splash-Screen überspringen (experimentell)",
     "settings-skipSplash-desc": "Überspringt den ArmCord-Startbildschirm beim Starten der Anwendung.",
     "settings-forceNativeCrash": "Nativen Absturz erzwingen",
-    "settings-MultiInstance": "Multi Instance",
-    "settings-MultiInstance-desc": "When enabled you'll be able to start up many instances of ArmCord."
+    "settings-MultiInstance": "Mehrere Instanzen",
+    "settings-MultiInstance-desc": "Wenn diese Funktion aktiviert ist, können Sie mehrere Instanzen von ArmCord starten."
 }
