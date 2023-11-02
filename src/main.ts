@@ -113,7 +113,8 @@ if (!app.requestSingleInstanceLock() && getConfigSync("multiInstance") == (false
                     break;
             }
         }
-        await init();
+        // Patch for linux bug to insure things are loaded before window creation (fixes transparency on some linux systems)
+        await setTimeout(init, 500);
         await installModLoader();
         session.fromPartition("some-partition").setPermissionRequestHandler((_webContents, permission, callback) => {
             if (permission === "notifications") {
