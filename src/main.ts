@@ -78,6 +78,7 @@ if (!app.requestSingleInstanceLock() && getConfigSync("multiInstance") == (false
         "disable-features",
         "WinRetrieveSuggestionsOnlyOnDemand,HardwareMediaKeyHandling,MediaSessionService"
     );
+    app.commandLine.appendSwitch("enable-transparent-visuals");
     checkForDataFolder();
     checkIfConfigExists();
     injectElectronFlags();
