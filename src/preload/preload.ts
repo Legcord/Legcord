@@ -73,7 +73,10 @@ sleep(5000).then(async () => {
 
 // Settings info version injection
 setInterval(() => {
-    const host = document.querySelector<HTMLDivElement>("nav > [class|=side] [class|=info]");
+    // @ts-expect-error
+    const host = [...document.querySelectorAll('[class*="sidebar"] [class*="info"] [class*="line"]')].find((x) =>
+        x.textContent.startsWith("Host ")
+    );
     if (!host || host.querySelector("#ac-ver")) {
         return;
     }
@@ -84,8 +87,8 @@ setInterval(() => {
     el.onclick = () => ipcRenderer.send("openSettingsWindow");
     host.append(el);
     let advanced = document
-        .querySelector('[class*="socialLinks-"]')!
-        .parentElement!.querySelector(
+        .querySelector('[class*="socialLinks"]')
+        ?.parentElement?.querySelector(
             '[class*="header"] + [class*="item"] + [class*="item"] + [class*="item"] + [class*="item"] + [class*="item"] + [class*="item"] + [class*="item"] + [class*="item"] + [class*="item"]'
         );
     if (!advanced) return;
