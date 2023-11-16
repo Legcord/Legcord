@@ -73,10 +73,7 @@ sleep(5000).then(async () => {
 
 // Settings info version injection
 setInterval(() => {
-    // @ts-expect-error
-    const host = [...document.querySelectorAll('[class*="sidebar"] [class*="info"] [class*="line"]')].find((x) =>
-        x.textContent.startsWith("Host ")
-    );
+    const host = document.querySelector('[class*="sidebar"] [class*="info"]');
     if (!host || host.querySelector("#ac-ver")) {
         return;
     }
