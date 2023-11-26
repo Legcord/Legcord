@@ -8,7 +8,7 @@ const unstrictCSP = (): void => {
         if (!responseHeaders) return done({});
 
         if (resourceType === "mainFrame") {
-            delete responseHeaders["Content-Security-Policy"];
+            delete responseHeaders["content-security-policy"];
         } else if (resourceType === "stylesheet") {
             // Fix hosts that don't properly set the css content type, such as
             // raw.githubusercontent.com
