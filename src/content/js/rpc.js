@@ -1,12 +1,17 @@
 window.addEventListener("load", async () => {
-  let Dispatcher = undefined;
-  let lookupAsset = undefined;
-  let lookupApp = undefined;
-  let apps = {};
+  let Dispatcher = undefined,
+    lookupAsset = undefined,
+    lookupApp = undefined;
 
-  const wpRequire = window.webpackChunkdiscord_app.push([ [Symbol()], {}, (x) => x ]);
+  let apps = {};
+  const chunkName = 'webpackChunkdiscord_app';
+
+  const wpRequire = window[chunkName].push(
+    [ [Symbol()], {}, (x) => x ]
+  );
+
   const cache = wpRequire.c;
-  window.webpackChunkdiscord_app.pop();
+  window[chunkName].pop();
 
   for (const id in cache) {
     let mod = cache[id].exports;
@@ -69,19 +74,19 @@ window.addEventListener("load", async () => {
 
   ArmCordRPC.listen(async (msg) => {
     if (msg.activity) {
-      if (msg.activity?.assets?.large_image)
+      if (msg.activity?.assets?.large_image && lookupAsset)
         msg.activity.assets.large_image = await lookupAsset(
           msg.activity.application_id,
           msg.activity.assets.large_image,
         );
-      if (msg.activity?.assets?.small_image)
+      if (msg.activity?.assets?.small_image && lookupAsset)
         msg.activity.assets.small_image = await lookupAsset(
           msg.activity.application_id,
           msg.activity.assets.small_image,
         );
 
       const appId = msg.activity.application_id;
-      if (!apps[appId]) apps[appId] = await lookupApp(appId);
+      if (!apps[appId] && lookupApp) apps[appId] = await lookupApp(appId);
 
       const app = apps[appId];
       if (!msg.activity.name) msg.activity.name = app.name;
