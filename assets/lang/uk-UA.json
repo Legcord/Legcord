@@ -79,6 +79,6 @@
     "settings-mintoTray": "Згорнути в трей",
     "settings-mintoTray-desc": "Коли вимкнено, ArmCord закриється, як і будь-яке інше вікно, інакше він візьме і буде відпочивати\n                в системному треї до кращих часів.",
     "settings-theme-desc4": "прозоре вікно з рідною панеллю заголовка, вам потрібна сумісна тема, щоб запустити це. Тільки Windows.",
-    "settings-MultiInstance": "Multi Instance",
+    "settings-MultiInstance": "Кілька екземплярів",
     "settings-MultiInstance-desc": "Якщо увімкнено, ви зможете запустити багато екземплярів ArmCord."
 }
