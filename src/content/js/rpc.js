@@ -12,6 +12,8 @@
                 window.webpackChunkdiscord_app.pop();
 
                 const modules = wpRequire.c;
+                lookupAsset = Object.values(modules).find(m => m.exports?.fetchAssetIds).exports.fetchAssetIds;
+                lookupApp = Object.values(modules).find(m => m.exports?.fetchApplicationsRPC).exports.fetchApplicationsRPC; 
 
                 for (const id in modules) {
                     const mod = modules[id].exports;
@@ -28,43 +30,6 @@
                     }
 
                     if (Dispatcher) break;
-                }
-
-                const factories = wpRequire.m;
-                for (const id in factories) {
-                    if (factories[id].toString().includes("getAssetImage: size must === [number, number] for Twitch")) {
-                        const mod = wpRequire(id);
-
-                        // fetchAssetIds
-                        const _lookupAsset = Object.values(mod).find(
-                            (e) => typeof e === "function" && e.toString().includes("APPLICATION_ASSETS_FETCH_SUCCESS")
-                        );
-                        if (_lookupAsset)
-                            lookupAsset = async (appId, name) => (await _lookupAsset(appId, [name, undefined]))[0];
-                    }
-
-                    if (lookupAsset) break;
-                }
-
-                for (const id in factories) {
-                    if (factories[id].toString().includes("APPLICATION_RPC(")) {
-                        const mod = wpRequire(id);
-
-                        // fetchApplicationsRPC
-                        const _lookupApp = Object.values(mod).find((e) => {
-                            if (typeof e !== "function") return;
-                            const str = e.toString();
-                            return str.includes(",coverImage:") && str.includes("INVALID_ORIGIN");
-                        });
-                        if (_lookupApp)
-                            lookupApp = async (appId) => {
-                                let socket = {};
-                                await _lookupApp(socket, appId);
-                                return socket.application;
-                            };
-                    }
-
-                    if (lookupApp) break;
                 }
             }
 
@@ -91,5 +56,6 @@
         });
     };
 
+    cb();
     setInterval(cb, 30 * 1000);
 }
