@@ -1,97 +1,61 @@
-window.addEventListener("load", async () => {
-  let Dispatcher = undefined,
-    lookupAsset = undefined,
-    lookupApp = undefined;
+{
+    const cb = () => {
+        let Dispatcher,
+            lookupAsset,
+            lookupApp,
+            apps = {};
 
-  let apps = {};
-  const chunkName = 'webpackChunkdiscord_app';
+        ArmCordRPC.listen(async (msg) => {
+            if (!Dispatcher) {
+                let wpRequire;
+                window.webpackChunkdiscord_app.push([[Symbol()], {}, (x) => (wpRequire = x)]);
+                window.webpackChunkdiscord_app.pop();
 
-  const wpRequire = window[chunkName].push(
-    [ [Symbol()], {}, (x) => x ]
-  );
+                const modules = wpRequire.c;
+                lookupAsset = Object.values(modules).find(m => m.exports?.fetchAssetIds).exports.fetchAssetIds;
+                lookupApp = Object.values(modules).find(m => m.exports?.fetchApplicationsRPC).exports.fetchApplicationsRPC; 
 
-  const cache = wpRequire.c;
-  window[chunkName].pop();
+                for (const id in modules) {
+                    const mod = modules[id].exports;
+                    if (!mod?.__esModule) continue;
 
-  for (const id in cache) {
-    let mod = cache[id].exports;
-    if (typeof mod !== "object") continue;
+                    for (const prop in mod) {
+                        if (!mod.hasOwnProperty(prop)) continue;
 
-    let candidates;
-    try {
-      candidates = Object.values(mod);
-    } catch {
-      continue;
-    }
+                        const candidate = mod[prop];
+                        if (candidate && candidate.register && candidate.wait) {
+                            Dispatcher = candidate;
+                            break;
+                        }
+                    }
 
-    for (const candidate of candidates) {
-      if (candidate && candidate.register && candidate.wait) {
-        Dispatcher = candidate;
-        break;
-      }
-    }
-  }
+                    if (Dispatcher) break;
+                }
+            }
 
-  const factories = wpRequire.m;
-  for (const id in factories) {
-    if (
-      factories[id]
-        .toString()
-        .includes("getAssetImage: size must === [number, number] for Twitch")
-    ) {
-      const mod = wpRequire(id);
+            if (msg.activity?.assets?.large_image)
+                msg.activity.assets.large_image = await lookupAsset(
+                    msg.activity.application_id,
+                    msg.activity.assets.large_image
+                );
+            if (msg.activity?.assets?.small_image)
+                msg.activity.assets.small_image = await lookupAsset(
+                    msg.activity.application_id,
+                    msg.activity.assets.small_image
+                );
 
-      // fetchAssetIds
-      const _lookupAsset = Object.values(mod).find(
-        (e) =>
-          typeof e === "function" &&
-          e.toString().includes("APPLICATION_ASSETS_FETCH_SUCCESS"),
-      );
-      if (_lookupAsset)
-        lookupAsset = async (appId, name) =>
-          (await _lookupAsset(appId, [name, undefined]))[0];
-    }
-    if (lookupAsset) break;
-  }
+            if (msg.activity) {
+                const appId = msg.activity.application_id;
+                if (!apps[appId]) apps[appId] = await lookupApp(appId);
 
-  for (const id in factories) {
-    if (factories[id].toString().includes("APPLICATION_RPC")) {
-      const mod = wpRequire(id);
+                const app = apps[appId];
+                if (!msg.activity.name) msg.activity.name = app.name;
+            }
 
-      // fetchApplicationsRPC
-      const _lookupApp = Object.values(mod).find(
-        (e) => typeof e === "function" && e.toString().includes(",coverImage:"),
-      );
-      if (_lookupApp)
-        lookupApp = async (appId) => {
-          let socket = {};
-          await _lookupApp(socket, appId);
-          return socket.application;
-        };
-    }
-    if (lookupApp) break;
-  }
+            Dispatcher.dispatch({type: "LOCAL_ACTIVITY_UPDATE", ...msg}); // set RPC status
+        });
+    };
 
-  ArmCordRPC.listen(async (msg) => {
-    if (msg.activity) {
-      if (msg.activity?.assets?.large_image && lookupAsset)
-        msg.activity.assets.large_image = await lookupAsset(
-          msg.activity.application_id,
-          msg.activity.assets.large_image,
-        );
-      if (msg.activity?.assets?.small_image && lookupAsset)
-        msg.activity.assets.small_image = await lookupAsset(
-          msg.activity.application_id,
-          msg.activity.assets.small_image,
-        );
-
-      const appId = msg.activity.application_id;
-      if (!apps[appId] && lookupApp) apps[appId] = await lookupApp(appId);
-
-      const app = apps[appId];
-      if (!msg.activity.name) msg.activity.name = app.name;
-    }
-
-    Dispatcher.dispatch({ type: "LOCAL_ACTIVITY_UPDATE", ...msg }); // set RPC status
-  });
-});
+    cb();
+    setInterval(cb, 30 * 1000);
+}
