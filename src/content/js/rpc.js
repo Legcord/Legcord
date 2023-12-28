@@ -6,14 +6,16 @@
             apps = {};
 
         ArmCordRPC.listen(async (msg) => {
+            console.warn(msg);
             if (!Dispatcher) {
                 let wpRequire;
                 window.webpackChunkdiscord_app.push([[Symbol()], {}, (x) => (wpRequire = x)]);
                 window.webpackChunkdiscord_app.pop();
 
                 const modules = wpRequire.c;
-                lookupAsset = Object.values(modules).find(m => m.exports?.fetchAssetIds).exports.fetchAssetIds;
-                lookupApp = Object.values(modules).find(m => m.exports?.fetchApplicationsRPC).exports.fetchApplicationsRPC; 
+                lookupAsset = Object.values(modules).find((m) => m.exports?.fetchAssetIds).exports.fetchAssetIds;
+                lookupApp = Object.values(modules).find((m) => m.exports?.fetchApplicationsRPC).exports
+                    .fetchApplicationsRPC;
 
                 for (const id in modules) {
                     const mod = modules[id].exports;
@@ -51,7 +53,6 @@
                 const app = apps[appId];
                 if (!msg.activity.name) msg.activity.name = app.name;
             }
-
             Dispatcher.dispatch({type: "LOCAL_ACTIVITY_UPDATE", ...msg}); // set RPC status
         });
     };
