@@ -274,25 +274,9 @@ async function doAfterDefiningTheWindow(): Promise<void> {
     if (firstRun) {
         mainWindow.close();
     }
-    mainWindow.loadURL("data:text/html,%3Ch1%3ELoading%21%3C%2Fh1%3E");
-    mainWindow.webContents.executeJavaScript(`
-            switch (window.armcord.channel) {
-                case "stable":
-                    window.location.replace("https://discord.com/app");
-                    break;
-                case "canary":
-                    window.location.replace("https://canary.discord.com/app");
-                    break;
-                case "ptb":
-                    window.location.replace("https://ptb.discord.com/app");
-                    break;
-                case undefined:
-                    window.location.replace("https://discord.com/app");
-                    break;
-                default:
-                    window.location.replace("https://discord.com/app");
-            }
-            `);
+    //loadURL broke for no good reason after E28
+    mainWindow.loadFile("splash/redirect.html");
+
     if (await getConfig("skipSplash")) {
         mainWindow.show();
     }

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Loading</title>
+    </head>
+    <body>
+        <h1>Loading Discord</h1>
+        <script>
+            switch (window.armcord.channel) {
+                case "stable":
+                    window.location.replace("https://discord.com/app");
+                    break;
+                case "canary":
+                    window.location.replace("https://canary.discord.com/app");
+                    break;
+                case "ptb":
+                    window.location.replace("https://ptb.discord.com/app");
+                    break;
+                case undefined:
+                    window.location.replace("https://discord.com/app");
+                    break;
+                default:
+                    window.location.replace("https://discord.com/app");
+            }
+        </script>
+    </body>
+</html>
