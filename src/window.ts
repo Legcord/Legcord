@@ -275,7 +275,7 @@ async function doAfterDefiningTheWindow(): Promise<void> {
         mainWindow.close();
     }
     //loadURL broke for no good reason after E28
-    mainWindow.loadFile("splash/redirect.html");
+    mainWindow.loadFile(`${__dirname}/splash/redirect.html`);
 
     if (await getConfig("skipSplash")) {
         mainWindow.show();
