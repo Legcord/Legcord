@@ -73,11 +73,24 @@ sleep(5000).then(async () => {
 
 // Settings info version injection
 setInterval(() => {
+    addScript(`
+    if (document.getElementById("ACsettingsModal") == null) {
+        var html = '<span class="close" id="closeSettings">&times;</span><div class="ACsettings-modal-content" id="webviewSettingsContainer"></div>';
+        const elem = document.createElement("div");
+        elem.id = "ACsettingsModal";
+        elem.classList.add("ACsettings-modal");
+        elem.innerHTML = html;
+        document.getElementById("app-mount").prepend(elem);
+        document.getElementById("closeSettings").addEventListener("click", () => {
+            document.getElementById("webviewSettingsContainer").innerHTML = "";
+            document.getElementById("ACsettingsModal").style.display = "none";
+        });
+    }
+    `);
     const host = document.querySelector('[class*="sidebar"] [class*="info"]');
     if (!host || host.querySelector("#ac-ver")) {
         return;
     }
-
     const el = host.firstElementChild!.cloneNode() as HTMLSpanElement;
     el.id = "ac-ver";
     el.textContent = `ArmCord Version: ${version}`;
