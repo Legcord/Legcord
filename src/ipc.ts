@@ -131,9 +131,6 @@ export function registerIpc(): void {
     ipcMain.on("mobileMode", async (event) => {
         event.returnValue = await getConfig("mobileMode");
     });
-    ipcMain.on("shouldPatch", async (event) => {
-        event.returnValue = await getConfig("automaticPatches");
-    });
     ipcMain.on("openSettingsWindow", () => {
         createSettingsWindow();
     });

@@ -48,7 +48,6 @@ export function setup(): void {
         channel: "stable",
         armcordCSP: true,
         minimizeToTray: true,
-        automaticPatches: false,
         keybinds: [],
         alternativePaste: false,
         multiInstance: false,
@@ -257,7 +256,6 @@ export interface Settings {
     channel: string;
     armcordCSP: boolean;
     minimizeToTray: boolean;
-    automaticPatches: boolean;
     alternativePaste: boolean;
     multiInstance: boolean;
     spellcheck: boolean;
