@@ -30,18 +30,23 @@ export async function checkIfConfigIsBroken(): Promise<void> {
         let settingsData = fs.readFileSync(getConfigLocation(), "utf-8");
         JSON.parse(settingsData);
         console.log("Config is fine");
+    } catch (e) {
+        console.error(e);
+        console.log("Detected a corrupted config");
+        setup();
+        dialog.showErrorBox(
+            "Oops, something went wrong.",
+            "ArmCord has detected that your configuration file is corrupted, please restart the app and set your settings again. If this issue persists, report it on the support server/Github issues."
+        );
+    }
+    try {
         let windowData = fs.readFileSync(getWindowStateLocation(), "utf-8");
         JSON.parse(windowData);
         console.log("Window config is fine");
     } catch (e) {
         console.error(e);
-        console.log("Detected a corrupted config");
-        setup();
         fs.writeFileSync(getWindowStateLocation(), "{}", "utf-8");
-        dialog.showErrorBox(
-            "Oops, something went wrong.",
-            "ArmCord has detected that your configuration file is corrupted, please restart the app and set your settings again. If this issue persists, report it on the support server/Github issues."
-        );
+        console.log("Detected a corrupted window config");
     }
 }
 
