@@ -27,13 +27,17 @@ export async function sleep(ms: number): Promise<void> {
 
 export async function checkIfConfigIsBroken(): Promise<void> {
     try {
-        let rawdata = fs.readFileSync(getConfigLocation(), "utf-8");
-        JSON.parse(rawdata);
+        let settingsData = fs.readFileSync(getConfigLocation(), "utf-8");
+        JSON.parse(settingsData);
         console.log("Config is fine");
+        let windowData = fs.readFileSync(getWindowStateLocation(), "utf-8");
+        JSON.parse(windowData);
+        console.log("Window config is fine");
     } catch (e) {
         console.error(e);
         console.log("Detected a corrupted config");
         setup();
+        fs.writeFileSync(getWindowStateLocation(), "{}", "utf-8");
         dialog.showErrorBox(
             "Oops, something went wrong.",
             "ArmCord has detected that your configuration file is corrupted, please restart the app and set your settings again. If this issue persists, report it on the support server/Github issues."
@@ -214,6 +218,11 @@ export interface WindowState {
     x: number;
     y: number;
     isMaximized: boolean;
+}
+function getWindowStateLocation() {
+    const userDataPath = app.getPath("userData");
+    const storagePath = path.join(userDataPath, "/storage/");
+    return `${storagePath}window.json`;
 }
 export async function setWindowState(object: WindowState): Promise<void> {
     const userDataPath = app.getPath("userData");
