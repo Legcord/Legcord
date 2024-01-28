@@ -1,16 +1,18 @@
-const {readlink, readdir} = require("fs/promises");
+const {readFile, readdir} = require("fs/promises");
 
-const getProcesses = async () => {
-    const pids = (await readdir("/proc")).filter((f) => !isNaN(+f));
-    return (
+const getProcesses = async () =>
+    (
         await Promise.all(
-            pids.map((pid) =>
-                readlink(`/proc/${pid}/exe`).then(
-                    (path) => [+pid, path],
-                    () => {}
-                )
+            (
+                await readdir("/proc")
+            ).map(
+                (pid) =>
+                    +pid > 0 &&
+                    readFile(`/proc/${pid}/cmdline`, "utf8").then(
+                        (path) => [+pid, path.replaceAll("0", "")],
+                        () => 0
+                    )
             )
         )
     ).filter((x) => x);
-};
 module.exports = {getProcesses};

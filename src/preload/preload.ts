@@ -1,5 +1,4 @@
 import "./bridge";
-import "./patch";
 import "./optimizer";
 import "./settings";
 import {ipcRenderer} from "electron";

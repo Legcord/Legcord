@@ -23,7 +23,9 @@ class RPCServer extends EventEmitter {
 
             this.ipc = await new IPCServer(handlers);
             this.ws = await new WSServer(handlers);
-            this.process = await new ProcessServer(handlers);
+
+            if (!process.argv.includes("--no-process-scanning") && !process.env.ARRPC_NO_PROCESS_SCANNING)
+                this.process = await new ProcessServer(handlers);
 
             return this;
         })();
@@ -33,6 +35,7 @@ class RPCServer extends EventEmitter {
         socket.send({
             cmd: "DISPATCH",
             evt: "READY",
+            nonce: 0,
 
             data: {
                 v: 1,
@@ -137,15 +140,23 @@ class RPCServer extends EventEmitter {
             case "GUILD_TEMPLATE_BROWSER":
             case "INVITE_BROWSER":
                 const {code} = args;
-                socket.send({
-                    cmd,
-                    data: {
-                        code
-                    },
-                    nonce
-                });
 
-                this.emit(cmd === "INVITE_BROWSER" ? "invite" : "guild-template", code);
+                const isInvite = cmd === "INVITE_BROWSER";
+                const callback = (isValid = true) => {
+                    socket.send({
+                        cmd,
+                        data: isValid
+                            ? {code}
+                            : {
+                                  code: isInvite ? 4011 : 4017,
+                                  message: `Invalid ${isInvite ? "invite" : "guild template"} id: ${code}`
+                              },
+                        evt: isValid ? null : "ERROR",
+                        nonce
+                    });
+                };
+
+                this.emit(isInvite ? "invite" : "guild-template", code, callback);
                 break;
 
             case "DEEP_LINK":
