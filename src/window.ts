@@ -101,7 +101,12 @@ async function doAfterDefiningTheWindow(): Promise<void> {
             url === "https://canary.discord.com/popout" ||
             url === "https://ptb.discord.com/popout"
         )
-            return {action: "allow"};
+            return {
+                action: "allow",
+                overrideBrowserWindowOptions: {
+                    alwaysOnTop: true
+                }
+            };
         if (url.startsWith("https:") || url.startsWith("http:") || url.startsWith("mailto:")) {
             shell.openExternal(url);
         } else if (ignoreProtocolWarning) {
