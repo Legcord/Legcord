@@ -57,10 +57,16 @@ If you're using an older version of Windows, you need to use [pre-built installe
 ### Debian, Ubuntu and Raspbian repository
 ArmCord is available on our official repositories for `apt` package manager. By using this method you'll receive automatic updates and get all the dependencies. Run the following commands to install ArmCord from them:
 ```sh
-curl -fsSL https://eu.armcord.app/pgp-key.public | sudo gpg --dearmor -o /usr/share/keyrings/armcord.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/armcord.gpg] https://eu.armcord.app/apt-repo stable main" | sudo tee /etc/apt/sources.list.d/armcord.list
+curl -fsSL https://apt.armcord.app/public.gpg | sudo gpg --dearmor -o /usr/share/keyrings/armcord.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/armcord.gpg] https://apt.armcord.app/ stable main" | sudo tee /etc/apt/sources.list.d/armcord.list
 sudo apt update
 sudo apt install armcord
+```
+If you previously used old ArmCord apt repo, here's how you can remove it:
+```sh
+sudo rm /etc/apt/sources.list.d/armcord.list
+sudo rm /usr/share/keyrings/armcord.gpg
+sudo apt update
 ```
 ### Snap package
 ArmCord is also available on the Snap store [here](https://snapcraft.io/armcord).   
