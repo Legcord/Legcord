@@ -122,6 +122,6 @@ setInterval(() => {
     fQuit.onclick = () => ipcRenderer.send("win-quit");
     advanced.insertAdjacentElement("afterend", acSettings);
     advanced.insertAdjacentElement("afterend", tManager);
-    advanced.insertAdjacentElement("afterend", keybindMaker);
+    //advanced.insertAdjacentElement("afterend", keybindMaker);
     advanced.insertAdjacentElement("afterend", fQuit);
 }, 1000);
