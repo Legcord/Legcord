@@ -395,45 +395,75 @@ async function updateModBundle(): Promise<void> {
 }
 
 export let modInstallState: string;
-export async function installModLoader(): Promise<void> {
+export function updateModInstallState() {
+    modInstallState = "modDownload";
+
+    updateModBundle();
+    import("./extensions/plugin");
+
+    modInstallState = "done";
+}
+
+export async function installModLoader(): Promise<void> 
+{
     if ((await getConfig("mods")) == "none") {
         modInstallState = "none";
         fs.rmSync(`${app.getPath("userData")}/plugins/loader`, {recursive: true, force: true});
+
         import("./extensions/plugin");
         console.log("[Mod loader] Skipping");
-    } else {
-        const pluginFolder = `${app.getPath("userData")}/plugins/`;
-        if (!fs.existsSync(`${pluginFolder}loader`) || !fs.existsSync(`${pluginFolder}loader/dist/bundle.css`)) {
-            try {
-                fs.rmSync(`${app.getPath("userData")}/plugins/loader`, {recursive: true, force: true});
-                modInstallState = "installing";
-                let zipPath = `${app.getPath("temp")}/loader.zip`;
-                if (!fs.existsSync(pluginFolder)) {
-                    fs.mkdirSync(pluginFolder);
-                    console.log("[Mod loader] Created missing plugin folder");
-                }
-                let loaderZip = await fetch("https://armcord.app/loader.zip");
-                if (!loaderZip.ok) throw new Error(`unexpected response ${loaderZip.statusText}`);
-                await streamPipeline(loaderZip.body, fs.createWriteStream(zipPath));
-                await extract(zipPath, {dir: path.join(app.getPath("userData"), "plugins")});
-                modInstallState = "modDownload";
-                updateModBundle();
-                import("./extensions/plugin");
-                modInstallState = "done";
-            } catch (e) {
-                console.log("[Mod loader] Failed to install modloader");
-                console.error(e);
-                dialog.showErrorBox(
-                    "Oops, something went wrong.",
-                    "ArmCord couldn't install internal mod loader, please check if you have stable internet connection and restart the app. If this issue persists, report it on the support server/Github issues."
-                );
-            }
-        } else {
-            modInstallState = "modDownload";
-            updateModBundle();
-            import("./extensions/plugin");
-            modInstallState = "done";
+
+        return;
+    }
+
+    const pluginFolder = `${app.getPath("userData")}/plugins/`;
+    if (fs.existsSync(`${pluginFolder}loader`) && fs.existsSync(`${pluginFolder}loader/dist/bundle.css`)){
+        updateModInstallState();
+        return;
+    }
+
+    try {
+        fs.rmSync(`${app.getPath("userData")}/plugins/loader`, {recursive: true, force: true});
+        modInstallState = "installing";
+
+        let zipPath = `${app.getPath("temp")}/loader.zip`;
+
+        if(!fs.existsSync(pluginFolder)) {
+            fs.mkdirSync (pluginFolder);
+            console.log("[Mod loader] Created missing plugin folder");
         }
+
+        // Add more of these later if needed!
+        let URLs = ['https://armcord.app/loader.zip', 'https://armcord.vercel.app/loader.zip', 'https://raw.githubusercontent.com/ArmCord/website/new/public/loader.zip'];
+        let loaderZip: any;
+
+        while (true){
+            if(URLs.length <= 0)
+                throw new Error(`unexpected response ${loaderZip.statusText}`);
+
+            try {
+                loaderZip = await fetch(URLs[0]);
+            } catch (err) {
+                console.log('[Mod loader] Failed to download. Links left to try: ' + (URLs.length - 1));
+                URLs.splice(0, 1);
+
+                continue;
+            }
+
+            break;
+        }
+
+        await streamPipeline(loaderZip.body, fs.createWriteStream(zipPath));
+        await extract(zipPath, {dir: path.join(app.getPath("userData"), "plugins")});
+
+        updateModInstallState();
+    } catch (e) {
+        console.log("[Mod loader] Failed to install modloader");
+        console.error(e);
+        dialog.showErrorBox(
+            "Oops, something went wrong.",
+            "ArmCord couldn't install internal mod loader, please check if you have stable internet connection and restart the app. If this issue persists, report it on the support server/Github issues."
+        );
     }
 }
 
