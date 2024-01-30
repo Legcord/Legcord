@@ -129,7 +129,7 @@ ArmCord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).
 - Yes! ArmCord should work normally under Windows, MacOS, and Linux as long as it has Electron support.  
 
 ## How can I access the settings?
-- Either right-click on the tray icon and click `Open Settings` or open Discord settings and scroll down the sidebar until you see information about versions. Click on the ArmCord version and the settings window will pop out.
+- Open Discord settings and there should be a button `ArmCord Settings` button with a white Discord icon, you can also right click on the tray icon and click `Open Settings`
 
 ## How does this work?   
 - We are using the official web app and wrapping it up in Electron. While you may think this is lame and done like thousands of times before, what makes us unique is that we actually strive for creating a customized experience. You can very easily load themes and mods with no installers/injectors. You can even make the client have transparency effects and follow the fluent design of Windows! At its core, it's just a simple web wrapper, however, we applied many patches to make this work well for you <3
