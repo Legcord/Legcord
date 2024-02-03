@@ -21,13 +21,18 @@
                 <source src="https://armcord.app/discord_loading.webm" type="video/webm" />
             </video>
             <p id="text-splashscreen"></p>
+            <button id="ignore">Start anyway</button>
         </div>
     </body>
     <script>
         async function loadLang() {
             const text = document.getElementById("text-splashscreen");
-            if (window.navigator.onLine === false) {
+            if (window.navigator.onLine === true) {
                 text.innerHTML = await internal.getLang("loading_screen_offline");
+                document.getElementById("ignore").style.display = "block";
+                document.getElementById("ignore").onclick = () => {
+                    window.internal.splashEnd();
+                };
             } else {
                 text.innerHTML = await internal.getLang("loading_screen_start");
                 if (window.internal.version === "3.3.0") {

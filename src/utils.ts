@@ -404,8 +404,7 @@ export function updateModInstallState() {
     modInstallState = "done";
 }
 
-export async function installModLoader(): Promise<void> 
-{
+export async function installModLoader(): Promise<void> {
     if ((await getConfig("mods")) == "none") {
         modInstallState = "none";
         fs.rmSync(`${app.getPath("userData")}/plugins/loader`, {recursive: true, force: true});
@@ -417,7 +416,7 @@ export async function installModLoader(): Promise<void>
     }
 
     const pluginFolder = `${app.getPath("userData")}/plugins/`;
-    if (fs.existsSync(`${pluginFolder}loader`) && fs.existsSync(`${pluginFolder}loader/dist/bundle.css`)){
+    if (fs.existsSync(`${pluginFolder}loader`) && fs.existsSync(`${pluginFolder}loader/dist/bundle.css`)) {
         updateModInstallState();
         return;
     }
@@ -428,23 +427,26 @@ export async function installModLoader(): Promise<void>
 
         let zipPath = `${app.getPath("temp")}/loader.zip`;
 
-        if(!fs.existsSync(pluginFolder)) {
-            fs.mkdirSync (pluginFolder);
+        if (!fs.existsSync(pluginFolder)) {
+            fs.mkdirSync(pluginFolder);
             console.log("[Mod loader] Created missing plugin folder");
         }
 
         // Add more of these later if needed!
-        let URLs = ['https://armcord.app/loader.zip', 'https://armcord.vercel.app/loader.zip', 'https://raw.githubusercontent.com/ArmCord/website/new/public/loader.zip'];
+        let URLs = [
+            "https://armcord.app/loader.zip",
+            "https://armcord.vercel.app/loader.zip",
+            "https://raw.githubusercontent.com/ArmCord/website/new/public/loader.zip"
+        ];
         let loaderZip: any;
 
-        while (true){
-            if(URLs.length <= 0)
-                throw new Error(`unexpected response ${loaderZip.statusText}`);
+        while (true) {
+            if (URLs.length <= 0) throw new Error(`unexpected response ${loaderZip.statusText}`);
 
             try {
                 loaderZip = await fetch(URLs[0]);
             } catch (err) {
-                console.log('[Mod loader] Failed to download. Links left to try: ' + (URLs.length - 1));
+                console.log("[Mod loader] Failed to download. Links left to try: " + (URLs.length - 1));
                 URLs.splice(0, 1);
 
                 continue;

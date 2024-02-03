@@ -38,14 +38,11 @@ html,
 body {
     -webkit-app-region: drag;
     overflow: hidden;
-
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100%;
-
     background: var(--background-primary);
-
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -54,29 +51,27 @@ body {
 
 * {
     font-family: "Whitney", sans-serif;
-
     box-sizing: border-box;
     -webkit-user-select: none;
     cursor: default;
 }
 
 video {
+    display: block;
     width: 200px;
     height: 150px;
     object-fit: cover;
+    margin: 0 auto;
 }
 
 #text-splashscreen {
     font-size: 7vw;
     text-align: center;
-
     color: var(--header-primary);
     font-weight: 400;
     font-style: italic;
     font-size: 16px;
-
     text-transform: uppercase;
-
     width: 100%;
 }
 
@@ -84,15 +79,12 @@ video {
 #bar-fill {
     width: 180px;
     height: 8px;
-
     border-radius: 4px;
-
     visibility: hidden;
 }
 
 #bar-container {
     background-color: var(--background-secondary);
-
     position: relative;
     margin-top: 12px;
 }
@@ -106,7 +98,6 @@ video {
     position: absolute;
     bottom: 6px;
     right: 6px;
-
     text-align: right;
     font-size: 10px;
     color: var(--text-muted);
@@ -115,4 +106,23 @@ video {
 
 img.logo {
     width: 272px;
+}
+
+button {
+    background: var(--brand-experiment);
+    color: var(--header-primary);
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+    -webkit-user-select: all !important;
+    user-select: all !important;
+    margin-top: 10px;
+    -webkit-app-region: no-drag;
+    transition: 0.17s ease;
+    display: none;
+    margin: 0 auto;
+}
+button:hover {
+    cursor: grab !important;
 }
