@@ -27,7 +27,7 @@
     <script>
         async function loadLang() {
             const text = document.getElementById("text-splashscreen");
-            if (window.navigator.onLine === true) {
+            if (window.navigator.onLine === false) {
                 text.innerHTML = await internal.getLang("loading_screen_offline");
                 document.getElementById("ignore").style.display = "block";
                 document.getElementById("ignore").onclick = () => {
