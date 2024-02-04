@@ -341,6 +341,7 @@ export async function createTransparentWindow(): Promise<void> {
         icon: iconPath,
         frame: true,
         backgroundColor: "#00000000",
+        transparent: true,
         show: false,
         autoHideMenuBar: true,
         webPreferences: {
