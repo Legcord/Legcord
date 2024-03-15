@@ -80,5 +80,6 @@
     "settings-mintoTray-desc": "Devre dışı bırakıldığında, ArmCord; kapatıldığında diğer pencereler gibi kapanacaktır. Aksi takdirde arkasına yaslanıp keyfine bakacaktır\n                sistem tepsinizde sonrası için bekleyerek.",
     "settings-theme-desc4": "native başlık çubuğuna sahip şeffaf pencere, bunu çalıştırmak için uyumlu bir temaya ihtiyacınız var. Sadece Windows.",
     "settings-MultiInstance": "Çoklu oturum",
-    "settings-MultiInstance-desc": "Etkinleştirildiğinde ArmCord'un birçok oturum ile başlatabileceksiniz."
+    "settings-MultiInstance-desc": "Etkinleştirildiğinde ArmCord'un birçok oturum ile başlatabileceksiniz.",
+    "settings-copyGPUInfo": "Copy GPU Info"
 }
