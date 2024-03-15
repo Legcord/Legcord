@@ -185,4 +185,7 @@ export function registerIpc(): void {
             }\n\`${settingsFileContent}\``
         );
     });
+    ipcMain.on("copyGPUInfo", () => {
+        clipboard.writeText(JSON.stringify(app.getGPUFeatureStatus()));
+    });
 }

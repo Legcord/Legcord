@@ -13,6 +13,7 @@ contextBridge.exposeInMainWorld("settings", {
     openStorageFolder: () => ipcRenderer.send("openStorageFolder"),
     openCrashesFolder: () => ipcRenderer.send("openCrashesFolder"),
     copyDebugInfo: () => ipcRenderer.send("copyDebugInfo"),
+    copyGPUInfo: () => ipcRenderer.send("copyGPUInfo"),
     crash: () => ipcRenderer.send("crash"),
     os: process.platform
 });
