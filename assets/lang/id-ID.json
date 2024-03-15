@@ -80,5 +80,6 @@
     "settings-mintoTray-desc": "Saat dinonaktifkan, ArmCord akan keluar seperti jendela lain saat dikeluarkan, jika tidak maka akan bersantai\n                di baki sistem untuk nanti.",
     "settings-theme-desc4": "jendela transparan dengan bilah judul asli, Anda memerlukan tema yang kompatibel untuk menjalankannya. Hanya untuk Windows.",
     "settings-MultiInstance": "Multi Instans",
-    "settings-MultiInstance-desc": "Ketika diaktifkan, Anda akan dapat memulai banyak contoh ArmCord."
+    "settings-MultiInstance-desc": "Ketika diaktifkan, Anda akan dapat memulai banyak contoh ArmCord.",
+    "settings-copyGPUInfo": "Copy GPU Info"
 }
