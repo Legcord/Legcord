@@ -80,5 +80,6 @@
     "settings-mintoTray-desc": "هنگامی که غیرفعال است، ArmCord مانند هر پنجره دیگری بسته می شود، در غیر این صورت می نشیند و\n                 در سینی سیستم خود را برای بعدا استراحت می‌کند.",
     "settings-theme-desc4": "پنجره شفاف با نوار عنوان بومی، برای اجرای آن به یک تم سازگار نیاز دارید. فقط ویندوز.",
     "settings-MultiInstance": "چند نمونه",
-    "settings-MultiInstance-desc": "وقتی فعال باشد، می‌توانید بسیاری از نمونه‌های ArmCord را راه‌اندازی کنید."
+    "settings-MultiInstance-desc": "وقتی فعال باشد، می‌توانید بسیاری از نمونه‌های ArmCord را راه‌اندازی کنید.",
+    "settings-copyGPUInfo": "Copy GPU Info"
 }
