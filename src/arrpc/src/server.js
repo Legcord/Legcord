@@ -35,7 +35,7 @@ class RPCServer extends EventEmitter {
         socket.send({
             cmd: "DISPATCH",
             evt: "READY",
-            nonce: 0,
+            nonce: "initial-ready",
 
             data: {
                 v: 1,
