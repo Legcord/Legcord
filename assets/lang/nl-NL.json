@@ -80,5 +80,6 @@
     "settings-mintoTray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax\n                in your system tray for later.",
     "settings-theme-desc4": "transparant venster met native titelbalk, je hebt een compatibel thema nodig om dit uit te voeren. Alleen voor Windows.",
     "settings-MultiInstance": "Multi Instance",
-    "settings-MultiInstance-desc": "When enabled you'll be able to start up many instances of ArmCord."
+    "settings-MultiInstance-desc": "When enabled you'll be able to start up many instances of ArmCord.",
+    "settings-copyGPUInfo": "Copy GPU Info"
 }
