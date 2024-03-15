@@ -80,5 +80,6 @@
     "settings-mintoTray-desc": "無効にすると、ArmCordを閉じた際は他のウィンドウと同じように閉じますが。\nそれ以外の場合はシステムトレイで待機し、後で使用できるようになります。",
     "settings-theme-desc4": "ネイティブなタイトルバーを使用した透過ウィンドウ。これを使用するには互換性のあるテーマが必要です。Windowsのみ。",
     "settings-MultiInstance": "マルチインスタンス",
-    "settings-MultiInstance-desc": "これを有効にすると、同時に複数のArmCordインスタンスを起動できるようになります。"
+    "settings-MultiInstance-desc": "これを有効にすると、同時に複数のArmCordインスタンスを起動できるようになります。",
+    "settings-copyGPUInfo": "Copy GPU Info"
 }
