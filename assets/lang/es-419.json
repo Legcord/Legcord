@@ -80,5 +80,6 @@
     "settings-mintoTray-desc": "Cuando no está activado, se cerrá ArmCord como cualquier otra ventana, de lo contrario, se cerrá ArmCord a la bandeja de la sistema para más tarde.",
     "settings-theme-desc4": "ventana transparente con barra de tareas nativa, necesitarás un tema compatible para ello. Exclusivo de Windows.",
     "settings-MultiInstance": "Varias instancias",
-    "settings-MultiInstance-desc": "Cuando se activa permite iniciar varias instancias de ArmCord."
+    "settings-MultiInstance-desc": "Cuando se activa permite iniciar varias instancias de ArmCord.",
+    "settings-copyGPUInfo": "Copy GPU Info"
 }
