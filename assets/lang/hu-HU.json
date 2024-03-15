@@ -80,5 +80,6 @@
     "settings-mintoTray-desc": "Ha le van tiltva, az ArmCord bezáródik, mint bármely más ablak, ha bezárják, különben hátradől és pihen.\n                a rendszer tálcáján a későbbiekre.",
     "settings-theme-desc4": "átlátszó ablak natív címsorral, ennek futtatásához kompatibilis témára van szükség. Csak Windows.",
     "settings-MultiInstance": "Több példány",
-    "settings-MultiInstance-desc": "Ha engedélyezve van, akkor az ArmCord több példányát is el tudja indítani."
+    "settings-MultiInstance-desc": "Ha engedélyezve van, akkor az ArmCord több példányát is el tudja indítani.",
+    "settings-copyGPUInfo": "Copy GPU Info"
 }
