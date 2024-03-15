@@ -80,5 +80,6 @@
     "settings-mintoTray-desc": "Quando desativado, ArmCord irá fechar igual qualquer outra janela quando fechada, por outro lado irá só sentar e relaxar\n                na bandeja do seu sistema para mais tarde.",
     "settings-theme-desc4": "janela transparente com titlebar nativa, você precisa de um tema compatível para executar isto. Apenas Windows.",
     "settings-MultiInstance": "Multi Instância",
-    "settings-MultiInstance-desc": "Quando ativado você será capaz de iniciar múltiplas instâncias do ArmCord."
+    "settings-MultiInstance-desc": "Quando ativado você será capaz de iniciar múltiplas instâncias do ArmCord.",
+    "settings-copyGPUInfo": "Copy GPU Info"
 }
