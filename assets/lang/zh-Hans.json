@@ -80,5 +80,6 @@
     "settings-mintoTray-desc": "禁用后，ArmCord 将和其他窗口一样在关闭时退出，\n                否则它将在您的系统托盘里稍稍休憩。",
     "settings-theme-desc4": "具有原生标题栏的透明窗口，需要兼容的主题。仅限Windows。",
     "settings-MultiInstance": "允许多实例",
-    "settings-MultiInstance-desc": "启用后，您将可以启动多个ArmCord实例。"
+    "settings-MultiInstance-desc": "启用后，您将可以启动多个ArmCord实例。",
+    "settings-copyGPUInfo": "Copy GPU Info"
 }
