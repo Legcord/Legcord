@@ -81,5 +81,5 @@
     "settings-theme-desc4": "transparent fönster med inbyggt titelfält, du behöver ett kompatibelt tema för detta. Windows specifikt.",
     "settings-MultiInstance": "Multi instans",
     "settings-MultiInstance-desc": "När detta är aktiverat kommer du att kunna starta många instanser av ArmCord.",
-    "settings-copyGPUInfo": "Copy GPU Info"
+    "settings-copyGPUInfo": "Kopiera GPU information"
 }
