@@ -81,5 +81,5 @@
     "settings-theme-desc4": "finestra trasparente con barra del titolo nativa, è necessario un tema compatibile per eseguirlo. Solo Windows.",
     "settings-MultiInstance": "Multi-istanza",
     "settings-MultiInstance-desc": "Se abilitato sarai in grado di avviare molte istanze di ArmCord.",
-    "settings-copyGPUInfo": "Copy GPU Info"
+    "settings-copyGPUInfo": "Copia informazioni sulla GPU"
 }
