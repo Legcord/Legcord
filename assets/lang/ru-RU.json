@@ -81,5 +81,5 @@
     "settings-theme-desc4": "прозрачное окно с нативной строкой заголовка, вам нужна совместимая тема для этого. Только для Windows.",
     "settings-MultiInstance": "Множество Экземпляров",
     "settings-MultiInstance-desc": "Когда включено, вы можете запустить множество экземпляров ArmCord.",
-    "settings-copyGPUInfo": "Copy GPU Info"
+    "settings-copyGPUInfo": "Копировать информацию о GPU"
 }
