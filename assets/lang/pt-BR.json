@@ -81,5 +81,5 @@
     "settings-theme-desc4": "janela transparente com titlebar nativa, você precisa de um tema compatível para executar isto. Apenas Windows.",
     "settings-MultiInstance": "Multi Instância",
     "settings-MultiInstance-desc": "Quando ativado você será capaz de iniciar múltiplas instâncias do ArmCord.",
-    "settings-copyGPUInfo": "Copy GPU Info"
+    "settings-copyGPUInfo": "Copiar informação da GPU"
 }
