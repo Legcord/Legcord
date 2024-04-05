@@ -28,7 +28,7 @@ import {createKeybindWindow} from "./keybindMaker/main";
 export let iconPath: string;
 export let settings: any;
 export let customTitlebar: boolean;
-checkIfConfigIsBroken();
+
 app.on("render-process-gone", (event, webContents, details) => {
     if (details.reason == "crashed") {
         app.relaunch();
@@ -80,6 +80,7 @@ if (!app.requestSingleInstanceLock() && getConfigSync("multiInstance") == (false
     );
     checkForDataFolder();
     checkIfConfigExists();
+    checkIfConfigIsBroken();
     injectElectronFlags();
     app.whenReady().then(async () => {
         if ((await getConfig("customIcon")) !== undefined ?? null) {

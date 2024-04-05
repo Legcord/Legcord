@@ -83,6 +83,12 @@
                 "rpm",
                 "AppImage"
             ]
+        },
+        "appx": {
+            "identityName": "53758smartfrigde.ArmCord",
+            "publisher": "CN=EAB3A6D3-7145-4623-8176-D579F573F339",
+            "publisherDisplayName": "smartfrigde",
+            "applicationId": "smartfrigde.ArmCord"
         }
     },
     "packageManager": "pnpm@8.10.2"
