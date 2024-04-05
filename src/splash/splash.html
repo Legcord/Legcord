@@ -28,11 +28,11 @@
         async function loadLang() {
             const text = document.getElementById("text-splashscreen");
             if (window.navigator.onLine === false) {
-                text.innerHTML = await internal.getLang("loading_screen_offline");
-                document.getElementById("ignore").style.display = "block";
-                document.getElementById("ignore").onclick = () => {
-                    window.internal.splashEnd();
-                };
+                for (let i = 0; i < 5; i++) {
+                    await new Promise((r) => setTimeout(r, 1000));
+                    text.innerHTML = (await internal.getLang("loading_screen_offline")) + (5 - i) + "s";
+                }
+                window.internal.restart();
             } else {
                 text.innerHTML = await internal.getLang("loading_screen_start");
                 if (window.internal.version === "3.3.0") {
