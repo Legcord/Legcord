@@ -61,17 +61,17 @@ sleep(5000).then(async () => {
     addScript(fs.readFileSync(path.join(__dirname, "../", "/content/js/rpc.js"), "utf8"));
     const cssPath = path.join(__dirname, "../", "/content/css/discord.css");
     addStyle(fs.readFileSync(cssPath, "utf8"));
+    await updateLang();
+});
+
+// Settings info version injection
+setInterval(() => {
     if (document.getElementById("window-controls-container") == null) {
         console.warn("Titlebar didn't inject, retrying...");
         if (ipcRenderer.sendSync("titlebar")) {
             fixTitlebar();
         }
     }
-    await updateLang();
-});
-
-// Settings info version injection
-setInterval(() => {
     addScript(`
     if (document.getElementById("ACsettingsModal") == null) {
         var html = '<span class="close" id="closeSettings">&times;</span><div class="ACsettings-modal-content" id="webviewSettingsContainer"></div>';
