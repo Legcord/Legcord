@@ -1,6 +1,6 @@
 {
     "loading_screen_start": "Запуск ArmCord…",
-    "loading_screen_offline": "Видимо, вы не в сети. Подключитесь к Интернету и повторите попытку.",
+    "loading_screen_offline": "Видимо, вы не в сети. Перезапуск через ",
     "loading_screen_update": "Доступна новая версия ArmCord. Пожалуйста, обновитесь до последней версии.",
     "setup_question1": "Добро пожаловать на установку ArmCord",
     "setup_offline": "Видимо, вы не в сети. Подключитесь к Интернету и перезапустите ArmCord.",
