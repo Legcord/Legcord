@@ -1,6 +1,6 @@
 {
     "loading_screen_start": "Startar ArmCord…",
-    "loading_screen_offline": "Du verkar vara offline. Var snäll och anslut till internet och försök igen.",
+    "loading_screen_offline": "Du verkar vara offline. Starta om i ",
     "loading_screen_update": "En ny version av ArmCord är tillgänglig. Var snäll och uppdatera till den senaste versionen.",
     "setup_question1": "Välkommen till ArmCord Setup",
     "setup_offline": "Du verkar vara offline. Var snäll och anslut till internet och omstarta ArmCord.",
