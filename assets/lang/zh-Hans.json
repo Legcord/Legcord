@@ -5,7 +5,7 @@
     "loading_screen_update": "发现ArmCord新版本。请更新至最新版。",
     "loading_screen_start": "正在启动ArmCord…",
     "setup_question1": "欢迎进入ArmCord安装向导",
-    "loading_screen_offline": "您看起来离线了，请连接至网络并重试。",
+    "loading_screen_offline": "您看起来离线了，即将自动重启： ",
     "setup_offline": "您看起来离线了。请连接至网络并重启ArmCord。",
     "setup_question2": "选择您的Discord频道或实例：",
     "settings-updater": "检查更新",
@@ -81,5 +81,5 @@
     "settings-theme-desc4": "具有原生标题栏的透明窗口，需要兼容的主题。仅限Windows。",
     "settings-MultiInstance": "允许多实例",
     "settings-MultiInstance-desc": "启用后，您将可以启动多个ArmCord实例。",
-    "settings-copyGPUInfo": "Copy GPU Info"
+    "settings-copyGPUInfo": "复制显卡信息"
 }
