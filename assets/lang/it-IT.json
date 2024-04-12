@@ -1,7 +1,7 @@
 {
     "loading_screen_update": "Una nuova versione di ArmCord è disponibile. Per favore aggiorna all'ultima versione.",
     "loading_screen_start": "Avvio di Armcord…",
-    "loading_screen_offline": "Sembri essere offline. Per favore connettiti all'Internet e riprova.",
+    "loading_screen_offline": "Sembra che tu sia offline. Ricomincia ",
     "setup_question1": "Benvenuto nella configurazione di ArmCord",
     "setup_question2": "Seleziona il tuo canale/istanza di Discord:",
     "setup_question3": "ArmCord dovrebbe gestire l'installazione di client mod?",
