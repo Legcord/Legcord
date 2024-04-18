@@ -1,6 +1,6 @@
 {
     "loading_screen_start": "Запуск ArmCord…",
-    "loading_screen_offline": "Можливо, ви не в мережі. Перевірте підключення до Інтернету та повторіть спробу.",
+    "loading_screen_offline": "Здається, ви не в мережі. Перезапуск через ",
     "settings-channel": "\"Екземпляр\" Discord",
     "settings-channel-desc1": "Ви можете використовувати це налаштування щоб обрати екземляр Discord:",
     "settings-channel-desc2": "ви, мабуть, найкраще з цим знайомі. Він використовується в стандартному офіційному клієнті\n                    Discord!",
