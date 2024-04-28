@@ -6,13 +6,6 @@ let capturerWindow: BrowserWindow;
 function registerCustomHandler(): void {
     session.defaultSession.setDisplayMediaRequestHandler(async (request, callback) => {
         console.log(request);
-        // if (process.platform == "linux") {
-        //     let isAudio = isAudioSupported();
-        //     if (isAudio) {
-        //         console.log("audio supported");
-        //         getSinks();
-        //     }
-        // }
         const sources = await desktopCapturer.getSources({
             types: ["screen", "window"]
         });
@@ -20,7 +13,7 @@ function registerCustomHandler(): void {
         if (process.platform === "linux" && process.env.XDG_SESSION_TYPE?.toLowerCase() === "wayland") {
             console.log("WebRTC Capturer detected, skipping window creation."); //assume webrtc capturer is used
             console.log({video: {id: sources[0].id, name: sources[0].name}});
-            callback({video: {id: sources[0].id, name: sources[0].name}});
+            callback({video: sources[0], audio: "loopbackWithMute"});
         } else {
             capturerWindow = new BrowserWindow({
                 width: 800,
@@ -40,8 +33,9 @@ function registerCustomHandler(): void {
                 //console.log(sources[id]);
                 //console.log(id);
                 capturerWindow.close();
-                let result = {id, name, width: 9999, height: 9999};
-                if (process.platform === "linux") {
+                let result = {id, name};
+                if (process.platform === "linux" || process.platform === "win32") {
+                    console.log("audio screenshare");
                     callback({video: result, audio: "loopbackWithMute"});
                 } else {
                     callback({video: result});

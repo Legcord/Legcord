@@ -58,7 +58,6 @@ export function setup(): void {
         armcordCSP: true,
         minimizeToTray: true,
         keybinds: [],
-        alternativePaste: false,
         multiInstance: false,
         mods: "none",
         spellcheck: true,
@@ -139,11 +138,11 @@ export async function injectElectronFlags(): Promise<void> {
     switch (await getConfig("performanceMode")) {
         case "performance":
             console.log("Performance mode enabled");
-            app.commandLine.appendSwitch(presets.performance);
+            app.commandLine.appendArgument(presets.performance);
             break;
         case "battery":
             console.log("Battery mode enabled");
-            app.commandLine.appendSwitch(presets.battery);
+            app.commandLine.appendArgument(presets.battery);
             break;
         default:
             console.log("No performance modes set");
@@ -270,7 +269,6 @@ export interface Settings {
     channel: string;
     armcordCSP: boolean;
     minimizeToTray: boolean;
-    alternativePaste: boolean;
     multiInstance: boolean;
     spellcheck: boolean;
     mods: string;
