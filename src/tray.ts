@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import {Menu, MessageBoxOptions, Tray, app, dialog, nativeImage} from "electron";
 import {createInviteWindow, mainWindow} from "./window";
-import {getConfig, getConfigLocation, getDisplayVersion, setConfig, setWindowState} from "./utils";
+import {getConfig, getConfigLocation, getDisplayVersion, setConfig} from "./utils";
 import * as path from "path";
 import {createSettingsWindow} from "./settings/main";
 export let tray: any = null;

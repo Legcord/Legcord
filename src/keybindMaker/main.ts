@@ -1,4 +1,4 @@
-import {BrowserWindow, app, globalShortcut, ipcMain, shell} from "electron";
+import {BrowserWindow, globalShortcut, ipcMain, shell} from "electron";
 import path from "path";
 import {getConfig, registerGlobalKeybinds, setConfig} from "../utils";
 let keybindWindow: BrowserWindow;

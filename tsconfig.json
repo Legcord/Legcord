@@ -16,7 +16,7 @@
         "esModuleInterop": true, // Enables compatibility with Node.js' module system since the entire export can be whatever you want. allowSyntheticDefaultImports doesn't address runtime issues and is made redundant by this setting.
         "resolveJsonModule": true, // Allows you to import JSON files just like how you can require() them. Do note that if you're accessing any JSON files outside of src, it'll mess up dist.
         "lib": ["ES2020", "DOM"], // Specifies what common libraries you have access to. If you're working in Node.js, you'll want to leave out the DOM library. But do make sure to include "@types/node" because otherwise, variables like "console" won't be defined.
-
+        "noUnusedLocals": true, // Warns you if you have unused variables.
         // Output //
         "module": "CommonJS", // Compiles ES6 imports to require() syntax.
         "removeComments": false,

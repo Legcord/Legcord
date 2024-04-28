@@ -11,15 +11,12 @@ import {
     getConfigSync,
     injectElectronFlags,
     installModLoader,
-    modInstallState,
     setConfig,
-    setLang,
-    setWindowState,
-    sleep
+    setLang
 } from "./utils";
 import "./extensions/mods";
 import "./tray";
-import {createCustomWindow, createNativeWindow, createTransparentWindow, mainWindow} from "./window";
+import {createCustomWindow, createNativeWindow, createTransparentWindow} from "./window";
 import path from "path";
 import {createTManagerWindow} from "./themeManager/main";
 import {createSplashWindow} from "./splash/main";
@@ -67,7 +64,8 @@ if (!app.requestSingleInstanceLock() && getConfigSync("multiInstance") == (false
     crashReporter.start({uploadToServer: false});
     // enable webrtc capturer for wayland
     if (process.platform === "linux" && process.env.XDG_SESSION_TYPE?.toLowerCase() === "wayland") {
-        app.commandLine.appendSwitch("enable-features=WebRTCPipeWireCapturer");
+        app.commandLine.appendSwitch("enable-features", "WebRTCPipeWireCapturer,PulseaudioLoopbackForScreenShare");
+        app.commandLine.appendSwitch("disable-features", "WebRtcAllowInputVolumeAdjustment");
         console.log("Wayland detected, using PipeWire for video capture.");
     }
     // work around chrome 66 disabling autoplay by default

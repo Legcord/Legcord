@@ -9,13 +9,9 @@ import {
     firstRun,
     getConfig,
     getWindowState,
-    modInstallState,
     registerGlobalKeybinds,
     setConfig,
-    setLang,
-    setWindowState,
-    sleep,
-    transparency
+    setWindowState
 } from "./utils";
 import {registerIpc} from "./ipc";
 import {setMenu} from "./menu";
@@ -24,7 +20,6 @@ import contextMenu from "electron-context-menu";
 import os from "os";
 import {tray} from "./tray";
 import {iconPath} from "./main";
-import {createSetupWindow} from "./setup/main";
 export let mainWindow: BrowserWindow;
 export let inviteWindow: BrowserWindow;
 let forceQuit = false;

@@ -41,8 +41,8 @@ function registerCustomHandler(): void {
                 //console.log(id);
                 capturerWindow.close();
                 let result = {id, name, width: 9999, height: 9999};
-                if (process.platform === "win32") {
-                    callback({video: result, audio: "loopback"});
+                if (process.platform === "linux") {
+                    callback({video: result, audio: "loopbackWithMute"});
                 } else {
                     callback({video: result});
                 }

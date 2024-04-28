@@ -1,4 +1,4 @@
-import {BrowserWindow, app, ipcMain, shell} from "electron";
+import {BrowserWindow, app, shell} from "electron";
 import {getDisplayVersion} from "../utils";
 import path from "path";
 import fs from "fs";

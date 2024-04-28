@@ -9,7 +9,6 @@ import {
     getLang,
     getLangName,
     getVersion,
-    getWindowState,
     modInstallState,
     packageVersion,
     setConfigBulk,

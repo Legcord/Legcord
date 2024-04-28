@@ -1,6 +1,6 @@
 import * as path from "path";
 import * as fs from "fs";
-import {addScript, addStyle} from "../utils";
+import {addStyle} from "../utils";
 import {WebviewTag} from "electron";
 
 var webview = `<webview src="${path.join("file://", __dirname, "../", "/settings/settings.html")}" preload="${path.join(
