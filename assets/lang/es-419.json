@@ -39,8 +39,6 @@
     "settings-themesFolder": "Abrir carpeta de temas",
     "settings-storageFolder": "Abrir carpeta de almacenamiento",
     "settings-invitewebsocket-desc": "Utiliza <a target=\"_blank\" href=\"https://github.com/OpenAsar/arrpc\">arRPC</a> para habilitar soporte de Discord RPC (Rich Presence) junto con programas locales en tu computadora. Inestable.",
-    "settings-altPaste": "Pegado Alternativo",
-    "settings-altPaste-desc": "Si estás usando GNOME en Linux o simplemente tienes problemas pegando imágenes copiadas de otros mensajes, esto es \n                para tí. Esta opción habilita un módulo alternativo pegar imágenes. Habilítalo solamente si tienes\n                problemas.",
     "settings-mod-desc1": "Los mods son programas que le permiten personalizar su experiencia de Discord. ¡Pueden cambiar la apariencia, modificar comportamientos o añadir nuevas características!",
     "settings-trayIcon": "Ícono en la bandeja",
     "settings-trayIcon-desc": "Escoge el ícono que aparecerá en la bandeja",

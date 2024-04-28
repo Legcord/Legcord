@@ -31,8 +31,6 @@
     "settings-channel-desc4": "公开测试版。接收介于Canary版与稳定版之间的功能更新。",
     "settings-invitewebsocket": "Rich Presence（实验性功能）",
     "settings-invitewebsocket-desc": "使用 <a target=\"_blank\" href=\"https://github.com/OpenAsar/arrpc\">arRPC</a> 以支持Discord RPC（Rich Presence）连接本地程序。正在实现中。",
-    "settings-altPaste": "备选粘贴",
-    "settings-altPaste-desc": "如果您正在Linux上使用Gnome桌面，或者您目前无法粘贴从其他消息复制的图片，\n                那么该功能正适合您。它将启用一种备选的粘贴图片模块。\n                仅在您遇到问题时启用该项。",
     "settings-mod": "客户端模组",
     "settings-mod-desc1": "客户端模组是用来帮助您定制Discord使用体验的程序。\n                它们可以更改客户端的外观，修改一些行为或添加新的功能！",
     "settings-prfmMode": "性能模式",

@@ -37,8 +37,6 @@
     "settings-channel-desc4": "build di prova pubblica. Riceve le funzionalità prima di stable ma è un po' più vecchio di Canary.",
     "settings-tray-desc": "Se disabilitato, ArmCord si chiuderà come qualsiasi altra finestra quando è chiuso, altrimenti si siederà e si rilasserà nella barra delle applicazioni per dopo.",
     "settings-invitewebsocket-desc": "Utilizza <a target=\"_blank\" href=\"https://github.com/OpenAsar/arrpc\">arRPC</a> per supportare Discord RPC (Rich Presence) con programmi locali sulla tua macchina. Lavori in corso.",
-    "settings-altPaste": "Incolla alternativo",
-    "settings-altPaste-desc": "Se sei su Gnome su Linux o semplicemente non puoi incollare immagini copiate da altri messaggi, allora questo è\n                 per te. Ciò abilita un modulo alternativo per incollare le immagini. Abilitalo solo quando stai sperimentando\n                 problemi.",
     "settings-mod-desc1": "Le mod client sono programmi che ti consentono di personalizzare la tua esperienza su Discord. Possono cambiare l'aspetto del\n                 client, modificare i comportamenti o aggiungere nuove funzionalità!",
     "settings-trayIcon": "Icona della barra",
     "settings-trayIcon-desc": "Impostare l'icona che apparirà nel menu della barra delle applicazioni.",

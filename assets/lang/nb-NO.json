@@ -37,8 +37,6 @@
     "settings-channel-desc3": "dette er en alfa-testutgave av Discord. Ved å bruke den får du tilgang til de nyeste\n                    funksjonene og fiksene.",
     "settings-channel-desc4": "Offentlig test-bygg. Får funksjoner tidligere enn den stabile versjonen, men litt senere enn Canary.",
     "settings-invitewebsocket-desc": "Når dette er påskrudd støtter ArmCord Discord.gg-lenker, noe som betyr at ArmCord automatisk godtar\n                invitasjoner hvis du åpner dem i nettleseren. Kan til tider slutte å svare.",
-    "settings-altPaste": "Alternativ innliming",
-    "settings-altPaste-desc": "Hvis du er på GNOME eller Linux, eller ganske enkelt ikke kan lime inn bilder kopiert fra andre bilder er\n                dette noe for deg. Det skrur på den alternative modulen for innliming av bilder. Kun skru på dette\n                hvis du har problemer.",
     "settings-mod-desc1": "Klientmodifikasjoner er prorammer som lar de endre Discord-opplevelsen. De kan endre klientens\n                utseende, endre adferden, eller legge til nye funksjoner.",
     "settings-trayIcon": "Systemkurvsikon",
     "settings-trayIcon-desc": "Sett ikonet som vises i systemkurven.",

@@ -31,8 +31,6 @@
     "settings-channel-desc1": "이 설정을 사용하여 디스코드의 현재 인스턴스를 변경할 수 있음:",
     "settings-channel-desc2": "당신은 아마도 이것을 가장 잘 알고 있을 것입니다. 기본 디스코드 클라이언트에서\n                    볼 수 있는 것입니다!",
     "settings-invitewebsocket-desc": "<a target=\"_blank\" href=\"https://github.com/OpenAsar/arrpc\">arRPC</a>를 사용하여 컴퓨터의 로컬 프로그램과 함께 디스코드 RPC (활동 상태)를 지원합니다. 진행중인 작업입니다.",
-    "settings-altPaste": "대체 붙여넣기",
-    "settings-altPaste-desc": "리눅스의 그놈을 사용 중이거나 단순히 다른 메시지에서 복사한 이미지를 붙여넣을 수 없다면 이것은\n                당신을 위한 것입니다. 문제가 발생한 경우에만 이 기능을\n                활성화하세요.",
     "settings-mod": "클라이언트 모드",
     "settings-mod-desc1": "클라이언트 모드는 디스코드 경험을 사용자 지정할 수 있는 프로그램입니다. 클라이언트의 모양을 변경하거나 동작을 수정하거나\n                새로운 기능을 추가할 수 있습니다!",
     "settings-prfmMode-performance": "성능",

@@ -32,8 +32,6 @@
     "settings-channel-desc4": "offentlig test build. Får funktioner tidigare än stable men är lite äldre än Canary.",
     "settings-invitewebsocket": "Rich Presence (Experimentell)",
     "settings-invitewebsocket-desc": "Använder sig av <a target=\"_blank\" href=\"https://github.com/OpenAsar/arrpc\">arRPC</a> för Discord RPC (Rich Presence) funktionalitet, med lokala program på din enhet. Work in progress.",
-    "settings-altPaste": "Alternativ Klistra in",
-    "settings-altPaste-desc": "Ifall du använder Gnome i Linux eller kan bara inte klistra in bilder som har kopierats från andra meddelanden, då passar detta\n                för dig. Detta aktiverar en alternativ modul för att klistra in bilder. Aktivera bara ifall du får\n                problem.",
     "settings-mod-desc1": "Klientmodifikationer är program som tillåter dig att anpassa din Discord upplevelse. De kan ändra utseende på\n                klienten, modifiera beteende eller lägga till nya funktioner!",
     "settings-prfmMode": "Prestandaläge",
     "settings-prfmMode-battery": "Batteri",

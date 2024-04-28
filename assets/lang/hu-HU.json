@@ -37,8 +37,6 @@
     "settings-channel-desc4": "nyilvános teszt build. Korábban kapja meg a funkciókat, mint a stabil, de egy kicsit később, mint a Canary.",
     "settings-invitewebsocket": "Rich Presence (Kisérleti)",
     "settings-invitewebsocket-desc": "Az <a target=\"_blank\" href=\"https://github.com/OpenAsar/arrpc\">arRPC-t</a> használja a Discord RPC (Rich Presence) támogatására a számítógépén lévő helyi programokkal. Fejlesztés alatt.",
-    "settings-altPaste": "Alternatív Beillesztés",
-    "settings-altPaste-desc": "Ha Gnome-ot használ Linuxon, vagy egyszerűen nem tud más üzenetekből másolt képeket beilleszteni, akkor ez\n                neked van. Ez lehetővé teszi a képek beillesztésének alternatív modulját. Csak akkor engedélyezze, ha tapasztal\n                problémát.",
     "settings-mod": "Kliens mod",
     "settings-mod-desc1": "A kliens modok olyan programok, amelyek lehetővé teszik a Discord-élmény testreszabását. Megváltoztatják a megjelenését\n                a kliensnek, megváltoztatják a viselkedését és új funkciókat adnak hozzá!",
     "settings-mod-vencord": "könnyű és könnyen használható kliens mod. Beépített boltot tartalmaz a bővítmények számára.",

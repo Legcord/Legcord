@@ -37,8 +37,6 @@
     "settings-channel-desc3": "esta é a versão de teste alfa do Discord. Ao utilizá-la, você obtém acesso aos recursos e correções\n                     mais recentes.",
     "settings-invitewebsocket-desc": "Usa <a target=\"_blank\" href=\"https://github.com/OpenAsar/arrpc\">arRPC</a> para dar suporte ao Discord RPC (Rich Presence) com programas locais na sua máquina. Trabalho em andamento.",
     "settings-channel-desc4": "canal de teste público. Recebe recursos mais cedo do que o estável, mas é um pouco mais antigo do que o Canary.",
-    "settings-altPaste": "Colar alternativo",
-    "settings-altPaste-desc": "Se você usa GNOME no Linux, ou simplesmente não consegue colar imagens copiadas a partir de outras mensagens, então isto é\n                para você. Isto habilita o módulo alternativo para colar imagens. Ative isso apenas quando estiver com\n                problemas.",
     "settings-mod-desc1": "Mods de cliente são programas que permitem personalizar sua experiência no Discord. Eles podem alterar a aparência\n                do cliente, modificar comportamentos ou adicionar novos recursos!",
     "settings-trayIcon": "Ícone da bandeja",
     "settings-trayIcon-desc": "Defina o ícone que aparecerá no menu da bandeja.",

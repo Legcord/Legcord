@@ -30,8 +30,6 @@
     "settings-channel-desc3": "これはDiscordのアルファテスト版です。\nこれを使用すると、最新の機能と修正にアクセスできるようになります。",
     "settings-channel-desc4": "公開テスト版ビルドです。安定版より早く機能を受け取るようになりますが、Canaryよりは少し古いものです。",
     "settings-invitewebsocket-desc": "<a target=\"_blank\" href=\"https://github.com/OpenAsar/arrpc\">arRPC</a> を使用して、マシン上のローカルプログラムでDiscord RPC(リッチプレゼンス)をサポートします。WIPです。",
-    "settings-altPaste": "代替貼り付け",
-    "settings-altPaste-desc": "Linuxシステム上でGNOMEを使用している場合、または単純に他のメッセージからコピーした画像を貼り付けることができない場合は、これを使用してみてください。\nこれを有効にすると、画像貼り付けのための代替モジュールが使用されます。\n問題が発生した場合にのみこれを有効にしてください。",
     "settings-mod": "クライアントmod",
     "settings-mod-desc1": "クライアントmodは、あなたのDiscord体験をカスタマイズできるプログラムです。\nクライアントの見た目を調整したり、動作を変更したり、新しい機能を追加することもできます！",
     "settings-prfmMode": "パフォーマンスモード",

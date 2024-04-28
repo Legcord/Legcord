@@ -37,8 +37,6 @@
     "settings-channel-desc3": "toto je alfa testovací vydání Discordu. Jeho používáním získáte přístup k nejnovějším\n                     funkce a opravy.",
     "settings-channel-desc4": "veřejný testovací kanál. Dostává funkce dříve než stabilní, ale je o něco starší než Canary.",
     "settings-invitewebsocket-desc": "Používá <a target=\"_blank\" href=\"https://github.com/OpenAsar/arrpc\">arRPC</a> k podpoře Discord RPC (Rich Presence) s místními programy na vašem počítači. Není dokončeno.",
-    "settings-altPaste": "Alternativní Vložení",
-    "settings-altPaste-desc": "Pokud používáte Gnome na Linuxu nebo prostě nemůžete vkládat obrázky zkopírované z jiných zpráv, pak je toto\n                 pro vás. To umožňuje alternativní modul pro vkládání obrázků. Povolte to, pouze když máte\n                 problémy.",
     "settings-mod": "Mód klienta",
     "settings-mod-desc1": "Klientské mody jsou programy, které vám umožňují přizpůsobit si zážitek z aplikace Discord. Mohou změnit vzhled\n                 klienta, upravit chování nebo přidat nové funkce!",
     "settings-mod-vencord": "lehký a snadno použitelný klientský mod. Obsahuje vestavěný obchod pro pluginy.",
