@@ -1,6 +1,5 @@
-import {BrowserWindow, Menu, app, clipboard, globalShortcut} from "electron";
+import {BrowserWindow, Menu, app, clipboard} from "electron";
 import {mainWindow} from "./window";
-import {getConfig} from "./utils";
 import {createSettingsWindow} from "./settings/main";
 
 function paste(contents: any): void {
