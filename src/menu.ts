@@ -104,7 +104,9 @@ export async function setMenu(): Promise<void> {
                 // Fix for zoom in on keyboards with dedicated + like QWERTZ (or numpad)
                 // See https://github.com/electron/electron/issues/14742 and https://github.com/electron/electron/issues/5256
                 {label: "Zoom in", accelerator: "CmdOrCtrl+=", role: "zoomIn", visible: false},
-                {label: "Zoom out", accelerator: "CmdOrCtrl+-", role: "zoomOut"}
+                {label: "Zoom out", accelerator: "CmdOrCtrl+-", role: "zoomOut"},
+                {type: "separator"},
+                {label: "Reset zoom", accelerator: "CmdOrCtrl+0", role: "resetZoom"}
             ]
         }
     ];
