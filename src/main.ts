@@ -62,10 +62,14 @@ if (!app.requestSingleInstanceLock() && getConfigSync("multiInstance") == (false
     app.commandLine.appendSwitch("disable-features", "WidgetLayering"); // fix dev tools layers
     // Your data now belongs to CCP
     crashReporter.start({uploadToServer: false});
+    // enable pulseaudio audio sharing on linux
+    if (process.platform === "linux") {
+        app.commandLine.appendSwitch("enable-features", "PulseaudioLoopbackForScreenShare");
+        app.commandLine.appendSwitch("disable-features", "WebRtcAllowInputVolumeAdjustment");
+    }
     // enable webrtc capturer for wayland
     if (process.platform === "linux" && process.env.XDG_SESSION_TYPE?.toLowerCase() === "wayland") {
-        app.commandLine.appendSwitch("enable-features", "WebRTCPipeWireCapturer,PulseaudioLoopbackForScreenShare");
-        app.commandLine.appendSwitch("disable-features", "WebRtcAllowInputVolumeAdjustment");
+        app.commandLine.appendSwitch("enable-features", "WebRTCPipeWireCapturer");
         console.log("Wayland detected, using PipeWire for video capture.");
     }
     // work around chrome 66 disabling autoplay by default
