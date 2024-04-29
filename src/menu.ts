@@ -43,6 +43,14 @@ export async function setMenu(): Promise<void> {
                     }
                 },
                 {
+                    label: "Restart",
+                    accelerator: "CmdOrCtrl+Shift+R",
+                    click() {
+                        app.relaunch();
+                        app.exit();
+                    }
+                },
+                {
                     label: "Quit",
                     accelerator: "CmdOrCtrl+Q",
                     click() {
