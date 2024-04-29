@@ -85,10 +85,6 @@
                 "tar.gz",
                 "rpm",
                 "AppImage"
-            ],
-            "executableArgs": [
-                "--ozone-platform-hint=auto",
-                "--enable-features=WebRTCPipeWireCapturer,WaylandWindowDecoration"
             ]
         },
         "appx": {
