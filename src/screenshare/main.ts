@@ -1,8 +1,27 @@
-import {BrowserWindow, desktopCapturer, ipcMain, session} from "electron";
+import {BrowserWindow, MessageBoxOptions, desktopCapturer, dialog, ipcMain, session} from "electron";
 import path from "path";
 import {iconPath} from "../main";
-
 let capturerWindow: BrowserWindow;
+function showAudioDialog(): boolean {
+    const options: MessageBoxOptions = {
+        type: "question",
+        buttons: ["Yes", "No"],
+        defaultId: 1,
+        title: "Screenshare audio",
+        message: `Would you like to screenshare audio?`,
+        detail: "Selecting yes will make viewers of your stream hear your entire system audio."
+    };
+
+    dialog.showMessageBox(capturerWindow, options).then(({response}) => {
+        if (response == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    });
+    return true;
+}
+
 function registerCustomHandler(): void {
     session.defaultSession.setDisplayMediaRequestHandler(async (request, callback) => {
         console.log(request);
@@ -12,8 +31,9 @@ function registerCustomHandler(): void {
         console.log(sources);
         if (process.platform === "linux" && process.env.XDG_SESSION_TYPE?.toLowerCase() === "wayland") {
             console.log("WebRTC Capturer detected, skipping window creation."); //assume webrtc capturer is used
-            console.log({video: {id: sources[0].id, name: sources[0].name}});
-            callback({video: sources[0], audio: "loopbackWithMute"});
+            var options: Electron.Streams = {video: sources[0]};
+            if (showAudioDialog() == true) options = {video: sources[0], audio: "loopbackWithMute"};
+            callback(options);
         } else {
             capturerWindow = new BrowserWindow({
                 width: 800,
@@ -35,8 +55,9 @@ function registerCustomHandler(): void {
                 capturerWindow.close();
                 let result = {id, name};
                 if (process.platform === "linux" || process.platform === "win32") {
-                    console.log("audio screenshare");
-                    callback({video: result, audio: "loopbackWithMute"});
+                    var options: Electron.Streams = {video: sources[0]};
+                    if (showAudioDialog() == true) options = {video: sources[0], audio: "loopbackWithMute"};
+                    callback(options);
                 } else {
                     callback({video: result});
                 }
