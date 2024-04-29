@@ -54,6 +54,9 @@
         "ws": "^8.11.0"
     },
     "build": {
+        "snap": {
+            "allowNativeWayland": true
+        },
         "nsis": {
             "include": "build/installer.nsh",
             "allowToChangeInstallationDirectory": true,
