@@ -177,17 +177,16 @@ async function doAfterDefiningTheWindow(): Promise<void> {
                 mainWindow.setIcon(trayPath);
             }
         });
-
-        mainWindow.webContents.on("page-title-updated", async (e, title) => {
-            const armCordSuffix = " - ArmCord"; /* identify */
-            if (!title.endsWith(armCordSuffix)) {
-                e.preventDefault();
-                await mainWindow.webContents.executeJavaScript(
-                    `document.title = '${title.replace("Discord |", "") + armCordSuffix}'`
-                );
-            }
-        });
     }
+    mainWindow.webContents.on("page-title-updated", async (e, title) => {
+        const armCordSuffix = " - ArmCord"; /* identify */
+        if (!title.endsWith(armCordSuffix)) {
+            e.preventDefault();
+            await mainWindow.webContents.executeJavaScript(
+                `document.title = '${title.replace("Discord |", "") + armCordSuffix}'`
+            );
+        }
+    });
     const userDataPath = app.getPath("userData");
     const themesFolder = `${userDataPath}/themes/`;
     if (!fs.existsSync(themesFolder)) {
