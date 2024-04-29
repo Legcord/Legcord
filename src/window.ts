@@ -183,7 +183,7 @@ async function doAfterDefiningTheWindow(): Promise<void> {
             if (!title.endsWith(armCordSuffix)) {
                 e.preventDefault();
                 await mainWindow.webContents.executeJavaScript(
-                    `document.title = '${(title.split(" | ")[1] ?? title) + armCordSuffix}'`
+                    `document.title = '${title.replace("Discord |", "") + armCordSuffix}'`
                 );
             }
         });
