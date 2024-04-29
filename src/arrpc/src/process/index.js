@@ -24,15 +24,19 @@ class ProcessServer {
     }
 
     async scan() {
-        const startTime = performance.now();
+        // const startTime = performance.now();
         const processes = await Native.getProcesses();
         const ids = [];
 
         // log(`got processed in ${(performance.now() - startTime).toFixed(2)}ms`);
 
-        for (const [pid, _path] of processes) {
+        for (const [pid, _path, args] of processes) {
             const path = _path.toLowerCase().replaceAll("\\", "/");
-            const toCompare = [path.split("/").pop(), path.split("/").slice(-2).join("/")];
+            const toCompare = [];
+            const splitPath = path.split("/");
+            for (let i = 1; i < splitPath.length; i++) {
+                toCompare.push(splitPath.slice(-i).join("/"));
+            }
 
             for (const p of toCompare.slice()) {
                 // add more possible tweaked paths for less false negatives
@@ -42,7 +46,19 @@ class ProcessServer {
             }
 
             for (const {executables, id, name} of DetectableDB) {
-                if (executables?.some((x) => !x.isLauncher && toCompare.some((y) => x.name === y))) {
+                if (
+                    executables?.some((x) => {
+                        if (x.is_launcher) return false;
+                        if (
+                            x.name[0] === ">"
+                                ? x.name.substring(1) !== toCompare[0]
+                                : !toCompare.some((y) => x.name === y)
+                        )
+                            return false;
+                        if (args && x.arguments) return args.join(" ").indexOf(x.arguments) > -1;
+                        return true;
+                    })
+                ) {
                     names[id] = name;
                     pids[id] = pid;
 
@@ -50,26 +66,27 @@ class ProcessServer {
                     if (!timestamps[id]) {
                         log("detected game!", name);
                         timestamps[id] = Date.now();
-
-                        this.handlers.message(
-                            {
-                                socketId: id
-                            },
-                            {
-                                cmd: "SET_ACTIVITY",
-                                args: {
-                                    activity: {
-                                        application_id: id,
-                                        name,
-                                        timestamps: {
-                                            start: timestamps[id]
-                                        }
-                                    },
-                                    pid
-                                }
-                            }
-                        );
                     }
+
+                    // Resending this on evry scan is intentional, so that in the case that arRPC scans processes before Discord, existing activities will be sent
+                    this.handlers.message(
+                        {
+                            socketId: id
+                        },
+                        {
+                            cmd: "SET_ACTIVITY",
+                            args: {
+                                activity: {
+                                    application_id: id,
+                                    name,
+                                    timestamps: {
+                                        start: timestamps[id]
+                                    }
+                                },
+                                pid
+                            }
+                        }
+                    );
                 }
             }
         }

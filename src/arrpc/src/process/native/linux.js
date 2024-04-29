@@ -9,7 +9,7 @@ const getProcesses = async () =>
                 (pid) =>
                     +pid > 0 &&
                     readFile(`/proc/${pid}/cmdline`, "utf8").then(
-                        (path) => [+pid, path.replaceAll("0", "")],
+                        (path) => [+pid, path.split("\0")[0], path.split("\0").slice(1)],
                         () => 0
                     )
             )

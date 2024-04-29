@@ -34,28 +34,28 @@ class RPCServer extends EventEmitter {
     onConnection(socket) {
         socket.send({
             cmd: "DISPATCH",
-            evt: "READY",
-            nonce: "initial-ready",
-
             data: {
                 v: 1,
-
-                // needed otherwise some stuff errors out parsing json strictly
+                config: {
+                    cdn_host: "cdn.discordapp.com",
+                    api_endpoint: "//discord.com/api",
+                    environment: "production"
+                },
                 user: {
                     // mock user data using arRPC app/bot
                     id: "1045800378228281345",
-                    username: "arRPC",
-                    discriminator: "0000",
+                    username: "arrpc",
+                    discriminator: "0",
+                    global_name: "arRPC",
                     avatar: "cfefa4d9839fb4bdf030f91c2a13e95c",
+                    avatar_decoration_data: null,
+                    bot: false,
                     flags: 0,
                     premium_type: 0
-                },
-                config: {
-                    api_endpoint: "//discord.com/api",
-                    cdn_host: "cdn.discordapp.com",
-                    environment: "production"
                 }
-            }
+            },
+            evt: "READY",
+            nonce: null
         });
 
         socket.socketId = socketId++;
@@ -130,7 +130,12 @@ class RPCServer extends EventEmitter {
 
                 socket.send?.({
                     cmd,
-                    data: null,
+                    data: {
+                        ...activity,
+                        name: "",
+                        application_id: socket.clientId,
+                        type: 0
+                    },
                     evt: null,
                     nonce
                 });
