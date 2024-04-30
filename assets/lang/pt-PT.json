@@ -79,5 +79,6 @@
     "settings-experimental": "Experimental",
     "settings-none": "Nenhum",
     "settings-csp-desc": "ArmCord CSP é o nosso sistema que gerencia o carregamento de conteúdo personalizado na app do Discord. Coisas como\n                mods de cliente e temas dependem disso. Desative se quiser livrar-se de mods e estilos personalizados.",
-    "settings-copyGPUInfo": "Copy GPU Info"
+    "settings-copyGPUInfo": "Copy GPU Info",
+    "settings-prfmMode-vaapi": "VAAPI"
 }

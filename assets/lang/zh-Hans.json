@@ -79,5 +79,6 @@
     "settings-theme-desc4": "具有原生标题栏的透明窗口，需要兼容的主题。仅限Windows。",
     "settings-MultiInstance": "允许多实例",
     "settings-MultiInstance-desc": "启用后，您将可以启动多个ArmCord实例。",
-    "settings-copyGPUInfo": "复制显卡信息"
+    "settings-copyGPUInfo": "复制显卡信息",
+    "settings-prfmMode-vaapi": "VAAPI"
 }

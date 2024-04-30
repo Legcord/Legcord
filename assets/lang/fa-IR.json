@@ -79,5 +79,6 @@
     "settings-theme-desc4": "پنجره شفاف با نوار عنوان بومی، برای اجرای آن به یک تم سازگار نیاز دارید. فقط ویندوز.",
     "settings-MultiInstance": "چند نمونه",
     "settings-MultiInstance-desc": "وقتی فعال باشد، می‌توانید بسیاری از نمونه‌های ArmCord را راه‌اندازی کنید.",
-    "settings-copyGPUInfo": "Copy GPU Info"
+    "settings-copyGPUInfo": "Copy GPU Info",
+    "settings-prfmMode-vaapi": "VAAPI"
 }

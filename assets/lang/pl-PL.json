@@ -79,5 +79,6 @@
     "settings-theme-desc4": "przeźroczyste okno z natywnym paskiem zadań, potrzebujesz kompatybilny motyw żeby to działało. Tylko dla Windows'a.",
     "settings-MultiInstance": "Wiele instancji",
     "settings-MultiInstance-desc": "Kiedy ta opcja jest włączona możliwe jest uruchomienie wielu instancji ArmCord.",
-    "settings-copyGPUInfo": "Copy GPU Info"
+    "settings-copyGPUInfo": "Copy GPU Info",
+    "settings-prfmMode-vaapi": "VAAPI"
 }

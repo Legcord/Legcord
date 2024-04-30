@@ -79,5 +79,6 @@
     "settings-theme-desc4": "ventana transparente con barra de tareas nativa, necesitarás un tema compatible para ello. Exclusivo de Windows.",
     "settings-MultiInstance": "Varias instancias",
     "settings-MultiInstance-desc": "Cuando se activa permite iniciar varias instancias de ArmCord.",
-    "settings-copyGPUInfo": "Copy GPU Info"
+    "settings-copyGPUInfo": "Copy GPU Info",
+    "settings-prfmMode-vaapi": "VAAPI"
 }

@@ -79,5 +79,6 @@
     "settings-forceNativeCrash": "Nativen Absturz erzwingen",
     "settings-MultiInstance": "Mehrere Instanzen",
     "settings-MultiInstance-desc": "Wenn diese Funktion aktiviert ist, können Sie mehrere Instanzen von ArmCord starten.",
-    "settings-copyGPUInfo": "Copy GPU Info"
+    "settings-copyGPUInfo": "Copy GPU Info",
+    "settings-prfmMode-vaapi": "VAAPI"
 }

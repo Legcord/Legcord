@@ -79,5 +79,6 @@
     "settings-theme-desc4": "jendela transparan dengan bilah judul asli, Anda memerlukan tema yang kompatibel untuk menjalankannya. Hanya untuk Windows.",
     "settings-MultiInstance": "Multi Instans",
     "settings-MultiInstance-desc": "Ketika diaktifkan, Anda akan dapat memulai banyak contoh ArmCord.",
-    "settings-copyGPUInfo": "Copy GPU Info"
+    "settings-copyGPUInfo": "Copy GPU Info",
+    "settings-prfmMode-vaapi": "VAAPI"
 }

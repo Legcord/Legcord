@@ -79,5 +79,6 @@
     "settings-theme-desc4": "прозоре вікно з рідною панеллю заголовка, вам потрібна сумісна тема, щоб запустити це. Тільки Windows.",
     "settings-MultiInstance": "Кілька екземплярів",
     "settings-MultiInstance-desc": "Якщо увімкнено, ви зможете запустити багато екземплярів ArmCord.",
-    "settings-copyGPUInfo": "Скопіювати інформацію про GPU"
+    "settings-copyGPUInfo": "Скопіювати інформацію про GPU",
+    "settings-prfmMode-vaapi": "VAAPI"
 }
