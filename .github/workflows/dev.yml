@@ -107,40 +107,6 @@ jobs:
         with:
           name: ArmCordWindows.zip
           path: dist/ArmCord-3.3.0-win.zip
-  build-legacywindows:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - uses: pnpm/action-setup@v2 # Install pnpm using packageManager key in package.json
-
-      - name: Use Node.js 18
-        uses: actions/setup-node@v2
-        with:
-          node-version: 18
-          cache: "pnpm"
-
-      - name: Install Node dependencies
-        run: pnpm install -g cargo-cp-artifact && pnpm install
-
-      - name: Install Electron-Builder
-        run: pnpm install -g electron-builder
-
-      - name: Install Electron 22
-        run: pnpm install electron@v22.3.27
-    
-      - name: Replace the version number
-        run: (Get-Content src/utils.ts) -replace "\d\.\d\.\d", "DEV" | Out-File src/utils.ts
-
-      - name: Build
-        run: npm run build && electron-builder --windows zip
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: ArmCordLegacyWindows
-          path: dist/ArmCord-3.3.0-win.zip
   build-windowsOnARM:
     runs-on: windows-latest
     steps:
@@ -181,13 +147,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      
-      - uses: actions/download-artifact@v2
-        with:
-          name: ArmCordLegacyWindows
-          path: windows
-      - name: Rename E22 zip
-        run: mv windows/ArmCord-3.3.0-win.zip windows/ArmCord-3.3.0-win7.zip
 
       - uses: actions/download-artifact@v2
         with:
@@ -207,7 +166,6 @@ jobs:
         with:
           name: ArmCordWindowsArm64.zip
           path: windows
-      
 
       - name: Get some values needed for the release
         id: vars
@@ -237,4 +195,3 @@ jobs:
             linux/ArmCord-3.3.0-arm64.zip
             windows/ArmCord-3.3.0-win.zip
             windows/ArmCord-3.3.0-arm64-win.zip
-            windows/ArmCord-3.3.0-win7.zip
