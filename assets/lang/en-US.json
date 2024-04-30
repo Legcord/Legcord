@@ -53,6 +53,7 @@
     "settings-prfmMode-desc": "Performance mode is an experimental function that may either increase responsiveness and performance of\n                ArmCord or… decrease it. Please try every option and see which fits you the best.",
     "settings-prfmMode-performance": "Performance",
     "settings-prfmMode-battery": "Battery",
+    "settings-prfmMode-vaapi": "VAAPI",
     "settings-disableAutogain": "Disable autogain",
     "settings-disableAutogain-desc": "Disables autogain.",
     "settings-trayIcon": "Tray icon",
