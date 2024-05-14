@@ -77,6 +77,9 @@ webview#inAppSettings {
     position: absolute;
     right: 5%;
     top: 5%;
+    border-radius: 10px;
+    background: black;
+    padding: 10px 15px;
 }
 
 .close:hover,
