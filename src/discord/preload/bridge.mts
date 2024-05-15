@@ -57,7 +57,6 @@ contextBridge.exposeInMainWorld("armcord", {
     getDisplayMediaSelector,
     version: ipcRenderer.sendSync("get-app-version", "app-version"),
     mods: ipcRenderer.sendSync("clientmod"),
-    packageVersion: ipcRenderer.sendSync("get-package-version", "app-version"),
     openSettingsWindow: () => ipcRenderer.send("openSettingsWindow")
 });
 let windowCallback: (arg0: object) => void;

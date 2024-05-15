@@ -8,7 +8,7 @@ import path from "path";
 import {getConfig, setConfigBulk, getConfigLocation, Settings} from "../common/config";
 import {setLang, getLang, getLangName} from "../common/lang";
 import {sleep} from "../common/sleep";
-import {getVersion, getDisplayVersion, packageVersion} from "../common/version";
+import {getVersion, getDisplayVersion} from "../common/version";
 import {customTitlebar} from "../main";
 import {createSettingsWindow} from "../settings/main";
 import {splashWindow} from "../splash/main";
@@ -79,9 +79,6 @@ export function registerIpc(): void {
     });
     ipcMain.on("modInstallState", (event) => {
         event.returnValue = modInstallState;
-    });
-    ipcMain.on("get-package-version", (event) => {
-        event.returnValue = packageVersion;
     });
     ipcMain.on("splashEnd", async () => {
         splashWindow.close();
