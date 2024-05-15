@@ -1,27 +1,28 @@
 // Modules to control application life and create native browser window
 import {BrowserWindow, app, crashReporter, session} from "electron";
 import "v8-compile-cache";
-import {
-    Settings,
-    checkForDataFolder,
-    checkIfConfigExists,
-    firstRun,
-    checkIfConfigIsBroken,
-    getConfig,
-    getConfigSync,
-    injectElectronFlags,
-    installModLoader,
-    setConfig,
-    setLang
-} from "./utils";
-import "./extensions/mods";
+import "./discord/extensions/csp";
 import "./tray";
-import {createCustomWindow, createNativeWindow, createTransparentWindow} from "./window";
+import fs from "fs";
+import {createCustomWindow, createNativeWindow, createTransparentWindow} from "./discord/window";
 import path from "path";
 import {createTManagerWindow} from "./themeManager/main";
 import {createSplashWindow} from "./splash/main";
 import {createSetupWindow} from "./setup/main";
-import {createKeybindWindow} from "./keybindMaker/main";
+import {
+    setConfig,
+    getConfigSync,
+    checkForDataFolder,
+    checkIfConfigExists,
+    checkIfConfigIsBroken,
+    getConfig,
+    firstRun,
+    Settings,
+    getConfigLocation
+} from "./common/config";
+import {injectElectronFlags} from "./common/flags";
+import {setLang} from "./common/lang";
+import {installModLoader} from "./discord/extensions/mods";
 export let iconPath: string;
 export let settings: any;
 export let customTitlebar: boolean;
@@ -46,10 +47,6 @@ async function args(): Promise<void> {
     } else if (args == "themes") {
         app.whenReady().then(async () => {
             createTManagerWindow();
-        });
-    } else if (args == "keybinds") {
-        app.whenReady().then(async () => {
-            createKeybindWindow();
         });
     }
 }
@@ -84,6 +81,7 @@ if (!app.requestSingleInstanceLock() && getConfigSync("multiInstance") == (false
     checkIfConfigExists();
     checkIfConfigIsBroken();
     injectElectronFlags();
+    console.log("[Config Manager] Current config: " + fs.readFileSync(getConfigLocation(), "utf-8"));
     app.whenReady().then(async () => {
         if ((await getConfig("customIcon")) !== undefined ?? null) {
             iconPath = await getConfig("customIcon");

@@ -4,22 +4,15 @@
 // I'm sorry for this mess but I'm not sure how to fix it.
 import {BrowserWindow, MessageBoxOptions, app, dialog, nativeImage, shell} from "electron";
 import path from "path";
-import {
-    contentPath,
-    firstRun,
-    getConfig,
-    getWindowState,
-    registerGlobalKeybinds,
-    setConfig,
-    setWindowState
-} from "./utils";
 import {registerIpc} from "./ipc";
 import {setMenu} from "./menu";
 import * as fs from "fs";
 import contextMenu from "electron-context-menu";
 import os from "os";
-import {tray} from "./tray";
-import {iconPath} from "./main";
+import {tray} from "../tray";
+import {iconPath} from "../main";
+import {getConfig, setConfig, firstRun} from "../common/config";
+import {getWindowState, setWindowState} from "../common/windowState";
 export let mainWindow: BrowserWindow;
 export let inviteWindow: BrowserWindow;
 let forceQuit = false;
@@ -196,7 +189,6 @@ async function doAfterDefiningTheWindow(): Promise<void> {
     if (!fs.existsSync(`${userDataPath}/disabled.txt`)) {
         fs.writeFileSync(path.join(userDataPath, "/disabled.txt"), "");
     }
-    registerGlobalKeybinds();
     mainWindow.webContents.on("did-finish-load", () => {
         fs.readdirSync(themesFolder).forEach((file) => {
             try {
@@ -265,7 +257,6 @@ async function doAfterDefiningTheWindow(): Promise<void> {
     mainWindow.on("unmaximize", () => {
         mainWindow.webContents.executeJavaScript(`document.body.removeAttribute("isMaximized");`);
     });
-    console.log(contentPath);
     if ((await getConfig("inviteWebsocket")) == true) {
         require("arrpc");
         //await startServer();
@@ -274,7 +265,7 @@ async function doAfterDefiningTheWindow(): Promise<void> {
         mainWindow.close();
     }
     //loadURL broke for no good reason after E28
-    mainWindow.loadFile(`${__dirname}/splash/redirect.html`);
+    mainWindow.loadFile(`${__dirname}/../splash/redirect.html`);
 
     if (await getConfig("skipSplash")) {
         mainWindow.show();

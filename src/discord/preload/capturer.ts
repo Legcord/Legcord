@@ -1,8 +1,8 @@
 //Fixed context isolation version https://github.com/getferdi/ferdi/blob/develop/src/webview/screenshare.ts
 //original https://github.com/electron/electron/issues/16513#issuecomment-602070250
-import {addScript, addStyle} from "../utils";
 import fs from "fs";
 import path from "path";
+import {addScript, addStyle} from "../../common/dom";
 
 const CANCEL_ID = "desktop-capturer-selection__cancel";
 

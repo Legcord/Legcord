@@ -1,5 +1,5 @@
 import {ipcRenderer, contextBridge} from "electron";
-import {sleep} from "../utils";
+import {sleep} from "../common/sleep";
 contextBridge.exposeInMainWorld("themes", {
     install: (url: string) => ipcRenderer.send("installBDTheme", url),
     uninstall: (id: string) => ipcRenderer.send("uninstallTheme", id)

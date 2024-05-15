@@ -1,28 +1,20 @@
 //ipc stuff
 import {app, clipboard, desktopCapturer, ipcMain, nativeImage, shell} from "electron";
 import {mainWindow} from "./window";
-import {
-    Settings,
-    getConfig,
-    getConfigLocation,
-    getDisplayVersion,
-    getLang,
-    getLangName,
-    getVersion,
-    modInstallState,
-    packageVersion,
-    setConfigBulk,
-    setLang,
-    sleep
-} from "./utils";
-import {customTitlebar} from "./main";
-import {createSettingsWindow} from "./settings/main";
+
 import os from "os";
 import fs from "fs";
 import path from "path";
-import {createTManagerWindow} from "./themeManager/main";
-import {splashWindow} from "./splash/main";
-import {createKeybindWindow} from "./keybindMaker/main";
+import {getConfig, setConfigBulk, getConfigLocation, Settings} from "../common/config";
+import {setLang, getLang, getLangName} from "../common/lang";
+import {sleep} from "../common/sleep";
+import {getVersion, getDisplayVersion, packageVersion} from "../common/version";
+import {customTitlebar} from "../main";
+import {createSettingsWindow} from "../settings/main";
+import {splashWindow} from "../splash/main";
+import {createTManagerWindow} from "../themeManager/main";
+import {modInstallState} from "./extensions/mods";
+
 const userDataPath = app.getPath("userData");
 const storagePath = path.join(userDataPath, "/storage/");
 const themesPath = path.join(userDataPath, "/themes/");
@@ -135,9 +127,6 @@ export function registerIpc(): void {
     });
     ipcMain.on("openManagerWindow", () => {
         createTManagerWindow();
-    });
-    ipcMain.on("openKeybindWindow", () => {
-        createKeybindWindow();
     });
     ipcMain.on("setting-armcordCSP", async (event) => {
         if (await getConfig("armcordCSP")) {

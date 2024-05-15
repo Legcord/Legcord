@@ -1,6 +1,6 @@
 import {BrowserWindow, Menu, app, clipboard} from "electron";
 import {mainWindow} from "./window";
-import {createSettingsWindow} from "./settings/main";
+import {createSettingsWindow} from "../settings/main";
 
 function paste(contents: any): void {
     const contentTypes = clipboard.availableFormats().toString();

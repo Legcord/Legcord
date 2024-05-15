@@ -4,10 +4,11 @@ import "./settings";
 import {ipcRenderer} from "electron";
 import * as fs from "fs";
 import * as path from "path";
-import {addScript, addStyle, sleep} from "../utils";
 import {injectMobileStuff} from "./mobile";
 import {fixTitlebar, injectTitlebar} from "./titlebar";
 import {injectSettings} from "./settings";
+import {addStyle, addScript} from "../../common/dom";
+import {sleep} from "../../common/sleep";
 
 window.localStorage.setItem("hideNag", "true");
 
@@ -56,10 +57,10 @@ sleep(5000).then(async () => {
         })();
         `);
     if (ipcRenderer.sendSync("disableAutogain")) {
-        addScript(fs.readFileSync(path.join(__dirname, "../", "/content/js/disableAutogain.js"), "utf8"));
+        addScript(fs.readFileSync(path.join(__dirname, "../", "../", "/content/js/disableAutogain.js"), "utf8"));
     }
-    addScript(fs.readFileSync(path.join(__dirname, "../", "/content/js/rpc.js"), "utf8"));
-    const cssPath = path.join(__dirname, "../", "/content/css/discord.css");
+    addScript(fs.readFileSync(path.join(__dirname, "../", "../", "/content/js/rpc.js"), "utf8"));
+    const cssPath = path.join(__dirname, "../", "../", "/content/css/discord.css");
     addStyle(fs.readFileSync(cssPath, "utf8"));
     await updateLang();
 });
@@ -107,21 +108,16 @@ setInterval(() => {
     const acSettings = advanced.cloneNode(true) as HTMLElement;
     const tManager = advanced.cloneNode(true) as HTMLElement;
     const fQuit = advanced.cloneNode(true) as HTMLElement;
-    const keybindMaker = advanced.cloneNode(true) as HTMLElement;
     acSettings.textContent = "ArmCord Settings";
     acSettings.id = "acSettings";
     acSettings.onclick = () => injectSettings();
     tManager.textContent = "Themes";
     tManager.id = "acThemes";
     tManager.onclick = () => ipcRenderer.send("openManagerWindow");
-    keybindMaker.textContent = "Global keybinds";
-    keybindMaker.id = "acKeybinds";
-    keybindMaker.onclick = () => ipcRenderer.send("openKeybindWindow");
     fQuit.textContent = "Force Quit";
     fQuit.id = "acForceQuit";
     fQuit.onclick = () => ipcRenderer.send("win-quit");
     advanced.insertAdjacentElement("afterend", acSettings);
     advanced.insertAdjacentElement("afterend", tManager);
-    advanced.insertAdjacentElement("afterend", keybindMaker);
     advanced.insertAdjacentElement("afterend", fQuit);
 }, 1000);

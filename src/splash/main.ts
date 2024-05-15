@@ -19,5 +19,5 @@ export async function createSplashWindow(): Promise<void> {
             preload: path.join(__dirname, "preload.js")
         }
     });
-    splashWindow.loadURL(`file://${__dirname}/splash.html`);
+    splashWindow.loadFile(path.join(__dirname, "splash.html"));
 }

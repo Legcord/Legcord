@@ -1,14 +1,15 @@
 import * as path from "path";
 import * as fs from "fs";
-import {addStyle} from "../utils";
+import {addStyle} from "../../common/dom";
 import {WebviewTag} from "electron";
 
-var webview = `<webview src="${path.join("file://", __dirname, "../", "/settings/settings.html")}" preload="${path.join(
+var webview = `<webview src="${path.join(
     "file://",
     __dirname,
     "../",
-    "/settings/preload.js"
-)}" id="inAppSettings"></webview>`;
+    "../",
+    "/settings/settings.html"
+)}" preload="${path.join("file://", __dirname, "../", "../", "/settings/preload.js")}" id="inAppSettings"></webview>`;
 
 export function injectSettings() {
     document.getElementById("webviewSettingsContainer")!.innerHTML = webview;

@@ -1,8 +1,8 @@
 import {BrowserWindow, app, dialog, ipcMain, shell} from "electron";
-import {sleep} from "../utils";
 import path from "path";
 import fs from "fs";
-import {createInviteWindow, mainWindow} from "../window";
+import {sleep} from "../common/sleep";
+import {createInviteWindow, mainWindow} from "../discord/window";
 let themeWindow: BrowserWindow;
 let instance = 0;
 interface ThemeManifest {

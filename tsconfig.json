@@ -1,5 +1,5 @@
-// Reference: https://www.typescriptlang.org/tsconfig
 {
+    // Reference: https://www.typescriptlang.org/tsconfig
     "include": ["src/**/*"], // This makes it so that the compiler won't compile anything outside of "src".
     //"exclude": ["src/**/*.test.ts"], // Exclude .test.ts files since they're for Jest only.
     "compilerOptions": {

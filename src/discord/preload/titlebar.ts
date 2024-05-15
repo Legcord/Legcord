@@ -1,5 +1,5 @@
 import {ipcRenderer} from "electron";
-import {addStyle} from "../utils";
+import {addStyle} from "../../common/dom";
 import * as fs from "fs";
 import * as path from "path";
 import os from "os";
@@ -21,8 +21,8 @@ export function injectTitlebar(): void {
         } else {
             document.getElementById("app-mount")!.prepend(elem);
         }
-        const titlebarcssPath = path.join(__dirname, "../", "/content/css/titlebar.css");
-        const wordmarkcssPath = path.join(__dirname, "../", "/content/css/logos.css");
+        const titlebarcssPath = path.join(__dirname, "../", "../", "/content/css/titlebar.css");
+        const wordmarkcssPath = path.join(__dirname, "../", "../", "/content/css/logos.css");
         addStyle(fs.readFileSync(titlebarcssPath, "utf8"));
         addStyle(fs.readFileSync(wordmarkcssPath, "utf8"));
         document.body.setAttribute("customTitlebar", "");
