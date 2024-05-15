@@ -15,7 +15,7 @@ var webview = `<webview src="${path.join(
     "../",
     "../",
     "/settings/preload.mjs"
-)}" id="inAppSettings"></webview>`;
+)}" id="inAppSettings" webpreferences="sandbox=false"></webview>`;
 
 export function injectSettings() {
     document.getElementById("webviewSettingsContainer")!.innerHTML = webview;
