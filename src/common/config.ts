@@ -149,7 +149,7 @@ export function setup(): void {
         trayIcon: "default",
         doneSetup: false,
         clientName: "ArmCord",
-        customIcon: path.join(__dirname, "../", "/assets/desktop.png")
+        customIcon: path.join(import.meta.dirname, "../", "/assets/desktop.png")
     };
     setConfigBulk({
         ...defaults

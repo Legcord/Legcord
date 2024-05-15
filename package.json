@@ -7,7 +7,7 @@
         "node": ">=18.0.0"
     },
     "scripts": {
-        "build": "tsc && copyfiles -u 1 src/**/*.html src/**/**/*.css src/**/**/*.js ts-out/ && copyfiles package.json ts-out/ && copyfiles assets/**/** ts-out/",
+        "build": "tsc && copyfiles -u 1 src/**/*.html src/**/**/*.css src/**/**/*.js ts-out/ && copyfiles package.json ts-out/ && copyfiles assets/**/** ts-out/ && npm run fixEsmImportPath",
         "watch": "tsc -w",
         "start": "npm run build && electron ./ts-out/main.js",
         "startThemeManager": "npm run build && electron ./ts-out/main.js themes",
@@ -16,6 +16,7 @@
         "package": "npm run build && electron-builder",
         "packageQuick": "npm run build && electron-builder --dir",
         "format": "prettier --write src *.json",
+        "fixEsmImportPath": "fix-esm-import-path ts-out/main.js",
         "lint": "eslint src --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore",
         "CIbuild": "npm run build && electron-builder --linux zip && electron-builder --windows zip && electron-builder --macos zip",
         "prepare": "git config --local core.hooksPath .hooks/"
@@ -26,27 +27,29 @@
     },
     "author": "smartfrigde",
     "license": "OSL-3.0",
+    "type": "module",
     "bugs": {
         "url": "https://github.com/armcord/armcord/issues"
     },
     "homepage": "https://github.com/armcord/armcord#readme",
     "devDependencies": {
-        "@types/node": "^18.11.9",
+        "@types/node": "^20.11.1",
         "@types/ws": "^8.5.3",
         "@typescript-eslint/eslint-plugin": "^5.59.2",
         "@typescript-eslint/parser": "^5.59.2",
         "copyfiles": "^2.4.1",
-        "electron": "30.0.4",
+        "electron": "30.0.5",
         "electron-builder": "^24.13.3",
         "eslint": "^8.40.0",
         "eslint-config-dmitmel": "github:dmitmel/eslint-config-dmitmel",
         "eslint-plugin-node": "^11.1.0",
         "eslint-plugin-prettier": "^4.2.1",
+        "fix-esm-import-path": "github:smartfrigde/fix-esm-import-path",
         "prettier": "^2.7.1",
         "typescript": "^4.9.3"
     },
     "dependencies": {
-        "arrpc": "file:src/arrpc",
+        "arrpc": "github:OpenAsar/arrpc",
         "cross-fetch": "^3.1.5",
         "electron-context-menu": "github:ArmCord/electron-context-menu",
         "extract-zip": "^2.0.1",

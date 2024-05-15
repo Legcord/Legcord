@@ -3,8 +3,8 @@ import extract from "extract-zip";
 import path from "path";
 import {getConfig} from "../../common/config";
 import fs from "fs";
-import util from "util";
-const streamPipeline = util.promisify(require("stream").pipeline);
+import {pipeline} from "stream";
+const streamPipeline = pipeline;
 async function updateModBundle(): Promise<void> {
     if ((await getConfig("noBundleUpdates")) == undefined ?? false) {
         try {
@@ -53,7 +53,7 @@ export function updateModInstallState() {
     modInstallState = "modDownload";
 
     updateModBundle();
-    import("./plugin");
+    import("./plugin.js");
 
     modInstallState = "done";
 }
@@ -63,7 +63,7 @@ export async function installModLoader(): Promise<void> {
         modInstallState = "none";
         fs.rmSync(`${app.getPath("userData")}/plugins/loader`, {recursive: true, force: true});
 
-        import("./plugin");
+        import("./plugin.js");
         console.log("[Mod loader] Skipping");
 
         return;

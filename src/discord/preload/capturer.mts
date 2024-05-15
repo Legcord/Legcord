@@ -2,7 +2,7 @@
 //original https://github.com/electron/electron/issues/16513#issuecomment-602070250
 import fs from "fs";
 import path from "path";
-import {addScript, addStyle} from "../../common/dom";
+import {addScript, addStyle} from "../../common/dom.js";
 
 const CANCEL_ID = "desktop-capturer-selection__cancel";
 
@@ -48,7 +48,7 @@ window.navigator.mediaDevices.getDisplayMedia = () => new Promise(async (resolve
 
 document.addEventListener("DOMContentLoaded", function () {
     addScript(screenShareJS);
-    const screenshareCss = path.join(__dirname, "../", "/content/css/screenshare.css");
+    const screenshareCss = path.join(import.meta.dirname, "../", "/content/css/screenshare.css");
     addStyle(fs.readFileSync(screenshareCss, "utf8"));
     console.log("Capturer injected.");
 });

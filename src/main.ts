@@ -86,7 +86,7 @@ if (!app.requestSingleInstanceLock() && getConfigSync("multiInstance") == (false
         if ((await getConfig("customIcon")) !== undefined ?? null) {
             iconPath = await getConfig("customIcon");
         } else {
-            iconPath = path.join(__dirname, "../", "/assets/desktop.png");
+            iconPath = path.join(import.meta.dirname, "../", "/assets/desktop.png");
         }
         async function init(): Promise<void> {
             if ((await getConfig("skipSplash")) == false) {

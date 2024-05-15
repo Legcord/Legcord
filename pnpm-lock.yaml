@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   arrpc:
-    specifier: file:src/arrpc
-    version: file:src/arrpc
+    specifier: github:OpenAsar/arrpc
+    version: github.com/OpenAsar/arrpc/c62ec6a04c8d870530aa6944257fe745f6c59a24
   cross-fetch:
     specifier: ^3.1.5
     version: 3.1.5
@@ -26,8 +26,8 @@ dependencies:
 
 devDependencies:
   '@types/node':
-    specifier: ^18.11.9
-    version: 18.11.9
+    specifier: ^20.11.1
+    version: 20.11.28
   '@types/ws':
     specifier: ^8.5.3
     version: 8.5.3
@@ -41,8 +41,8 @@ devDependencies:
     specifier: ^2.4.1
     version: 2.4.1
   electron:
-    specifier: 30.0.4
-    version: 30.0.4
+    specifier: 30.0.5
+    version: 30.0.5
   electron-builder:
     specifier: ^24.13.3
     version: 24.13.3(electron-builder-squirrel-windows@24.13.3)
@@ -58,6 +58,9 @@ devDependencies:
   eslint-plugin-prettier:
     specifier: ^4.2.1
     version: 4.2.1(eslint@8.40.0)(prettier@2.7.1)
+  fix-esm-import-path:
+    specifier: github:smartfrigde/fix-esm-import-path
+    version: github.com/smartfrigde/fix-esm-import-path/71f374903884f2da21aad60b8c6a34c144523bbf
   prettier:
     specifier: ^2.7.1
     version: 2.7.1
@@ -267,7 +270,7 @@ packages:
     dependencies:
       '@types/http-cache-semantics': 4.0.1
       '@types/keyv': 3.1.4
-      '@types/node': 18.15.11
+      '@types/node': 20.11.28
       '@types/responselike': 1.0.0
     dev: true
 
@@ -280,7 +283,7 @@ packages:
   /@types/fs-extra@9.0.13:
     resolution: {integrity: sha512-nEnwB++1u5lVDM2UI4c1+5R+FYaKfaAzS4OococimjVm3nQw3TuzH5UNsocrcTBbhnerblyHj4A49qXbIiZdpA==}
     dependencies:
-      '@types/node': 18.15.11
+      '@types/node': 20.11.28
     dev: true
 
   /@types/http-cache-semantics@4.0.1:
@@ -294,31 +297,23 @@ packages:
   /@types/keyv@3.1.4:
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
     dependencies:
-      '@types/node': 18.15.11
+      '@types/node': 20.11.28
     dev: true
 
   /@types/ms@0.7.31:
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
     dev: true
 
-  /@types/node@18.11.9:
-    resolution: {integrity: sha512-CRpX21/kGdzjOpFsZSkcrXMGIBWMGNIHXXBVFSH+ggkftxg+XYP20TESbh+zFvFj3EQOl5byk0HTRn1IL6hbqg==}
-    dev: true
-
-  /@types/node@18.15.11:
-    resolution: {integrity: sha512-E5Kwq2n4SbMzQOn6wnmBjuK9ouqlURrcZDVfbo9ftDDTFt3nk7ZKK4GMOzoYgnpQJKcxwQw+lGaBvvlMo0qN/Q==}
-
   /@types/node@20.11.28:
     resolution: {integrity: sha512-M/GPWVS2wLkSkNHVeLkrF2fD5Lx5UC4PxA0uZcKc6QqbIQUJyW1jVjueJYi1z8n0I5PxYrtpnPnWglE+y9A0KA==}
     dependencies:
       undici-types: 5.26.5
-    dev: true
 
   /@types/plist@3.0.2:
     resolution: {integrity: sha512-ULqvZNGMv0zRFvqn8/4LSPtnmN4MfhlPNtJCTpKuIIxGVGZ2rYWzFXrvEBoh9CVyqSE7D6YFRJ1hydLHI6kbWw==}
     requiresBuild: true
     dependencies:
-      '@types/node': 18.15.11
+      '@types/node': 20.11.28
       xmlbuilder: 15.1.1
     dev: true
     optional: true
@@ -326,7 +321,7 @@ packages:
   /@types/responselike@1.0.0:
     resolution: {integrity: sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==}
     dependencies:
-      '@types/node': 18.15.11
+      '@types/node': 20.11.28
     dev: true
 
   /@types/semver@7.3.13:
@@ -342,14 +337,14 @@ packages:
   /@types/ws@8.5.3:
     resolution: {integrity: sha512-6YOoWjruKj1uLf3INHH7D3qTXwFfEsg1kf3c0uDdSBJwfa/llkwIjrAGV7j7mVgGNbzTQ3HiHKKDXl6bJPD97w==}
     dependencies:
-      '@types/node': 18.11.9
+      '@types/node': 20.11.28
     dev: true
 
   /@types/yauzl@2.10.0:
     resolution: {integrity: sha512-Cn6WYCm0tXv8p6k+A8PvbDG763EDpBoTzHdA+Q/MF6H3sapGjCm9NzoaJncJS9tUKSuCoDs9XHxYYsQDgxR6kw==}
     requiresBuild: true
     dependencies:
-      '@types/node': 18.15.11
+      '@types/node': 20.11.28
     optional: true
 
   /@typescript-eslint/eslint-plugin@5.59.2(@typescript-eslint/parser@5.59.2)(eslint@8.40.0)(typescript@4.9.3):
@@ -1128,8 +1123,8 @@ packages:
       - supports-color
     dev: true
 
-  /electron@30.0.4:
-    resolution: {integrity: sha512-z8tGQeiVM6CHj0t8PKWVhAB4FZTRNN0vSrd1jA4edX1aOjBztddk4d0Gyw91pQb4arIVf2RGPu0hYbHG2+vDcA==}
+  /electron@30.0.5:
+    resolution: {integrity: sha512-+a7PjcAq2HrfF1l+Ez8n0W9YeZIam7E9ERHEGs+L2dqKu7qxk8GNSEFoBEPCpLI00p/fc0d76L9IcLCQJdNFqA==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     requiresBuild: true
@@ -2644,7 +2639,6 @@ packages:
 
   /undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
-    dev: true
 
   /universalify@0.1.2:
     resolution: {integrity: sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==}
@@ -2824,16 +2818,6 @@ packages:
       readable-stream: 3.6.2
     dev: true
 
-  file:src/arrpc:
-    resolution: {directory: src/arrpc, type: directory}
-    name: arrpc
-    dependencies:
-      ws: 8.11.0
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-    dev: false
-
   github.com/ArmCord/electron-context-menu/280c81398c02a063f46e3285a9708d8db1a7ce32:
     resolution: {tarball: https://codeload.github.com/ArmCord/electron-context-menu/tar.gz/280c81398c02a063f46e3285a9708d8db1a7ce32}
     name: electron-context-menu
@@ -2842,6 +2826,18 @@ packages:
       cli-truncate: 2.1.0
       electron-dl: 3.5.0
       electron-is-dev: 2.0.0
+    dev: false
+
+  github.com/OpenAsar/arrpc/c62ec6a04c8d870530aa6944257fe745f6c59a24:
+    resolution: {tarball: https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24}
+    name: arrpc
+    version: 3.4.0
+    hasBin: true
+    dependencies:
+      ws: 8.11.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
     dev: false
 
   github.com/dmitmel/eslint-config-dmitmel/d97129ec35235415c6ae6a42299f55cdbb5d75fd(eslint@8.40.0):
@@ -2854,4 +2850,15 @@ packages:
       eslint: '>=8.17.0'
     dependencies:
       eslint: 8.40.0
+    dev: true
+
+  github.com/smartfrigde/fix-esm-import-path/71f374903884f2da21aad60b8c6a34c144523bbf:
+    resolution: {tarball: https://codeload.github.com/smartfrigde/fix-esm-import-path/tar.gz/71f374903884f2da21aad60b8c6a34c144523bbf}
+    name: fix-esm-import-path
+    version: 1.5.0
+    hasBin: true
+    dependencies:
+      debug: 4.3.4
+    transitivePeerDependencies:
+      - supports-color
     dev: true

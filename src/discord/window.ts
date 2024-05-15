@@ -9,6 +9,7 @@ import {setMenu} from "./menu";
 import * as fs from "fs";
 import contextMenu from "electron-context-menu";
 import os from "os";
+import RPCServer from "arrpc";
 import {tray} from "../tray";
 import {iconPath} from "../main";
 import {getConfig, setConfig, firstRun} from "../common/config";
@@ -129,7 +130,7 @@ async function doAfterDefiningTheWindow(): Promise<void> {
     });
     if ((await getConfig("useLegacyCapturer")) == false) {
         console.log("Starting screenshare module...");
-        import("./screenshare/main");
+        import("./screenshare/main.js");
     }
 
     mainWindow.webContents.session.webRequest.onBeforeRequest(
@@ -258,14 +259,18 @@ async function doAfterDefiningTheWindow(): Promise<void> {
         mainWindow.webContents.executeJavaScript(`document.body.removeAttribute("isMaximized");`);
     });
     if ((await getConfig("inviteWebsocket")) == true) {
-        require("arrpc");
-        //await startServer();
+        const server = await new RPCServer();
+        server.on("activity", (data: string) => mainWindow.webContents.send("rpc", data));
+        server.on("invite", (code: string) => {
+            console.log(code);
+            createInviteWindow(code);
+        });
     }
     if (firstRun) {
         mainWindow.close();
     }
     //loadURL broke for no good reason after E28
-    mainWindow.loadFile(`${__dirname}/../splash/redirect.html`);
+    mainWindow.loadFile(`${import.meta.dirname}/../splash/redirect.html`);
 
     if (await getConfig("skipSplash")) {
         mainWindow.show();
@@ -287,7 +292,7 @@ export async function createCustomWindow(): Promise<void> {
         webPreferences: {
             webviewTag: true,
             sandbox: false,
-            preload: path.join(__dirname, "preload/preload.js"),
+            preload: path.join(import.meta.dirname, "preload/preload.mjs"),
             spellcheck: await getConfig("spellcheck")
         }
     });
@@ -309,7 +314,7 @@ export async function createNativeWindow(): Promise<void> {
         webPreferences: {
             webviewTag: true,
             sandbox: false,
-            preload: path.join(__dirname, "preload/preload.js"),
+            preload: path.join(import.meta.dirname, "preload/preload.mjs"),
             spellcheck: await getConfig("spellcheck")
         }
     });
@@ -331,7 +336,7 @@ export async function createTransparentWindow(): Promise<void> {
         webPreferences: {
             sandbox: false,
             webviewTag: true,
-            preload: path.join(__dirname, "preload/preload.js"),
+            preload: path.join(import.meta.dirname, "preload/preload.mjs"),
             spellcheck: await getConfig("spellcheck")
         }
     });

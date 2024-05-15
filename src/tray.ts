@@ -12,7 +12,7 @@ app.whenReady().then(async () => {
     if ((await getConfig("trayIcon")) != "default") {
         trayIcon = await getConfig("trayIcon");
     }
-    let trayPath = nativeImage.createFromPath(path.join(__dirname, "../", `/assets/${trayIcon}.png`));
+    let trayPath = nativeImage.createFromPath(path.join(import.meta.dirname, "../", `/assets/${trayIcon}.png`));
     let trayVerIcon;
     trayVerIcon = function () {
         if (process.platform == "win32") {

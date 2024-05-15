@@ -1,6 +1,6 @@
 import {BrowserWindow, MessageBoxOptions, desktopCapturer, dialog, ipcMain, session} from "electron";
 import path from "path";
-import {iconPath} from "../../main";
+import {iconPath} from "../../main.js";
 let capturerWindow: BrowserWindow;
 function showAudioDialog(): boolean {
     const options: MessageBoxOptions = {
@@ -46,7 +46,7 @@ function registerCustomHandler(): void {
                 webPreferences: {
                     sandbox: false,
                     spellcheck: false,
-                    preload: path.join(__dirname, "preload.js")
+                    preload: path.join(import.meta.dirname, "preload.js")
                 }
             });
             ipcMain.once("selectScreenshareSource", (_event, id, name) => {
@@ -62,7 +62,7 @@ function registerCustomHandler(): void {
                     callback({video: result});
                 }
             });
-            capturerWindow.loadURL(`file://${__dirname}/picker.html`);
+            capturerWindow.loadURL(`file://${import.meta.dirname}/picker.html`);
             capturerWindow.webContents.send("getSources", sources);
         }
     });

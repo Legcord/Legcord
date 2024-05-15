@@ -1,6 +1,6 @@
 import {app} from "electron";
 
-export const packageVersion = require("../package.json").version;
+export const packageVersion = "3.2.0";
 
 export function getVersion(): string {
     return packageVersion;

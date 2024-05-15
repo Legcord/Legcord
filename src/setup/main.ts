@@ -17,7 +17,7 @@ export function createSetupWindow(): void {
         webPreferences: {
             sandbox: false,
             spellcheck: false,
-            preload: path.join(__dirname, "preload.js")
+            preload: path.join(import.meta.dirname, "preload.js")
         }
     });
     ipcMain.on("saveSettings", (_event, args: Settings) => {
@@ -38,5 +38,5 @@ export function createSetupWindow(): void {
             app.quit();
         });
     });
-    setupWindow.loadURL(`file://${__dirname}/setup.html`);
+    setupWindow.loadURL(`file://${import.meta.dirname}/setup.html`);
 }

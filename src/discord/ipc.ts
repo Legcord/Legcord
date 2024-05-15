@@ -39,7 +39,7 @@ export function registerIpc(): void {
                 break;
             case "win32":
                 if (pingCount > 0) {
-                    let image = nativeImage.createFromPath(path.join(__dirname, "../", `/assets/ping.png`));
+                    let image = nativeImage.createFromPath(path.join(import.meta.dirname, "../", `/assets/ping.png`));
                     mainWindow.setOverlayIcon(image, "badgeCount");
                 } else {
                     mainWindow.setOverlayIcon(null, "badgeCount");

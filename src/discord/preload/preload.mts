@@ -1,20 +1,20 @@
-import "./bridge";
-import "./optimizer";
-import "./settings";
+import "./bridge.mjs";
+import "./optimizer.mjs";
+import "./settings.mjs";
 import {ipcRenderer} from "electron";
 import * as fs from "fs";
 import * as path from "path";
-import {injectMobileStuff} from "./mobile";
-import {fixTitlebar, injectTitlebar} from "./titlebar";
-import {injectSettings} from "./settings";
-import {addStyle, addScript} from "../../common/dom";
-import {sleep} from "../../common/sleep";
+import {injectMobileStuff} from "./mobile.mjs";
+import {fixTitlebar, injectTitlebar} from "./titlebar.mjs";
+import {injectSettings} from "./settings.mjs";
+import {addStyle, addScript} from "../../common/dom.js";
+import {sleep} from "../../common/sleep.js";
 
 window.localStorage.setItem("hideNag", "true");
 
 if (ipcRenderer.sendSync("legacyCapturer")) {
     console.warn("Using legacy capturer module");
-    import("./capturer");
+    import("./capturer.mjs");
 }
 
 const version = ipcRenderer.sendSync("displayVersion");
@@ -57,10 +57,10 @@ sleep(5000).then(async () => {
         })();
         `);
     if (ipcRenderer.sendSync("disableAutogain")) {
-        addScript(fs.readFileSync(path.join(__dirname, "../", "../", "/content/js/disableAutogain.js"), "utf8"));
+        addScript(fs.readFileSync(path.join(import.meta.dirname, "../", "/content/js/disableAutogain.js"), "utf8"));
     }
-    addScript(fs.readFileSync(path.join(__dirname, "../", "../", "/content/js/rpc.js"), "utf8"));
-    const cssPath = path.join(__dirname, "../", "../", "/content/css/discord.css");
+    addScript(fs.readFileSync(path.join(import.meta.dirname, "../", "/content/js/rpc.js"), "utf8"));
+    const cssPath = path.join(import.meta.dirname, "../", "/content/css/discord.css");
     addStyle(fs.readFileSync(cssPath, "utf8"));
     await updateLang();
 });

@@ -107,7 +107,7 @@ export function createTManagerWindow(): void {
             autoHideMenuBar: true,
             webPreferences: {
                 sandbox: false,
-                preload: path.join(__dirname, "preload.js")
+                preload: path.join(import.meta.dirname, "preload.mjs")
             }
         });
         //setWindowHandler doesn't work for some reason
@@ -124,7 +124,7 @@ export function createTManagerWindow(): void {
         });
 
         async function managerLoadPage(): Promise<void> {
-            themeWindow.loadFile(`${__dirname}/manager.html`);
+            themeWindow.loadFile(`${import.meta.dirname}/manager.html`);
         }
         const userDataPath = app.getPath("userData");
         const themesFolder = `${userDataPath}/themes/`;

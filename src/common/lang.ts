@@ -30,15 +30,15 @@ export async function getLang(object: string): Promise<string> {
     if (language.length == 2) {
         language = `${language}-${language.toUpperCase()}`;
     }
-    let langPath = path.join(__dirname, "../", `/assets/lang/${language}.json`);
+    let langPath = path.join(import.meta.dirname, "../", `/assets/lang/${language}.json`);
     if (!fs.existsSync(langPath)) {
-        langPath = path.join(__dirname, "../", "/assets/lang/en-US.json");
+        langPath = path.join(import.meta.dirname, "../", "/assets/lang/en-US.json");
     }
     let rawdata = fs.readFileSync(langPath, "utf-8");
     let parsed = JSON.parse(rawdata);
     if (parsed[object] == undefined) {
         console.log(`${object} is undefined in ${language}`);
-        langPath = path.join(__dirname, "../", "/assets/lang/en-US.json");
+        langPath = path.join(import.meta.dirname, "../", "/assets/lang/en-US.json");
         rawdata = fs.readFileSync(langPath, "utf-8");
         parsed = JSON.parse(rawdata);
         return parsed[object];

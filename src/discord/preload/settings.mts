@@ -1,15 +1,21 @@
 import * as path from "path";
 import * as fs from "fs";
-import {addStyle} from "../../common/dom";
+import {addStyle} from "../../common/dom.js";
 import {WebviewTag} from "electron";
 
 var webview = `<webview src="${path.join(
     "file://",
-    __dirname,
+    import.meta.dirname,
     "../",
     "../",
     "/settings/settings.html"
-)}" preload="${path.join("file://", __dirname, "../", "../", "/settings/preload.js")}" id="inAppSettings"></webview>`;
+)}" preload="${path.join(
+    "file://",
+    import.meta.dirname,
+    "../",
+    "../",
+    "/settings/preload.mjs"
+)}" id="inAppSettings"></webview>`;
 
 export function injectSettings() {
     document.getElementById("webviewSettingsContainer")!.innerHTML = webview;
@@ -17,7 +23,7 @@ export function injectSettings() {
 }
 
 document.addEventListener("DOMContentLoaded", function (_event) {
-    const settingsCssPath = path.join(__dirname, "../", "/content/css/inAppSettings.css");
+    const settingsCssPath = path.join(import.meta.dirname, "../", "/content/css/inAppSettings.css");
     addStyle(fs.readFileSync(settingsCssPath, "utf8"));
     const webview = document.querySelector("webview") as WebviewTag;
     webview.addEventListener("console-message", (e) => {

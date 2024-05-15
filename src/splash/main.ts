@@ -16,8 +16,8 @@ export async function createSplashWindow(): Promise<void> {
         autoHideMenuBar: true,
         webPreferences: {
             sandbox: false,
-            preload: path.join(__dirname, "preload.js")
+            preload: path.join(import.meta.dirname, "preload.mjs")
         }
     });
-    splashWindow.loadFile(path.join(__dirname, "splash.html"));
+    splashWindow.loadFile(path.join(import.meta.dirname, "splash.html"));
 }
