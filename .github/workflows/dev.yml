@@ -28,9 +28,6 @@ jobs:
       - name: Install Electron-Builder
         run: pnpm install -g electron-builder
 
-      - name: Replace the version number
-        run: cat src/utils.ts | sed -e 's/[[:digit:]]\.[[:digit:]]\.[[:digit:]]/DEV/g' | tee src/utils.ts > /dev/null
-
       - name: Build
         run: npm run build && electron-builder --linux zip && electron-builder --arm64 --linux zip
 
@@ -64,9 +61,6 @@ jobs:
       - name: Install Electron-Builder
         run: pnpm install -g electron-builder
 
-      - name: Replace the version number
-        run: cat src/utils.ts | sed -e 's/[[:digit:]]\.[[:digit:]]\.[[:digit:]]/DEV/g' | tee src/utils.ts > /dev/null
-
       - name: Build
         run: npm run build && electron-builder --linux snap --config.snap.grade=devel
 
@@ -96,9 +90,6 @@ jobs:
       - name: Install Electron-Builder
         run: pnpm install -g electron-builder
 
-      - name: Replace the version number
-        run: (Get-Content src/utils.ts) -replace "\d\.\d\.\d", "DEV" | Out-File src/utils.ts
-
       - name: Build
         run: npm run build && electron-builder --windows zip
 
@@ -127,9 +118,6 @@ jobs:
 
       - name: Install Electron-Builder
         run: pnpm install -g electron-builder
-
-      - name: Replace the version number
-        run: (Get-Content src/utils.ts) -replace "\d\.\d\.\d", "DEV" | Out-File src/utils.ts
 
       - name: Build
         run: npm run build && electron-builder --windows zip --arm64
