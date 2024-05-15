@@ -97,5 +97,6 @@
             "applicationId": "smartfrigde.ArmCord"
         }
     },
-    "packageManager": "pnpm@9.0.6"
+    "packageManager": "pnpm@9.1.1",
+    "package-manager-strict": false
 }
