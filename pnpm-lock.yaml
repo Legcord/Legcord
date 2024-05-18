@@ -46,7 +46,7 @@ importers:
         specifier: 30.0.6
         version: 30.0.6
       electron-builder:
-        specifier: ^24.13.3
+        specifier: ^24.13.0
         version: 24.13.3(electron-builder-squirrel-windows@24.13.3(dmg-builder@24.13.3))
       eslint:
         specifier: ^8.40.0
