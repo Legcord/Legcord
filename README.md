@@ -99,6 +99,14 @@ ArmCord is also available on the Arch User Repository (AUR):
 
 Install it via an AUR helper tool like `yay`.
 
+### Homebrew repository
+ArmcCord also has a homebrew repository
+```
+brew tap armcord/armcord
+```
+```
+brew install --cask armcord
+```
 **Example:** `yay -S armcord-bin`
 ### FreeBSD
 You can also get ArmCord running on FreeBSD by following [these instructions](https://gist.github.com/axyiee/4d29c982ac85d5d26f98a51040b5de37).
