@@ -23,8 +23,6 @@ jobs:
                   node-version: 19
 
             - uses: pnpm/action-setup@v4
-              with:
-                  version: latest
 
             - name: Get pnpm store directory
               shell: bash
