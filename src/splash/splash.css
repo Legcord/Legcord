@@ -53,6 +53,7 @@ body {
     font-family: "Whitney", sans-serif;
     box-sizing: border-box;
     -webkit-user-select: none;
+    user-select: none;
     cursor: default;
 }
 

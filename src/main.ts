@@ -40,17 +40,17 @@ async function args(): Promise<void> {
     if (args.startsWith("--")) return; //electron flag
     if (args.includes("=")) {
         let e = args.split("=");
-        await setConfig(e[0] as keyof Settings, e[1]);
+        setConfig(e[0] as keyof Settings, e[1]);
         console.log(`Setting ${e[0]} to ${e[1]}`);
         app.relaunch();
         app.exit();
     } else if (args == "themes") {
-        app.whenReady().then(async () => {
-            createTManagerWindow();
+        await app.whenReady().then(async () => {
+            await createTManagerWindow();
         });
     }
 }
-args(); // i want my top level awaits
+await args(); // i want my top level awaits - IMPLEMENTED :)
 if (!app.requestSingleInstanceLock() && getConfigSync("multiInstance") == (false ?? undefined)) {
     // if value isn't set after 3.2.4
     // kill if 2nd instance
@@ -78,11 +78,12 @@ if (!app.requestSingleInstanceLock() && getConfigSync("multiInstance") == (false
         "WinRetrieveSuggestionsOnlyOnDemand,HardwareMediaKeyHandling,MediaSessionService"
     );
     checkForDataFolder();
-    checkIfConfigExists();
+    await checkIfConfigExists();
     checkIfConfigIsBroken();
-    injectElectronFlags();
+    await injectElectronFlags();
     console.log("[Config Manager] Current config: " + fs.readFileSync(getConfigLocation(), "utf-8"));
-    app.whenReady().then(async () => {
+    void app.whenReady().then(async () => {
+        // REVIEW - Awaiting the line above will cause a hang at startup
         if ((await getConfig("customIcon")) !== undefined ?? null) {
             iconPath = await getConfig("customIcon");
         } else {
@@ -90,25 +91,25 @@ if (!app.requestSingleInstanceLock() && getConfigSync("multiInstance") == (false
         }
         async function init(): Promise<void> {
             if ((await getConfig("skipSplash")) == false) {
-                createSplashWindow();
+                void createSplashWindow(); // REVIEW - Awaiting will hang at start
             }
             if (firstRun == true) {
-                await setLang(new Intl.DateTimeFormat().resolvedOptions().locale);
-                createSetupWindow();
+                setLang(new Intl.DateTimeFormat().resolvedOptions().locale);
+                void createSetupWindow(); //NOTE - Untested, awaiting this will probably hang
             }
             switch (await getConfig("windowStyle")) {
                 case "default":
-                    createCustomWindow();
+                    await createCustomWindow();
                     customTitlebar = true;
                     break;
                 case "native":
-                    createNativeWindow();
+                    await createNativeWindow();
                     break;
                 case "transparent":
-                    createTransparentWindow();
+                    await createTransparentWindow();
                     break;
                 default:
-                    createCustomWindow();
+                    await createCustomWindow();
                     customTitlebar = true;
                     break;
             }
@@ -125,8 +126,10 @@ if (!app.requestSingleInstanceLock() && getConfigSync("multiInstance") == (false
                 callback(true);
             }
         });
-        app.on("activate", async function () {
-            if (BrowserWindow.getAllWindows().length === 0) await init();
+        app.on("activate", function () {
+            async () => {
+                if (BrowserWindow.getAllWindows().length === 0) await init();
+            };
         });
     });
 }

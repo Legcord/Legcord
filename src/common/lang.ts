@@ -1,7 +1,7 @@
 import {app} from "electron";
 import path from "path";
 import fs from "fs";
-export async function setLang(language: string): Promise<void> {
+export function setLang(language: string): void {
     const langConfigFile = `${path.join(app.getPath("userData"), "/storage/")}lang.json`;
     if (!fs.existsSync(langConfigFile)) {
         fs.writeFileSync(langConfigFile, "{}", "utf-8");
@@ -13,7 +13,7 @@ export async function setLang(language: string): Promise<void> {
     fs.writeFileSync(langConfigFile, toSave, "utf-8");
 }
 let language: string;
-export async function getLang(object: string): Promise<string> {
+export function getLang(object: string): Promise<string> {
     if (language == undefined) {
         try {
             const userDataPath = app.getPath("userData");
@@ -46,7 +46,7 @@ export async function getLang(object: string): Promise<string> {
         return parsed[object];
     }
 }
-export async function getLangName(): Promise<string> {
+export function getLangName(): string {
     if (language == undefined) {
         try {
             const userDataPath = app.getPath("userData");

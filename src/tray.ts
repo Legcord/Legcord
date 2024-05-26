@@ -7,7 +7,8 @@ import {getConfig, getConfigLocation, setConfig} from "./common/config";
 import {getDisplayVersion} from "./common/version";
 export let tray: any = null;
 let trayIcon = "ac_plug_colored";
-app.whenReady().then(async () => {
+void app.whenReady().then(async () => {
+    // REVIEW - app will hang at startup if line above is awaited.
     let finishedSetup = await getConfig("doneSetup");
     if ((await getConfig("trayIcon")) != "default") {
         trayIcon = await getConfig("trayIcon");
@@ -37,8 +38,8 @@ app.whenReady().then(async () => {
                 },
                 {
                     label: `Quit ${clientName}`,
-                    async click() {
-                        fs.unlink(await getConfigLocation(), (err) => {
+                    click() {
+                        fs.unlink(getConfigLocation(), (err) => {
                             if (err) throw err;
 
                             console.log('Closed during setup. "settings.json" was deleted');
@@ -50,6 +51,7 @@ app.whenReady().then(async () => {
             tray.setContextMenu(contextMenu);
         } else {
             const contextMenu = Menu.buildFromTemplate([
+                // REVIEW - Awaiting any window creation will fail silently
                 {
                     label: `${clientName} ${getDisplayVersion()}`,
                     icon: trayVerIcon(),
@@ -67,13 +69,13 @@ app.whenReady().then(async () => {
                 {
                     label: "Open Settings",
                     click() {
-                        createSettingsWindow();
+                        void createSettingsWindow();
                     }
                 },
                 {
                     label: "Support Discord Server",
                     click() {
-                        createInviteWindow("TnhxcqynZ2");
+                        void createInviteWindow("TnhxcqynZ2");
                     }
                 },
                 {
@@ -104,7 +106,7 @@ app.whenReady().then(async () => {
                     detail: "Linux may not work well with tray icons. Depending on your system configuration, you may not be able to see the tray icon. Enable at your own risk. Can be changed later."
                 };
 
-                dialog.showMessageBox(mainWindow, options).then(({response}) => {
+                await dialog.showMessageBox(mainWindow, options).then(({response}) => {
                     if (response == 0) {
                         setConfig("tray", true);
                     } else {

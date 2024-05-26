@@ -19,5 +19,5 @@ export async function createSplashWindow(): Promise<void> {
             preload: path.join(import.meta.dirname, "preload.mjs")
         }
     });
-    splashWindow.loadFile(path.join(import.meta.dirname, "splash.html"));
+    await splashWindow.loadFile(path.join(import.meta.dirname, "splash.html"));
 }

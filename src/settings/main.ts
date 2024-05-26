@@ -5,7 +5,7 @@ import {getDisplayVersion} from "../common/version";
 let settingsWindow: BrowserWindow;
 let instance = 0;
 
-export function createSettingsWindow(): void {
+export async function createSettingsWindow(): Promise<void> {
     console.log("Creating a settings window.");
     instance += 1;
     if (instance > 1) {
@@ -28,7 +28,7 @@ export function createSettingsWindow(): void {
             }
         });
         async function settingsLoadPage(): Promise<void> {
-            settingsWindow.loadURL(`file://${import.meta.dirname}/settings.html`);
+            await settingsWindow.loadURL(`file://${import.meta.dirname}/settings.html`);
         }
         const userDataPath = app.getPath("userData");
         const themesFolder = `${userDataPath}/themes/`;
@@ -64,10 +64,12 @@ export function createSettingsWindow(): void {
             });
         });
         settingsWindow.webContents.setWindowOpenHandler(({url}) => {
-            shell.openExternal(url);
+            async () => {
+                await shell.openExternal(url);
+            };
             return {action: "deny"};
         });
-        settingsLoadPage();
+        await settingsLoadPage();
         settingsWindow.on("close", () => {
             instance = 0;
         });

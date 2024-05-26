@@ -17,7 +17,8 @@ contextBridge.exposeInMainWorld("settings", {
     crash: () => ipcRenderer.send("crash"),
     os: process.platform
 });
-
+/*
 ipcRenderer.on("themeLoader", (_event, message) => {
     //addStyle(message);
 });
+*/

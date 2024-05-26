@@ -35,7 +35,7 @@ export interface Settings {
     startMinimized: boolean;
     useLegacyCapturer: boolean;
     tray: boolean;
-    keybinds: Array<string>;
+    keybinds: string[];
     inviteWebsocket: boolean;
     disableAutogain: boolean;
     trayIcon: string;
@@ -47,7 +47,7 @@ export function getConfigLocation(): string {
     const storagePath = path.join(userDataPath, "/storage/");
     return `${storagePath}settings.json`;
 }
-export async function getConfig<K extends keyof Settings>(object: K): Promise<Settings[K]> {
+export function getConfig<K extends keyof Settings>(object: K): Promise<Settings[K]> {
     let rawdata = fs.readFileSync(getConfigLocation(), "utf-8");
     let returndata = JSON.parse(rawdata);
     return returndata[object];
@@ -57,14 +57,14 @@ export function getConfigSync<K extends keyof Settings>(object: K) {
     let returndata = JSON.parse(rawdata);
     return returndata[object];
 }
-export async function setConfig<K extends keyof Settings>(object: K, toSet: Settings[K]): Promise<void> {
+export function setConfig<K extends keyof Settings>(object: K, toSet: Settings[K]): void {
     let rawdata = fs.readFileSync(getConfigLocation(), "utf-8");
     let parsed = JSON.parse(rawdata);
     parsed[object] = toSet;
     let toSave = JSON.stringify(parsed, null, 4);
     fs.writeFileSync(getConfigLocation(), toSave, "utf-8");
 }
-export async function setConfigBulk(object: Settings): Promise<void> {
+export function setConfigBulk(object: Settings): void {
     let existingData = {};
     try {
         const existingDataBuffer = fs.readFileSync(getConfigLocation(), "utf-8");
@@ -99,7 +99,7 @@ export async function checkIfConfigExists(): Promise<void> {
         console.log("ArmCord has been run before. Skipping setup.");
     }
 }
-export async function checkIfConfigIsBroken(): Promise<void> {
+export function checkIfConfigIsBroken(): void {
     try {
         let settingsData = fs.readFileSync(getConfigLocation(), "utf-8");
         JSON.parse(settingsData);

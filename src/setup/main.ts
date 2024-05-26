@@ -5,7 +5,7 @@ import {iconPath} from "../main";
 import {setConfigBulk, getConfigLocation, Settings} from "../common/config";
 
 let setupWindow: BrowserWindow;
-export function createSetupWindow(): void {
+export async function createSetupWindow(): Promise<void> {
     setupWindow = new BrowserWindow({
         width: 390,
         height: 470,
@@ -30,13 +30,13 @@ export function createSetupWindow(): void {
     ipcMain.on("setup-getOS", (event) => {
         event.returnValue = process.platform;
     });
-    ipcMain.on("setup-quit", async () => {
-        fs.unlink(await getConfigLocation(), (err) => {
+    ipcMain.on("setup-quit", () => {
+        fs.unlink(getConfigLocation(), (err) => {
             if (err) throw err;
 
             console.log('Closed during setup. "settings.json" was deleted');
             app.quit();
         });
     });
-    setupWindow.loadURL(`file://${import.meta.dirname}/setup.html`);
+    await setupWindow.loadURL(`file://${import.meta.dirname}/setup.html`);
 }
