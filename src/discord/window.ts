@@ -12,7 +12,7 @@ import os from "os";
 import RPCServer from "arrpc";
 import {tray} from "../tray";
 import {iconPath} from "../main";
-import {getConfig, setConfig, firstRun} from "../common/config";
+import {firstRun, getConfig, setConfig} from "../common/config";
 import {getWindowState, setWindowState} from "../common/windowState";
 export let mainWindow: BrowserWindow;
 export let inviteWindow: BrowserWindow;

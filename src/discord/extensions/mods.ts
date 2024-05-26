@@ -99,8 +99,8 @@ export async function installModLoader(): Promise<void> {
 
             try {
                 loaderZip = await fetch(URLs[0]);
-            } catch (err) {
-                console.log("[Mod loader] Failed to download. Links left to try: " + (URLs.length - 1));
+            } catch (_err) {
+                console.log(`[Mod loader] Failed to download. Links left to try: ${URLs.length - 1}`);
                 URLs.splice(0, 1);
 
                 continue;

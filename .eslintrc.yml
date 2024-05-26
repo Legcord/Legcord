@@ -29,6 +29,9 @@ overrides:
           require-await: 0
           no-undefined: 0
           node/no-unsupported-features/es-syntax: 0
+          node/no-unpublished-import: [error, 
+            allowModules: [electron] # electron is referenced directly in this rule's documentation. https://github.com/mysticatea/eslint-plugin-node/blob/master/docs/rules/no-unpublished-import.md
+          ]
           "@typescript-eslint/no-dynamic-delete": 0
           "@typescript-eslint/no-explicit-any": 0
           "@typescript-eslint/no-non-null-asserted-optional-chain": 0

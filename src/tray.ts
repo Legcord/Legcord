@@ -92,32 +92,30 @@ app.whenReady().then(async () => {
         tray.on("click", function () {
             mainWindow.show();
         });
-    } else {
-        if ((await getConfig("tray")) == undefined) {
-            if (process.platform == "linux") {
-                const options: MessageBoxOptions = {
-                    type: "question",
-                    buttons: ["Yes, please", "No, I don't"],
-                    defaultId: 1,
-                    title: "Tray icon choice",
-                    message: `Do you want to use tray icons?`,
-                    detail: "Linux may not work well with tray icons. Depending on your system configuration, you may not be able to see the tray icon. Enable at your own risk. Can be changed later."
-                };
+    } else if ((await getConfig("tray")) == undefined) {
+        if (process.platform == "linux") {
+            const options: MessageBoxOptions = {
+                type: "question",
+                buttons: ["Yes, please", "No, I don't"],
+                defaultId: 1,
+                title: "Tray icon choice",
+                message: `Do you want to use tray icons?`,
+                detail: "Linux may not work well with tray icons. Depending on your system configuration, you may not be able to see the tray icon. Enable at your own risk. Can be changed later."
+            };
 
-                dialog.showMessageBox(mainWindow, options).then(({response}) => {
-                    if (response == 0) {
-                        setConfig("tray", true);
-                    } else {
-                        setConfig("tray", false);
-                    }
-                    app.relaunch();
-                    app.exit();
-                });
-            } else {
-                setConfig("tray", true);
+            dialog.showMessageBox(mainWindow, options).then(({response}) => {
+                if (response == 0) {
+                    setConfig("tray", true);
+                } else {
+                    setConfig("tray", false);
+                }
                 app.relaunch();
                 app.exit();
-            }
+            });
+        } else {
+            setConfig("tray", true);
+            app.relaunch();
+            app.exit();
         }
     }
 });

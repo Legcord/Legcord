@@ -187,7 +187,7 @@ export function createTManagerWindow(): void {
                 });
                 themeWindow.webContents.reload();
                 mainWindow.webContents.reload();
-            } catch (e) {
+            } catch (_e) {
                 dialog.showErrorBox(
                     "BD Theme import fail",
                     "Failed to import theme from link. Please make sure that it's a valid BetterDiscord Theme."

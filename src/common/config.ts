@@ -35,7 +35,7 @@ export interface Settings {
     startMinimized: boolean;
     useLegacyCapturer: boolean;
     tray: boolean;
-    keybinds: Array<string>;
+    keybinds: string[];
     inviteWebsocket: boolean;
     disableAutogain: boolean;
     trayIcon: string;
@@ -69,7 +69,7 @@ export async function setConfigBulk(object: Settings): Promise<void> {
     try {
         const existingDataBuffer = fs.readFileSync(getConfigLocation(), "utf-8");
         existingData = JSON.parse(existingDataBuffer.toString());
-    } catch (error) {
+    } catch (_error) {
         // Ignore errors when the file doesn't exist or parsing fails
     }
     // Merge the existing data with the new data

@@ -10,15 +10,15 @@ import {createTManagerWindow} from "./themeManager/main";
 import {createSplashWindow} from "./splash/main";
 import {createSetupWindow} from "./setup/main";
 import {
-    setConfig,
-    getConfigSync,
+    Settings,
     checkForDataFolder,
     checkIfConfigExists,
     checkIfConfigIsBroken,
-    getConfig,
     firstRun,
-    Settings,
-    getConfigLocation
+    getConfig,
+    getConfigLocation,
+    getConfigSync,
+    setConfig
 } from "./common/config";
 import {injectElectronFlags} from "./common/flags";
 import {setLang} from "./common/lang";
@@ -27,7 +27,7 @@ export let iconPath: string;
 export let settings: any;
 export let customTitlebar: boolean;
 
-app.on("render-process-gone", (event, webContents, details) => {
+app.on("render-process-gone", (_event, _webContents, details) => {
     if (details.reason == "crashed") {
         app.relaunch();
     }
@@ -81,7 +81,7 @@ if (!app.requestSingleInstanceLock() && getConfigSync("multiInstance") == (false
     checkIfConfigExists();
     checkIfConfigIsBroken();
     injectElectronFlags();
-    console.log("[Config Manager] Current config: " + fs.readFileSync(getConfigLocation(), "utf-8"));
+    console.log(`[Config Manager] Current config: ${fs.readFileSync(getConfigLocation(), "utf-8")}`);
     app.whenReady().then(async () => {
         if ((await getConfig("customIcon")) !== undefined ?? null) {
             iconPath = await getConfig("customIcon");
