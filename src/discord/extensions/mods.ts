@@ -52,7 +52,7 @@ export let modInstallState: string;
 export function updateModInstallState() {
     modInstallState = "modDownload";
 
-    updateModBundle();
+    void updateModBundle(); // REVIEW - Awaiting this will hang the app on the splash
     import("./plugin.js");
 
     modInstallState = "done";
@@ -109,7 +109,7 @@ export async function installModLoader(): Promise<void> {
             break;
         }
 
-        await streamPipeline(loaderZip.body, fs.createWriteStream(zipPath));
+        streamPipeline(loaderZip.body, fs.createWriteStream(zipPath));
         await extract(zipPath, {dir: path.join(app.getPath("userData"), "plugins")});
 
         updateModInstallState();

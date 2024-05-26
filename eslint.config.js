@@ -7,7 +7,7 @@ import n from "eslint-plugin-n";
 
 export default tseslint.config(
     eslint.configs.recommended,
-    {ignores: ["ts-out", "src/discord"]}, // investigate discord files a bit
+    {ignores: ["ts-out"]}, // investigate discord files a bit
     ...tseslint.configs.recommendedTypeChecked,
     ...tseslint.configs.stylisticTypeChecked,
     n.configs["flat/recommended"],
@@ -37,6 +37,7 @@ export default tseslint.config(
             "no-constant-binary-expression": 0,
             "no-prototype-builtins": 0,
             "no-unused-vars": 0, // Handled by @typescript-eslint/no-unused-vars
+            "no-var": 1,
             "n/no-unsupported-features/node-builtins": 0,
             "n/no-unpublished-import": 0, // Seems broken right now
             "@typescript-eslint/no-unused-vars": [

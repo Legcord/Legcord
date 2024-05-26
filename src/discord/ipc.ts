@@ -30,7 +30,7 @@ export function registerIpc(): void {
         return getLang(toGet);
     });
     ipcMain.on("open-external-link", (_event, href: string) => {
-        shell.openExternal(href);
+        void shell.openExternal(href);
     });
     ipcMain.on("setPing", (_event, pingCount: number) => {
         switch (os.platform()) {
@@ -156,7 +156,7 @@ export function registerIpc(): void {
     ipcMain.on("getLangName", async (event) => {
         event.returnValue = await getLangName();
     });
-    ipcMain.on("crash", async () => {
+    ipcMain.on("crash", () => {
         process.crash();
     });
     ipcMain.handle("getSetting", (_event, toGet: keyof Settings) => {

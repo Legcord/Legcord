@@ -10,7 +10,7 @@ function paste(contents: any): void {
     }
     contents.paste();
 }
-export async function setMenu(): Promise<void> {
+export function setMenu(): void {
     let template: Electron.MenuItemConstructorOptions[] = [
         {
             label: "ArmCord",
@@ -28,7 +28,7 @@ export async function setMenu(): Promise<void> {
                     label: "Open settings",
                     accelerator: "CmdOrCtrl+Shift+'",
                     click() {
-                        createSettingsWindow();
+                        void createSettingsWindow();
                     }
                 },
                 {

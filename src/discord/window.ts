@@ -29,7 +29,7 @@ contextMenu({
             // Only show it when right-clicking text
             visible: parameters.selectionText.trim().length > 0,
             click: () => {
-                shell.openExternal(`https://google.com/search?q=${encodeURIComponent(parameters.selectionText)}`);
+                void shell.openExternal(`https://google.com/search?q=${encodeURIComponent(parameters.selectionText)}`);
             }
         },
         {
@@ -37,7 +37,7 @@ contextMenu({
             // Only show it when right-clicking text
             visible: parameters.selectionText.trim().length > 0,
             click: () => {
-                shell.openExternal(`https://duckduckgo.com/?q=${encodeURIComponent(parameters.selectionText)}`);
+                void shell.openExternal(`https://duckduckgo.com/?q=${encodeURIComponent(parameters.selectionText)}`);
             }
         }
     ]
@@ -46,7 +46,7 @@ async function doAfterDefiningTheWindow(): Promise<void> {
     if ((await getWindowState("isMaximized")) ?? false) {
         mainWindow.setSize(835, 600); //just so the whole thing doesn't cover whole screen
         mainWindow.maximize();
-        mainWindow.webContents.executeJavaScript(`document.body.setAttribute("isMaximized", "");`);
+        void mainWindow.webContents.executeJavaScript(`document.body.setAttribute("isMaximized", "");`);
         mainWindow.hide(); // please don't flashbang the user
     }
     if ((await getConfig("windowStyle")) == "transparency" && process.platform === "win32") {
@@ -55,6 +55,9 @@ async function doAfterDefiningTheWindow(): Promise<void> {
             mainWindow.show();
         }
     }
+
+    // REVIEW - Test the protocol warning. I was not sure how to get it to pop up. For now I've voided the promises.
+
     let ignoreProtocolWarning = await getConfig("ignoreProtocolWarning");
     registerIpc();
     if (await getConfig("mobileMode")) {
@@ -97,9 +100,9 @@ async function doAfterDefiningTheWindow(): Promise<void> {
                 }
             };
         if (url.startsWith("https:") || url.startsWith("http:") || url.startsWith("mailto:")) {
-            shell.openExternal(url);
+            void shell.openExternal(url);
         } else if (ignoreProtocolWarning) {
-            shell.openExternal(url);
+            void shell.openExternal(url);
         } else {
             const options: MessageBoxOptions = {
                 type: "question",
@@ -112,7 +115,7 @@ async function doAfterDefiningTheWindow(): Promise<void> {
                 checkboxChecked: false
             };
 
-            dialog.showMessageBox(mainWindow, options).then(({response, checkboxChecked}) => {
+            void dialog.showMessageBox(mainWindow, options).then(({response, checkboxChecked}) => {
                 console.log(response, checkboxChecked);
                 if (checkboxChecked) {
                     if (response == 0) {
@@ -122,7 +125,7 @@ async function doAfterDefiningTheWindow(): Promise<void> {
                     }
                 }
                 if (response == 0) {
-                    shell.openExternal(url);
+                    void shell.openExternal(url);
                 }
             });
         }
@@ -139,8 +142,10 @@ async function doAfterDefiningTheWindow(): Promise<void> {
     );
 
     if ((await getConfig("trayIcon")) == "default" || (await getConfig("dynamicIcon"))) {
-        mainWindow.webContents.on("page-favicon-updated", async () => {
-            let faviconBase64 = await mainWindow.webContents.executeJavaScript(`
+        mainWindow.webContents.on("page-favicon-updated", () => {
+            void mainWindow.webContents
+                .executeJavaScript(
+                    `
                 var getFavicon = function(){
                 var favicon = undefined;
                 var nodeList = document.getElementsByTagName("link");
@@ -154,29 +159,33 @@ async function doAfterDefiningTheWindow(): Promise<void> {
                 return favicon;
                 }
                 getFavicon()
-            `);
-            let buf = Buffer.from(faviconBase64.replace(/^data:image\/\w+;base64,/, ""), "base64");
-            fs.writeFileSync(path.join(app.getPath("temp"), "/", "tray.png"), buf, "utf-8");
-            let trayPath = nativeImage.createFromPath(path.join(app.getPath("temp"), "/", "tray.png"));
-            if (process.platform === "darwin" && trayPath.getSize().height > 22)
-                trayPath = trayPath.resize({height: 22});
-            if (process.platform === "win32" && trayPath.getSize().height > 32)
-                trayPath = trayPath.resize({height: 32});
-            if (await getConfig("tray")) {
-                if ((await getConfig("trayIcon")) == "default") {
-                    tray.setImage(trayPath);
-                }
-            }
-            if (await getConfig("dynamicIcon")) {
-                mainWindow.setIcon(trayPath);
-            }
+            `
+                )
+                .then(async (faviconBase64) => {
+                    let buf = Buffer.from(faviconBase64.replace(/^data:image\/\w+;base64,/, ""), "base64");
+                    fs.writeFileSync(path.join(app.getPath("temp"), "/", "tray.png"), buf, "utf-8");
+                    let trayPath = nativeImage.createFromPath(path.join(app.getPath("temp"), "/", "tray.png"));
+                    if (process.platform === "darwin" && trayPath.getSize().height > 22)
+                        trayPath = trayPath.resize({height: 22});
+                    if (process.platform === "win32" && trayPath.getSize().height > 32)
+                        trayPath = trayPath.resize({height: 32});
+                    if (await getConfig("tray")) {
+                        if ((await getConfig("trayIcon")) == "default") {
+                            tray.setImage(trayPath);
+                        }
+                    }
+                    if (await getConfig("dynamicIcon")) {
+                        mainWindow.setIcon(trayPath);
+                    }
+                });
         });
     }
-    mainWindow.webContents.on("page-title-updated", async (e, title) => {
+    mainWindow.webContents.on("page-title-updated", (e, title) => {
         const armCordSuffix = " - ArmCord"; /* identify */
         if (!title.endsWith(armCordSuffix)) {
             e.preventDefault();
-            await mainWindow.webContents.executeJavaScript(
+            // REVIEW - I don't see a reason to wait for the titlebar to update
+            void mainWindow.webContents.executeJavaScript(
                 `document.title = '${title.replace("Discord |", "") + armCordSuffix}'`
             );
         }

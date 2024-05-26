@@ -19,7 +19,8 @@ const unstrictCSP = (): void => {
     });
 };
 
-electron.app.whenReady().then(async () => {
+void electron.app.whenReady().then(async () => {
+    // REVIEW - Awaiting the line above will hang the app.
     if (await getConfig("armcordCSP")) {
         unstrictCSP();
     } else {

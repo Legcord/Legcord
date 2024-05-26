@@ -50,7 +50,7 @@ function setConstraint(constraint, name, value) {
 }
 function disableAutogain(constraints) {
     console.log("Automatically unsetting gain!", constraints);
-    if (constraints && constraints.audio) {
+    if (constraints?.audio) {
         if (typeof constraints.audio !== "object") {
             constraints.audio = {};
         }
