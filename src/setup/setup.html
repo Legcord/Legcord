@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -123,9 +123,8 @@
                 });
                 if (window.armcordinternal.getOS == "linux") {
                     document.getElementById("tray").value = "false";
-                    document.getElementById(
-                        "linuxNotice"
-                    ).innerHTML = `Linux may not work well with tray icons. Depending on your system configuration, you may not be able to see the tray icon. Enable at your own risk. Can be changed later.`;
+                    document.getElementById("linuxNotice").innerHTML =
+                        `Linux may not work well with tray icons. Depending on your system configuration, you may not be able to see the tray icon. Enable at your own risk. Can be changed later.`;
                 }
                 document.getElementById("next-page4").addEventListener("click", () => {
                     window.armcordinternal.saveSettings({
