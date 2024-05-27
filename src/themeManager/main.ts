@@ -149,7 +149,7 @@ export async function createTManagerWindow(): Promise<void> {
             mainWindow.webContents.reload();
         });
         ipcMain.on("installBDTheme", (_event, link: string) => {
-            async () => {
+            return async () => {
                 try {
                     let code = await (await fetch(link)).text();
                     let manifest = parseBDManifest(code);
@@ -169,10 +169,9 @@ export async function createTManagerWindow(): Promise<void> {
                         message: "Successfully imported theme from link."
                     });
                     themeWindow.webContents.reload();
-                    // NOTE - Weird returns to make DeepScan happy
-                    return mainWindow.webContents.reload();
+                    mainWindow.webContents.reload();
                 } catch (e) {
-                    return dialog.showErrorBox(
+                    dialog.showErrorBox(
                         "BD Theme import fail",
                         "Failed to import theme from link. Please make sure that it's a valid BetterDiscord Theme."
                     );
