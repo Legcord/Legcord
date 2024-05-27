@@ -17,7 +17,7 @@ jobs:
       - uses: pnpm/action-setup@v2 # Install pnpm using packageManager key in package.json
 
       - name: Use Node.js 18
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: "pnpm"
@@ -50,7 +50,7 @@ jobs:
       - uses: pnpm/action-setup@v2 # Install pnpm using packageManager key in package.json
 
       - name: Use Node.js 18
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: "pnpm"
@@ -79,7 +79,7 @@ jobs:
       - uses: pnpm/action-setup@v2 # Install pnpm using packageManager key in package.json
 
       - name: Use Node.js 18
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: "pnpm"
@@ -101,7 +101,7 @@ jobs:
   build-windowsOnARM:
     runs-on: windows-latest
     steps:
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: '18'
 
