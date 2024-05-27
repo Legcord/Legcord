@@ -1,8 +1,8 @@
 import electron from "electron";
 import {getConfig} from "../../common/config";
 
-const unstrictCSP = (): void => {
-    console.log("Setting up CSP unstricter...");
+const unrestrictCSP = (): void => {
+    console.log("Setting up CSP unrestricter...");
 
     electron.session.defaultSession.webRequest.onHeadersReceived(({responseHeaders, resourceType}, done) => {
         if (!responseHeaders) return done({});
@@ -22,7 +22,7 @@ const unstrictCSP = (): void => {
 void electron.app.whenReady().then(() => {
     // REVIEW - Awaiting the line above will hang the app.
     if (getConfig("armcordCSP")) {
-        unstrictCSP();
+        unrestrictCSP();
     } else {
         console.log("ArmCord CSP is disabled. The CSP should be managed by a third-party plugin(s).");
     }

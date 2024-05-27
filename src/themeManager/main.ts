@@ -2,30 +2,16 @@ import {BrowserWindow, app, dialog, ipcMain, shell} from "electron";
 import path from "path";
 import fs from "fs";
 import {createInviteWindow, mainWindow} from "../discord/window";
+import type {ThemeManifest} from "../types/themeManifest";
 let themeWindow: BrowserWindow;
 let instance = 0;
-interface ThemeManifest {
-    name?: string;
-    author?: string;
-    description?: string;
-    version?: string;
-    invite?: string;
-    authorId?: string;
-    theme: string;
-    authorLink?: string;
-    donate?: string;
-    patreon?: string;
-    website?: string;
-    source?: string;
-    updateSrc?: string;
-    supportsArmCordTitlebar?: boolean;
-}
+
 function parseBDManifest(content: string) {
     const metaReg = /@([^ ]*) (.*)/g;
     if (!content.startsWith("/**")) {
         throw new Error("Not a manifest.");
     }
-    let manifest: ThemeManifest = {theme: "src.css"};
+    let manifest: ThemeManifest = {theme: "src.css", name: "null"}; // Will be defined later
 
     let match;
     while ((match = metaReg.exec(content)) !== null) {

@@ -5,7 +5,7 @@ import {mainWindow} from "./window";
 import os from "os";
 import fs from "fs";
 import path from "path";
-import {getConfig, setConfigBulk, getConfigLocation, Settings} from "../common/config";
+import {getConfig, setConfigBulk, getConfigLocation} from "../common/config";
 import {setLang, getLang, getLangName} from "../common/lang";
 import {getVersion, getDisplayVersion} from "../common/version";
 import {customTitlebar} from "../main";
@@ -13,6 +13,7 @@ import {createSettingsWindow} from "../settings/main";
 import {splashWindow} from "../splash/main";
 import {createTManagerWindow} from "../themeManager/main";
 import {modInstallState} from "./extensions/mods";
+import type {Settings} from "../types/settings";
 
 const userDataPath = app.getPath("userData");
 const storagePath = path.join(userDataPath, "/storage/");

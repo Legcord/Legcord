@@ -1,14 +1,15 @@
 import {ipcRenderer, contextBridge} from "electron";
 import {sleep} from "../common/sleep";
+import {ThemeManifest} from "../types/themeManifest";
 contextBridge.exposeInMainWorld("themes", {
     install: (url: string) => ipcRenderer.send("installBDTheme", url),
     uninstall: (id: string) => ipcRenderer.send("uninstallTheme", id)
 });
-ipcRenderer.on("themeManifest", (_event, json) => {
+ipcRenderer.on("themeManifest", (_event, json: string) => {
     async () => {
-        let manifest = JSON.parse(json);
+        let manifest = JSON.parse(json) as ThemeManifest;
         console.log(manifest);
-        await sleep(1000);
+        await sleep(1000); // REVIEW - This is all that requires async, would be nice if it could be removed.
         let e = document.getElementById("cardBox");
         let id = manifest.name.replace(" ", "-");
         e?.insertAdjacentHTML(
@@ -55,7 +56,7 @@ ipcRenderer.on("themeManifest", (_event, json) => {
         if (!ipcRenderer.sendSync("disabled").includes(id)) {
             (document.getElementById(id) as HTMLInputElement).checked = true;
         }
-        (document.getElementById(id) as HTMLInputElement)!.addEventListener("input", function () {
+        (document.getElementById(id) as HTMLInputElement).addEventListener("input", function () {
             ipcRenderer.send("reloadMain");
             if (this.checked) {
                 ipcRenderer.send("removeFromDisabled", id);
@@ -71,6 +72,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("themeInfoButtons")!.innerHTML = "";
     });
     document.getElementById("download")!.addEventListener("click", () => {
-        ipcRenderer.send("installBDTheme", (document.getElementById("themeLink") as HTMLInputElement)!.value);
+        ipcRenderer.send("installBDTheme", (document.getElementById("themeLink") as HTMLInputElement).value);
     });
 });

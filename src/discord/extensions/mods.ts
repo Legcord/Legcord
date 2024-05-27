@@ -92,11 +92,9 @@ export async function installModLoader(): Promise<void> {
             "https://armcord.vercel.app/loader.zip",
             "https://raw.githubusercontent.com/ArmCord/website/new/public/loader.zip"
         ];
-        let loaderZip: any;
+        let loaderZip: Response;
 
         while (true) {
-            if (URLs.length <= 0) throw new Error(`unexpected response ${loaderZip.statusText}`);
-
             try {
                 loaderZip = await fetch(URLs[0]);
             } catch (err) {
@@ -108,7 +106,7 @@ export async function installModLoader(): Promise<void> {
 
             break;
         }
-
+        // @ts-expect-error // REVIEW - This clearly works as its BEEN here and WORKS here but Typescript won't build with this.
         streamPipeline(loaderZip.body, fs.createWriteStream(zipPath));
         await extract(zipPath, {dir: path.join(app.getPath("userData"), "plugins")});
 

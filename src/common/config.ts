@@ -2,6 +2,7 @@ import {app, dialog} from "electron";
 import path from "path";
 import fs from "fs";
 import {getWindowStateLocation} from "./windowState";
+import type {Settings} from "../types/settings";
 export let firstRun: boolean;
 export function checkForDataFolder(): void {
     const dataPath = path.join(path.dirname(app.getPath("exe")), "armcord-data");
@@ -11,37 +12,6 @@ export function checkForDataFolder(): void {
     }
 }
 
-export interface Settings {
-    // Referenced for detecting a broken config.
-    "0"?: string;
-    // Referenced once for disabling mod updating.
-    noBundleUpdates?: boolean;
-    // Only used for external url warning dialog.
-    ignoreProtocolWarning?: boolean;
-    customIcon: string;
-    windowStyle: string;
-    channel: string;
-    armcordCSP: boolean;
-    minimizeToTray: boolean;
-    multiInstance: boolean;
-    spellcheck: boolean;
-    mods: string;
-    dynamicIcon: boolean;
-    mobileMode: boolean;
-    skipSplash: boolean;
-    performanceMode: string;
-    customJsBundle: RequestInfo | URL;
-    customCssBundle: RequestInfo | URL;
-    startMinimized: boolean;
-    useLegacyCapturer: boolean;
-    tray: boolean;
-    keybinds: string[];
-    inviteWebsocket: boolean;
-    disableAutogain: boolean;
-    trayIcon: string;
-    doneSetup: boolean;
-    clientName: string;
-}
 export function getConfigLocation(): string {
     const userDataPath = app.getPath("userData");
     const storagePath = path.join(userDataPath, "/storage/");
@@ -52,13 +22,13 @@ export function getConfigLocation(): string {
 // Tested with src/tray.ts - Seems to work great!
 // NOTE - Removed getConfigSync<K extends keyof Settings>(object: K) - Redundant now.
 export function getConfig<K extends keyof Settings>(object: K): Settings[K] {
-    let rawdata = fs.readFileSync(getConfigLocation(), "utf-8");
-    let returndata = JSON.parse(rawdata);
-    return returndata[object];
+    let rawData = fs.readFileSync(getConfigLocation(), "utf-8");
+    let returnData = JSON.parse(rawData) as Settings;
+    return returnData[object];
 }
 export function setConfig<K extends keyof Settings>(object: K, toSet: Settings[K]): void {
-    let rawdata = fs.readFileSync(getConfigLocation(), "utf-8");
-    let parsed = JSON.parse(rawdata);
+    let rawData = fs.readFileSync(getConfigLocation(), "utf-8");
+    let parsed = JSON.parse(rawData) as Settings;
     parsed[object] = toSet;
     let toSave = JSON.stringify(parsed, null, 4);
     fs.writeFileSync(getConfigLocation(), toSave, "utf-8");
@@ -67,7 +37,7 @@ export function setConfigBulk(object: Settings): void {
     let existingData = {};
     try {
         const existingDataBuffer = fs.readFileSync(getConfigLocation(), "utf-8");
-        existingData = JSON.parse(existingDataBuffer.toString());
+        existingData = JSON.parse(existingDataBuffer.toString()) as Settings;
     } catch (error) {
         // Ignore errors when the file doesn't exist or parsing fails
     }

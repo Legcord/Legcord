@@ -16,14 +16,14 @@ import {
     checkIfConfigIsBroken,
     getConfig,
     firstRun,
-    Settings,
     getConfigLocation
 } from "./common/config";
 import {injectElectronFlags} from "./common/flags";
 import {setLang} from "./common/lang";
 import {installModLoader} from "./discord/extensions/mods";
 export let iconPath: string;
-export let settings: any;
+import type {Settings} from "./types/settings";
+export let settings: Settings;
 export let customTitlebar: boolean;
 
 app.on("render-process-gone", (_event, _webContents, details) => {

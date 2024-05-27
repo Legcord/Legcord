@@ -1,13 +1,7 @@
 import {app} from "electron";
 import path from "path";
 import fs from "fs";
-export interface WindowState {
-    width: number;
-    height: number;
-    x: number;
-    y: number;
-    isMaximized: boolean;
-}
+import {WindowState} from "../types/windowState";
 export function getWindowStateLocation() {
     const userDataPath = app.getPath("userData");
     const storagePath = path.join(userDataPath, "/storage/");
@@ -30,8 +24,8 @@ export function getWindowState<K extends keyof WindowState>(object: K): WindowSt
     if (!fs.existsSync(settingsFile)) {
         fs.writeFileSync(settingsFile, "{}", "utf-8");
     }
-    let rawdata = fs.readFileSync(settingsFile, "utf-8");
-    let returndata = JSON.parse(rawdata);
-    console.log(`[Window state manager] ${returndata}`);
-    return returndata[object];
+    let rawData = fs.readFileSync(settingsFile, "utf-8");
+    let returnData = JSON.parse(rawData) as WindowState;
+    console.log(`[Window state manager] ${JSON.stringify(returnData)}`);
+    return returnData[object];
 }

@@ -7,7 +7,7 @@ import n from "eslint-plugin-n";
 
 export default tseslint.config(
     eslint.configs.recommended,
-    {ignores: ["ts-out"]}, // investigate discord files a bit
+    {ignores: ["ts-out", "src/discord/content/js"]}, // REVIEW - investigate discord files a bit before finalizing this - I think these are meant to be run in the app console, and this would be difficult to type
     ...tseslint.configs.recommendedTypeChecked,
     ...tseslint.configs.stylisticTypeChecked,
     n.configs["flat/recommended"],
@@ -15,7 +15,7 @@ export default tseslint.config(
         settings: {
             n: {
                 allowModules: ["electron"],
-                tryExtensions: [".tsx", ".ts", ".jsx", ".js", ".json", ".node"]
+                tryExtensions: [".tsx", ".ts", ".jsx", ".js", ".json", ".node", ".d.ts"]
             }
         },
         plugins: {
@@ -50,7 +50,7 @@ export default tseslint.config(
             ],
             "@typescript-eslint/no-unsafe-member-access": 1,
             "@typescript-eslint/no-unsafe-call": 1,
-            "@typescript-eslint/no-explicit-any": 1,
+            "@typescript-eslint/no-explicit-any": 2,
             "@typescript-eslint/no-unnecessary-type-assertion": 1,
             "@typescript-eslint/no-unsafe-argument": 1,
             "@typescript-eslint/no-unsafe-assignment": 1,

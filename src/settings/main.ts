@@ -2,6 +2,7 @@ import {BrowserWindow, app, shell} from "electron";
 import path from "path";
 import fs from "fs";
 import {getDisplayVersion} from "../common/version";
+import type {ThemeManifest} from "../types/themeManifest";
 let settingsWindow: BrowserWindow;
 let instance = 0;
 
@@ -43,7 +44,7 @@ export async function createSettingsWindow(): Promise<void> {
             fs.readdirSync(themesFolder).forEach((file) => {
                 try {
                     const manifest = fs.readFileSync(`${themesFolder}/${file}/manifest.json`, "utf8");
-                    let themeFile = JSON.parse(manifest);
+                    let themeFile = JSON.parse(manifest) as ThemeManifest;
                     if (
                         fs
                             .readFileSync(path.join(userDataPath, "/disabled.txt"))
