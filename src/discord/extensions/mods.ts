@@ -6,7 +6,7 @@ import fs from "fs";
 import {pipeline} from "stream";
 const streamPipeline = pipeline;
 async function updateModBundle(): Promise<void> {
-    if (getConfig("noBundleUpdates") == undefined ?? false) {
+    if (getConfig("noBundleUpdates") == false) {
         try {
             console.log("Downloading mod bundle");
             const distFolder = `${app.getPath("userData")}/plugins/loader/dist/`;

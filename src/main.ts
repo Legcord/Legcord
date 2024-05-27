@@ -83,7 +83,7 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") == (false ?? 
     console.log("[Config Manager] Current config: " + fs.readFileSync(getConfigLocation(), "utf-8"));
     void app.whenReady().then(async () => {
         // REVIEW - Awaiting the line above will cause a hang at startup
-        if (getConfig("customIcon") !== undefined ?? null) {
+        if (getConfig("customIcon") !== null) {
             iconPath = getConfig("customIcon");
         } else {
             iconPath = path.join(import.meta.dirname, "../", "/assets/desktop.png");
