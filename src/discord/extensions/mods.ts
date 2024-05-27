@@ -13,12 +13,12 @@ async function updateModBundle(): Promise<void> {
             while (!fs.existsSync(distFolder)) {
                 //waiting
             }
-            let name: string = getConfig("mods");
+            const name: string = getConfig("mods");
             if (name == "custom") {
                 // aspy fix
-                let bundle: string = await (await fetch(getConfig("customJsBundle"))).text();
+                const bundle: string = await (await fetch(getConfig("customJsBundle"))).text();
                 fs.writeFileSync(`${distFolder}bundle.js`, bundle, "utf-8");
-                let css: string = await (await fetch(getConfig("customCssBundle"))).text();
+                const css: string = await (await fetch(getConfig("customCssBundle"))).text();
                 fs.writeFileSync(`${distFolder}bundle.css`, css, "utf-8");
             } else {
                 const clientMods = {
@@ -30,9 +30,9 @@ async function updateModBundle(): Promise<void> {
                     shelter: "https://armcord.app/placeholder.css"
                 };
                 console.log(clientMods[name as keyof typeof clientMods]);
-                let bundle: string = await (await fetch(clientMods[name as keyof typeof clientMods])).text();
+                const bundle: string = await (await fetch(clientMods[name as keyof typeof clientMods])).text();
                 fs.writeFileSync(`${distFolder}bundle.js`, bundle, "utf-8");
-                let css: string = await (await fetch(clientModsCss[name as keyof typeof clientModsCss])).text();
+                const css: string = await (await fetch(clientModsCss[name as keyof typeof clientModsCss])).text();
                 fs.writeFileSync(`${distFolder}bundle.css`, css, "utf-8");
             }
         } catch (e) {
@@ -79,7 +79,7 @@ export async function installModLoader(): Promise<void> {
         fs.rmSync(`${app.getPath("userData")}/plugins/loader`, {recursive: true, force: true});
         modInstallState = "installing";
 
-        let zipPath = `${app.getPath("temp")}/loader.zip`;
+        const zipPath = `${app.getPath("temp")}/loader.zip`;
 
         if (!fs.existsSync(pluginFolder)) {
             fs.mkdirSync(pluginFolder);
@@ -87,7 +87,7 @@ export async function installModLoader(): Promise<void> {
         }
 
         // Add more of these later if needed!
-        let URLs = [
+        const URLs = [
             "https://armcord.app/loader.zip",
             "https://armcord.vercel.app/loader.zip",
             "https://raw.githubusercontent.com/ArmCord/website/new/public/loader.zip"

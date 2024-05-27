@@ -2,8 +2,8 @@ import "./bridge.mjs";
 import "./optimizer.js";
 import "./settings.js";
 import {ipcRenderer} from "electron";
-import * as fs from "fs";
-import * as path from "path";
+import fs from "fs";
+import path from "path";
 import {injectMobileStuff} from "./mobile.js";
 import {fixTitlebar, injectTitlebar} from "./titlebar.js";
 import {injectSettings} from "./settings.js";
@@ -20,8 +20,8 @@ if (ipcRenderer.sendSync("legacyCapturer")) {
 const version = ipcRenderer.sendSync("displayVersion");
 function updateLang(): void {
     const value = `; ${document.cookie}`;
-    const parts: any = value.split(`; locale=`);
-    if (parts.length === 2) ipcRenderer.send("setLang", parts.pop().split(";").shift());
+    const parts = value.split(`; locale=`);
+    if (parts.length === 2) ipcRenderer.send("setLang", parts.pop()?.split(";").shift());
 }
 declare global {
     interface Window {

@@ -9,13 +9,12 @@ export let tray: Tray;
 let trayIcon = "ac_plug_colored";
 void app.whenReady().then(async () => {
     // REVIEW - app will hang at startup if line above is awaited.
-    let finishedSetup = getConfig("doneSetup");
+    const finishedSetup = getConfig("doneSetup");
     if (getConfig("trayIcon") != "default") {
         trayIcon = getConfig("trayIcon");
     }
     let trayPath = nativeImage.createFromPath(path.join(import.meta.dirname, "../", `/assets/${trayIcon}.png`));
-    let trayVerIcon;
-    trayVerIcon = function () {
+    const trayVerIcon = function () {
         if (process.platform == "win32") {
             return trayPath.resize({height: 16});
         } else if (process.platform == "darwin") {
@@ -28,7 +27,7 @@ void app.whenReady().then(async () => {
 
     if (process.platform == "darwin" && trayPath.getSize().height > 22) trayPath = trayPath.resize({height: 22});
     if (getConfig("tray")) {
-        let clientName = getConfig("clientName") ?? "ArmCord";
+        const clientName = getConfig("clientName") ?? "ArmCord";
         tray = new Tray(trayPath);
         if (finishedSetup == false) {
             const contextMenu = Menu.buildFromTemplate([

@@ -1,7 +1,7 @@
 import {ipcRenderer} from "electron";
 import {addStyle} from "../../common/dom.js";
-import * as fs from "fs";
-import * as path from "path";
+import fs from "fs";
+import path from "path";
 import os from "os";
 export function injectTitlebar(): void {
     document.addEventListener("DOMContentLoaded", function (_event) {

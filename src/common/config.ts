@@ -22,15 +22,15 @@ export function getConfigLocation(): string {
 // Tested with src/tray.ts - Seems to work great!
 // NOTE - Removed getConfigSync<K extends keyof Settings>(object: K) - Redundant now.
 export function getConfig<K extends keyof Settings>(object: K): Settings[K] {
-    let rawData = fs.readFileSync(getConfigLocation(), "utf-8");
-    let returnData = JSON.parse(rawData) as Settings;
+    const rawData = fs.readFileSync(getConfigLocation(), "utf-8");
+    const returnData = JSON.parse(rawData) as Settings;
     return returnData[object];
 }
 export function setConfig<K extends keyof Settings>(object: K, toSet: Settings[K]): void {
-    let rawData = fs.readFileSync(getConfigLocation(), "utf-8");
-    let parsed = JSON.parse(rawData) as Settings;
+    const rawData = fs.readFileSync(getConfigLocation(), "utf-8");
+    const parsed = JSON.parse(rawData) as Settings;
     parsed[object] = toSet;
-    let toSave = JSON.stringify(parsed, null, 4);
+    const toSave = JSON.stringify(parsed, null, 4);
     fs.writeFileSync(getConfigLocation(), toSave, "utf-8");
 }
 export function setConfigBulk(object: Settings): void {
@@ -70,7 +70,7 @@ export function checkIfConfigExists(): void {
 }
 export function checkIfConfigIsBroken(): void {
     try {
-        let settingsData = fs.readFileSync(getConfigLocation(), "utf-8");
+        const settingsData = fs.readFileSync(getConfigLocation(), "utf-8");
         JSON.parse(settingsData);
         console.log("Config is fine");
     } catch (e) {
@@ -83,7 +83,7 @@ export function checkIfConfigIsBroken(): void {
         );
     }
     try {
-        let windowData = fs.readFileSync(getWindowStateLocation(), "utf-8");
+        const windowData = fs.readFileSync(getWindowStateLocation(), "utf-8");
         JSON.parse(windowData);
         console.log("Window config is fine");
     } catch (e) {

@@ -6,10 +6,10 @@ export function setLang(language: string): void {
     if (!fs.existsSync(langConfigFile)) {
         fs.writeFileSync(langConfigFile, "{}", "utf-8");
     }
-    let rawData = fs.readFileSync(langConfigFile, "utf-8");
-    let parsed = JSON.parse(rawData);
+    const rawData = fs.readFileSync(langConfigFile, "utf-8");
+    const parsed = JSON.parse(rawData);
     parsed.lang = language;
-    let toSave = JSON.stringify(parsed, null, 4);
+    const toSave = JSON.stringify(parsed, null, 4);
     fs.writeFileSync(langConfigFile, toSave, "utf-8");
 }
 let language: string;
@@ -19,8 +19,8 @@ export function getLang(object: string): Promise<string> {
             const userDataPath = app.getPath("userData");
             const storagePath = path.join(userDataPath, "/storage/");
             const langConfigFile = `${storagePath}lang.json`;
-            let rawData = fs.readFileSync(langConfigFile, "utf-8");
-            let parsed = JSON.parse(rawData);
+            const rawData = fs.readFileSync(langConfigFile, "utf-8");
+            const parsed = JSON.parse(rawData);
             language = parsed.lang;
         } catch (_e) {
             console.log("Language config file doesn't exist. Fallback to English.");
@@ -52,8 +52,8 @@ export function getLangName(): string {
             const userDataPath = app.getPath("userData");
             const storagePath = path.join(userDataPath, "/storage/");
             const langConfigFile = `${storagePath}lang.json`;
-            let rawData = fs.readFileSync(langConfigFile, "utf-8");
-            let parsed = JSON.parse(rawData);
+            const rawData = fs.readFileSync(langConfigFile, "utf-8");
+            const parsed = JSON.parse(rawData);
             language = parsed.lang;
         } catch (_e) {
             console.log("Language config file doesn't exist. Fallback to English.");

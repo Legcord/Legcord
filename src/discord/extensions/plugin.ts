@@ -1,4 +1,4 @@
-import * as fs from "fs";
+import fs from "fs";
 import {app, session} from "electron";
 const userDataPath = app.getPath("userData");
 const pluginFolder = `${userDataPath}/plugins`;

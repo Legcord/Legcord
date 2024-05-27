@@ -7,11 +7,11 @@ contextBridge.exposeInMainWorld("themes", {
 });
 ipcRenderer.on("themeManifest", (_event, json: string) => {
     async () => {
-        let manifest = JSON.parse(json) as ThemeManifest;
+        const manifest = JSON.parse(json) as ThemeManifest;
         console.log(manifest);
         await sleep(1000); // REVIEW - This is all that requires async, would be nice if it could be removed.
-        let e = document.getElementById("cardBox");
-        let id = manifest.name.replace(" ", "-");
+        const e = document.getElementById("cardBox");
+        const id = manifest.name.replace(" ", "-");
         e?.insertAdjacentHTML(
             "beforeend",
             `

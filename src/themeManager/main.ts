@@ -11,11 +11,12 @@ function parseBDManifest(content: string) {
     if (!content.startsWith("/**")) {
         throw new Error("Not a manifest.");
     }
-    let manifest: ThemeManifest = {theme: "src.css", name: "null"}; // Will be defined later
+    const manifest: ThemeManifest = {theme: "src.css", name: "null"}; // Will be defined later
 
     let match;
     while ((match = metaReg.exec(content)) !== null) {
-        let [_, key, value] = match;
+        const [_, key] = match;
+        let [value] = match;
         if (key === "import") break;
 
         value = value.trim();
@@ -133,11 +134,11 @@ export async function createTManagerWindow(): Promise<void> {
             e.returnValue = fs.readFileSync(path.join(userDataPath, "/disabled.txt")).toString();
         });
         ipcMain.on("removeFromDisabled", (_event, name: string) => {
-            let e = fs.readFileSync(path.join(userDataPath, "/disabled.txt")).toString();
+            const e = fs.readFileSync(path.join(userDataPath, "/disabled.txt")).toString();
             fs.writeFileSync(path.join(userDataPath, "/disabled.txt"), e.replace(name, ""));
         });
         ipcMain.on("uninstallTheme", (_event, id: string) => {
-            let themePath = path.join(themesFolder, id);
+            const themePath = path.join(themesFolder, id);
             if (fs.existsSync(themePath)) {
                 fs.rmdirSync(themePath, {recursive: true});
                 console.log(`Removed ${id} folder`);
@@ -151,9 +152,9 @@ export async function createTManagerWindow(): Promise<void> {
         ipcMain.on("installBDTheme", (_event, link: string) => {
             return async () => {
                 try {
-                    let code = await (await fetch(link)).text();
-                    let manifest = parseBDManifest(code);
-                    let themePath = path.join(themesFolder, `${manifest.name?.replace(" ", "-")}-BD`);
+                    const code = await (await fetch(link)).text();
+                    const manifest = parseBDManifest(code);
+                    const themePath = path.join(themesFolder, `${manifest.name?.replace(" ", "-")}-BD`);
                     if (!fs.existsSync(themePath)) {
                         fs.mkdirSync(themePath);
                         console.log(`Created ${manifest.name} folder`);

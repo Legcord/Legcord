@@ -39,7 +39,7 @@ export function registerIpc(): void {
                 break;
             case "win32":
                 if (pingCount > 0) {
-                    let image = nativeImage.createFromPath(path.join(import.meta.dirname, "../", `/assets/ping.png`));
+                    const image = nativeImage.createFromPath(path.join(import.meta.dirname, "../", `/assets/ping.png`));
                     mainWindow.setOverlayIcon(image, "badgeCount");
                 } else {
                     mainWindow.setOverlayIcon(null, "badgeCount");
@@ -161,7 +161,7 @@ export function registerIpc(): void {
         return getConfig(toGet);
     });
     ipcMain.on("copyDebugInfo", () => {
-        let settingsFileContent = fs.readFileSync(getConfigLocation(), "utf-8");
+        const settingsFileContent = fs.readFileSync(getConfigLocation(), "utf-8");
         clipboard.writeText(
             `**OS:** ${os.platform()} ${os.version()}\n**Architecture:** ${os.arch()}\n**ArmCord version:** ${getVersion()}\n**Electron version:** ${
                 process.versions.electron

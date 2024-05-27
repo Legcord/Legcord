@@ -5,7 +5,7 @@ export function addStyle(styleString: string): void {
 }
 
 export function addScript(scriptString: string): void {
-    let script = document.createElement("script");
+    const script = document.createElement("script");
     script.textContent = scriptString;
     document.body.append(script);
 }

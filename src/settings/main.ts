@@ -44,7 +44,7 @@ export async function createSettingsWindow(): Promise<void> {
             fs.readdirSync(themesFolder).forEach((file) => {
                 try {
                     const manifest = fs.readFileSync(`${themesFolder}/${file}/manifest.json`, "utf8");
-                    let themeFile = JSON.parse(manifest) as ThemeManifest;
+                    const themeFile = JSON.parse(manifest) as ThemeManifest;
                     if (
                         fs
                             .readFileSync(path.join(userDataPath, "/disabled.txt"))

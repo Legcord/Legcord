@@ -31,7 +31,7 @@ function registerCustomHandler(): void {
         console.log(sources);
         if (process.platform === "linux" && process.env.XDG_SESSION_TYPE?.toLowerCase() === "wayland") {
             console.log("WebRTC Capturer detected, skipping window creation."); //assume webrtc capturer is used
-            var options: Electron.Streams = {video: sources[0]};
+            let options: Electron.Streams = {video: sources[0]};
             if (showAudioDialog() == true) options = {video: sources[0], audio: "loopbackWithMute"};
             callback(options);
         } else {
@@ -53,9 +53,9 @@ function registerCustomHandler(): void {
                 //console.log(sources[id]);
                 //console.log(id);
                 capturerWindow.close();
-                let result = {id, name};
+                const result = {id, name};
                 if (process.platform === "linux" || process.platform === "win32") {
-                    var options: Electron.Streams = {video: sources[0]};
+                    let options: Electron.Streams = {video: sources[0]};
                     if (showAudioDialog() == true) options = {video: sources[0], audio: "loopbackWithMute"};
                     callback(options);
                 } else {

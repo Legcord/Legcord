@@ -6,7 +6,7 @@ import {BrowserWindow, MessageBoxOptions, app, dialog, nativeImage, shell} from 
 import path from "path";
 import {registerIpc} from "./ipc";
 import {setMenu} from "./menu";
-import * as fs from "fs";
+import fs from "fs";
 import contextMenu from "electron-context-menu";
 import os from "os";
 import RPCServer from "arrpc";
@@ -14,6 +14,8 @@ import {tray} from "../tray";
 import {iconPath} from "../main";
 import {getConfig, setConfig, firstRun} from "../common/config";
 import {getWindowState, setWindowState} from "../common/windowState";
+import type EventEmitter from "events";
+import {ThemeManifest} from "../types/themeManifest";
 export let mainWindow: BrowserWindow;
 export let inviteWindow: BrowserWindow;
 let forceQuit = false;
@@ -58,7 +60,7 @@ function doAfterDefiningTheWindow(): void {
 
     // REVIEW - Test the protocol warning. I was not sure how to get it to pop up. For now I've voided the promises.
 
-    let ignoreProtocolWarning = getConfig("ignoreProtocolWarning");
+    const ignoreProtocolWarning = getConfig("ignoreProtocolWarning");
     registerIpc();
     if (getConfig("mobileMode")) {
         mainWindow.webContents.userAgent =
@@ -162,8 +164,8 @@ function doAfterDefiningTheWindow(): void {
                 getFavicon()
             `
                 )
-                .then((faviconBase64) => {
-                    let buf = Buffer.from(faviconBase64.replace(/^data:image\/\w+;base64,/, ""), "base64");
+                .then((faviconBase64: string) => {
+                    const buf = Buffer.from(faviconBase64.replace(/^data:image\/\w+;base64,/, ""), "base64");
                     fs.writeFileSync(path.join(app.getPath("temp"), "/", "tray.png"), buf, "utf-8");
                     let trayPath = nativeImage.createFromPath(path.join(app.getPath("temp"), "/", "tray.png"));
                     if (process.platform === "darwin" && trayPath.getSize().height > 22)
@@ -204,7 +206,7 @@ function doAfterDefiningTheWindow(): void {
         fs.readdirSync(themesFolder).forEach((file) => {
             try {
                 const manifest = fs.readFileSync(`${themesFolder}/${file}/manifest.json`, "utf8");
-                let themeFile = JSON.parse(manifest);
+                const themeFile = JSON.parse(manifest) as ThemeManifest;
                 if (
                     fs
                         .readFileSync(path.join(userDataPath, "/disabled.txt"))
@@ -229,7 +231,7 @@ function doAfterDefiningTheWindow(): void {
         if (process.platform === "darwin" && forceQuit) {
             mainWindow.close();
         } else {
-            let [width, height] = mainWindow.getSize();
+            const [width, height] = mainWindow.getSize();
             setWindowState({
                 width,
                 height,
@@ -270,9 +272,11 @@ function doAfterDefiningTheWindow(): void {
     mainWindow.on("unmaximize", () => {
         void mainWindow.webContents.executeJavaScript(`document.body.removeAttribute("isMaximized");`);
     });
-    if (getConfig("inviteWebsocket") == true) {
+    if (getConfig("inviteWebsocket")) {
         // NOTE - RPCServer appears to be untyped. cool.
-        new RPCServer().then((server: any) => {
+        // REVIEW - Whatever Ducko has done here to make an async constructor is awful.
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+        new RPCServer().then((server: EventEmitter) => {
             server.on("activity", (data: string) => mainWindow.webContents.send("rpc", data));
             server.on("invite", (code: string) => {
                 console.log(code);
@@ -370,7 +374,7 @@ export function createInviteWindow(code: string): void {
             spellcheck: getConfig("spellcheck")
         }
     });
-    let formInviteURL = `https://discord.com/invite/${code}`;
+    const formInviteURL = `https://discord.com/invite/${code}`;
     inviteWindow.webContents.session.webRequest.onBeforeRequest((details, callback) => {
         if (details.url.includes("ws://")) return callback({cancel: true});
         return callback({});

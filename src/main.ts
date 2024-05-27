@@ -34,11 +34,11 @@ app.on("render-process-gone", (_event, _webContents, details) => {
 async function args(): Promise<void> {
     let argNum = 2;
     if (process.argv[0] == "electron") argNum++;
-    let args = process.argv[argNum];
+    const args = process.argv[argNum];
     if (args == undefined) return;
     if (args.startsWith("--")) return; //electron flag
     if (args.includes("=")) {
-        let e = args.split("=");
+        const e = args.split("=");
         setConfig(e[0] as keyof Settings, e[1]);
         console.log(`Setting ${e[0]} to ${e[1]}`);
         app.relaunch();

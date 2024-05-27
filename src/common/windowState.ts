@@ -11,7 +11,7 @@ export function setWindowState(object: WindowState): void {
     const userDataPath = app.getPath("userData");
     const storagePath = path.join(userDataPath, "/storage/");
     const saveFile = `${storagePath}window.json`;
-    let toSave = JSON.stringify(object, null, 4);
+    const toSave = JSON.stringify(object, null, 4);
     fs.writeFileSync(saveFile, toSave, "utf-8");
 }
 
@@ -24,8 +24,8 @@ export function getWindowState<K extends keyof WindowState>(object: K): WindowSt
     if (!fs.existsSync(settingsFile)) {
         fs.writeFileSync(settingsFile, "{}", "utf-8");
     }
-    let rawData = fs.readFileSync(settingsFile, "utf-8");
-    let returnData = JSON.parse(rawData) as WindowState;
+    const rawData = fs.readFileSync(settingsFile, "utf-8");
+    const returnData = JSON.parse(rawData) as WindowState;
     console.log(`[Window state manager] ${JSON.stringify(returnData)}`);
     return returnData[object];
 }

@@ -11,7 +11,7 @@ function paste(contents: any): void {
     contents.paste();
 }
 export function setMenu(): void {
-    let template: Electron.MenuItemConstructorOptions[] = [
+    const template: Electron.MenuItemConstructorOptions[] = [
         {
             label: "ArmCord",
             submenu: [

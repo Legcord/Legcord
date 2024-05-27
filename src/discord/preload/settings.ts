@@ -1,8 +1,8 @@
-import * as path from "path";
-import * as fs from "fs";
+import path from "path";
+import fs from "fs";
 import {addStyle} from "../../common/dom.js";
 
-var webview = `<webview src="${path.join(
+const webview = `<webview src="${path.join(
     "file://",
     import.meta.dirname,
     "../",

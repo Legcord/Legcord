@@ -33,12 +33,9 @@ export default tseslint.config(
             // FIXME: THIS IS TEMPORARY. DEAR GOD PLEASE FIX THIS.
             // Explanation: Upon migrating away from Dmitmel's config, these errors cropped up.
             // This leads me to believe that these rules were never covered by the original config.
-            "prefer-const": 0,
             "no-constant-binary-expression": 0,
-            "no-prototype-builtins": 0,
             "no-unused-vars": 0, // Handled by @typescript-eslint/no-unused-vars
-            "no-var": 1,
-            "n/no-unsupported-features/node-builtins": 0,
+            "n/no-unsupported-features/node-builtins": 0, // Don't care
             "n/no-unpublished-import": 0, // Seems broken right now
             "@typescript-eslint/no-unused-vars": [
                 2,
@@ -50,7 +47,6 @@ export default tseslint.config(
             ],
             "@typescript-eslint/no-unsafe-member-access": 1,
             "@typescript-eslint/no-unsafe-call": 1,
-            "@typescript-eslint/no-explicit-any": 2,
             "@typescript-eslint/no-unnecessary-type-assertion": 1,
             "@typescript-eslint/no-unsafe-argument": 1,
             "@typescript-eslint/no-unsafe-assignment": 1,
