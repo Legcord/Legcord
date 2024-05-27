@@ -9,9 +9,9 @@ export let tray: any = null;
 let trayIcon = "ac_plug_colored";
 void app.whenReady().then(async () => {
     // REVIEW - app will hang at startup if line above is awaited.
-    let finishedSetup = await getConfig("doneSetup");
-    if ((await getConfig("trayIcon")) != "default") {
-        trayIcon = await getConfig("trayIcon");
+    let finishedSetup = getConfig("doneSetup");
+    if (getConfig("trayIcon") != "default") {
+        trayIcon = getConfig("trayIcon");
     }
     let trayPath = nativeImage.createFromPath(path.join(import.meta.dirname, "../", `/assets/${trayIcon}.png`));
     let trayVerIcon;
@@ -27,8 +27,8 @@ void app.whenReady().then(async () => {
     };
 
     if (process.platform == "darwin" && trayPath.getSize().height > 22) trayPath = trayPath.resize({height: 22});
-    if (await getConfig("tray")) {
-        let clientName = (await getConfig("clientName")) ?? "ArmCord";
+    if (getConfig("tray")) {
+        let clientName = getConfig("clientName") ?? "ArmCord";
         tray = new Tray(trayPath);
         if (finishedSetup == false) {
             const contextMenu = Menu.buildFromTemplate([
@@ -84,6 +84,8 @@ void app.whenReady().then(async () => {
                 {
                     label: `Quit ${clientName}`,
                     click() {
+                        // FIXME - I think I (@SomeAspy) introduced this, but the process doesn't properly exit using quit from the taskbar
+                        // IE: Process still running in CLI, taskbar icon left behind, main window closes.
                         app.quit();
                     }
                 }
@@ -95,7 +97,7 @@ void app.whenReady().then(async () => {
             mainWindow.show();
         });
     } else {
-        if ((await getConfig("tray")) == undefined) {
+        if (getConfig("tray") == undefined) {
             if (process.platform == "linux") {
                 const options: MessageBoxOptions = {
                     type: "question",

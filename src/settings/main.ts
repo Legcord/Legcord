@@ -64,9 +64,7 @@ export async function createSettingsWindow(): Promise<void> {
             });
         });
         settingsWindow.webContents.setWindowOpenHandler(({url}) => {
-            async () => {
-                await shell.openExternal(url);
-            };
+            void shell.openExternal(url);
             return {action: "deny"};
         });
         await settingsLoadPage();

@@ -2,7 +2,7 @@ import {app} from "electron";
 import {getConfig} from "./config";
 
 export let transparency: boolean;
-export async function injectElectronFlags(): Promise<void> {
+export function injectElectronFlags(): void {
     //     MIT License
 
     // Copyright (c) 2022 GooseNest
@@ -29,7 +29,7 @@ export async function injectElectronFlags(): Promise<void> {
         battery: "--enable-features=TurnOffStreamingMediaCachingOnBattery --force_low_power_gpu", // Known to have better battery life for Chromium?
         vaapi: "--ignore-gpu-blocklist --enable-features=VaapiVideoDecoder --enable-gpu-rasterization --enable-zero-copy --force_high_performance_gpu --use-gl=desktop --disable-features=UseChromeOSDirectVideoDecoder"
     };
-    switch (await getConfig("performanceMode")) {
+    switch (getConfig("performanceMode")) {
         case "performance":
             console.log("Performance mode enabled");
             app.commandLine.appendArgument(presets.performance);
@@ -41,7 +41,7 @@ export async function injectElectronFlags(): Promise<void> {
         default:
             console.log("No performance modes set");
     }
-    if ((await getConfig("windowStyle")) == "transparent" && process.platform === "win32") {
+    if (getConfig("windowStyle") == "transparent" && process.platform === "win32") {
         transparency = true;
     }
 }

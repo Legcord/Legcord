@@ -1,7 +1,6 @@
 import {BrowserWindow, app, dialog, ipcMain, shell} from "electron";
 import path from "path";
 import fs from "fs";
-import {sleep} from "../common/sleep";
 import {createInviteWindow, mainWindow} from "../discord/window";
 let themeWindow: BrowserWindow;
 let instance = 0;
@@ -117,7 +116,7 @@ export async function createTManagerWindow(): Promise<void> {
                 if (url != themeWindow.webContents.getURL()) {
                     e.preventDefault();
                     if (url.startsWith("https://discord.gg/")) {
-                        await createInviteWindow(url.replace("https://discord.gg/", ""));
+                        createInviteWindow(url.replace("https://discord.gg/", ""));
                     } else {
                         await shell.openExternal(url);
                     }
@@ -138,29 +137,20 @@ export async function createTManagerWindow(): Promise<void> {
             fs.writeFileSync(path.join(userDataPath, "/disabled.txt"), "");
         }
         ipcMain.on("openThemesFolder", () => {
-            async () => {
-                shell.showItemInFolder(themesPath);
-                await sleep(1000);
-            };
+            shell.showItemInFolder(themesPath);
         });
         ipcMain.on("reloadMain", () => {
             mainWindow.webContents.reload();
         });
         ipcMain.on("addToDisabled", (_event, name: string) => {
-            async () => {
-                fs.appendFileSync(path.join(userDataPath, "/disabled.txt"), `${name}\n`);
-                await sleep(1000);
-            };
+            fs.appendFileSync(path.join(userDataPath, "/disabled.txt"), `${name}\n`);
         });
         ipcMain.on("disabled", (e) => {
             e.returnValue = fs.readFileSync(path.join(userDataPath, "/disabled.txt")).toString();
         });
         ipcMain.on("removeFromDisabled", (_event, name: string) => {
-            async () => {
-                let e = fs.readFileSync(path.join(userDataPath, "/disabled.txt")).toString();
-                fs.writeFileSync(path.join(userDataPath, "/disabled.txt"), e.replace(name, ""));
-                await sleep(1000);
-            };
+            let e = fs.readFileSync(path.join(userDataPath, "/disabled.txt")).toString();
+            fs.writeFileSync(path.join(userDataPath, "/disabled.txt"), e.replace(name, ""));
         });
         ipcMain.on("uninstallTheme", (_event, id: string) => {
             let themePath = path.join(themesFolder, id);

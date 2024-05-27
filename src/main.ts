@@ -11,7 +11,6 @@ import {createSplashWindow} from "./splash/main";
 import {createSetupWindow} from "./setup/main";
 import {
     setConfig,
-    getConfigSync,
     checkForDataFolder,
     checkIfConfigExists,
     checkIfConfigIsBroken,
@@ -27,7 +26,7 @@ export let iconPath: string;
 export let settings: any;
 export let customTitlebar: boolean;
 
-app.on("render-process-gone", (event, webContents, details) => {
+app.on("render-process-gone", (_event, _webContents, details) => {
     if (details.reason == "crashed") {
         app.relaunch();
     }
@@ -51,7 +50,7 @@ async function args(): Promise<void> {
     }
 }
 await args(); // i want my top level awaits - IMPLEMENTED :)
-if (!app.requestSingleInstanceLock() && getConfigSync("multiInstance") == (false ?? undefined)) {
+if (!app.requestSingleInstanceLock() && getConfig("multiInstance") == (false ?? undefined)) {
     // if value isn't set after 3.2.4
     // kill if 2nd instance
     app.quit();
@@ -78,43 +77,43 @@ if (!app.requestSingleInstanceLock() && getConfigSync("multiInstance") == (false
         "WinRetrieveSuggestionsOnlyOnDemand,HardwareMediaKeyHandling,MediaSessionService"
     );
     checkForDataFolder();
-    await checkIfConfigExists();
+    checkIfConfigExists();
     checkIfConfigIsBroken();
-    await injectElectronFlags();
+    injectElectronFlags();
     console.log("[Config Manager] Current config: " + fs.readFileSync(getConfigLocation(), "utf-8"));
     void app.whenReady().then(async () => {
         // REVIEW - Awaiting the line above will cause a hang at startup
-        if ((await getConfig("customIcon")) !== undefined ?? null) {
-            iconPath = await getConfig("customIcon");
+        if (getConfig("customIcon") !== undefined ?? null) {
+            iconPath = getConfig("customIcon");
         } else {
             iconPath = path.join(import.meta.dirname, "../", "/assets/desktop.png");
         }
-        async function init(): Promise<void> {
-            if ((await getConfig("skipSplash")) == false) {
+        function init(): void {
+            if (getConfig("skipSplash") == false) {
                 void createSplashWindow(); // REVIEW - Awaiting will hang at start
             }
             if (firstRun == true) {
                 setLang(new Intl.DateTimeFormat().resolvedOptions().locale);
                 void createSetupWindow(); //NOTE - Untested, awaiting this will probably hang
             }
-            switch (await getConfig("windowStyle")) {
+            switch (getConfig("windowStyle")) {
                 case "default":
-                    await createCustomWindow();
+                    createCustomWindow();
                     customTitlebar = true;
                     break;
                 case "native":
-                    await createNativeWindow();
+                    createNativeWindow();
                     break;
                 case "transparent":
-                    await createTransparentWindow();
+                    createTransparentWindow();
                     break;
                 default:
-                    await createCustomWindow();
+                    createCustomWindow();
                     customTitlebar = true;
                     break;
             }
         }
-        await init();
+        init();
         await installModLoader();
         session.fromPartition("some-partition").setPermissionRequestHandler((_webContents, permission, callback) => {
             if (permission === "notifications") {
@@ -127,9 +126,7 @@ if (!app.requestSingleInstanceLock() && getConfigSync("multiInstance") == (false
             }
         });
         app.on("activate", function () {
-            async () => {
-                if (BrowserWindow.getAllWindows().length === 0) await init();
-            };
+            if (BrowserWindow.getAllWindows().length === 0) init();
         });
     });
 }

@@ -7,7 +7,6 @@ import fs from "fs";
 import path from "path";
 import {getConfig, setConfigBulk, getConfigLocation, Settings} from "../common/config";
 import {setLang, getLang, getLangName} from "../common/lang";
-import {sleep} from "../common/sleep";
 import {getVersion, getDisplayVersion} from "../common/version";
 import {customTitlebar} from "../main";
 import {createSettingsWindow} from "../settings/main";
@@ -80,9 +79,9 @@ export function registerIpc(): void {
     ipcMain.on("modInstallState", (event) => {
         event.returnValue = modInstallState;
     });
-    ipcMain.on("splashEnd", async () => {
+    ipcMain.on("splashEnd", () => {
         splashWindow.close();
-        if (await getConfig("startMinimized")) {
+        if (getConfig("startMinimized")) {
             mainWindow.hide();
         } else {
             mainWindow.show();
@@ -95,38 +94,39 @@ export function registerIpc(): void {
     ipcMain.on("saveSettings", (_event, args) => {
         setConfigBulk(args);
     });
-    ipcMain.on("minimizeToTray", async (event) => {
-        event.returnValue = await getConfig("minimizeToTray");
+    ipcMain.on("minimizeToTray", (event) => {
+        event.returnValue = getConfig("minimizeToTray");
     });
-    ipcMain.on("channel", async (event) => {
-        event.returnValue = await getConfig("channel");
+    ipcMain.on("channel", (event) => {
+        event.returnValue = getConfig("channel");
     });
-    ipcMain.on("clientmod", async (event) => {
-        event.returnValue = await getConfig("mods");
+    ipcMain.on("clientmod", (event) => {
+        event.returnValue = getConfig("mods");
     });
-    ipcMain.on("legacyCapturer", async (event) => {
-        event.returnValue = await getConfig("useLegacyCapturer");
+    ipcMain.on("legacyCapturer", (event) => {
+        event.returnValue = getConfig("useLegacyCapturer");
     });
-    ipcMain.on("trayIcon", async (event) => {
-        event.returnValue = await getConfig("trayIcon");
+    ipcMain.on("trayIcon", (event) => {
+        event.returnValue = getConfig("trayIcon");
     });
-    ipcMain.on("disableAutogain", async (event) => {
-        event.returnValue = await getConfig("disableAutogain");
+    ipcMain.on("disableAutogain", (event) => {
+        event.returnValue = getConfig("disableAutogain");
     });
     ipcMain.on("titlebar", (event) => {
         event.returnValue = customTitlebar;
     });
-    ipcMain.on("mobileMode", async (event) => {
-        event.returnValue = await getConfig("mobileMode");
+    ipcMain.on("mobileMode", (event) => {
+        event.returnValue = getConfig("mobileMode");
     });
+    // REVIEW - I don't see a reason to await the actual action of running the settings window. The user cannot open more than one anyway, as defined in the function.
     ipcMain.on("openSettingsWindow", () => {
-        createSettingsWindow();
+        void createSettingsWindow();
     });
     ipcMain.on("openManagerWindow", () => {
-        createTManagerWindow();
+        void createTManagerWindow();
     });
-    ipcMain.on("setting-armcordCSP", async (event) => {
-        if (await getConfig("armcordCSP")) {
+    ipcMain.on("setting-armcordCSP", (event) => {
+        if (getConfig("armcordCSP")) {
             event.returnValue = true;
         } else {
             event.returnValue = false;
@@ -137,24 +137,21 @@ export function registerIpc(): void {
         console.log(args);
         setConfigBulk(args);
     });
-    ipcMain.on("openStorageFolder", async () => {
+    // REVIEW - The lower 4 functions had await sleep(1000), I'm not sure why. Behavior is same regardless
+    ipcMain.on("openStorageFolder", () => {
         shell.showItemInFolder(storagePath);
-        await sleep(1000);
     });
-    ipcMain.on("openThemesFolder", async () => {
+    ipcMain.on("openThemesFolder", () => {
         shell.showItemInFolder(themesPath);
-        await sleep(1000);
     });
-    ipcMain.on("openPluginsFolder", async () => {
+    ipcMain.on("openPluginsFolder", () => {
         shell.showItemInFolder(pluginsPath);
-        await sleep(1000);
     });
-    ipcMain.on("openCrashesFolder", async () => {
+    ipcMain.on("openCrashesFolder", () => {
         shell.showItemInFolder(path.join(app.getPath("temp"), `${app.getName()} Crashes`));
-        await sleep(1000);
     });
-    ipcMain.on("getLangName", async (event) => {
-        event.returnValue = await getLangName();
+    ipcMain.on("getLangName", (event) => {
+        event.returnValue = getLangName();
     });
     ipcMain.on("crash", () => {
         process.crash();

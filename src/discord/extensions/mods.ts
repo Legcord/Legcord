@@ -6,19 +6,19 @@ import fs from "fs";
 import {pipeline} from "stream";
 const streamPipeline = pipeline;
 async function updateModBundle(): Promise<void> {
-    if ((await getConfig("noBundleUpdates")) == undefined ?? false) {
+    if (getConfig("noBundleUpdates") == undefined ?? false) {
         try {
             console.log("Downloading mod bundle");
             const distFolder = `${app.getPath("userData")}/plugins/loader/dist/`;
             while (!fs.existsSync(distFolder)) {
                 //waiting
             }
-            let name: string = await getConfig("mods");
+            let name: string = getConfig("mods");
             if (name == "custom") {
                 // aspy fix
-                let bundle: string = await (await fetch(await getConfig("customJsBundle"))).text();
+                let bundle: string = await (await fetch(getConfig("customJsBundle"))).text();
                 fs.writeFileSync(`${distFolder}bundle.js`, bundle, "utf-8");
-                let css: string = await (await fetch(await getConfig("customCssBundle"))).text();
+                let css: string = await (await fetch(getConfig("customCssBundle"))).text();
                 fs.writeFileSync(`${distFolder}bundle.css`, css, "utf-8");
             } else {
                 const clientMods = {
@@ -59,7 +59,7 @@ export function updateModInstallState() {
 }
 
 export async function installModLoader(): Promise<void> {
-    if ((await getConfig("mods")) == "none") {
+    if (getConfig("mods") == "none") {
         modInstallState = "none";
         fs.rmSync(`${app.getPath("userData")}/plugins/loader`, {recursive: true, force: true});
 

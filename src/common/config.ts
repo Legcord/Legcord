@@ -47,12 +47,11 @@ export function getConfigLocation(): string {
     const storagePath = path.join(userDataPath, "/storage/");
     return `${storagePath}settings.json`;
 }
-export function getConfig<K extends keyof Settings>(object: K): Promise<Settings[K]> {
-    let rawdata = fs.readFileSync(getConfigLocation(), "utf-8");
-    let returndata = JSON.parse(rawdata);
-    return returndata[object];
-}
-export function getConfigSync<K extends keyof Settings>(object: K) {
+// REVIEW - If I remember correctly fs doesn't need async. I have adjusted the Promise<Settings[K]> to reflect so.
+// Why touch it when it worked fine? The Async-ness of this function caused headaches in a lot of other places.
+// Tested with src/tray.ts - Seems to work great!
+// NOTE - Removed getConfigSync<K extends keyof Settings>(object: K) - Redundant now.
+export function getConfig<K extends keyof Settings>(object: K): Settings[K] {
     let rawdata = fs.readFileSync(getConfigLocation(), "utf-8");
     let returndata = JSON.parse(rawdata);
     return returndata[object];
@@ -78,7 +77,7 @@ export function setConfigBulk(object: Settings): void {
     const toSave = JSON.stringify(mergedData, null, 4);
     fs.writeFileSync(getConfigLocation(), toSave, "utf-8");
 }
-export async function checkIfConfigExists(): Promise<void> {
+export function checkIfConfigExists(): void {
     const userDataPath = app.getPath("userData");
     const storagePath = path.join(userDataPath, "/storage/");
     const settingsFile = `${storagePath}settings.json`;
@@ -91,7 +90,7 @@ export async function checkIfConfigExists(): Promise<void> {
         console.log("First run of the ArmCord. Starting setup.");
         setup();
         firstRun = true;
-    } else if ((await getConfig("doneSetup")) == false) {
+    } else if (getConfig("doneSetup") == false) {
         console.log("First run of the ArmCord. Starting setup.");
         setup();
         firstRun = true;

@@ -19,9 +19,9 @@ const unstrictCSP = (): void => {
     });
 };
 
-void electron.app.whenReady().then(async () => {
+void electron.app.whenReady().then(() => {
     // REVIEW - Awaiting the line above will hang the app.
-    if (await getConfig("armcordCSP")) {
+    if (getConfig("armcordCSP")) {
         unstrictCSP();
     } else {
         console.log("ArmCord CSP is disabled. The CSP should be managed by a third-party plugin(s).");
