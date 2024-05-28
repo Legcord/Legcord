@@ -88,13 +88,13 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") == (false ?? 
         } else {
             iconPath = path.join(import.meta.dirname, "../", "/assets/desktop.png");
         }
-        function init(): void {
+        async function init(): Promise<void> {
             if (getConfig("skipSplash") == false) {
                 void createSplashWindow(); // REVIEW - Awaiting will hang at start
             }
             if (firstRun == true) {
                 setLang(new Intl.DateTimeFormat().resolvedOptions().locale);
-                void createSetupWindow(); //NOTE - Untested, awaiting this will probably hang
+                await createSetupWindow(); //NOTE - Untested, awaiting this will probably hang
             }
             switch (getConfig("windowStyle")) {
                 case "default":
@@ -113,7 +113,7 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") == (false ?? 
                     break;
             }
         }
-        init();
+        await init();
         await installModLoader();
         session.fromPartition("some-partition").setPermissionRequestHandler((_webContents, permission, callback) => {
             if (permission === "notifications") {
@@ -126,7 +126,9 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") == (false ?? 
             }
         });
         app.on("activate", function () {
-            if (BrowserWindow.getAllWindows().length === 0) init();
+            async () => {
+                if (BrowserWindow.getAllWindows().length === 0) await init();
+            };
         });
     });
 }

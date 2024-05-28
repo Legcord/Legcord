@@ -18,7 +18,7 @@ export async function createSetupWindow(): Promise<void> {
         webPreferences: {
             sandbox: false,
             spellcheck: false,
-            preload: path.join(import.meta.dirname, "preload.js")
+            preload: path.join(import.meta.dirname, "preload.mjs")
         }
     });
     ipcMain.on("saveSettings", (_event, args: Settings) => {
