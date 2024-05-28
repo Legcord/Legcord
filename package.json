@@ -46,12 +46,12 @@
         "fix-esm-import-path": "github:smartfrigde/fix-esm-import-path",
         "prettier": "^3.2.5",
         "typescript": "^5.4.5",
-        "typescript-eslint": "7.10.0"
+        "typescript-eslint": "^7.11.0"
     },
     "dependencies": {
         "arrpc": "github:OpenAsar/arrpc",
         "cross-fetch": "^3.1.8",
-        "electron-context-menu": "github:ArmCord/electron-context-menu",
+        "electron-context-menu": "^4.0.0",
         "extract-zip": "^2.0.1",
         "v8-compile-cache": "^2.4.0",
         "ws": "^8.17.0"
