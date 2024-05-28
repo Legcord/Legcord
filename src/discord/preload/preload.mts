@@ -1,4 +1,4 @@
-import "./bridge.mjs";
+import "./bridge.js";
 import "./optimizer.js";
 import "./settings.js";
 import {ipcRenderer} from "electron";
