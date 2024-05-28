@@ -22,7 +22,6 @@ contextMenu({
     showSaveImageAs: true,
     showCopyImageAddress: true,
     showSearchWithGoogle: false,
-    showSearchWithDuckDuckGo: false,
     prepend: (_defaultActions, parameters) => [
         {
             label: "Search with Google",
