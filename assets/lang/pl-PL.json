@@ -1,15 +1,15 @@
 {
-    "loading_screen_update": "Nowa wersja ArmCord jest dostępna. Proszę zaktualizować aplikację do najnowszej wersji.",
+    "loading_screen_update": "Nowa wersja ArmCord jest dostępna. Proszę zaktualizować do najnowszej wersji.",
     "setup_question2": "Wybierz swój kanał/odmianę Discorda:",
     "setup_question3": "Czy ArmCord powinienem zajmować sie instalacją modyfikacji klienta?",
     "yes": "Tak",
     "no": "Nie",
     "next": "Dalej",
     "setup_question4": "Wybierz modyfikację klienta którą chcesz zainstalować:",
-    "loading_screen_start": "Ładowanie ArmCord…",
-    "loading_screen_offline": "Wydaje nam się, że nie jesteś połączony z Internetem. Połącz się z internetem i spróbuj ponownie.",
+    "loading_screen_start": "Uruchamianie ArmCord…",
+    "loading_screen_offline": "Wygląda na to, że jesteś offline. Uruchom ponownie za ",
     "setup_question1": "Witaj w konfiguracji ArmCord'a",
-    "setup_offline": "Wydaje nam się, że nie jesteś połączony z internetem. Połącz się z internetem i uruchom ponownie konfiguracje ArmCord.",
+    "setup_offline": "Wygląda na to, że jesteś offline. Połącz się z Internetem i uruchom ponownie ArmCord.",
     "settings-channel": "Kanał Discorda",
     "settings-updater": "Sprawdź aktualizacje",
     "settings-tray": "Zminimalizuj do ikony zasobnika",
@@ -79,6 +79,6 @@
     "settings-theme-desc4": "przeźroczyste okno z natywnym paskiem zadań, potrzebujesz kompatybilny motyw żeby to działało. Tylko dla Windows'a.",
     "settings-MultiInstance": "Wiele instancji",
     "settings-MultiInstance-desc": "Kiedy ta opcja jest włączona możliwe jest uruchomienie wielu instancji ArmCord.",
-    "settings-copyGPUInfo": "Copy GPU Info",
+    "settings-copyGPUInfo": "Skopiuj informacje o GPU",
     "settings-prfmMode-vaapi": "VAAPI"
 }
