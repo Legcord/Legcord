@@ -10,7 +10,7 @@ importers:
     dependencies:
       arrpc:
         specifier: github:OpenAsar/arrpc
-        version: https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24
+        version: git+https://git@github.com:OpenAsar/arrpc.git#c62ec6a04c8d870530aa6944257fe745f6c59a24
       cross-fetch:
         specifier: ^3.1.5
         version: 3.1.5
@@ -28,8 +28,8 @@ importers:
         version: 8.11.0
     devDependencies:
       '@types/node':
-        specifier: ^20.11.1
-        version: 20.11.28
+        specifier: ^20.12.13
+        version: 20.12.13
       '@types/ws':
         specifier: ^8.5.3
         version: 8.5.3
@@ -53,7 +53,7 @@ importers:
         version: 8.40.0
       eslint-config-dmitmel:
         specifier: github:dmitmel/eslint-config-dmitmel
-        version: https://codeload.github.com/dmitmel/eslint-config-dmitmel/tar.gz/d97129ec35235415c6ae6a42299f55cdbb5d75fd(eslint@8.40.0)
+        version: git+https://git@github.com:dmitmel/eslint-config-dmitmel.git#d97129ec35235415c6ae6a42299f55cdbb5d75fd(eslint@8.40.0)
       eslint-plugin-node:
         specifier: ^11.1.0
         version: 11.1.0(eslint@8.40.0)
@@ -62,7 +62,7 @@ importers:
         version: 4.2.1(eslint@8.40.0)(prettier@2.7.1)
       fix-esm-import-path:
         specifier: github:smartfrigde/fix-esm-import-path
-        version: https://codeload.github.com/smartfrigde/fix-esm-import-path/tar.gz/71f374903884f2da21aad60b8c6a34c144523bbf
+        version: git+https://git@github.com:smartfrigde/fix-esm-import-path.git#71f374903884f2da21aad60b8c6a34c144523bbf
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
@@ -183,8 +183,8 @@ packages:
   '@types/ms@0.7.31':
     resolution: {integrity: sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==}
 
-  '@types/node@20.11.28':
-    resolution: {integrity: sha512-M/GPWVS2wLkSkNHVeLkrF2fD5Lx5UC4PxA0uZcKc6QqbIQUJyW1jVjueJYi1z8n0I5PxYrtpnPnWglE+y9A0KA==}
+  '@types/node@20.12.13':
+    resolution: {integrity: sha512-gBGeanV41c1L171rR7wjbMiEpEI/l5XFQdLLfhr/REwpgDy/4U8y89+i8kRiLzDyZdOkXh+cRaTetUnCYutoXA==}
 
   '@types/plist@3.0.2':
     resolution: {integrity: sha512-ULqvZNGMv0zRFvqn8/4LSPtnmN4MfhlPNtJCTpKuIIxGVGZ2rYWzFXrvEBoh9CVyqSE7D6YFRJ1hydLHI6kbWw==}
@@ -329,8 +329,8 @@ packages:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
 
-  arrpc@https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24:
-    resolution: {tarball: https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24}
+  arrpc@git+https://git@github.com:OpenAsar/arrpc.git#c62ec6a04c8d870530aa6944257fe745f6c59a24:
+    resolution: {commit: c62ec6a04c8d870530aa6944257fe745f6c59a24, repo: git@github.com:OpenAsar/arrpc.git, type: git}
     version: 3.4.0
     hasBin: true
 
@@ -633,8 +633,8 @@ packages:
     resolution: {integrity: sha512-/veY75JbMK4j1yjvuUxuVsiS/hr/4iHs9FTT6cgTexxdE0Ly/glccBAkloH/DofkjRbZU3bnoj38mOmhkZ0lHw==}
     engines: {node: '>=12'}
 
-  eslint-config-dmitmel@https://codeload.github.com/dmitmel/eslint-config-dmitmel/tar.gz/d97129ec35235415c6ae6a42299f55cdbb5d75fd:
-    resolution: {tarball: https://codeload.github.com/dmitmel/eslint-config-dmitmel/tar.gz/d97129ec35235415c6ae6a42299f55cdbb5d75fd}
+  eslint-config-dmitmel@git+https://git@github.com:dmitmel/eslint-config-dmitmel.git#d97129ec35235415c6ae6a42299f55cdbb5d75fd:
+    resolution: {commit: d97129ec35235415c6ae6a42299f55cdbb5d75fd, repo: git@github.com:dmitmel/eslint-config-dmitmel.git, type: git}
     version: 8.3.0
     engines: {node: '>=8.10.0'}
     peerDependencies:
@@ -766,8 +766,8 @@ packages:
     resolution: {integrity: sha512-78/PXT1wlLLDgTzDs7sjq9hzz0vXD+zn+7wypEe4fXQxCmdmqfGsEPQxmiCSQI3ajFV91bVSsvNtrJRiW6nGng==}
     engines: {node: '>=10'}
 
-  fix-esm-import-path@https://codeload.github.com/smartfrigde/fix-esm-import-path/tar.gz/71f374903884f2da21aad60b8c6a34c144523bbf:
-    resolution: {tarball: https://codeload.github.com/smartfrigde/fix-esm-import-path/tar.gz/71f374903884f2da21aad60b8c6a34c144523bbf}
+  fix-esm-import-path@git+https://git@github.com:smartfrigde/fix-esm-import-path.git#71f374903884f2da21aad60b8c6a34c144523bbf:
+    resolution: {commit: 71f374903884f2da21aad60b8c6a34c144523bbf, repo: git@github.com:smartfrigde/fix-esm-import-path.git, type: git}
     version: 1.5.0
     hasBin: true
 
@@ -1734,7 +1734,7 @@ snapshots:
     dependencies:
       '@types/http-cache-semantics': 4.0.1
       '@types/keyv': 3.1.4
-      '@types/node': 20.11.28
+      '@types/node': 20.12.13
       '@types/responselike': 1.0.0
 
   '@types/debug@4.1.7':
@@ -1743,7 +1743,7 @@ snapshots:
 
   '@types/fs-extra@9.0.13':
     dependencies:
-      '@types/node': 20.11.28
+      '@types/node': 20.12.13
 
   '@types/http-cache-semantics@4.0.1': {}
 
@@ -1751,23 +1751,23 @@ snapshots:
 
   '@types/keyv@3.1.4':
     dependencies:
-      '@types/node': 20.11.28
+      '@types/node': 20.12.13
 
   '@types/ms@0.7.31': {}
 
-  '@types/node@20.11.28':
+  '@types/node@20.12.13':
     dependencies:
       undici-types: 5.26.5
 
   '@types/plist@3.0.2':
     dependencies:
-      '@types/node': 20.11.28
+      '@types/node': 20.12.13
       xmlbuilder: 15.1.1
     optional: true
 
   '@types/responselike@1.0.0':
     dependencies:
-      '@types/node': 20.11.28
+      '@types/node': 20.12.13
 
   '@types/semver@7.3.13': {}
 
@@ -1776,11 +1776,11 @@ snapshots:
 
   '@types/ws@8.5.3':
     dependencies:
-      '@types/node': 20.11.28
+      '@types/node': 20.12.13
 
   '@types/yauzl@2.10.0':
     dependencies:
-      '@types/node': 20.11.28
+      '@types/node': 20.12.13
     optional: true
 
   '@typescript-eslint/eslint-plugin@5.59.2(@typescript-eslint/parser@5.59.2(eslint@8.40.0)(typescript@4.9.3))(eslint@8.40.0)(typescript@4.9.3)':
@@ -1976,7 +1976,7 @@ snapshots:
 
   array-union@2.1.0: {}
 
-  arrpc@https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24:
+  arrpc@git+https://git@github.com:OpenAsar/arrpc.git#c62ec6a04c8d870530aa6944257fe745f6c59a24:
     dependencies:
       ws: 8.11.0
     transitivePeerDependencies:
@@ -2313,7 +2313,7 @@ snapshots:
   electron@30.0.5:
     dependencies:
       '@electron/get': 2.0.2
-      '@types/node': 20.11.28
+      '@types/node': 20.12.13
       extract-zip: 2.0.1
     transitivePeerDependencies:
       - supports-color
@@ -2341,7 +2341,7 @@ snapshots:
 
   escape-string-regexp@5.0.0: {}
 
-  eslint-config-dmitmel@https://codeload.github.com/dmitmel/eslint-config-dmitmel/tar.gz/d97129ec35235415c6ae6a42299f55cdbb5d75fd(eslint@8.40.0):
+  eslint-config-dmitmel@git+https://git@github.com:dmitmel/eslint-config-dmitmel.git#d97129ec35235415c6ae6a42299f55cdbb5d75fd(eslint@8.40.0):
     dependencies:
       eslint: 8.40.0
 
@@ -2513,7 +2513,7 @@ snapshots:
       locate-path: 6.0.0
       path-exists: 4.0.0
 
-  fix-esm-import-path@https://codeload.github.com/smartfrigde/fix-esm-import-path/tar.gz/71f374903884f2da21aad60b8c6a34c144523bbf:
+  fix-esm-import-path@git+https://git@github.com:smartfrigde/fix-esm-import-path.git#71f374903884f2da21aad60b8c6a34c144523bbf:
     dependencies:
       debug: 4.3.4
     transitivePeerDependencies:
