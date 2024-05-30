@@ -3,8 +3,9 @@ import extract from "extract-zip";
 import path from "path";
 import {getConfig} from "../../common/config";
 import fs from "fs";
+import {promisify} from "node:util";
 import {pipeline} from "stream";
-const streamPipeline = pipeline;
+const streamPipeline = promisify(pipeline);
 async function updateModBundle(): Promise<void> {
     if ((await getConfig("noBundleUpdates")) == undefined ?? false) {
         try {
@@ -108,7 +109,6 @@ export async function installModLoader(): Promise<void> {
 
             break;
         }
-
         await streamPipeline(loaderZip.body, fs.createWriteStream(zipPath));
         await extract(zipPath, {dir: path.join(app.getPath("userData"), "plugins")});
 
