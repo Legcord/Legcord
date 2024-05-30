@@ -3,8 +3,9 @@ import extract from "extract-zip";
 import path from "path";
 import {getConfig} from "../../common/config";
 import fs from "fs";
+import {promisify} from "node:util";
 import {pipeline} from "stream";
-const streamPipeline = pipeline;
+const streamPipeline = promisify(pipeline);
 async function updateModBundle(): Promise<void> {
     if (getConfig("noBundleUpdates") == false) {
         try {
@@ -106,8 +107,7 @@ export async function installModLoader(): Promise<void> {
 
             break;
         }
-        // @ts-expect-error // REVIEW - This clearly works as its BEEN here and WORKS here but Typescript won't build with this.
-        streamPipeline(loaderZip.body, fs.createWriteStream(zipPath));
+        await streamPipeline(loaderZip.body, fs.createWriteStream(zipPath));
         await extract(zipPath, {dir: path.join(app.getPath("userData"), "plugins")});
 
         updateModInstallState();
