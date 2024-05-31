@@ -1,5 +1,5 @@
 import electron from "electron";
-import {getConfig} from "../../common/config";
+import {getConfig} from "../../common/config.js";
 
 const unstrictCSP = (): void => {
     console.log("Setting up CSP unstricter...");

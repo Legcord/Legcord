@@ -1,8 +1,8 @@
 import {BrowserWindow, app, ipcMain} from "electron";
 import path from "path";
 import * as fs from "fs";
-import {iconPath} from "../main";
-import {setConfigBulk, getConfigLocation, Settings} from "../common/config";
+import {iconPath} from "../main.js";
+import {setConfigBulk, getConfigLocation, Settings} from "../common/config.js";
 
 let setupWindow: BrowserWindow;
 export function createSetupWindow(): void {
