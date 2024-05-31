@@ -1,8 +1,8 @@
 // Modules to control application life and create native browser window
 import {BrowserWindow, app, crashReporter, session} from "electron";
 import "v8-compile-cache";
-import "./discord/extensions/csp";
-import "./tray";
+import "./discord/extensions/csp.js";
+import "./tray.js";
 import fs from "fs";
 import {createCustomWindow, createNativeWindow, createTransparentWindow} from "./discord/window.js";
 import path from "path";
