@@ -2,7 +2,7 @@ import {BrowserWindow, app, shell} from "electron";
 import path from "path";
 import fs from "fs";
 import {getDisplayVersion} from "../common/version.js";
-import type {ThemeManifest} from "../types/themeManifest.js";
+import type {ThemeManifest} from "../types/themeManifest.d.js";
 let settingsWindow: BrowserWindow;
 let instance = 0;
 

@@ -3,11 +3,11 @@ import extract from "extract-zip";
 import path from "path";
 import {getConfig} from "../../common/config.js";
 import fs from "fs";
-import {promisify} from "node:util";
-import {pipeline} from "stream";
-const streamPipeline = promisify(pipeline);
+import {Readable} from "stream";
+import type {ReadableStream} from "stream/web";
+import {finished} from "stream/promises";
 async function updateModBundle(): Promise<void> {
-    if (getConfig("noBundleUpdates") == false) {
+    if (getConfig("noBundleUpdates") == undefined ?? false) {
         try {
             console.log("Downloading mod bundle");
             const distFolder = `${app.getPath("userData")}/plugins/loader/dist/`;
@@ -93,24 +93,29 @@ export async function installModLoader(): Promise<void> {
             "https://armcord.vercel.app/loader.zip",
             "https://raw.githubusercontent.com/ArmCord/website/new/public/loader.zip"
         ];
-        let loaderZip: Response;
 
         while (true) {
-            try {
-                loaderZip = await fetch(URLs[0]);
-            } catch (err) {
-                console.log("[Mod loader] Failed to download. Links left to try: " + (URLs.length - 1));
-                URLs.splice(0, 1);
-
-                continue;
+            let completed = false;
+            await fetch(URLs[0])
+                .then(async (loaderZip) => {
+                    const fileStream = fs.createWriteStream(zipPath);
+                    await finished(Readable.fromWeb(loaderZip.body as ReadableStream).pipe(fileStream)).then(
+                        async () => {
+                            await extract(zipPath, {dir: path.join(app.getPath("userData"), "plugins")}).then(() => {
+                                updateModInstallState();
+                                completed = true;
+                            });
+                        }
+                    );
+                })
+                .catch(() => {
+                    console.warn(`[Mod loader] Failed to download. Links left to try: ${URLs.length - 1}`);
+                    URLs.splice(0, 1);
+                });
+            if (completed || URLs.length == 0) {
+                break;
             }
-
-            break;
         }
-        await streamPipeline(loaderZip.body, fs.createWriteStream(zipPath));
-        await extract(zipPath, {dir: path.join(app.getPath("userData"), "plugins")});
-
-        updateModInstallState();
     } catch (e) {
         console.log("[Mod loader] Failed to install modloader");
         console.error(e);

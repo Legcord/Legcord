@@ -5,7 +5,7 @@
 import {BrowserWindow, MessageBoxOptions, app, dialog, nativeImage, shell} from "electron";
 import path from "path";
 import type EventEmitter from "events";
-import {ThemeManifest} from "../types/themeManifest.js";
+import {ThemeManifest} from "../types/themeManifest.d.js";
 import {registerIpc} from "./ipc.js";
 import {setMenu} from "./menu.js";
 import * as fs from "fs";

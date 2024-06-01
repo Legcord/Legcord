@@ -92,7 +92,7 @@ export function registerIpc(): void {
         app.relaunch();
         app.exit();
     });
-    ipcMain.on("saveSettings", (_event, args) => {
+    ipcMain.on("saveSettings", (_event, args: Settings) => {
         setConfigBulk(args);
     });
     ipcMain.on("minimizeToTray", (event) => {

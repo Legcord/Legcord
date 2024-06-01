@@ -1,7 +1,7 @@
 import {app, dialog} from "electron";
 import path from "path";
 import fs from "fs";
-import type {Settings} from "../types/settings.js";
+import type {Settings} from "../types/settings.d.js";
 import {getWindowStateLocation} from "./windowState.js";
 export let firstRun: boolean;
 export function checkForDataFolder(): void {

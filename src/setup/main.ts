@@ -3,7 +3,7 @@ import path from "path";
 import fs from "fs";
 import {iconPath} from "../main.js";
 import {setConfigBulk, getConfigLocation} from "../common/config.js";
-import type {Settings} from "../types/settings.js";
+import type {Settings} from "../types/settings.d.js";
 
 let setupWindow: BrowserWindow;
 export async function createSetupWindow(): Promise<void> {

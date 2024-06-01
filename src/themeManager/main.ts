@@ -2,7 +2,7 @@ import {BrowserWindow, app, dialog, ipcMain, shell} from "electron";
 import path from "path";
 import fs from "fs";
 import {createInviteWindow, mainWindow} from "../discord/window.js";
-import type {ThemeManifest} from "../types/themeManifest.js";
+import type {ThemeManifest} from "../types/themeManifest.d.js";
 let themeWindow: BrowserWindow;
 let instance = 0;
 
