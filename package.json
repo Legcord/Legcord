@@ -39,7 +39,7 @@
         "copyfiles": "^2.4.1",
         "electron": "30.0.5",
         "electron-builder": "^24.13.3",
-        "eslint": "^8.40.0",
+        "eslint": "^8.57.0",
         "eslint-config-dmitmel": "github:dmitmel/eslint-config-dmitmel",
         "eslint-plugin-node": "^11.1.0",
         "eslint-plugin-prettier": "^4.2.1",
