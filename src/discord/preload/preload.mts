@@ -5,7 +5,7 @@ import {ipcRenderer} from "electron";
 import fs from "fs";
 import path from "path";
 import {injectMobileStuff} from "./mobile.js";
-import {fixTitlebar, injectTitlebar} from "./titlebar.js";
+import {fixTitlebar, injectTitlebar} from "./titlebar.mjs";
 import {injectSettings} from "./settings.js";
 import {addStyle, addScript} from "../../common/dom.js";
 import {sleep} from "../../common/sleep.js";

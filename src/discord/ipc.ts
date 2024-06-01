@@ -5,15 +5,15 @@ import {mainWindow} from "./window.js";
 import os from "os";
 import fs from "fs";
 import path from "path";
-import {getConfig, setConfigBulk, getConfigLocation, Settings} from "../common/config.js";
+import {getConfig, setConfigBulk, getConfigLocation} from "../common/config.js";
 import {setLang, getLang, getLangName} from "../common/lang.js";
-import {sleep} from "../common/sleep.js";
 import {getVersion, getDisplayVersion} from "../common/version.js";
 import {customTitlebar} from "../main.js";
 import {createSettingsWindow} from "../settings/main.js";
 import {splashWindow} from "../splash/main.js";
 import {createTManagerWindow} from "../themeManager/main.js";
 import {modInstallState} from "./extensions/mods.js";
+import {Settings} from "../types/settings.d.js";
 
 const userDataPath = app.getPath("userData");
 const storagePath = path.join(userDataPath, "/storage/");
