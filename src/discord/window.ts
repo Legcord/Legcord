@@ -4,16 +4,16 @@
 // I'm sorry for this mess but I'm not sure how to fix it.
 import {BrowserWindow, MessageBoxOptions, app, dialog, nativeImage, shell} from "electron";
 import path from "path";
-import {registerIpc} from "./ipc";
-import {setMenu} from "./menu";
+import {registerIpc} from "./ipc.js";
+import {setMenu} from "./menu.js";
 import * as fs from "fs";
 import contextMenu from "electron-context-menu";
 import os from "os";
 import RPCServer from "arrpc";
-import {tray} from "../tray";
-import {iconPath} from "../main";
-import {getConfig, setConfig, firstRun} from "../common/config";
-import {getWindowState, setWindowState} from "../common/windowState";
+import {tray} from "../tray.js";
+import {iconPath} from "../main.js";
+import {getConfig, setConfig, firstRun} from "../common/config.js";
+import {getWindowState, setWindowState} from "../common/windowState.js";
 export let mainWindow: BrowserWindow;
 export let inviteWindow: BrowserWindow;
 let forceQuit = false;

@@ -60,9 +60,6 @@ importers:
       eslint-plugin-prettier:
         specifier: ^4.2.1
         version: 4.2.1(eslint@8.40.0)(prettier@2.7.1)
-      fix-esm-import-path:
-        specifier: github:smartfrigde/fix-esm-import-path
-        version: https://codeload.github.com/smartfrigde/fix-esm-import-path/tar.gz/71f374903884f2da21aad60b8c6a34c144523bbf
       prettier:
         specifier: ^2.7.1
         version: 2.7.1
@@ -765,11 +762,6 @@ packages:
   find-up@5.0.0:
     resolution: {integrity: sha512-78/PXT1wlLLDgTzDs7sjq9hzz0vXD+zn+7wypEe4fXQxCmdmqfGsEPQxmiCSQI3ajFV91bVSsvNtrJRiW6nGng==}
     engines: {node: '>=10'}
-
-  fix-esm-import-path@https://codeload.github.com/smartfrigde/fix-esm-import-path/tar.gz/71f374903884f2da21aad60b8c6a34c144523bbf:
-    resolution: {tarball: https://codeload.github.com/smartfrigde/fix-esm-import-path/tar.gz/71f374903884f2da21aad60b8c6a34c144523bbf}
-    version: 1.5.0
-    hasBin: true
 
   flat-cache@3.0.4:
     resolution: {integrity: sha512-dm9s5Pw7Jc0GvMYbshN6zchCA9RgQlzzEZX3vylR9IqFfS8XciblUXOKfW6SiuJ0e13eDYZoZV5wdrev7P3Nwg==}
@@ -2512,12 +2504,6 @@ snapshots:
     dependencies:
       locate-path: 6.0.0
       path-exists: 4.0.0
-
-  fix-esm-import-path@https://codeload.github.com/smartfrigde/fix-esm-import-path/tar.gz/71f374903884f2da21aad60b8c6a34c144523bbf:
-    dependencies:
-      debug: 4.3.4
-    transitivePeerDependencies:
-      - supports-color
 
   flat-cache@3.0.4:
     dependencies:

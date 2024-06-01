@@ -1,5 +1,5 @@
 import {app} from "electron";
-import {getConfig} from "./config";
+import {getConfig} from "./config.js";
 
 export let transparency: boolean;
 export async function injectElectronFlags(): Promise<void> {

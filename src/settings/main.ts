@@ -1,7 +1,7 @@
 import {BrowserWindow, app, shell} from "electron";
 import path from "path";
 import fs from "fs";
-import {getDisplayVersion} from "../common/version";
+import {getDisplayVersion} from "../common/version.js";
 let settingsWindow: BrowserWindow;
 let instance = 0;
 
