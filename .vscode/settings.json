@@ -6,6 +6,7 @@
         "Autogain",
         "modloader",
         "smartfrigde",
+        "togglefullscreen",
         "vaapi"
     ]
 }

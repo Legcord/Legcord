@@ -1,15 +1,7 @@
-import {BrowserWindow, Menu, app, clipboard} from "electron";
+import {BrowserWindow, Menu, app} from "electron";
 import {mainWindow} from "./window.js";
 import {createSettingsWindow} from "../settings/main.js";
 
-function paste(contents: any): void {
-    const contentTypes = clipboard.availableFormats().toString();
-    //Workaround: fix pasting the images.
-    if (contentTypes.includes("image/") && contentTypes.includes("text/html")) {
-        clipboard.writeImage(clipboard.readImage());
-    }
-    contents.paste();
-}
 export function setMenu(): void {
     const template: Electron.MenuItemConstructorOptions[] = [
         {
@@ -67,13 +59,6 @@ export function setMenu(): void {
                 {type: "separator"},
                 {label: "Cut", accelerator: "CmdOrCtrl+X", role: "cut"},
                 {label: "Copy", accelerator: "CmdOrCtrl+C", role: "copy"},
-                {
-                    label: "Paste",
-                    accelerator: "CmdOrCtrl+V",
-                    click() {
-                        paste(mainWindow.webContents);
-                    }
-                },
                 {label: "Select All", accelerator: "CmdOrCtrl+A", role: "selectAll"}
             ]
         },
