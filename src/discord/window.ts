@@ -1,5 +1,5 @@
 // To allow seamless switching between custom titlebar and native os titlebar,
-// I had to add most of the window creation code here to split both into seperete functions
+// I had to add most of the window creation code here to split both into separate functions
 // WHY? Because I can't use the same code for both due to annoying bug with value `frame` not responding to variables
 // I'm sorry for this mess but I'm not sure how to fix it.
 import {BrowserWindow, MessageBoxOptions, app, dialog, nativeImage, shell} from "electron";

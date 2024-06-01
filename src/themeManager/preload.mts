@@ -53,7 +53,7 @@ ipcRenderer.on("themeManifest", (_event, json: string) => {
                 document.getElementById("themeInfoButtons")!.innerHTML +=
                     `<a href="${`https://discord.gg/${manifest.invite}`}" class="button">Support Discord</a>`;
         });
-        if (!ipcRenderer.sendSync("disabled").includes(id)) {
+        if (!(ipcRenderer.sendSync("disabled") as string[]).includes(id)) {
             (document.getElementById(id) as HTMLInputElement).checked = true;
         }
         (document.getElementById(id) as HTMLInputElement).addEventListener("input", function () {

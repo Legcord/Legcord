@@ -1,5 +1,5 @@
 //ipc stuff
-import {app, clipboard, desktopCapturer, ipcMain, nativeImage, shell} from "electron";
+import {app, clipboard, desktopCapturer, ipcMain, nativeImage, shell, SourcesOptions} from "electron";
 import {mainWindow} from "./window.js";
 
 import os from "os";
@@ -133,7 +133,8 @@ export function registerIpc(): void {
             event.returnValue = false;
         }
     });
-    ipcMain.handle("DESKTOP_CAPTURER_GET_SOURCES", (_event, opts) => desktopCapturer.getSources(opts));
+    // NOTE - I assume this would return sources based on the fact that the function only ingests sources
+    ipcMain.handle("DESKTOP_CAPTURER_GET_SOURCES", (_event, opts: SourcesOptions) => desktopCapturer.getSources(opts));
     ipcMain.on("saveSettings", (_event, args: Settings) => {
         console.log(args);
         setConfigBulk(args);

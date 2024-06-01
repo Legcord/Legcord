@@ -4,9 +4,15 @@
         "armcordinternal",
         "arrpc",
         "Autogain",
+        "clientmod",
+        "copyfiles",
+        "Ducko",
         "modloader",
+        "nsis",
+        "smartfridge",
         "smartfrigde",
         "togglefullscreen",
+        "unmaximize",
         "vaapi"
     ]
 }

@@ -10,7 +10,8 @@ await app.whenReady().then(() => {
     fs.readdirSync(pluginFolder).forEach((file) => {
         try {
             const manifest = fs.readFileSync(`${pluginFolder}/${file}/manifest.json`, "utf8");
-            const pluginFile = JSON.parse(manifest);
+            // NOTE - The below type assertion is just what we need from the chrome manifest
+            const pluginFile = JSON.parse(manifest) as {name: string; author: string};
             void session.defaultSession.loadExtension(`${pluginFolder}/${file}`); // REVIEW - Awaiting this will cause plugins to not inject
             console.log(`[Mod loader] Loaded ${pluginFile.name} made by ${pluginFile.author}`);
         } catch (err) {

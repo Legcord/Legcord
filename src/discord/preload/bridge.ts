@@ -1,8 +1,8 @@
-import {contextBridge, ipcRenderer} from "electron";
+import {contextBridge, ipcRenderer, type SourcesOptions} from "electron";
 import {injectTitlebar} from "./titlebar.mjs";
 const CANCEL_ID = "desktop-capturer-selection__cancel";
 const desktopCapturer = {
-    getSources: (opts: any) => ipcRenderer.invoke("DESKTOP_CAPTURER_GET_SOURCES", opts)
+    getSources: (opts: SourcesOptions) => ipcRenderer.invoke("DESKTOP_CAPTURER_GET_SOURCES", opts)
 };
 interface IPCSources {
     id: string;
@@ -44,19 +44,19 @@ contextBridge.exposeInMainWorld("armcord", {
     },
     titlebar: {
         injectTitlebar: () => injectTitlebar(),
-        isTitlebar: ipcRenderer.sendSync("titlebar")
+        isTitlebar: ipcRenderer.sendSync("titlebar") as boolean
     },
     electron: process.versions.electron,
-    channel: ipcRenderer.sendSync("channel"),
+    channel: ipcRenderer.sendSync("channel") as string,
     setPingCount: (pingCount: number) => ipcRenderer.send("setPing", pingCount),
     setTrayIcon: (favicon: string) => ipcRenderer.send("sendTrayIcon", favicon),
     getLang: (toGet: string) =>
         ipcRenderer.invoke("getLang", toGet).then((result) => {
-            return result;
+            return result as string;
         }),
     getDisplayMediaSelector,
-    version: ipcRenderer.sendSync("get-app-version", "app-version"),
-    mods: ipcRenderer.sendSync("clientmod"),
+    version: ipcRenderer.sendSync("get-app-version", "app-version") as string,
+    mods: ipcRenderer.sendSync("clientmod") as string,
     openSettingsWindow: () => ipcRenderer.send("openSettingsWindow")
 });
 let windowCallback: (arg0: object) => void;

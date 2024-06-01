@@ -17,7 +17,7 @@ if (ipcRenderer.sendSync("legacyCapturer")) {
     import("./capturer.js");
 }
 
-const version = ipcRenderer.sendSync("displayVersion");
+const version = ipcRenderer.sendSync("displayVersion") as string;
 function updateLang(): void {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; locale=`);
