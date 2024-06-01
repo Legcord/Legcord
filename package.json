@@ -33,7 +33,7 @@
     "homepage": "https://github.com/armcord/armcord#readme",
     "devDependencies": {
         "@types/node": "^20.11.1",
-        "@types/ws": "^8.5.3",
+        "@types/ws": "^8.5.10",
         "@typescript-eslint/eslint-plugin": "^5.59.2",
         "@typescript-eslint/parser": "^5.59.2",
         "copyfiles": "^2.4.1",
@@ -52,7 +52,7 @@
         "electron-context-menu": "^4.0.0",
         "extract-zip": "^2.0.1",
         "v8-compile-cache": "^2.3.0",
-        "ws": "^8.11.0"
+        "ws": "^8.17.0"
     },
     "build": {
         "snap": {
