@@ -10,7 +10,7 @@ importers:
     dependencies:
       arrpc:
         specifier: github:OpenAsar/arrpc
-        version: https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24
+        version: git+https://git@github.com:OpenAsar/arrpc.git#c62ec6a04c8d870530aa6944257fe745f6c59a24
       cross-fetch:
         specifier: ^3.1.5
         version: 3.1.5
@@ -35,10 +35,10 @@ importers:
         version: 8.5.3
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.59.2
-        version: 5.59.2(@typescript-eslint/parser@5.59.2(eslint@8.40.0)(typescript@4.9.3))(eslint@8.40.0)(typescript@4.9.3)
+        version: 5.59.2(@typescript-eslint/parser@5.62.0(eslint@8.40.0)(typescript@4.9.3))(eslint@8.40.0)(typescript@4.9.3)
       '@typescript-eslint/parser':
-        specifier: ^5.59.2
-        version: 5.59.2(eslint@8.40.0)(typescript@4.9.3)
+        specifier: ^5.62.0
+        version: 5.62.0(eslint@8.40.0)(typescript@4.9.3)
       copyfiles:
         specifier: ^2.4.1
         version: 2.4.1
@@ -53,7 +53,7 @@ importers:
         version: 8.40.0
       eslint-config-dmitmel:
         specifier: github:dmitmel/eslint-config-dmitmel
-        version: https://codeload.github.com/dmitmel/eslint-config-dmitmel/tar.gz/d97129ec35235415c6ae6a42299f55cdbb5d75fd(eslint@8.40.0)
+        version: git+https://git@github.com:dmitmel/eslint-config-dmitmel.git#d97129ec35235415c6ae6a42299f55cdbb5d75fd(eslint@8.40.0)
       eslint-plugin-node:
         specifier: ^11.1.0
         version: 11.1.0(eslint@8.40.0)
@@ -212,8 +212,8 @@ packages:
       typescript:
         optional: true
 
-  '@typescript-eslint/parser@5.59.2':
-    resolution: {integrity: sha512-uq0sKyw6ao1iFOZZGk9F8Nro/8+gfB5ezl1cA06SrqbgJAt0SRoFhb9pXaHvkrxUpZaoLxt8KlovHNk8Gp6/HQ==}
+  '@typescript-eslint/parser@5.62.0':
+    resolution: {integrity: sha512-VlJEV0fOQ7BExOsHYAGrgbEiZoi8D+Bl2+f6V2RrXerRSylnp+ZBHmPvaIa8cz0Ajx7WO7Z5RqfgYg7ED1nRhA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
@@ -224,6 +224,10 @@ packages:
 
   '@typescript-eslint/scope-manager@5.59.2':
     resolution: {integrity: sha512-dB1v7ROySwQWKqQ8rEWcdbTsFjh2G0vn8KUyvTXdPoyzSL6lLGkiXEV5CvpJsEe9xIdKV+8Zqb7wif2issoOFA==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  '@typescript-eslint/scope-manager@5.62.0':
+    resolution: {integrity: sha512-VXuvVvZeQCQb5Zgf4HAxc04q5j+WrNAtNh9OwCsCgpKqESMTu3tF/jhZ3xG6T4NZwWl65Bg8KuS2uEvhSfLl0w==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
   '@typescript-eslint/type-utils@5.59.2':
@@ -240,8 +244,21 @@ packages:
     resolution: {integrity: sha512-LbJ/HqoVs2XTGq5shkiKaNTuVv5tTejdHgfdjqRUGdYhjW1crm/M7og2jhVskMt8/4wS3T1+PfFvL1K3wqYj4w==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
+  '@typescript-eslint/types@5.62.0':
+    resolution: {integrity: sha512-87NVngcbVXUahrRTqIK27gD2t5Cu1yuCXxbLcFtCzZGlfyVWWh8mLHkoxzjsB6DDNnvdL+fW8MiwPEJyGJQDgQ==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
   '@typescript-eslint/typescript-estree@5.59.2':
     resolution: {integrity: sha512-+j4SmbwVmZsQ9jEyBMgpuBD0rKwi9RxRpjX71Brr73RsYnEr3Lt5QZ624Bxphp8HUkSKfqGnPJp1kA5nl0Sh7Q==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    peerDependencies:
+      typescript: '*'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
+  '@typescript-eslint/typescript-estree@5.62.0':
+    resolution: {integrity: sha512-CmcQ6uY7b9y694lKdRB8FEel7JbU/40iSAPomu++SjLMntB+2Leay2LO6i8VnJk58MtE9/nQSFIH6jpyRWyYzA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
       typescript: '*'
@@ -257,6 +274,10 @@ packages:
 
   '@typescript-eslint/visitor-keys@5.59.2':
     resolution: {integrity: sha512-EEpsO8m3RASrKAHI9jpavNv9NlEUebV4qmF1OWxSTtKSFBpC1NCmWazDQHFivRf0O1DV11BA645yrLEVQ0/Lig==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  '@typescript-eslint/visitor-keys@5.62.0':
+    resolution: {integrity: sha512-07ny+LHRzQXepkGg6w0mFY41fVUNBrL2Roj/++7V1txKugfjm/Ci/qSND03r2RhlJhJYMcTn9AhhSSqQp0Ysyw==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
   acorn-jsx@5.3.2:
@@ -326,8 +347,8 @@ packages:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
 
-  arrpc@https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24:
-    resolution: {tarball: https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24}
+  arrpc@git+https://git@github.com:OpenAsar/arrpc.git#c62ec6a04c8d870530aa6944257fe745f6c59a24:
+    resolution: {commit: c62ec6a04c8d870530aa6944257fe745f6c59a24, repo: git@github.com:OpenAsar/arrpc.git, type: git}
     version: 3.4.0
     hasBin: true
 
@@ -630,8 +651,8 @@ packages:
     resolution: {integrity: sha512-/veY75JbMK4j1yjvuUxuVsiS/hr/4iHs9FTT6cgTexxdE0Ly/glccBAkloH/DofkjRbZU3bnoj38mOmhkZ0lHw==}
     engines: {node: '>=12'}
 
-  eslint-config-dmitmel@https://codeload.github.com/dmitmel/eslint-config-dmitmel/tar.gz/d97129ec35235415c6ae6a42299f55cdbb5d75fd:
-    resolution: {tarball: https://codeload.github.com/dmitmel/eslint-config-dmitmel/tar.gz/d97129ec35235415c6ae6a42299f55cdbb5d75fd}
+  eslint-config-dmitmel@git+https://git@github.com:dmitmel/eslint-config-dmitmel.git#d97129ec35235415c6ae6a42299f55cdbb5d75fd:
+    resolution: {commit: d97129ec35235415c6ae6a42299f55cdbb5d75fd, repo: git@github.com:dmitmel/eslint-config-dmitmel.git, type: git}
     version: 8.3.0
     engines: {node: '>=8.10.0'}
     peerDependencies:
@@ -1775,10 +1796,10 @@ snapshots:
       '@types/node': 20.11.28
     optional: true
 
-  '@typescript-eslint/eslint-plugin@5.59.2(@typescript-eslint/parser@5.59.2(eslint@8.40.0)(typescript@4.9.3))(eslint@8.40.0)(typescript@4.9.3)':
+  '@typescript-eslint/eslint-plugin@5.59.2(@typescript-eslint/parser@5.62.0(eslint@8.40.0)(typescript@4.9.3))(eslint@8.40.0)(typescript@4.9.3)':
     dependencies:
       '@eslint-community/regexpp': 4.5.1
-      '@typescript-eslint/parser': 5.59.2(eslint@8.40.0)(typescript@4.9.3)
+      '@typescript-eslint/parser': 5.62.0(eslint@8.40.0)(typescript@4.9.3)
       '@typescript-eslint/scope-manager': 5.59.2
       '@typescript-eslint/type-utils': 5.59.2(eslint@8.40.0)(typescript@4.9.3)
       '@typescript-eslint/utils': 5.59.2(eslint@8.40.0)(typescript@4.9.3)
@@ -1794,11 +1815,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/parser@5.59.2(eslint@8.40.0)(typescript@4.9.3)':
+  '@typescript-eslint/parser@5.62.0(eslint@8.40.0)(typescript@4.9.3)':
     dependencies:
-      '@typescript-eslint/scope-manager': 5.59.2
-      '@typescript-eslint/types': 5.59.2
-      '@typescript-eslint/typescript-estree': 5.59.2(typescript@4.9.3)
+      '@typescript-eslint/scope-manager': 5.62.0
+      '@typescript-eslint/types': 5.62.0
+      '@typescript-eslint/typescript-estree': 5.62.0(typescript@4.9.3)
       debug: 4.3.4
       eslint: 8.40.0
     optionalDependencies:
@@ -1810,6 +1831,11 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 5.59.2
       '@typescript-eslint/visitor-keys': 5.59.2
+
+  '@typescript-eslint/scope-manager@5.62.0':
+    dependencies:
+      '@typescript-eslint/types': 5.62.0
+      '@typescript-eslint/visitor-keys': 5.62.0
 
   '@typescript-eslint/type-utils@5.59.2(eslint@8.40.0)(typescript@4.9.3)':
     dependencies:
@@ -1825,6 +1851,8 @@ snapshots:
 
   '@typescript-eslint/types@5.59.2': {}
 
+  '@typescript-eslint/types@5.62.0': {}
+
   '@typescript-eslint/typescript-estree@5.59.2(typescript@4.9.3)':
     dependencies:
       '@typescript-eslint/types': 5.59.2
@@ -1832,7 +1860,21 @@ snapshots:
       debug: 4.3.4
       globby: 11.1.0
       is-glob: 4.0.3
-      semver: 7.3.8
+      semver: 7.5.4
+      tsutils: 3.21.0(typescript@4.9.3)
+    optionalDependencies:
+      typescript: 4.9.3
+    transitivePeerDependencies:
+      - supports-color
+
+  '@typescript-eslint/typescript-estree@5.62.0(typescript@4.9.3)':
+    dependencies:
+      '@typescript-eslint/types': 5.62.0
+      '@typescript-eslint/visitor-keys': 5.62.0
+      debug: 4.3.4
+      globby: 11.1.0
+      is-glob: 4.0.3
+      semver: 7.5.4
       tsutils: 3.21.0(typescript@4.9.3)
     optionalDependencies:
       typescript: 4.9.3
@@ -1857,6 +1899,11 @@ snapshots:
   '@typescript-eslint/visitor-keys@5.59.2':
     dependencies:
       '@typescript-eslint/types': 5.59.2
+      eslint-visitor-keys: 3.4.1
+
+  '@typescript-eslint/visitor-keys@5.62.0':
+    dependencies:
+      '@typescript-eslint/types': 5.62.0
       eslint-visitor-keys: 3.4.1
 
   acorn-jsx@5.3.2(acorn@8.8.2):
@@ -1968,7 +2015,7 @@ snapshots:
 
   array-union@2.1.0: {}
 
-  arrpc@https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24:
+  arrpc@git+https://git@github.com:OpenAsar/arrpc.git#c62ec6a04c8d870530aa6944257fe745f6c59a24:
     dependencies:
       ws: 8.11.0
     transitivePeerDependencies:
@@ -2333,7 +2380,7 @@ snapshots:
 
   escape-string-regexp@5.0.0: {}
 
-  eslint-config-dmitmel@https://codeload.github.com/dmitmel/eslint-config-dmitmel/tar.gz/d97129ec35235415c6ae6a42299f55cdbb5d75fd(eslint@8.40.0):
+  eslint-config-dmitmel@git+https://git@github.com:dmitmel/eslint-config-dmitmel.git#d97129ec35235415c6ae6a42299f55cdbb5d75fd(eslint@8.40.0):
     dependencies:
       eslint: 8.40.0
 
