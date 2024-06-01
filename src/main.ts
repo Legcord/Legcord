@@ -94,7 +94,7 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") == (false ?? 
             }
             if (firstRun == true) {
                 setLang(new Intl.DateTimeFormat().resolvedOptions().locale);
-                await createSetupWindow(); //NOTE - Untested, awaiting this will probably hang
+                await createSetupWindow();
             }
             switch (getConfig("windowStyle")) {
                 case "default":

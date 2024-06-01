@@ -94,6 +94,7 @@ export async function installModLoader(): Promise<void> {
             "https://raw.githubusercontent.com/ArmCord/website/new/public/loader.zip"
         ];
 
+        // REVIEW - Rewrote this
         while (true) {
             let completed = false;
             await fetch(URLs[0])
