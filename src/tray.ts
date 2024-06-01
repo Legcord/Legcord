@@ -1,10 +1,10 @@
 import fs from "fs";
 import {Menu, MessageBoxOptions, Tray, app, dialog, nativeImage} from "electron";
-import {createInviteWindow, mainWindow} from "./discord/window";
+import {createInviteWindow, mainWindow} from "./discord/window.js";
 import path from "path";
-import {createSettingsWindow} from "./settings/main";
-import {getConfig, getConfigLocation, setConfig} from "./common/config";
-import {getDisplayVersion} from "./common/version";
+import {createSettingsWindow} from "./settings/main.js";
+import {getConfig, getConfigLocation, setConfig} from "./common/config.js";
+import {getDisplayVersion} from "./common/version.js";
 export let tray: Tray;
 let trayIcon = "ac_plug_colored";
 void app.whenReady().then(async () => {

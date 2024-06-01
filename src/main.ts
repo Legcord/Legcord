@@ -1,14 +1,14 @@
 // Modules to control application life and create native browser window
 import {BrowserWindow, app, crashReporter, session} from "electron";
 import "v8-compile-cache";
-import "./discord/extensions/csp";
-import "./tray";
+import "./discord/extensions/csp.js";
+import "./tray.js";
 import fs from "fs";
-import {createCustomWindow, createNativeWindow, createTransparentWindow} from "./discord/window";
+import {createCustomWindow, createNativeWindow, createTransparentWindow} from "./discord/window.js";
 import path from "path";
-import {createTManagerWindow} from "./themeManager/main";
-import {createSplashWindow} from "./splash/main";
-import {createSetupWindow} from "./setup/main";
+import {createTManagerWindow} from "./themeManager/main.js";
+import {createSplashWindow} from "./splash/main.js";
+import {createSetupWindow} from "./setup/main.js";
 import {
     setConfig,
     checkForDataFolder,
@@ -17,10 +17,10 @@ import {
     getConfig,
     firstRun,
     getConfigLocation
-} from "./common/config";
-import {injectElectronFlags} from "./common/flags";
-import {setLang} from "./common/lang";
-import {installModLoader} from "./discord/extensions/mods";
+} from "./common/config.js";
+import {injectElectronFlags} from "./common/flags.js";
+import {setLang} from "./common/lang.js";
+import {installModLoader} from "./discord/extensions/mods.js";
 export let iconPath: string;
 import type {Settings} from "./types/settings";
 export let settings: Settings;

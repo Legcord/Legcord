@@ -1,8 +1,8 @@
 import {app, dialog} from "electron";
 import path from "path";
 import fs from "fs";
-import {getWindowStateLocation} from "./windowState";
-import type {Settings} from "../types/settings";
+import type {Settings} from "../types/settings.js";
+import {getWindowStateLocation} from "./windowState.js";
 export let firstRun: boolean;
 export function checkForDataFolder(): void {
     const dataPath = path.join(path.dirname(app.getPath("exe")), "armcord-data");

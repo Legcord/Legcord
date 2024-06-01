@@ -1,7 +1,7 @@
 import {app, dialog} from "electron";
 import extract from "extract-zip";
 import path from "path";
-import {getConfig} from "../../common/config";
+import {getConfig} from "../../common/config.js";
 import fs from "fs";
 import {promisify} from "node:util";
 import {pipeline} from "stream";

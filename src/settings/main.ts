@@ -1,8 +1,8 @@
 import {BrowserWindow, app, shell} from "electron";
 import path from "path";
 import fs from "fs";
-import {getDisplayVersion} from "../common/version";
-import type {ThemeManifest} from "../types/themeManifest";
+import {getDisplayVersion} from "../common/version.js";
+import type {ThemeManifest} from "../types/themeManifest.js";
 let settingsWindow: BrowserWindow;
 let instance = 0;
 

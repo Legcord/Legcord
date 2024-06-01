@@ -1,5 +1,5 @@
 import {BrowserWindow} from "electron";
-import {iconPath} from "../main";
+import {iconPath} from "../main.js";
 import path from "path";
 
 export let splashWindow: BrowserWindow;

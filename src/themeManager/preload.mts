@@ -1,5 +1,5 @@
 import {ipcRenderer, contextBridge} from "electron";
-import {sleep} from "../common/sleep";
+import {sleep} from "../common/sleep.js";
 import {ThemeManifest} from "../types/themeManifest";
 contextBridge.exposeInMainWorld("themes", {
     install: (url: string) => ipcRenderer.send("installBDTheme", url),

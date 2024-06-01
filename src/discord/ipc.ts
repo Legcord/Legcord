@@ -1,19 +1,19 @@
 //ipc stuff
 import {app, clipboard, desktopCapturer, ipcMain, nativeImage, shell} from "electron";
-import {mainWindow} from "./window";
+import {mainWindow} from "./window.js";
 
 import os from "os";
 import fs from "fs";
 import path from "path";
-import {getConfig, setConfigBulk, getConfigLocation} from "../common/config";
-import {setLang, getLang, getLangName} from "../common/lang";
-import {getVersion, getDisplayVersion} from "../common/version";
-import {customTitlebar} from "../main";
-import {createSettingsWindow} from "../settings/main";
-import {splashWindow} from "../splash/main";
-import {createTManagerWindow} from "../themeManager/main";
-import {modInstallState} from "./extensions/mods";
-import type {Settings} from "../types/settings";
+import {getConfig, setConfigBulk, getConfigLocation, Settings} from "../common/config.js";
+import {setLang, getLang, getLangName} from "../common/lang.js";
+import {sleep} from "../common/sleep.js";
+import {getVersion, getDisplayVersion} from "../common/version.js";
+import {customTitlebar} from "../main.js";
+import {createSettingsWindow} from "../settings/main.js";
+import {splashWindow} from "../splash/main.js";
+import {createTManagerWindow} from "../themeManager/main.js";
+import {modInstallState} from "./extensions/mods.js";
 
 const userDataPath = app.getPath("userData");
 const storagePath = path.join(userDataPath, "/storage/");
