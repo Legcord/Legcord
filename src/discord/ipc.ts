@@ -92,9 +92,6 @@ export function registerIpc(): void {
         app.relaunch();
         app.exit();
     });
-    ipcMain.on("saveSettings", (_event, args) => {
-        setConfigBulk(args);
-    });
     ipcMain.on("minimizeToTray", async (event) => {
         event.returnValue = await getConfig("minimizeToTray");
     });
