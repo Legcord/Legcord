@@ -43,7 +43,7 @@
         "eslint-config-dmitmel": "github:dmitmel/eslint-config-dmitmel",
         "eslint-plugin-node": "^11.1.0",
         "eslint-plugin-prettier": "^4.2.1",
-        "prettier": "^2.7.1",
+        "prettier": "^3.3.0",
         "typescript": "^4.9.3"
     },
     "dependencies": {
