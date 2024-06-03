@@ -1,6 +1,6 @@
 //ipc stuff
 import {app, clipboard, desktopCapturer, ipcMain, nativeImage, shell, SourcesOptions} from "electron";
-import {mainWindow} from "./window.js";
+import {BrowserWindow} from "electron";
 
 import os from "os";
 import fs from "fs";
@@ -19,16 +19,20 @@ const userDataPath = app.getPath("userData");
 const storagePath = path.join(userDataPath, "/storage/");
 const themesPath = path.join(userDataPath, "/themes/");
 const pluginsPath = path.join(userDataPath, "/plugins/");
-export function registerIpc(): void {
+export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.on("get-app-path", (event) => {
         event.reply("app-path", app.getAppPath());
     });
     ipcMain.on("setLang", (_event, lang: string) => {
         setLang(lang);
     });
-    ipcMain.handle("getLang", (_event, toGet: string) => {
-        return getLang(toGet);
-    });
+    try {
+        ipcMain.handle("getLang", (_event, toGet: string) => {
+            return getLang(toGet);
+        });
+    } catch (e) {
+        console.error("getLang is not supported");
+    }
     ipcMain.on("open-external-link", (_event, href: string) => {
         void shell.openExternal(href);
     });
@@ -40,33 +44,33 @@ export function registerIpc(): void {
             case "win32":
                 if (pingCount > 0) {
                     const image = nativeImage.createFromPath(path.join(import.meta.dirname, "../", `/assets/ping.png`));
-                    mainWindow.setOverlayIcon(image, "badgeCount");
+                    passedWindow.setOverlayIcon(image, "badgeCount");
                 } else {
-                    mainWindow.setOverlayIcon(null, "badgeCount");
+                    passedWindow.setOverlayIcon(null, "badgeCount");
                 }
                 break;
         }
     });
     ipcMain.on("win-maximize", () => {
-        mainWindow.maximize();
+        passedWindow.maximize();
     });
     ipcMain.on("win-isMaximized", (event) => {
-        event.returnValue = mainWindow.isMaximized();
+        event.returnValue = passedWindow.isMaximized();
     });
     ipcMain.on("win-isNormal", (event) => {
-        event.returnValue = mainWindow.isNormal();
+        event.returnValue = passedWindow.isNormal();
     });
     ipcMain.on("win-minimize", () => {
-        mainWindow.minimize();
+        passedWindow.minimize();
     });
     ipcMain.on("win-unmaximize", () => {
-        mainWindow.unmaximize();
+        passedWindow.unmaximize();
     });
     ipcMain.on("win-show", () => {
-        mainWindow.show();
+        passedWindow.show();
     });
     ipcMain.on("win-hide", () => {
-        mainWindow.hide();
+        passedWindow.hide();
     });
     ipcMain.on("win-quit", () => {
         app.exit();
@@ -83,9 +87,9 @@ export function registerIpc(): void {
     ipcMain.on("splashEnd", () => {
         splashWindow.close();
         if (getConfig("startMinimized")) {
-            mainWindow.hide();
+            passedWindow.hide();
         } else {
-            mainWindow.show();
+            passedWindow.show();
         }
     });
     ipcMain.on("restart", () => {
@@ -133,8 +137,12 @@ export function registerIpc(): void {
             event.returnValue = false;
         }
     });
-    // NOTE - I assume this would return sources based on the fact that the function only ingests sources
-    ipcMain.handle("DESKTOP_CAPTURER_GET_SOURCES", (_event, opts: SourcesOptions) => desktopCapturer.getSources(opts));
+    try {
+        // NOTE - I assume this would return sources based on the fact that the function only ingests sources
+        ipcMain.handle("DESKTOP_CAPTURER_GET_SOURCES", (_event, opts: SourcesOptions) => desktopCapturer.getSources(opts));
+    } catch {
+        console.error("desktopCapturer.getSources is not supported");
+    }
     ipcMain.on("saveSettings", (_event, args: Settings) => {
         console.log(args);
         setConfigBulk(args);
@@ -158,9 +166,13 @@ export function registerIpc(): void {
     ipcMain.on("crash", () => {
         process.crash();
     });
-    ipcMain.handle("getSetting", (_event, toGet: keyof Settings) => {
-        return getConfig(toGet);
-    });
+    try {
+        ipcMain.handle("getSetting", (_event, toGet: keyof Settings) => {
+            return getConfig(toGet);
+        });
+    } catch {
+        console.error("getSetting is not supported");
+    }
     ipcMain.on("copyDebugInfo", () => {
         const settingsFileContent = fs.readFileSync(getConfigLocation(), "utf-8");
         clipboard.writeText(

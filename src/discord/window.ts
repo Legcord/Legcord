@@ -17,6 +17,7 @@ import {iconPath} from "../main.js";
 import {getConfig, setConfig, firstRun} from "../common/config.js";
 import {getWindowState, setWindowState} from "../common/windowState.js";
 export let mainWindow: BrowserWindow;
+export let secondWindow: BrowserWindow;
 export let inviteWindow: BrowserWindow;
 let forceQuit = false;
 let osType = os.type();
@@ -43,49 +44,49 @@ contextMenu({
         }
     ]
 });
-function doAfterDefiningTheWindow(): void {
+function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     if (getWindowState("isMaximized") ?? false) {
-        mainWindow.setSize(835, 600); //just so the whole thing doesn't cover whole screen
-        mainWindow.maximize();
-        void mainWindow.webContents.executeJavaScript(`document.body.setAttribute("isMaximized", "");`);
-        mainWindow.hide(); // please don't flashbang the user
+        passedWindow.setSize(835, 600); //just so the whole thing doesn't cover whole screen
+        passedWindow.maximize();
+        void passedWindow.webContents.executeJavaScript(`document.body.setAttribute("isMaximized", "");`);
+        passedWindow.hide(); // please don't flashbang the user
     }
     if (getConfig("windowStyle") == "transparency" && process.platform === "win32") {
-        mainWindow.setBackgroundMaterial("mica");
+        passedWindow.setBackgroundMaterial("mica");
         if (getConfig("startMinimized") == false) {
-            mainWindow.show();
+            passedWindow.show();
         }
     }
 
     // REVIEW - Test the protocol warning. I was not sure how to get it to pop up. For now I've voided the promises.
 
     const ignoreProtocolWarning = getConfig("ignoreProtocolWarning");
-    registerIpc();
+    registerIpc(passedWindow);
     if (getConfig("mobileMode")) {
-        mainWindow.webContents.userAgent =
+        passedWindow.webContents.userAgent =
             "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.149 Mobile Safari/537.36";
     } else {
         // A little sloppy but it works :p
         if (osType == "Windows_NT") {
             osType = `Windows ${os.release().split(".")[0]} (${os.release()})`;
         }
-        mainWindow.webContents.userAgent = `Mozilla/5.0 (X11; ${osType} ${os.arch()}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36`; //fake useragent for screenshare to work
+        passedWindow.webContents.userAgent = `Mozilla/5.0 (X11; ${osType} ${os.arch()}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36`; //fake useragent for screenshare to work
     }
     app.on("second-instance", (_event, _commandLine, _workingDirectory, additionalData) => {
         // Print out data received from the second instance.
         console.log(additionalData);
 
         // Someone tried to run a second instance, we should focus our window.
-        if (mainWindow) {
-            if (mainWindow.isMinimized()) mainWindow.restore();
-            mainWindow.show();
-            mainWindow.focus();
+        if (passedWindow) {
+            if (passedWindow.isMinimized()) passedWindow.restore();
+            passedWindow.show();
+            passedWindow.focus();
         }
     });
     app.on("activate", function () {
         app.show();
     });
-    mainWindow.webContents.setWindowOpenHandler(({url}) => {
+    passedWindow.webContents.setWindowOpenHandler(({url}) => {
         // Allow about:blank (used by Vencord QuickCss popup)
         if (url === "about:blank") return {action: "allow"};
         // Allow Discord stream popout
@@ -116,7 +117,7 @@ function doAfterDefiningTheWindow(): void {
                 checkboxChecked: false
             };
 
-            void dialog.showMessageBox(mainWindow, options).then(({response, checkboxChecked}) => {
+            void dialog.showMessageBox(passedWindow, options).then(({response, checkboxChecked}) => {
                 console.log(response, checkboxChecked);
                 if (checkboxChecked) {
                     if (response == 0) {
@@ -137,15 +138,15 @@ function doAfterDefiningTheWindow(): void {
         import("./screenshare/main.js");
     }
 
-    mainWindow.webContents.session.webRequest.onBeforeRequest(
+    passedWindow.webContents.session.webRequest.onBeforeRequest(
         {urls: ["https://*/api/v*/science", "https://sentry.io/*", "https://*.nel.cloudflare.com/*"]},
         (_, callback) => callback({cancel: true})
     );
 
     if (getConfig("trayIcon") == "default" || getConfig("dynamicIcon")) {
-        mainWindow.webContents.on("page-favicon-updated", () => {
+        passedWindow.webContents.on("page-favicon-updated", () => {
             // REVIEW - no need to await if we just .then() - This works!
-            void mainWindow.webContents
+            void passedWindow.webContents
                 .executeJavaScript(
                     `
                 var getFavicon = function(){
@@ -177,17 +178,17 @@ function doAfterDefiningTheWindow(): void {
                         }
                     }
                     if (getConfig("dynamicIcon")) {
-                        mainWindow.setIcon(trayPath);
+                        passedWindow.setIcon(trayPath);
                     }
                 });
         });
     }
-    mainWindow.webContents.on("page-title-updated", (e, title) => {
+    passedWindow.webContents.on("page-title-updated", (e, title) => {
         const armCordSuffix = " - ArmCord"; /* identify */
         if (!title.endsWith(armCordSuffix)) {
             e.preventDefault();
             // REVIEW - I don't see a reason to wait for the titlebar to update
-            void mainWindow.webContents.executeJavaScript(
+            void passedWindow.webContents.executeJavaScript(
                 `document.title = '${title.replace("Discord |", "") + armCordSuffix}'`
             );
         }
@@ -201,7 +202,7 @@ function doAfterDefiningTheWindow(): void {
     if (!fs.existsSync(`${userDataPath}/disabled.txt`)) {
         fs.writeFileSync(path.join(userDataPath, "/disabled.txt"), "");
     }
-    mainWindow.webContents.on("did-finish-load", () => {
+    passedWindow.webContents.on("did-finish-load", () => {
         fs.readdirSync(themesFolder).forEach((file) => {
             try {
                 const manifest = fs.readFileSync(`${themesFolder}/${file}/manifest.json`, "utf8");
@@ -214,7 +215,7 @@ function doAfterDefiningTheWindow(): void {
                 ) {
                     console.log(`%cSkipped ${themeFile.name} made by ${themeFile.author}`, "color:red");
                 } else {
-                    mainWindow.webContents.send(
+                    passedWindow.webContents.send(
                         "themeLoader",
                         fs.readFileSync(`${themesFolder}/${file}/${themeFile.theme}`, "utf-8")
                     );
@@ -226,21 +227,21 @@ function doAfterDefiningTheWindow(): void {
         });
     });
     setMenu();
-    mainWindow.on("close", (e) => {
+    passedWindow.on("close", (e) => {
         if (process.platform === "darwin" && forceQuit) {
-            mainWindow.close();
+            passedWindow.close();
         } else {
-            const [width, height] = mainWindow.getSize();
+            const [width, height] = passedWindow.getSize();
             setWindowState({
                 width,
                 height,
-                isMaximized: mainWindow.isMaximized(),
-                x: mainWindow.getPosition()[0],
-                y: mainWindow.getPosition()[1]
+                isMaximized: passedWindow.isMaximized(),
+                x: passedWindow.getPosition()[0],
+                y: passedWindow.getPosition()[1]
             });
             if (getConfig("minimizeToTray")) {
                 e.preventDefault();
-                mainWindow.hide();
+                passedWindow.hide();
             } else if (!getConfig("minimizeToTray")) {
                 e.preventDefault();
                 app.quit();
@@ -258,25 +259,25 @@ function doAfterDefiningTheWindow(): void {
     }
 
     // REVIEW - Awaiting javascript execution is silly
-    mainWindow.on("focus", () => {
-        void mainWindow.webContents.executeJavaScript(`document.body.removeAttribute("unFocused");`);
+    passedWindow.on("focus", () => {
+        void passedWindow.webContents.executeJavaScript(`document.body.removeAttribute("unFocused");`);
     });
-    mainWindow.on("blur", () => {
-        void mainWindow.webContents.executeJavaScript(`document.body.setAttribute("unFocused", "");`);
+    passedWindow.on("blur", () => {
+        void passedWindow.webContents.executeJavaScript(`document.body.setAttribute("unFocused", "");`);
     });
 
-    mainWindow.on("maximize", () => {
-        void mainWindow.webContents.executeJavaScript(`document.body.setAttribute("isMaximized", "");`);
+    passedWindow.on("maximize", () => {
+        void passedWindow.webContents.executeJavaScript(`document.body.setAttribute("isMaximized", "");`);
     });
-    mainWindow.on("unmaximize", () => {
-        void mainWindow.webContents.executeJavaScript(`document.body.removeAttribute("isMaximized");`);
+    passedWindow.on("unmaximize", () => {
+        void passedWindow.webContents.executeJavaScript(`document.body.removeAttribute("isMaximized");`);
     });
     if (getConfig("inviteWebsocket")) {
         // NOTE - RPCServer appears to be untyped. cool.
         // REVIEW - Whatever Ducko has done here to make an async constructor is awful.
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
         new RPCServer().then((server: EventEmitter) => {
-            server.on("activity", (data: string) => mainWindow.webContents.send("rpc", data));
+            server.on("activity", (data: string) => passedWindow.webContents.send("rpc", data));
             server.on("invite", (code: string) => {
                 console.log(code);
                 createInviteWindow(code);
@@ -284,13 +285,13 @@ function doAfterDefiningTheWindow(): void {
         });
     }
     if (firstRun) {
-        mainWindow.close();
+        passedWindow.close();
     }
     //loadURL broke for no good reason after E28
-    void mainWindow.loadFile(`${import.meta.dirname}/../splash/redirect.html`);
+    void passedWindow.loadFile(`${import.meta.dirname}/../splash/redirect.html`);
 
     if (getConfig("skipSplash")) {
-        mainWindow.show();
+        passedWindow.show();
     }
 }
 export function createCustomWindow(): void {
@@ -313,7 +314,7 @@ export function createCustomWindow(): void {
             spellcheck: getConfig("spellcheck")
         }
     });
-    doAfterDefiningTheWindow();
+    doAfterDefiningTheWindow(mainWindow);
 }
 export function createNativeWindow(): void {
     mainWindow = new BrowserWindow({
@@ -335,7 +336,27 @@ export function createNativeWindow(): void {
             spellcheck: getConfig("spellcheck")
         }
     });
-    doAfterDefiningTheWindow();
+    doAfterDefiningTheWindow(mainWindow);
+    secondWindow = new BrowserWindow({
+        width: (getWindowState("width")) ?? 835,
+        height: (getWindowState("height")) ?? 600,
+        x: getWindowState("x"),
+        y: getWindowState("y"),
+        title: "ArmCord",
+        darkTheme: true,
+        icon: iconPath,
+        show: false,
+        frame: true,
+        backgroundColor: "#202225",
+        autoHideMenuBar: true,
+        webPreferences: {
+            webviewTag: true,
+            sandbox: false,
+            preload: path.join(import.meta.dirname, "preload/preload.mjs"),
+            spellcheck: getConfig("spellcheck")
+        }
+    });
+    doAfterDefiningTheWindow(secondWindow);
 }
 export function createTransparentWindow(): void {
     mainWindow = new BrowserWindow({
@@ -357,7 +378,7 @@ export function createTransparentWindow(): void {
             spellcheck: getConfig("spellcheck")
         }
     });
-    doAfterDefiningTheWindow();
+    doAfterDefiningTheWindow(mainWindow);
 }
 export function createInviteWindow(code: string): void {
     inviteWindow = new BrowserWindow({
