@@ -10,9 +10,9 @@ interface IPCSources {
     thumbnail: HTMLCanvasElement;
 }
 async function getDisplayMediaSelector(): Promise<string> {
-    const sources: IPCSources[] = await desktopCapturer.getSources({
+    const sources = (await desktopCapturer.getSources({
         types: ["screen", "window"]
-    });
+    })) as IPCSources[];
     return `<div class="desktop-capturer-selection__scroller">
   <ul class="desktop-capturer-selection__list">
     ${sources

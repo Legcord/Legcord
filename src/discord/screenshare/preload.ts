@@ -5,8 +5,8 @@ interface IPCSources {
     thumbnail: HTMLCanvasElement;
 }
 function addDisplays(): void {
-    ipcRenderer.once("getSources", (_event, arg) => {
-        const sources: IPCSources[] = arg;
+    ipcRenderer.once("getSources", (_event, arg: IPCSources[]) => {
+        const sources = arg;
         console.log(sources);
         const selectionElem = document.createElement("div");
         selectionElem.classList.add("desktop-capturer-selection");

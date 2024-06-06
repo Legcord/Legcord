@@ -30,7 +30,7 @@ declare global {
 }
 
 console.log(`ArmCord ${version}`);
-ipcRenderer.on("themeLoader", (_event, message) => {
+ipcRenderer.on("themeLoader", (_event, message: string) => {
     addStyle(message);
 });
 

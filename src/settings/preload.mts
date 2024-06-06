@@ -1,9 +1,11 @@
 import {contextBridge, ipcRenderer} from "electron";
+import {Settings} from "../types/settings";
 //import {addStyle} from "../utils.js";
 console.log("ArmCord Settings");
 console.log(process.platform);
 contextBridge.exposeInMainWorld("settings", {
-    save: (...args: any) => ipcRenderer.send("saveSettings", ...args),
+    // REVIEW - this may be typed incorrectly, I'm not sure how "..." works
+    save: (...args: Settings[]) => ipcRenderer.send("saveSettings", ...args),
     restart: () => ipcRenderer.send("restart"),
     saveAlert: (restartFunc: any) => ipcRenderer.send("saveAlert", restartFunc),
     getLang: (toGet: string) => ipcRenderer.invoke("getLang", toGet),
