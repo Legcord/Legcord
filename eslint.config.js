@@ -30,9 +30,6 @@ export default tseslint.config(
         },
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         rules: {
-            // FIXME: THIS IS TEMPORARY. DEAR GOD PLEASE FIX THIS.
-            // Explanation: Upon migrating away from Dmitmel's config, these errors cropped up.
-            // This leads me to believe that these rules were never covered by the original config.
             "no-constant-binary-expression": 0,
             "no-unused-vars": 0, // Handled by @typescript-eslint/no-unused-vars
             "n/no-unsupported-features/node-builtins": 0, // Don't care
@@ -45,14 +42,6 @@ export default tseslint.config(
                     caughtErrorsIgnorePattern: "^_"
                 }
             ],
-            "@typescript-eslint/no-unsafe-member-access": 1,
-            "@typescript-eslint/no-unsafe-call": 1,
-            "@typescript-eslint/no-unnecessary-type-assertion": 1,
-            "@typescript-eslint/no-unsafe-argument": 1,
-            "@typescript-eslint/no-unsafe-assignment": 1,
-            "@typescript-eslint/no-unsafe-return": 1,
-            "@typescript-eslint/unbound-method": 1,
-            "@typescript-eslint/ban-types": 1,
             // @ts-expect-error - Don't worry about it
             ...prettier.configs.recommended.rules
         }
