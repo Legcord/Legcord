@@ -48,7 +48,7 @@ function registerCustomHandler(): void {
                         webPreferences: {
                             sandbox: false,
                             spellcheck: false,
-                            preload: path.join(import.meta.dirname, "preload.js")
+                            preload: path.join(import.meta.dirname, "preload.mjs")
                         }
                     });
                     ipcMain.once("selectScreenshareSource", (_event, id: string, name: string) => {
