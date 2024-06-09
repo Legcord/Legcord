@@ -764,8 +764,8 @@ packages:
     peerDependencies:
       eslint: '>=6.0.0'
 
-  eslint-plugin-es-x@7.6.0:
-    resolution: {integrity: sha512-I0AmeNgevgaTR7y2lrVCJmGYF0rjoznpDvqV/kIkZSZbZ8Rw3eu4cGlvBBULScfkSOCzqKbff5LR4CNrV7mZHA==}
+  eslint-plugin-es-x@7.7.0:
+    resolution: {integrity: sha512-aP3qj8BwiEDPttxQkZdI221DLKq9sI/qHolE2YSQL1/9+xk7dTV+tB1Fz8/IaCA+lnLA1bDEnvaS2LKs0k2Uig==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       eslint: '>=8'
@@ -2309,7 +2309,7 @@ snapshots:
 
   app-builder-bin@5.0.0-alpha.3: {}
 
-  app-builder-lib@25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9(electron-builder-squirrel-windows@25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9)))(electron-builder-squirrel-windows@25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9)):
+  app-builder-lib@25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9(electron-builder-squirrel-windows@25.0.0-alpha.9))(electron-builder-squirrel-windows@25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9)):
     dependencies:
       '@develar/schema-utils': 2.6.5
       '@electron/notarize': 2.3.0
@@ -2324,7 +2324,7 @@ snapshots:
       builder-util-runtime: 9.2.5-alpha.2
       chromium-pickle-js: 0.2.0
       debug: 4.3.5
-      dmg-builder: 25.0.0-alpha.9(electron-builder-squirrel-windows@25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9))
+      dmg-builder: 25.0.0-alpha.9(electron-builder-squirrel-windows@25.0.0-alpha.9)
       ejs: 3.1.10
       electron-builder-squirrel-windows: 25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9)
       electron-publish: 25.0.0-alpha.9
@@ -2691,9 +2691,9 @@ snapshots:
     dependencies:
       path-type: 4.0.0
 
-  dmg-builder@25.0.0-alpha.9(electron-builder-squirrel-windows@25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9)):
+  dmg-builder@25.0.0-alpha.9(electron-builder-squirrel-windows@25.0.0-alpha.9):
     dependencies:
-      app-builder-lib: 25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9(electron-builder-squirrel-windows@25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9)))(electron-builder-squirrel-windows@25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9))
+      app-builder-lib: 25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9(electron-builder-squirrel-windows@25.0.0-alpha.9))(electron-builder-squirrel-windows@25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9))
       builder-util: 25.0.0-alpha.9
       builder-util-runtime: 9.2.5-alpha.2
       fs-extra: 10.1.0
@@ -2736,7 +2736,7 @@ snapshots:
 
   electron-builder-squirrel-windows@25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9):
     dependencies:
-      app-builder-lib: 25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9(electron-builder-squirrel-windows@25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9)))(electron-builder-squirrel-windows@25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9))
+      app-builder-lib: 25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9(electron-builder-squirrel-windows@25.0.0-alpha.9))(electron-builder-squirrel-windows@25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9))
       archiver: 5.3.2
       builder-util: 25.0.0-alpha.9
       fs-extra: 10.1.0
@@ -2747,11 +2747,11 @@ snapshots:
 
   electron-builder@25.0.0-alpha.9(electron-builder-squirrel-windows@25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9)):
     dependencies:
-      app-builder-lib: 25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9(electron-builder-squirrel-windows@25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9)))(electron-builder-squirrel-windows@25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9))
+      app-builder-lib: 25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9(electron-builder-squirrel-windows@25.0.0-alpha.9))(electron-builder-squirrel-windows@25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9))
       builder-util: 25.0.0-alpha.9
       builder-util-runtime: 9.2.5-alpha.2
       chalk: 4.1.2
-      dmg-builder: 25.0.0-alpha.9(electron-builder-squirrel-windows@25.0.0-alpha.9(dmg-builder@25.0.0-alpha.9))
+      dmg-builder: 25.0.0-alpha.9(electron-builder-squirrel-windows@25.0.0-alpha.9)
       fs-extra: 10.1.0
       is-ci: 3.0.1
       lazy-val: 1.0.5
@@ -2845,7 +2845,7 @@ snapshots:
       eslint: 9.4.0
       semver: 7.6.2
 
-  eslint-plugin-es-x@7.6.0(eslint@9.4.0):
+  eslint-plugin-es-x@7.7.0(eslint@9.4.0):
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@9.4.0)
       '@eslint-community/regexpp': 4.10.1
@@ -2857,7 +2857,7 @@ snapshots:
       '@eslint-community/eslint-utils': 4.4.0(eslint@9.4.0)
       enhanced-resolve: 5.17.0
       eslint: 9.4.0
-      eslint-plugin-es-x: 7.6.0(eslint@9.4.0)
+      eslint-plugin-es-x: 7.7.0(eslint@9.4.0)
       get-tsconfig: 4.7.5
       globals: 15.4.0
       ignore: 5.3.1

@@ -1,5 +1,5 @@
 #!/bin/sh
 set -e
 
-npm run format
+pnpm run format
 git add -A
