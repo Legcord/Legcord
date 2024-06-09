@@ -1,5 +1,6 @@
 import {contextBridge, ipcRenderer, type SourcesOptions} from "electron";
 import {injectTitlebar} from "./titlebar.mjs";
+import type {ArmCordWindow} from "../../types/armcordWindow.d.js";
 const CANCEL_ID = "desktop-capturer-selection__cancel";
 const desktopCapturer = {
     getSources: (opts: SourcesOptions) => ipcRenderer.invoke("DESKTOP_CAPTURER_GET_SOURCES", opts)
@@ -58,7 +59,7 @@ contextBridge.exposeInMainWorld("armcord", {
     version: ipcRenderer.sendSync("get-app-version", "app-version") as string,
     mods: ipcRenderer.sendSync("clientmod") as string,
     openSettingsWindow: () => ipcRenderer.send("openSettingsWindow")
-});
+} as ArmCordWindow);
 let windowCallback: (arg0: object) => void;
 contextBridge.exposeInMainWorld("ArmCordRPC", {
     listen: (callback: any) => {

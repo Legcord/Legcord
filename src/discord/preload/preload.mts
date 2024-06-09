@@ -9,6 +9,7 @@ import {fixTitlebar, injectTitlebar} from "./titlebar.mjs";
 import {injectSettings} from "./settings.js";
 import {addStyle, addScript} from "../../common/dom.js";
 import {sleep} from "../../common/sleep.js";
+import type {ArmCordWindow} from "../../types/armcordWindow.d.js";
 
 window.localStorage.setItem("hideNag", "true");
 
@@ -23,9 +24,11 @@ function updateLang(): void {
     const parts = value.split(`; locale=`);
     if (parts.length === 2) ipcRenderer.send("setLang", parts.pop()?.split(";").shift());
 }
+
 declare global {
     interface Window {
-        armcord: any;
+        // REVIEW - Assumption, this was previously any
+        armcord: ArmCordWindow;
     }
 }
 
