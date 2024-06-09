@@ -145,6 +145,8 @@ jobs:
               run: |
                   echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
             - run: gh release delete devbuild -y --cleanup-tag
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Create the release
               uses: softprops/action-gh-release@v1
               env:
