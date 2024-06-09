@@ -7,7 +7,7 @@ import {Readable} from "stream";
 import type {ReadableStream} from "stream/web";
 import {finished} from "stream/promises";
 async function updateModBundle(): Promise<void> {
-    if (getConfig("noBundleUpdates") == undefined ?? false) {
+    if (getConfig("noBundleUpdates") == undefined || false) {
         try {
             console.log("Downloading mod bundle");
             const distFolder = `${app.getPath("userData")}/plugins/loader/dist/`;
