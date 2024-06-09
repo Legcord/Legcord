@@ -25,18 +25,38 @@ jobs:
             - name: Install Node dependencies
               run: pnpm i -g cargo-cp-artifact electron-builder && pnpm i
             - name: Build
-              run: pnpm run build && electron-builder --linux zip && electron-builder --arm64 --linux zip
+              run: pnpm run build && electron-builder --linux zip
 
             - name: Upload artifact
               uses: actions/upload-artifact@v4
               with:
                   name: ArmCordLinux.zip
-                  path: dist/armcord-3.3.0.zip
+                  path: dist/armcord-*.zip
+
+    build-linux-arm:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - uses: pnpm/action-setup@v4
+
+            - name: Use Node.js 22
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: "pnpm"
+
+            - name: Install Node dependencies
+              run: pnpm i -g cargo-cp-artifact electron-builder && pnpm i
+            - name: Build
+              run: pnpm run build && electron-builder --arm64 --linux zip
+
             - name: Upload artifact
               uses: actions/upload-artifact@v4
               with:
                   name: ArmCordLinuxArm64.zip
-                  path: dist/
+                  path: dist/armcord-*-arm64.zip
 
     build-windows:
         runs-on: windows-latest
@@ -128,4 +148,4 @@ jobs:
                   name: Dev Build ${{ steps.vars.outputs.sha_short }}
                   prerelease: true
                   tag: devbuild
-                  artifacts: "release-files/*"
+                  artifacts: "release-files/**/*.zip"
