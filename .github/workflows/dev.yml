@@ -137,12 +137,6 @@ jobs:
               uses: actions/checkout@v4
 
             - uses: actions/download-artifact@v4
-              with:
-                  path: windows
-
-            - uses: actions/download-artifact@v4
-              with:
-                  path: linux
 
             # FIXME - https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
             - name: Get some values needed for the release
@@ -168,7 +162,4 @@ jobs:
                   prerelease: true
                   body_path: .github/release.md
                   files: |
-                      linux/ArmCord-3.3.0.zip
-                      linux/ArmCord-3.3.0-arm64.zip
-                      windows/ArmCord-3.3.0-win.zip
-                      windows/ArmCord-3.3.0-arm64-win.zip
+                      ArmCord*
