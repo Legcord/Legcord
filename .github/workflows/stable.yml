@@ -15,7 +15,7 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            - uses: pnpm/action-setup@v4 # Install pnpm using packageManager key in package.json
+            - uses: pnpm/action-setup@v4
 
             - name: Use Node.js 22
               uses: actions/setup-node@v4
@@ -24,21 +24,21 @@ jobs:
                   cache: "pnpm"
 
             - name: Install Node dependencies
-              run: pnpm install -g cargo-cp-artifact && pnpm install
-
-            - name: Install Electron-Builder
-              run: pnpm install -g electron-builder
+              run: pnpm i -g cargo-cp-artifact electron-builder && pnpm i
 
             - name: Build
               run: pnpm run build && electron-builder --linux && electron-builder --arm64 --linux && electron-builder --armv7l --linux
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
             - name: List all files in the dist directory
               run: ls -l dist
+
             - name: Delete unpacked builds
               run: rm -rf dist/linux-unpacked && rm -rf dist/linux-arm64-unpacked && rm -rf dist/linux-armv7l-unpacked
+
             - name: Upload artifact
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v4
               with:
                   name: ArmCordLinux
                   path: dist/
@@ -50,7 +50,7 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            - uses: pnpm/action-setup@v4 # Install pnpm using packageManager key in package.json
+            - uses: pnpm/action-setup@v4
 
             - name: Use Node.js 22
               uses: actions/setup-node@v4
@@ -59,22 +59,21 @@ jobs:
                   cache: "pnpm"
 
             - name: Install Node dependencies
-              run: pnpm install -g cargo-cp-artifact && pnpm install
-
-            - name: Install Electron-Builder
-              run: pnpm install -g electron-builder
+              run: pnpm i -g cargo-cp-artifact electron-builder && pnpm i
 
             - name: Build
               run: pnpm run build && electron-builder --macos --x64 --arm64
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
             - name: List all files in the dist directory
               run: ls -l dist
+
             - name: Delete unpacked builds
               run: rm -rf dist/macos-unpacked
 
             - name: Upload artifact
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v4
               with:
                   name: ArmCordMac
                   path: dist/
@@ -85,7 +84,7 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            - uses: pnpm/action-setup@v4 # Install pnpm using packageManager key in package.json
+            - uses: pnpm/action-setup@v4
 
             - name: Use Node.js 22
               uses: actions/setup-node@v4
@@ -94,51 +93,51 @@ jobs:
                   cache: "pnpm"
 
             - name: Install Node dependencies
-              run: pnpm install -g cargo-cp-artifact && pnpm install
-
-            - name: Install Electron-Builder
-              run: pnpm install -g electron-builder
+              run: pnpm i -g cargo-cp-artifact electron-builder && pnpm i
 
             - name: Build
               run: pnpm run build && electron-builder --windows
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
             - name: Delete unpacked builds
               run: Remove-Item -LiteralPath ".\dist\win-unpacked" -Force -Recurse
+
             - name: Upload artifact
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v4
               with:
                   name: ArmCordWindows
                   path: dist/
+
     build-windowsOnARM:
         runs-on: windows-latest
         steps:
-            - uses: actions/setup-node@v4
-              with:
-                  node-version: "18"
-
             - name: Checkout code
               uses: actions/checkout@v4
+
+            - uses: pnpm/action-setup@v4
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: "22"
+                  cache: "pnpm"
 
             - name: Set architecture
               run: set npm_config_arch=arm64
 
-            - uses: pnpm/action-setup@v4 # Install pnpm using packageManager key in package.json
-
             - name: Install Node dependencies
-              run: pnpm install -g cargo-cp-artifact && pnpm install
-
-            - name: Install Electron-Builder
-              run: pnpm install -g electron-builder
+              run: pnpm install -g cargo-cp-artifact electron-builder && pnpm install
 
             - name: Build
               run: pnpm run build && electron-builder --windows --arm64
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
             - name: Delete unpacked builds
               run: Remove-Item -LiteralPath ".\dist\win-arm64-unpacked" -Force -Recurse
+
             - name: Upload artifact
-              uses: actions/upload-artifact@v2
+              uses: actions/upload-artifact@v4
               with:
                   name: ArmCordWindowsArm64
                   path: dist/
@@ -151,26 +150,33 @@ jobs:
               with:
                   name: ArmCordMac
                   path: macos
+
             - uses: actions/download-artifact@v4
               with:
                   name: ArmCordWindows
                   path: windows
+
             - uses: actions/download-artifact@v4
               with:
                   name: ArmCordWindowsArm64
                   path: windows
+
             - uses: actions/download-artifact@v4
               with:
                   name: ArmCordLinux
                   path: linux
+
             - name: ls
               run: ls
+
             - name: Delete unwanted directories
               run: rm -rf {linux,macos,windows}/*/
                   rm -rf {linux,macos,windows}/.icon*
                   rm -rf {linux,macos,windows}/builder-debug.yml
+
             - name: ls dirs
               run: ls linux && ls macos && ls windows
+
             - name: Get some values needed for the release
               id: vars
               shell: bash
