@@ -154,4 +154,4 @@ jobs:
                   name: Dev Build ${{ steps.vars.outputs.sha_short }}
                   prerelease: true
                   tag: devbuild
-                  artifacts: "release-files/*"
+                  artifacts: "release-files/**/*"
