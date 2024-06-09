@@ -144,13 +144,7 @@ jobs:
               shell: bash
               run: |
                   echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
-              # FIXME - https://github.com/dev-drprasad/delete-tag-and-release Deprecation
-            - uses: dev-drprasad/delete-tag-and-release@v1.1
-              with:
-                  delete_release: true
-                  tag_name: devbuild
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
-
+            - run: gh release delete devbuild -y --cleanup-tag
             - name: Create the release
               uses: softprops/action-gh-release@v1
               env:
