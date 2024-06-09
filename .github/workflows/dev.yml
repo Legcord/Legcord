@@ -138,29 +138,18 @@ jobs:
 
             - uses: actions/download-artifact@v4
               with:
-                  name: ArmCordWindows.zip
                   path: windows
 
             - uses: actions/download-artifact@v4
               with:
-                  name: ArmCordLinux.zip
                   path: linux
-
-            - uses: actions/download-artifact@v4
-              with:
-                  name: ArmCordLinuxArm64.zip
-                  path: linux
-            - uses: actions/download-artifact@v4
-              with:
-                  name: ArmCordWindowsArm64.zip
-                  path: windows
 
             - name: Get some values needed for the release
               id: vars
               shell: bash
               run: |
                   echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
-
+              # FIXME - https://github.com/dev-drprasad/delete-tag-and-release Deprecation
             - uses: dev-drprasad/delete-tag-and-release@v0.2.1
               with:
                   delete_release: true
