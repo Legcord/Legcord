@@ -144,15 +144,14 @@ jobs:
             - name: find where the things are sob
               run: ls -laR
 
-            - name: Create the release
-              uses: softprops/action-gh-release@v2
+            - name: Create Release
+              uses: ncipollo/release-action@v1
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
-                  tag_name: devbuild
+                  bodyFile: .github/release.md
+                  generateReleaseNotes: true
                   name: Dev Build ${{ steps.vars.outputs.sha_short }}
-                  draft: false
                   prerelease: true
-                  body_path: .github/release.md
-                  files: |
-                      release-files/*
+                  tag: devbuild
+                  artifacts: "*.zip"
