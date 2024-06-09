@@ -30,7 +30,7 @@ jobs:
             - name: Upload artifact
               uses: actions/upload-artifact@v4
               with:
-                  name: ArmCordLinux.zip
+                  name: ArmCordLinux
                   path: dist/armcord-*.zip
 
     build-linux-arm:
@@ -55,7 +55,7 @@ jobs:
             - name: Upload artifact
               uses: actions/upload-artifact@v4
               with:
-                  name: ArmCordLinuxArm64.zip
+                  name: ArmCordLinuxArm64
                   path: dist/armcord-*-arm64.zip
 
     build-windows:
@@ -81,10 +81,10 @@ jobs:
             - name: Upload artifact
               uses: actions/upload-artifact@v4
               with:
-                  name: ArmCordWindows.zip
+                  name: ArmCordWindows
                   path: dist/armcord-3.3.0-win.zip
 
-    build-windowsOnARM:
+    build-windows-arm:
         runs-on: windows-latest
         steps:
             - name: Checkout code
@@ -110,12 +110,12 @@ jobs:
             - name: Upload artifact
               uses: actions/upload-artifact@v4
               with:
-                  name: ArmCordWindowsArm64.zip
+                  name: ArmCordWindowsArm64
                   path: dist\armcord-3.3.0-arm64-win.zip
 
     release:
         runs-on: ubuntu-latest
-        needs: [build-linux, build-windows, build-windowsOnARM, build-linux-arm]
+        needs: [build-linux, build-windows, build-windows-arm, build-linux-arm]
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
@@ -124,9 +124,9 @@ jobs:
               with:
                   path: release-files
 
-            - name: Get release data
+            - name: Get short commit hash
               id: vars
-              run: echo "{name}={value}" >> $(git rev-parse --short HEAD)
+              run: echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> $ENV
 
             - run: gh release delete devbuild -y --cleanup-tag
               env:
