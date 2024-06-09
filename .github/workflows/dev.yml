@@ -126,7 +126,7 @@ jobs:
 
             - name: Get short commit hash
               id: vars
-              run: echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> $ENV
+              run: echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_OUTPUT
 
             - run: gh release delete devbuild -y --cleanup-tag
               env:
