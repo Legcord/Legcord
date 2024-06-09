@@ -28,11 +28,16 @@ jobs:
             - name: Build
               run: pnpm run build && electron-builder --linux zip && electron-builder --arm64 --linux zip
 
-            - name: Upload artifacts
-              uses: actions/upload-artifact@v4
+            - name: Upload artifact
+              uses: actions/upload-artifact@v2
               with:
-                  name: ArmCordLinux
-                  path: dist/*.zip
+                  name: ArmCordLinux.zip
+                  path: dist/ArmCord-3.3.0.zip
+            - name: Upload artifact
+              uses: actions/upload-artifact@v2
+              with:
+                  name: ArmCordLinuxArm64.zip
+                  path: dist/ArmCord-3.3.0-arm64.zip
 
     build-snap:
         runs-on: ubuntu-latest
@@ -148,7 +153,4 @@ jobs:
                   prerelease: true
                   body_path: .github/release.md
                   files: |
-                      ArmCordLinux.zip
-                      ArmCordLinuxArm64.zip
-                      ArmCordWindows.zip
-                      ArmCordWindowsArm64.zip
+                      armcord*.zip
