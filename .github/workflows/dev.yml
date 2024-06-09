@@ -103,7 +103,7 @@ jobs:
         steps:
             - uses: actions/setup-node@v4
               with:
-                  node-version: "18"
+                  node-version: "22"
 
             - name: Checkout code
               uses: actions/checkout@v4
@@ -148,7 +148,7 @@ jobs:
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Create the release
-              uses: softprops/action-gh-release@v1
+              uses: softprops/action-gh-release@v2
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
@@ -158,4 +158,7 @@ jobs:
                   prerelease: true
                   body_path: .github/release.md
                   files: |
-                      ArmCord*
+                      ArmCordLinux.zip
+                      ArmCordLinuxArm64.zip
+                      ArmCordWindows.zip
+                      ArmCordWindowsArm64.zip
