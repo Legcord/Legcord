@@ -23,9 +23,10 @@ jobs:
                   cache: "pnpm"
 
             - name: Install Node dependencies
-              run: pnpm i -g cargo-cp-artifact electron-builder && pnpm i
+              run: pnpm i
+
             - name: Build
-              run: pnpm run build && electron-builder --linux zip
+              run: pnpm run build && pnpm electron-builder --linux zip
 
             - name: Upload artifact
               uses: actions/upload-artifact@v4
@@ -48,9 +49,10 @@ jobs:
                   cache: "pnpm"
 
             - name: Install Node dependencies
-              run: pnpm i -g cargo-cp-artifact electron-builder && pnpm i
+              run: pnpm i
+
             - name: Build
-              run: pnpm run build && electron-builder --arm64 --linux zip
+              run: pnpm run build && pnpm electron-builder --arm64 --linux zip
 
             - name: Upload artifact
               uses: actions/upload-artifact@v4
@@ -64,7 +66,7 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            - uses: pnpm/action-setup@v4 # Install pnpm using packageManager key in package.json
+            - uses: pnpm/action-setup@v4
 
             - name: Use Node.js 22
               uses: actions/setup-node@v4
@@ -73,10 +75,10 @@ jobs:
                   cache: "pnpm"
 
             - name: Install Node dependencies
-              run: pnpm i -g cargo-cp-artifact electron-builder && pnpm i
+              run: pnpm i
 
             - name: Build
-              run: pnpm run build && electron-builder --windows zip
+              run: pnpm run build && pnpm electron-builder --windows zip
 
             - name: Upload artifact
               uses: actions/upload-artifact@v4
@@ -100,10 +102,10 @@ jobs:
             - uses: pnpm/action-setup@v4 # Install pnpm using packageManager key in package.json
 
             - name: Install Node dependencies
-              run: pnpm i -g cargo-cp-artifact electron-builder && pnpm i
+              run: pnpm i
 
             - name: Build
-              run: pnpm run build && electron-builder --windows zip --arm64
+              run: pnpm run build && pnpm electron-builder --windows zip --arm64
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
