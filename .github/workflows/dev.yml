@@ -29,7 +29,7 @@ jobs:
               run: pnpm install -g electron-builder
 
             - name: Build
-              run: npm run build && electron-builder --linux zip && electron-builder --arm64 --linux zip
+              run: pnpm run build && electron-builder --linux zip && electron-builder --arm64 --linux zip
 
             - name: Upload artifact
               uses: actions/upload-artifact@v2
@@ -62,7 +62,7 @@ jobs:
               run: pnpm install -g electron-builder
 
             - name: Build
-              run: npm run build && electron-builder --linux snap --config.snap.grade=devel
+              run: pnpm run build && electron-builder --linux snap --config.snap.grade=devel
 
             - uses: snapcore/action-publish@v1
               env:
@@ -91,7 +91,7 @@ jobs:
               run: pnpm install -g electron-builder
 
             - name: Build
-              run: npm run build && electron-builder --windows zip
+              run: pnpm run build && electron-builder --windows zip
 
             - name: Upload artifact
               uses: actions/upload-artifact@v4
@@ -120,7 +120,7 @@ jobs:
               run: pnpm install -g electron-builder
 
             - name: Build
-              run: npm run build && electron-builder --windows zip --arm64
+              run: pnpm run build && electron-builder --windows zip --arm64
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             - name: Upload artifact
