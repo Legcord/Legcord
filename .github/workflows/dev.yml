@@ -14,7 +14,7 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            - uses: pnpm/action-setup@v4 # Install pnpm using packageManager key in package.json
+            - uses: pnpm/action-setup@v4
 
             - name: Use Node.js 22
               uses: actions/setup-node@v4
@@ -23,31 +23,24 @@ jobs:
                   cache: "pnpm"
 
             - name: Install Node dependencies
-              run: pnpm install -g cargo-cp-artifact && pnpm install
-
-            - name: Install Electron-Builder
-              run: pnpm install -g electron-builder
+              run: pnpm i -g cargo-cp-artifact electron-builder && pnpm i
 
             - name: Build
               run: pnpm run build && electron-builder --linux zip && electron-builder --arm64 --linux zip
 
-            - name: Upload artifact
+            - name: Upload artifacts
               uses: actions/upload-artifact@v4
               with:
-                  name: ArmCordLinux.zip
-                  path: dist/armcord-3.3.0.zip
-            - name: Upload artifact
-              uses: actions/upload-artifact@v4
-              with:
-                  name: ArmCordLinuxArm64.zip
-                  path: dist/armcord-3.3.0-arm64.zip
+                  name: ArmCordLinux
+                  path: dist/*.zip
+
     build-snap:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            - uses: pnpm/action-setup@v4 # Install pnpm using packageManager key in package.json
+            - uses: pnpm/action-setup@v4
 
             - name: Use Node.js 22
               uses: actions/setup-node@v4
@@ -56,10 +49,7 @@ jobs:
                   cache: "pnpm"
 
             - name: Install Node dependencies
-              run: pnpm install -g cargo-cp-artifact && pnpm install
-
-            - name: Install Electron-Builder
-              run: pnpm install -g electron-builder
+              run: pnpm i -g cargo-cp-artifact electron-builder && pnpm i
 
             - name: Build
               run: pnpm run build && electron-builder --linux snap --config.snap.grade=devel
@@ -85,10 +75,7 @@ jobs:
                   cache: "pnpm"
 
             - name: Install Node dependencies
-              run: pnpm install -g cargo-cp-artifact && pnpm install
-
-            - name: Install Electron-Builder
-              run: pnpm install -g electron-builder
+              run: pnpm i -g cargo-cp-artifact electron-builder && pnpm i
 
             - name: Build
               run: pnpm run build && electron-builder --windows zip
@@ -114,15 +101,13 @@ jobs:
             - uses: pnpm/action-setup@v4 # Install pnpm using packageManager key in package.json
 
             - name: Install Node dependencies
-              run: pnpm install -g cargo-cp-artifact && pnpm install
-
-            - name: Install Electron-Builder
-              run: pnpm install -g electron-builder
+              run: pnpm i -g cargo-cp-artifact electron-builder && pnpm i
 
             - name: Build
               run: pnpm run build && electron-builder --windows zip --arm64
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
             - name: Upload artifact
               uses: actions/upload-artifact@v4
               with:
@@ -144,9 +129,14 @@ jobs:
               shell: bash
               run: |
                   echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+
             - run: gh release delete devbuild -y --cleanup-tag
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: find where the things are sob
+              run: ls -laR
+
             - name: Create the release
               uses: softprops/action-gh-release@v2
               env:
