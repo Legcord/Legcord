@@ -97,7 +97,7 @@ jobs:
               uses: actions/upload-artifact@v4
               with:
                   name: ArmCordWindows.zip
-                  path: dist/ArmCord-3.3.0-win.zip
+                  path: dist/armcord-3.3.0-win.zip
     build-windowsOnARM:
         runs-on: windows-latest
         steps:
@@ -127,7 +127,7 @@ jobs:
               uses: actions/upload-artifact@v4
               with:
                   name: ArmCordWindowsArm64.zip
-                  path: dist\ArmCord-3.3.0-arm64-win.zip
+                  path: dist\armcord-3.3.0-arm64-win.zip
 
     release:
         runs-on: ubuntu-latest
@@ -179,7 +179,7 @@ jobs:
                   prerelease: true
                   body_path: .github/release.md
                   files: |
-                      linux/ArmCord-3.3.0.zip
-                      linux/ArmCord-3.3.0-arm64.zip
-                      windows/ArmCord-3.3.0-win.zip
-                      windows/ArmCord-3.3.0-arm64-win.zip
+                      linux/armcord-3.3.0.zip
+                      linux/armcord-3.3.0-arm64.zip
+                      windows/armcord-3.3.0-win.zip
+                      windows/armcord-3.3.0-arm64-win.zip
