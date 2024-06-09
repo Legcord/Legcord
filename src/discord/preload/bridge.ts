@@ -62,7 +62,8 @@ contextBridge.exposeInMainWorld("armcord", {
 } as ArmCordWindow);
 let windowCallback: (arg0: object) => void;
 contextBridge.exposeInMainWorld("ArmCordRPC", {
-    listen: (callback: any) => {
+    // REVIEW - I don't think this is right
+    listen: (callback: () => void) => {
         windowCallback = callback;
     }
 });

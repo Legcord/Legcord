@@ -14,5 +14,8 @@
         "togglefullscreen",
         "unmaximize",
         "vaapi"
+    ],
+    "cSpell.ignorePaths": [
+        "assets/lang"
     ]
 }

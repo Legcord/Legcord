@@ -1,3 +1,4 @@
+/* eslint-disable n/no-unpublished-import */
 // @ts-check
 
 import eslint from "@eslint/js";
@@ -31,9 +32,7 @@ export default tseslint.config(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         rules: {
             "no-constant-binary-expression": 0,
-            "no-unused-vars": 0, // Handled by @typescript-eslint/no-unused-vars
-            "n/no-unsupported-features/node-builtins": 0, // Don't care
-            "n/no-unpublished-import": 0, // Seems broken right now
+            "n/no-unsupported-features/node-builtins": 1,
             "@typescript-eslint/no-unused-vars": [
                 2,
                 {
