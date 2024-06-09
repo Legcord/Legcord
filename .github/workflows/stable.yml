@@ -17,10 +17,10 @@ jobs:
 
             - uses: pnpm/action-setup@v4 # Install pnpm using packageManager key in package.json
 
-            - name: Use Node.js 18
+            - name: Use Node.js 22
               uses: actions/setup-node@v4
               with:
-                  node-version: 18
+                  node-version: 22
                   cache: "pnpm"
 
             - name: Install Node dependencies
@@ -52,10 +52,10 @@ jobs:
 
             - uses: pnpm/action-setup@v4 # Install pnpm using packageManager key in package.json
 
-            - name: Use Node.js 18
+            - name: Use Node.js 22
               uses: actions/setup-node@v4
               with:
-                  node-version: 18
+                  node-version: 22
                   cache: "pnpm"
 
             - name: Install Node dependencies
@@ -87,10 +87,10 @@ jobs:
 
             - uses: pnpm/action-setup@v4 # Install pnpm using packageManager key in package.json
 
-            - name: Use Node.js 18
+            - name: Use Node.js 22
               uses: actions/setup-node@v4
               with:
-                  node-version: 18
+                  node-version: 22
                   cache: "pnpm"
 
             - name: Install Node dependencies
