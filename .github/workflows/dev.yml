@@ -124,19 +124,13 @@ jobs:
               with:
                   path: release-files
 
-            # FIXME - https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
-            - name: Get some values needed for the release
+            - name: Get release data
               id: vars
-              shell: bash
-              run: |
-                  echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+              run: echo "{name}={value}" >> $(git rev-parse --short HEAD)
 
             - run: gh release delete devbuild -y --cleanup-tag
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-            - name: find where the things are sob
-              run: ls -laR
 
             - name: Create Release
               uses: ncipollo/release-action@v1
