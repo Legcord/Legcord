@@ -1,2 +1,21 @@
 {
+    "cSpell.words": [
+        "armcord",
+        "armcordinternal",
+        "arrpc",
+        "Autogain",
+        "clientmod",
+        "copyfiles",
+        "Ducko",
+        "modloader",
+        "nsis",
+        "smartfridge",
+        "smartfrigde",
+        "togglefullscreen",
+        "unmaximize",
+        "vaapi"
+    ],
+    "cSpell.ignorePaths": [
+        "assets/lang"
+    ]
 }

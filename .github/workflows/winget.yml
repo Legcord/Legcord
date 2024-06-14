@@ -1,13 +1,13 @@
 name: Publish to WinGet
 on:
-  release:
-    types: [released]
+    release:
+        types: [released]
 
 jobs:
-  publish:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: vedantmgoyal2009/winget-releaser@v2
-        with:
-          identifier: ArmCord.ArmCord
-          token: ${{ secrets.WINGET_TOKEN }}
+    publish:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: vedantmgoyal2009/winget-releaser@v2
+              with:
+                  identifier: ArmCord.ArmCord
+                  token: ${{ secrets.WINGET_TOKEN }}

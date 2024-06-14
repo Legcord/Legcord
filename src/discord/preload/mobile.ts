@@ -1,6 +1,6 @@
 import {addStyle} from "../../common/dom.js";
-import * as fs from "fs";
-import * as path from "path";
+import fs from "fs";
+import path from "path";
 export function injectMobileStuff(): void {
     document.addEventListener("DOMContentLoaded", function () {
         const mobileCSS = path.join(import.meta.dirname, "../", "/content/css/mobile.css");

@@ -2,10 +2,11 @@ import {BrowserWindow, app, shell} from "electron";
 import path from "path";
 import fs from "fs";
 import {getDisplayVersion} from "../common/version.js";
+import type {ThemeManifest} from "../types/themeManifest.d.js";
 let settingsWindow: BrowserWindow;
 let instance = 0;
 
-export function createSettingsWindow(): void {
+export async function createSettingsWindow(): Promise<void> {
     console.log("Creating a settings window.");
     instance += 1;
     if (instance > 1) {
@@ -28,7 +29,7 @@ export function createSettingsWindow(): void {
             }
         });
         async function settingsLoadPage(): Promise<void> {
-            settingsWindow.loadURL(`file://${import.meta.dirname}/settings.html`);
+            await settingsWindow.loadURL(`file://${import.meta.dirname}/settings.html`);
         }
         const userDataPath = app.getPath("userData");
         const themesFolder = `${userDataPath}/themes/`;
@@ -43,7 +44,7 @@ export function createSettingsWindow(): void {
             fs.readdirSync(themesFolder).forEach((file) => {
                 try {
                     const manifest = fs.readFileSync(`${themesFolder}/${file}/manifest.json`, "utf8");
-                    let themeFile = JSON.parse(manifest);
+                    const themeFile = JSON.parse(manifest) as ThemeManifest;
                     if (
                         fs
                             .readFileSync(path.join(userDataPath, "/disabled.txt"))
@@ -64,10 +65,10 @@ export function createSettingsWindow(): void {
             });
         });
         settingsWindow.webContents.setWindowOpenHandler(({url}) => {
-            shell.openExternal(url);
+            void shell.openExternal(url);
             return {action: "deny"};
         });
-        settingsLoadPage();
+        await settingsLoadPage();
         settingsWindow.on("close", () => {
             instance = 0;
         });

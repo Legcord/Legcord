@@ -11,23 +11,22 @@ import {createSplashWindow} from "./splash/main.js";
 import {createSetupWindow} from "./setup/main.js";
 import {
     setConfig,
-    getConfigSync,
     checkForDataFolder,
     checkIfConfigExists,
     checkIfConfigIsBroken,
     getConfig,
     firstRun,
-    Settings,
     getConfigLocation
 } from "./common/config.js";
 import {injectElectronFlags} from "./common/flags.js";
 import {setLang} from "./common/lang.js";
 import {installModLoader} from "./discord/extensions/mods.js";
 export let iconPath: string;
-export let settings: any;
+import type {Settings} from "./types/settings";
+export let settings: Settings;
 export let customTitlebar: boolean;
 
-app.on("render-process-gone", (event, webContents, details) => {
+app.on("render-process-gone", (_event, _webContents, details) => {
     if (details.reason == "crashed") {
         app.relaunch();
     }
@@ -35,23 +34,23 @@ app.on("render-process-gone", (event, webContents, details) => {
 async function args(): Promise<void> {
     let argNum = 2;
     if (process.argv[0] == "electron") argNum++;
-    let args = process.argv[argNum];
+    const args = process.argv[argNum];
     if (args == undefined) return;
     if (args.startsWith("--")) return; //electron flag
     if (args.includes("=")) {
-        let e = args.split("=");
-        await setConfig(e[0] as keyof Settings, e[1]);
+        const e = args.split("=");
+        setConfig(e[0] as keyof Settings, e[1]);
         console.log(`Setting ${e[0]} to ${e[1]}`);
         app.relaunch();
         app.exit();
     } else if (args == "themes") {
-        app.whenReady().then(async () => {
-            createTManagerWindow();
+        await app.whenReady().then(async () => {
+            await createTManagerWindow();
         });
     }
 }
-args(); // i want my top level awaits
-if (!app.requestSingleInstanceLock() && getConfigSync("multiInstance") == (false ?? undefined)) {
+await args(); // i want my top level awaits - IMPLEMENTED :)
+if (!app.requestSingleInstanceLock() && getConfig("multiInstance") == (false ?? undefined)) {
     // if value isn't set after 3.2.4
     // kill if 2nd instance
     app.quit();
@@ -82,21 +81,22 @@ if (!app.requestSingleInstanceLock() && getConfigSync("multiInstance") == (false
     checkIfConfigIsBroken();
     injectElectronFlags();
     console.log("[Config Manager] Current config: " + fs.readFileSync(getConfigLocation(), "utf-8"));
-    app.whenReady().then(async () => {
-        if ((await getConfig("customIcon")) !== undefined ?? null) {
-            iconPath = await getConfig("customIcon");
+    void app.whenReady().then(async () => {
+        // REVIEW - Awaiting the line above will cause a hang at startup
+        if (getConfig("customIcon") !== null) {
+            iconPath = getConfig("customIcon");
         } else {
             iconPath = path.join(import.meta.dirname, "../", "/assets/desktop.png");
         }
         async function init(): Promise<void> {
-            if ((await getConfig("skipSplash")) == false) {
-                createSplashWindow();
+            if (getConfig("skipSplash") == false) {
+                void createSplashWindow(); // REVIEW - Awaiting will hang at start
             }
             if (firstRun == true) {
-                await setLang(new Intl.DateTimeFormat().resolvedOptions().locale);
-                createSetupWindow();
+                setLang(new Intl.DateTimeFormat().resolvedOptions().locale);
+                await createSetupWindow();
             }
-            switch (await getConfig("windowStyle")) {
+            switch (getConfig("windowStyle")) {
                 case "default":
                     createCustomWindow();
                     customTitlebar = true;
@@ -125,8 +125,9 @@ if (!app.requestSingleInstanceLock() && getConfigSync("multiInstance") == (false
                 callback(true);
             }
         });
-        app.on("activate", async function () {
-            if (BrowserWindow.getAllWindows().length === 0) await init();
+        app.on("activate", function () {
+            // REVIEW - I don't think it really matters if this promise is voided
+            if (BrowserWindow.getAllWindows().length === 0) void init();
         });
     });
 }

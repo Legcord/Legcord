@@ -4,9 +4,9 @@ interface IPCSources {
     name: string;
     thumbnail: HTMLCanvasElement;
 }
-async function addDisplays(): Promise<void> {
-    ipcRenderer.once("getSources", (_event, arg) => {
-        let sources: IPCSources[] = arg;
+function addDisplays(): void {
+    ipcRenderer.once("getSources", (_event, arg: IPCSources[]) => {
+        const sources = arg;
         console.log(sources);
         const selectionElem = document.createElement("div");
         selectionElem.classList.add("desktop-capturer-selection");
@@ -33,7 +33,7 @@ async function addDisplays(): Promise<void> {
     </div>`;
         document.body.appendChild(selectionElem);
         document.querySelectorAll(".desktop-capturer-selection__btn").forEach((button) => {
-            button.addEventListener("click", async () => {
+            button.addEventListener("click", () => {
                 try {
                     const id = button.getAttribute("data-id");
                     const title = button.getAttribute("title");

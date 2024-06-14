@@ -1,8 +1,9 @@
-import {contextBridge, ipcRenderer} from "electron";
+import {contextBridge, ipcRenderer, type SourcesOptions} from "electron";
 import {injectTitlebar} from "./titlebar.mjs";
+import type {ArmCordWindow} from "../../types/armcordWindow.d.js";
 const CANCEL_ID = "desktop-capturer-selection__cancel";
 const desktopCapturer = {
-    getSources: (opts: any) => ipcRenderer.invoke("DESKTOP_CAPTURER_GET_SOURCES", opts)
+    getSources: (opts: SourcesOptions) => ipcRenderer.invoke("DESKTOP_CAPTURER_GET_SOURCES", opts)
 };
 interface IPCSources {
     id: string;
@@ -10,9 +11,9 @@ interface IPCSources {
     thumbnail: HTMLCanvasElement;
 }
 async function getDisplayMediaSelector(): Promise<string> {
-    const sources: IPCSources[] = await desktopCapturer.getSources({
+    const sources = (await desktopCapturer.getSources({
         types: ["screen", "window"]
-    });
+    })) as IPCSources[];
     return `<div class="desktop-capturer-selection__scroller">
   <ul class="desktop-capturer-selection__list">
     ${sources
@@ -44,24 +45,25 @@ contextBridge.exposeInMainWorld("armcord", {
     },
     titlebar: {
         injectTitlebar: () => injectTitlebar(),
-        isTitlebar: ipcRenderer.sendSync("titlebar")
+        isTitlebar: ipcRenderer.sendSync("titlebar") as boolean
     },
     electron: process.versions.electron,
-    channel: ipcRenderer.sendSync("channel"),
+    channel: ipcRenderer.sendSync("channel") as string,
     setPingCount: (pingCount: number) => ipcRenderer.send("setPing", pingCount),
     setTrayIcon: (favicon: string) => ipcRenderer.send("sendTrayIcon", favicon),
     getLang: (toGet: string) =>
         ipcRenderer.invoke("getLang", toGet).then((result) => {
-            return result;
+            return result as string;
         }),
     getDisplayMediaSelector,
-    version: ipcRenderer.sendSync("get-app-version", "app-version"),
-    mods: ipcRenderer.sendSync("clientmod"),
+    version: ipcRenderer.sendSync("get-app-version", "app-version") as string,
+    mods: ipcRenderer.sendSync("clientmod") as string,
     openSettingsWindow: () => ipcRenderer.send("openSettingsWindow")
-});
+} as ArmCordWindow);
 let windowCallback: (arg0: object) => void;
 contextBridge.exposeInMainWorld("ArmCordRPC", {
-    listen: (callback: any) => {
+    // REVIEW - I don't think this is right
+    listen: (callback: () => void) => {
         windowCallback = callback;
     }
 });

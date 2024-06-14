@@ -1,36 +1,39 @@
-import "./bridge.mjs";
-import "./optimizer.mjs";
-import "./settings.mjs";
+import "./bridge.js";
+import "./optimizer.js";
+import "./settings.js";
 import {ipcRenderer} from "electron";
-import * as fs from "fs";
-import * as path from "path";
-import {injectMobileStuff} from "./mobile.mjs";
+import fs from "fs";
+import path from "path";
+import {injectMobileStuff} from "./mobile.js";
 import {fixTitlebar, injectTitlebar} from "./titlebar.mjs";
-import {injectSettings} from "./settings.mjs";
+import {injectSettings} from "./settings.js";
 import {addStyle, addScript} from "../../common/dom.js";
 import {sleep} from "../../common/sleep.js";
+import type {ArmCordWindow} from "../../types/armcordWindow.d.js";
 
 window.localStorage.setItem("hideNag", "true");
 
 if (ipcRenderer.sendSync("legacyCapturer")) {
     console.warn("Using legacy capturer module");
-    import("./capturer.mjs");
+    import("./capturer.js");
 }
 
-const version = ipcRenderer.sendSync("displayVersion");
-async function updateLang(): Promise<void> {
+const version = ipcRenderer.sendSync("displayVersion") as string;
+function updateLang(): void {
     const value = `; ${document.cookie}`;
-    const parts: any = value.split(`; locale=`);
-    if (parts.length === 2) ipcRenderer.send("setLang", parts.pop().split(";").shift());
+    const parts = value.split(`; locale=`);
+    if (parts.length === 2) ipcRenderer.send("setLang", parts.pop()?.split(";").shift());
 }
+
 declare global {
     interface Window {
-        armcord: any;
+        // REVIEW - Assumption, this was previously any
+        armcord: ArmCordWindow;
     }
 }
 
 console.log(`ArmCord ${version}`);
-ipcRenderer.on("themeLoader", (_event, message) => {
+ipcRenderer.on("themeLoader", (_event, message: string) => {
     addStyle(message);
 });
 
@@ -40,7 +43,7 @@ if (ipcRenderer.sendSync("titlebar")) {
 if (ipcRenderer.sendSync("mobileMode")) {
     injectMobileStuff();
 }
-sleep(5000).then(async () => {
+await sleep(5000).then(() => {
     // dirty hack to make clicking notifications focus ArmCord
     addScript(`
         (() => {
@@ -62,7 +65,7 @@ sleep(5000).then(async () => {
     addScript(fs.readFileSync(path.join(import.meta.dirname, "../", "/content/js/rpc.js"), "utf8"));
     const cssPath = path.join(import.meta.dirname, "../", "/content/css/discord.css");
     addStyle(fs.readFileSync(cssPath, "utf8"));
-    await updateLang();
+    updateLang();
 });
 
 // Settings info version injection

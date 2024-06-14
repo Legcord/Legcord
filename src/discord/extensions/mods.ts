@@ -3,23 +3,23 @@ import extract from "extract-zip";
 import path from "path";
 import {getConfig} from "../../common/config.js";
 import fs from "fs";
-import {promisify} from "node:util";
-import {pipeline} from "stream";
-const streamPipeline = promisify(pipeline);
+import {Readable} from "stream";
+import type {ReadableStream} from "stream/web";
+import {finished} from "stream/promises";
 async function updateModBundle(): Promise<void> {
-    if ((await getConfig("noBundleUpdates")) == undefined ?? false) {
+    if (getConfig("noBundleUpdates") == undefined || false) {
         try {
             console.log("Downloading mod bundle");
             const distFolder = `${app.getPath("userData")}/plugins/loader/dist/`;
             while (!fs.existsSync(distFolder)) {
                 //waiting
             }
-            let name: string = await getConfig("mods");
+            const name: string = getConfig("mods");
             if (name == "custom") {
                 // aspy fix
-                let bundle: string = await (await fetch(await getConfig("customJsBundle"))).text();
+                const bundle: string = await (await fetch(getConfig("customJsBundle"))).text();
                 fs.writeFileSync(`${distFolder}bundle.js`, bundle, "utf-8");
-                let css: string = await (await fetch(await getConfig("customCssBundle"))).text();
+                const css: string = await (await fetch(getConfig("customCssBundle"))).text();
                 fs.writeFileSync(`${distFolder}bundle.css`, css, "utf-8");
             } else {
                 const clientMods = {
@@ -31,9 +31,9 @@ async function updateModBundle(): Promise<void> {
                     shelter: "https://armcord.app/placeholder.css"
                 };
                 console.log(clientMods[name as keyof typeof clientMods]);
-                let bundle: string = await (await fetch(clientMods[name as keyof typeof clientMods])).text();
+                const bundle: string = await (await fetch(clientMods[name as keyof typeof clientMods])).text();
                 fs.writeFileSync(`${distFolder}bundle.js`, bundle, "utf-8");
-                let css: string = await (await fetch(clientModsCss[name as keyof typeof clientModsCss])).text();
+                const css: string = await (await fetch(clientModsCss[name as keyof typeof clientModsCss])).text();
                 fs.writeFileSync(`${distFolder}bundle.css`, css, "utf-8");
             }
         } catch (e) {
@@ -53,14 +53,14 @@ export let modInstallState: string;
 export function updateModInstallState() {
     modInstallState = "modDownload";
 
-    updateModBundle();
+    void updateModBundle(); // REVIEW - Awaiting this will hang the app on the splash
     import("./plugin.js");
 
     modInstallState = "done";
 }
 
 export async function installModLoader(): Promise<void> {
-    if ((await getConfig("mods")) == "none") {
+    if (getConfig("mods") == "none") {
         modInstallState = "none";
         fs.rmSync(`${app.getPath("userData")}/plugins/loader`, {recursive: true, force: true});
 
@@ -80,7 +80,7 @@ export async function installModLoader(): Promise<void> {
         fs.rmSync(`${app.getPath("userData")}/plugins/loader`, {recursive: true, force: true});
         modInstallState = "installing";
 
-        let zipPath = `${app.getPath("temp")}/loader.zip`;
+        const zipPath = `${app.getPath("temp")}/loader.zip`;
 
         if (!fs.existsSync(pluginFolder)) {
             fs.mkdirSync(pluginFolder);
@@ -88,31 +88,35 @@ export async function installModLoader(): Promise<void> {
         }
 
         // Add more of these later if needed!
-        let URLs = [
+        const URLs = [
             "https://armcord.app/loader.zip",
             "https://armcord.vercel.app/loader.zip",
             "https://raw.githubusercontent.com/ArmCord/website/new/public/loader.zip"
         ];
-        let loaderZip: any;
 
+        // REVIEW - Rewrote this
         while (true) {
-            if (URLs.length <= 0) throw new Error(`unexpected response ${loaderZip.statusText}`);
-
-            try {
-                loaderZip = await fetch(URLs[0]);
-            } catch (err) {
-                console.log("[Mod loader] Failed to download. Links left to try: " + (URLs.length - 1));
-                URLs.splice(0, 1);
-
-                continue;
+            let completed = false;
+            await fetch(URLs[0])
+                .then(async (loaderZip) => {
+                    const fileStream = fs.createWriteStream(zipPath);
+                    await finished(Readable.fromWeb(loaderZip.body as ReadableStream).pipe(fileStream)).then(
+                        async () => {
+                            await extract(zipPath, {dir: path.join(app.getPath("userData"), "plugins")}).then(() => {
+                                updateModInstallState();
+                                completed = true;
+                            });
+                        }
+                    );
+                })
+                .catch(() => {
+                    console.warn(`[Mod loader] Failed to download. Links left to try: ${URLs.length - 1}`);
+                    URLs.splice(0, 1);
+                });
+            if (completed || URLs.length == 0) {
+                break;
             }
-
-            break;
         }
-        await streamPipeline(loaderZip.body, fs.createWriteStream(zipPath));
-        await extract(zipPath, {dir: path.join(app.getPath("userData"), "plugins")});
-
-        updateModInstallState();
     } catch (e) {
         console.log("[Mod loader] Failed to install modloader");
         console.error(e);

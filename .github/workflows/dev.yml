@@ -1,185 +1,147 @@
 name: Dev build
 on:
-  push:
-    branches:
-      - dev
+    push:
+        branches:
+            - dev
 
 env:
-  FORCE_COLOR: true
+    FORCE_COLOR: true
 
 jobs:
-  build-linux:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    build-linux:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v2 # Install pnpm using packageManager key in package.json
+            - uses: pnpm/action-setup@v4
 
-      - name: Use Node.js 18
-        uses: actions/setup-node@v2
-        with:
-          node-version: 18
-          cache: "pnpm"
+            - name: Use Node.js 22
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: "pnpm"
 
-      - name: Install Node dependencies
-        run: pnpm install -g cargo-cp-artifact && pnpm install
+            - name: Install Node dependencies
+              run: pnpm i
 
-      - name: Install Electron-Builder
-        run: pnpm install -g electron-builder
+            - name: Build
+              run: pnpm run build && pnpm electron-builder --linux zip
 
-      - name: Build
-        run: npm run build && electron-builder --linux zip && electron-builder --arm64 --linux zip
+            - name: Upload artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: ArmCordLinux
+                  path: dist/armcord-*.zip
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: ArmCordLinux.zip
-          path: dist/ArmCord-3.3.0.zip
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: ArmCordLinuxArm64.zip
-          path: dist/ArmCord-3.3.0-arm64.zip
-  build-snap:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    build-linux-arm:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v2 # Install pnpm using packageManager key in package.json
+            - uses: pnpm/action-setup@v4
 
-      - name: Use Node.js 18
-        uses: actions/setup-node@v2
-        with:
-          node-version: 18
-          cache: "pnpm"
+            - name: Use Node.js 22
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: "pnpm"
 
-      - name: Install Node dependencies
-        run: pnpm install -g cargo-cp-artifact && pnpm install
+            - name: Install Node dependencies
+              run: pnpm i
 
-      - name: Install Electron-Builder
-        run: pnpm install -g electron-builder
+            - name: Build
+              run: pnpm run build && pnpm electron-builder --arm64 --linux zip
 
-      - name: Build
-        run: npm run build && electron-builder --linux snap --config.snap.grade=devel
+            - name: Upload artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: ArmCordLinuxArm64
+                  path: dist/armcord-*-arm64.zip
 
-      - uses: snapcore/action-publish@v1
-        env:
-          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAP_STORE_LOGIN }}
-        with:
-          snap: dist/ArmCord_3.3.0_amd64.snap
-          release: edge
-  build-windows:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    build-windows:
+        runs-on: windows-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v2 # Install pnpm using packageManager key in package.json
+            - uses: pnpm/action-setup@v4
 
-      - name: Use Node.js 18
-        uses: actions/setup-node@v2
-        with:
-          node-version: 18
-          cache: "pnpm"
+            - name: Use Node.js 22
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: "pnpm"
 
-      - name: Install Node dependencies
-        run: pnpm install -g cargo-cp-artifact && pnpm install
+            - name: Install Node dependencies
+              run: pnpm i
 
-      - name: Install Electron-Builder
-        run: pnpm install -g electron-builder
+            - name: Build
+              run: pnpm run build && pnpm electron-builder --windows zip
 
-      - name: Build
-        run: npm run build && electron-builder --windows zip
+            - name: Upload artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: ArmCordWindows
+                  path: dist/armcord-3.3.0-win.zip
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: ArmCordWindows.zip
-          path: dist/ArmCord-3.3.0-win.zip
-  build-windowsOnARM:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+    build-windows-arm:
+        runs-on: windows-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
 
-      - name: Checkout code
-        uses: actions/checkout@v2
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: "22"
 
-      - name: Set architecture
-        run: set npm_config_arch=arm64
+            - name: Set architecture
+              run: set npm_config_arch=arm64
 
-      - uses: pnpm/action-setup@v2 # Install pnpm using packageManager key in package.json
+            - uses: pnpm/action-setup@v4 # Install pnpm using packageManager key in package.json
 
-      - name: Install Node dependencies
-        run: pnpm install -g cargo-cp-artifact && pnpm install
+            - name: Install Node dependencies
+              run: pnpm i
 
-      - name: Install Electron-Builder
-        run: pnpm install -g electron-builder
+            - name: Build
+              run: pnpm run build && pnpm electron-builder --windows zip --arm64
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build
-        run: npm run build && electron-builder --windows zip --arm64
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: ArmCordWindowsArm64.zip
-          path: dist\ArmCord-3.3.0-arm64-win.zip
+            - name: Upload artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: ArmCordWindowsArm64
+                  path: dist\armcord-3.3.0-arm64-win.zip
 
-  release:
-    runs-on: ubuntu-latest
-    needs: [build-linux, build-windows, build-windowsOnARM]
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    release:
+        runs-on: ubuntu-latest
+        needs: [build-linux, build-windows, build-windows-arm, build-linux-arm]
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
 
-      - uses: actions/download-artifact@v2
-        with:
-          name: ArmCordWindows.zip
-          path: windows
+            - uses: actions/download-artifact@v4
+              with:
+                  path: release-files
 
-      - uses: actions/download-artifact@v2
-        with:
-          name: ArmCordLinux.zip
-          path: linux
+            - name: Get short commit hash
+              id: vars
+              run: echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_OUTPUT
 
-      - uses: actions/download-artifact@v2
-        with:
-          name: ArmCordLinuxArm64.zip
-          path: linux
-      - uses: actions/download-artifact@v2
-        with:
-          name: ArmCordWindowsArm64.zip
-          path: windows
+            - run: gh release delete devbuild -y --cleanup-tag
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Get some values needed for the release
-        id: vars
-        shell: bash
-        run: |
-          echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
-
-      - uses: dev-drprasad/delete-tag-and-release@v0.2.1
-        with:
-          delete_release: true
-          tag_name: devbuild
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Create the release
-        uses: softprops/action-gh-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: devbuild
-          name: Dev Build ${{ steps.vars.outputs.sha_short }}
-          draft: false
-          prerelease: true
-          body_path: .github/release.md
-          files: |
-            linux/ArmCord-3.3.0.zip
-            linux/ArmCord-3.3.0-arm64.zip
-            windows/ArmCord-3.3.0-win.zip
-            windows/ArmCord-3.3.0-arm64-win.zip
+            - name: Create Release
+              uses: ncipollo/release-action@v1
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              with:
+                  bodyFile: .github/release.md
+                  generateReleaseNotes: true
+                  name: Dev Build ${{ steps.vars.outputs.sha_short }}
+                  prerelease: true
+                  tag: devbuild
+                  artifacts: "release-files/**/*.zip"

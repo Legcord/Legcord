@@ -1,23 +1,23 @@
 {
-    "name": "ArmCord",
+    "name": "armcord",
     "version": "3.3.0",
     "description": "ArmCord is a custom client designed to enhance your Discord experience while keeping everything lightweight.",
     "main": "ts-out/main.js",
     "engines": {
-        "node": ">=18.0.0"
+        "node": ">=22"
     },
     "scripts": {
         "build": "tsc && copyfiles -u 1 src/**/*.html src/**/**/*.css src/**/**/*.js ts-out/ && copyfiles package.json ts-out/ && copyfiles assets/**/** ts-out/",
         "watch": "tsc -w",
-        "start": "npm run build && electron ./ts-out/main.js",
-        "startThemeManager": "npm run build && electron ./ts-out/main.js themes",
-        "startKeybindManager": "npm run build && electron ./ts-out/main.js keybinds",
-        "startWayland": "npm run build && electron ./ts-out/main.js --ozone-platform-hint=auto --enable-features=WebRTCPipeWireCapturer,WaylandWindowDecorations --disable-gpu",
-        "package": "npm run build && electron-builder",
-        "packageQuick": "npm run build && electron-builder --dir",
+        "start": "pnpm run build && electron ./ts-out/main.js",
+        "startThemeManager": "pnpm run build && electron ./ts-out/main.js themes",
+        "startKeybindManager": "pnpm run build && electron ./ts-out/main.js keybinds",
+        "startWayland": "pnpm run build && electron ./ts-out/main.js --ozone-platform-hint=auto --enable-features=WebRTCPipeWireCapturer,WaylandWindowDecorations --disable-gpu",
+        "package": "pnpm run build && electron-builder",
+        "packageQuick": "pnpm run build && electron-builder --dir",
         "format": "prettier --write src *.json",
-        "lint": "eslint src --ext .js,.jsx,.ts,.tsx --ignore-path .gitignore",
-        "CIbuild": "npm run build && electron-builder --linux zip && electron-builder --windows zip && electron-builder --macos zip",
+        "lint": "eslint \"**/*.{ts,tsx,js,jsx}\" .",
+        "CIbuild": "pnpm run build && electron-builder --linux zip && electron-builder --windows zip && electron-builder --macos zip",
         "prepare": "git config --local core.hooksPath .hooks/"
     },
     "repository": {
@@ -32,27 +32,27 @@
     },
     "homepage": "https://github.com/armcord/armcord#readme",
     "devDependencies": {
-        "@types/node": "^20.11.1",
-        "@types/ws": "^8.5.3",
-        "@typescript-eslint/eslint-plugin": "^5.59.2",
-        "@typescript-eslint/parser": "^5.59.2",
+        "@eslint/js": "^9.4.0",
+        "@types/eslint__js": "^8.42.3",
+        "@types/node": "^20.14.2",
+        "@types/ws": "^8.5.10",
         "copyfiles": "^2.4.1",
-        "electron": "30.0.5",
-        "electron-builder": "^24.13.3",
-        "eslint": "^8.40.0",
-        "eslint-config-dmitmel": "github:dmitmel/eslint-config-dmitmel",
-        "eslint-plugin-node": "^11.1.0",
-        "eslint-plugin-prettier": "^4.2.1",
-        "prettier": "^2.7.1",
-        "typescript": "^4.9.3"
+        "electron": "30.1.0",
+        "electron-builder": "25.0.0-alpha.9",
+        "eslint": "^9.4.0",
+        "eslint-plugin-n": "^17.8.1",
+        "eslint-plugin-prettier": "^5.1.3",
+        "prettier": "^3.3.1",
+        "typescript": "^5.4.5",
+        "typescript-eslint": "^7.12.0"
     },
     "dependencies": {
         "arrpc": "github:OpenAsar/arrpc",
-        "cross-fetch": "^3.1.5",
+        "cross-fetch": "^4.0.0",
         "electron-context-menu": "^4.0.0",
         "extract-zip": "^2.0.1",
-        "v8-compile-cache": "^2.3.0",
-        "ws": "^8.11.0"
+        "v8-compile-cache": "^2.4.0",
+        "ws": "^8.17.0"
     },
     "build": {
         "snap": {
@@ -95,6 +95,6 @@
             "applicationId": "smartfrigde.ArmCord"
         }
     },
-    "packageManager": "pnpm@9.1.1",
+    "packageManager": "pnpm@9.2.0",
     "package-manager-strict": false
 }

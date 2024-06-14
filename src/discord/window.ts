@@ -1,9 +1,11 @@
 // To allow seamless switching between custom titlebar and native os titlebar,
-// I had to add most of the window creation code here to split both into seperete functions
+// I had to add most of the window creation code here to split both into separate functions
 // WHY? Because I can't use the same code for both due to annoying bug with value `frame` not responding to variables
 // I'm sorry for this mess but I'm not sure how to fix it.
 import {BrowserWindow, MessageBoxOptions, app, dialog, nativeImage, shell} from "electron";
 import path from "path";
+import type EventEmitter from "events";
+import {ThemeManifest} from "../types/themeManifest.d.js";
 import {registerIpc} from "./ipc.js";
 import {setMenu} from "./menu.js";
 import * as fs from "fs";
@@ -28,7 +30,7 @@ contextMenu({
             // Only show it when right-clicking text
             visible: parameters.selectionText.trim().length > 0,
             click: () => {
-                shell.openExternal(`https://google.com/search?q=${encodeURIComponent(parameters.selectionText)}`);
+                void shell.openExternal(`https://google.com/search?q=${encodeURIComponent(parameters.selectionText)}`);
             }
         },
         {
@@ -36,27 +38,30 @@ contextMenu({
             // Only show it when right-clicking text
             visible: parameters.selectionText.trim().length > 0,
             click: () => {
-                shell.openExternal(`https://duckduckgo.com/?q=${encodeURIComponent(parameters.selectionText)}`);
+                void shell.openExternal(`https://duckduckgo.com/?q=${encodeURIComponent(parameters.selectionText)}`);
             }
         }
     ]
 });
-async function doAfterDefiningTheWindow(): Promise<void> {
-    if ((await getWindowState("isMaximized")) ?? false) {
+function doAfterDefiningTheWindow(): void {
+    if (getWindowState("isMaximized") ?? false) {
         mainWindow.setSize(835, 600); //just so the whole thing doesn't cover whole screen
         mainWindow.maximize();
-        mainWindow.webContents.executeJavaScript(`document.body.setAttribute("isMaximized", "");`);
+        void mainWindow.webContents.executeJavaScript(`document.body.setAttribute("isMaximized", "");`);
         mainWindow.hide(); // please don't flashbang the user
     }
-    if ((await getConfig("windowStyle")) == "transparency" && process.platform === "win32") {
+    if (getConfig("windowStyle") == "transparency" && process.platform === "win32") {
         mainWindow.setBackgroundMaterial("mica");
-        if ((await getConfig("startMinimized")) == false) {
+        if (getConfig("startMinimized") == false) {
             mainWindow.show();
         }
     }
-    let ignoreProtocolWarning = await getConfig("ignoreProtocolWarning");
+
+    // REVIEW - Test the protocol warning. I was not sure how to get it to pop up. For now I've voided the promises.
+
+    const ignoreProtocolWarning = getConfig("ignoreProtocolWarning");
     registerIpc();
-    if (await getConfig("mobileMode")) {
+    if (getConfig("mobileMode")) {
         mainWindow.webContents.userAgent =
             "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.149 Mobile Safari/537.36";
     } else {
@@ -96,9 +101,9 @@ async function doAfterDefiningTheWindow(): Promise<void> {
                 }
             };
         if (url.startsWith("https:") || url.startsWith("http:") || url.startsWith("mailto:")) {
-            shell.openExternal(url);
+            void shell.openExternal(url);
         } else if (ignoreProtocolWarning) {
-            shell.openExternal(url);
+            void shell.openExternal(url);
         } else {
             const options: MessageBoxOptions = {
                 type: "question",
@@ -111,7 +116,7 @@ async function doAfterDefiningTheWindow(): Promise<void> {
                 checkboxChecked: false
             };
 
-            dialog.showMessageBox(mainWindow, options).then(({response, checkboxChecked}) => {
+            void dialog.showMessageBox(mainWindow, options).then(({response, checkboxChecked}) => {
                 console.log(response, checkboxChecked);
                 if (checkboxChecked) {
                     if (response == 0) {
@@ -121,13 +126,13 @@ async function doAfterDefiningTheWindow(): Promise<void> {
                     }
                 }
                 if (response == 0) {
-                    shell.openExternal(url);
+                    void shell.openExternal(url);
                 }
             });
         }
         return {action: "deny"};
     });
-    if ((await getConfig("useLegacyCapturer")) == false) {
+    if (getConfig("useLegacyCapturer") == false) {
         console.log("Starting screenshare module...");
         import("./screenshare/main.js");
     }
@@ -137,9 +142,12 @@ async function doAfterDefiningTheWindow(): Promise<void> {
         (_, callback) => callback({cancel: true})
     );
 
-    if ((await getConfig("trayIcon")) == "default" || (await getConfig("dynamicIcon"))) {
-        mainWindow.webContents.on("page-favicon-updated", async () => {
-            let faviconBase64 = await mainWindow.webContents.executeJavaScript(`
+    if (getConfig("trayIcon") == "default" || getConfig("dynamicIcon")) {
+        mainWindow.webContents.on("page-favicon-updated", () => {
+            // REVIEW - no need to await if we just .then() - This works!
+            void mainWindow.webContents
+                .executeJavaScript(
+                    `
                 var getFavicon = function(){
                 var favicon = undefined;
                 var nodeList = document.getElementsByTagName("link");
@@ -153,29 +161,33 @@ async function doAfterDefiningTheWindow(): Promise<void> {
                 return favicon;
                 }
                 getFavicon()
-            `);
-            let buf = Buffer.from(faviconBase64.replace(/^data:image\/\w+;base64,/, ""), "base64");
-            fs.writeFileSync(path.join(app.getPath("temp"), "/", "tray.png"), buf, "utf-8");
-            let trayPath = nativeImage.createFromPath(path.join(app.getPath("temp"), "/", "tray.png"));
-            if (process.platform === "darwin" && trayPath.getSize().height > 22)
-                trayPath = trayPath.resize({height: 22});
-            if (process.platform === "win32" && trayPath.getSize().height > 32)
-                trayPath = trayPath.resize({height: 32});
-            if (await getConfig("tray")) {
-                if ((await getConfig("trayIcon")) == "default") {
-                    tray.setImage(trayPath);
-                }
-            }
-            if (await getConfig("dynamicIcon")) {
-                mainWindow.setIcon(trayPath);
-            }
+            `
+                )
+                .then((faviconBase64: string) => {
+                    const buf = Buffer.from(faviconBase64.replace(/^data:image\/\w+;base64,/, ""), "base64");
+                    fs.writeFileSync(path.join(app.getPath("temp"), "/", "tray.png"), buf, "utf-8");
+                    let trayPath = nativeImage.createFromPath(path.join(app.getPath("temp"), "/", "tray.png"));
+                    if (process.platform === "darwin" && trayPath.getSize().height > 22)
+                        trayPath = trayPath.resize({height: 22});
+                    if (process.platform === "win32" && trayPath.getSize().height > 32)
+                        trayPath = trayPath.resize({height: 32});
+                    if (getConfig("tray")) {
+                        if (getConfig("trayIcon") == "default") {
+                            tray.setImage(trayPath);
+                        }
+                    }
+                    if (getConfig("dynamicIcon")) {
+                        mainWindow.setIcon(trayPath);
+                    }
+                });
         });
     }
-    mainWindow.webContents.on("page-title-updated", async (e, title) => {
+    mainWindow.webContents.on("page-title-updated", (e, title) => {
         const armCordSuffix = " - ArmCord"; /* identify */
         if (!title.endsWith(armCordSuffix)) {
             e.preventDefault();
-            await mainWindow.webContents.executeJavaScript(
+            // REVIEW - I don't see a reason to wait for the titlebar to update
+            void mainWindow.webContents.executeJavaScript(
                 `document.title = '${title.replace("Discord |", "") + armCordSuffix}'`
             );
         }
@@ -193,7 +205,7 @@ async function doAfterDefiningTheWindow(): Promise<void> {
         fs.readdirSync(themesFolder).forEach((file) => {
             try {
                 const manifest = fs.readFileSync(`${themesFolder}/${file}/manifest.json`, "utf8");
-                let themeFile = JSON.parse(manifest);
+                const themeFile = JSON.parse(manifest) as ThemeManifest;
                 if (
                     fs
                         .readFileSync(path.join(userDataPath, "/disabled.txt"))
@@ -213,23 +225,23 @@ async function doAfterDefiningTheWindow(): Promise<void> {
             }
         });
     });
-    await setMenu();
-    mainWindow.on("close", async (e) => {
+    setMenu();
+    mainWindow.on("close", (e) => {
         if (process.platform === "darwin" && forceQuit) {
             mainWindow.close();
         } else {
-            let [width, height] = mainWindow.getSize();
-            await setWindowState({
+            const [width, height] = mainWindow.getSize();
+            setWindowState({
                 width,
                 height,
                 isMaximized: mainWindow.isMaximized(),
                 x: mainWindow.getPosition()[0],
                 y: mainWindow.getPosition()[1]
             });
-            if (await getConfig("minimizeToTray")) {
+            if (getConfig("minimizeToTray")) {
                 e.preventDefault();
                 mainWindow.hide();
-            } else if (!(await getConfig("minimizeToTray"))) {
+            } else if (!getConfig("minimizeToTray")) {
                 e.preventDefault();
                 app.quit();
             }
@@ -244,43 +256,49 @@ async function doAfterDefiningTheWindow(): Promise<void> {
             }
         });
     }
+
+    // REVIEW - Awaiting javascript execution is silly
     mainWindow.on("focus", () => {
-        mainWindow.webContents.executeJavaScript(`document.body.removeAttribute("unFocused");`);
+        void mainWindow.webContents.executeJavaScript(`document.body.removeAttribute("unFocused");`);
     });
     mainWindow.on("blur", () => {
-        mainWindow.webContents.executeJavaScript(`document.body.setAttribute("unFocused", "");`);
+        void mainWindow.webContents.executeJavaScript(`document.body.setAttribute("unFocused", "");`);
     });
 
     mainWindow.on("maximize", () => {
-        mainWindow.webContents.executeJavaScript(`document.body.setAttribute("isMaximized", "");`);
+        void mainWindow.webContents.executeJavaScript(`document.body.setAttribute("isMaximized", "");`);
     });
     mainWindow.on("unmaximize", () => {
-        mainWindow.webContents.executeJavaScript(`document.body.removeAttribute("isMaximized");`);
+        void mainWindow.webContents.executeJavaScript(`document.body.removeAttribute("isMaximized");`);
     });
-    if ((await getConfig("inviteWebsocket")) == true) {
-        const server = await new RPCServer();
-        server.on("activity", (data: string) => mainWindow.webContents.send("rpc", data));
-        server.on("invite", (code: string) => {
-            console.log(code);
-            createInviteWindow(code);
+    if (getConfig("inviteWebsocket")) {
+        // NOTE - RPCServer appears to be untyped. cool.
+        // REVIEW - Whatever Ducko has done here to make an async constructor is awful.
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+        new RPCServer().then((server: EventEmitter) => {
+            server.on("activity", (data: string) => mainWindow.webContents.send("rpc", data));
+            server.on("invite", (code: string) => {
+                console.log(code);
+                createInviteWindow(code);
+            });
         });
     }
     if (firstRun) {
         mainWindow.close();
     }
     //loadURL broke for no good reason after E28
-    mainWindow.loadFile(`${import.meta.dirname}/../splash/redirect.html`);
+    void mainWindow.loadFile(`${import.meta.dirname}/../splash/redirect.html`);
 
-    if (await getConfig("skipSplash")) {
+    if (getConfig("skipSplash")) {
         mainWindow.show();
     }
 }
-export async function createCustomWindow(): Promise<void> {
+export function createCustomWindow(): void {
     mainWindow = new BrowserWindow({
-        width: (await getWindowState("width")) ?? 835,
-        height: (await getWindowState("height")) ?? 600,
-        x: await getWindowState("x"),
-        y: await getWindowState("y"),
+        width: getWindowState("width") ?? 835,
+        height: getWindowState("height") ?? 600,
+        x: getWindowState("x"),
+        y: getWindowState("y"),
         title: "ArmCord",
         show: false,
         darkTheme: true,
@@ -292,17 +310,17 @@ export async function createCustomWindow(): Promise<void> {
             webviewTag: true,
             sandbox: false,
             preload: path.join(import.meta.dirname, "preload/preload.mjs"),
-            spellcheck: await getConfig("spellcheck")
+            spellcheck: getConfig("spellcheck")
         }
     });
     doAfterDefiningTheWindow();
 }
-export async function createNativeWindow(): Promise<void> {
+export function createNativeWindow(): void {
     mainWindow = new BrowserWindow({
-        width: (await getWindowState("width")) ?? 835,
-        height: (await getWindowState("height")) ?? 600,
-        x: await getWindowState("x"),
-        y: await getWindowState("y"),
+        width: getWindowState("width") ?? 835,
+        height: getWindowState("height") ?? 600,
+        x: getWindowState("x"),
+        y: getWindowState("y"),
         title: "ArmCord",
         darkTheme: true,
         icon: iconPath,
@@ -314,17 +332,17 @@ export async function createNativeWindow(): Promise<void> {
             webviewTag: true,
             sandbox: false,
             preload: path.join(import.meta.dirname, "preload/preload.mjs"),
-            spellcheck: await getConfig("spellcheck")
+            spellcheck: getConfig("spellcheck")
         }
     });
     doAfterDefiningTheWindow();
 }
-export async function createTransparentWindow(): Promise<void> {
+export function createTransparentWindow(): void {
     mainWindow = new BrowserWindow({
-        width: (await getWindowState("width")) ?? 835,
-        height: (await getWindowState("height")) ?? 600,
-        x: await getWindowState("x"),
-        y: await getWindowState("y"),
+        width: getWindowState("width") ?? 835,
+        height: getWindowState("height") ?? 600,
+        x: getWindowState("x"),
+        y: getWindowState("y"),
         title: "ArmCord",
         darkTheme: true,
         icon: iconPath,
@@ -336,12 +354,12 @@ export async function createTransparentWindow(): Promise<void> {
             sandbox: false,
             webviewTag: true,
             preload: path.join(import.meta.dirname, "preload/preload.mjs"),
-            spellcheck: await getConfig("spellcheck")
+            spellcheck: getConfig("spellcheck")
         }
     });
     doAfterDefiningTheWindow();
 }
-export async function createInviteWindow(code: string): Promise<void> {
+export function createInviteWindow(code: string): void {
     inviteWindow = new BrowserWindow({
         width: 800,
         height: 600,
@@ -352,15 +370,16 @@ export async function createInviteWindow(code: string): Promise<void> {
         autoHideMenuBar: true,
         webPreferences: {
             sandbox: false,
-            spellcheck: await getConfig("spellcheck")
+            spellcheck: getConfig("spellcheck")
         }
     });
-    let formInviteURL = `https://discord.com/invite/${code}`;
+    const formInviteURL = `https://discord.com/invite/${code}`;
     inviteWindow.webContents.session.webRequest.onBeforeRequest((details, callback) => {
         if (details.url.includes("ws://")) return callback({cancel: true});
         return callback({});
     });
-    inviteWindow.loadURL(formInviteURL);
+    // REVIEW - This shouldn't matter, since below we have an event on it
+    void inviteWindow.loadURL(formInviteURL);
     inviteWindow.webContents.once("did-finish-load", () => {
         if (!mainWindow.webContents.isLoading()) {
             inviteWindow.show();

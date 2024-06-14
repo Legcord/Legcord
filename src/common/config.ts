@@ -1,6 +1,7 @@
 import {app, dialog} from "electron";
 import path from "path";
 import fs from "fs";
+import type {Settings} from "../types/settings.d.js";
 import {getWindowStateLocation} from "./windowState.js";
 export let firstRun: boolean;
 export function checkForDataFolder(): void {
@@ -11,64 +12,32 @@ export function checkForDataFolder(): void {
     }
 }
 
-export interface Settings {
-    // Referenced for detecting a broken config.
-    "0"?: string;
-    // Referenced once for disabling mod updating.
-    noBundleUpdates?: boolean;
-    // Only used for external url warning dialog.
-    ignoreProtocolWarning?: boolean;
-    customIcon: string;
-    windowStyle: string;
-    channel: string;
-    armcordCSP: boolean;
-    minimizeToTray: boolean;
-    multiInstance: boolean;
-    spellcheck: boolean;
-    mods: string;
-    dynamicIcon: boolean;
-    mobileMode: boolean;
-    skipSplash: boolean;
-    performanceMode: string;
-    customJsBundle: RequestInfo | URL;
-    customCssBundle: RequestInfo | URL;
-    startMinimized: boolean;
-    useLegacyCapturer: boolean;
-    tray: boolean;
-    keybinds: Array<string>;
-    inviteWebsocket: boolean;
-    disableAutogain: boolean;
-    trayIcon: string;
-    doneSetup: boolean;
-    clientName: string;
-}
 export function getConfigLocation(): string {
     const userDataPath = app.getPath("userData");
     const storagePath = path.join(userDataPath, "/storage/");
     return `${storagePath}settings.json`;
 }
-export async function getConfig<K extends keyof Settings>(object: K): Promise<Settings[K]> {
-    let rawdata = fs.readFileSync(getConfigLocation(), "utf-8");
-    let returndata = JSON.parse(rawdata);
-    return returndata[object];
+// REVIEW - If I remember correctly fs doesn't need async. I have adjusted the Promise<Settings[K]> to reflect so.
+// Why touch it when it worked fine? The Async-ness of this function caused headaches in a lot of other places.
+// Tested with src/tray.ts - Seems to work great!
+// NOTE - Removed getConfigSync<K extends keyof Settings>(object: K) - Redundant now.
+export function getConfig<K extends keyof Settings>(object: K): Settings[K] {
+    const rawData = fs.readFileSync(getConfigLocation(), "utf-8");
+    const returnData = JSON.parse(rawData) as Settings;
+    return returnData[object];
 }
-export function getConfigSync<K extends keyof Settings>(object: K) {
-    let rawdata = fs.readFileSync(getConfigLocation(), "utf-8");
-    let returndata = JSON.parse(rawdata);
-    return returndata[object];
-}
-export async function setConfig<K extends keyof Settings>(object: K, toSet: Settings[K]): Promise<void> {
-    let rawdata = fs.readFileSync(getConfigLocation(), "utf-8");
-    let parsed = JSON.parse(rawdata);
+export function setConfig<K extends keyof Settings>(object: K, toSet: Settings[K]): void {
+    const rawData = fs.readFileSync(getConfigLocation(), "utf-8");
+    const parsed = JSON.parse(rawData) as Settings;
     parsed[object] = toSet;
-    let toSave = JSON.stringify(parsed, null, 4);
+    const toSave = JSON.stringify(parsed, null, 4);
     fs.writeFileSync(getConfigLocation(), toSave, "utf-8");
 }
-export async function setConfigBulk(object: Settings): Promise<void> {
+export function setConfigBulk(object: Settings): void {
     let existingData = {};
     try {
         const existingDataBuffer = fs.readFileSync(getConfigLocation(), "utf-8");
-        existingData = JSON.parse(existingDataBuffer.toString());
+        existingData = JSON.parse(existingDataBuffer.toString()) as Settings;
     } catch (error) {
         // Ignore errors when the file doesn't exist or parsing fails
     }
@@ -78,7 +47,7 @@ export async function setConfigBulk(object: Settings): Promise<void> {
     const toSave = JSON.stringify(mergedData, null, 4);
     fs.writeFileSync(getConfigLocation(), toSave, "utf-8");
 }
-export async function checkIfConfigExists(): Promise<void> {
+export function checkIfConfigExists(): void {
     const userDataPath = app.getPath("userData");
     const storagePath = path.join(userDataPath, "/storage/");
     const settingsFile = `${storagePath}settings.json`;
@@ -91,7 +60,7 @@ export async function checkIfConfigExists(): Promise<void> {
         console.log("First run of the ArmCord. Starting setup.");
         setup();
         firstRun = true;
-    } else if ((await getConfig("doneSetup")) == false) {
+    } else if (getConfig("doneSetup") == false) {
         console.log("First run of the ArmCord. Starting setup.");
         setup();
         firstRun = true;
@@ -99,9 +68,9 @@ export async function checkIfConfigExists(): Promise<void> {
         console.log("ArmCord has been run before. Skipping setup.");
     }
 }
-export async function checkIfConfigIsBroken(): Promise<void> {
+export function checkIfConfigIsBroken(): void {
     try {
-        let settingsData = fs.readFileSync(getConfigLocation(), "utf-8");
+        const settingsData = fs.readFileSync(getConfigLocation(), "utf-8");
         JSON.parse(settingsData);
         console.log("Config is fine");
     } catch (e) {
@@ -114,7 +83,7 @@ export async function checkIfConfigIsBroken(): Promise<void> {
         );
     }
     try {
-        let windowData = fs.readFileSync(getWindowStateLocation(), "utf-8");
+        const windowData = fs.readFileSync(getWindowStateLocation(), "utf-8");
         JSON.parse(windowData);
         console.log("Window config is fine");
     } catch (e) {

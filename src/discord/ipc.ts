@@ -1,19 +1,19 @@
 //ipc stuff
-import {app, clipboard, desktopCapturer, ipcMain, nativeImage, shell} from "electron";
+import {app, clipboard, desktopCapturer, ipcMain, nativeImage, shell, SourcesOptions} from "electron";
 import {mainWindow} from "./window.js";
 
 import os from "os";
 import fs from "fs";
 import path from "path";
-import {getConfig, setConfigBulk, getConfigLocation, Settings} from "../common/config.js";
+import {getConfig, setConfigBulk, getConfigLocation} from "../common/config.js";
 import {setLang, getLang, getLangName} from "../common/lang.js";
-import {sleep} from "../common/sleep.js";
 import {getVersion, getDisplayVersion} from "../common/version.js";
 import {customTitlebar} from "../main.js";
 import {createSettingsWindow} from "../settings/main.js";
 import {splashWindow} from "../splash/main.js";
 import {createTManagerWindow} from "../themeManager/main.js";
 import {modInstallState} from "./extensions/mods.js";
+import {Settings} from "../types/settings.d.js";
 
 const userDataPath = app.getPath("userData");
 const storagePath = path.join(userDataPath, "/storage/");
@@ -30,7 +30,7 @@ export function registerIpc(): void {
         return getLang(toGet);
     });
     ipcMain.on("open-external-link", (_event, href: string) => {
-        shell.openExternal(href);
+        void shell.openExternal(href);
     });
     ipcMain.on("setPing", (_event, pingCount: number) => {
         switch (os.platform()) {
@@ -39,7 +39,7 @@ export function registerIpc(): void {
                 break;
             case "win32":
                 if (pingCount > 0) {
-                    let image = nativeImage.createFromPath(path.join(import.meta.dirname, "../", `/assets/ping.png`));
+                    const image = nativeImage.createFromPath(path.join(import.meta.dirname, "../", `/assets/ping.png`));
                     mainWindow.setOverlayIcon(image, "badgeCount");
                 } else {
                     mainWindow.setOverlayIcon(null, "badgeCount");
@@ -80,9 +80,9 @@ export function registerIpc(): void {
     ipcMain.on("modInstallState", (event) => {
         event.returnValue = modInstallState;
     });
-    ipcMain.on("splashEnd", async () => {
+    ipcMain.on("splashEnd", () => {
         splashWindow.close();
-        if (await getConfig("startMinimized")) {
+        if (getConfig("startMinimized")) {
             mainWindow.hide();
         } else {
             mainWindow.show();
@@ -92,75 +92,77 @@ export function registerIpc(): void {
         app.relaunch();
         app.exit();
     });
-    ipcMain.on("minimizeToTray", async (event) => {
-        event.returnValue = await getConfig("minimizeToTray");
+    ipcMain.on("saveSettings", (_event, args: Settings) => {
+        setConfigBulk(args);
     });
-    ipcMain.on("channel", async (event) => {
-        event.returnValue = await getConfig("channel");
+    ipcMain.on("minimizeToTray", (event) => {
+        event.returnValue = getConfig("minimizeToTray");
     });
-    ipcMain.on("clientmod", async (event) => {
-        event.returnValue = await getConfig("mods");
+    ipcMain.on("channel", (event) => {
+        event.returnValue = getConfig("channel");
     });
-    ipcMain.on("legacyCapturer", async (event) => {
-        event.returnValue = await getConfig("useLegacyCapturer");
+    ipcMain.on("clientmod", (event) => {
+        event.returnValue = getConfig("mods");
     });
-    ipcMain.on("trayIcon", async (event) => {
-        event.returnValue = await getConfig("trayIcon");
+    ipcMain.on("legacyCapturer", (event) => {
+        event.returnValue = getConfig("useLegacyCapturer");
     });
-    ipcMain.on("disableAutogain", async (event) => {
-        event.returnValue = await getConfig("disableAutogain");
+    ipcMain.on("trayIcon", (event) => {
+        event.returnValue = getConfig("trayIcon");
+    });
+    ipcMain.on("disableAutogain", (event) => {
+        event.returnValue = getConfig("disableAutogain");
     });
     ipcMain.on("titlebar", (event) => {
         event.returnValue = customTitlebar;
     });
-    ipcMain.on("mobileMode", async (event) => {
-        event.returnValue = await getConfig("mobileMode");
+    ipcMain.on("mobileMode", (event) => {
+        event.returnValue = getConfig("mobileMode");
     });
+    // REVIEW - I don't see a reason to await the actual action of running the settings window. The user cannot open more than one anyway, as defined in the function.
     ipcMain.on("openSettingsWindow", () => {
-        createSettingsWindow();
+        void createSettingsWindow();
     });
     ipcMain.on("openManagerWindow", () => {
-        createTManagerWindow();
+        void createTManagerWindow();
     });
-    ipcMain.on("setting-armcordCSP", async (event) => {
-        if (await getConfig("armcordCSP")) {
+    ipcMain.on("setting-armcordCSP", (event) => {
+        if (getConfig("armcordCSP")) {
             event.returnValue = true;
         } else {
             event.returnValue = false;
         }
     });
-    ipcMain.handle("DESKTOP_CAPTURER_GET_SOURCES", (_event, opts) => desktopCapturer.getSources(opts));
+    // NOTE - I assume this would return sources based on the fact that the function only ingests sources
+    ipcMain.handle("DESKTOP_CAPTURER_GET_SOURCES", (_event, opts: SourcesOptions) => desktopCapturer.getSources(opts));
     ipcMain.on("saveSettings", (_event, args: Settings) => {
         console.log(args);
         setConfigBulk(args);
     });
-    ipcMain.on("openStorageFolder", async () => {
+    // REVIEW - The lower 4 functions had await sleep(1000), I'm not sure why. Behavior is same regardless
+    ipcMain.on("openStorageFolder", () => {
         shell.showItemInFolder(storagePath);
-        await sleep(1000);
     });
-    ipcMain.on("openThemesFolder", async () => {
+    ipcMain.on("openThemesFolder", () => {
         shell.showItemInFolder(themesPath);
-        await sleep(1000);
     });
-    ipcMain.on("openPluginsFolder", async () => {
+    ipcMain.on("openPluginsFolder", () => {
         shell.showItemInFolder(pluginsPath);
-        await sleep(1000);
     });
-    ipcMain.on("openCrashesFolder", async () => {
+    ipcMain.on("openCrashesFolder", () => {
         shell.showItemInFolder(path.join(app.getPath("temp"), `${app.getName()} Crashes`));
-        await sleep(1000);
     });
-    ipcMain.on("getLangName", async (event) => {
-        event.returnValue = await getLangName();
+    ipcMain.on("getLangName", (event) => {
+        event.returnValue = getLangName();
     });
-    ipcMain.on("crash", async () => {
+    ipcMain.on("crash", () => {
         process.crash();
     });
     ipcMain.handle("getSetting", (_event, toGet: keyof Settings) => {
         return getConfig(toGet);
     });
     ipcMain.on("copyDebugInfo", () => {
-        let settingsFileContent = fs.readFileSync(getConfigLocation(), "utf-8");
+        const settingsFileContent = fs.readFileSync(getConfigLocation(), "utf-8");
         clipboard.writeText(
             `**OS:** ${os.platform()} ${os.version()}\n**Architecture:** ${os.arch()}\n**ArmCord version:** ${getVersion()}\n**Electron version:** ${
                 process.versions.electron

@@ -260,6 +260,7 @@ select option {
 select {
     -webkit-appearance: button;
     -moz-appearance: button;
+    appearance: button;
     background-color: var(--background-secondary-alt);
     background-position: center right;
     background-repeat: no-repeat;
