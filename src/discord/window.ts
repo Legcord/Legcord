@@ -13,11 +13,10 @@ import contextMenu from "electron-context-menu";
 import os from "os";
 import RPCServer from "arrpc";
 import {tray} from "../tray.js";
-import {iconPath} from "../main.js";
+import {iconPath, init} from "../main.js";
 import {getConfig, setConfig, firstRun} from "../common/config.js";
 import {getWindowState, setWindowState} from "../common/windowState.js";
-export let mainWindow: BrowserWindow;
-export let secondWindow: BrowserWindow;
+export let mainWindows: BrowserWindow[] = [];
 export let inviteWindow: BrowserWindow;
 let forceQuit = false;
 let osType = os.type();
@@ -72,17 +71,23 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         }
         passedWindow.webContents.userAgent = `Mozilla/5.0 (X11; ${osType} ${os.arch()}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36`; //fake useragent for screenshare to work
     }
-    app.on("second-instance", (_event, _commandLine, _workingDirectory, additionalData) => {
-        // Print out data received from the second instance.
-        console.log(additionalData);
+    if (mainWindows.length === 1) {
+        app.on("second-instance", async (_event, _commandLine, _workingDirectory, additionalData) => {
+            // Print out data received from the second instance.
+            console.log(additionalData);
 
-        // Someone tried to run a second instance, we should focus our window.
-        if (passedWindow) {
-            if (passedWindow.isMinimized()) passedWindow.restore();
-            passedWindow.show();
-            passedWindow.focus();
-        }
-    });
+            if (getConfig("multiInstance") == (false ?? undefined)) {
+                // Someone tried to run a second instance, we should focus our window.
+                if (passedWindow) {
+                    if (passedWindow.isMinimized()) passedWindow.restore();
+                    passedWindow.show();
+                    passedWindow.focus();
+                }
+            } else {
+                await init();
+            }
+        });
+    }
     app.on("activate", function () {
         app.show();
     });
@@ -230,6 +235,9 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     passedWindow.on("close", (e) => {
         if (process.platform === "darwin" && forceQuit) {
             passedWindow.close();
+        } else if (mainWindows.length > 1) {
+            mainWindows = mainWindows.filter((mainWindow) => mainWindow.id != passedWindow.id);
+            passedWindow.destroy();
         } else {
             const [width, height] = passedWindow.getSize();
             setWindowState({
@@ -272,7 +280,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     passedWindow.on("unmaximize", () => {
         void passedWindow.webContents.executeJavaScript(`document.body.removeAttribute("isMaximized");`);
     });
-    if (getConfig("inviteWebsocket")) {
+    if (getConfig("inviteWebsocket") && mainWindows.length === 1) {
         // NOTE - RPCServer appears to be untyped. cool.
         // REVIEW - Whatever Ducko has done here to make an async constructor is awful.
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
@@ -295,7 +303,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     }
 }
 export function createCustomWindow(): void {
-    mainWindow = new BrowserWindow({
+    let mainWindow = new BrowserWindow({
         width: getWindowState("width") ?? 835,
         height: getWindowState("height") ?? 600,
         x: getWindowState("x"),
@@ -314,10 +322,11 @@ export function createCustomWindow(): void {
             spellcheck: getConfig("spellcheck")
         }
     });
+    mainWindows.push(mainWindow);
     doAfterDefiningTheWindow(mainWindow);
 }
 export function createNativeWindow(): void {
-    mainWindow = new BrowserWindow({
+    let mainWindow = new BrowserWindow({
         width: getWindowState("width") ?? 835,
         height: getWindowState("height") ?? 600,
         x: getWindowState("x"),
@@ -336,30 +345,11 @@ export function createNativeWindow(): void {
             spellcheck: getConfig("spellcheck")
         }
     });
+    mainWindows.push(mainWindow);
     doAfterDefiningTheWindow(mainWindow);
-    secondWindow = new BrowserWindow({
-        width: (getWindowState("width")) ?? 835,
-        height: (getWindowState("height")) ?? 600,
-        x: getWindowState("x"),
-        y: getWindowState("y"),
-        title: "ArmCord",
-        darkTheme: true,
-        icon: iconPath,
-        show: false,
-        frame: true,
-        backgroundColor: "#202225",
-        autoHideMenuBar: true,
-        webPreferences: {
-            webviewTag: true,
-            sandbox: false,
-            preload: path.join(import.meta.dirname, "preload/preload.mjs"),
-            spellcheck: getConfig("spellcheck")
-        }
-    });
-    doAfterDefiningTheWindow(secondWindow);
 }
 export function createTransparentWindow(): void {
-    mainWindow = new BrowserWindow({
+    let mainWindow = new BrowserWindow({
         width: getWindowState("width") ?? 835,
         height: getWindowState("height") ?? 600,
         x: getWindowState("x"),
@@ -378,6 +368,7 @@ export function createTransparentWindow(): void {
             spellcheck: getConfig("spellcheck")
         }
     });
+    mainWindows.push(mainWindow);
     doAfterDefiningTheWindow(mainWindow);
 }
 export function createInviteWindow(code: string): void {
@@ -402,7 +393,7 @@ export function createInviteWindow(code: string): void {
     // REVIEW - This shouldn't matter, since below we have an event on it
     void inviteWindow.loadURL(formInviteURL);
     inviteWindow.webContents.once("did-finish-load", () => {
-        if (!mainWindow.webContents.isLoading()) {
+        if (!mainWindows[0].webContents.isLoading()) {
             inviteWindow.show();
             inviteWindow.webContents.once("will-navigate", () => {
                 inviteWindow.close();

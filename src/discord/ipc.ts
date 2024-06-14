@@ -5,6 +5,7 @@ import {BrowserWindow} from "electron";
 import os from "os";
 import fs from "fs";
 import path from "path";
+import {mainWindows} from "./window.js";
 import {getConfig, setConfigBulk, getConfigLocation} from "../common/config.js";
 import {setLang, getLang, getLangName} from "../common/lang.js";
 import {getVersion, getDisplayVersion} from "../common/version.js";
@@ -20,19 +21,28 @@ const storagePath = path.join(userDataPath, "/storage/");
 const themesPath = path.join(userDataPath, "/themes/");
 const pluginsPath = path.join(userDataPath, "/plugins/");
 export function registerIpc(passedWindow: BrowserWindow): void {
+    ipcMain.on("splashEnd", () => {
+        splashWindow.close();
+        if (getConfig("startMinimized")) {
+            passedWindow.hide();
+        } else {
+            passedWindow.show();
+        }
+    });
+
+    if (mainWindows.length !== 1) {
+        return;
+    }
+
     ipcMain.on("get-app-path", (event) => {
         event.reply("app-path", app.getAppPath());
     });
     ipcMain.on("setLang", (_event, lang: string) => {
         setLang(lang);
     });
-    try {
-        ipcMain.handle("getLang", (_event, toGet: string) => {
-            return getLang(toGet);
-        });
-    } catch (e) {
-        console.error("getLang is not supported");
-    }
+    ipcMain.handle("getLang", (_event, toGet: string) => {
+        return getLang(toGet);
+    });
     ipcMain.on("open-external-link", (_event, href: string) => {
         void shell.openExternal(href);
     });
@@ -84,14 +94,6 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.on("modInstallState", (event) => {
         event.returnValue = modInstallState;
     });
-    ipcMain.on("splashEnd", () => {
-        splashWindow.close();
-        if (getConfig("startMinimized")) {
-            passedWindow.hide();
-        } else {
-            passedWindow.show();
-        }
-    });
     ipcMain.on("restart", () => {
         app.relaunch();
         app.exit();
@@ -137,12 +139,8 @@ export function registerIpc(passedWindow: BrowserWindow): void {
             event.returnValue = false;
         }
     });
-    try {
-        // NOTE - I assume this would return sources based on the fact that the function only ingests sources
-        ipcMain.handle("DESKTOP_CAPTURER_GET_SOURCES", (_event, opts: SourcesOptions) => desktopCapturer.getSources(opts));
-    } catch {
-        console.error("desktopCapturer.getSources is not supported");
-    }
+    // NOTE - I assume this would return sources based on the fact that the function only ingests sources
+    ipcMain.handle("DESKTOP_CAPTURER_GET_SOURCES", (_event, opts: SourcesOptions) => desktopCapturer.getSources(opts));
     ipcMain.on("saveSettings", (_event, args: Settings) => {
         console.log(args);
         setConfigBulk(args);
@@ -166,13 +164,9 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.on("crash", () => {
         process.crash();
     });
-    try {
-        ipcMain.handle("getSetting", (_event, toGet: keyof Settings) => {
-            return getConfig(toGet);
-        });
-    } catch {
-        console.error("getSetting is not supported");
-    }
+    ipcMain.handle("getSetting", (_event, toGet: keyof Settings) => {
+        return getConfig(toGet);
+    });
     ipcMain.on("copyDebugInfo", () => {
         const settingsFileContent = fs.readFileSync(getConfigLocation(), "utf-8");
         clipboard.writeText(
