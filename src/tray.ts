@@ -83,9 +83,8 @@ void app.whenReady().then(async () => {
                 {
                     label: `Quit ${clientName}`,
                     click() {
-                        // FIXME - I think I (@SomeAspy) introduced this, but the process doesn't properly exit using quit from the taskbar
-                        // IE: Process still running in CLI, taskbar icon left behind, main window closes.
-                        app.quit();
+                        // NOTE - Temporary fix for app not actually quitting
+                        app.exit();
                     }
                 }
             ]);
