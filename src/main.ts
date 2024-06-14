@@ -74,7 +74,7 @@ export async function init(): Promise<void> {
             break;
     }
 }
-args(); // i want my top level awaits - IMPLEMENTED :)
+await args(); // i want my top level awaits - IMPLEMENTED :)
 if (!app.requestSingleInstanceLock()) {
     // if value isn't set after 3.2.4
     // kill if 2nd instance

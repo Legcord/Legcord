@@ -72,20 +72,22 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         passedWindow.webContents.userAgent = `Mozilla/5.0 (X11; ${osType} ${os.arch()}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36`; //fake useragent for screenshare to work
     }
     if (mainWindows.length === 1) {
-        app.on("second-instance", async (_event, _commandLine, _workingDirectory, additionalData) => {
-            // Print out data received from the second instance.
-            console.log(additionalData);
+        app.on("second-instance", (_event, _commandLine, _workingDirectory, additionalData) => {
+            void (async () => {
+                // Print out data received from the second instance.
+                console.log(additionalData);
 
-            if (getConfig("multiInstance") == (false ?? undefined)) {
-                // Someone tried to run a second instance, we should focus our window.
-                if (passedWindow) {
-                    if (passedWindow.isMinimized()) passedWindow.restore();
-                    passedWindow.show();
-                    passedWindow.focus();
+                if (getConfig("multiInstance") == (false ?? undefined)) {
+                    // Someone tried to run a second instance, we should focus our window.
+                    if (passedWindow) {
+                        if (passedWindow.isMinimized()) passedWindow.restore();
+                        passedWindow.show();
+                        passedWindow.focus();
+                    }
+                } else {
+                    await init();
                 }
-            } else {
-                await init();
-            }
+            })();
         });
     }
     app.on("activate", function () {
@@ -303,7 +305,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     }
 }
 export function createCustomWindow(): void {
-    let mainWindow = new BrowserWindow({
+    const mainWindow = new BrowserWindow({
         width: getWindowState("width") ?? 835,
         height: getWindowState("height") ?? 600,
         x: getWindowState("x"),
@@ -326,7 +328,7 @@ export function createCustomWindow(): void {
     doAfterDefiningTheWindow(mainWindow);
 }
 export function createNativeWindow(): void {
-    let mainWindow = new BrowserWindow({
+    const mainWindow = new BrowserWindow({
         width: getWindowState("width") ?? 835,
         height: getWindowState("height") ?? 600,
         x: getWindowState("x"),
@@ -349,7 +351,7 @@ export function createNativeWindow(): void {
     doAfterDefiningTheWindow(mainWindow);
 }
 export function createTransparentWindow(): void {
-    let mainWindow = new BrowserWindow({
+    const mainWindow = new BrowserWindow({
         width: getWindowState("width") ?? 835,
         height: getWindowState("height") ?? 600,
         x: getWindowState("x"),
