@@ -209,6 +209,9 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     if (!fs.existsSync(`${userDataPath}/disabled.txt`)) {
         fs.writeFileSync(path.join(userDataPath, "/disabled.txt"), "");
     }
+    passedWindow.on("unresponsive", () => {
+        passedWindow.webContents.reload();
+    });
     passedWindow.webContents.on("did-finish-load", () => {
         fs.readdirSync(themesFolder).forEach((file) => {
             try {
