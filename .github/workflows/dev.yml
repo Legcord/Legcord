@@ -73,6 +73,9 @@ jobs:
                   node-version: 22
                   cache: "pnpm"
 
+            - name: Install qemu
+              run: sudo apt install qemu-kvm libvirt-bin ubuntu-vm-builder bridge-utils
+
             - name: Install snapcraft
               run: sudo apt install snapd && sudo snap install snapcraft --classic && sudo snap install multipass --edge
 
