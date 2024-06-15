@@ -10,6 +10,10 @@ export function checkForDataFolder(): void {
         console.log("Found armcord-data folder. Running in portable mode.");
         app.setPath("userData", dataPath);
     }
+    if (path.join(app.getPath("appData"), "ArmCord")) {
+        console.log("Found existing ArmCord folder.");
+        app.setPath("userData", path.join(app.getPath("appData"), "ArmCord"));
+    }
 }
 
 export function getConfigLocation(): string {
