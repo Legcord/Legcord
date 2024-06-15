@@ -140,7 +140,7 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               with:
                   bodyFile: .github/release.md
-                  generateReleaseNotes: true
+                  generateReleaseNotes: false
                   name: Dev Build ${{ steps.vars.outputs.sha_short }}
                   prerelease: true
                   tag: devbuild
