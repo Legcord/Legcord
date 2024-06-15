@@ -12,13 +12,13 @@ import * as fs from "fs";
 import contextMenu from "electron-context-menu";
 import os from "os";
 import RPCServer from "arrpc";
-import {tray} from "../tray.js";
+import {isQuitting, tray} from "../tray.js";
 import {iconPath, init} from "../main.js";
 import {getConfig, setConfig, firstRun} from "../common/config.js";
 import {getWindowState, setWindowState} from "../common/windowState.js";
 export let mainWindows: BrowserWindow[] = [];
 export let inviteWindow: BrowserWindow;
-let forceQuit = false;
+export let forceQuit = false;
 let osType = os.type();
 contextMenu({
     showSaveImageAs: true,
@@ -252,7 +252,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
                 x: passedWindow.getPosition()[0],
                 y: passedWindow.getPosition()[1]
             });
-            if (getConfig("minimizeToTray")) {
+            if (getConfig("minimizeToTray") && !isQuitting) {
                 e.preventDefault();
                 passedWindow.hide();
             } else if (!getConfig("minimizeToTray")) {

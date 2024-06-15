@@ -112,7 +112,7 @@ setInterval(() => {
     tManager.onclick = () => ipcRenderer.send("openManagerWindow");
     fQuit.textContent = "Force Quit";
     fQuit.id = "acForceQuit";
-    fQuit.onclick = () => ipcRenderer.send("win-quit");
+    fQuit.onclick = () => ipcRenderer.send("win-forceQuit");
     advanced.insertAdjacentElement("afterend", acSettings);
     advanced.insertAdjacentElement("afterend", tManager);
     advanced.insertAdjacentElement("afterend", fQuit);

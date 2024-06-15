@@ -83,6 +83,9 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         passedWindow.hide();
     });
     ipcMain.on("win-quit", () => {
+        app.quit();
+    });
+    ipcMain.on("win-forceQuit", () => {
         app.exit();
     });
     ipcMain.on("get-app-version", (event) => {

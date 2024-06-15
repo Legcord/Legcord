@@ -30,6 +30,7 @@ function registerCustomHandler(): void {
                 types: ["screen", "window"]
             })
             .then((sources) => {
+                if (!sources) return callback({});
                 console.log(sources);
                 if (process.platform === "linux" && process.env.XDG_SESSION_TYPE?.toLowerCase() === "wayland") {
                     console.log("WebRTC Capturer detected, skipping window creation."); //assume webrtc capturer is used

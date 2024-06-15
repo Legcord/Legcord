@@ -6,6 +6,7 @@ import {createSettingsWindow} from "./settings/main.js";
 import {getConfig, getConfigLocation, setConfig} from "./common/config.js";
 import {getDisplayVersion} from "./common/version.js";
 export let tray: Tray;
+export let isQuitting = false;
 let trayIcon = "ac_plug_colored";
 void app.whenReady().then(async () => {
     // REVIEW - app will hang at startup if line above is awaited.
@@ -85,8 +86,9 @@ void app.whenReady().then(async () => {
                 {
                     label: `Quit ${clientName}`,
                     click() {
-                        // NOTE - Temporary fix for app not actually quitting
-                        app.exit();
+                        //NOTE - It would be better to unify isQuitting with forceQuit in window.ts that's used on macOS
+                        isQuitting = true;
+                        app.quit();
                     }
                 }
             ]);
