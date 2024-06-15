@@ -80,5 +80,7 @@
     "settings-MultiInstance": "다중 인스턴스",
     "settings-MultiInstance-desc": "활성화되면 ArmCord의 많은 인스턴스를 시작할 수 있습니다.",
     "settings-copyGPUInfo": "Copy GPU Info",
-    "settings-prfmMode-vaapi": "VAAPI"
+    "settings-prfmMode-vaapi": "VAAPI",
+    "settings-smoothScroll": "Use smooth scrolling",
+    "settings-smoothScroll-desc": "Toggle smooth scrolling"
 }
