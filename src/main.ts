@@ -76,6 +76,7 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") == (false ?? 
         "disable-features",
         "WinRetrieveSuggestionsOnlyOnDemand,HardwareMediaKeyHandling,MediaSessionService"
     );
+    app.commandLine.appendSwitch("enable-transparent-visuals");
     checkForDataFolder();
     checkIfConfigExists();
     checkIfConfigIsBroken();
@@ -113,7 +114,8 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") == (false ?? 
                     break;
             }
         }
-        await init();
+        // Patch for linux bug to insure things are loaded before window creation (fixes transparency on some linux systems)
+        await new Promise<void>((resolve) => setTimeout(() => (init(), resolve()), 1500));
         await installModLoader();
         session.fromPartition("some-partition").setPermissionRequestHandler((_webContents, permission, callback) => {
             if (permission === "notifications") {
