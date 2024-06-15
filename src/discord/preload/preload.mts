@@ -5,7 +5,7 @@ import {ipcRenderer} from "electron";
 import fs from "fs";
 import path from "path";
 import {injectMobileStuff} from "./mobile.js";
-import {fixTitlebar, injectTitlebar} from "./titlebar.mjs";
+import {injectTitlebar} from "./titlebar.mjs";
 import {injectSettings} from "./settings.js";
 import {addStyle, addScript} from "../../common/dom.js";
 import {sleep} from "../../common/sleep.js";
@@ -27,7 +27,6 @@ function updateLang(): void {
 
 declare global {
     interface Window {
-        // REVIEW - Assumption, this was previously any
         armcord: ArmCordWindow;
     }
 }
@@ -73,7 +72,7 @@ setInterval(() => {
     if (document.getElementById("window-controls-container") == null) {
         console.warn("Titlebar didn't inject, retrying...");
         if (ipcRenderer.sendSync("titlebar")) {
-            fixTitlebar();
+            //fixTitlebar();
         }
     }
     addScript(`
