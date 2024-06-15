@@ -1,7 +1,7 @@
 import {BrowserWindow, app, dialog, ipcMain, shell} from "electron";
 import path from "path";
 import fs from "fs";
-import {createInviteWindow, mainWindow} from "../discord/window.js";
+import {createInviteWindow, mainWindows} from "../discord/window.js";
 import type {ThemeManifest} from "../types/themeManifest.d.js";
 let themeWindow: BrowserWindow;
 let instance = 0;
@@ -125,7 +125,9 @@ export async function createTManagerWindow(): Promise<void> {
             shell.showItemInFolder(themesPath);
         });
         ipcMain.on("reloadMain", () => {
-            mainWindow.webContents.reload();
+            mainWindows.forEach((mainWindow) => {
+                mainWindow.webContents.reload();
+            });
         });
         ipcMain.on("addToDisabled", (_event, name: string) => {
             fs.appendFileSync(path.join(userDataPath, "/disabled.txt"), `${name}\n`);
@@ -147,7 +149,9 @@ export async function createTManagerWindow(): Promise<void> {
                 console.log(`Removed ${id} folder`);
             }
             themeWindow.webContents.reload();
-            mainWindow.webContents.reload();
+            mainWindows.forEach((mainWindow) => {
+                mainWindow.webContents.reload();
+            });
         });
         ipcMain.on("installBDTheme", (_event, link: string) => {
             return async () => {
@@ -170,7 +174,9 @@ export async function createTManagerWindow(): Promise<void> {
                         message: "Successfully imported theme from link."
                     });
                     themeWindow.webContents.reload();
-                    mainWindow.webContents.reload();
+                    mainWindows.forEach((mainWindow) => {
+                        mainWindow.webContents.reload();
+                    });
                 } catch (e) {
                     dialog.showErrorBox(
                         "BD Theme import fail",

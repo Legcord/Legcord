@@ -1,6 +1,6 @@
 import fs from "fs";
 import {Menu, MessageBoxOptions, Tray, app, dialog, nativeImage} from "electron";
-import {createInviteWindow, mainWindow} from "./discord/window.js";
+import {createInviteWindow, mainWindows} from "./discord/window.js";
 import path from "path";
 import {createSettingsWindow} from "./settings/main.js";
 import {getConfig, getConfigLocation, setConfig} from "./common/config.js";
@@ -62,7 +62,9 @@ void app.whenReady().then(async () => {
                 {
                     label: `Open ${clientName}`,
                     click() {
-                        mainWindow.show();
+                        mainWindows.forEach((mainWindow) => {
+                            mainWindow.show();
+                        });
                     }
                 },
                 {
@@ -92,7 +94,9 @@ void app.whenReady().then(async () => {
         }
         tray.setToolTip(clientName);
         tray.on("click", function () {
-            mainWindow.show();
+            mainWindows.forEach((mainWindow) => {
+                mainWindow.show();
+            });
         });
     } else {
         if (getConfig("tray") == undefined) {
@@ -106,7 +110,7 @@ void app.whenReady().then(async () => {
                     detail: "Linux may not work well with tray icons. Depending on your system configuration, you may not be able to see the tray icon. Enable at your own risk. Can be changed later."
                 };
 
-                await dialog.showMessageBox(mainWindow, options).then(({response}) => {
+                await dialog.showMessageBox(mainWindows[0], options).then(({response}) => {
                     if (response == 0) {
                         setConfig("tray", true);
                     } else {

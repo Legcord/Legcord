@@ -1,5 +1,5 @@
 import {BrowserWindow, Menu, app} from "electron";
-import {mainWindow} from "./window.js";
+import {mainWindows} from "./window.js";
 import {createSettingsWindow} from "../settings/main.js";
 
 export function setMenu(): void {
@@ -31,7 +31,9 @@ export function setMenu(): void {
                     label: "Reload",
                     accelerator: "CmdOrCtrl+R",
                     click() {
-                        mainWindow.reload();
+                        mainWindows.forEach((mainWindow) => {
+                            mainWindow.reload();
+                        });
                     }
                 },
                 {

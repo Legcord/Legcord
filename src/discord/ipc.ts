@@ -1,10 +1,11 @@
 //ipc stuff
 import {app, clipboard, desktopCapturer, ipcMain, nativeImage, shell, SourcesOptions} from "electron";
-import {mainWindow} from "./window.js";
+import {BrowserWindow} from "electron";
 
 import os from "os";
 import fs from "fs";
 import path from "path";
+import {mainWindows} from "./window.js";
 import {getConfig, setConfigBulk, getConfigLocation} from "../common/config.js";
 import {setLang, getLang, getLangName} from "../common/lang.js";
 import {getVersion, getDisplayVersion} from "../common/version.js";
@@ -19,7 +20,20 @@ const userDataPath = app.getPath("userData");
 const storagePath = path.join(userDataPath, "/storage/");
 const themesPath = path.join(userDataPath, "/themes/");
 const pluginsPath = path.join(userDataPath, "/plugins/");
-export function registerIpc(): void {
+export function registerIpc(passedWindow: BrowserWindow): void {
+    ipcMain.on("splashEnd", () => {
+        splashWindow.close();
+        if (getConfig("startMinimized")) {
+            passedWindow.hide();
+        } else {
+            passedWindow.show();
+        }
+    });
+
+    if (mainWindows.length !== 1) {
+        return;
+    }
+
     ipcMain.on("get-app-path", (event) => {
         event.reply("app-path", app.getAppPath());
     });
@@ -40,33 +54,33 @@ export function registerIpc(): void {
             case "win32":
                 if (pingCount > 0) {
                     const image = nativeImage.createFromPath(path.join(import.meta.dirname, "../", `/assets/ping.png`));
-                    mainWindow.setOverlayIcon(image, "badgeCount");
+                    passedWindow.setOverlayIcon(image, "badgeCount");
                 } else {
-                    mainWindow.setOverlayIcon(null, "badgeCount");
+                    passedWindow.setOverlayIcon(null, "badgeCount");
                 }
                 break;
         }
     });
     ipcMain.on("win-maximize", () => {
-        mainWindow.maximize();
+        passedWindow.maximize();
     });
     ipcMain.on("win-isMaximized", (event) => {
-        event.returnValue = mainWindow.isMaximized();
+        event.returnValue = passedWindow.isMaximized();
     });
     ipcMain.on("win-isNormal", (event) => {
-        event.returnValue = mainWindow.isNormal();
+        event.returnValue = passedWindow.isNormal();
     });
     ipcMain.on("win-minimize", () => {
-        mainWindow.minimize();
+        passedWindow.minimize();
     });
     ipcMain.on("win-unmaximize", () => {
-        mainWindow.unmaximize();
+        passedWindow.unmaximize();
     });
     ipcMain.on("win-show", () => {
-        mainWindow.show();
+        passedWindow.show();
     });
     ipcMain.on("win-hide", () => {
-        mainWindow.hide();
+        passedWindow.hide();
     });
     ipcMain.on("win-quit", () => {
         app.exit();
@@ -79,14 +93,6 @@ export function registerIpc(): void {
     });
     ipcMain.on("modInstallState", (event) => {
         event.returnValue = modInstallState;
-    });
-    ipcMain.on("splashEnd", () => {
-        splashWindow.close();
-        if (getConfig("startMinimized")) {
-            mainWindow.hide();
-        } else {
-            mainWindow.show();
-        }
     });
     ipcMain.on("restart", () => {
         app.relaunch();
