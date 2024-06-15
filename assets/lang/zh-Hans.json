@@ -80,5 +80,7 @@
     "settings-MultiInstance": "允许多实例",
     "settings-MultiInstance-desc": "启用后，您将可以启动多个ArmCord实例。",
     "settings-copyGPUInfo": "复制显卡信息",
-    "settings-prfmMode-vaapi": "VAAPI"
+    "settings-prfmMode-vaapi": "VAAPI",
+    "settings-smoothScroll": "Use smooth scrolling",
+    "settings-smoothScroll-desc": "Toggle smooth scrolling"
 }
