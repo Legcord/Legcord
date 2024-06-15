@@ -80,5 +80,7 @@
     "settings-skipSplash-desc": "Skips ArmCord splash screen when you start up the app.",
     "settings-copyDebugInfo": "Copy Debug Info",
     "settings-copyGPUInfo": "Copy GPU Info",
-    "settings-forceNativeCrash": "Force native crash"
+    "settings-forceNativeCrash": "Force native crash",
+    "settings-smoothScroll": "Use smooth scrolling",
+    "settings-smoothScroll-desc": "Toggle smooth scrolling"
 }

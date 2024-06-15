@@ -107,6 +107,9 @@ if (!app.requestSingleInstanceLock()) {
     checkIfConfigIsBroken();
     injectElectronFlags();
     console.log("[Config Manager] Current config: " + fs.readFileSync(getConfigLocation(), "utf-8"));
+    if (getConfig("smoothScroll") === false) {
+        app.commandLine.appendSwitch("disable-smooth-scrolling");
+    }
     void app.whenReady().then(async () => {
         // REVIEW - Awaiting the line above will cause a hang at startup
         if (getConfig("customIcon") !== null) {
