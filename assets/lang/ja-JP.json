@@ -80,5 +80,7 @@
     "settings-MultiInstance": "マルチインスタンス",
     "settings-MultiInstance-desc": "これを有効にすると、同時に複数のArmCordインスタンスを起動できるようになります。",
     "settings-copyGPUInfo": "Copy GPU Info",
-    "settings-prfmMode-vaapi": "VAAPI"
+    "settings-prfmMode-vaapi": "VAAPI",
+    "settings-smoothScroll": "Use smooth scrolling",
+    "settings-smoothScroll-desc": "Toggle smooth scrolling"
 }
