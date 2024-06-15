@@ -80,5 +80,7 @@
     "settings-none": "لا شئ",
     "settings-csp-desc": "ArmCord CSP هو نظامنا الذي يدير تحميل المحتوى المخصص في تطبيق Discord. أشياء من هذا القبيل\n                 تعتمد تعديلات العميل وموضوعاته على ذلك. قم بتعطيله إذا كنت تريد التخلص من التعديلات والأنماط المخصصة.",
     "settings-copyGPUInfo": "Copy GPU Info",
-    "settings-prfmMode-vaapi": "VAAPI"
+    "settings-prfmMode-vaapi": "VAAPI",
+    "settings-smoothScroll": "Use smooth scrolling",
+    "settings-smoothScroll-desc": "Toggle smooth scrolling"
 }
