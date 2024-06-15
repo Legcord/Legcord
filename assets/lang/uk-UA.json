@@ -80,5 +80,7 @@
     "settings-MultiInstance": "Кілька екземплярів",
     "settings-MultiInstance-desc": "Якщо увімкнено, ви зможете запустити багато екземплярів ArmCord.",
     "settings-copyGPUInfo": "Скопіювати інформацію про GPU",
-    "settings-prfmMode-vaapi": "VAAPI"
+    "settings-prfmMode-vaapi": "VAAPI",
+    "settings-smoothScroll-desc": "Toggle smooth scrolling",
+    "settings-smoothScroll": "Use smooth scrolling"
 }
