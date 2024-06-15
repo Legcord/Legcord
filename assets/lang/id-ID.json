@@ -80,5 +80,7 @@
     "settings-MultiInstance": "Multi Instans",
     "settings-MultiInstance-desc": "Ketika diaktifkan, Anda akan dapat memulai banyak contoh ArmCord.",
     "settings-copyGPUInfo": "Copy GPU Info",
-    "settings-prfmMode-vaapi": "VAAPI"
+    "settings-prfmMode-vaapi": "VAAPI",
+    "settings-smoothScroll": "Use smooth scrolling",
+    "settings-smoothScroll-desc": "Toggle smooth scrolling"
 }
