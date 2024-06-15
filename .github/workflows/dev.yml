@@ -33,7 +33,58 @@ jobs:
               with:
                   name: ArmCordLinux
                   path: dist/armcord-*.zip
+    build-snap:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
 
+            - uses: pnpm/action-setup@v4
+
+            - name: Use Node.js 22
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: "pnpm"
+
+            - name: Install Node dependencies
+              run: pnpm i
+
+            - name: Build
+              run: pnpm run build && pnpm electron-builder --linux snap --config.snap.grade=devel
+
+            - uses: snapcore/action-publish@v1
+              env:
+                  SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAP_STORE_LOGIN }}
+              with:
+                  snap: dist/ArmCord_3.3.0_amd64.snap
+                  release: edge
+    build-snap-arm64:
+        runs-on: warp-ubuntu-latest-arm64-2x
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - uses: pnpm/action-setup@v4
+
+            - name: Use Node.js 22
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: "pnpm"
+
+            - name: Install Node dependencies
+              run: pnpm i
+
+            - name: Build
+              run: pnpm run build && pnpm electron-builder --linux snap --config.snap.grade=devel
+
+            - uses: snapcore/action-publish@v1
+              env:
+                  SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAP_STORE_LOGIN }}
+              with:
+                  snap: dist/ArmCord_3.3.0_arm64.snap
+                  release: edge
     build-linux-arm:
         runs-on: ubuntu-latest
         steps:
