@@ -74,10 +74,10 @@ jobs:
                   cache: "pnpm"
 
             - name: Install qemu
-              run: sudo apt install qemu-kvm libvirt-daemon-system virtinst libvirt-clients bridge-utils && sudo systemctl enable libvirtd && sudo systemctl start libvirtd
+              run: sudo apt install -y qemu-kvm libvirt-daemon-system virtinst libvirt-clients bridge-utils && sudo systemctl enable libvirtd && sudo systemctl start libvirtd
 
             - name: Install snapcraft
-              run: sudo apt install snapd && sudo snap install snapcraft --classic && sudo snap install multipass --edge
+              run: sudo apt install -y snapd && sudo snap install snapcraft --classic && sudo snap install multipass --edge
 
             - name: Install Node dependencies
               run: pnpm i
