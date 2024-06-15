@@ -49,8 +49,33 @@ async function args(): Promise<void> {
         });
     }
 }
+export async function init(): Promise<void> {
+    if (getConfig("skipSplash") == false) {
+        void createSplashWindow(); // REVIEW - Awaiting will hang at start
+    }
+    if (firstRun == true) {
+        setLang(new Intl.DateTimeFormat().resolvedOptions().locale);
+        await createSetupWindow();
+    }
+    switch (getConfig("windowStyle")) {
+        case "default":
+            createCustomWindow();
+            customTitlebar = true;
+            break;
+        case "native":
+            createNativeWindow();
+            break;
+        case "transparent":
+            createTransparentWindow();
+            break;
+        default:
+            createCustomWindow();
+            customTitlebar = true;
+            break;
+    }
+}
 await args(); // i want my top level awaits - IMPLEMENTED :)
-if (!app.requestSingleInstanceLock() && getConfig("multiInstance") == (false ?? undefined)) {
+if (!app.requestSingleInstanceLock()) {
     // if value isn't set after 3.2.4
     // kill if 2nd instance
     app.quit();
@@ -87,31 +112,6 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") == (false ?? 
             iconPath = getConfig("customIcon");
         } else {
             iconPath = path.join(import.meta.dirname, "../", "/assets/desktop.png");
-        }
-        async function init(): Promise<void> {
-            if (getConfig("skipSplash") == false) {
-                void createSplashWindow(); // REVIEW - Awaiting will hang at start
-            }
-            if (firstRun == true) {
-                setLang(new Intl.DateTimeFormat().resolvedOptions().locale);
-                await createSetupWindow();
-            }
-            switch (getConfig("windowStyle")) {
-                case "default":
-                    createCustomWindow();
-                    customTitlebar = true;
-                    break;
-                case "native":
-                    createNativeWindow();
-                    break;
-                case "transparent":
-                    createTransparentWindow();
-                    break;
-                default:
-                    createCustomWindow();
-                    customTitlebar = true;
-                    break;
-            }
         }
         await init();
         await installModLoader();
