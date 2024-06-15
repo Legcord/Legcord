@@ -47,7 +47,7 @@
         "typescript-eslint": "^7.12.0"
     },
     "dependencies": {
-        "arrpc": "github:OpenAsar/arrpc",
+        "arrpc": "github:OpenAsar/arrpc#c62ec6a04c8d870530aa6944257fe745f6c59a24",
         "cross-fetch": "^4.0.0",
         "electron-context-menu": "^4.0.0",
         "extract-zip": "^2.0.1",
