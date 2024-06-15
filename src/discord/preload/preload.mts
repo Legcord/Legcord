@@ -69,12 +69,6 @@ await sleep(5000).then(() => {
 
 // Settings info version injection
 setInterval(() => {
-    if (document.getElementById("window-controls-container") == null) {
-        console.warn("Titlebar didn't inject, retrying...");
-        if (ipcRenderer.sendSync("titlebar")) {
-            //fixTitlebar();
-        }
-    }
     addScript(`
     if (document.getElementById("ACsettingsModal") == null) {
         var html = '<span class="close" id="closeSettings">&times;</span><div class="ACsettings-modal-content" id="webviewSettingsContainer"></div>';
