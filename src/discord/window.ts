@@ -300,8 +300,8 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     if (firstRun) {
         passedWindow.close();
     }
-    //loadURL broke for no good reason after E28
-    void passedWindow.loadFile(`${import.meta.dirname}/../splash/redirect.html`);
+
+    void passedWindow.loadURL("https://discord.com/app");
 
     if (getConfig("skipSplash")) {
         passedWindow.show();
