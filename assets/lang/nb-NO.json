@@ -80,5 +80,7 @@
     "settings-MultiInstance": "Flerinstans",
     "settings-MultiInstance-desc": "Når avskurdd vil du ha muligheten til å starte mange instanser med ArmCord.",
     "settings-copyGPUInfo": "Kopier GPU-informasjon",
-    "settings-prfmMode-vaapi": "VAAPI"
+    "settings-prfmMode-vaapi": "VAAPI",
+    "settings-smoothScroll": "Use smooth scrolling",
+    "settings-smoothScroll-desc": "Toggle smooth scrolling"
 }
