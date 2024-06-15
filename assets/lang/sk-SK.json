@@ -80,5 +80,7 @@
     "settings-none": "None",
     "settings-csp-desc": "ArmCord CSP is our system that manages loading custom content loading into the Discord app. Stuff like\n                client mods and themes depend on it. Disable if you want to get rid of mods and custom styles.",
     "settings-copyGPUInfo": "Copy GPU Info",
-    "settings-prfmMode-vaapi": "VAAPI"
+    "settings-prfmMode-vaapi": "VAAPI",
+    "settings-smoothScroll": "Use smooth scrolling",
+    "settings-smoothScroll-desc": "Toggle smooth scrolling"
 }
