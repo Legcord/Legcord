@@ -28,4 +28,5 @@ export interface Settings {
     trayIcon: string;
     doneSetup: boolean;
     clientName: string;
+    smoothScroll: boolean;
 }
