@@ -57,7 +57,7 @@ jobs:
               env:
                   SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAP_STORE_LOGIN }}
               with:
-                  snap: dist/armcord.3.0_amd64.snap
+                  snap: dist/armcord_3.3.0_amd64.snap
                   release: edge
     build-snap-arm64:
         runs-on: warp-ubuntu-latest-arm64-2x
