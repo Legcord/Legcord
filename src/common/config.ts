@@ -56,6 +56,11 @@ export function checkIfConfigExists(): void {
     const storagePath = path.join(userDataPath, "/storage/");
     const settingsFile = `${storagePath}settings.json`;
 
+    if (!fs.existsSync(app.getPath("userData"))) {
+        fs.mkdirSync(app.getPath("userData"));
+        console.log("Created missing user data folder");
+    }
+
     if (!fs.existsSync(settingsFile)) {
         if (!fs.existsSync(storagePath)) {
             fs.mkdirSync(storagePath);
