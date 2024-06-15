@@ -56,7 +56,7 @@
     },
     "build": {
         "snap": {
-            "allowNativeWayland": true
+            "allowNativeWayland": false
         },
         "nsis": {
             "include": "build/installer.nsh",
