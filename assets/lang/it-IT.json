@@ -80,5 +80,7 @@
     "settings-MultiInstance": "Multi-istanza",
     "settings-MultiInstance-desc": "Se abilitato sarai in grado di avviare molte istanze di ArmCord.",
     "settings-copyGPUInfo": "Copia informazioni sulla GPU",
-    "settings-prfmMode-vaapi": "VAAPI"
+    "settings-prfmMode-vaapi": "VAAPI",
+    "settings-smoothScroll": "Use smooth scrolling",
+    "settings-smoothScroll-desc": "Toggle smooth scrolling"
 }
