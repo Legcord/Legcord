@@ -80,5 +80,7 @@
     "settings-MultiInstance": "Çoklu oturum",
     "settings-MultiInstance-desc": "Etkinleştirildiğinde ArmCord'un birçok oturum ile başlatabileceksiniz.",
     "settings-copyGPUInfo": "GPU Bilgilerini Kopyala",
-    "settings-prfmMode-vaapi": "VAAPI"
+    "settings-prfmMode-vaapi": "VAAPI",
+    "settings-smoothScroll": "Use smooth scrolling",
+    "settings-smoothScroll-desc": "Toggle smooth scrolling"
 }
