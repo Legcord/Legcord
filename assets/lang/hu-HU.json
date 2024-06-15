@@ -80,5 +80,7 @@
     "settings-MultiInstance": "Több példány",
     "settings-MultiInstance-desc": "Ha engedélyezve van, akkor az ArmCord több példányát is el tudja indítani.",
     "settings-copyGPUInfo": "Copy GPU Info",
-    "settings-prfmMode-vaapi": "VAAPI"
+    "settings-prfmMode-vaapi": "VAAPI",
+    "settings-smoothScroll": "Use smooth scrolling",
+    "settings-smoothScroll-desc": "Toggle smooth scrolling"
 }
