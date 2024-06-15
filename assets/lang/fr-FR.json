@@ -80,5 +80,7 @@
     "settings-MultiInstance": "Multi-instances",
     "settings-MultiInstance-desc": "Une fois activé vous pourrez lancer plusieurs instances d'Armcord",
     "settings-copyGPUInfo": "Copier les informations du GPU",
-    "settings-prfmMode-vaapi": "VAAPI"
+    "settings-prfmMode-vaapi": "VAAPI",
+    "settings-smoothScroll": "Use smooth scrolling",
+    "settings-smoothScroll-desc": "Toggle smooth scrolling"
 }
