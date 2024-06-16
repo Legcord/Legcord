@@ -117,31 +117,7 @@ if (!app.requestSingleInstanceLock()) {
         } else {
             iconPath = path.join(import.meta.dirname, "../", "/assets/desktop.png");
         }
-        async function init(): Promise<void> {
-            if (getConfig("skipSplash") == false) {
-                void createSplashWindow(); // REVIEW - Awaiting will hang at start
-            }
-            if (firstRun == true) {
-                setLang(new Intl.DateTimeFormat().resolvedOptions().locale);
-                await createSetupWindow();
-            }
-            switch (getConfig("windowStyle")) {
-                case "default":
-                    createCustomWindow();
-                    customTitlebar = true;
-                    break;
-                case "native":
-                    createNativeWindow();
-                    break;
-                case "transparent":
-                    createTransparentWindow();
-                    break;
-                default:
-                    createCustomWindow();
-                    customTitlebar = true;
-                    break;
-            }
-        }
+
         // Patch for linux bug to insure things are loaded before window creation (fixes transparency on some linux systems)
         await new Promise<void>((resolve) => setTimeout(() => (init(), resolve()), 1500));
         await installModLoader();
