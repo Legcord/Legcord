@@ -31,7 +31,7 @@ app.on("render-process-gone", (_event, _webContents, details) => {
         app.relaunch();
     }
 });
-async function args(): Promise<void> {
+function args(): void {
     let argNum = 2;
     if (process.argv[0] == "electron") argNum++;
     const args = process.argv[argNum];
@@ -74,7 +74,7 @@ export async function init(): Promise<void> {
             break;
     }
 }
-await args(); // i want my top level awaits - IMPLEMENTED :)
+args();
 if (!app.requestSingleInstanceLock()) {
     // if value isn't set after 3.2.4
     // kill if 2nd instance
