@@ -3,151 +3,83 @@ on:
     push:
         branches:
             - dev
-
-env:
-    FORCE_COLOR: true
-
 jobs:
-    build-linux:
-        runs-on: ubuntu-latest
+    build:
+        strategy:
+            matrix:
+                os: [windows-latest, ubuntu-latest, macos-latest]
+                arch: [arm64, amd64]
+                include:
+                    - arch: arm64
+                      os: windows-latest
+                      flags: "--arm64 --windows"
+                      target: "arm64-win"
+
+                    - arch: amd64
+                      os: windows-latest
+                      flags: "--x64 --windows"
+                      target: "amd64-win"
+
+                    - arch: arm64
+                      os: ubuntu-latest
+                      flags: "--arm64 --linux"
+                      target: "arm64-linux"
+
+                    - arch: amd64
+                      os: ubuntu-latest
+                      flags: "--x64 --linux"
+                      target: "amd64-linux"
+
+                    - arch: arm64
+                      os: macos-latest
+                      flags: "--arm64 --macos"
+                      target: "arm64-mac"
+
+                    - arch: amd64
+                      os: macos-latest
+                      flags: "--x64 --macos"
+                      target: "amd64-mac"
+
+        runs-on: ${{matrix.os}}
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            - uses: pnpm/action-setup@v4
+            - name: Prepeare PNPM
+              uses: pnpm/action-setup@v4
 
-            - name: Use Node.js 22
+            - name: Prepare Node.js
               uses: actions/setup-node@v4
               with:
                   node-version: 22
-                  cache: "pnpm"
+                  cache: pnpm
 
-            - name: Install Node dependencies
+            - name: Install dependencies
               run: pnpm i
 
-            - name: Build
-              run: pnpm run build && pnpm electron-builder --linux zip
+            - name: Build TypeScript
+              run: pnpm build
 
-            - name: Upload artifact
-              uses: actions/upload-artifact@v4
-              with:
-                  name: ArmCordLinux
-                  path: dist/armcord-*.zip
-    build-snap:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-
-            - uses: pnpm/action-setup@v4
-
-            - name: Use Node.js 22
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 22
-                  cache: "pnpm"
-
-            - name: Install Node dependencies
-              run: pnpm i
-
-            - name: Build
-              run: pnpm run build && pnpm electron-builder --linux snap --config.snap.grade=devel
-
-            - uses: snapcore/action-publish@v1
+            - name: Build Electron
+              run: pnpm electron-builder ${{matrix.flags}} zip
               env:
-                  SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAP_STORE_LOGIN }}
-              with:
-                  snap: dist/armcord_3.3.0_amd64.snap
-                  release: edge
-    build-linux-arm:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-
-            - uses: pnpm/action-setup@v4
-
-            - name: Use Node.js 22
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 22
-                  cache: "pnpm"
-
-            - name: Install Node dependencies
-              run: pnpm i
-
-            - name: Build
-              run: pnpm run build && pnpm electron-builder --arm64 --linux zip
+                  GH_TOKEN: ${{secrets.GITHUB_TOKEN}} # MacOS needs the token or it will fail to build
 
             - name: Upload artifact
               uses: actions/upload-artifact@v4
               with:
-                  name: ArmCordLinuxArm64
-                  path: dist/armcord-*-arm64.zip
-
-    build-windows:
-        runs-on: windows-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-
-            - uses: pnpm/action-setup@v4
-
-            - name: Use Node.js 22
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 22
-                  cache: "pnpm"
-
-            - name: Install Node dependencies
-              run: pnpm i
-
-            - name: Build
-              run: pnpm run build && pnpm electron-builder --windows zip
-
-            - name: Upload artifact
-              uses: actions/upload-artifact@v4
-              with:
-                  name: ArmCordWindows
-                  path: dist/armcord-3.3.0-win.zip
-
-    build-windows-arm:
-        runs-on: windows-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-
-            - uses: actions/setup-node@v4
-              with:
-                  node-version: "22"
-
-            - name: Set architecture
-              run: set npm_config_arch=arm64
-
-            - uses: pnpm/action-setup@v4 # Install pnpm using packageManager key in package.json
-
-            - name: Install Node dependencies
-              run: pnpm i
-
-            - name: Build
-              run: pnpm run build && pnpm electron-builder --windows zip --arm64
-              env:
-                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-            - name: Upload artifact
-              uses: actions/upload-artifact@v4
-              with:
-                  name: ArmCordWindowsArm64
-                  path: dist\armcord-3.3.0-arm64-win.zip
+                  name: ${{matrix.target}}
+                  path: dist/
 
     release:
         runs-on: ubuntu-latest
-        needs: [build-linux, build-windows, build-windows-arm, build-linux-arm]
+        needs: build
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            - uses: actions/download-artifact@v4
+            - name: Download artifacts
+              uses: actions/download-artifact@v4
               with:
                   path: release-files
 
@@ -155,18 +87,19 @@ jobs:
               id: vars
               run: echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_OUTPUT
 
-            - run: gh release delete devbuild -y --cleanup-tag
+            - name: Delete old devbuild
+              run: gh release delete devbuild -y --cleanup-tag
               env:
-                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-            - name: Create Release
+            - name: Create release
               uses: ncipollo/release-action@v1
               env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
               with:
                   bodyFile: .github/release.md
-                  generateReleaseNotes: false
-                  name: Dev Build ${{ steps.vars.outputs.sha_short }}
+                  name: Dev Build ${{steps.vars.outputs.sha_short}}
                   prerelease: true
+                  draft: false
                   tag: devbuild
-                  artifacts: "release-files/**/*.zip"
+                  artifacts: release-files/**/*.zip
