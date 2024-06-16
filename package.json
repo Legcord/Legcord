@@ -11,7 +11,6 @@
         "watch": "tsc -w",
         "start": "pnpm run build && electron --trace-warnings ./ts-out/main.js",
         "startThemeManager": "pnpm run build && electron ./ts-out/main.js themes",
-        "startKeybindManager": "pnpm run build && electron ./ts-out/main.js keybinds",
         "startWayland": "pnpm run build && electron ./ts-out/main.js --ozone-platform-hint=auto --enable-features=WebRTCPipeWireCapturer,WaylandWindowDecorations --disable-gpu",
         "package": "pnpm run build && electron-builder",
         "packageQuick": "pnpm run build && electron-builder --dir",

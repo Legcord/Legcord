@@ -44,7 +44,7 @@ async function args(): Promise<void> {
         app.relaunch();
         app.exit();
     } else if (args == "themes") {
-        await app.whenReady().then(async () => {
+        void app.whenReady().then(async () => {
             await createTManagerWindow();
         });
     }
