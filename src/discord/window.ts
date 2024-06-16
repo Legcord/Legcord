@@ -97,6 +97,10 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     passedWindow.webContents.setWindowOpenHandler(({url}) => {
         // Allow about:blank (used by Vencord QuickCss popup)
         if (url === "about:blank") return {action: "allow"};
+        // Saving ics files on future events
+        if (url.startsWith("blob:https://discord.com/")) {
+            return {action: "allow", overrideBrowserWindowOptions: {show: false}};
+        }
         // Allow Discord stream popout
         if (
             url === "https://discord.com/popout" ||
@@ -139,6 +143,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
                 }
             });
         }
+
         return {action: "deny"};
     });
     if (getConfig("useLegacyCapturer") == false) {
