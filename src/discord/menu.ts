@@ -1,6 +1,7 @@
 import {BrowserWindow, Menu, app} from "electron";
 import {mainWindows} from "./window.js";
 import {createSettingsWindow} from "../settings/main.js";
+import {setForceQuit} from "../common/forceQuit.js";
 
 export function setMenu(): void {
     const template: Electron.MenuItemConstructorOptions[] = [
@@ -48,6 +49,7 @@ export function setMenu(): void {
                     label: "Quit",
                     accelerator: "CmdOrCtrl+Q",
                     click() {
+                        setForceQuit(true);
                         app.quit();
                     }
                 }

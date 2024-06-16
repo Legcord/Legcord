@@ -12,13 +12,14 @@ import * as fs from "fs";
 import contextMenu from "electron-context-menu";
 import os from "os";
 import RPCServer from "arrpc";
-import {isQuitting, tray} from "../tray.js";
+import {tray} from "../tray.js";
 import {iconPath, init} from "../main.js";
 import {getConfig, setConfig, firstRun} from "../common/config.js";
 import {getWindowState, setWindowState} from "../common/windowState.js";
+import {forceQuit, setForceQuit} from "../common/forceQuit.js";
 export let mainWindows: BrowserWindow[] = [];
 export let inviteWindow: BrowserWindow;
-export let forceQuit = false;
+
 let osType = os.type();
 contextMenu({
     showSaveImageAs: true,
@@ -238,39 +239,28 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     });
     setMenu();
     passedWindow.on("close", (e) => {
-        if (process.platform === "darwin" && forceQuit) {
-            passedWindow.close();
-        } else if (mainWindows.length > 1) {
+        if (mainWindows.length > 1) {
             mainWindows = mainWindows.filter((mainWindow) => mainWindow.id != passedWindow.id);
             passedWindow.destroy();
-        } else {
-            const [width, height] = passedWindow.getSize();
-            setWindowState({
-                width,
-                height,
-                isMaximized: passedWindow.isMaximized(),
-                x: passedWindow.getPosition()[0],
-                y: passedWindow.getPosition()[1]
-            });
-            if (getConfig("minimizeToTray") && !isQuitting) {
-                e.preventDefault();
-                passedWindow.hide();
-            } else if (!getConfig("minimizeToTray")) {
-                e.preventDefault();
-                app.quit();
-            }
+        }
+        if (getConfig("minimizeToTray") && !forceQuit) {
+            e.preventDefault();
+            passedWindow.hide();
+        } else if (!getConfig("minimizeToTray")) {
+            app.quit();
         }
     });
-    if (process.platform === "darwin") {
-        app.on("before-quit", function (event) {
-            if (!forceQuit) {
-                event.preventDefault();
-                forceQuit = true;
-                app.quit();
-            }
+    app.on("before-quit", () => {
+        const [width, height] = passedWindow.getSize();
+        setWindowState({
+            width,
+            height,
+            isMaximized: passedWindow.isMaximized(),
+            x: passedWindow.getPosition()[0],
+            y: passedWindow.getPosition()[1]
         });
-    }
-
+        setForceQuit(true);
+    });
     // REVIEW - Awaiting javascript execution is silly
     passedWindow.on("focus", () => {
         void passedWindow.webContents.executeJavaScript(`document.body.removeAttribute("unFocused");`);
