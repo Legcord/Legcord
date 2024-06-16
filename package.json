@@ -50,6 +50,7 @@
         "arrpc": "github:OpenAsar/arrpc#c62ec6a04c8d870530aa6944257fe745f6c59a24",
         "cross-fetch": "^4.0.0",
         "electron-context-menu": "^4.0.0",
+        "electron-is-dev": "^3.0.1",
         "extract-zip": "^2.0.1",
         "v8-compile-cache": "^2.4.0",
         "ws": "^8.17.0"

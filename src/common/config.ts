@@ -1,5 +1,6 @@
 import {app, dialog} from "electron";
 import path from "path";
+import isDev from "electron-is-dev";
 import fs from "fs";
 import type {Settings} from "../types/settings.d.js";
 import {getWindowStateLocation} from "./windowState.js";
@@ -10,7 +11,7 @@ export function checkForDataFolder(): void {
         console.log("Found armcord-data folder. Running in portable mode.");
         app.setPath("userData", dataPath);
     }
-    if (path.join(app.getPath("appData"), "ArmCord")) {
+    if (path.join(app.getPath("appData"), "ArmCord") && !isDev) {
         console.log("Found existing ArmCord folder.");
         app.setPath("userData", path.join(app.getPath("appData"), "ArmCord"));
     }
