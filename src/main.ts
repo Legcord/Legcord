@@ -31,7 +31,7 @@ app.on("render-process-gone", (_event, _webContents, details) => {
         app.relaunch();
     }
 });
-async function args(): Promise<void> {
+function args(): void {
     let argNum = 2;
     if (process.argv[0] == "electron") argNum++;
     const args = process.argv[argNum];
@@ -44,7 +44,7 @@ async function args(): Promise<void> {
         app.relaunch();
         app.exit();
     } else if (args == "themes") {
-        await app.whenReady().then(async () => {
+        void app.whenReady().then(async () => {
             await createTManagerWindow();
         });
     }
@@ -74,7 +74,7 @@ export async function init(): Promise<void> {
             break;
     }
 }
-await args(); // i want my top level awaits - IMPLEMENTED :)
+args();
 if (!app.requestSingleInstanceLock()) {
     // if value isn't set after 3.2.4
     // kill if 2nd instance
@@ -117,31 +117,7 @@ if (!app.requestSingleInstanceLock()) {
         } else {
             iconPath = path.join(import.meta.dirname, "../", "/assets/desktop.png");
         }
-        async function init(): Promise<void> {
-            if (getConfig("skipSplash") == false) {
-                void createSplashWindow(); // REVIEW - Awaiting will hang at start
-            }
-            if (firstRun == true) {
-                setLang(new Intl.DateTimeFormat().resolvedOptions().locale);
-                await createSetupWindow();
-            }
-            switch (getConfig("windowStyle")) {
-                case "default":
-                    createCustomWindow();
-                    customTitlebar = true;
-                    break;
-                case "native":
-                    createNativeWindow();
-                    break;
-                case "transparent":
-                    createTransparentWindow();
-                    break;
-                default:
-                    createCustomWindow();
-                    customTitlebar = true;
-                    break;
-            }
-        }
+
         // Patch for linux bug to insure things are loaded before window creation (fixes transparency on some linux systems)
         await new Promise<void>((resolve) => setTimeout(() => (init(), resolve()), 1500));
         await installModLoader();

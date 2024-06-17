@@ -12,14 +12,14 @@ import * as fs from "fs";
 import contextMenu from "electron-context-menu";
 import os from "os";
 import RPCServer from "arrpc";
-import {isQuitting, tray} from "../tray.js";
+import {tray} from "../tray.js";
 import {iconPath, init} from "../main.js";
 import {getConfig, setConfig, firstRun} from "../common/config.js";
 import {getWindowState, setWindowState} from "../common/windowState.js";
+import {forceQuit, setForceQuit} from "../common/forceQuit.js";
 export let mainWindows: BrowserWindow[] = [];
 export let inviteWindow: BrowserWindow;
-export let forceQuit = false;
-let osType = os.type();
+
 contextMenu({
     showSaveImageAs: true,
     showCopyImageAddress: true,
@@ -65,11 +65,11 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         passedWindow.webContents.userAgent =
             "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.149 Mobile Safari/537.36";
     } else {
-        // A little sloppy but it works :p
-        if (osType == "Windows_NT") {
-            osType = `Windows ${os.release().split(".")[0]} (${os.release()})`;
-        }
-        passedWindow.webContents.userAgent = `Mozilla/5.0 (X11; ${osType} ${os.arch()}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36`; //fake useragent for screenshare to work
+        let osType = process.platform === "darwin" ? "Macintosh" : process.platform === "win32" ? "Windows" : "Linux";
+        if (osType === "Linux") osType = "X11; " + osType;
+        const chromeVersion = process.versions.chrome;
+        const userAgent = `Mozilla/5.0 (${osType} ${os.arch()}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chromeVersion} Safari/537.36`;
+        passedWindow.webContents.userAgent = userAgent;
     }
     if (mainWindows.length === 1) {
         app.on("second-instance", (_event, _commandLine, _workingDirectory, additionalData) => {
@@ -96,6 +96,10 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     passedWindow.webContents.setWindowOpenHandler(({url}) => {
         // Allow about:blank (used by Vencord QuickCss popup)
         if (url === "about:blank") return {action: "allow"};
+        // Saving ics files on future events
+        if (url.startsWith("blob:https://discord.com/")) {
+            return {action: "allow", overrideBrowserWindowOptions: {show: false}};
+        }
         // Allow Discord stream popout
         if (
             url === "https://discord.com/popout" ||
@@ -138,6 +142,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
                 }
             });
         }
+
         return {action: "deny"};
     });
     if (getConfig("useLegacyCapturer") == false) {
@@ -238,39 +243,28 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     });
     setMenu();
     passedWindow.on("close", (e) => {
-        if (process.platform === "darwin" && forceQuit) {
-            passedWindow.close();
-        } else if (mainWindows.length > 1) {
+        if (mainWindows.length > 1) {
             mainWindows = mainWindows.filter((mainWindow) => mainWindow.id != passedWindow.id);
             passedWindow.destroy();
-        } else {
-            const [width, height] = passedWindow.getSize();
-            setWindowState({
-                width,
-                height,
-                isMaximized: passedWindow.isMaximized(),
-                x: passedWindow.getPosition()[0],
-                y: passedWindow.getPosition()[1]
-            });
-            if (getConfig("minimizeToTray") && !isQuitting) {
-                e.preventDefault();
-                passedWindow.hide();
-            } else if (!getConfig("minimizeToTray")) {
-                e.preventDefault();
-                app.quit();
-            }
+        }
+        if (getConfig("minimizeToTray") && !forceQuit) {
+            e.preventDefault();
+            passedWindow.hide();
+        } else if (!getConfig("minimizeToTray")) {
+            app.quit();
         }
     });
-    if (process.platform === "darwin") {
-        app.on("before-quit", function (event) {
-            if (!forceQuit) {
-                event.preventDefault();
-                forceQuit = true;
-                app.quit();
-            }
+    app.on("before-quit", () => {
+        const [width, height] = passedWindow.getSize();
+        setWindowState({
+            width,
+            height,
+            isMaximized: passedWindow.isMaximized(),
+            x: passedWindow.getPosition()[0],
+            y: passedWindow.getPosition()[1]
         });
-    }
-
+        setForceQuit(true);
+    });
     // REVIEW - Awaiting javascript execution is silly
     passedWindow.on("focus", () => {
         void passedWindow.webContents.executeJavaScript(`document.body.removeAttribute("unFocused");`);

@@ -11,7 +11,6 @@
         "watch": "tsc -w",
         "start": "pnpm run build && electron --trace-warnings ./ts-out/main.js",
         "startThemeManager": "pnpm run build && electron ./ts-out/main.js themes",
-        "startKeybindManager": "pnpm run build && electron ./ts-out/main.js keybinds",
         "startWayland": "pnpm run build && electron ./ts-out/main.js --ozone-platform-hint=auto --enable-features=WebRTCPipeWireCapturer,WaylandWindowDecorations --disable-gpu",
         "package": "pnpm run build && electron-builder",
         "packageQuick": "pnpm run build && electron-builder --dir",
@@ -50,6 +49,7 @@
         "arrpc": "github:OpenAsar/arrpc#c62ec6a04c8d870530aa6944257fe745f6c59a24",
         "cross-fetch": "^4.0.0",
         "electron-context-menu": "^4.0.0",
+        "electron-is-dev": "^3.0.1",
         "extract-zip": "^2.0.1",
         "v8-compile-cache": "^2.4.0",
         "ws": "^8.17.0"

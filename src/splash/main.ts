@@ -1,6 +1,7 @@
-import {BrowserWindow} from "electron";
+import {BrowserWindow, ipcMain} from "electron";
 import {iconPath} from "../main.js";
 import path from "path";
+import isDev from "electron-is-dev";
 
 export let splashWindow: BrowserWindow;
 export async function createSplashWindow(): Promise<void> {
@@ -18,6 +19,9 @@ export async function createSplashWindow(): Promise<void> {
             sandbox: false,
             preload: path.join(import.meta.dirname, "preload.mjs")
         }
+    });
+    ipcMain.on("isDev", (event) => {
+        event.returnValue = isDev;
     });
     await splashWindow.loadFile(path.join(import.meta.dirname, "splash.html"));
 }

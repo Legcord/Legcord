@@ -1,13 +1,14 @@
 import {app} from "electron";
+import isDev from "electron-is-dev";
 
 export function getVersion(): string {
-    if ((app.getVersion() == process.versions.electron) == true) {
-        return "3.3.0";
+    if (isDev) {
+        return "0.0.0";
     }
     return app.getVersion();
 }
 export function getDisplayVersion(): string {
-    if ((app.getVersion() == process.versions.electron) == true) {
+    if (isDev) {
         return "Dev Build";
     }
     return app.getVersion();
