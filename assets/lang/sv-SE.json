@@ -74,13 +74,13 @@
     "settings-spellcheck": "Stavningskontroll",
     "settings-spellcheck-desc": "Hjälper dig att rätta till misstavda ord genom att markera dem.",
     "setup_question5": "Vill du använda en ikon i systembrickan?",
-    "settings-mintoTray": "Minimera till systembrickan",
+    "settings-mintoTray": "Kör i bakgrunden",
     "settings-mintoTray-desc": "Ifall inaktiverad, Så kommer ArmCord stängas likadant som andra fönster, annar så kommer den hänga \n                i din system tray tills vidare.",
-    "settings-theme-desc4": "transparent fönster med inbyggt titelfält, du behöver ett kompatibelt tema för detta. Windows specifikt.",
+    "settings-theme-desc4": "transparent fönster med inbyggt titelfält, du behöver ett kompatibelt tema för detta.",
     "settings-MultiInstance": "Multi instans",
     "settings-MultiInstance-desc": "När detta är aktiverat kommer du att kunna starta många instanser av ArmCord.",
     "settings-copyGPUInfo": "Kopiera GPU information",
     "settings-prfmMode-vaapi": "VAAPI",
-    "settings-smoothScroll": "Use smooth scrolling",
-    "settings-smoothScroll-desc": "Toggle smooth scrolling"
+    "settings-smoothScroll": "Använd mjuk rullning",
+    "settings-smoothScroll-desc": "Växla mjuk rullning"
 }
