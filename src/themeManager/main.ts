@@ -109,9 +109,6 @@ export async function createTManagerWindow(): Promise<void> {
             }
         });
 
-        async function managerLoadPage(): Promise<void> {
-            await themeWindow.loadFile(`${import.meta.dirname}/manager.html`);
-        }
         const userDataPath = app.getPath("userData");
         const themesFolder = `${userDataPath}/themes/`;
         if (!fs.existsSync(themesFolder)) {
@@ -129,13 +126,13 @@ export async function createTManagerWindow(): Promise<void> {
                 mainWindow.webContents.reload();
             });
         });
-        ipcMain.on("addToDisabled", (_event, name: string) => {
+        ipcMain.on("addToDisabled", async (_event, name: string) => {
             fs.appendFileSync(path.join(userDataPath, "/disabled.txt"), `${name}\n`);
         });
         ipcMain.on("disabled", (e) => {
             e.returnValue = fs.readFileSync(path.join(userDataPath, "/disabled.txt")).toString();
         });
-        ipcMain.on("removeFromDisabled", (_event, name: string) => {
+        ipcMain.on("removeFromDisabled", async (_event, name: string) => {
             const e = fs.readFileSync(path.join(userDataPath, "/disabled.txt")).toString();
             fs.writeFileSync(path.join(userDataPath, "/disabled.txt"), e.replace(name, ""));
         });
@@ -153,37 +150,35 @@ export async function createTManagerWindow(): Promise<void> {
                 mainWindow.webContents.reload();
             });
         });
-        ipcMain.on("installBDTheme", (_event, link: string) => {
-            return async () => {
-                try {
-                    const code = await (await fetch(link)).text();
-                    const manifest = parseBDManifest(code);
-                    const themePath = path.join(themesFolder, `${manifest.name?.replace(" ", "-")}-BD`);
-                    if (!fs.existsSync(themePath)) {
-                        fs.mkdirSync(themePath);
-                        console.log(`Created ${manifest.name} folder`);
-                    }
-                    manifest.updateSrc = link;
-                    if (code.includes(".titlebar")) manifest.supportsArmCordTitlebar = true;
-                    else manifest.supportsArmCordTitlebar = false;
-                    fs.writeFileSync(path.join(themePath, "manifest.json"), JSON.stringify(manifest));
-                    fs.writeFileSync(path.join(themePath, "src.css"), code);
-                    dialog.showMessageBoxSync({
-                        type: "info",
-                        title: "BD Theme import success",
-                        message: "Successfully imported theme from link."
-                    });
-                    themeWindow.webContents.reload();
-                    mainWindows.forEach((mainWindow) => {
-                        mainWindow.webContents.reload();
-                    });
-                } catch (e) {
-                    dialog.showErrorBox(
-                        "BD Theme import fail",
-                        "Failed to import theme from link. Please make sure that it's a valid BetterDiscord Theme."
-                    );
+        ipcMain.on("installBDTheme", async (_event, link: string) => {
+            try {
+                const code = await (await fetch(link)).text();
+                const manifest = parseBDManifest(code);
+                const themePath = path.join(themesFolder, `${manifest.name?.replace(" ", "-")}-BD`);
+                if (!fs.existsSync(themePath)) {
+                    fs.mkdirSync(themePath);
+                    console.log(`Created ${manifest.name} folder`);
                 }
-            };
+                manifest.updateSrc = link;
+                if (code.includes(".titlebar")) manifest.supportsArmCordTitlebar = true;
+                else manifest.supportsArmCordTitlebar = false;
+                fs.writeFileSync(path.join(themePath, "manifest.json"), JSON.stringify(manifest));
+                fs.writeFileSync(path.join(themePath, "src.css"), code);
+                dialog.showMessageBoxSync({
+                    type: "info",
+                    title: "BD Theme import success",
+                    message: "Successfully imported theme from link."
+                });
+                themeWindow.webContents.reload();
+                mainWindows.forEach((mainWindow) => {
+                    mainWindow.webContents.reload();
+                });
+            } catch (e) {
+                dialog.showErrorBox(
+                    "BD Theme import fail",
+                    "Failed to import theme from link. Please make sure that it's a valid BetterDiscord Theme."
+                );
+            }
         });
         themeWindow.webContents.on("did-finish-load", () => {
             fs.readdirSync(themesFolder).forEach((file) => {
@@ -197,7 +192,7 @@ export async function createTManagerWindow(): Promise<void> {
             });
         });
 
-        await managerLoadPage();
+        await themeWindow.loadFile(`${import.meta.dirname}/manager.html`);
         themeWindow.on("close", () => {
             instance = 0;
         });

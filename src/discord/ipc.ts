@@ -1,7 +1,5 @@
 //ipc stuff
-import {app, clipboard, desktopCapturer, ipcMain, nativeImage, shell, SourcesOptions} from "electron";
-import {BrowserWindow} from "electron";
-
+import {app, clipboard, desktopCapturer, ipcMain, nativeImage, shell, SourcesOptions, BrowserWindow} from "electron";
 import os from "os";
 import fs from "fs";
 import path from "path";
@@ -128,7 +126,6 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.on("mobileMode", (event) => {
         event.returnValue = getConfig("mobileMode");
     });
-    // REVIEW - I don't see a reason to await the actual action of running the settings window. The user cannot open more than one anyway, as defined in the function.
     ipcMain.on("openSettingsWindow", () => {
         void createSettingsWindow();
     });
