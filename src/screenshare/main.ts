@@ -1,6 +1,6 @@
 import {BrowserWindow, MessageBoxOptions, desktopCapturer, dialog, ipcMain, session} from "electron";
 import path from "path";
-import {iconPath} from "../../main.js";
+import {iconPath} from "../main.js";
 let capturerWindow: BrowserWindow;
 function showAudioDialog(): boolean {
     const options: MessageBoxOptions = {

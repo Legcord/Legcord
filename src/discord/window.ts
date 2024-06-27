@@ -147,7 +147,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     });
     if (getConfig("useLegacyCapturer") == false) {
         console.log("Starting screenshare module...");
-        import("./screenshare/main.js");
+        import("../screenshare/main.js");
     }
 
     passedWindow.webContents.session.webRequest.onBeforeRequest(
