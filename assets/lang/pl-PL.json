@@ -82,5 +82,7 @@
     "settings-copyGPUInfo": "Skopiuj informacje o GPU",
     "settings-prfmMode-vaapi": "VAAPI",
     "settings-smoothScroll": "Use smooth scrolling",
-    "settings-smoothScroll-desc": "Toggle smooth scrolling"
+    "settings-smoothScroll-desc": "Toggle smooth scrolling",
+    "settings-autoScroll": "Allow auto-scroll",
+    "settings-autoScroll-desc": "Allow auto-scrolling with middle-click (Note: Your desktop environment can still override this with another action)"
 }
