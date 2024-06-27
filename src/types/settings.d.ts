@@ -29,4 +29,5 @@ export interface Settings {
     doneSetup: boolean;
     clientName: string;
     smoothScroll: boolean;
+    autoScroll: boolean;
 }

@@ -129,7 +129,8 @@ export function setup(): void {
         doneSetup: false,
         clientName: "ArmCord",
         customIcon: path.join(import.meta.dirname, "../", "/assets/desktop.png"),
-        smoothScroll: true
+        smoothScroll: true,
+        autoScroll: false
     };
     setConfigBulk({
         ...defaults
