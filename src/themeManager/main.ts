@@ -126,13 +126,13 @@ export async function createTManagerWindow(): Promise<void> {
                 mainWindow.webContents.reload();
             });
         });
-        ipcMain.on("addToDisabled", async (_event, name: string) => {
+        ipcMain.on("addToDisabled", (_event, name: string) => {
             fs.appendFileSync(path.join(userDataPath, "/disabled.txt"), `${name}\n`);
         });
         ipcMain.on("disabled", (e) => {
             e.returnValue = fs.readFileSync(path.join(userDataPath, "/disabled.txt")).toString();
         });
-        ipcMain.on("removeFromDisabled", async (_event, name: string) => {
+        ipcMain.on("removeFromDisabled", (_event, name: string) => {
             const e = fs.readFileSync(path.join(userDataPath, "/disabled.txt")).toString();
             fs.writeFileSync(path.join(userDataPath, "/disabled.txt"), e.replace(name, ""));
         });
@@ -150,7 +150,7 @@ export async function createTManagerWindow(): Promise<void> {
                 mainWindow.webContents.reload();
             });
         });
-        ipcMain.on("installBDTheme", async (_event, link: string) => {
+        ipcMain.handle("installBDTheme", async (_event, link: string) => {
             try {
                 const code = await (await fetch(link)).text();
                 const manifest = parseBDManifest(code);

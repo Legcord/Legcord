@@ -1,14 +1,12 @@
 import {ipcRenderer, contextBridge} from "electron";
-import {sleep} from "../common/sleep.js";
 import {ThemeManifest} from "../types/themeManifest";
 contextBridge.exposeInMainWorld("themes", {
     install: (url: string) => ipcRenderer.send("installBDTheme", url),
     uninstall: (id: string) => ipcRenderer.send("uninstallTheme", id)
 });
-ipcRenderer.on("themeManifest", async (_event, json: string) => {
+ipcRenderer.on("themeManifest", (_event, json: string) => {
     const manifest = JSON.parse(json) as ThemeManifest;
     console.log(manifest);
-    await sleep(1000); // REVIEW - This is all that requires async, would be nice if it could be removed.
     const e = document.getElementById("cardBox");
     const id = manifest.name.replace(" ", "-");
     e?.insertAdjacentHTML(
