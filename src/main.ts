@@ -110,6 +110,9 @@ if (!app.requestSingleInstanceLock()) {
     if (getConfig("smoothScroll") === false) {
         app.commandLine.appendSwitch("disable-smooth-scrolling");
     }
+    if (getConfig("autoScroll")) {
+        app.commandLine.appendSwitch("enable-blink-features", "MiddleClickAutoscroll");
+    }
     void app.whenReady().then(async () => {
         // REVIEW - Awaiting the line above will cause a hang at startup
         if (getConfig("customIcon") !== null) {
