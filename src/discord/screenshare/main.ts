@@ -65,7 +65,7 @@ function registerCustomHandler(): void {
                             callback({video: result});
                         }
                     });
-                    void capturerWindow.loadURL(`file://${import.meta.dirname}/picker.html`);
+                    void capturerWindow.loadFile(path.join(import.meta.dirname, "picker.html"));
                     capturerWindow.webContents.send("getSources", sources);
                 }
             });

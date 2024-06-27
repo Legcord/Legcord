@@ -7,7 +7,7 @@
         "node": ">=22"
     },
     "scripts": {
-        "build": "tsc && copyfiles -u 1 src/**/*.html src/**/**/*.css src/**/**/*.js ts-out/ && copyfiles package.json ts-out/ && copyfiles assets/**/** ts-out/",
+        "build": "tsc && copyfiles -u 1 src/**/**/*.html src/**/**/*.css src/**/**/*.js ts-out/ && copyfiles package.json ts-out/ && copyfiles assets/**/** ts-out/",
         "watch": "tsc -w",
         "start": "pnpm run build && electron --trace-warnings ./ts-out/main.js",
         "startThemeManager": "pnpm run build && electron ./ts-out/main.js themes",
