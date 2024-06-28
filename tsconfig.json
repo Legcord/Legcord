@@ -1,6 +1,6 @@
 {
     // Reference: https://www.typescriptlang.org/tsconfig
-    "include": ["src/**/*", "eslint.config.js", "prettier.config.js"], // This makes it so that the compiler won't compile anything outside of "src".
+    "include": ["src/**/*", "*.js"], // This makes it so that the compiler won't compile anything outside of "src".
     //"exclude": ["src/**/*.test.ts"], // Exclude .test.ts files since they're for Jest only.
     "compilerOptions": {
         // Project Structure //
