@@ -74,15 +74,15 @@
     "settings-spellcheck": "Проверка орфографии",
     "settings-spellcheck-desc": "Помогает исправить неправильно написанные слова, выделяя их.",
     "setup_question5": "Вы хотите использовать значок в трее?",
-    "settings-mintoTray": "Свернуть в трей",
+    "settings-mintoTray": "Работа в фоновом режиме",
     "settings-mintoTray-desc": "При отключении ArmCord будет закрываться как любое другое окно при закрытии, в противном случае он будет сидеть и отдыхать\n                в системном трее.",
-    "settings-theme-desc4": "прозрачное окно с нативной строкой заголовка, вам нужна совместимая тема для этого. Только для Windows.",
+    "settings-theme-desc4": "прозрачное окно с нативной строкой заголовка, вам нужна совместимая тема для этого.",
     "settings-MultiInstance": "Множество Экземпляров",
     "settings-MultiInstance-desc": "Когда включено, вы можете запустить множество экземпляров ArmCord.",
     "settings-copyGPUInfo": "Копировать информацию о GPU",
     "settings-prfmMode-vaapi": "VAAPI",
-    "settings-smoothScroll": "Use smooth scrolling",
-    "settings-smoothScroll-desc": "Toggle smooth scrolling",
-    "settings-autoScroll": "Allow auto-scroll",
-    "settings-autoScroll-desc": "Allow auto-scrolling with middle-click (Note: Your desktop environment can still override this with another action)"
+    "settings-smoothScroll": "Использовать плавную прокрутку",
+    "settings-smoothScroll-desc": "Включить плавную прокрутку",
+    "settings-autoScroll": "Разрешить автоматическую прокрутку",
+    "settings-autoScroll-desc": "Разрешить автоматическую прокрутку при нажатии средней кнопки мыши (Примечание: ваша среда рабочего стола все еще может переопределить это с помощью другого действия)"
 }
