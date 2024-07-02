@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       arrpc:
-        specifier: github:OpenAsar/arrpc#c62ec6a04c8d870530aa6944257fe745f6c59a24
-        version: git+https://git@github.com:OpenAsar/arrpc.git#c62ec6a04c8d870530aa6944257fe745f6c59a24
+        specifier: git+https://github.com/OpenAsar/arrpc#c62ec6a04c8d870530aa6944257fe745f6c59a24
+        version: https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0(encoding@0.1.13)
@@ -395,8 +395,8 @@ packages:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
 
-  arrpc@git+https://git@github.com:OpenAsar/arrpc.git#c62ec6a04c8d870530aa6944257fe745f6c59a24:
-    resolution: {commit: c62ec6a04c8d870530aa6944257fe745f6c59a24, repo: git@github.com:OpenAsar/arrpc.git, type: git}
+  arrpc@https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24:
+    resolution: {tarball: https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24}
     version: 3.4.0
     hasBin: true
 
@@ -2416,7 +2416,7 @@ snapshots:
 
   array-union@2.1.0: {}
 
-  arrpc@git+https://git@github.com:OpenAsar/arrpc.git#c62ec6a04c8d870530aa6944257fe745f6c59a24:
+  arrpc@https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24:
     dependencies:
       ws: 8.17.1
     transitivePeerDependencies:
