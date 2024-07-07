@@ -17,7 +17,7 @@ export async function createSplashWindow(): Promise<void> {
         autoHideMenuBar: true,
         webPreferences: {
             sandbox: false,
-            preload: path.join(import.meta.dirname, "preload.mjs")
+            preload: path.join(import.meta.dirname, "splash", "preload.js")
         }
     });
     ipcMain.on("isDev", (event) => {

@@ -9,7 +9,8 @@
     "scripts": {
         "build": "tsc && copyfiles -u 1 src/**/**/*.html src/**/**/*.css src/**/**/*.js ts-out/ && copyfiles package.json ts-out/ && copyfiles assets/**/** ts-out/",
         "watch": "tsc -w",
-        "start": "pnpm run build && electron --trace-warnings ./ts-out/main.js",
+        "bundle": "rollup -c",
+        "start": "pnpm run bundle && electron --trace-warnings ./ts-out/main.js",
         "startThemeManager": "pnpm run build && electron ./ts-out/main.js themes",
         "startWayland": "pnpm run build && electron ./ts-out/main.js --ozone-platform-hint=auto --enable-features=WebRTCPipeWireCapturer,WaylandWindowDecorations --disable-gpu",
         "package": "pnpm run build && electron-builder",
@@ -32,6 +33,10 @@
     "homepage": "https://github.com/armcord/armcord#readme",
     "devDependencies": {
         "@eslint/js": "^9.5.0",
+        "@rollup/plugin-commonjs": "^26.0.1",
+        "@rollup/plugin-esm-shim": "^0.1.7",
+        "@rollup/plugin-json": "^6.1.0",
+        "@rollup/plugin-node-resolve": "^15.2.3",
         "@rollup/plugin-typescript": "^11.1.6",
         "@types/eslint__js": "^8.42.3",
         "@types/node": "^20.14.9",
