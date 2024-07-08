@@ -37,7 +37,7 @@
         "@types/ws": "^8.5.10",
         "copyfiles": "^2.4.1",
         "electron": "31.1.0",
-        "electron-builder": "25.0.0-alpha.10",
+        "electron-builder": "25.0.0-alpha.11",
         "eslint": "^9.6.0",
         "eslint-config-prettier": "^9.1.0",
         "eslint-plugin-n": "^17.9.0",
