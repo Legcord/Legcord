@@ -230,7 +230,7 @@
 [armcord-platform="darwin"] .sidebar-1tnWFu {
     border-top-left-radius: 0px !important;
 }
-[armcord-platform="darwin"] .scroller__3d071 {
+[armcord-platform="darwin"] nav.wrapper_fea3ef.guilds_a4d4d9 {
     padding-top: 35px !important;
 }
 [armcord-platform="darwin"] .container__037ed {
@@ -243,13 +243,14 @@
     line-height: 48px;
     width: 150px !important;
 }
-[armcord-platform="darwin"] section.theme-dark.container__11d72.themed_b152d4 {
+[armcord-platform="darwin"] section.theme-dark.container_fc4f04.themed_fc4f04 {
     -webkit-app-region: drag;
 }
-[armcord-platform="darwin"] section.title_b7d661.container__11d72.themed_b152d4 {
+
+[armcord-platform="darwin"] section.title_a7d72e.container_fc4f04.themed_fc4f04 {
     -webkit-app-region: drag;
 }
-[armcord-platform="darwin"] .searchBar_e4ea2a {
+[armcord-platform="darwin"] [class*="searchBar_"] {
     -webkit-app-region: drag;
 }
 [armcord-platform="darwin"] .titlebar #window-controls-container {
