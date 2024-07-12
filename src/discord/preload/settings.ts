@@ -6,12 +6,10 @@ const webview = `<webview src="${path.join(
     "file://",
     import.meta.dirname,
     "../",
-    "../",
-    "/settings/settings.html"
+    "/html/settings.html"
 )}" preload="${path.join(
     "file://",
     import.meta.dirname,
-    "../",
     "../",
     "/settings/preload.mjs"
 )}" id="inAppSettings" webpreferences="sandbox=false"></webview>`;

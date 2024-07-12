@@ -53,5 +53,45 @@ export default defineConfig([
             sourcemap: true,
         },
         plugins: [typescript()]
+    },
+    {
+        input: "src/settings/preload.mts",
+        output: {
+            dir: "ts-out/settings",
+            format: "esm",
+            entryFileNames: "[name].mjs",
+            sourcemap: true,
+        },
+        plugins: [typescript()]
+    },
+    {
+        input: "src/setup/preload.mts",
+        output: {
+            dir: "ts-out/setup",
+            format: "esm",
+            entryFileNames: "[name].mjs",
+            sourcemap: true,
+        },
+        plugins: [typescript()]
+    },
+    {
+        input: "src/themeManager/preload.mts",
+        output: {
+            dir: "ts-out/themeManager",
+            format: "esm",
+            entryFileNames: "[name].mjs",
+            sourcemap: true,
+        },
+        plugins: [typescript()]
+    },
+    {
+        input: "src/screenshare/preload.mts",
+        output: {
+            dir: "ts-out/screenshare",
+            format: "esm",
+            entryFileNames: "[name].mjs",
+            sourcemap: true,
+        },
+        plugins: [typescript()]
     }
 ]);

@@ -93,7 +93,7 @@ export async function createTManagerWindow(): Promise<void> {
             autoHideMenuBar: true,
             webPreferences: {
                 sandbox: false,
-                preload: path.join(import.meta.dirname, "preload.mjs")
+                preload: path.join(import.meta.dirname, "themeManager", "preload.mjs")
             }
         });
         //setWindowHandler doesn't work for some reason
@@ -192,7 +192,7 @@ export async function createTManagerWindow(): Promise<void> {
             });
         });
 
-        await themeWindow.loadFile(`${import.meta.dirname}/manager.html`);
+        await themeWindow.loadFile(`${import.meta.dirname}/html/manager.html`);
         themeWindow.on("close", () => {
             instance = 0;
         });
