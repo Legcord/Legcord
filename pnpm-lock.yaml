@@ -23,9 +23,6 @@ importers:
       extract-zip:
         specifier: ^2.0.1
         version: 2.0.1
-      rollup-plugin-esbuild-minify:
-        specifier: ^1.1.1
-        version: 1.1.1(rollup@4.18.0)
       v8-compile-cache:
         specifier: ^2.4.0
         version: 2.4.0
@@ -84,6 +81,9 @@ importers:
       rollup-plugin-copy:
         specifier: ^3.5.0
         version: 3.5.0
+      rollup-plugin-esbuild:
+        specifier: ^6.1.1
+        version: 6.1.1(esbuild@0.19.12)(rollup@4.18.0)
       typescript:
         specifier: ^5.5.2
         version: 5.5.2
@@ -744,6 +744,9 @@ packages:
     resolution: {integrity: sha512-Zf5H2Kxt2xjTvbJvP2ZWLEICxA6j+hAmMzIlypy4xcBg1vKVnx89Wy0GbS+kf5cwCVFFzdCFh2XSCFNULS6csw==}
     engines: {node: '>= 0.4'}
 
+  es-module-lexer@1.5.4:
+    resolution: {integrity: sha512-MVNK56NiMrOwitFB7cqDwq0CQutbw+0BvLshJSse0MUNU+y1FC3bUS/AQg7oUng+/wKrrki7JfmwtVHkVfPLlw==}
+
   es6-error@4.1.1:
     resolution: {integrity: sha512-Um/+FxMr9CISWh0bi5Zv0iOD+4cFh5qLeks1qhAopKVAJw3drgKbKySikp7wGhDL0HPeaja0P5ULZrxLkniUVg==}
 
@@ -1312,11 +1315,12 @@ packages:
     resolution: {integrity: sha512-wI8D5dvYovRMx/YYKtUNt3Yxaw4ORC9xo6Gt9t22kveWz1enG9QrhVlagzwrxSC455xD1dHMKhIJkbsQ7d48BA==}
     engines: {node: '>=8.3'}
 
-  rollup-plugin-esbuild-minify@1.1.1:
-    resolution: {integrity: sha512-DHrCx6Evla4kafxzk3bwPXvY/w+LbCkNXZmjZoBMIN8o2ELEoAoa1/QkPzLMVtBEjB5BAKV1iRhai3yniKA5MQ==}
-    engines: {node: '>= 14.18'}
+  rollup-plugin-esbuild@6.1.1:
+    resolution: {integrity: sha512-CehMY9FAqJD5OUaE/Mi1r5z0kNeYxItmRO2zG4Qnv2qWKF09J2lTy5GUzjJR354ZPrLkCj4fiBN41lo8PzBUhw==}
+    engines: {node: '>=14.18.0'}
     peerDependencies:
-      rollup: ^2 || ^3 || ^4
+      esbuild: '>=0.18.0'
+      rollup: ^1.20.0 || ^2.0.0 || ^3.0.0 || ^4.0.0
 
   rollup@4.18.0:
     resolution: {integrity: sha512-QmJz14PX3rzbJCN1SG4Xe/bAAX2a6NpCP8ab2vfu2GiUr8AQcr2nCV/oEO3yneFarB67zk8ShlIyWb2LGTb3Sg==}
@@ -2113,6 +2117,8 @@ snapshots:
   es-errors@1.3.0:
     optional: true
 
+  es-module-lexer@1.5.4: {}
+
   es6-error@4.1.1:
     optional: true
 
@@ -2722,10 +2728,16 @@ snapshots:
       globby: 10.0.1
       is-plain-object: 3.0.1
 
-  rollup-plugin-esbuild-minify@1.1.1(rollup@4.18.0):
+  rollup-plugin-esbuild@6.1.1(esbuild@0.19.12)(rollup@4.18.0):
     dependencies:
+      '@rollup/pluginutils': 5.1.0(rollup@4.18.0)
+      debug: 4.3.5
+      es-module-lexer: 1.5.4
       esbuild: 0.19.12
+      get-tsconfig: 4.7.5
       rollup: 4.18.0
+    transitivePeerDependencies:
+      - supports-color
 
   rollup@4.18.0:
     dependencies:

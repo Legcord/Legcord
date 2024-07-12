@@ -1,8 +1,8 @@
-//@ts-check
+// @ts-check
 
 import typescript from "@rollup/plugin-typescript";
 import copy from "rollup-plugin-copy";
-import {minify} from "rollup-plugin-esbuild-minify";
+import {minify} from "rollup-plugin-esbuild";
 import commonjs from "@rollup/plugin-commonjs";
 import json from "@rollup/plugin-json";
 import esmShim from "@rollup/plugin-esm-shim";
