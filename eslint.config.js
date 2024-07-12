@@ -1,4 +1,3 @@
-/* eslint-disable n/no-unpublished-import */
 // @ts-check
 
 import eslint from "@eslint/js";
@@ -31,6 +30,7 @@ export default tseslint.config(
         },
         rules: {
             "no-constant-binary-expression": 0,
+            "n/no-unpublished-import": 0,
             "n/no-unsupported-features/node-builtins": 1,
             "@typescript-eslint/no-unused-vars": [
                 2,

@@ -20,7 +20,7 @@ export async function createSetupWindow(): Promise<void> {
             webPreferences: {
                 sandbox: false,
                 spellcheck: false,
-                preload: path.join(import.meta.dirname, "preload.mjs")
+                preload: path.join(import.meta.dirname, "setup", "preload.mjs")
             }
         });
         ipcMain.on("saveSettings", (_event, args: Settings) => {
@@ -42,6 +42,6 @@ export async function createSetupWindow(): Promise<void> {
                 app.quit();
             });
         });
-        void setupWindow.loadURL(`file://${import.meta.dirname}/setup.html`);
+        void setupWindow.loadURL(`file://${import.meta.dirname}/html/setup.html`);
     });
 }

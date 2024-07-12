@@ -6,12 +6,10 @@ const webview = `<webview src="${path.join(
     "file://",
     import.meta.dirname,
     "../",
-    "../",
-    "/settings/settings.html"
+    "/html/settings.html"
 )}" preload="${path.join(
     "file://",
     import.meta.dirname,
-    "../",
     "../",
     "/settings/preload.mjs"
 )}" id="inAppSettings" webpreferences="sandbox=false"></webview>`;
@@ -22,7 +20,7 @@ export function injectSettings() {
 }
 
 document.addEventListener("DOMContentLoaded", function (_event) {
-    const settingsCssPath = path.join(import.meta.dirname, "../", "/content/css/inAppSettings.css");
+    const settingsCssPath = path.join(import.meta.dirname, "../", "/css/inAppSettings.css");
     addStyle(fs.readFileSync(settingsCssPath, "utf8"));
     const webview = document.querySelector("webview")!;
     webview.addEventListener("console-message", (e) => {

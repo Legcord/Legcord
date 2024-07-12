@@ -1,11 +1,10 @@
 {
     // Reference: https://www.typescriptlang.org/tsconfig
-    "include": ["src/**/*", "eslint.config.js", "prettier.config.js"], // This makes it so that the compiler won't compile anything outside of "src".
+    "include": ["src/**/*", "*.js"], // This makes it so that the compiler won't compile anything outside of "src".
     //"exclude": ["src/**/*.test.ts"], // Exclude .test.ts files since they're for Jest only.
     "compilerOptions": {
         // Project Structure //
         "rootDir": "src", // rootDir only affects the STRUCTURE of the folders, not what gets compiled. For extra measure, make sure the structure conforms to "src".
-        "outDir": "ts-out", // Likewise, outDir only chooses which folder to compile to. Prevent the compiler from creating JS files right next to source files.
         "moduleResolution": "node", // Specify how the compiler resolves modules, like going for node_modules first then searching elsewhere. The official docs just say to use this instead of classic.
 
         // Type Settings //
