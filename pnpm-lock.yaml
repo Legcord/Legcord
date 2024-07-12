@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       arrpc:
-        specifier: ^3.3.1
-        version: 3.3.1
+        specifier: git+https://github.com/OpenAsar/arrpc#c62ec6a04c8d870530aa6944257fe745f6c59a24
+        version: https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0(encoding@0.1.13)
@@ -581,8 +581,9 @@ packages:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
 
-  arrpc@3.3.1:
-    resolution: {integrity: sha512-Tt2YQg+5vKwMTt4Qaz8O9gAc+CNsZadSSZ8lrVYONYaFf7N2jBiQ6HLhE+F5oF8XO3keO0dbbvR3V3fsZ3x7Vg==}
+  arrpc@https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24:
+    resolution: {tarball: https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24}
+    version: 3.4.0
     hasBin: true
 
   balanced-match@1.0.2:
@@ -1947,7 +1948,7 @@ snapshots:
 
   array-union@2.1.0: {}
 
-  arrpc@3.3.1:
+  arrpc@https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24:
     dependencies:
       ws: 8.17.1
     transitivePeerDependencies:

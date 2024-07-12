@@ -16,6 +16,7 @@ export default defineConfig([
             format: "esm",
             sourcemap: true
         },
+        external: ["electron"],
         plugins: [
             commonjs(),
             esmShim(),
@@ -42,6 +43,7 @@ export default defineConfig([
             format: "esm",
             sourcemap: true
         },
+        external: ["electron"],
         plugins: [typescript(), minify({minify: process.env.BUILD === "prod" ? true : false})]
     },
     {
@@ -52,6 +54,7 @@ export default defineConfig([
             entryFileNames: "[name].mjs",
             sourcemap: true
         },
+        external: ["electron"],
         plugins: [typescript(), minify({minify: process.env.BUILD === "prod" ? true : false})]
     },
     {
@@ -62,6 +65,7 @@ export default defineConfig([
             entryFileNames: "[name].mjs",
             sourcemap: true
         },
+        external: ["electron"],
         plugins: [typescript(), minify({minify: process.env.BUILD === "prod" ? true : false})]
     },
     {
@@ -72,6 +76,7 @@ export default defineConfig([
             entryFileNames: "[name].mjs",
             sourcemap: true
         },
+        external: ["electron"],
         plugins: [typescript(), minify({minify: process.env.BUILD === "prod" ? true : false})]
     },
     {
@@ -82,6 +87,7 @@ export default defineConfig([
             entryFileNames: "[name].mjs",
             sourcemap: true
         },
+        external: ["electron"],
         plugins: [typescript(), minify({minify: process.env.BUILD === "prod" ? true : false})]
     },
     {
@@ -92,6 +98,7 @@ export default defineConfig([
             entryFileNames: "[name].mjs",
             sourcemap: true
         },
+        external: ["electron"],
         plugins: [typescript(), minify({minify: process.env.BUILD === "prod" ? true : false})]
     }
 ]);
