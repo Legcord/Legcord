@@ -7,13 +7,13 @@
         "node": ">=22"
     },
     "scripts": {
-        "build": "tsc && copyfiles -u 1 src/**/**/*.html src/**/**/*.css src/**/**/*.js ts-out/ && copyfiles package.json ts-out/ && copyfiles assets/**/** ts-out/",
-        "watch": "tsc -w",
+        "build:dev": "rollup -c --environment BUILD:dev",
+        "build": "rollup -c --environment BUILD:prod",
         "bundle": "rollup -c",
-        "start": "pnpm run bundle && electron --trace-warnings ./ts-out/main.js",
+        "start": "pnpm run build:dev && electron --trace-warnings ./ts-out/main.js",
         "runElectron": "electron --trace-warnings ./ts-out/main.js",
-        "startThemeManager": "pnpm run build && electron ./ts-out/main.js themes",
-        "startWayland": "pnpm run build && electron ./ts-out/main.js --ozone-platform-hint=auto --enable-features=WebRTCPipeWireCapturer,WaylandWindowDecorations --disable-gpu",
+        "startThemeManager": "pnpm run build:dev && electron ./ts-out/main.js themes",
+        "startWayland": "pnpm run build:dev && electron ./ts-out/main.js --ozone-platform-hint=auto --enable-features=WebRTCPipeWireCapturer,WaylandWindowDecorations --disable-gpu",
         "package": "pnpm run build && electron-builder",
         "packageQuick": "pnpm run build && electron-builder --dir",
         "format": "prettier --write src *.json",
@@ -59,6 +59,7 @@
         "electron-context-menu": "^4.0.1",
         "electron-is-dev": "^3.0.1",
         "extract-zip": "^2.0.1",
+        "rollup-plugin-esbuild-minify": "^1.1.1",
         "v8-compile-cache": "^2.4.0",
         "ws": "^8.17.1"
     },

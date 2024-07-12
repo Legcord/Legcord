@@ -2,7 +2,7 @@
 
 import typescript from "@rollup/plugin-typescript";
 import copy from "rollup-plugin-copy";
-import {nodeResolve} from "@rollup/plugin-node-resolve";
+import { minify } from 'rollup-plugin-esbuild-minify'
 import commonjs from "@rollup/plugin-commonjs";
 import json from "@rollup/plugin-json";
 import esmShim from "@rollup/plugin-esm-shim";
@@ -20,6 +20,7 @@ export default defineConfig([
             commonjs(),
             esmShim(),
             json(),
+            minify({minify: process.env.BUILD === 'prod' ? true : false,}),
             //        nodeResolve(), we don't need to bundle node_modules cuz it breaks electron
             typescript(),
             copy({
@@ -41,7 +42,7 @@ export default defineConfig([
             format: "esm",
             sourcemap: true,
         },
-        plugins: [typescript()]
+        plugins: [typescript(), minify({minify: process.env.BUILD === 'prod' ? true : false})]
     }
     ,
     {
@@ -52,7 +53,7 @@ export default defineConfig([
             entryFileNames: "[name].mjs",
             sourcemap: true,
         },
-        plugins: [typescript()]
+        plugins: [typescript(), minify({minify: process.env.BUILD === 'prod' ? true : false})]
     },
     {
         input: "src/settings/preload.mts",
@@ -62,7 +63,7 @@ export default defineConfig([
             entryFileNames: "[name].mjs",
             sourcemap: true,
         },
-        plugins: [typescript()]
+        plugins: [typescript(), minify({minify: process.env.BUILD === 'prod' ? true : false})]
     },
     {
         input: "src/setup/preload.mts",
@@ -72,7 +73,7 @@ export default defineConfig([
             entryFileNames: "[name].mjs",
             sourcemap: true,
         },
-        plugins: [typescript()]
+        plugins: [typescript(), minify({minify: process.env.BUILD === 'prod' ? true : false})]
     },
     {
         input: "src/themeManager/preload.mts",
@@ -82,7 +83,7 @@ export default defineConfig([
             entryFileNames: "[name].mjs",
             sourcemap: true,
         },
-        plugins: [typescript()]
+        plugins: [typescript(), minify({minify: process.env.BUILD === 'prod' ? true : false})]
     },
     {
         input: "src/screenshare/preload.mts",
@@ -92,6 +93,6 @@ export default defineConfig([
             entryFileNames: "[name].mjs",
             sourcemap: true,
         },
-        plugins: [typescript()]
+        plugins: [typescript(), minify({minify: process.env.BUILD === 'prod' ? true : false})]
     }
 ]);
