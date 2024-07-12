@@ -63,6 +63,7 @@ export function setMenu(): void {
                 {type: "separator"},
                 {label: "Cut", accelerator: "CmdOrCtrl+X", role: "cut"},
                 {label: "Copy", accelerator: "CmdOrCtrl+C", role: "copy"},
+                {label: "Paste", accelerator: "CmdOrCtrl+V", role: "paste"},
                 {label: "Select All", accelerator: "CmdOrCtrl+A", role: "selectAll"}
             ]
         },
