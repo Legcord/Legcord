@@ -74,15 +74,15 @@
     "settings-spellcheck": "Controllo ortografico",
     "settings-spellcheck-desc": "Ti aiuta a correggere le parole errate evidenziandole.",
     "setup_question5": "Vuoi usare un'icona nella barra delle applicazioni?",
-    "settings-mintoTray": "Riduci a icona nel barra delle applicazioni",
+    "settings-mintoTray": "Lavora in background",
     "settings-mintoTray-desc": "Se disabilitato, ArmCord si chiuderà come qualsiasi altra finestra quando è chiusa, altrimenti si siederà e si rilasserà\n                 nella barra delle applicazioni per dopo.",
-    "settings-theme-desc4": "finestra trasparente con barra del titolo nativa, è necessario un tema compatibile per eseguirlo. Solo Windows.",
+    "settings-theme-desc4": "finestra trasparente con barra del titolo nativa, è necessario un tema compatibile per eseguirlo.",
     "settings-MultiInstance": "Multi-istanza",
     "settings-MultiInstance-desc": "Se abilitato sarai in grado di avviare molte istanze di ArmCord.",
     "settings-copyGPUInfo": "Copia informazioni sulla GPU",
     "settings-prfmMode-vaapi": "VAAPI",
-    "settings-smoothScroll": "Use smooth scrolling",
-    "settings-smoothScroll-desc": "Toggle smooth scrolling",
-    "settings-autoScroll": "Allow auto-scroll",
-    "settings-autoScroll-desc": "Allow auto-scrolling with middle-click (Note: Your desktop environment can still override this with another action)"
+    "settings-smoothScroll": "Utilizza lo scorrimento fluido",
+    "settings-smoothScroll-desc": "Attiva lo scorrimento fluido",
+    "settings-autoScroll": "Consenti lo scorrimento automatico",
+    "settings-autoScroll-desc": "Consenti lo scorrimento automatico con il clic centrale (nota: l'ambiente desktop può comunque sovrascriverlo con un'altra azione)"
 }
