@@ -10,7 +10,7 @@ importers:
     dependencies:
       arrpc:
         specifier: git+https://github.com/OpenAsar/arrpc#c62ec6a04c8d870530aa6944257fe745f6c59a24
-        version: https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24
+        version: git+https://git@github.com:OpenAsar/arrpc.git#c62ec6a04c8d870530aa6944257fe745f6c59a24
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0(encoding@0.1.13)
@@ -55,8 +55,8 @@ importers:
         specifier: ^8.42.3
         version: 8.42.3
       '@types/node':
-        specifier: ^20.14.9
-        version: 20.14.9
+        specifier: ^20.14.10
+        version: 20.14.10
       '@types/ws':
         specifier: ^8.5.10
         version: 8.5.10
@@ -521,8 +521,8 @@ packages:
   '@types/ms@0.7.34':
     resolution: {integrity: sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==}
 
-  '@types/node@20.14.9':
-    resolution: {integrity: sha512-06OCtnTXtWOZBJlRApleWndH4JsRVs1pDCc8dLSQp+7PpUpX3ePdHyeNSFTeSe7FtKyQkrlPvHwJOW3SLd8Oyg==}
+  '@types/node@20.14.10':
+    resolution: {integrity: sha512-MdiXf+nDuMvY0gJKxyfZ7/6UFsETO7mGKF54MVD/ekJS6HdFtpZFBgrh6Pseu64XTb2MLyFPlbW6hj8HYRQNOQ==}
 
   '@types/plist@3.0.5':
     resolution: {integrity: sha512-E6OCaRmAe4WDmWNsL/9RMqdkkzDCY1etutkflWk4c+AcjDU07Pcz1fQwTX0TQz+Pxqn9i4L1TU3UFpjnrcDgxA==}
@@ -671,8 +671,8 @@ packages:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
 
-  arrpc@https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24:
-    resolution: {tarball: https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24}
+  arrpc@git+https://git@github.com:OpenAsar/arrpc.git#c62ec6a04c8d870530aa6944257fe745f6c59a24:
+    resolution: {commit: c62ec6a04c8d870530aa6944257fe745f6c59a24, repo: git@github.com:OpenAsar/arrpc.git, type: git}
     version: 3.4.0
     hasBin: true
 
@@ -2369,7 +2369,7 @@ snapshots:
     dependencies:
       '@types/http-cache-semantics': 4.0.4
       '@types/keyv': 3.1.4
-      '@types/node': 20.14.9
+      '@types/node': 20.14.10
       '@types/responselike': 1.0.3
 
   '@types/debug@4.1.12':
@@ -2389,16 +2389,16 @@ snapshots:
 
   '@types/fs-extra@8.1.5':
     dependencies:
-      '@types/node': 20.14.9
+      '@types/node': 20.14.10
 
   '@types/fs-extra@9.0.13':
     dependencies:
-      '@types/node': 20.14.9
+      '@types/node': 20.14.10
 
   '@types/glob@7.2.0':
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 20.14.9
+      '@types/node': 20.14.10
 
   '@types/http-cache-semantics@4.0.4': {}
 
@@ -2406,19 +2406,19 @@ snapshots:
 
   '@types/keyv@3.1.4':
     dependencies:
-      '@types/node': 20.14.9
+      '@types/node': 20.14.10
 
   '@types/minimatch@5.1.2': {}
 
   '@types/ms@0.7.34': {}
 
-  '@types/node@20.14.9':
+  '@types/node@20.14.10':
     dependencies:
       undici-types: 5.26.5
 
   '@types/plist@3.0.5':
     dependencies:
-      '@types/node': 20.14.9
+      '@types/node': 20.14.10
       xmlbuilder: 15.1.1
     optional: true
 
@@ -2426,18 +2426,18 @@ snapshots:
 
   '@types/responselike@1.0.3':
     dependencies:
-      '@types/node': 20.14.9
+      '@types/node': 20.14.10
 
   '@types/verror@1.10.10':
     optional: true
 
   '@types/ws@8.5.10':
     dependencies:
-      '@types/node': 20.14.9
+      '@types/node': 20.14.10
 
   '@types/yauzl@2.10.3':
     dependencies:
-      '@types/node': 20.14.9
+      '@types/node': 20.14.10
     optional: true
 
   '@typescript-eslint/eslint-plugin@7.16.0(@typescript-eslint/parser@7.16.0(eslint@9.6.0)(typescript@5.5.3))(eslint@9.6.0)(typescript@5.5.3)':
@@ -2632,7 +2632,7 @@ snapshots:
 
   array-union@2.1.0: {}
 
-  arrpc@https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24:
+  arrpc@git+https://git@github.com:OpenAsar/arrpc.git#c62ec6a04c8d870530aa6944257fe745f6c59a24:
     dependencies:
       ws: 8.17.1
     transitivePeerDependencies:
@@ -2967,7 +2967,7 @@ snapshots:
   electron@31.1.0:
     dependencies:
       '@electron/get': 2.0.3
-      '@types/node': 20.14.9
+      '@types/node': 20.14.10
       extract-zip: 2.0.1
     transitivePeerDependencies:
       - supports-color
