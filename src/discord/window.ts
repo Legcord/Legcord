@@ -317,7 +317,7 @@ export function createCustomWindow(): void {
         webPreferences: {
             webviewTag: true,
             sandbox: false,
-            preload: path.join(import.meta.dirname, "preload/preload.mjs"),
+            preload: path.join(import.meta.dirname, "discord/preload.mjs"),
             spellcheck: getConfig("spellcheck")
         }
     });
@@ -340,7 +340,7 @@ export function createNativeWindow(): void {
         webPreferences: {
             webviewTag: true,
             sandbox: false,
-            preload: path.join(import.meta.dirname, "preload/preload.mjs"),
+            preload: path.join(import.meta.dirname, "discord/preload.mjs"),
             spellcheck: getConfig("spellcheck")
         }
     });
@@ -364,7 +364,7 @@ export function createTransparentWindow(): void {
         webPreferences: {
             sandbox: false,
             webviewTag: true,
-            preload: path.join(import.meta.dirname, "preload/preload.mjs"),
+            preload: path.join(import.meta.dirname, "discord/preload.mjs"),
             spellcheck: getConfig("spellcheck")
         }
     });

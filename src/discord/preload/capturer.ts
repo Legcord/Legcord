@@ -48,7 +48,7 @@ window.navigator.mediaDevices.getDisplayMedia = () => new Promise(async (resolve
 
 document.addEventListener("DOMContentLoaded", function () {
     addScript(screenShareJS);
-    const screenshareCss = path.join(import.meta.dirname, "../", "/content/css/screenshare.css");
+    const screenshareCss = path.join(import.meta.dirname, "../", "/css/screenshare.css");
     addStyle(fs.readFileSync(screenshareCss, "utf8"));
     console.log("Capturer injected.");
 });

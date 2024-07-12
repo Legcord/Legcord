@@ -11,6 +11,7 @@
         "watch": "tsc -w",
         "bundle": "rollup -c",
         "start": "pnpm run bundle && electron --trace-warnings ./ts-out/main.js",
+        "runElectron": "electron --trace-warnings ./ts-out/main.js",
         "startThemeManager": "pnpm run build && electron ./ts-out/main.js themes",
         "startWayland": "pnpm run build && electron ./ts-out/main.js --ozone-platform-hint=auto --enable-features=WebRTCPipeWireCapturer,WaylandWindowDecorations --disable-gpu",
         "package": "pnpm run build && electron-builder",

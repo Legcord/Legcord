@@ -24,11 +24,11 @@ export default defineConfig([
             typescript(),
             copy({
                 targets: [
-                    {src: "src/**/**/*.html", dest: "ts-out/"},
-                    {src: "src/**/**/*.css", dest: "ts-out/"},
-                    {src: "src/**/**/*.js", dest: "ts-out/"},
+                    {src: "src/**/**/*.html", dest: "ts-out/html/"},
+                    {src: "src/**/**/*.css", dest: "ts-out/css/"},
+                    {src: "src/**/**/*.js", dest: "ts-out/js/"},
                     {src: "package.json", dest: "ts-out/"},
-                    {src: "assets/**/**", dest: "ts-out/"}
+                    {src: "assets/**/**", dest: "ts-out/assets/"}
                 ]
             })
         ]
@@ -37,6 +37,7 @@ export default defineConfig([
         input: "src/discord/preload/preload.mts",
         output: {
             dir: "ts-out/discord",
+            entryFileNames: "[name].mjs",
             format: "esm",
             sourcemap: true,
         },
@@ -48,6 +49,7 @@ export default defineConfig([
         output: {
             dir: "ts-out/splash",
             format: "esm",
+            entryFileNames: "[name].mjs",
             sourcemap: true,
         },
         plugins: [typescript()]
