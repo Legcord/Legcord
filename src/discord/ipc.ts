@@ -4,7 +4,7 @@ import os from "os";
 import fs from "fs";
 import path from "path";
 import {mainWindows} from "./window.js";
-import {getConfig, setConfigBulk, getConfigLocation} from "../common/config.js";
+import {getConfig, setConfigBulk, getConfigLocation, setConfig} from "../common/config.js";
 import {setLang, getLang, getLangName} from "../common/lang.js";
 import {getVersion, getDisplayVersion} from "../common/version.js";
 import {customTitlebar} from "../main.js";
@@ -32,11 +32,11 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         return;
     }
 
-    ipcMain.on("get-app-path", (event) => {
-        event.reply("app-path", app.getAppPath());
-    });
     ipcMain.on("setLang", (_event, lang: string) => {
         setLang(lang);
+    });
+    ipcMain.on("getLangSync", (event, toGet: string) => {
+        event.reply("langString", getLang(toGet));
     });
     ipcMain.handle("getLang", (_event, toGet: string) => {
         return getLang(toGet);
@@ -99,8 +99,8 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         app.relaunch();
         app.exit();
     });
-    ipcMain.on("saveSettings", (_event, args: Settings) => {
-        setConfigBulk(args);
+    ipcMain.on("setConfig", (_event, key: keyof Settings, value: string) => {
+        setConfig(key, value);
     });
     ipcMain.on("minimizeToTray", (event) => {
         event.returnValue = getConfig("minimizeToTray");
@@ -110,6 +110,11 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     });
     ipcMain.on("clientmod", (event) => {
         event.returnValue = getConfig("mods");
+    });
+    ipcMain.on("getEntireConfig", (event) => {
+        const rawData = fs.readFileSync(getConfigLocation(), "utf-8");
+        const returnData = JSON.parse(rawData) as Settings;
+        event.returnValue = returnData;
     });
     ipcMain.on("legacyCapturer", (event) => {
         event.returnValue = getConfig("useLegacyCapturer");
@@ -129,7 +134,7 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.on("openSettingsWindow", () => {
         void createSettingsWindow();
     });
-    ipcMain.on("openManagerWindow", () => {
+    ipcMain.on("openThemesWindow", () => {
         void createTManagerWindow();
     });
     ipcMain.on("setting-armcordCSP", (event) => {

@@ -18,4 +18,5 @@ export interface ArmCordWindow {
     version: string;
     mods: string;
     openSettingsWindow: () => void;
+    openThemesWindow: () => void;
 }

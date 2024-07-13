@@ -1,8 +1,10 @@
-import {BrowserWindow, app, shell} from "electron";
+import {BrowserWindow, app, ipcMain, shell} from "electron";
 import path from "path";
+import {Settings} from "../types/settings.d.js";
 import fs from "fs";
 import {getDisplayVersion} from "../common/version.js";
 import type {ThemeManifest} from "../types/themeManifest.d.js";
+import {setConfigBulk} from "../common/config.js";
 let settingsWindow: BrowserWindow;
 let instance = 0;
 
@@ -27,6 +29,9 @@ export async function createSettingsWindow(): Promise<void> {
                 sandbox: false,
                 preload: path.join(import.meta.dirname, "settings", "preload.mjs")
             }
+        });
+        ipcMain.on("saveSettings", (_event, args: Settings) => {
+            setConfigBulk(args);
         });
         async function settingsLoadPage(): Promise<void> {
             await settingsWindow.loadURL(`file://${import.meta.dirname}/html/settings.html`);

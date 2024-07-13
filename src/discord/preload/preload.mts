@@ -1,12 +1,10 @@
 import "./bridge.js";
 import "./optimizer.js";
-import "./settings.js";
 import {ipcRenderer} from "electron";
 import fs from "fs";
 import path from "path";
 import {injectMobileStuff} from "./mobile.js";
 import {injectTitlebar} from "./titlebar.mjs";
-import {injectSettings} from "./settings.js";
 import {addStyle, addScript} from "../../common/dom.js";
 import {sleep} from "../../common/sleep.js";
 import type {ArmCordWindow} from "../../types/armcordWindow.d.js";
@@ -69,20 +67,6 @@ await sleep(5000).then(() => {
 
 // Settings info version injection
 setInterval(() => {
-    addScript(`
-    if (document.getElementById("ACsettingsModal") == null) {
-        var html = '<span class="close" id="closeSettings">&times;</span><div class="ACsettings-modal-content" id="webviewSettingsContainer"></div>';
-        const elem = document.createElement("div");
-        elem.id = "ACsettingsModal";
-        elem.classList.add("ACsettings-modal");
-        elem.innerHTML = html;
-        document.getElementById("app-mount").prepend(elem);
-        document.getElementById("closeSettings").addEventListener("click", () => {
-            document.getElementById("webviewSettingsContainer").innerHTML = "";
-            document.getElementById("ACsettingsModal").style.display = "none";
-        });
-    }
-    `);
     const host = document.querySelector('[class*="sidebar"] [class*="info"]');
     if (!host || host.querySelector("#ac-ver")) {
         return;
@@ -92,28 +76,4 @@ setInterval(() => {
     el.textContent = `ArmCord Version: ${version}`;
     el.onclick = () => ipcRenderer.send("openSettingsWindow");
     host.append(el);
-    let advanced = document
-        .querySelector('[class*="socialLinks"]')
-        ?.parentElement?.querySelector(
-            '[class*="header"] + [class*="item"] + [class*="item"] + [class*="item"] + [class*="item"] + [class*="item"] + [class*="item"] + [class*="item"] + [class*="item"] + [class*="item"]'
-        );
-    if (!advanced) return;
-    if (advanced.nextSibling instanceof Element && advanced.nextSibling.className.includes("item")) {
-        advanced = advanced.nextSibling;
-    }
-    const acSettings = advanced.cloneNode(true) as HTMLElement;
-    const tManager = advanced.cloneNode(true) as HTMLElement;
-    const fQuit = advanced.cloneNode(true) as HTMLElement;
-    acSettings.textContent = "ArmCord Settings";
-    acSettings.id = "acSettings";
-    acSettings.onclick = () => injectSettings();
-    tManager.textContent = "Themes";
-    tManager.id = "acThemes";
-    tManager.onclick = () => ipcRenderer.send("openManagerWindow");
-    fQuit.textContent = "Force Quit";
-    fQuit.id = "acForceQuit";
-    fQuit.onclick = () => ipcRenderer.send("win-forceQuit");
-    advanced.insertAdjacentElement("afterend", acSettings);
-    advanced.insertAdjacentElement("afterend", tManager);
-    advanced.insertAdjacentElement("afterend", fQuit);
 }, 1000);
