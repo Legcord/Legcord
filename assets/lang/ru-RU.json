@@ -74,5 +74,7 @@
     "settings-smoothScroll": "Использовать плавную прокрутку",
     "settings-smoothScroll-desc": "Включить плавную прокрутку",
     "settings-autoScroll": "Разрешить автоматическую прокрутку",
-    "settings-autoScroll-desc": "Разрешить автоматическую прокрутку при нажатии средней кнопки мыши (Примечание: ваша среда рабочего стола все еще может переопределить это с помощью другого действия)"
+    "settings-autoScroll-desc": "Разрешить автоматическую прокрутку при нажатии средней кнопки мыши (Примечание: ваша среда рабочего стола все еще может переопределить это с помощью другого действия)",
+    "settings-theme-desc": "Window style manages what titlebar ArmCord uses.",
+    "settings-channel-desc": "Use this setting to change current instance of Discord that ArmCord is running."
 }
