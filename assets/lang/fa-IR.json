@@ -74,5 +74,7 @@
     "settings-smoothScroll": "Use smooth scrolling",
     "settings-smoothScroll-desc": "Toggle smooth scrolling",
     "settings-autoScroll": "Allow auto-scroll",
-    "settings-autoScroll-desc": "Allow auto-scrolling with middle-click (Note: Your desktop environment can still override this with another action)"
+    "settings-autoScroll-desc": "Allow auto-scrolling with middle-click (Note: Your desktop environment can still override this with another action)",
+    "settings-channel-desc": "Use this setting to change current instance of Discord that ArmCord is running.",
+    "settings-theme-desc": "Window style manages what titlebar ArmCord uses."
 }
