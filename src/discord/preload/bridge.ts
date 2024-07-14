@@ -56,6 +56,7 @@ contextBridge.exposeInMainWorld("armcord", {
     channel: ipcRenderer.sendSync("channel") as string,
     setPingCount: (pingCount: number) => ipcRenderer.send("setPing", pingCount),
     setTrayIcon: (favicon: string) => ipcRenderer.send("sendTrayIcon", favicon),
+    translations: ipcRenderer.sendSync("getTranslations") as string,
     getLang: async (toGet: string) =>
         await ipcRenderer.invoke("getLang", toGet).then((result) => {
             return result as string;

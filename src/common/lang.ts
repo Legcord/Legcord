@@ -47,6 +47,31 @@ export function getLang(object: string): string {
         return parsed[object];
     }
 }
+export function getRawLang(): i18nStrings {
+    if (language == undefined) {
+        try {
+            const userDataPath = app.getPath("userData");
+            const storagePath = path.join(userDataPath, "/storage/");
+            const langConfigFile = `${storagePath}lang.json`;
+            const rawData = fs.readFileSync(langConfigFile, "utf-8");
+            const parsed = JSON.parse(rawData) as i18nStrings;
+            language = parsed.lang;
+        } catch (_e) {
+            console.log("Language config file doesn't exist. Fallback to English.");
+            language = "en-US";
+        }
+    }
+    if (language.length == 2) {
+        language = `${language}-${language.toUpperCase()}`;
+    }
+    let langPath = path.join(import.meta.dirname, "../", `/assets/lang/${language}.json`);
+    if (!fs.existsSync(langPath)) {
+        langPath = path.join(import.meta.dirname, "../", "/assets/lang/en-US.json");
+    }
+    let rawData = fs.readFileSync(langPath, "utf-8");
+    let parsed = JSON.parse(rawData) as i18nStrings;
+    return parsed;
+}
 export function getLangName(): string {
     if (language == undefined) {
         try {

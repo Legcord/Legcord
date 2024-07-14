@@ -5,7 +5,7 @@ import fs from "fs";
 import path from "path";
 import {mainWindows} from "./window.js";
 import {getConfig, setConfigBulk, getConfigLocation, setConfig} from "../common/config.js";
-import {setLang, getLang, getLangName} from "../common/lang.js";
+import {setLang, getLang, getLangName, getRawLang} from "../common/lang.js";
 import {getVersion, getDisplayVersion} from "../common/version.js";
 import {customTitlebar} from "../main.js";
 import {createSettingsWindow} from "../settings/main.js";
@@ -115,6 +115,9 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         const rawData = fs.readFileSync(getConfigLocation(), "utf-8");
         const returnData = JSON.parse(rawData) as Settings;
         event.returnValue = returnData;
+    });
+    ipcMain.on("getTranslations", (event) => {
+        event.returnValue = getRawLang();
     });
     ipcMain.on("legacyCapturer", (event) => {
         event.returnValue = getConfig("useLegacyCapturer");
