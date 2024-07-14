@@ -315,7 +315,6 @@ export function createCustomWindow(): void {
         backgroundColor: "#202225",
         autoHideMenuBar: true,
         webPreferences: {
-            webviewTag: true,
             sandbox: false,
             preload: path.join(import.meta.dirname, "discord/preload.mjs"),
             spellcheck: getConfig("spellcheck")
@@ -338,7 +337,6 @@ export function createNativeWindow(): void {
         backgroundColor: "#202225",
         autoHideMenuBar: true,
         webPreferences: {
-            webviewTag: true,
             sandbox: false,
             preload: path.join(import.meta.dirname, "discord/preload.mjs"),
             spellcheck: getConfig("spellcheck")
@@ -363,7 +361,6 @@ export function createTransparentWindow(): void {
         autoHideMenuBar: true,
         webPreferences: {
             sandbox: false,
-            webviewTag: true,
             preload: path.join(import.meta.dirname, "discord/preload.mjs"),
             spellcheck: getConfig("spellcheck")
         }
