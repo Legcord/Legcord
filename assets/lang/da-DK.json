@@ -74,5 +74,7 @@
     "settings-themesFolder": "Open themes folder",
     "setup_offline": "Du virker til at være offline. Venligst forbind til internettet og genstart ArmCord.",
     "setup_question1": "Velkommen til ArmCord Installationen",
-    "settings-copyDebugInfo": "Copy Debug Info"
+    "settings-copyDebugInfo": "Copy Debug Info",
+    "settings-channel-desc": "Use this setting to change current instance of Discord that ArmCord is running.",
+    "settings-theme-desc": "Window style manages what titlebar ArmCord uses."
 }
