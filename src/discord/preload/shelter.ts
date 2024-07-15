@@ -1,6 +1,6 @@
 import {ipcRenderer, webFrame} from "electron";
 import {sleep} from "../../common/sleep";
-const requiredPlugins: {[key: string]: string} = {
+const requiredPlugins: Record<string, string> = {
     "armcord-arrpc": "https://armcord.github.io/shelter-plugins/armcordRPC/",
     "armcord-settings": "https://armcord.github.io/shelter-plugins/armcordSettings/",
     "armcord-screenshare": "https://armcord.github.io/shelter-plugins/screenshareQualityFix/"
@@ -23,4 +23,4 @@ async function addPlugins() {
         }
     });
 }
-addPlugins();
+void addPlugins();
