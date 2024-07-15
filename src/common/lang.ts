@@ -68,8 +68,8 @@ export function getRawLang(): i18nStrings {
     if (!fs.existsSync(langPath)) {
         langPath = path.join(import.meta.dirname, "../", "/assets/lang/en-US.json");
     }
-    let rawData = fs.readFileSync(langPath, "utf-8");
-    let parsed = JSON.parse(rawData) as i18nStrings;
+    const rawData = fs.readFileSync(langPath, "utf-8");
+    const parsed = JSON.parse(rawData) as i18nStrings;
     return parsed;
 }
 export function getLangName(): string {

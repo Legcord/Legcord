@@ -4,7 +4,7 @@ import {Settings} from "../types/settings.d.js";
 import fs from "fs";
 import {getDisplayVersion} from "../common/version.js";
 import type {ThemeManifest} from "../types/themeManifest.d.js";
-import {setConfigBulk} from "../common/config.js";
+import {getConfig, setConfigBulk} from "../common/config.js";
 let settingsWindow: BrowserWindow;
 let instance = 0;
 
@@ -32,6 +32,9 @@ export async function createSettingsWindow(): Promise<void> {
         });
         ipcMain.on("saveSettings", (_event, args: Settings) => {
             setConfigBulk(args);
+        });
+        ipcMain.handle("getSetting", (_event, toGet: keyof Settings) => {
+            return getConfig(toGet);
         });
         async function settingsLoadPage(): Promise<void> {
             await settingsWindow.loadURL(`file://${import.meta.dirname}/html/settings.html`);

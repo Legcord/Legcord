@@ -41,9 +41,7 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.handle("getLang", (_event, toGet: string) => {
         return getLang(toGet);
     });
-    ipcMain.on("open-external-link", (_event, href: string) => {
-        void shell.openExternal(href);
-    });
+
     ipcMain.on("setPing", (_event, pingCount: number) => {
         switch (os.platform()) {
             case "linux" ?? "macos":
@@ -82,9 +80,6 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     });
     ipcMain.on("win-quit", () => {
         app.quit();
-    });
-    ipcMain.on("win-forceQuit", () => {
-        app.exit();
     });
     ipcMain.on("get-app-version", (event) => {
         event.returnValue = getVersion();
@@ -140,13 +135,6 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.on("openThemesWindow", () => {
         void createTManagerWindow();
     });
-    ipcMain.on("setting-armcordCSP", (event) => {
-        if (getConfig("armcordCSP")) {
-            event.returnValue = true;
-        } else {
-            event.returnValue = false;
-        }
-    });
     // NOTE - I assume this would return sources based on the fact that the function only ingests sources
     ipcMain.handle("DESKTOP_CAPTURER_GET_SOURCES", (_event, opts: SourcesOptions) => desktopCapturer.getSources(opts));
     ipcMain.on("saveSettings", (_event, args: Settings) => {
@@ -171,9 +159,6 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     });
     ipcMain.on("crash", () => {
         process.crash();
-    });
-    ipcMain.handle("getSetting", (_event, toGet: keyof Settings) => {
-        return getConfig(toGet);
     });
     ipcMain.on("copyDebugInfo", () => {
         const settingsFileContent = fs.readFileSync(getConfigLocation(), "utf-8");
