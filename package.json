@@ -96,7 +96,7 @@
         "linux": {
             "icon": "build/icon.icns",
             "category": "Network",
-            "maintainer": "smartfridge@vivaldi.net",
+            "maintainer": "linux@armcord.app",
             "target": [
                 "deb",
                 "tar.gz",
