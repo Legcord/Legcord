@@ -70,7 +70,9 @@
             "environment": {
                 "ARRPC_NO_PROCESS_SCANNING": "true"
             },
-            "executableArgs": "--no-process-scanning"
+            "executableArgs": [
+                "--no-process-scanning"
+            ]
         },
         "nsis": {
             "include": "build/installer.nsh",
