@@ -3,6 +3,8 @@ export interface Settings {
     "0"?: string;
     // Referenced once for disabling mod updating.
     noBundleUpdates?: boolean;
+    // Referenced once for disabling Shelter completely
+    disableShelter?: boolean;
     // Only used for external url warning dialog.
     ignoreProtocolWarning?: boolean;
     customIcon: string;

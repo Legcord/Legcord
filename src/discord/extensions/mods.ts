@@ -7,6 +7,16 @@ import {Readable} from "stream";
 import type {ReadableStream} from "stream/web";
 import {finished} from "stream/promises";
 async function updateModBundle(): Promise<void> {
+    if (getConfig("disableShelter") == undefined || false) {
+        const bundle: string = await (
+            await fetch("https://raw.githubusercontent.com/uwu/shelter-builds/main/shelter.js")
+        ).text();
+        fs.writeFileSync(path.join(app.getPath("userData"), "shelter.js"), bundle, "utf-8");
+    } else {
+        console.warn("Shelter is disabled. Skipping update");
+        // We overwrite the bundle so nothing runs
+        fs.writeFileSync(path.join(app.getPath("userData"), "shelter.js"), "", "utf-8");
+    }
     if (getConfig("noBundleUpdates") == undefined || false) {
         try {
             console.log("Downloading mod bundle");
@@ -15,27 +25,21 @@ async function updateModBundle(): Promise<void> {
                 //waiting
             }
             const name: string = getConfig("mods");
-            if (name == "custom") {
-                // aspy fix
-                const bundle: string = await (await fetch(getConfig("customJsBundle"))).text();
-                fs.writeFileSync(`${distFolder}bundle.js`, bundle, "utf-8");
-                const css: string = await (await fetch(getConfig("customCssBundle"))).text();
-                fs.writeFileSync(`${distFolder}bundle.css`, css, "utf-8");
-            } else {
-                const clientMods = {
-                    vencord: "https://github.com/Vendicated/Vencord/releases/download/devbuild/browser.js",
-                    shelter: "https://raw.githubusercontent.com/uwu/shelter-builds/main/shelter.js"
-                };
-                const clientModsCss = {
-                    vencord: "https://github.com/Vendicated/Vencord/releases/download/devbuild/browser.css",
-                    shelter: "https://armcord.app/placeholder.css"
-                };
-                console.log(clientMods[name as keyof typeof clientMods]);
-                const bundle: string = await (await fetch(clientMods[name as keyof typeof clientMods])).text();
-                fs.writeFileSync(`${distFolder}bundle.js`, bundle, "utf-8");
-                const css: string = await (await fetch(clientModsCss[name as keyof typeof clientModsCss])).text();
-                fs.writeFileSync(`${distFolder}bundle.css`, css, "utf-8");
-            }
+            const clientMods = {
+                vencord: "https://github.com/Vendicated/Vencord/releases/download/devbuild/browser.js",
+                shelter: "https://armcord.app/placeholder.js", // for users migrating from pre-3.3.0
+                custom: getConfig("customJsBundle")
+            };
+            const clientModsCss = {
+                vencord: "https://github.com/Vendicated/Vencord/releases/download/devbuild/browser.css",
+                shelter: "https://armcord.app/placeholder.css", // for users migrating from pre-3.3.0
+                custom: getConfig("customCssBundle")
+            };
+            console.log(clientMods[name as keyof typeof clientMods]);
+            const bundle: string = await (await fetch(clientMods[name as keyof typeof clientMods])).text();
+            fs.writeFileSync(`${distFolder}bundle.js`, bundle, "utf-8");
+            const css: string = await (await fetch(clientModsCss[name as keyof typeof clientModsCss])).text();
+            fs.writeFileSync(`${distFolder}bundle.css`, css, "utf-8");
         } catch (e) {
             console.log("[Mod loader] Failed to install mods");
             console.error(e);
@@ -94,7 +98,6 @@ export async function installModLoader(): Promise<void> {
             "https://raw.githubusercontent.com/ArmCord/website/new/public/loader.zip"
         ];
 
-        // REVIEW - Rewrote this
         while (true) {
             let completed = false;
             await fetch(URLs[0])

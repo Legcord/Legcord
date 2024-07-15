@@ -19,6 +19,9 @@ const storagePath = path.join(userDataPath, "/storage/");
 const themesPath = path.join(userDataPath, "/themes/");
 const pluginsPath = path.join(userDataPath, "/plugins/");
 export function registerIpc(passedWindow: BrowserWindow): void {
+    ipcMain.handle("getShelterBundle", () => {
+        return fs.readFileSync(path.join(app.getPath("userData"), "shelter.js"), "utf-8");
+    });
     ipcMain.on("splashEnd", () => {
         splashWindow.close();
         if (getConfig("startMinimized")) {

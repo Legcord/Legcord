@@ -1,4 +1,5 @@
 import "./bridge.js";
+import "./shelter.js";
 import "./optimizer.js";
 import {ipcRenderer} from "electron";
 import fs from "fs";
