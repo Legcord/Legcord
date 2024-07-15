@@ -294,8 +294,20 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     if (firstRun) {
         passedWindow.close();
     }
-
-    void passedWindow.loadURL("https://discord.com/app");
+    switch (getConfig("channel")) {
+        case "stable":
+            void passedWindow.loadURL("https://discord.com/app");
+            break;
+        case "canary":
+            void passedWindow.loadURL("https://canary.discord.com/app");
+            break;
+        case "ptb":
+            void passedWindow.loadURL("https://ptb.discord.com/app");
+            break;
+        default:
+            void passedWindow.loadURL("https://discord.com/app");
+            break;
+    }
 
     if (getConfig("skipSplash")) {
         passedWindow.show();
