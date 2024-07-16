@@ -44,7 +44,6 @@
                     <div class="center">
                         <select name="mod" id="mod" class="dropdown-button">
                             <option value="vencord">Vencord</option>
-                            <option value="shelter">Shelter</option>
                             <option value="none">None</option>
                         </select>
                     </div>
@@ -125,6 +124,10 @@
                     document.getElementById("tray").value = "false";
                     document.getElementById("linuxNotice").innerHTML =
                         `Linux may not work well with tray icons. Depending on your system configuration, you may not be able to see the tray icon. Enable at your own risk. Can be changed later.`;
+                }
+                if (window.armcordinternal.getOS == "darwin") {
+                    // macOS doesn't really do tray icons
+                    document.getElementById("tray").value = "false";
                 }
                 document.getElementById("next-page4").addEventListener("click", () => {
                     window.armcordinternal.saveSettings({
