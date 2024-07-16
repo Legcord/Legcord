@@ -139,8 +139,13 @@ if (!app.requestSingleInstanceLock()) {
             }
         });
         app.on("activate", function () {
-            // REVIEW - I don't think it really matters if this promise is voided
-            if (BrowserWindow.getAllWindows().length === 0) void init();
+            if (BrowserWindow.getAllWindows().length === 0) {
+                void init();
+            } else {
+                BrowserWindow.getAllWindows().forEach((window) => {
+                    window.show();
+                });
+            }
         });
     });
 }

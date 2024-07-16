@@ -265,7 +265,6 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         });
         setForceQuit(true);
     });
-    // REVIEW - Awaiting javascript execution is silly
     passedWindow.on("focus", () => {
         void passedWindow.webContents.executeJavaScript(`document.body.removeAttribute("unFocused");`);
     });
