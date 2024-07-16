@@ -27,4 +27,4 @@ async function addPlugins() {
         }
     });
 }
-void addPlugins();
+if (!ipcRenderer.sendSync("isDev")) void addPlugins();
