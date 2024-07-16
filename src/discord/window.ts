@@ -196,15 +196,14 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         });
     }
     passedWindow.webContents.on("page-title-updated", (e, title) => {
-        console.log(title);
         const armCordSuffix = " - ArmCord"; /* identify */
         if (process.platform === "darwin") {
-            if (title.startsWith("•")) app.dock.setBadge("•");
-            if (title.startsWith("(")) app.setBadgeCount(parseInt(title.match(/\((\d+)\)/)![1]));
+            if (title.startsWith("•")) return app.dock.setBadge("•");
+            if (title.startsWith("(")) return app.setBadgeCount(parseInt(title.match(/\((\d+)\)/)![1]));
+            app.setBadgeCount(0);
         }
         if (!title.endsWith(armCordSuffix)) {
             e.preventDefault();
-            // REVIEW - I don't see a reason to wait for the titlebar to update
             void passedWindow.webContents.executeJavaScript(
                 `document.title = '${title.replace("Discord |", "") + armCordSuffix}'`
             );

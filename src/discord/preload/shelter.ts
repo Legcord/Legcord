@@ -19,7 +19,11 @@ async function addPlugins() {
             );
             window.shelter.plugins.startPlugin("${plugin}")
         `;
-            await webFrame.executeJavaScript(js);
+            try {
+                await webFrame.executeJavaScript(js);
+            } catch (e) {
+                console.log("Plugin " + plugin + " already injected");
+            }
         }
     });
 }
