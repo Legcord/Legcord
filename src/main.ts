@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-import {BrowserWindow, app, crashReporter, session} from "electron";
+import {BrowserWindow, app, crashReporter, session, systemPreferences} from "electron";
 import "v8-compile-cache";
 import "./discord/extensions/csp.js";
 import "./tray.js";
@@ -92,6 +92,10 @@ if (!app.requestSingleInstanceLock()) {
     if (process.platform === "linux" && process.env.XDG_SESSION_TYPE?.toLowerCase() === "wayland") {
         app.commandLine.appendSwitch("enable-features", "WebRTCPipeWireCapturer");
         console.log("Wayland detected, using PipeWire for video capture.");
+    }
+    if (process.platform === "darwin") {
+        const status = systemPreferences.getMediaAccessStatus("screen");
+        console.log("macOS screenshare permission: " + status);
     }
     // work around chrome 66 disabling autoplay by default
     app.commandLine.appendSwitch("autoplay-policy", "no-user-gesture-required");
