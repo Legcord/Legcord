@@ -4,10 +4,12 @@ import fs from "fs";
 import {iconPath} from "../main.js";
 import {setConfigBulk, getConfigLocation} from "../common/config.js";
 import type {Settings} from "../types/settings.d.js";
+import {getLang} from "../common/lang.js";
+import {installModLoader} from "../discord/extensions/mods.js";
 
 let setupWindow: BrowserWindow;
 export async function createSetupWindow(): Promise<void> {
-    // NOTE - intentionally hang the process until setup is completed
+    installModLoader(); // NOTE - downloading shelter bundle, that way it's ready for first launch
     return new Promise((resolve) => {
         setupWindow = new BrowserWindow({
             width: 390,
@@ -34,6 +36,10 @@ export async function createSetupWindow(): Promise<void> {
         ipcMain.on("setup-getOS", (event) => {
             event.returnValue = process.platform;
         });
+        ipcMain.on("setup-saveSettings", (_event, args: Settings) => {
+            console.log(args);
+            setConfigBulk(args);
+        });
         ipcMain.on("setup-quit", () => {
             fs.unlink(getConfigLocation(), (err) => {
                 if (err) throw err;
@@ -41,6 +47,13 @@ export async function createSetupWindow(): Promise<void> {
                 console.log('Closed during setup. "settings.json" was deleted');
                 app.quit();
             });
+        });
+        ipcMain.handle("setup-getLang", (_event, toGet: string) => {
+            return getLang(toGet);
+        });
+        ipcMain.on("setup-restart", () => {
+            app.relaunch();
+            app.exit();
         });
         void setupWindow.loadURL(`file://${import.meta.dirname}/html/setup.html`);
     });

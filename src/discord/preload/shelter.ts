@@ -5,19 +5,31 @@ const requiredPlugins: Record<string, string> = {
     "armcord-settings": "https://armcord.github.io/shelter-plugins/armcordSettings/",
     "armcord-screenshare": "https://armcord.github.io/shelter-plugins/screenshareQualityFix/"
 };
-await ipcRenderer.invoke("getShelterBundle").then(async (bundle: string) => {
-    await webFrame.executeJavaScript(bundle);
-});
+try {
+    await ipcRenderer.invoke("getShelterBundle").then(async (bundle: string) => {
+        await webFrame.executeJavaScript(bundle);
+    });
+} catch (e) {
+    console.error("shelter bundle not available: " + e);
+}
 async function addPlugins() {
-    await sleep(5000).then(async () => {
+    sleep(5000).then(async () => {
         for (const plugin in requiredPlugins) {
             console.log(`${plugin}: ${requiredPlugins[plugin]}`);
             const js = `
-        window.shelter.plugins.addRemotePlugin(
-                "${plugin}",
-                "${requiredPlugins[plugin]}"
-            );
-            window.shelter.plugins.startPlugin("${plugin}")
+            async function install() {
+                var installed = shelter.plugins.installedPlugins();
+                if (installed["${plugin}"]) {
+                    window.shelter.plugins.startPlugin("${plugin}");
+                } else {
+                    window.shelter.plugins.addRemotePlugin(
+                        "${plugin}",
+                        "${requiredPlugins[plugin]}"
+                    );
+                    await new Promise(r => setTimeout(r, 2000));
+                    window.shelter.plugins.startPlugin("${plugin}");
+            }}
+            install()
         `;
             try {
                 await webFrame.executeJavaScript(js);
@@ -27,4 +39,4 @@ async function addPlugins() {
         }
     });
 }
-if (!ipcRenderer.sendSync("isDev")) void addPlugins();
+if (ipcRenderer.sendSync("isDev")) void addPlugins();

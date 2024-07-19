@@ -7,16 +7,6 @@ import {Readable} from "stream";
 import type {ReadableStream} from "stream/web";
 import {finished} from "stream/promises";
 async function updateModBundle(): Promise<void> {
-    if (getConfig("disableShelter") == undefined || false) {
-        const bundle: string = await (
-            await fetch("https://raw.githubusercontent.com/uwu/shelter-builds/main/shelter.js")
-        ).text();
-        fs.writeFileSync(path.join(app.getPath("userData"), "shelter.js"), bundle, "utf-8");
-    } else {
-        console.warn("Shelter is disabled. Skipping update");
-        // We overwrite the bundle so nothing runs
-        fs.writeFileSync(path.join(app.getPath("userData"), "shelter.js"), "", "utf-8");
-    }
     if (getConfig("noBundleUpdates") == undefined || false) {
         try {
             console.log("Downloading mod bundle");
@@ -64,6 +54,17 @@ export function updateModInstallState() {
 }
 
 export async function installModLoader(): Promise<void> {
+    if (getConfig("disableShelter") == undefined || false) {
+        const bundle: string = await (
+            await fetch("https://raw.githubusercontent.com/uwu/shelter-builds/main/shelter.js")
+        ).text();
+        console.log("Downloading shelter bundle");
+        fs.writeFileSync(path.join(app.getPath("userData"), "shelter.js"), bundle, "utf-8");
+    } else {
+        console.warn("Shelter is disabled. Skipping update");
+        // We overwrite the bundle so nothing runs
+        fs.writeFileSync(path.join(app.getPath("userData"), "shelter.js"), "", "utf-8");
+    }
     if (getConfig("mods") == "none") {
         modInstallState = "none";
         fs.rmSync(`${app.getPath("userData")}/plugins/loader`, {recursive: true, force: true});
