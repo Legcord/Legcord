@@ -365,6 +365,34 @@ export function createCustomWindow(): void {
     mainWindows.push(mainWindow);
     doAfterDefiningTheWindow(mainWindow);
 }
+// https://www.electronjs.org/docs/latest/tutorial/window-customization#window-controls-overlay
+export function createTitlebarOverlayWindow(): void {
+    const mainWindow = new BrowserWindow({
+        width: getWindowState("width") ?? 835,
+        height: getWindowState("height") ?? 600,
+        x: getWindowState("x"),
+        y: getWindowState("y"),
+        title: "ArmCord",
+        show: false,
+        darkTheme: true,
+        icon: iconPath,
+        titleBarStyle: "hidden",
+        titleBarOverlay: {
+            color: "#2c2f33",
+            symbolColor: "#99aab5",
+            height: 30
+        },
+        backgroundColor: "#202225",
+        autoHideMenuBar: true,
+        webPreferences: {
+            sandbox: false,
+            preload: path.join(import.meta.dirname, "discord/preload.mjs"),
+            spellcheck: getConfig("spellcheck")
+        }
+    });
+    mainWindows.push(mainWindow);
+    doAfterDefiningTheWindow(mainWindow);
+}
 export function createNativeWindow(): void {
     const mainWindow = new BrowserWindow({
         width: getWindowState("width") ?? 835,

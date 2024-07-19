@@ -3,10 +3,7 @@ import {addStyle} from "../../common/dom.js";
 import fs from "fs";
 import path from "path";
 import os from "os";
-export function injectTitlebar(): void {
-    window.onload = function () {
-        const elem = document.createElement("div");
-        elem.innerHTML = `<nav class="titlebar">
+const titlebarHTML = `<nav class="titlebar">
           <div class="window-title" id="window-title"></div>
           <div id="window-controls-container">
               <div id="spacer"></div>
@@ -15,6 +12,17 @@ export function injectTitlebar(): void {
               <div id="quit"><div id="quit-icon"></div></div>
           </div>
         </nav>`;
+const titlebarOverlayHTML = `<nav class="titlebar">
+          <div class="window-title" id="window-title"></div>
+        </nav>`;
+export function injectTitlebar(): void {
+    window.onload = function () {
+        const elem = document.createElement("div");
+        if (process.platform == "win32") {
+            elem.innerHTML = titlebarOverlayHTML;
+        } else {
+            elem.innerHTML = titlebarHTML;
+        }
         elem.classList.add("withFrame-haYltI");
         if (document.getElementById("app-mount") == null) {
             document.body.appendChild(elem);

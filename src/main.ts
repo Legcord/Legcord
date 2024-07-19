@@ -4,7 +4,12 @@ import "v8-compile-cache";
 import "./discord/extensions/csp.js";
 import "./tray.js";
 import fs from "fs";
-import {createCustomWindow, createNativeWindow, createTransparentWindow} from "./discord/window.js";
+import {
+    createCustomWindow,
+    createNativeWindow,
+    createTitlebarOverlayWindow,
+    createTransparentWindow
+} from "./discord/window.js";
 import path from "path";
 import {createTManagerWindow} from "./themeManager/main.js";
 import {createSplashWindow} from "./splash/main.js";
@@ -59,7 +64,12 @@ export async function init(): Promise<void> {
         }
         switch (getConfig("windowStyle")) {
             case "default":
-                createCustomWindow();
+                if (process.platform == "linux" ?? "darwin") {
+                    createCustomWindow();
+                } else {
+                    // TODO - Bring titlebar overlay to macOS
+                    createTitlebarOverlayWindow();
+                }
                 customTitlebar = true;
                 break;
             case "native":
