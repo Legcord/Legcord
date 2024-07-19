@@ -200,7 +200,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         const armCordSuffix = " - ArmCord"; /* identify */
 
         // FIXME - This is a bit of a mess. I'm not sure how to clean it up.
-        if (process.platform === "win32") {
+        if (process.platform === "win32" && !getConfig("dynamicIcon")) {
             if (title.startsWith("•"))
                 return passedWindow.setOverlayIcon(
                     nativeImage.createFromPath(path.join(import.meta.dirname, "../", "/assets/badge-11.ico")),
