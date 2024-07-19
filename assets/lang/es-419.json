@@ -69,12 +69,12 @@
     "settings-mintoTray-desc": "Cuando no está activado, se cerrá ArmCord como cualquier otra ventana, de lo contrario, se cerrá ArmCord a la bandeja de la sistema para más tarde.",
     "settings-MultiInstance": "Varias instancias",
     "settings-MultiInstance-desc": "Cuando se activa permite iniciar varias instancias de ArmCord.",
-    "settings-copyGPUInfo": "Copy GPU Info",
+    "settings-copyGPUInfo": "Copiar información de la GPU",
     "settings-prfmMode-vaapi": "VAAPI",
-    "settings-smoothScroll": "Use smooth scrolling",
-    "settings-smoothScroll-desc": "Toggle smooth scrolling",
-    "settings-autoScroll": "Allow auto-scroll",
-    "settings-autoScroll-desc": "Allow auto-scrolling with middle-click (Note: Your desktop environment can still override this with another action)",
+    "settings-smoothScroll": "Utilizar desplazamiento suave",
+    "settings-smoothScroll-desc": "Activar desplazamiento suave",
+    "settings-autoScroll": "Permitir auto-desplazamiento",
+    "settings-autoScroll-desc": "Permitir auto-desplazamiento con click medio (Nota: Tu sistema aun puede sobreescribir esta opción con otra acción)",
     "settings-theme-desc": "Window style manages what titlebar ArmCord uses.",
     "settings-channel-desc": "Use this setting to change current instance of Discord that ArmCord is running."
 }
