@@ -32,7 +32,7 @@
     "settings-spellcheck": "Spellcheck",
     "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them.",
     "settings-tray": "Tray",
-    "settings-tray-desc": "When disabled, ArmCord will close like any other window when closed, otherwise it'll sit back and relax in your system tray for later.",
+    "settings-tray-desc": "Toggle whether ArmCord will have a tray icon",
     "settings-channel": "Discord channel",
     "settings-channel-desc": "Use this setting to change current instance of Discord that ArmCord is running.",
     "settings-invitewebsocket": "Rich Presence",
