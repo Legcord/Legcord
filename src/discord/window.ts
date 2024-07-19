@@ -195,8 +195,35 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
                 });
         });
     }
+
     passedWindow.webContents.on("page-title-updated", (e, title) => {
         const armCordSuffix = " - ArmCord"; /* identify */
+
+        // FIXME - This is a bit of a mess. I'm not sure how to clean it up.
+        if (process.platform === "win32") {
+            if (title.startsWith("•"))
+                return passedWindow.setOverlayIcon(
+                    nativeImage.createFromPath(path.join(import.meta.dirname, "../", "/assets/badge-11.ico")),
+                    "You have some unread messages."
+                );
+            if (title.startsWith("(")) {
+                const pings = parseInt(title.match(/\((\d+)\)/)![1]);
+                if (pings > 9) {
+                    return passedWindow.setOverlayIcon(
+                        nativeImage.createFromPath(path.join(import.meta.dirname, "../", "/assets/badge-10.ico")),
+                        "You have some unread messages."
+                    );
+                } else {
+                    return passedWindow.setOverlayIcon(
+                        nativeImage.createFromPath(
+                            path.join(import.meta.dirname, "../", "/assets/badge-" + pings + ".ico")
+                        ),
+                        "You have some unread messages."
+                    );
+                }
+            }
+            passedWindow.setOverlayIcon(null, "");
+        }
         if (process.platform === "darwin") {
             if (title.startsWith("•")) return app.dock.setBadge("•");
             if (title.startsWith("(")) return app.setBadgeCount(parseInt(title.match(/\((\d+)\)/)![1]));
