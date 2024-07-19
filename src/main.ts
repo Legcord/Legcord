@@ -30,7 +30,7 @@ export let iconPath: string;
 import type {Settings} from "./types/settings";
 export let settings: Settings;
 export let customTitlebar: boolean;
-
+checkForDataFolder();
 app.on("render-process-gone", (_event, _webContents, details) => {
     if (details.reason == "crashed") {
         app.relaunch();
@@ -117,7 +117,6 @@ if (!app.requestSingleInstanceLock()) {
         "WinRetrieveSuggestionsOnlyOnDemand,HardwareMediaKeyHandling,MediaSessionService"
     );
     app.commandLine.appendSwitch("enable-transparent-visuals");
-    checkForDataFolder();
     checkIfConfigExists();
     checkIfConfigIsBroken();
     injectElectronFlags();
