@@ -13,6 +13,7 @@ import {splashWindow} from "../splash/main.js";
 import {createTManagerWindow} from "../themeManager/main.js";
 import {modInstallState} from "./extensions/mods.js";
 import {Settings} from "../types/settings.d.js";
+import isDev from "electron-is-dev";
 
 const userDataPath = app.getPath("userData");
 const storagePath = path.join(userDataPath, "/storage/");
@@ -96,6 +97,9 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.on("restart", () => {
         app.relaunch();
         app.exit();
+    });
+    ipcMain.on("isDev", (event) => {
+        event.returnValue = isDev;
     });
     ipcMain.on("setConfig", (_event, key: keyof Settings, value: string) => {
         setConfig(key, value);

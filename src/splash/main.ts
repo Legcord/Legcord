@@ -20,7 +20,7 @@ export async function createSplashWindow(): Promise<void> {
             preload: path.join(import.meta.dirname, "splash", "preload.mjs")
         }
     });
-    ipcMain.on("isDev", (event) => {
+    ipcMain.on("splash-isDev", (event) => {
         event.returnValue = isDev;
     });
     await splashWindow.loadFile(path.join(import.meta.dirname, "html", "splash.html"));
