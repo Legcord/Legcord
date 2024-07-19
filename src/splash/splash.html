@@ -40,7 +40,8 @@
                 } else {
                     const response = await fetch("https://armcord.app/latest.json");
                     const data = await response.json();
-                    if (data.version !== window.internal.version) {
+                    const remoteVersion = data.version.replace(/\./g, ""); // easy to compare
+                    if (remoteVersion > window.internal.version.replace(/\./g, "")) {
                         var elem = document.createElement("img");
                         elem.classList.add("logo");
                         elem.src = "https://armcord.app/update.webp";
