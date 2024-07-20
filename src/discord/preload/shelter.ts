@@ -13,7 +13,7 @@ try {
     console.error(e);
 }
 async function addPlugins() {
-    if (ipcRenderer.sendSync("isDev")) {
+    if (!ipcRenderer.sendSync("isDev")) {
         await sleep(5000).then(async () => {
             for (const plugin in requiredPlugins) {
                 console.log(`${plugin}: ${requiredPlugins[plugin]}`);
