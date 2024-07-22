@@ -22,10 +22,10 @@ export function getConfigLocation(): string {
     const storagePath = path.join(userDataPath, "/storage/");
     return `${storagePath}settings.json`;
 }
-// REVIEW - If I remember correctly fs doesn't need async. I have adjusted the Promise<Settings[K]> to reflect so.
+// NOTE - If I remember correctly fs doesn't need async. I have adjusted the Promise<Settings[K]> to reflect so.
 // Why touch it when it worked fine? The Async-ness of this function caused headaches in a lot of other places.
 // Tested with src/tray.ts - Seems to work great!
-// NOTE - Removed getConfigSync<K extends keyof Settings>(object: K) - Redundant now.
+// Removed getConfigSync<K extends keyof Settings>(object: K) - Redundant now.
 export function getConfig<K extends keyof Settings>(object: K): Settings[K] {
     const rawData = fs.readFileSync(getConfigLocation(), "utf-8");
     const returnData = JSON.parse(rawData) as Settings;

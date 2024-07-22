@@ -10,7 +10,7 @@ export let tray: Tray;
 
 let trayIcon = "ac_plug_colored";
 void app.whenReady().then(async () => {
-    // REVIEW - app will hang at startup if line above is awaited.
+    // NOTE - app will hang at startup if line above is awaited.
     const finishedSetup = getConfig("doneSetup");
     if (getConfig("trayIcon") != "default") {
         trayIcon = getConfig("trayIcon");
@@ -52,7 +52,7 @@ void app.whenReady().then(async () => {
             tray.setContextMenu(contextMenu);
         } else {
             const contextMenu = Menu.buildFromTemplate([
-                // REVIEW - Awaiting any window creation will fail silently
+                // NOTE - Awaiting any window creation will fail silently
                 {
                     label: `${clientName} ${getDisplayVersion()}`,
                     icon: trayVerIcon(),

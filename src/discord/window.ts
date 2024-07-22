@@ -147,7 +147,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     });
     if (getConfig("useLegacyCapturer") == false) {
         console.log("Starting screenshare module...");
-        import("../screenshare/main.js");
+        void import("../screenshare/main.js"); // REVIEW - This is probably bad.
     }
 
     passedWindow.webContents.session.webRequest.onBeforeRequest(
@@ -157,7 +157,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
 
     if (getConfig("trayIcon") == "default" || getConfig("dynamicIcon")) {
         passedWindow.webContents.on("page-favicon-updated", () => {
-            // REVIEW - no need to await if we just .then() - This works!
+            // NOTE - no need to await if we just .then() - This works!
             void passedWindow.webContents
                 .executeJavaScript(
                     `
@@ -457,7 +457,7 @@ export function createInviteWindow(code: string): void {
         if (details.url.includes("ws://")) return callback({cancel: true});
         return callback({});
     });
-    // REVIEW - This shouldn't matter, since below we have an event on it
+    // NOTE - This shouldn't matter, since below we have an event on it
     void inviteWindow.loadURL(formInviteURL);
     inviteWindow.webContents.once("did-finish-load", () => {
         if (!mainWindows[0].webContents.isLoading()) {

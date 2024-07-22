@@ -60,7 +60,7 @@ export async function init(): Promise<void> {
         await createSetupWindow();
     } else {
         if (getConfig("skipSplash") == false) {
-            void createSplashWindow(); // REVIEW - Awaiting will hang at start
+            void createSplashWindow(); // NOTE - Awaiting will hang at start
         }
         switch (getConfig("windowStyle")) {
             case "default":
@@ -128,7 +128,7 @@ if (!app.requestSingleInstanceLock()) {
         app.commandLine.appendSwitch("enable-blink-features", "MiddleClickAutoscroll");
     }
     void app.whenReady().then(async () => {
-        // REVIEW - Awaiting the line above will cause a hang at startup
+        // NOTE - Awaiting the line above will cause a hang at startup
         if (getConfig("customIcon") !== null) {
             iconPath = getConfig("customIcon");
         } else {

@@ -15,7 +15,7 @@ export function setWindowState(object: WindowState): void {
     fs.writeFileSync(saveFile, toSave, "utf-8");
 }
 
-// REVIEW - Similar to getConfig, this seems to return a promise when it has no async. Originally Promise<WindowState[K]>
+// NOTE - Similar to getConfig, this seems to return a promise when it has no async. Originally Promise<WindowState[K]>
 
 export function getWindowState<K extends keyof WindowState>(object: K): WindowState[K] {
     const userDataPath = app.getPath("userData");

@@ -47,10 +47,10 @@ export let modInstallState: string;
 export function updateModInstallState() {
     modInstallState = "modDownload";
 
-    void updateModBundle(); // REVIEW - Awaiting this will hang the app on the splash
-    import("./plugin.js");
-
-    modInstallState = "done";
+    void updateModBundle(); // NOTE - Awaiting this will hang the app on the splash
+    void import("./plugin.js").then(() => {
+        modInstallState = "done";
+    });
 }
 
 export async function installModLoader(): Promise<void> {
@@ -69,7 +69,7 @@ export async function installModLoader(): Promise<void> {
         modInstallState = "none";
         fs.rmSync(`${app.getPath("userData")}/plugins/loader`, {recursive: true, force: true});
 
-        import("./plugin.js");
+        await import("./plugin.js");
         console.log("[Mod loader] Skipping");
 
         return;

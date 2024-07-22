@@ -14,7 +14,7 @@ window.localStorage.setItem("hideNag", "true");
 
 if (ipcRenderer.sendSync("legacyCapturer")) {
     console.warn("Using legacy capturer module");
-    import("./capturer.js");
+    await import("./capturer.js");
 }
 
 const version = ipcRenderer.sendSync("displayVersion") as string;

@@ -148,7 +148,7 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         console.log(args);
         setConfigBulk(args);
     });
-    // REVIEW - The lower 4 functions had await sleep(1000), I'm not sure why. Behavior is same regardless
+    // NOTE - The lower 4 functions had await sleep(1000), I'm not sure why. Behavior is same regardless
     ipcMain.on("openStorageFolder", () => {
         shell.showItemInFolder(storagePath);
     });
