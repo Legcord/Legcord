@@ -40,20 +40,20 @@
         "@rollup/plugin-node-resolve": "^15.2.3",
         "@rollup/plugin-typescript": "^11.1.6",
         "@types/eslint__js": "^8.42.3",
-        "@types/node": "^20.14.10",
-        "@types/ws": "^8.5.10",
+        "@types/node": "^20.14.11",
+        "@types/ws": "^8.5.11",
         "electron": "31.2.1",
         "electron-builder": "^24.13.3",
         "eslint": "^9.7.0",
         "eslint-config-prettier": "^9.1.0",
         "eslint-plugin-n": "^17.9.0",
-        "eslint-plugin-prettier": "^5.1.3",
-        "prettier": "^3.3.2",
-        "rollup": "^4.18.1",
+        "eslint-plugin-prettier": "^5.2.1",
+        "prettier": "^3.3.3",
+        "rollup": "^4.19.0",
         "rollup-plugin-copy": "^3.5.0",
         "rollup-plugin-esbuild": "^6.1.1",
         "typescript": "^5.5.3",
-        "typescript-eslint": "^7.16.0"
+        "typescript-eslint": "^7.17.0"
     },
     "dependencies": {
         "arrpc": "github:OpenAsar/arrpc#c62ec6a04c8d870530aa6944257fe745f6c59a24",
@@ -111,6 +111,6 @@
             "applicationId": "smartfrigde.ArmCord"
         }
     },
-    "packageManager": "pnpm@9.4.0",
+    "packageManager": "pnpm@9.6.0+sha512.38dc6fba8dba35b39340b9700112c2fe1e12f10b17134715a4aa98ccf7bb035e76fd981cf0bb384dfa98f8d6af5481c2bef2f4266a24bfa20c34eb7147ce0b5e",
     "package-manager-strict": false
 }
