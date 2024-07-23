@@ -40,7 +40,7 @@
         "@rollup/plugin-node-resolve": "^15.2.3",
         "@rollup/plugin-typescript": "^11.1.6",
         "@types/eslint__js": "^8.42.3",
-        "@types/node": "^20.14.11",
+        "@types/node": "^20.14.12",
         "@types/ws": "^8.5.11",
         "electron": "31.2.1",
         "electron-builder": "^24.13.3",
@@ -52,7 +52,7 @@
         "rollup": "^4.19.0",
         "rollup-plugin-copy": "^3.5.0",
         "rollup-plugin-esbuild": "^6.1.1",
-        "typescript": "^5.5.3",
+        "typescript": "^5.5.4",
         "typescript-eslint": "^7.17.0"
     },
     "dependencies": {
