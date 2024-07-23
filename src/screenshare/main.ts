@@ -2,6 +2,7 @@ import {BrowserWindow, MessageBoxOptions, desktopCapturer, dialog, ipcMain, sess
 import path from "path";
 import {iconPath} from "../main.js";
 let capturerWindow: BrowserWindow;
+let isDone: boolean;
 function showAudioDialog(): boolean {
     const options: MessageBoxOptions = {
         type: "question",
@@ -31,10 +32,12 @@ function registerCustomHandler(): void {
             })
             .then((sources) => {
                 if (!sources) return callback({});
+                isDone = false;
                 console.log(sources);
                 if (process.platform === "linux" && process.env.XDG_SESSION_TYPE?.toLowerCase() === "wayland") {
                     console.log("WebRTC Capturer detected, skipping window creation."); //assume webrtc capturer is used
                     let options: Electron.Streams = {video: sources[0]};
+                    if (sources[0] === undefined) return callback({});
                     if (showAudioDialog() == true) options = {video: sources[0], audio: "loopback"};
                     callback(options);
                 } else {
@@ -52,18 +55,24 @@ function registerCustomHandler(): void {
                             preload: path.join(import.meta.dirname, "screenshare", "preload.mjs")
                         }
                     });
-                    ipcMain.once("selectScreenshareSource", (_event, id: string, name: string) => {
-                        //console.log(sources[id]);
-                        //console.log(id);
+                    ipcMain.once("selectScreenshareSource", (_event, id: string, name: string, audio: boolean) => {
+                        isDone = true;
+                        console.log("Audio status: " + audio);
                         capturerWindow.close();
                         const result = {id, name};
-                        if (process.platform === "linux" || process.platform === "win32") {
-                            let options: Electron.Streams = {video: sources[0]};
-                            if (showAudioDialog() == true) options = {video: sources[0], audio: "loopback"};
-                            callback(options);
-                        } else {
-                            callback({video: result});
+                        let options: Electron.Streams = {video: sources[0]};
+                        switch (process.platform) {
+                            case "win32" || "linux":
+                                options = {video: result};
+                                if (audio) options = {video: result, audio: "loopback"};
+                                callback(options);
+                                break;
+                            default:
+                                callback({video: result});
                         }
+                    });
+                    capturerWindow.on("closed", () => {
+                        if (!isDone) callback({});
                     });
                     void capturerWindow.loadFile(path.join(import.meta.dirname, "html", "picker.html"));
                     capturerWindow.webContents.send("getSources", sources);
