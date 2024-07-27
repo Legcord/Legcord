@@ -35,7 +35,7 @@
     "settings-dynamicIcon": "Dynamisches Icon",
     "settings-dynamicIcon-desc": "In Anlehnung an das Verhalten von Discord unter Windows wird die Anzahl der ungelesenen Nachrichten/Pings auf dem ArmCord-Symbol und nicht in der Taskleiste angezeigt.",
     "settings-spellcheck": "Rechtschreibprüfung",
-    "settings-tray-desc": "",
+    "settings-tray-desc": "Toggle whether ArmCord will have a tray icon",
     "settings-spellcheck-desc": "Hilft dir, falsch geschriebene Wörter zu korrigieren, indem es sie hervorhebt.",
     "settings-tray": "Tray",
     "settings-invitewebsocket": "Rich Presence",
