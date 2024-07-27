@@ -76,5 +76,5 @@
     "settings-autoScroll": "Automatischen Bildlauf erlauben",
     "settings-autoScroll-desc": "Allow auto-scrolling with middle-click (Note: Your desktop environment can still override this with another action)",
     "settings-theme-desc": "Window style manages what titlebar ArmCord uses.",
-    "settings-channel-desc": ""
+    "settings-channel-desc": "Use this setting to change current instance of Discord that ArmCord is running."
 }
