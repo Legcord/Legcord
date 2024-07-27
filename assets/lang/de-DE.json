@@ -38,7 +38,7 @@
     "settings-tray-desc": "",
     "settings-spellcheck-desc": "Hilft dir, falsch geschriebene Wörter zu korrigieren, indem es sie hervorhebt.",
     "settings-tray": "Tray",
-    "settings-invitewebsocket": "",
+    "settings-invitewebsocket": "Rich Presence",
     "settings-invitewebsocket-desc": "Nutzt arRPC, um Discord RPC (Rich Presence) mit lokalen Programmen auf deinem Rechner zu unterstützen.",
     "settings-mod": "Client-Mod",
     "settings-mod-desc1": "Client-Mods sind Programme, mit denen du dein Discord-Erlebnis individuell gestalten kannst. Du kannst das Aussehen des Clients ändern,\nVerhaltensweisen modifizieren oder neue Funktionen hinzufügen!",
