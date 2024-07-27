@@ -75,6 +75,6 @@
     "settings-smoothScroll-desc": "Sanften Bildlauf umschalten",
     "settings-autoScroll": "Automatischen Bildlauf erlauben",
     "settings-autoScroll-desc": "",
-    "settings-theme-desc": "",
+    "settings-theme-desc": "Window style manages what titlebar ArmCord uses.",
     "settings-channel-desc": ""
 }
