@@ -10,7 +10,7 @@ importers:
     dependencies:
       arrpc:
         specifier: github:OpenAsar/arrpc#c62ec6a04c8d870530aa6944257fe745f6c59a24
-        version: https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24
+        version: git+https://git@github.com:OpenAsar/arrpc.git#c62ec6a04c8d870530aa6944257fe745f6c59a24
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0(encoding@0.1.13)
@@ -70,8 +70,8 @@ importers:
         specifier: ^9.1.0
         version: 9.1.0(eslint@9.7.0)
       eslint-plugin-n:
-        specifier: ^17.9.0
-        version: 17.9.0(eslint@9.7.0)
+        specifier: ^17.10.1
+        version: 17.10.1(eslint@9.7.0)
       eslint-plugin-prettier:
         specifier: ^5.2.1
         version: 5.2.1(@types/eslint@9.6.0)(eslint-config-prettier@9.1.0(eslint@9.7.0))(eslint@9.7.0)(prettier@3.3.3)
@@ -740,8 +740,8 @@ packages:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
 
-  arrpc@https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24:
-    resolution: {tarball: https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24}
+  arrpc@git+https://git@github.com:OpenAsar/arrpc.git#c62ec6a04c8d870530aa6944257fe745f6c59a24:
+    resolution: {commit: c62ec6a04c8d870530aa6944257fe745f6c59a24, repo: git@github.com:OpenAsar/arrpc.git, type: git}
     version: 3.4.0
     hasBin: true
 
@@ -1159,8 +1159,8 @@ packages:
     peerDependencies:
       eslint: '>=8'
 
-  eslint-plugin-n@17.9.0:
-    resolution: {integrity: sha512-CPSaXDXdrT4nsrOrO4mT4VB6FMUkoySRkHWuuJJHVqsIEjIeZgMY1H7AzSwPbDScikBmLN82KeM1u7ixV7PzGg==}
+  eslint-plugin-n@17.10.1:
+    resolution: {integrity: sha512-hm/q37W6efDptJXdwirsm6A257iY6ZNtpoSG0wEzFzjJ3AhL7OhEIhdSR2e4OdYfHO5EDeqlCfFrjf9q208IPw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: '>=8.23.0'
@@ -3080,7 +3080,7 @@ snapshots:
 
   array-union@2.1.0: {}
 
-  arrpc@https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24:
+  arrpc@git+https://git@github.com:OpenAsar/arrpc.git#c62ec6a04c8d870530aa6944257fe745f6c59a24:
     dependencies:
       ws: 8.18.0
     transitivePeerDependencies:
@@ -3610,7 +3610,7 @@ snapshots:
       eslint: 9.7.0
       eslint-compat-utils: 0.5.1(eslint@9.7.0)
 
-  eslint-plugin-n@17.9.0(eslint@9.7.0):
+  eslint-plugin-n@17.10.1(eslint@9.7.0):
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@9.7.0)
       enhanced-resolve: 5.17.1
