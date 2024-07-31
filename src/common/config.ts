@@ -10,6 +10,13 @@ export function checkForDataFolder(): void {
         console.log("Found armcord-data folder. Running in portable mode.");
         app.setPath("userData", dataPath);
     }
+    const oldDataPath = path.join(app.getPath("appData"), "ArmCord"); // pre 3.3.0
+    const newDataPath = app.getPath("userData");
+    if (fs.existsSync(oldDataPath)) {
+        console.log("Found legacy ArmCord folder.");
+        // copy old data to new location
+        fs.renameSync(oldDataPath, newDataPath);
+    }
 }
 
 export function getConfigLocation(): string {
