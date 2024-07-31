@@ -95,6 +95,9 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.on("channel", (event) => {
         event.returnValue = getConfig("channel");
     });
+    ipcMain.on("disableShelter", (event) => {
+        event.returnValue = getConfig("disableShelter");
+    });
     ipcMain.on("clientmod", (event) => {
         event.returnValue = getConfig("mods");
     });

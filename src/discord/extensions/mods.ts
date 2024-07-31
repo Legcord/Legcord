@@ -54,7 +54,7 @@ export function updateModInstallState() {
 }
 
 export async function installModLoader(): Promise<void> {
-    if (getConfig("disableShelter") == undefined || false) {
+    if (getConfig("disableShelter") == false) {
         const bundle: string = await (
             await fetch("https://raw.githubusercontent.com/uwu/shelter-builds/main/shelter.js")
         ).text();
