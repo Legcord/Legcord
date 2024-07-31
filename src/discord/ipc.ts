@@ -46,21 +46,6 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         return getLang(toGet);
     });
 
-    ipcMain.on("setPing", (_event, pingCount: number) => {
-        switch (os.platform()) {
-            case "linux" ?? "macos":
-                app.setBadgeCount(pingCount);
-                break;
-            case "win32":
-                if (pingCount > 0) {
-                    const image = nativeImage.createFromPath(path.join(import.meta.dirname, "../", `/assets/ping.png`));
-                    passedWindow.setOverlayIcon(image, "badgeCount");
-                } else {
-                    passedWindow.setOverlayIcon(null, "badgeCount");
-                }
-                break;
-        }
-    });
     ipcMain.on("win-maximize", () => {
         passedWindow.maximize();
     });

@@ -50,11 +50,13 @@ contextBridge.exposeInMainWorld("armcord", {
     },
     settings: {
         config: ipcRenderer.sendSync("getEntireConfig") as string,
-        setConfig: (key: string, value: string) => ipcRenderer.send("setConfig", key, value)
+        setConfig: (key: string, value: string) => ipcRenderer.send("setConfig", key, value),
+        openStorageFolder: () => ipcRenderer.send("openStorageFolder"),
+        copyDebugInfo: () => ipcRenderer.send("copyDebugInfo"),
+        copyGPUInfo: () => ipcRenderer.send("copyGPUInfo")
     },
     electron: process.versions.electron,
     channel: ipcRenderer.sendSync("channel") as string,
-    setPingCount: (pingCount: number) => ipcRenderer.send("setPing", pingCount),
     setTrayIcon: (favicon: string) => ipcRenderer.send("sendTrayIcon", favicon),
     translations: ipcRenderer.sendSync("getTranslations") as string,
     getLang: async (toGet: string) =>

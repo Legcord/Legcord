@@ -11,7 +11,6 @@ export interface ArmCordWindow {
     };
     electron: string;
     channel: string;
-    setPingCount: (pingCount: number) => void;
     setTrayIcon: (favicon: string) => void;
     getLang: (toGet: string) => Promise<string>;
     getDisplayMediaSelector: () => Promise<string>;
