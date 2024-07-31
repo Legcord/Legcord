@@ -13,7 +13,8 @@ export function checkForDataFolder(): void {
     }
     const oldDataPath = path.join(app.getPath("appData"), "ArmCord"); // pre 3.3.0
     const newDataPath = app.getPath("userData");
-    if (fs.existsSync(oldDataPath) && !isDev) {
+    if (fs.existsSync(oldDataPath) && !isDev && process.platform !== "win32") {
+        // only on case-sensitive filesystems
         console.log("Found legacy ArmCord folder.");
         // copy old data to new location
         fs.renameSync(oldDataPath, newDataPath);
