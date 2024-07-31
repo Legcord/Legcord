@@ -18,10 +18,10 @@ function parseBDManifest(content: string) {
         const [_, key] = match;
         let [value] = match;
         if (key === "import") break;
-
+        value = value.replace("@" + key, "");
         value = value.trim();
 
-        //console.log(key, value);
+        console.log(key, value);
 
         switch (key) {
             case "name":
