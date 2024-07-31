@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("themeInfoModal")!.style.display = "none";
         document.getElementById("themeInfoButtons")!.innerHTML = "";
     });
-    document.getElementById("download")!.addEventListener("click", () => {
-        ipcRenderer.invoke("installBDTheme", (document.getElementById("themeLink") as HTMLInputElement).value);
+    document.getElementById("download")!.addEventListener("click", async () => {
+        await ipcRenderer.invoke("installBDTheme", (document.getElementById("themeLink") as HTMLInputElement).value);
     });
 });
