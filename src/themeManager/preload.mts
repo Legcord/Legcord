@@ -1,7 +1,7 @@
 import {ipcRenderer, contextBridge} from "electron";
 import {ThemeManifest} from "../types/themeManifest";
 contextBridge.exposeInMainWorld("themes", {
-    install: (url: string) => ipcRenderer.send("installBDTheme", url),
+    install: async (url: string) => ipcRenderer.invoke("installBDTheme", url),
     uninstall: (id: string) => ipcRenderer.send("uninstallTheme", id)
 });
 ipcRenderer.on("themeManifest", (_event, json: string) => {
@@ -68,6 +68,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("themeInfoButtons")!.innerHTML = "";
     });
     document.getElementById("download")!.addEventListener("click", () => {
-        ipcRenderer.send("installBDTheme", (document.getElementById("themeLink") as HTMLInputElement).value);
+        ipcRenderer.invoke("installBDTheme", (document.getElementById("themeLink") as HTMLInputElement).value);
     });
 });
