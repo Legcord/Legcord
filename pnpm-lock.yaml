@@ -10,7 +10,7 @@ importers:
     dependencies:
       arrpc:
         specifier: github:OpenAsar/arrpc#c62ec6a04c8d870530aa6944257fe745f6c59a24
-        version: https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24
+        version: git+https://git@github.com:OpenAsar/arrpc.git#c62ec6a04c8d870530aa6944257fe745f6c59a24
       cross-fetch:
         specifier: ^4.0.0
         version: 4.0.0(encoding@0.1.13)
@@ -52,8 +52,8 @@ importers:
         specifier: ^8.42.3
         version: 8.42.3
       '@types/node':
-        specifier: ^20.14.12
-        version: 20.14.12
+        specifier: ^22.0.0
+        version: 22.0.0
       '@types/ws':
         specifier: ^8.5.11
         version: 8.5.11
@@ -564,6 +564,9 @@ packages:
   '@types/node@20.14.12':
     resolution: {integrity: sha512-r7wNXakLeSsGT0H1AU863vS2wa5wBOK4bWMjZz2wj+8nBx+m5PeIn0k8AloSLpRuiwdRQZwarZqHE4FNArPuJQ==}
 
+  '@types/node@22.0.0':
+    resolution: {integrity: sha512-VT7KSYudcPOzP5Q0wfbowyNLaVR8QWUdw+088uFWwfvpY6uCWaXpqV6ieLAu9WBcnTa7H4Z5RLK8I5t2FuOcqw==}
+
   '@types/plist@3.0.5':
     resolution: {integrity: sha512-E6OCaRmAe4WDmWNsL/9RMqdkkzDCY1etutkflWk4c+AcjDU07Pcz1fQwTX0TQz+Pxqn9i4L1TU3UFpjnrcDgxA==}
 
@@ -740,8 +743,8 @@ packages:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
 
-  arrpc@https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24:
-    resolution: {tarball: https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24}
+  arrpc@git+https://git@github.com:OpenAsar/arrpc.git#c62ec6a04c8d870530aa6944257fe745f6c59a24:
+    resolution: {commit: c62ec6a04c8d870530aa6944257fe745f6c59a24, repo: git@github.com:OpenAsar/arrpc.git, type: git}
     version: 3.4.0
     hasBin: true
 
@@ -2262,6 +2265,9 @@ packages:
   undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
+  undici-types@6.11.1:
+    resolution: {integrity: sha512-mIDEX2ek50x0OlRgxryxsenE5XaQD4on5U2inY7RApK3SOJpofyw7uW2AyfMKkhAxXIceo2DeWGVGwyvng1GNQ==}
+
   unique-filename@2.0.1:
     resolution: {integrity: sha512-ODWHtkkdx3IAR+veKxFV+VBkUMcN+FaqzUUd7IZzt+0zhDZFPFxhlqwPF3YQvMHx1TD0tdgYl+kuPnJ8E6ql7A==}
     engines: {node: ^12.13.0 || ^14.15.0 || >=16.0.0}
@@ -2807,6 +2813,10 @@ snapshots:
     dependencies:
       undici-types: 5.26.5
 
+  '@types/node@22.0.0':
+    dependencies:
+      undici-types: 6.11.1
+
   '@types/plist@3.0.5':
     dependencies:
       '@types/node': 20.14.12
@@ -3080,7 +3090,7 @@ snapshots:
 
   array-union@2.1.0: {}
 
-  arrpc@https://codeload.github.com/OpenAsar/arrpc/tar.gz/c62ec6a04c8d870530aa6944257fe745f6c59a24:
+  arrpc@git+https://git@github.com:OpenAsar/arrpc.git#c62ec6a04c8d870530aa6944257fe745f6c59a24:
     dependencies:
       ws: 8.18.0
     transitivePeerDependencies:
@@ -4801,6 +4811,8 @@ snapshots:
   typescript@5.5.4: {}
 
   undici-types@5.26.5: {}
+
+  undici-types@6.11.1: {}
 
   unique-filename@2.0.1:
     dependencies:
