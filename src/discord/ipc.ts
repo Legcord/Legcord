@@ -1,5 +1,5 @@
 //ipc stuff
-import {app, clipboard, desktopCapturer, ipcMain, nativeImage, shell, SourcesOptions, BrowserWindow} from "electron";
+import {app, clipboard, desktopCapturer, ipcMain, shell, SourcesOptions, BrowserWindow} from "electron";
 import os from "os";
 import fs from "fs";
 import path from "path";
