@@ -3,6 +3,7 @@ import path from "path";
 import fs from "fs";
 import type {Settings} from "../types/settings.d.js";
 import {getWindowStateLocation} from "./windowState.js";
+import isDev from "electron-is-dev";
 export let firstRun: boolean;
 export function checkForDataFolder(): void {
     const dataPath = path.join(path.dirname(app.getPath("exe")), "armcord-data");
@@ -12,7 +13,7 @@ export function checkForDataFolder(): void {
     }
     const oldDataPath = path.join(app.getPath("appData"), "ArmCord"); // pre 3.3.0
     const newDataPath = app.getPath("userData");
-    if (fs.existsSync(oldDataPath)) {
+    if (fs.existsSync(oldDataPath) && !isDev) {
         console.log("Found legacy ArmCord folder.");
         // copy old data to new location
         fs.renameSync(oldDataPath, newDataPath);
