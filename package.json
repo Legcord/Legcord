@@ -53,7 +53,7 @@
         "rollup-plugin-copy": "^3.5.0",
         "rollup-plugin-esbuild": "^6.1.1",
         "typescript": "^5.5.4",
-        "typescript-eslint": "^7.17.0"
+        "typescript-eslint": "^8.0.0"
     },
     "dependencies": {
         "arrpc": "github:OpenAsar/arrpc#c62ec6a04c8d870530aa6944257fe745f6c59a24",
