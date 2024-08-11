@@ -2,6 +2,8 @@ import {BrowserWindow, MessageBoxOptions, desktopCapturer, dialog, ipcMain, sess
 import path from "path";
 import {iconPath} from "../main";
 let capturerWindow: BrowserWindow;
+// @ts-ignore why tf is this not working
+let isDone: boolean;
 function showAudioDialog(): boolean {
     const options: MessageBoxOptions = {
         type: "question",
@@ -28,6 +30,8 @@ function registerCustomHandler(): void {
         const sources = await desktopCapturer.getSources({
             types: ["screen", "window"]
         });
+        if (!sources) return callback({});
+        isDone = false;
         console.log(sources);
         if (process.platform === "linux" && process.env.XDG_SESSION_TYPE?.toLowerCase() === "wayland") {
             console.log("WebRTC Capturer detected, skipping window creation."); //assume webrtc capturer is used
@@ -49,17 +53,20 @@ function registerCustomHandler(): void {
                     preload: path.join(__dirname, "preload.js")
                 }
             });
-            ipcMain.once("selectScreenshareSource", (_event, id, name) => {
-                //console.log(sources[id]);
-                //console.log(id);
+            ipcMain.once("selectScreenshareSource", (_event, id, name, audio: boolean) => {
+                isDone = true;
+                console.log("Audio status: " + audio);
                 capturerWindow.close();
-                let result = {id, name};
-                if (process.platform === "linux" || process.platform === "win32") {
-                    var options: Electron.Streams = {video: sources[0]};
-                    if (showAudioDialog() == true) options = {video: sources[0], audio: "loopbackWithMute"};
-                    callback(options);
-                } else {
-                    callback({video: result});
+                const result = {id, name};
+                let options: Electron.Streams = {video: sources[0]};
+                switch (process.platform) {
+                    case "win32" || "linux":
+                        options = {video: result};
+                        if (audio) options = {video: result, audio: "loopback"};
+                        callback(options);
+                        break;
+                    default:
+                        callback({video: result});
                 }
             });
             capturerWindow.loadURL(`file://${__dirname}/picker.html`);

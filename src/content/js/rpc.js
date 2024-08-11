@@ -14,15 +14,16 @@
 
             for (const id in modules) {
                 const mod = modules[id].exports;
-                if (!mod?.__esModule) continue;
 
                 for (const prop in mod) {
-                    if (!mod.hasOwnProperty(prop)) continue;
-
                     const candidate = mod[prop];
-                    if (candidate && candidate.register && candidate.wait) {
-                        Dispatcher = candidate;
-                        break;
+                    try {
+                        if (candidate && candidate.register && candidate.wait) {
+                            Dispatcher = candidate;
+                            break;
+                        }
+                    } catch {
+                        continue;
                     }
                 }
 

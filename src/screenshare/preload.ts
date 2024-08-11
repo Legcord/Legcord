@@ -30,7 +30,13 @@ async function addDisplays(): Promise<void> {
         </button>
       </li>
     </ul>
-    </div>`;
+    </div>
+    <div class="switch">
+            <label class="header">Share system audio</label>
+            <input id="audio" class="tgl tgl-light left" type="checkbox" />
+            <label class="tgl-btn left" for="audio"></label>
+    </div>
+    `;
         document.body.appendChild(selectionElem);
         document.querySelectorAll(".desktop-capturer-selection__btn").forEach((button) => {
             button.addEventListener("click", async () => {
@@ -40,7 +46,10 @@ async function addDisplays(): Promise<void> {
                     if (id === "${CANCEL_ID}") {
                         throw new Error("Cancelled by user");
                     } else {
-                        ipcRenderer.sendSync("selectScreenshareSource", id, title);
+                        const audioElement: HTMLInputElement | null = document.getElementById(
+                            "audio"
+                        ) as HTMLInputElement;
+                        ipcRenderer.sendSync("selectScreenshareSource", id, title, audioElement.checked);
                     }
                 } catch (err) {
                     console.error(err);
