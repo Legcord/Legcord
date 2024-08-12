@@ -101,7 +101,7 @@ export async function installModLoader(): Promise<void> {
 
         while (true) {
             let completed = false;
-            await fetch(URLs[0]!)
+            await fetch(URLs[0])
                 .then(async (loaderZip) => {
                     const fileStream = fs.createWriteStream(zipPath);
                     await finished(Readable.fromWeb(loaderZip.body as ReadableStream).pipe(fileStream)).then(
