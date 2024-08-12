@@ -17,14 +17,19 @@ void app.whenReady().then(async () => {
     }
     let trayPath = nativeImage.createFromPath(path.join(import.meta.dirname, "../", `/assets/${trayIcon}.png`));
     const trayVerIcon = function () {
-        if (process.platform == "win32") {
-            return trayPath.resize({height: 16});
-        } else if (process.platform == "darwin") {
-            return trayPath.resize({height: 18});
-        } else if (process.platform == "linux") {
-            return trayPath.resize({height: 24});
+        switch (process.platform) {
+            case "win32":
+                return trayPath.resize({height: 16});
+                break;
+            case "darwin":
+                return trayPath.resize({height: 18});
+                break;
+            case "linux":
+                return trayPath.resize({height: 24});
+                break;
+            default:
+                return trayPath; // NOTE - If you fall under this condition, feel free to submit a PR if there are issues.
         }
-        return undefined;
     };
 
     if (process.platform == "darwin" && trayPath.getSize().height > 22) trayPath = trayPath.resize({height: 22});

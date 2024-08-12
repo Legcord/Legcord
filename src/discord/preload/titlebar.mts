@@ -42,7 +42,7 @@ export function injectTitlebar(): void {
         const quit = document.getElementById("quit");
 
         minimize!.addEventListener("click", () => {
-            if (window.location.href.indexOf("setup.html") > -1) {
+            if (window.location.href.includes("setup.html")) {
                 ipcRenderer.send("setup-minimize");
             } else {
                 ipcRenderer.send("win-minimize");
@@ -59,7 +59,7 @@ export function injectTitlebar(): void {
         });
 
         quit!.addEventListener("click", () => {
-            if (window.location.href.indexOf("setup.html") > -1) {
+            if (window.location.href.includes("setup.html")) {
                 ipcRenderer.send("setup-quit");
             } else {
                 if (ipcRenderer.sendSync("minimizeToTray") === true) {

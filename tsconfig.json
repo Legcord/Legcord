@@ -1,32 +1,16 @@
 {
-    // Reference: https://www.typescriptlang.org/tsconfig
-    "include": ["src/**/*", "*.js"], // This makes it so that the compiler won't compile anything outside of "src".
-    //"exclude": ["src/**/*.test.ts"], // Exclude .test.ts files since they're for Jest only.
     "compilerOptions": {
-        // Project Structure //
-        "rootDir": "src", // rootDir only affects the STRUCTURE of the folders, not what gets compiled. For extra measure, make sure the structure conforms to "src".
-        "moduleResolution": "node", // Specify how the compiler resolves modules, like going for node_modules first then searching elsewhere. The official docs just say to use this instead of classic.
-
-        // Type Settings //
-        "strict": true, // Enables all strict checks possible.
-        "noImplicitReturns": false, // Makes sure you don't accidentally return something + undefined.
-        "noFallthroughCasesInSwitch": true, // Prevents accidentally forgetting to break every switch case. Of course, if you know what you're doing, feel free to add a @ts-ignore, which also signals that it's not a mistake.
-        "forceConsistentCasingInFileNames": true, // Make import paths case-sensitive. "./tEst" is no longer the same as "./test".
-        "esModuleInterop": true, // Enables compatibility with Node.js' module system since the entire export can be whatever you want. allowSyntheticDefaultImports doesn't address runtime issues and is made redundant by this setting.
-        "lib": ["ESNext", "DOM"], // Specifies what common libraries you have access to. If you're working in Node.js, you'll want to leave out the DOM library. But do make sure to include "@types/node" because otherwise, variables like "console" won't be defined.
-        "noUnusedLocals": true, // Warns you if you have unused variables.
-        // Output //
-        "module": "ESNext", // Compiles ES6 imports to require() syntax.
-        "removeComments": false,
-        "sourceMap": true, // Used for displaying the original source when debugging in webpack. Allows you to set breakpoints directly on TypeScript code for VSCode's debugger.
-
-        // Library Building //
-        "declaration": false, // Exports declaration files in addition, used for exporting a module.
-        "declarationMap": false, // Allows the user to go to the source file when hitting a go-to-implementation key like F12 in VSCode for example.
-        //"declarationDir": "typings", // declarationDir allows you to separate the compiled code from the declaration files, used in conjunction with package.json's "types" property.
-        // Web Compatibility //
-        "target": "ESNext", // ES2017 supports async/await, reducing the amount of compiled code, especially for async-heavy projects. ES2020 is from the Node 14 base (https://github.com/tsconfig/bases/blob/master/bases/node14.json)
-        "downlevelIteration": false, // This flag adds extra support when targeting ES3, but adds extra bloat otherwise.
-        "importHelpers": false // Reduce the amount of bloat that comes from downlevelIteration (when polyfills are redeclared).
-    }
+        "exactOptionalPropertyTypes": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "strict": true,
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "rootDir": "src",
+        "lib": ["ESNext", "DOM"],
+        "target": "ESNext",
+        "sourceMap": true
+    },
+    "include": ["src/**/*", "*.config.js"],
+    "exclude": ["node_modules", "dist"]
 }

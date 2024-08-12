@@ -1,5 +1,5 @@
 import {ipcRenderer, webFrame} from "electron";
-import {sleep} from "../../common/sleep";
+import {sleep} from "../../common/sleep.js";
 const requiredPlugins: Record<string, string> = {
     "armcord-arrpc": "https://armcord.github.io/shelter-plugins/armcordRPC/",
     "armcord-settings": "https://armcord.github.io/shelter-plugins/armcordSettings/",
@@ -34,7 +34,7 @@ async function addPlugins() {
         `;
                 try {
                     await webFrame.executeJavaScript(js);
-                } catch (e) {
+                } catch (_e) {
                     console.log("Plugin " + plugin + " already injected");
                 }
             }

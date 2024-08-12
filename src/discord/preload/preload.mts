@@ -11,7 +11,7 @@ import {sleep} from "../../common/sleep.js";
 import type {ArmCordWindow} from "../../types/armcordWindow.d.js";
 
 window.localStorage.setItem("hideNag", "true");
-const disableShelter = ipcRenderer.sendSync("disableShelter");
+const disableShelter = ipcRenderer.sendSync("disableShelter") as boolean;
 if (ipcRenderer.sendSync("legacyCapturer")) {
     console.warn("Using legacy capturer module");
     await import("./capturer.js");

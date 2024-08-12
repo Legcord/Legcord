@@ -1,5 +1,5 @@
 import {contextBridge, ipcRenderer} from "electron";
-import {Settings} from "../types/settings";
+import {Settings} from "../types/settings.d.js";
 //import {addStyle} from "../utils.js";
 console.log("ArmCord Settings");
 console.log(process.platform);

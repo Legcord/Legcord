@@ -47,7 +47,7 @@ export function setConfigBulk(object: Settings): void {
     try {
         const existingDataBuffer = fs.readFileSync(getConfigLocation(), "utf-8");
         existingData = JSON.parse(existingDataBuffer.toString()) as Settings;
-    } catch (error) {
+    } catch (_error) {
         // Ignore errors when the file doesn't exist or parsing fails
     }
     // Merge the existing data with the new data

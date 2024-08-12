@@ -1,7 +1,7 @@
 import {ipcRenderer, contextBridge} from "electron";
-import {ThemeManifest} from "../types/themeManifest";
+import {ThemeManifest} from "../types/themeManifest.d.js";
 contextBridge.exposeInMainWorld("themes", {
-    install: async (url: string) => ipcRenderer.invoke("installBDTheme", url),
+    install: async (url: string) => ipcRenderer.invoke("installBDTheme", url) as Promise<null>,
     uninstall: (id: string) => ipcRenderer.send("uninstallTheme", id)
 });
 ipcRenderer.on("themeManifest", (_event, json: string) => {

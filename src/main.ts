@@ -27,7 +27,7 @@ import {injectElectronFlags} from "./common/flags.js";
 import {setLang} from "./common/lang.js";
 import {installModLoader} from "./discord/extensions/mods.js";
 export let iconPath: string;
-import type {Settings} from "./types/settings";
+import type {Settings} from "./types/settings.d.js";
 export let settings: Settings;
 export let customTitlebar: boolean;
 checkForDataFolder();
@@ -64,7 +64,7 @@ export async function init(): Promise<void> {
         }
         switch (getConfig("windowStyle")) {
             case "default":
-                if (process.platform == "linux" ?? "darwin") {
+                if (["linux", "darwin"].includes(process.platform)) {
                     createCustomWindow();
                 } else {
                     // TODO - Bring titlebar overlay to macOS

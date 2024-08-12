@@ -2,7 +2,7 @@ type OptimizableFunction<T extends Node> = (child: T) => T;
 
 const optimize = <T extends Node>(orig: OptimizableFunction<T>) => {
     return function (this: Element, ...args: [Element]) {
-        if (typeof args[0]?.className === "string" && args[0].className.indexOf("activity") !== -1) {
+        if (typeof args[0]?.className === "string" && args[0].className.includes("activity")) {
             // @ts-expect-error - // FIXME
             return setTimeout(() => orig.apply(this, args), 100);
         }

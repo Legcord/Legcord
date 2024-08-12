@@ -207,7 +207,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
                     "You have some unread messages."
                 );
             if (title.startsWith("(")) {
-                const pings = parseInt(title.match(/\((\d+)\)/)![1]);
+                const pings = parseInt(/\((\d+)\)/.exec(title)![1]!);
                 if (pings > 9) {
                     return passedWindow.setOverlayIcon(
                         nativeImage.createFromPath(path.join(import.meta.dirname, "../", "/assets/badge-10.ico")),
@@ -226,7 +226,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         }
         if (process.platform === "darwin") {
             if (title.startsWith("•")) return app.dock.setBadge("•");
-            if (title.startsWith("(")) return app.setBadgeCount(parseInt(title.match(/\((\d+)\)/)![1]));
+            if (title.startsWith("(")) return app.setBadgeCount(parseInt(/\((\d+)\)/.exec(title)![1]!));
             app.setBadgeCount(0);
         }
         if (!title.endsWith(armCordSuffix)) {
