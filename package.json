@@ -17,7 +17,7 @@
         "package": "pnpm run build && electron-builder",
         "packageQuick": "pnpm run build && electron-builder --dir",
         "format": "prettier --write src *.json",
-        "lint": "eslint \"**/*.{ts,tsx,js,jsx}\" .",
+        "lint": "eslint",
         "CIbuild": "pnpm run build && electron-builder --linux zip && electron-builder --windows zip && electron-builder --macos zip",
         "prepare": "git config --local core.hooksPath .hooks/"
     },

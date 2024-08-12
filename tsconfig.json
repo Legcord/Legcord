@@ -11,6 +11,6 @@
         "target": "ESNext",
         "sourceMap": true
     },
-    "include": ["src/**/*", "*.config.js"],
+    "include": ["src/**/*"],
     "exclude": ["node_modules", "dist"]
 }

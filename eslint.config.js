@@ -7,7 +7,7 @@ import n from "eslint-plugin-n";
 
 export default tseslint.config(
     eslint.configs.recommended,
-    {ignores: ["ts-out", "src/discord/content/js"]},
+    {ignores: ["ts-out", "src/discord/content/js", "*.config.js"]},
     ...tseslint.configs.recommendedTypeChecked,
     ...tseslint.configs.stylisticTypeChecked,
     n.configs["flat/recommended"],
