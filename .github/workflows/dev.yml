@@ -12,56 +12,40 @@ jobs:
                 include:
                     - arch: arm64
                       os: windows-latest
-                      flags: "--arm64 --windows zip"
+                      flags: "--arm64 --windows"
                       target: "arm64-win"
 
                     - arch: amd64
                       os: windows-latest
-                      flags: "--x64 --windows zip"
+                      flags: "--x64 --windows"
                       target: "amd64-win"
 
                     - arch: arm64
                       os: ubuntu-latest
-                      flags: "--arm64 --linux zip"
+                      flags: "--arm64 --linux"
                       target: "arm64-linux"
 
                     - arch: amd64
                       os: ubuntu-latest
-                      flags: "--x64 --linux zip"
+                      flags: "--x64 --linux"
                       target: "amd64-linux"
-
-                    - arch: amd64
-                      os: ubuntu-latest
-                      flags: "--x64 --linux flatpak"
-                      target: "amd64-linux-flatpak"
-                      setup: "sudo apt-get update && sudo apt-get install -y flatpak flatpak-builder"
-
-                    - arch: arm64
-                      os: ubuntu-latest
-                      flags: "--x64 --linux flatpak"
-                      target: "arm64-linux-flatpak"
-                      setup: "sudo apt-get update && sudo apt-get install -y flatpak flatpak-builder"
 
                     - arch: arm64
                       os: macos-latest
-                      flags: "--arm64 --macos zip"
+                      flags: "--arm64 --macos"
                       target: "arm64-mac"
 
                     - arch: amd64
                       os: macos-latest
-                      flags: "--x64 --macos zip"
+                      flags: "--x64 --macos"
                       target: "amd64-mac"
 
         runs-on: ${{matrix.os}}
         steps:
-            - name: Run pre-setup scripts
-              shell: bash
-              run: ${{matrix.setup}}
-
             - name: Checkout code
               uses: actions/checkout@v4
 
-            - name: Prepare PNPM
+            - name: Prepeare PNPM
               uses: pnpm/action-setup@v4
 
             - name: Prepare Node.js
@@ -77,7 +61,7 @@ jobs:
               run: pnpm build
 
             - name: Build Electron
-              run: pnpm electron-builder ${{matrix.flags}}
+              run: pnpm electron-builder ${{matrix.flags}} zip
               env:
                   GH_TOKEN: ${{secrets.GITHUB_TOKEN}} # MacOS needs the token or it will fail to build
 
