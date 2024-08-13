@@ -93,6 +93,16 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     app.on("activate", function () {
         app.show();
     });
+    passedWindow.webContents.on("frame-created", (_, {frame}) => {
+        frame.once("dom-ready", () => {
+            if (
+                frame.url.includes("youtube.com/embed/") ||
+                (frame.url.includes("discordsays") && frame.url.includes("youtube.com"))
+            ) {
+                frame.executeJavaScript(fs.readFileSync(path.join(__dirname, "js/adguard.js"), "utf-8"));
+            }
+        });
+    });
     passedWindow.webContents.setWindowOpenHandler(({url}) => {
         // Allow about:blank (used by Vencord QuickCss popup)
         if (url === "about:blank") return {action: "allow"};
