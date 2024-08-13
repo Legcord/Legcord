@@ -94,12 +94,12 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         app.show();
     });
     passedWindow.webContents.on("frame-created", (_, {frame}) => {
-        frame.once("dom-ready", () => {
+        frame.once("dom-ready", async () => {
             if (
                 frame.url.includes("youtube.com/embed/") ||
                 (frame.url.includes("discordsays") && frame.url.includes("youtube.com"))
             ) {
-                frame.executeJavaScript(fs.readFileSync(path.join(__dirname, "js/adguard.js"), "utf-8"));
+                await frame.executeJavaScript(fs.readFileSync(path.join(__dirname, "js/adguard.js"), "utf-8"));
             }
         });
     });
