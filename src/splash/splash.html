@@ -59,7 +59,7 @@
                     } else if (internal.installState === "done") {
                         return true;
                     } else if (internal.installState === "modDownload") {
-                        text.innerHTML = "Updating " + armcord.mods;
+                        text.innerHTML = "Updating " + internal.mods;
                     } else if (internal.installState === "none") {
                         text.innerHTML = "Nothing to install.";
                         return true;

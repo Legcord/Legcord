@@ -2,6 +2,7 @@ import {BrowserWindow, ipcMain} from "electron";
 import {iconPath} from "../main.js";
 import path from "path";
 import isDev from "electron-is-dev";
+import {getConfig} from "../common/config.js";
 
 export let splashWindow: BrowserWindow;
 export async function createSplashWindow(): Promise<void> {
@@ -22,6 +23,9 @@ export async function createSplashWindow(): Promise<void> {
     });
     ipcMain.on("splash-isDev", (event) => {
         event.returnValue = isDev;
+    });
+    ipcMain.on("splash-clientmod", (event) => {
+        event.returnValue = getConfig("mods");
     });
     await splashWindow.loadFile(path.join(import.meta.dirname, "html", "splash.html"));
 }

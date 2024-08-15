@@ -64,10 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("download")!.addEventListener("click", () => {
         void ipcRenderer.invoke("installBDTheme", (document.getElementById("themeLink") as HTMLInputElement).value);
     });
-});
-
-//drag and drop
-document.addEventListener("DOMContentLoaded", () => {
+    // drag and drop
     const holder = document.getElementById("dropArea");
 
     holder!.ondragover = () => {
