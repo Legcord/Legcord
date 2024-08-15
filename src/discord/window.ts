@@ -5,7 +5,6 @@
 import {BrowserWindow, MessageBoxOptions, app, dialog, nativeImage, shell} from "electron";
 import path from "path";
 import type EventEmitter from "events";
-import {ThemeManifest} from "../types/themeManifest.d.js";
 import {registerIpc} from "./ipc.js";
 import {setMenu} from "./menu.js";
 import * as fs from "fs";
@@ -17,6 +16,7 @@ import {iconPath, init} from "../main.js";
 import {getConfig, setConfig, firstRun} from "../common/config.js";
 import {getWindowState, setWindowState} from "../common/windowState.js";
 import {forceQuit, setForceQuit} from "../common/forceQuit.js";
+import {injectThemesMain} from "../common/themes.js";
 export let mainWindows: BrowserWindow[] = [];
 export let inviteWindow: BrowserWindow;
 
@@ -246,42 +246,11 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
             );
         }
     });
-    const userDataPath = app.getPath("userData");
-    const themesFolder = `${userDataPath}/themes/`;
-    if (!fs.existsSync(themesFolder)) {
-        fs.mkdirSync(themesFolder);
-        console.log("Created missing theme folder");
-    }
-    if (!fs.existsSync(`${userDataPath}/disabled.txt`)) {
-        fs.writeFileSync(path.join(userDataPath, "/disabled.txt"), "");
-    }
+    injectThemesMain(passedWindow);
     passedWindow.on("unresponsive", () => {
         passedWindow.webContents.reload();
     });
-    passedWindow.webContents.on("did-finish-load", () => {
-        fs.readdirSync(themesFolder).forEach((file) => {
-            try {
-                const manifest = fs.readFileSync(`${themesFolder}/${file}/manifest.json`, "utf8");
-                const themeFile = JSON.parse(manifest) as ThemeManifest;
-                if (
-                    fs
-                        .readFileSync(path.join(userDataPath, "/disabled.txt"))
-                        .toString()
-                        .includes(themeFile.name.replace(" ", "-"))
-                ) {
-                    console.log(`%cSkipped ${themeFile.name} made by ${themeFile.author}`, "color:red");
-                } else {
-                    passedWindow.webContents.send(
-                        "themeLoader",
-                        fs.readFileSync(`${themesFolder}/${file}/${themeFile.theme}`, "utf-8")
-                    );
-                    console.log(`%cLoaded ${themeFile.name} made by ${themeFile.author}`, "color:red");
-                }
-            } catch (err) {
-                console.error(err);
-            }
-        });
-    });
+
     setMenu();
     passedWindow.on("close", (e) => {
         if (mainWindows.length > 1) {

@@ -1,10 +1,9 @@
-import {BrowserWindow, app, ipcMain, shell} from "electron";
+import {BrowserWindow, ipcMain, shell} from "electron";
 import path from "path";
 import {Settings} from "../types/settings.d.js";
-import fs from "fs";
 import {getDisplayVersion} from "../common/version.js";
-import type {ThemeManifest} from "../types/themeManifest.d.js";
 import {getConfig, setConfigBulk} from "../common/config.js";
+import {injectThemesMain} from "../common/themes.js";
 let settingsWindow: BrowserWindow;
 let instance = 0;
 
@@ -39,39 +38,7 @@ export async function createSettingsWindow(): Promise<void> {
         async function settingsLoadPage(): Promise<void> {
             await settingsWindow.loadURL(`file://${import.meta.dirname}/html/settings.html`);
         }
-        const userDataPath = app.getPath("userData");
-        const themesFolder = `${userDataPath}/themes/`;
-        if (!fs.existsSync(themesFolder)) {
-            fs.mkdirSync(themesFolder);
-            console.log("Created missing theme folder");
-        }
-        if (!fs.existsSync(`${userDataPath}/disabled.txt`)) {
-            fs.writeFileSync(path.join(userDataPath, "/disabled.txt"), "");
-        }
-        settingsWindow.webContents.on("did-finish-load", () => {
-            fs.readdirSync(themesFolder).forEach((file) => {
-                try {
-                    const manifest = fs.readFileSync(`${themesFolder}/${file}/manifest.json`, "utf8");
-                    const themeFile = JSON.parse(manifest) as ThemeManifest;
-                    if (
-                        fs
-                            .readFileSync(path.join(userDataPath, "/disabled.txt"))
-                            .toString()
-                            .includes(themeFile.name.replace(" ", "-"))
-                    ) {
-                        console.log(`%cSkipped ${themeFile.name} made by ${themeFile.author}`, "color:red");
-                    } else {
-                        settingsWindow.webContents.send(
-                            "themeLoader",
-                            fs.readFileSync(`${themesFolder}/${file}/${themeFile.theme}`, "utf-8")
-                        );
-                        console.log(`%cLoaded ${themeFile.name} made by ${themeFile.author}`, "color:red");
-                    }
-                } catch (err) {
-                    console.error(err);
-                }
-            });
-        });
+        injectThemesMain(settingsWindow);
         settingsWindow.webContents.setWindowOpenHandler(({url}) => {
             void shell.openExternal(url);
             return {action: "deny"};

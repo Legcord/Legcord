@@ -2,13 +2,13 @@ import {ipcRenderer, contextBridge} from "electron";
 import {ThemeManifest} from "../types/themeManifest.d.js";
 contextBridge.exposeInMainWorld("themes", {
     install: async (url: string) => ipcRenderer.invoke("installBDTheme", url) as Promise<null>,
-    uninstall: (id: string) => ipcRenderer.send("uninstallTheme", id)
+    uninstall: (id: string) => ipcRenderer.send("uninstallTheme", id),
+    edit: (id: string) => ipcRenderer.send("editTheme", id)
 });
-ipcRenderer.on("themeManifest", (_event, json: string) => {
+ipcRenderer.on("themeManifest", (_event, id: string, json: string) => {
     const manifest = JSON.parse(json) as ThemeManifest;
     console.log(manifest);
     const e = document.getElementById("cardBox");
-    const id = manifest.name.replace(" ", "-");
     e?.insertAdjacentHTML(
         "beforeend",
         `
@@ -22,6 +22,7 @@ ipcRenderer.on("themeManifest", (_event, json: string) => {
         </div>
         `
     );
+    (document.getElementById(id) as HTMLInputElement).checked = manifest.enabled;
     document.getElementById(`${id}header`)!.addEventListener("click", () => {
         document.getElementById("themeInfoModal")!.style.display = "block";
         document.getElementById("themeInfoName")!.textContent = `${manifest.name} by ${manifest.author}`;
@@ -30,6 +31,7 @@ ipcRenderer.on("themeManifest", (_event, json: string) => {
             document.getElementById("themeInfoButtons")!.innerHTML +=
                 `<img class="themeInfoIcon" id="removeTheme" onclick="themes.uninstall('${id}')" title="Remove the theme" src="https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/Trash.png"></img>
                            <img class="themeInfoIcon" id="updateTheme" onclick="themes.install('${manifest.updateSrc}')" title="Update your theme" src="https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/UpgradeArrow.png"></img>
+                           <img class="themeInfoIcon" id="editTheme" onclick="themes.edit('${id}')" title="Edit your theme" src="https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/Edit.png"></img>
                            <img class="themeInfoIcon" id="compatibility" title="Supports ArmCord Titlebar" src=""></img>`;
             console.log("e");
             if (manifest.supportsArmCordTitlebar == true) {
@@ -50,16 +52,8 @@ ipcRenderer.on("themeManifest", (_event, json: string) => {
             document.getElementById("themeInfoButtons")!.innerHTML +=
                 `<a href="${`https://discord.gg/${manifest.invite}`}" class="button">Support Discord</a>`;
     });
-    if (!(ipcRenderer.sendSync("disabled") as string[]).includes(id)) {
-        (document.getElementById(id) as HTMLInputElement).checked = true;
-    }
     (document.getElementById(id) as HTMLInputElement).addEventListener("input", function () {
-        ipcRenderer.send("reloadMain");
-        if (this.checked) {
-            ipcRenderer.send("removeFromDisabled", id);
-        } else {
-            ipcRenderer.send("addToDisabled", id);
-        }
+        ipcRenderer.send("setThemeEnabled", id, this.checked);
     });
 });
 document.addEventListener("DOMContentLoaded", () => {
@@ -70,4 +64,32 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("download")!.addEventListener("click", () => {
         void ipcRenderer.invoke("installBDTheme", (document.getElementById("themeLink") as HTMLInputElement).value);
     });
+});
+
+//drag and drop
+document.addEventListener("DOMContentLoaded", () => {
+    const holder = document.getElementById("dropArea");
+
+    holder!.ondragover = () => {
+        return false;
+    };
+
+    holder!.ondragleave = () => {
+        return false;
+    };
+
+    holder!.ondragend = () => {
+        return false;
+    };
+
+    holder!.ondrop = async (e) => {
+        e.preventDefault();
+
+        for (const f of e.dataTransfer!.files) {
+            console.log("File you dragged here: ", f.path);
+            await ipcRenderer.invoke("installBDTheme", f.path);
+        }
+
+        return false;
+    };
 });

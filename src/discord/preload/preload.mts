@@ -6,7 +6,7 @@ import fs from "fs";
 import path from "path";
 import {injectMobileStuff} from "./mobile.js";
 import {injectTitlebar} from "./titlebar.mjs";
-import {addStyle, addScript} from "../../common/dom.js";
+import {addStyle, addScript, addTheme} from "../../common/dom.js";
 import {sleep} from "../../common/sleep.js";
 import type {ArmCordWindow} from "../../types/armcordWindow.d.js";
 
@@ -31,10 +31,13 @@ declare global {
 }
 
 console.log(`ArmCord ${version}`);
-ipcRenderer.on("themeLoader", (_event, message: string) => {
-    addStyle(message);
+ipcRenderer.on("addTheme", (_event, name: string, css: string) => {
+    if (document.getElementById(name)) return;
+    addTheme(name, css);
 });
-
+ipcRenderer.on("removeTheme", (_event, name: string) => {
+    document.getElementById(name)!.remove();
+});
 if (ipcRenderer.sendSync("titlebar")) {
     injectTitlebar();
 }

@@ -11,7 +11,7 @@
     clear: both;
     height: 30px;
     line-height: 30px;
-    -webkit-app-region: drag;
+    -webkit-app-region: drag !important;
     user-select: none;
     -webkit-user-select: none;
     position: fixed;

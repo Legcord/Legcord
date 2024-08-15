@@ -4,6 +4,13 @@ export function addStyle(styleString: string): void {
     document.head.append(style);
 }
 
+export function addTheme(id: string, styleString: string): void {
+    const style = document.createElement("style");
+    style.textContent = styleString;
+    style.id = id;
+    document.head.append(style);
+}
+
 export function addScript(scriptString: string): void {
     const script = document.createElement("script");
     script.textContent = scriptString;

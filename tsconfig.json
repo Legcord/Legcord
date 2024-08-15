@@ -7,7 +7,7 @@
         "module": "NodeNext",
         "moduleResolution": "NodeNext",
         "rootDir": "src",
-        "lib": ["ESNext", "DOM"],
+        "lib": ["ESNext", "DOM", "DOM.Iterable"],
         "target": "ESNext",
         "sourceMap": true
     },

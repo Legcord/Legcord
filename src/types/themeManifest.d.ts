@@ -2,6 +2,7 @@ export interface ThemeManifest {
     name: string;
     author?: string;
     description?: string;
+    enabled: boolean;
     version?: string;
     invite?: string;
     authorId?: string;
