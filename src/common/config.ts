@@ -127,6 +127,7 @@ export function setup(): void {
         customJsBundle: "https://armcord.app/placeholder.js",
         customCssBundle: "https://armcord.app/placeholder.css",
         disableAutogain: false,
+        disableShelter: false,
         useLegacyCapturer: false,
         mobileMode: false,
         trayIcon: "default",
