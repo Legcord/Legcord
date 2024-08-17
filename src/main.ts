@@ -86,7 +86,7 @@ export async function init(): Promise<void> {
     }
 }
 args();
-if (!app.requestSingleInstanceLock()) {
+if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     // if value isn't set after 3.2.4
     // kill if 2nd instance
     app.quit();
