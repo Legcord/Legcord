@@ -11,7 +11,6 @@ import {sleep} from "../../common/sleep.js";
 import type {ArmCordWindow} from "../../types/armcordWindow.d.js";
 
 window.localStorage.setItem("hideNag", "true");
-const disableShelter = ipcRenderer.sendSync("disableShelter") as boolean;
 if (ipcRenderer.sendSync("legacyCapturer")) {
     console.warn("Using legacy capturer module");
     await import("./capturer.js");
@@ -63,9 +62,6 @@ await sleep(5000).then(() => {
     if (ipcRenderer.sendSync("disableAutogain")) {
         addScript(fs.readFileSync(path.join(import.meta.dirname, "../", "/js/disableAutogain.js"), "utf8"));
     }
-    if (disableShelter) {
-        addScript(fs.readFileSync(path.join(import.meta.dirname, "../", "/js/rpc.js"), "utf8"));
-    }
     const cssPath = path.join(import.meta.dirname, "../", "/css/discord.css");
     addStyle(fs.readFileSync(cssPath, "utf8"));
     updateLang();
@@ -82,25 +78,4 @@ setInterval(() => {
     el.textContent = `ArmCord Version: ${version}`;
     el.onclick = () => ipcRenderer.send("openSettingsWindow");
     host.append(el);
-    if (disableShelter) {
-        let advanced = document
-            .querySelector('[class*="socialLinks"]')
-            ?.parentElement?.querySelector(
-                '[class*="header"] + [class*="item"] + [class*="item"] + [class*="item"] + [class*="item"] + [class*="item"] + [class*="item"] + [class*="item"] + [class*="item"] + [class*="item"]'
-            );
-        if (!advanced) return;
-        if (advanced.nextSibling instanceof Element && advanced.nextSibling.className.includes("item")) {
-            advanced = advanced.nextSibling;
-        }
-        const acSettings = advanced.cloneNode(true) as HTMLElement;
-        const tManager = advanced.cloneNode(true) as HTMLElement;
-        acSettings.textContent = "ArmCord Settings";
-        acSettings.id = "acSettings";
-        acSettings.onclick = () => ipcRenderer.send("openSettingsWindow");
-        tManager.textContent = "Themes";
-        tManager.id = "acThemes";
-        tManager.onclick = () => ipcRenderer.send("openThemesWindow");
-        advanced.insertAdjacentElement("afterend", acSettings);
-        advanced.insertAdjacentElement("afterend", tManager);
-    }
 }, 1000);

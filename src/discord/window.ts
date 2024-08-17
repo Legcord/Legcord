@@ -50,7 +50,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         void passedWindow.webContents.executeJavaScript(`document.body.setAttribute("isMaximized", "");`);
         passedWindow.hide(); // please don't flashbang the user
     }
-    if (getConfig("windowStyle") == "transparency" && process.platform === "win32") {
+    if (getConfig("windowStyle") == "transparent" && process.platform === "win32") {
         passedWindow.setBackgroundMaterial("mica");
         if (getConfig("startMinimized") == false) {
             passedWindow.show();

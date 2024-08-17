@@ -11,7 +11,6 @@ import {customTitlebar} from "../main.js";
 import {createSettingsWindow} from "../settings/main.js";
 import {splashWindow} from "../splash/main.js";
 import {createTManagerWindow} from "../themeManager/main.js";
-import {modInstallState} from "./extensions/mods.js";
 import {Settings} from "../types/settings.d.js";
 import isDev from "electron-is-dev";
 
@@ -76,9 +75,6 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.on("displayVersion", (event) => {
         event.returnValue = getDisplayVersion();
     });
-    ipcMain.on("modInstallState", (event) => {
-        event.returnValue = modInstallState;
-    });
     ipcMain.on("restart", () => {
         app.relaunch();
         app.exit();
@@ -94,9 +90,6 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     });
     ipcMain.on("channel", (event) => {
         event.returnValue = getConfig("channel");
-    });
-    ipcMain.on("disableShelter", (event) => {
-        event.returnValue = getConfig("disableShelter");
     });
     ipcMain.on("clientmod", (event) => {
         event.returnValue = getConfig("mods");

@@ -25,9 +25,9 @@ import {
 } from "./common/config.js";
 import {injectElectronFlags} from "./common/flags.js";
 import {setLang} from "./common/lang.js";
-import {installModLoader} from "./discord/extensions/mods.js";
 export let iconPath: string;
 import type {Settings} from "./types/settings.d.js";
+import {fetchMods} from "./discord/extensions/mods.js";
 export let settings: Settings;
 export let customTitlebar: boolean;
 checkForDataFolder();
@@ -137,7 +137,7 @@ if (!app.requestSingleInstanceLock()) {
 
         // Patch for linux bug to insure things are loaded before window creation (fixes transparency on some linux systems)
         await new Promise<void>((resolve) => setTimeout(() => (init(), resolve()), 1500));
-        await installModLoader();
+        await fetchMods();
         session.fromPartition("some-partition").setPermissionRequestHandler((_webContents, permission, callback) => {
             if (permission === "notifications") {
                 // Approves the permissions request

@@ -20,9 +20,6 @@ importers:
       electron-is-dev:
         specifier: ^3.0.1
         version: 3.0.1
-      extract-zip:
-        specifier: ^2.0.1
-        version: 2.0.1
       v8-compile-cache:
         specifier: ^2.4.0
         version: 2.4.0
