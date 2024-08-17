@@ -1,0 +1,27 @@
+.acDropdown option {
+    color: #fff;
+    font-weight: 400;
+    font-style: normal;
+}
+.acDropdown {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 100%;
+    font-size: 25px;
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    background-color: var(--background-secondary-alt);
+    background-position: center right;
+    background-repeat: no-repeat;
+    border: 1px solid var(--background-floating);
+    border-radius: 2px;
+    color: #fff;
+    font-size: 1.2em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    outline: none !important;
+}
