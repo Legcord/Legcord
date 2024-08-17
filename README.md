@@ -46,9 +46,9 @@
 
 ### Windows
 
-~~<a href="https://microsoft.com/store/apps/9PFHLJFD7KJT">
+<a href="https://microsoft.com/store/apps/9PFHLJFD7KJT">
    <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Download ArmCord" />
-</a>~~ ArmCord in the Microsoft store is currently unavailable.
+</a>
 
 If you're using an older version of Windows, you need to use [pre-built installers](https://www.armcord.app/download).
 
