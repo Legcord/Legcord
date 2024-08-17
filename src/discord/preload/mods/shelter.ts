@@ -16,11 +16,10 @@ try {
     console.error(e);
 }
 async function addPlugins() {
-    if (ipcRenderer.sendSync("isDev")) {
-        await sleep(5000).then(async () => {
-            for (const plugin in requiredPlugins) {
-                console.log(`${plugin}: ${requiredPlugins[plugin]}`);
-                const js = `
+    await sleep(5000).then(async () => {
+        for (const plugin in requiredPlugins) {
+            console.log(`${plugin}: ${requiredPlugins[plugin]}`);
+            const js = `
             async function install() {
                 var installed = shelter.plugins.installedPlugins();
                 if (installed["${plugin}"]) {
@@ -35,13 +34,12 @@ async function addPlugins() {
             }}
             install()
         `;
-                try {
-                    await webFrame.executeJavaScript(js);
-                } catch (_e) {
-                    console.log("Plugin " + plugin + " already injected");
-                }
+            try {
+                await webFrame.executeJavaScript(js);
+            } catch (_e) {
+                console.log("Plugin " + plugin + " already injected");
             }
-        });
-    }
+        }
+    });
 }
 void addPlugins();
