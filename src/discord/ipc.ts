@@ -1,4 +1,3 @@
-//ipc stuff
 import {app, clipboard, desktopCapturer, ipcMain, shell, SourcesOptions, BrowserWindow} from "electron";
 import os from "os";
 import fs from "fs";
@@ -11,7 +10,6 @@ import {customTitlebar} from "../main.js";
 import {createSettingsWindow} from "../settings/main.js";
 import {splashWindow} from "../splash/main.js";
 import {createTManagerWindow} from "../themeManager/main.js";
-import {modInstallState} from "./extensions/mods.js";
 import {Settings} from "../types/settings.d.js";
 import isDev from "electron-is-dev";
 
@@ -21,7 +19,17 @@ const themesPath = path.join(userDataPath, "/themes/");
 const pluginsPath = path.join(userDataPath, "/plugins/");
 export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.handle("getShelterBundle", () => {
-        return fs.readFileSync(path.join(app.getPath("userData"), "shelter.js"), "utf-8");
+        return {
+            js: fs.readFileSync(path.join(app.getPath("userData"), "shelter.js"), "utf-8"),
+            enabled: true
+        };
+    });
+    ipcMain.handle("getVencordBundle", () => {
+        return {
+            js: fs.readFileSync(path.join(app.getPath("userData"), "vencord.js"), "utf-8"),
+            css: fs.readFileSync(path.join(app.getPath("userData"), "vencord.css"), "utf-8"),
+            enabled: getConfig("mods").includes("vencord")
+        };
     });
     ipcMain.on("splashEnd", () => {
         splashWindow.close();
@@ -76,9 +84,6 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.on("displayVersion", (event) => {
         event.returnValue = getDisplayVersion();
     });
-    ipcMain.on("modInstallState", (event) => {
-        event.returnValue = modInstallState;
-    });
     ipcMain.on("restart", () => {
         app.relaunch();
         app.exit();
@@ -94,9 +99,6 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     });
     ipcMain.on("channel", (event) => {
         event.returnValue = getConfig("channel");
-    });
-    ipcMain.on("disableShelter", (event) => {
-        event.returnValue = getConfig("disableShelter");
     });
     ipcMain.on("clientmod", (event) => {
         event.returnValue = getConfig("mods");

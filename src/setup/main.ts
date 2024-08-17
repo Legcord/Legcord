@@ -5,11 +5,9 @@ import {iconPath} from "../main.js";
 import {setConfigBulk, getConfigLocation} from "../common/config.js";
 import type {Settings} from "../types/settings.d.js";
 import {getLang} from "../common/lang.js";
-import {installModLoader} from "../discord/extensions/mods.js";
 
 let setupWindow: BrowserWindow;
 export async function createSetupWindow(): Promise<void> {
-    await installModLoader(); // NOTE - downloading shelter bundle, that way it's ready for first launch
     return new Promise((resolve) => {
         setupWindow = new BrowserWindow({
             width: 390,

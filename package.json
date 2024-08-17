@@ -40,7 +40,7 @@
         "@rollup/plugin-node-resolve": "^15.2.3",
         "@rollup/plugin-typescript": "^11.1.6",
         "@types/eslint__js": "^8.42.3",
-        "@types/node": "^22.2.0",
+        "@types/node": "^22.4.0",
         "@types/ws": "^8.5.12",
         "electron": "31.4.0",
         "electron-builder": "^24.13.3",
@@ -60,7 +60,6 @@
         "cross-fetch": "^4.0.0",
         "electron-context-menu": "^4.0.1",
         "electron-is-dev": "^3.0.1",
-        "extract-zip": "^2.0.1",
         "v8-compile-cache": "^2.4.0",
         "ws": "^8.18.0"
     },
