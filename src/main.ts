@@ -120,6 +120,7 @@ if (!app.requestSingleInstanceLock()) {
     checkIfConfigExists();
     checkIfConfigIsBroken();
     injectElectronFlags();
+    await fetchMods();
     console.log("[Config Manager] Current config: " + fs.readFileSync(getConfigLocation(), "utf-8"));
     if (getConfig("smoothScroll") === false) {
         app.commandLine.appendSwitch("disable-smooth-scrolling");
@@ -137,7 +138,6 @@ if (!app.requestSingleInstanceLock()) {
 
         // Patch for linux bug to insure things are loaded before window creation (fixes transparency on some linux systems)
         await new Promise<void>((resolve) => setTimeout(() => (init(), resolve()), 1500));
-        await fetchMods();
         session.fromPartition("some-partition").setPermissionRequestHandler((_webContents, permission, callback) => {
             if (permission === "notifications") {
                 // Approves the permissions request

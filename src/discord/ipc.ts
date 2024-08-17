@@ -1,4 +1,3 @@
-//ipc stuff
 import {app, clipboard, desktopCapturer, ipcMain, shell, SourcesOptions, BrowserWindow} from "electron";
 import os from "os";
 import fs from "fs";
@@ -20,7 +19,17 @@ const themesPath = path.join(userDataPath, "/themes/");
 const pluginsPath = path.join(userDataPath, "/plugins/");
 export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.handle("getShelterBundle", () => {
-        return fs.readFileSync(path.join(app.getPath("userData"), "shelter.js"), "utf-8");
+        return {
+            js: fs.readFileSync(path.join(app.getPath("userData"), "shelter.js"), "utf-8"),
+            enabled: true
+        };
+    });
+    ipcMain.handle("getVencordBundle", () => {
+        return {
+            js: fs.readFileSync(path.join(app.getPath("userData"), "vencord.js"), "utf-8"),
+            css: fs.readFileSync(path.join(app.getPath("userData"), "vencord.css"), "utf-8"),
+            enabled: getConfig("mods").includes("vencord")
+        };
     });
     ipcMain.on("splashEnd", () => {
         splashWindow.close();

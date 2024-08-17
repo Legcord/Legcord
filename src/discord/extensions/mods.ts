@@ -20,19 +20,13 @@ async function fetchMod(fileName: string, url: string) {
 
 export async function fetchMods() {
     const mods = getConfig("mods");
-    if (mods.includes("shelter")) {
-        console.log("Downloading Shelter");
-        await fetchMod("shelter.js", "https://raw.githubusercontent.com/uwu/shelter-builds/main/shelter.js");
-    }
+
+    console.log("Downloading Shelter");
+    await fetchMod("shelter.js", "https://raw.githubusercontent.com/uwu/shelter-builds/main/shelter.js");
+
     if (mods.includes("vencord")) {
         console.log("Downloading Vencord");
-        await fetchMod("vencord.asar", "https://github.com/Vendicated/Vencord/releases/download/devbuild/desktop.asar");
-    }
-}
-
-export function runMods() {
-    const mods = getConfig("mods");
-    if (mods.includes("vencord")) {
-        console.log("Starting Vencord");
+        await fetchMod("vencord.js", "https://github.com/Vendicated/Vencord/releases/download/devbuild/browser.js");
+        await fetchMod("vencord.css", "https://github.com/Vendicated/Vencord/releases/download/devbuild/browser.css");
     }
 }

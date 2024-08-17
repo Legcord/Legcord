@@ -116,7 +116,7 @@ export function setup(): void {
         minimizeToTray: true,
         keybinds: [],
         multiInstance: false,
-        mods: ["shelter"],
+        mods: ["vencord"],
         spellcheck: true,
         performanceMode: "none",
         skipSplash: false,

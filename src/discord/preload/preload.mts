@@ -1,9 +1,10 @@
 import "./bridge.js";
-import "./shelter.js";
+import "./mods/shelter.js";
+import "./mods/vencord.js";
 import "./optimizer.js";
 import {ipcRenderer} from "electron";
-import fs from "fs";
-import path from "path";
+import {readFileSync} from "fs";
+import {join} from "path";
 import {injectMobileStuff} from "./mobile.js";
 import {injectTitlebar} from "./titlebar.mjs";
 import {addStyle, addScript, addTheme} from "../../common/dom.js";
@@ -60,10 +61,10 @@ await sleep(5000).then(() => {
         })();
         `);
     if (ipcRenderer.sendSync("disableAutogain")) {
-        addScript(fs.readFileSync(path.join(import.meta.dirname, "../", "/js/disableAutogain.js"), "utf8"));
+        addScript(readFileSync(join(import.meta.dirname, "../", "/js/disableAutogain.js"), "utf8"));
     }
-    const cssPath = path.join(import.meta.dirname, "../", "/css/discord.css");
-    addStyle(fs.readFileSync(cssPath, "utf8"));
+    const cssPath = join(import.meta.dirname, "../", "/css/discord.css");
+    addStyle(readFileSync(cssPath, "utf8"));
     updateLang();
 });
 

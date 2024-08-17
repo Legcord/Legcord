@@ -20,13 +20,10 @@ void app.whenReady().then(async () => {
         switch (process.platform) {
             case "win32":
                 return trayPath.resize({height: 16});
-                break;
             case "darwin":
                 return trayPath.resize({height: 18});
-                break;
             case "linux":
                 return trayPath.resize({height: 24});
-                break;
             default:
                 return trayPath; // NOTE - If you fall under this condition, feel free to submit a PR if there are issues.
         }
