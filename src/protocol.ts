@@ -15,10 +15,9 @@ protocol.registerSchemesAsPrivileged([
     }
 ]);
 
-app.whenReady().then(() => {
-    // FIXME - fix types
-    protocol.handle("armcord", (req): any => {
-        let url = req.url.replace("armcord://plugins/", "").split("/");
+void app.whenReady().then(() => {
+    protocol.handle("armcord", (req) => {
+        const url = req.url.replace("armcord://plugins/", "").split("/");
         // TODO - strict path checking, only allow stuff to load from the plugins folder
         return net.fetch(
             Url.pathToFileURL(path.join(import.meta.dirname, "plugins", `/${url[0]}/${url[1]}`))
