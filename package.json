@@ -10,7 +10,7 @@
         "build:dev": "rollup -c --environment BUILD:dev",
         "build": "pnpm build:plugins && rollup -c --environment BUILD:prod",
         "build:plugins": "lune ci --repoSubDir src/shelter --to ts-out/plugins",
-        "start": "pnpm build:plugins && pnpm run build:dev && electron --trace-warnings ./ts-out/main.js",
+        "start": "pnpm run build:dev && electron --trace-warnings ./ts-out/main.js",
         "runElectron": "electron --trace-warnings ./ts-out/main.js",
         "startThemeManager": "pnpm run build:dev && electron ./ts-out/main.js themes",
         "startWayland": "pnpm run build:dev && electron ./ts-out/main.js --ozone-platform-hint=auto --enable-features=WebRTCPipeWireCapturer,WaylandWindowDecorations --disable-gpu",

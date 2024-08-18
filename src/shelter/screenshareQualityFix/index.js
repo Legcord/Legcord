@@ -19,7 +19,7 @@ function onStreamQualityChange() {
         streamConnection.videoQualityManager.goliveMaxQuality.bitrateMin = 500000;
         streamConnection.videoQualityManager.goliveMaxQuality.bitrateMax = 8000000;
         streamConnection.videoQualityManager.goliveMaxQuality.bitrateTarget = 600000;
-        //log(`Patched current user stream with resolution: ${store.resolution} and fps: ${store.fps}`);
+        log(`Patched current user stream with resolution: ${store.resolution} and fps: ${store.fps}`);
     }
 }
 export function onLoad() {
