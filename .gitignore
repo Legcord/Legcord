@@ -1,7 +1,6 @@
-node_modules
+node_modules/
 out/
-dist
+dist/
 ts-out/
-ts-out
 package-lock.json
 .pnpm-store
