@@ -76,13 +76,13 @@ void app.whenReady().then(async () => {
                         mainWindows.forEach((mainWindow) => {
                             mainWindow.show();
 
-                            mainWindow.webContents.executeJavaScript(`window.shelter.flux.dispatcher.dispatch({
+                            void mainWindow.webContents.executeJavaScript(`window.shelter.flux.dispatcher.dispatch({
                                 "type": "USER_SETTINGS_MODAL_OPEN",
                                 "section": "My Account",
                                 "subsection": null,
                                 "openWithoutBackstack": false
                             })`);
-                            mainWindow.webContents.executeJavaScript(
+                            void mainWindow.webContents.executeJavaScript(
                                 `window.shelter.flux.dispatcher.dispatch({type: "LAYER_PUSH", component: "USER_SETTINGS"})`
                             );
                             // TODO - open armcord tab in settings
