@@ -1,0 +1,22 @@
+.note {
+    margin-top: 8px;
+    color: var(--header-secondary);
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+    cursor: default;
+}
+.title {
+    flex: 1;
+    display: block;
+    overflow: hidden;
+    margin: 0;
+    color: var(--header-primary);
+    line-height: 24px;
+    font-weight: 500;
+    word-wrap: break-word;
+    cursor: pointer;
+}
+.item {
+    margin-bottom: 20px;
+}

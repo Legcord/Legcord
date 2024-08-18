@@ -3,6 +3,7 @@ import {BrowserWindow, app, crashReporter, session, systemPreferences} from "ele
 import "v8-compile-cache";
 import "./discord/extensions/csp.js";
 import "./tray.js";
+import "./protocol.js";
 import fs from "fs";
 import {
     createCustomWindow,

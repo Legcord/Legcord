@@ -14,7 +14,6 @@ const unrestrictCSP = (): void => {
             // raw.githubusercontent.com
             responseHeaders["content-type"] = ["text/css"];
         }
-
         return done({responseHeaders});
     });
 };

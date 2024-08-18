@@ -8,9 +8,9 @@
     },
     "scripts": {
         "build:dev": "rollup -c --environment BUILD:dev",
-        "build": "rollup -c --environment BUILD:prod",
-        "bundle": "rollup -c",
-        "start": "pnpm run build:dev && electron --trace-warnings ./ts-out/main.js",
+        "build": "pnpm build:plugins && rollup -c --environment BUILD:prod",
+        "build:plugins": "lune ci --repoSubDir src/shelter --to ts-out/plugins && node ./scripts/fixBundles.js",
+        "start": "pnpm build:plugins && pnpm run build:dev && electron --trace-warnings ./ts-out/main.js",
         "runElectron": "electron --trace-warnings ./ts-out/main.js",
         "startThemeManager": "pnpm run build:dev && electron ./ts-out/main.js themes",
         "startWayland": "pnpm run build:dev && electron ./ts-out/main.js --ozone-platform-hint=auto --enable-features=WebRTCPipeWireCapturer,WaylandWindowDecorations --disable-gpu",
@@ -53,10 +53,12 @@
         "rollup-plugin-copy": "^3.5.0",
         "rollup-plugin-esbuild": "^6.1.1",
         "typescript": "^5.5.4",
+        "@uwu/lune": "^1.4.2",
+        "@uwu/shelter-defs": "^1.4.1",
         "typescript-eslint": "^8.1.0"
     },
     "dependencies": {
-        "arrpc": "github:OpenAsar/arrpc#c62ec6a04c8d870530aa6944257fe745f6c59a24",
+        "arrpc": "github:OpenAsar/arrpc#3898488be9de93165fe05b3077154e0f0d946894",
         "cross-fetch": "^4.0.0",
         "electron-context-menu": "^4.0.1",
         "electron-is-dev": "^3.0.1",
