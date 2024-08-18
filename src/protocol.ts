@@ -25,6 +25,6 @@ void app.whenReady().then(() => {
                 headers: {"content-type": "text/html"}
             });
         }
-        return net.fetch(Url.pathToFileURL(filePath).toString().replace('"use strict";', ""));
+        return net.fetch(Url.pathToFileURL(filePath).toString());
     });
 });
