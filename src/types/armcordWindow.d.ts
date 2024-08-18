@@ -16,6 +16,5 @@ export interface ArmCordWindow {
     getDisplayMediaSelector: () => Promise<string>;
     version: string;
     mods: string;
-    openSettingsWindow: () => void;
     openThemesWindow: () => void;
 }

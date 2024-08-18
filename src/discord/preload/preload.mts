@@ -77,6 +77,5 @@ setInterval(() => {
     const el = host.firstElementChild!.cloneNode() as HTMLSpanElement;
     el.id = "ac-ver";
     el.textContent = `ArmCord Version: ${version}`;
-    el.onclick = () => ipcRenderer.send("openSettingsWindow");
     host.append(el);
 }, 1000);

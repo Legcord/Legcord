@@ -2,7 +2,6 @@ import fs from "fs";
 import {Menu, MessageBoxOptions, Tray, app, dialog, nativeImage} from "electron";
 import {createInviteWindow, mainWindows} from "./discord/window.js";
 import path from "path";
-import {createSettingsWindow} from "./settings/main.js";
 import {getConfig, getConfigLocation, setConfig} from "./common/config.js";
 import {getDisplayVersion} from "./common/version.js";
 import {setForceQuit} from "./common/forceQuit.js";
@@ -74,7 +73,20 @@ void app.whenReady().then(async () => {
                 {
                     label: "Open Settings",
                     click() {
-                        void createSettingsWindow();
+                        mainWindows.forEach((mainWindow) => {
+                            mainWindow.show();
+
+                            mainWindow.webContents.executeJavaScript(`window.shelter.flux.dispatcher.dispatch({
+                                "type": "USER_SETTINGS_MODAL_OPEN",
+                                "section": "My Account",
+                                "subsection": null,
+                                "openWithoutBackstack": false
+                            })`);
+                            mainWindow.webContents.executeJavaScript(
+                                `window.shelter.flux.dispatcher.dispatch({type: "LAYER_PUSH", component: "USER_SETTINGS"})`
+                            );
+                            // TODO - open armcord tab in settings
+                        });
                     }
                 },
                 {

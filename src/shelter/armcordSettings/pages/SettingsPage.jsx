@@ -180,10 +180,6 @@ export function SettingsPage() {
             >
                 Disable Shelter
             </SwitchItem>
-            <Button size={ButtonSizes.MAX} onClick={window.armcord.openSettingsWindow}>
-                Open legacy settings
-            </Button>
-            <br />
             <Button size={ButtonSizes.MAX} onClick={window.armcord.settings.openStorageFolder}>
                 Open storage folder
             </Button>

@@ -7,7 +7,6 @@ import {getConfig, setConfigBulk, getConfigLocation, setConfig} from "../common/
 import {setLang, getLang, getLangName, getRawLang} from "../common/lang.js";
 import {getVersion, getDisplayVersion} from "../common/version.js";
 import {customTitlebar} from "../main.js";
-import {createSettingsWindow} from "../settings/main.js";
 import {splashWindow} from "../splash/main.js";
 import {createTManagerWindow} from "../themeManager/main.js";
 import {Settings} from "../types/settings.d.js";
@@ -125,9 +124,6 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     });
     ipcMain.on("mobileMode", (event) => {
         event.returnValue = getConfig("mobileMode");
-    });
-    ipcMain.on("openSettingsWindow", () => {
-        void createSettingsWindow();
     });
     ipcMain.on("openThemesWindow", () => {
         void createTManagerWindow();

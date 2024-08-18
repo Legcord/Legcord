@@ -25,7 +25,6 @@ export default defineConfig([
             "electron-is-dev",
             "electron-context-menu",
             "arrpc",
-            "extract-zip",
             "stream",
             "stream/promises"
         ],
@@ -62,17 +61,6 @@ export default defineConfig([
         input: "src/splash/preload.mts",
         output: {
             dir: "ts-out/splash",
-            format: "esm",
-            entryFileNames: "[name].mjs",
-            sourcemap: true
-        },
-        external: ["electron"],
-        plugins: [typescript(), minify({minify: process.env.BUILD === "prod" ? true : false})]
-    },
-    {
-        input: "src/settings/preload.mts",
-        output: {
-            dir: "ts-out/settings",
             format: "esm",
             entryFileNames: "[name].mjs",
             sourcemap: true

@@ -1,6 +1,5 @@
 import {BrowserWindow, Menu, app} from "electron";
 import {mainWindows} from "./window.js";
-import {createSettingsWindow} from "../settings/main.js";
 import {setForceQuit} from "../common/forceQuit.js";
 
 export function setMenu(): void {
@@ -21,7 +20,20 @@ export function setMenu(): void {
                     label: "Open settings",
                     accelerator: "CmdOrCtrl+Shift+'",
                     click() {
-                        void createSettingsWindow();
+                        mainWindows.forEach((mainWindow) => {
+                            mainWindow.show();
+
+                            mainWindow.webContents.executeJavaScript(`window.shelter.flux.dispatcher.dispatch({
+                                "type": "USER_SETTINGS_MODAL_OPEN",
+                                "section": "My Account",
+                                "subsection": null,
+                                "openWithoutBackstack": false
+                            })`);
+                            mainWindow.webContents.executeJavaScript(
+                                `window.shelter.flux.dispatcher.dispatch({type: "LAYER_PUSH", component: "USER_SETTINGS"})`
+                            );
+                            // TODO - open armcord tab in settings
+                        });
                     }
                 },
                 {

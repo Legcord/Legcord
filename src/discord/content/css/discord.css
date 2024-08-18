@@ -20,10 +20,6 @@
     cursor: pointer;
     color: var(--text-muted);
 }
-#ac-ver:hover {
-    text-decoration: underline;
-    color: var(--text-normal);
-}
 
 [data-list-item-id="guildsnav___app-download-button"] {
     display: none !important;
