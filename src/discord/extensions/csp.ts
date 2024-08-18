@@ -14,7 +14,8 @@ const unrestrictCSP = (): void => {
             // raw.githubusercontent.com
             responseHeaders["content-type"] = ["text/css"];
         }
-
+        //responseHeaders['access-control-allow-origin'].push('armcord://*')
+        //console.log(responseHeaders)
         return done({responseHeaders});
     });
 };
