@@ -1,5 +1,4 @@
 const {
-    util: {log},
     flux: {
         dispatcher: FluxDispatcher,
         stores: {ApplicationStore}

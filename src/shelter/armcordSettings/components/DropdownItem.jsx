@@ -1,7 +1,6 @@
 import {Dropdown} from "./Dropdown";
 import classes from "./DropdownItem.css";
 const {
-    plugin: {store},
     ui: {Divider, Header, LinkButton, HeaderTags}
 } = shelter;
 
