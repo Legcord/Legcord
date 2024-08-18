@@ -1,238 +1,134 @@
-name: Release build
+name: Stable release
 on:
     push:
-        branches:
-            - stable
-
-env:
-    FORCE_COLOR: true
+        branches: stable
 
 jobs:
-    build-linux:
+    prepare-release:
         runs-on: ubuntu-latest
-
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
-
-            - uses: pnpm/action-setup@v4
-
-            - name: Use Node.js 22
-              uses: actions/setup-node@v4
               with:
-                  node-version: 22
-                  cache: "pnpm"
+                  fetch-depth: 0
 
-            - name: Install Node dependencies
-              run: pnpm i -g cargo-cp-artifact electron-builder && pnpm i
-
-            - name: Build
-              run: pnpm run build && electron-builder --linux && electron-builder --arm64 --linux && electron-builder --armv7l --linux
-              env:
-                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-            - name: List all files in the dist directory
-              run: ls -l dist
-
-            - name: Delete unpacked builds
-              run: rm -rf dist/linux-unpacked && rm -rf dist/linux-arm64-unpacked && rm -rf dist/linux-armv7l-unpacked
-
-            - name: Upload artifact
-              uses: actions/upload-artifact@v4
-              with:
-                  name: ArmCordLinux
-                  path: dist/
-
-    build-mac:
-        runs-on: macos-latest
-
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-
-            - uses: pnpm/action-setup@v4
-
-            - name: Use Node.js 22
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 22
-                  cache: "pnpm"
-
-            - name: Install Node dependencies
-              run: pnpm i -g cargo-cp-artifact electron-builder && pnpm i
-
-            - name: Build
-              run: pnpm run build && electron-builder --macos --x64 --arm64
-              env:
-                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-            - name: List all files in the dist directory
-              run: ls -l dist
-
-            - name: Delete unpacked builds
-              run: rm -rf dist/macos-unpacked
-
-            - name: Upload artifact
-              uses: actions/upload-artifact@v4
-              with:
-                  name: ArmCordMac
-                  path: dist/
-
-    build-windows:
-        runs-on: windows-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-
-            - uses: pnpm/action-setup@v4
-
-            - name: Use Node.js 22
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 22
-                  cache: "pnpm"
-
-            - name: Install Node dependencies
-              run: pnpm i -g cargo-cp-artifact electron-builder && pnpm i
-
-            - name: Build
-              run: pnpm run build && electron-builder --windows
-              env:
-                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-            - name: Delete unpacked builds
-              run: Remove-Item -LiteralPath ".\dist\win-unpacked" -Force -Recurse
-
-            - name: Upload artifact
-              uses: actions/upload-artifact@v4
-              with:
-                  name: ArmCordWindows
-                  path: dist/
-
-    build-windowsOnARM:
-        runs-on: windows-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-
-            - uses: pnpm/action-setup@v4
-
-            - uses: actions/setup-node@v4
-              with:
-                  node-version: "22"
-                  cache: "pnpm"
-
-            - name: Set architecture
-              run: set npm_config_arch=arm64
-
-            - name: Install Node dependencies
-              run: pnpm install -g cargo-cp-artifact electron-builder && pnpm install
-
-            - name: Build
-              run: pnpm run build && electron-builder --windows --arm64
-              env:
-                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-            - name: Delete unpacked builds
-              run: Remove-Item -LiteralPath ".\dist\win-arm64-unpacked" -Force -Recurse
-
-            - name: Upload artifact
-              uses: actions/upload-artifact@v4
-              with:
-                  name: ArmCordWindowsArm64
-                  path: dist/
-    release:
-        runs-on: ubuntu-latest
-        needs: [build-linux, build-mac, build-windows, build-windowsOnARM]
-
-        steps:
-            - uses: actions/download-artifact@v4
-              with:
-                  name: ArmCordMac
-                  path: macos
-
-            - uses: actions/download-artifact@v4
-              with:
-                  name: ArmCordWindows
-                  path: windows
-
-            - uses: actions/download-artifact@v4
-              with:
-                  name: ArmCordWindowsArm64
-                  path: windows
-
-            - uses: actions/download-artifact@v4
-              with:
-                  name: ArmCordLinux
-                  path: linux
-
-            - name: ls
-              run: ls
-
-            - name: Delete unwanted directories
-              run: rm -rf {linux,macos,windows}/*/
-                  rm -rf {linux,macos,windows}/.icon*
-                  rm -rf {linux,macos,windows}/builder-debug.yml
-
-            - name: ls dirs
-              run: ls linux && ls macos && ls windows
-
-            - name: Get some values needed for the release
+            - name: Get release tag
               id: vars
-              shell: bash
-              run: |
-                  echo "::set-output name=releaseTag::$(git describe --tags --abbrev=0)"
+              run: echo "releaseTag=$(git describe --tags `git rev-list --tags --max-count=1`)" >> $GITHUB_OUTPUT # Git has severe issues doing basic things https://gist.github.com/rponte/fdc0724dd984088606b0
 
-            - name: Create Release
-              uses: actions/github-script@v7
-              with:
-                  github-token: ${{secrets.GITHUB_TOKEN}}
-                  script: |
-                      console.log('environment', process.versions);
-
-                      const fs = require('fs').promises;
-
-                      const { repo: { owner, repo }, sha } = context;
-                      console.log({ owner, repo, sha });
-
-                      const release = await github.repos.createRelease({
-                        owner, repo,
-                        tag_name: process.env.releaseTag,
-                        draft: true,
-                        target_commitish: sha
-                      });
-
-                      console.log('created release', { release });
-
-                      for (let file of await fs.readdir('linux')) {
-                        // do whatever filtering you want here, I'm just uploading all the files
-                        console.log('uploading', file);
-                        await github.repos.uploadReleaseAsset({
-                          owner, repo,
-                          release_id: release.data.id,
-                          name: file,
-                          data: await fs.readFile(`./linux/${file}`)
-                        });    
-                      }
-                      for (let file of await fs.readdir('windows')) {
-                        // do whatever filtering you want here, I'm just uploading all the files
-                        console.log('uploading', file);
-                        await github.repos.uploadReleaseAsset({
-                          owner, repo,
-                          release_id: release.data.id,
-                          name: file,
-                          data: await fs.readFile(`./windows/${file}`)
-                        });    
-                      }
-                      for (let file of await fs.readdir('macos')) {
-                        // do whatever filtering you want here, I'm just uploading all the files
-                        console.log('uploading', file);
-                        await github.repos.uploadReleaseAsset({
-                          owner, repo,
-                          release_id: release.data.id,
-                          name: file,
-                          data: await fs.readFile(`./macos/${file}`)
-                        });    
-                      }
+            - name: Delete old duplicate releases
+              run: gh release delete ${{steps.vars.outputs.releaseTag}} -y --cleanup-tag
               env:
-                  releaseTag: ${{ steps.vars.outputs.releaseTag }}
+                  GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+              continue-on-error: true
+
+            - name: Create stable release
+              uses: ncipollo/release-action@v1
+              env:
+                  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+              with:
+                  tag: ${{steps.vars.outputs.releaseTag}} 
+
+    build:
+        needs: prepare-release
+        continue-on-error: true
+        strategy:
+            matrix:
+                os: [windows-latest, ubuntu-latest, macos-latest]
+                arch: [arm32, arm64, amd64]
+                include:
+                    - os: ubuntu-latest
+                      cleanup: "rm -rf dist/*/ && rm -rf .icon*"
+
+                    - os: macos-latest
+                      cleanup: "rm -rf dist/*/ && rm -rf .icon* && rm dist/builder-debug.yml" 
+
+                    - arch: arm64
+                      os: windows-latest
+                      flags: "--arm64 --windows"
+                      target: "arm64-win"
+                      cleanup: rm -rf dist/*/ &&
+                          rm dist/builder-debug.yml &&
+                          mv dist/*.exe.blockmap dist/ArmCord-Windows-ARM64.exe.blockmap &&
+                          mv dist/*.exe dist/ArmCord-Windows-ARM64.exe # Windows ARM64 build has the same name as AMD64
+
+                    - arch: amd64
+                      os: windows-latest
+                      flags: "--x64 --windows"
+                      target: "amd64-win"
+                      cleanup: rm -rf dist/*/ &&
+                          rm dist/builder-debug.yml
+
+                    - arch: arm64
+                      os: ubuntu-latest
+                      flags: "--arm64 --linux"
+                      target: "arm64-linux"
+
+                    - arch: arm32
+                      os: ubuntu-latest
+                      flags: "--armv7l --linux"
+                      target: "arm32-linux"
+                      cleanup: "rm -rf dist/*/ && rm -rf .icon*"
+
+                    - arch: amd64
+                      os: ubuntu-latest
+                      flags: "--x64 --linux"
+                      target: "amd64-linux"
+
+                    - arch: arm64
+                      os: macos-latest
+                      flags: "--arm64 --macos"
+                      target: "arm64-mac"
+
+                    - arch: amd64
+                      os: macos-latest
+                      flags: "--x64 --macos"
+                      target: "amd64-mac"
+
+                exclude:
+                    - arch: arm32 # Don't run 32 bit arm tasks.
+
+        runs-on: ${{matrix.os}}
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Get release tag
+              id: vars
+              shell: bash # Windows (In GitHub actions) cannot run this command and get a correct output
+              run: echo "releaseTag=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_OUTPUT
+
+            - name: Prepare PNPM
+              uses: pnpm/action-setup@v4
+
+            - name: Prepare Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: pnpm
+
+            - name: Install dependencies
+              run: pnpm i
+
+            - name: Build TypeScript
+              run: pnpm build
+
+            - name: Build Electron
+              run: pnpm electron-builder ${{matrix.flags}}
+              env:
+                  GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+            - name: Run OS-specific scripts
+              shell: bash
+              run: ${{matrix.cleanup}}
+
+            - name: Upload artifact to release
+              uses: ncipollo/release-action@v1
+              env:
+                  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+              with:
+                  tag: ${{steps.vars.outputs.releaseTag}}
+                  artifacts: dist/**/*
+                  allowUpdates: true
