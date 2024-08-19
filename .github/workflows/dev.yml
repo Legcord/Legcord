@@ -34,3 +34,4 @@ jobs:
               run: pnpm electron-builder -p always --x64 -- arm64 --universal
               env:
                   GH_TOKEN: ${{github.token}}
+                  EP_PRE_RELEASE: true
