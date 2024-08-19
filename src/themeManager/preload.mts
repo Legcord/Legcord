@@ -25,10 +25,10 @@ ipcRenderer.on("themeManifest", (_event, id: string, json: string) => {
         `
     );
     document.getElementById(`${id}-shortcuts`)!.innerHTML +=
-        `<img class="themeInfoIcon" id="${id}-removeTheme" onclick="themes.uninstall('${id}')" title="Remove the theme" src="https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/Trash.png"></img>
-                           <img class="themeInfoIcon" id="${id}-updateTheme" onclick="themes.install('${manifest.updateSrc}')" title="Update your theme" src="https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/UpgradeArrow.png"></img>
-                           <img class="themeInfoIcon" id="${id}-editTheme" onclick="themes.edit('${id}')" title="Edit your theme" src="https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/Edit.png"></img>
-                           <img class="themeInfoIcon" id="${id}-folderTheme" onclick="themes.folder('${id}')" title="Open this theme folder" src="https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/folder.png"></img>`;
+        `<img class="themeInfoIcon" id="${id}-removeTheme" onclick="themes.uninstall('${id}')" title="Remove the theme" src="armcord://assets/Trash.png"></img>
+                           <img class="themeInfoIcon" id="${id}-updateTheme" onclick="themes.install('${manifest.updateSrc}')" title="Update your theme" src="armcord://assets/UpgradeArrow.png"></img>
+                           <img class="themeInfoIcon" id="${id}-editTheme" onclick="themes.edit('${id}')" title="Edit your theme" src="armcord://assets/Edit.png"></img>
+                           <img class="themeInfoIcon" id="${id}-folderTheme" onclick="themes.folder('${id}')" title="Open this theme folder" src="armcord://assets/Folder.png"></img>`;
     (document.getElementById(id) as HTMLInputElement).checked = manifest.enabled;
     document.getElementById(`${id}header`)!.addEventListener("click", () => {
         document.getElementById("themeInfoModal")!.style.display = "block";
@@ -38,11 +38,10 @@ ipcRenderer.on("themeManifest", (_event, id: string, json: string) => {
             document.getElementById("themeInfoButtons")!.innerHTML +=
                 `<img class="themeInfoIcon" id="compatibility" title="Supports ArmCord Titlebar" src=""></img>`;
             if (manifest.supportsArmCordTitlebar == true) {
-                (document.getElementById(`compatibility`) as HTMLImageElement).src =
-                    "https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/Window.png";
+                (document.getElementById(`compatibility`) as HTMLImageElement).src = "armcord://assets/Window.png";
             } else {
                 (document.getElementById(`compatibility`) as HTMLImageElement).src =
-                    "https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/WindowUnsupported.png";
+                    "armcord://assets/WindowUnsupported.png";
             }
         }
         if (manifest.source != undefined)

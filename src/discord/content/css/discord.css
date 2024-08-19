@@ -25,13 +25,6 @@
     display: none !important;
 }
 
-div#acThemes:after,
-div#acSettings:after,
-div#acForceQuit:after,
-div#acKeybinds:after {
-    content: url("https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/ac_white_plug16x.png");
-    margin-right: 5px;
-}
 .container-3jbRo5.info-1hMolH.browserNotice-1u-Y5o {
     visibility: hidden;
     display: block !important;

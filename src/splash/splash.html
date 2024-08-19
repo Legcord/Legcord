@@ -18,7 +18,7 @@
     <body>
         <div class="container">
             <video autoplay loop class="logo" id="splashscreen-armcord">
-                <source src="https://armcord.app/discord_loading.webm" type="video/webm" />
+                <source src="armcord://assets/Loading.webm" type="video/webm" />
             </video>
             <p id="text-splashscreen"></p>
             <button id="ignore">Start anyway</button>
@@ -44,7 +44,7 @@
                     if (remoteVersion > window.internal.version.replace(/\./g, "")) {
                         var elem = document.createElement("img");
                         elem.classList.add("logo");
-                        elem.src = "https://armcord.app/update.webp";
+                        elem.src = "armcord://assets/Update.webp";
                         document.body.prepend(elem);
                         document.getElementById("splashscreen-armcord").remove();
                         text.innerHTML = await internal.getLang("loading_screen_update");
