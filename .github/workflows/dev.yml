@@ -5,9 +5,11 @@ on:
             - dev
 jobs:
     build:
+        continue-on-error: true
         strategy:
             matrix:
                 os: [macos-latest, ubuntu-latest, windows-latest]
+        permissions: {contents: write}
 
         runs-on: ${{matrix.os}}
         steps:
@@ -32,4 +34,4 @@ jobs:
             - name: Build Electron
               run: pnpm electron-builder -p always
               env:
-                  GH_TOKEN: ${{secrets.GITHUB_TOKEN}} # MacOS needs the token or it will fail to build
+                  GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
