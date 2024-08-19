@@ -3,7 +3,7 @@ on:
     push:
         branches: dev
 jobs:
-    Build:
+    Dev-Build:
         continue-on-error: true
         strategy:
             matrix:
@@ -62,7 +62,7 @@ jobs:
     DevRelease:
         runs-on: ubuntu-latest
         needs:
-            - Build
+            - Dev-Build
         steps:
             - name: Checkout code
               uses: actions/checkout@v4

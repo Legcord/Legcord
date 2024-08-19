@@ -3,7 +3,7 @@ on:
     push:
         branches: stable
 jobs:
-    Build:
+    Stable-Build:
         continue-on-error: true
         strategy:
             matrix:
