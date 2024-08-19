@@ -10,7 +10,7 @@ jobs:
                 os: [macos-latest, ubuntu-latest, windows-latest]
                 include:
                     - os: macos-latest
-                      flags: m --universal
+                      flags: -universal -m
                     - os: ubuntu-latest
                       flags: l
                     - os: windows-latest
