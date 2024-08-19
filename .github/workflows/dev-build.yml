@@ -10,7 +10,7 @@ jobs:
                 os: [macos-latest, ubuntu-latest, windows-latest]
                 include:
                     - os: macos-latest
-                      flags: -universal -m
+                      flags: -universal --x64=false --arm64=false -m
                     - os: ubuntu-latest
                       flags: l
                     - os: windows-latest
@@ -57,7 +57,7 @@ jobs:
               uses: actions/upload-artifact@v4
               with:
                   name: ${{matrix.os}}
-                  path: dist/
+                  path: dist/**/*.zip
 
     DevRelease:
         runs-on: ubuntu-latest
