@@ -36,10 +36,22 @@ jobs:
             - name: Build TypeScript
               run: pnpm build
 
+            - name: Load Electron Cache
+              uses: actions/cache/restore@v4
+              with:
+                  path: .cache
+                  key: electron-zips
+
             - name: Build ArmCord
               run: pnpm electron-builder --publish never --x64 --arm64 -${{matrix.flags}} zip
               env:
                   GH_TOKEN: ${{secrets.GITHUB_TOKEN}} # MacOS needs the token or it will fail to build
+
+            - name: Save Electron Cache
+              uses: actions/cache/save@v4
+              with:
+                  path: .cache
+                  key: electron-zips
 
             - name: Upload artifact
               uses: actions/upload-artifact@v4

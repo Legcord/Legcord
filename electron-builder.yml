@@ -35,3 +35,6 @@ files:
     - ts-out
     - package.json
     - license.txt
+
+electronDownload:
+    cache: .cache
