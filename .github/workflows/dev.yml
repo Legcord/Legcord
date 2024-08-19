@@ -31,6 +31,6 @@ jobs:
               run: pnpm build
 
             - name: Build Electron
-              run: pnpm electron-builder -p always --x64 --armv7l -- arm64 --universal
+              run: pnpm electron-builder -p always --x64 -- arm64 --universal
               env:
                   GH_TOKEN: ${{github.token}}
