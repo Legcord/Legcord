@@ -37,7 +37,7 @@ jobs:
 
             - name: Publish Artifacts # NOTE - Stable Release
               if: github.ref == 'refs/heads/stable'
-              run: pnpm electron-builder --publish
+              run: pnpm electron-builder --publish always
               env:
                   GH_TOKEN: ${{github.token}}
                   EP_DRAFT: false
@@ -45,7 +45,7 @@ jobs:
             # SECTION - DEV BUILD
 
             - name: Build Electron
-              run: pnpm electron-builder zip --publish never
+              run: pnpm electron-builder -mwl zip --publish never
               env:
                   GH_TOKEN: ${{secrets.GITHUB_TOKEN}} # MacOS needs the token or it will fail to build
 
