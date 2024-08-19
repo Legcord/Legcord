@@ -1,7 +1,7 @@
 name: Build
 on: push
 jobs:
-    build:
+    Build:
         continue-on-error: true
         strategy:
             matrix:
@@ -44,20 +44,47 @@ jobs:
 
             # SECTION - DEV BUILD
 
-            - name: Get short commit hash
-              if: github.ref == 'refs/heads/dev'
-              id: vars
-              run: echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_OUTPUT
+            - name: Build Electron
+              run: pnpm electron-builder zip -mwl
+              env:
+                  GH_TOKEN: ${{secrets.GITHUB_TOKEN}} # MacOS needs the token or it will fail to build
 
-            # NOTE - Delete the devbuild, regardless of whether the release is stable or not
+            - name: Upload artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  path: dist/
+
+    DeleteDevbuild:
+        runs-on: ubuntu-latest
+        needs: Build
+        continue-on-error: true
+        steps:
             - name: Delete old devbuild
-              continue-on-error: true
               run: gh release delete devbuild -y --cleanup-tag
               env:
                   GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
+    # SECTION - DEV RELEASE
+    DevRelease:
+        if: github.ref == 'refs/heads/dev'
+        runs-on: ubuntu-latest
+        needs:
+            - Build
+            - DeleteDevbuild
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Download artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  path: release-files
+
+            - name: Get short commit hash
+              id: vars
+              run: echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_OUTPUT
+
             - name: Create release
-              if: github.ref == 'refs/heads/dev'
               uses: ncipollo/release-action@v1
               env:
                   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
