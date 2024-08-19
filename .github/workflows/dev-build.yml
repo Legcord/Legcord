@@ -57,7 +57,7 @@ jobs:
               uses: actions/upload-artifact@v4
               with:
                   name: ${{matrix.os}}
-                  path: dist/
+                  path: dist/**/*.zip
 
     DevRelease:
         runs-on: ubuntu-latest
