@@ -173,13 +173,6 @@ export function SettingsPage() {
             <Header class={classes.category} tag={HeaderTags.H5}>
                 Debug options
             </Header>
-            <SwitchItem
-                note="Disables the Shelter mod. Note features like RPC and screenshare quality fix will be disabled."
-                value={store.settings.disableShelter}
-                onChange={(e) => set("disableShelter", e)}
-            >
-                Disable Shelter
-            </SwitchItem>
             <Button size={ButtonSizes.MAX} onClick={window.armcord.settings.openStorageFolder}>
                 Open storage folder
             </Button>
