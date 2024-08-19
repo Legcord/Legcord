@@ -80,7 +80,6 @@ export function injectThemesMain(browserWindow: BrowserWindow): void {
         fs.mkdirSync(themesFolder);
         console.log("Created missing theme folder");
     }
-
     browserWindow.webContents.on("did-finish-load", () => {
         fs.readdirSync(themesFolder).forEach((file) => {
             try {

@@ -3,7 +3,8 @@ import {ThemeManifest} from "../types/themeManifest.d.js";
 contextBridge.exposeInMainWorld("themes", {
     install: async (url: string) => ipcRenderer.invoke("installBDTheme", url) as Promise<null>,
     uninstall: (id: string) => ipcRenderer.send("uninstallTheme", id),
-    edit: (id: string) => ipcRenderer.send("editTheme", id)
+    edit: (id: string) => ipcRenderer.send("editTheme", id),
+    folder: (id: string) => ipcRenderer.send("openThemeFolder", id)
 });
 ipcRenderer.on("themeManifest", (_event, id: string, json: string) => {
     const manifest = JSON.parse(json) as ThemeManifest;
@@ -19,9 +20,15 @@ ipcRenderer.on("themeManifest", (_event, id: string, json: string) => {
                 <label class="tgl-btn left" for="${id}"></label>
             </div>
             <p>${manifest.description}</p>
+            <div id="${id}-shortcuts"></div>
         </div>
         `
     );
+    document.getElementById(`${id}-shortcuts`)!.innerHTML +=
+        `<img class="themeInfoIcon" id="${id}-removeTheme" onclick="themes.uninstall('${id}')" title="Remove the theme" src="https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/Trash.png"></img>
+                           <img class="themeInfoIcon" id="${id}-updateTheme" onclick="themes.install('${manifest.updateSrc}')" title="Update your theme" src="https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/UpgradeArrow.png"></img>
+                           <img class="themeInfoIcon" id="${id}-editTheme" onclick="themes.edit('${id}')" title="Edit your theme" src="https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/Edit.png"></img>
+                           <img class="themeInfoIcon" id="${id}-folderTheme" onclick="themes.folder('${id}')" title="Open this theme folder" src="https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/folder.png"></img>`;
     (document.getElementById(id) as HTMLInputElement).checked = manifest.enabled;
     document.getElementById(`${id}header`)!.addEventListener("click", () => {
         document.getElementById("themeInfoModal")!.style.display = "block";
@@ -29,11 +36,7 @@ ipcRenderer.on("themeManifest", (_event, id: string, json: string) => {
         document.getElementById("themeInfoDesc")!.textContent = `${manifest.description}\n\n${manifest.version}`;
         if (manifest.supportsArmCordTitlebar !== undefined) {
             document.getElementById("themeInfoButtons")!.innerHTML +=
-                `<img class="themeInfoIcon" id="removeTheme" onclick="themes.uninstall('${id}')" title="Remove the theme" src="https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/Trash.png"></img>
-                           <img class="themeInfoIcon" id="updateTheme" onclick="themes.install('${manifest.updateSrc}')" title="Update your theme" src="https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/UpgradeArrow.png"></img>
-                           <img class="themeInfoIcon" id="editTheme" onclick="themes.edit('${id}')" title="Edit your theme" src="https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/Edit.png"></img>
-                           <img class="themeInfoIcon" id="compatibility" title="Supports ArmCord Titlebar" src=""></img>`;
-            console.log("e");
+                `<img class="themeInfoIcon" id="compatibility" title="Supports ArmCord Titlebar" src=""></img>`;
             if (manifest.supportsArmCordTitlebar == true) {
                 (document.getElementById(`compatibility`) as HTMLImageElement).src =
                     "https://raw.githubusercontent.com/ArmCord/BrandingStuff/main/Window.png";

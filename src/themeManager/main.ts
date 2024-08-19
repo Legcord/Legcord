@@ -1,4 +1,4 @@
-import {BrowserWindow, app, dialog, ipcMain, shell} from "electron";
+import {BrowserWindow, MessageBoxOptions, app, dialog, ipcMain, shell} from "electron";
 import path from "path";
 import fs from "fs";
 import {createInviteWindow, mainWindows} from "../discord/window.js";
@@ -65,11 +65,26 @@ export async function createTManagerWindow(): Promise<void> {
             ) as ThemeManifest;
             void shell.openPath(`${themesFolder}/${id}/${manifest.theme}`);
         });
+        ipcMain.on("openThemeFolder", (_event, id: string) => {
+            shell.openPath(path.join(themesFolder, id));
+        });
         ipcMain.on("uninstallTheme", (_event, id: string) => {
-            uninstallTheme(id);
-            themeWindow.webContents.reload();
-            mainWindows.forEach((mainWindow) => {
-                mainWindow.webContents.reload();
+            const options: MessageBoxOptions = {
+                type: "warning",
+                buttons: ["Yes, please", "No, cancel"],
+                defaultId: 1,
+                title: "Remove theme",
+                message: `Are you sure you want to remove this theme?`
+            };
+
+            void dialog.showMessageBox(mainWindows[0], options).then(({response}) => {
+                if (response == 0) {
+                    uninstallTheme(id);
+                    themeWindow.webContents.reload();
+                    mainWindows.forEach((mainWindow) => {
+                        mainWindow.webContents.reload();
+                    });
+                }
             });
         });
         ipcMain.handle("installBDTheme", async (_event, link: string) => {
