@@ -66,7 +66,7 @@ export async function createTManagerWindow(): Promise<void> {
             void shell.openPath(`${themesFolder}/${id}/${manifest.theme}`);
         });
         ipcMain.on("openThemeFolder", (_event, id: string) => {
-            shell.openPath(path.join(themesFolder, id));
+            void shell.openPath(path.join(themesFolder, id));
         });
         ipcMain.on("uninstallTheme", (_event, id: string) => {
             const options: MessageBoxOptions = {
