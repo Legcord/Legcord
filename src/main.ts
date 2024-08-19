@@ -28,7 +28,7 @@ import {injectElectronFlags} from "./common/flags.js";
 import {setLang} from "./common/lang.js";
 export let iconPath: string;
 import type {Settings} from "./types/settings.d.js";
-import {fetchMods} from "./discord/extensions/mods.js";
+import {fetchMods} from "./discord/extensions/modloader.js";
 export let settings: Settings;
 export let customTitlebar: boolean;
 checkForDataFolder();
