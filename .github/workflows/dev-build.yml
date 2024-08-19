@@ -1,5 +1,7 @@
 name: Build
-on: push
+on:
+    push:
+        branches: dev
 jobs:
     Build:
         continue-on-error: true
@@ -8,11 +10,11 @@ jobs:
                 os: [macos-latest, ubuntu-latest, windows-latest]
                 include:
                     - os: macos-latest
-                      flag: m
+                      flags: m --universal
                     - os: ubuntu-latest
-                      flag: l
+                      flags: l
                     - os: windows-latest
-                      flag: w
+                      flags: w
 
         runs-on: ${{matrix.os}}
         steps:
@@ -34,25 +36,8 @@ jobs:
             - name: Build TypeScript
               run: pnpm build
 
-            # SECTION - STABLE RELEASE
-
-            - name: Build ArmCord # NOTE Stable Complete Build
-              if: github.ref == 'refs/heads/stable'
-              run: pnpm electron-builder -p always --x64 -- arm64 --universal
-              env:
-                  GH_TOKEN: ${{github.token}}
-
-            - name: Publish Artifacts # NOTE - Stable Release
-              if: github.ref == 'refs/heads/stable'
-              run: pnpm electron-builder --publish always
-              env:
-                  GH_TOKEN: ${{github.token}}
-                  EP_DRAFT: false
-
-            # SECTION - DEV BUILD
-
-            - name: Build Electron
-              run: pnpm electron-builder --publish never --x64 --arm64 --universal -${{matrix.flag}}
+            - name: Build ArmCord
+              run: pnpm electron-builder --publish never --x64 --arm64 -${{matrix.flags}}
               env:
                   GH_TOKEN: ${{secrets.GITHUB_TOKEN}} # MacOS needs the token or it will fail to build
 
@@ -61,26 +46,10 @@ jobs:
               with:
                   path: dist/
 
-    DeleteDevbuild:
-        runs-on: ubuntu-latest
-        needs: Build
-        continue-on-error: true
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-
-            - name: Delete old devbuild
-              run: gh release delete devbuild -y --cleanup-tag
-              env:
-                  GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
-    # SECTION - DEV RELEASE
     DevRelease:
-        if: github.ref == 'refs/heads/dev'
         runs-on: ubuntu-latest
         needs:
             - Build
-            - DeleteDevbuild
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
@@ -89,6 +58,12 @@ jobs:
               uses: actions/download-artifact@v4
               with:
                   path: release-files
+
+            - name: Delete
+              run: gh release delete devbuild -y --cleanup-tag
+              continue-on-error: true
+              env:
+                  GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
             - name: Get short commit hash
               id: vars
