@@ -9,7 +9,6 @@ const config = {
     jsxSingleQuote: false,
     trailingComma: "none",
     bracketSpacing: false,
-    jsxBracketSameLine: false,
     arrowParens: "always",
     endOfLine: "auto"
 };
