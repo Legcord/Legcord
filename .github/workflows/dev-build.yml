@@ -41,6 +41,10 @@ jobs:
               env:
                   GH_TOKEN: ${{secrets.GITHUB_TOKEN}} # MacOS needs the token or it will fail to build
 
+            - name: Remove Extra Files
+              shell: bash
+              run: find dist -type f ! -name '*.zip' -delete
+
             - name: Upload artifact
               uses: actions/upload-artifact@v4
               with:

@@ -37,6 +37,6 @@ jobs:
               run: pnpm build
 
             - name: Build ArmCord
-              run: pnpm electron-builder -p always --x64 --arm64 ${{matrix.flags}} --publish always
+              run: pnpm electron-builder -p always --x64 --arm64 -${{matrix.flags}} --publish always
               env:
                   GH_TOKEN: ${{github.token}}
