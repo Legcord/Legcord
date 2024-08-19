@@ -40,7 +40,7 @@ jobs:
               uses: actions/cache/restore@v4
               with:
                   path: .cache
-                  key: electron-zips
+                  key: electron-zips.stable.${{matrix.os}}
 
             - name: Build ArmCord
               run: pnpm electron-builder --x64 --arm64 -${{matrix.flags}} --publish always
@@ -51,4 +51,4 @@ jobs:
               uses: actions/cache/save@v4
               with:
                   path: .cache
-                  key: electron-zips
+                  key: electron-zips.stable.${{matrix.os}}
