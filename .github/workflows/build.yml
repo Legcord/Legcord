@@ -45,7 +45,7 @@ jobs:
             # SECTION - DEV BUILD
 
             - name: Build Electron
-              run: pnpm electron-builder zip -mwl
+              run: pnpm electron-builder zip --x64 -- arm64 --universal
               env:
                   GH_TOKEN: ${{secrets.GITHUB_TOKEN}} # MacOS needs the token or it will fail to build
 
