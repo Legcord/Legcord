@@ -1,4 +1,4 @@
-name: Dev build
+name: Dev Build
 on:
     push:
         branches:
@@ -7,38 +7,7 @@ jobs:
     build:
         strategy:
             matrix:
-                os: [windows-latest, ubuntu-latest, macos-latest]
-                arch: [arm64, amd64]
-                include:
-                    - arch: arm64
-                      os: windows-latest
-                      flags: "--arm64 --windows"
-                      target: "arm64-win"
-
-                    - arch: amd64
-                      os: windows-latest
-                      flags: "--x64 --windows"
-                      target: "amd64-win"
-
-                    - arch: arm64
-                      os: ubuntu-latest
-                      flags: "--arm64 --linux"
-                      target: "arm64-linux"
-
-                    - arch: amd64
-                      os: ubuntu-latest
-                      flags: "--x64 --linux"
-                      target: "amd64-linux"
-
-                    - arch: arm64
-                      os: macos-latest
-                      flags: "--arm64 --macos"
-                      target: "arm64-mac"
-
-                    - arch: amd64
-                      os: macos-latest
-                      flags: "--x64 --macos"
-                      target: "amd64-mac"
+                os: [macos-latest, ubuntu-latest, windows-latest]
 
         runs-on: ${{matrix.os}}
         steps:
@@ -61,45 +30,6 @@ jobs:
               run: pnpm build
 
             - name: Build Electron
-              run: pnpm electron-builder ${{matrix.flags}} zip
+              run: pnpm electron-builder -p always
               env:
                   GH_TOKEN: ${{secrets.GITHUB_TOKEN}} # MacOS needs the token or it will fail to build
-
-            - name: Upload artifact
-              uses: actions/upload-artifact@v4
-              with:
-                  name: ${{matrix.target}}
-                  path: dist/
-
-    release:
-        runs-on: ubuntu-latest
-        needs: build
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-
-            - name: Download artifacts
-              uses: actions/download-artifact@v4
-              with:
-                  path: release-files
-
-            - name: Get short commit hash
-              id: vars
-              run: echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_OUTPUT
-
-            - name: Delete old devbuild
-              run: gh release delete devbuild -y --cleanup-tag
-              env:
-                  GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
-            - name: Create release
-              uses: ncipollo/release-action@v1
-              env:
-                  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-              with:
-                  bodyFile: .github/release.md
-                  name: Dev Build ${{steps.vars.outputs.sha_short}}
-                  prerelease: true
-                  draft: false
-                  tag: devbuild
-                  artifacts: release-files/**/*.zip
