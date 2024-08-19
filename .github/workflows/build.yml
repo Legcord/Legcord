@@ -6,6 +6,13 @@ jobs:
         strategy:
             matrix:
                 os: [macos-latest, ubuntu-latest, windows-latest]
+                include:
+                    - os: macos-latest
+                      flag: m
+                    - os: ubuntu-latest
+                      flag: l
+                    - os: windows-latest
+                      flag: w
 
         runs-on: ${{matrix.os}}
         steps:
@@ -45,7 +52,7 @@ jobs:
             # SECTION - DEV BUILD
 
             - name: Build Electron
-              run: pnpm electron-builder --x64 --arm64 --universal --publish never zip
+              run: pnpm electron-builder --publish never --x64 --arm64 --universal -${{matrix.flag}}
               env:
                   GH_TOKEN: ${{secrets.GITHUB_TOKEN}} # MacOS needs the token or it will fail to build
 
