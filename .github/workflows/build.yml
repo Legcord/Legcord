@@ -51,6 +51,7 @@ jobs:
 
             # NOTE - Delete the devbuild, regardless of whether the release is stable or not
             - name: Delete old devbuild
+              continue-on-error: true
               run: gh release delete devbuild -y --cleanup-tag
               env:
                   GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
