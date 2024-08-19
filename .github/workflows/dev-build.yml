@@ -43,7 +43,7 @@ jobs:
                   key: electron-zips
 
             - name: Build ArmCord
-              run: pnpm electron-builder --publish never --x64 --arm64 -${{matrix.flags}} zip
+              run: pnpm electron-builder --x64 --arm64 -${{matrix.flags}} zip --publish never
               env:
                   GH_TOKEN: ${{secrets.GITHUB_TOKEN}} # MacOS needs the token or it will fail to build
 
