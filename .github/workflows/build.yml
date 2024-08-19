@@ -59,6 +59,9 @@ jobs:
         needs: Build
         continue-on-error: true
         steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
             - name: Delete old devbuild
               run: gh release delete devbuild -y --cleanup-tag
               env:
