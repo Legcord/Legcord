@@ -67,7 +67,8 @@ contextBridge.exposeInMainWorld("armcord", {
     version: ipcRenderer.sendSync("get-app-version", "app-version") as string,
     mods: ipcRenderer.sendSync("clientmod") as string,
     restart: () => ipcRenderer.send("restart"),
-    openThemesWindow: () => ipcRenderer.send("openThemesWindow")
+    openThemesWindow: () => ipcRenderer.send("openThemesWindow"),
+    openQuickCssFile: () => ipcRenderer.send("openQuickCssFile")
 } as ArmCordWindow);
 let windowCallback: (arg0: object) => void;
 contextBridge.exposeInMainWorld("ArmCordRPC", {

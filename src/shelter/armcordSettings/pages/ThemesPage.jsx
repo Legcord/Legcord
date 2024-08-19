@@ -10,6 +10,10 @@ export function ThemesPage() {
             <Button size={ButtonSizes.MAX} onClick={window.armcord.openThemesWindow}>
                 Open Theme Manager
             </Button>
+            <Divider mt mb />
+            <Button size={ButtonSizes.MAX} onClick={window.armcord.openQuickCssFile}>
+                Open Quick CSS file
+            </Button>
         </>
     );
 }

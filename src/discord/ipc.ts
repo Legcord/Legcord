@@ -16,6 +16,7 @@ const userDataPath = app.getPath("userData");
 const storagePath = path.join(userDataPath, "/storage/");
 const themesPath = path.join(userDataPath, "/themes/");
 const pluginsPath = path.join(userDataPath, "/plugins/");
+const quickCssPath = path.join(userDataPath, "/quickCss.css");
 export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.handle("getShelterBundle", () => {
         return {
@@ -143,6 +144,9 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     });
     ipcMain.on("openPluginsFolder", () => {
         shell.showItemInFolder(pluginsPath);
+    });
+    ipcMain.on("openQuickCssFile", () => {
+        void shell.openPath(quickCssPath);
     });
     ipcMain.on("openCrashesFolder", () => {
         shell.showItemInFolder(path.join(app.getPath("temp"), `${app.getName()} Crashes`));

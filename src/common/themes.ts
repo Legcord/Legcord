@@ -165,3 +165,17 @@ export async function installTheme(linkOrPath: string) {
     fs.writeFileSync(path.join(themePath, "manifest.json"), JSON.stringify(manifest));
     fs.writeFileSync(path.join(themePath, "src.css"), code);
 }
+
+export function initQuickCss(browserWindow: BrowserWindow) {
+    const quickCssPath = path.join(userDataPath, "/quickCss.css");
+    if (!fs.existsSync(quickCssPath)) {
+        fs.writeFileSync(quickCssPath, "");
+    }
+    browserWindow.webContents.send("addTheme", "armcord-quick-css", fs.readFileSync(quickCssPath, "utf-8"));
+    console.log(`[Theme Manager] Loaded Quick CSS`);
+    fs.watchFile(quickCssPath, {interval: 1000}, () => {
+        console.log("[Theme Manager] Quick CSS updated.");
+        browserWindow.webContents.send("removeTheme", "armcord-quick-css");
+        browserWindow.webContents.send("addTheme", "armcord-quick-css", fs.readFileSync(quickCssPath, "utf-8"));
+    });
+}

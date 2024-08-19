@@ -16,7 +16,7 @@ import {iconPath, init} from "../main.js";
 import {getConfig, setConfig, firstRun} from "../common/config.js";
 import {getWindowState, setWindowState} from "../common/windowState.js";
 import {forceQuit, setForceQuit} from "../common/forceQuit.js";
-import {injectThemesMain} from "../common/themes.js";
+import {initQuickCss, injectThemesMain} from "../common/themes.js";
 export let mainWindows: BrowserWindow[] = [];
 export let inviteWindow: BrowserWindow;
 
@@ -205,7 +205,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
                 });
         });
     }
-
+    initQuickCss(passedWindow);
     passedWindow.webContents.on("page-title-updated", (e, title) => {
         const armCordSuffix = " - ArmCord"; /* identify */
 
