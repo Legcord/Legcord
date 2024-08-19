@@ -63,6 +63,7 @@ await sleep(5000).then(() => {
     if (ipcRenderer.sendSync("disableAutogain")) {
         addScript(readFileSync(join(import.meta.dirname, "../", "/js/disableAutogain.js"), "utf8"));
     }
+    addScript(readFileSync(join(import.meta.dirname, "../", "/js/rpc.js"), "utf8"));
     const cssPath = join(import.meta.dirname, "../", "/css/discord.css");
     addStyle(readFileSync(cssPath, "utf8"));
     updateLang();
