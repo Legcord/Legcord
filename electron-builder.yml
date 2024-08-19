@@ -1,0 +1,40 @@
+appId: com.smartfridge.armcord
+productName: ArmCord
+mac:
+    category: Network
+
+nsis:
+    oneClick: false
+    allowToChangeInstallationDirectory: true
+
+appx:
+    applicationId: smartfrigde.ArmCord
+    identityName: 53758smartfrigde.ArmCord
+    publisher: CN=EAB3A6D3-7145-4623-8176-D579F573F339
+    publisherDisplayName: smartfrigde
+
+linux:
+    target:
+        - AppImage
+        - deb
+        - rpm
+        - tar.gz
+    maintainer: linux@armcord.app
+    category: Network
+
+snap:
+    environment: {ARRPC_NO_PROCESS_SCANNING: true}
+    allowNativeWayland: true
+    executableArgs:
+        - --no-process-scanning
+
+files:
+    - "!*"
+    - assets
+    - node_modules
+    - ts-out
+    - package.json
+    - license.txt
+
+electronDownload:
+    cache: .cache

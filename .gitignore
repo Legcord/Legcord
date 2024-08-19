@@ -4,3 +4,4 @@ dist/
 ts-out/
 package-lock.json
 .pnpm-store
+.cache
