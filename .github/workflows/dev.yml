@@ -9,7 +9,6 @@ jobs:
         strategy:
             matrix:
                 os: [macos-latest, ubuntu-latest, windows-latest]
-        permissions: write-all # GitHub doesn't seem to provide "Release only"
 
         runs-on: ${{matrix.os}}
         steps:
@@ -34,4 +33,4 @@ jobs:
             - name: Build Electron
               run: pnpm electron-builder -p always
               env:
-                  GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+                  GH_TOKEN: ${{github.token}}
