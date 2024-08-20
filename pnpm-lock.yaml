@@ -36,9 +36,6 @@ importers:
       '@rollup/plugin-json':
         specifier: ^6.1.0
         version: 6.1.0(rollup@4.21.0)
-      '@rollup/plugin-node-resolve':
-        specifier: ^15.2.3
-        version: 15.2.3(rollup@4.21.0)
       '@rollup/plugin-typescript':
         specifier: ^11.1.6
         version: 11.1.6(rollup@4.21.0)(tslib@2.6.3)(typescript@5.5.4)
@@ -537,15 +534,6 @@ packages:
       rollup:
         optional: true
 
-  '@rollup/plugin-node-resolve@15.2.3':
-    resolution: {integrity: sha512-j/lym8nf5E21LwBT4Df1VD6hRO2L2iwUeUmP7litikRsVp1H6NWx20NEp0Y7su+7XGc476GnXXc4kFeZNGmaSQ==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      rollup: ^2.78.0||^3.0.0||^4.0.0
-    peerDependenciesMeta:
-      rollup:
-        optional: true
-
   '@rollup/plugin-typescript@11.1.6':
     resolution: {integrity: sha512-R92yOmIACgYdJ7dJ97p4K69I8gg6IEHt8M7dUBxN3W6nrO8uUxX5ixl0yU/N3aZTi8WhPuICvOHXQvF6FaykAA==}
     engines: {node: '>=14.0.0'}
@@ -707,9 +695,6 @@ packages:
 
   '@types/plist@3.0.5':
     resolution: {integrity: sha512-E6OCaRmAe4WDmWNsL/9RMqdkkzDCY1etutkflWk4c+AcjDU07Pcz1fQwTX0TQz+Pxqn9i4L1TU3UFpjnrcDgxA==}
-
-  '@types/resolve@1.20.2':
-    resolution: {integrity: sha512-60BCwRFOZCQhDncwQdxxeOEEkbc5dIMccYLwbxsS4TUNeVECQ/pBJ0j09mrHOl/JJvpRPGwO9SvE4nR2Nb/a4Q==}
 
   '@types/responselike@1.0.3':
     resolution: {integrity: sha512-H/+L+UkTV33uf49PH5pCAUBVPNj2nDBXTN+qS1dOwyyg24l3CcicicCA7ca+HMvJBZcFgl5r8e+RR6elsb4Lyw==}
@@ -908,8 +893,8 @@ packages:
     resolution: {integrity: sha512-NW2cX8m1Q7KPA7a5M2ULQeZ2wR5qI5PAbw5L0UOMxdioVk9PMZ0h1TmyZEkPYrCvYjDlFICusOu1dlEKAAeXBw==}
     engines: {node: '>=0.12.0'}
 
-  async@3.2.5:
-    resolution: {integrity: sha512-baNZyqaaLhyLVKm/DlvdW051MSgO6b8eVfIezl9E5PqWxFgzLm/wQntEW4zOytVburDEr0JlALEpdOFwvErLsg==}
+  async@3.2.6:
+    resolution: {integrity: sha512-htCUDlxyyCLMgaM3xXg0C0LW2xqfuQ6p05pCEIsXuyQ+a1koYKTuBMzRNwmybfLgvJDMd0r1LTn4+E0Ti6C2AA==}
 
   asynckit@0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
@@ -976,10 +961,6 @@ packages:
 
   builder-util@25.0.0-alpha.10:
     resolution: {integrity: sha512-SrlawYIKu6UZOPWCGlbzVqbgv81jkeUPlrZbbdGb8ERIHuGR9HjnnQs7FV1QR2TKMjRsg/47I8UDtudj16qldg==}
-
-  builtin-modules@3.3.0:
-    resolution: {integrity: sha512-zhaCDicdLuWN5UbN5IMnFqNMhNfo919sH85y2/ea+5Yg9TsTkeZxpL+JLbp6cgYFS4sRLp3YV4S6yDuqVWHYOw==}
-    engines: {node: '>=6'}
 
   cacache@16.1.3:
     resolution: {integrity: sha512-/+Emcj9DAXxX4cwlLmRI9c166RuL3w30zp4R7Joiv2cQTtTtA+jeuCAjH3ZlGnYS3tKENSrKhAzVVP9GVyzeYQ==}
@@ -1137,10 +1118,6 @@ packages:
 
   deep-is@0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
-
-  deepmerge@4.3.1:
-    resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
-    engines: {node: '>=0.10.0'}
 
   defaults@1.0.4:
     resolution: {integrity: sha512-eFuaLoy/Rxalv2kr+lqMlUnrDWV+3j4pljOIJgLIhI058IQfWJ7vXhyEIHu+HtC738klGALYxOKDO0bQP3tg8A==}
@@ -1814,10 +1791,6 @@ packages:
     resolution: {integrity: sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==}
     engines: {node: '>=8'}
 
-  is-builtin-module@3.2.1:
-    resolution: {integrity: sha512-BSLE3HnV2syZ0FK0iMA/yUGplUeMmNz4AW5fnTunbCIqZi4vG3WjJT9FHMy5D69xmAYBHXQhJdALdpwVxV501A==}
-    engines: {node: '>=6'}
-
   is-ci@3.0.1:
     resolution: {integrity: sha512-ZYvCgrefwqoQ6yTyYUbQu64HsITZ3NfKX1lzaEYdkTDcfKzzCI/wthRRYKkdjHKFVgNiXKAKm65Zo1pk2as/QQ==}
     hasBin: true
@@ -1848,9 +1821,6 @@ packages:
 
   is-lambda@1.0.1:
     resolution: {integrity: sha512-z7CMFGNrENq5iFB9Bqo64Xk6Y9sg+epq1myIcdHaGnbMTYOxvzsEtdYqQUylB7LxfkvgrrjP32T6Ywciio9UIQ==}
-
-  is-module@1.0.0:
-    resolution: {integrity: sha512-51ypPSPCoTEIN9dy5Oy+h4pShgJmPCygKfyRCISBI+JoWT/2oJvK8QPxmwv7b/p239jXrm9M1mlQbyKJ5A152g==}
 
   is-number@7.0.0:
     resolution: {integrity: sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==}
@@ -2113,8 +2083,8 @@ packages:
     resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==}
     engines: {node: '>= 0.6'}
 
-  node-abi@3.65.0:
-    resolution: {integrity: sha512-ThjYBfoDNr08AWx6hGaRbfPwxKV9kVzAzOzlLKbk2CuqXE2xnCh+cbAGnwM3t8Lq4v9rUB7VfondlkBckcJrVA==}
+  node-abi@3.66.0:
+    resolution: {integrity: sha512-J3ygyG8cTcn5TVzpHYEBE6zHN4uVoj6wKMS946b19VYGhVpGgR5mB3OK2oBTe0l3Bpsj5/h+TAblq0K8Ec9cRQ==}
     engines: {node: '>=10'}
 
   node-addon-api@1.7.2:
@@ -2826,7 +2796,7 @@ snapshots:
       detect-libc: 2.0.3
       fs-extra: 10.1.0
       got: 11.8.6
-      node-abi: 3.65.0
+      node-abi: 3.66.0
       node-api-version: 0.2.0
       node-gyp: 9.4.1
       ora: 5.4.1
@@ -3120,17 +3090,6 @@ snapshots:
     optionalDependencies:
       rollup: 4.21.0
 
-  '@rollup/plugin-node-resolve@15.2.3(rollup@4.21.0)':
-    dependencies:
-      '@rollup/pluginutils': 5.1.0(rollup@4.21.0)
-      '@types/resolve': 1.20.2
-      deepmerge: 4.3.1
-      is-builtin-module: 3.2.1
-      is-module: 1.0.0
-      resolve: 1.22.8
-    optionalDependencies:
-      rollup: 4.21.0
-
   '@rollup/plugin-typescript@11.1.6(rollup@4.21.0)(tslib@2.6.3)(typescript@5.5.4)':
     dependencies:
       '@rollup/pluginutils': 5.1.0(rollup@4.21.0)
@@ -3264,8 +3223,6 @@ snapshots:
       '@types/node': 22.4.1
       xmlbuilder: 15.1.1
     optional: true
-
-  '@types/resolve@1.20.2': {}
 
   '@types/responselike@1.0.3':
     dependencies:
@@ -3540,7 +3497,7 @@ snapshots:
   archiver@5.3.2:
     dependencies:
       archiver-utils: 2.1.0
-      async: 3.2.5
+      async: 3.2.6
       buffer-crc32: 0.2.13
       readable-stream: 3.6.2
       readdir-glob: 1.1.3
@@ -3571,7 +3528,7 @@ snapshots:
 
   async-exit-hook@2.0.1: {}
 
-  async@3.2.5: {}
+  async@3.2.6: {}
 
   asynckit@0.4.0: {}
 
@@ -3677,8 +3634,6 @@ snapshots:
       temp-file: 3.4.0
     transitivePeerDependencies:
       - supports-color
-
-  builtin-modules@3.3.0: {}
 
   cacache@16.1.3:
     dependencies:
@@ -3848,8 +3803,6 @@ snapshots:
       mimic-response: 3.1.0
 
   deep-is@0.1.4: {}
-
-  deepmerge@4.3.1: {}
 
   defaults@1.0.4:
     dependencies:
@@ -4655,10 +4608,6 @@ snapshots:
     dependencies:
       binary-extensions: 2.3.0
 
-  is-builtin-module@3.2.1:
-    dependencies:
-      builtin-modules: 3.3.0
-
   is-ci@3.0.1:
     dependencies:
       ci-info: 3.9.0
@@ -4680,8 +4629,6 @@ snapshots:
   is-interactive@1.0.0: {}
 
   is-lambda@1.0.1: {}
-
-  is-module@1.0.0: {}
 
   is-number@7.0.0: {}
 
@@ -4713,7 +4660,7 @@ snapshots:
 
   jake@10.9.2:
     dependencies:
-      async: 3.2.5
+      async: 3.2.6
       chalk: 4.1.2
       filelist: 1.0.4
       minimatch: 3.1.2
@@ -4914,7 +4861,7 @@ snapshots:
 
   negotiator@0.6.3: {}
 
-  node-abi@3.65.0:
+  node-abi@3.66.0:
     dependencies:
       semver: 7.6.3
 

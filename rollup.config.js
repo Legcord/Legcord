@@ -33,7 +33,6 @@ export default defineConfig([
             esmShim(),
             json(),
             minify({minify: process.env.BUILD === "prod" ? true : false}),
-            //        nodeResolve(), we don't need to bundle node_modules cuz it breaks electron
             typescript(),
             copy({
                 targets: [

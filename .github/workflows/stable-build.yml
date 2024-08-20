@@ -10,11 +10,11 @@ jobs:
                 os: [macos-latest, ubuntu-latest, windows-latest]
                 include:
                     - os: macos-latest
-                      flags: m --universal
+                      flags: --universal --x64=false --arm64=false -m
                     - os: ubuntu-latest
-                      flags: l
+                      flags: --armv7l --ia32 -l
                     - os: windows-latest
-                      flags: w
+                      flags: --ia32 -w
 
         runs-on: ${{matrix.os}}
         steps:
@@ -43,7 +43,7 @@ jobs:
                   key: electron-zips.stable.${{matrix.os}}
 
             - name: Build ArmCord
-              run: pnpm electron-builder --x64 --arm64 -${{matrix.flags}} --publish always
+              run: pnpm electron-builder --x64 --arm64 ${{matrix.flags}} --publish always
               env:
                   GH_TOKEN: ${{github.token}}
 
