@@ -44,7 +44,7 @@
         "@types/ws": "^8.5.12",
         "@uwu/lune": "^1.4.2",
         "@uwu/shelter-defs": "^1.4.1",
-        "electron": "31.4.0",
+        "electron": "32.0.0",
         "electron-builder": "^24.13.3",
         "eslint": "^9.9.0",
         "eslint-config-prettier": "^9.1.0",
