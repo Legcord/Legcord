@@ -12,7 +12,7 @@ jobs:
                     - os: macos-latest
                       flags: --universal --x64=false --arm64=false -m
                     - os: ubuntu-latest
-                      flags: --armv7l --ia32 -l
+                      flags: --armv7l -l
                     - os: windows-latest
                       flags: --ia32 -w
 
