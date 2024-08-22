@@ -39,11 +39,11 @@
         "@rollup/plugin-json": "^6.1.0",
         "@rollup/plugin-typescript": "^11.1.6",
         "@types/eslint__js": "^8.42.3",
-        "@types/node": "^22.4.1",
+        "@types/node": "^22.5.0",
         "@types/ws": "^8.5.12",
         "@uwu/lune": "^1.4.2",
         "@uwu/shelter-defs": "^1.4.1",
-        "electron": "32.0.0",
+        "electron": "32.0.1",
         "electron-builder": "^24.13.3",
         "eslint": "^9.9.0",
         "eslint-config-prettier": "^9.1.0",
@@ -63,6 +63,11 @@
         "v8-compile-cache": "^2.4.0",
         "ws": "^8.18.0"
     },
-    "packageManager": "pnpm@9.6.0+sha512.38dc6fba8dba35b39340b9700112c2fe1e12f10b17134715a4aa98ccf7bb035e76fd981cf0bb384dfa98f8d6af5481c2bef2f4266a24bfa20c34eb7147ce0b5e",
-    "package-manager-strict": false
+    "packageManager": "pnpm@9.8.0+sha512.8e4c3550fb500e808dbc30bb0ce4dd1eb614e30b1c55245f211591ec2cdf9c611cabd34e1364b42f564bd54b3945ed0f49d61d1bbf2ec9bd74b866fcdc723276",
+    "package-manager-strict": false,
+    "pnpm": {
+        "patchedDependencies": {
+            "electron-context-menu": "patches/electron-context-menu.patch"
+        }
+    }
 }
