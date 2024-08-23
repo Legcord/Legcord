@@ -76,5 +76,7 @@
     "settings-autoScroll": "Дозволити авто-прокрутку",
     "settings-autoScroll-desc": "Дозволити авто-прокрутку середньої кнопкою миші (Помітка: ваша оболочка рабочого стола все ще може замініти це іншою дією)",
     "settings-channel-desc": "Використовуйте це налаштування, щоб змінити поточний канал Discord наразі запущенний Discord.",
-    "settings-theme-desc": "Стиль вікна керує тим, яку заголовочну строку використовує ArmCord."
+    "settings-theme-desc": "Стиль вікна керує тим, яку заголовочну строку використовує ArmCord.",
+    "settings-hardwareAcceleration": "Hardware acceleration",
+    "settings-hardwareAcceleration-desc": "Hardware acceleration uses your GPU to make ArmCord run faster. If you're experiencing visual glitches, try disabling this."
 }
