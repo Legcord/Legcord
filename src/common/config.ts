@@ -118,6 +118,7 @@ export function setup(): void {
         multiInstance: false,
         mods: ["vencord"],
         spellcheck: true,
+        hardwareAcceleration: true,
         performanceMode: "none",
         skipSplash: false,
         inviteWebsocket: true,

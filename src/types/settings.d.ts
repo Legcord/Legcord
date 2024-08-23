@@ -21,6 +21,7 @@ export interface Settings {
     useLegacyCapturer: boolean;
     tray: boolean;
     keybinds: string[];
+    hardwareAcceleration: boolean;
     inviteWebsocket: boolean;
     disableAutogain: boolean;
     trayIcon: string;

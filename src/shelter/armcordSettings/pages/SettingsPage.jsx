@@ -173,6 +173,13 @@ export function SettingsPage() {
             <Header class={classes.category} tag={HeaderTags.H5}>
                 Debug options
             </Header>
+            <SwitchItem
+                note={store.i18n["settings-hardwareAcceleration-desc"]}
+                value={store.settings.hardwareAcceleration}
+                onChange={(e) => set("hardwareAcceleration", e)}
+            >
+                {store.i18n["settings-hardwareAcceleration"]}
+            </SwitchItem>
             <Button size={ButtonSizes.MAX} onClick={window.armcord.settings.openStorageFolder}>
                 Open storage folder
             </Button>
