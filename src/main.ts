@@ -92,9 +92,6 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     // kill if 2nd instance
     app.quit();
 } else {
-    if (getConfig("hardwareAcceleration") === false) {
-        app.disableHardwareAcceleration();
-    }
     app.commandLine.appendSwitch("disable-features", "WidgetLayering"); // fix dev tools layers
     // Your data now belongs to CCP
     crashReporter.start({uploadToServer: false});
@@ -126,6 +123,9 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     injectElectronFlags();
     await fetchMods();
     console.log("[Config Manager] Current config: " + fs.readFileSync(getConfigLocation(), "utf-8"));
+    if (getConfig("hardwareAcceleration") === false) {
+        app.disableHardwareAcceleration();
+    }
     if (getConfig("smoothScroll") === false) {
         app.commandLine.appendSwitch("disable-smooth-scrolling");
     }
