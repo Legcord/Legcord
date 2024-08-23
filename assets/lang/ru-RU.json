@@ -76,5 +76,7 @@
     "settings-autoScroll": "Разрешить автоматическую прокрутку",
     "settings-autoScroll-desc": "Разрешить автоматическую прокрутку при нажатии средней кнопки мыши (Примечание: ваша среда рабочего стола все еще может переопределить это с помощью другого действия)",
     "settings-theme-desc": "Стиль окна определяет какой заголовок окна будет использовать ArmCord.",
-    "settings-channel-desc": "Используйте эту настройку, чтобы изменить текущий экземпляр Discord, запущенный ArmCord."
+    "settings-channel-desc": "Используйте эту настройку, чтобы изменить текущий экземпляр Discord, запущенный ArmCord.",
+    "settings-hardwareAcceleration": "Hardware acceleration",
+    "settings-hardwareAcceleration-desc": "Hardware acceleration uses your GPU to make ArmCord run faster. If you're experiencing visual glitches, try disabling this."
 }
