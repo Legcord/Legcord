@@ -9,6 +9,7 @@ if (!fs.existsSync(pluginFolder)) {
 await app.whenReady().then(() => {
     fs.readdirSync(pluginFolder).forEach((file) => {
         try {
+            if (pluginFolder == "loader") return;
             const manifest = fs.readFileSync(`${pluginFolder}/${file}/manifest.json`, "utf8");
             // NOTE - The below type assertion is just what we need from the chrome manifest
             const pluginFile = JSON.parse(manifest) as {name: string; author: string};
