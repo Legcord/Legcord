@@ -76,5 +76,7 @@
     "settings-autoScroll": "Allow auto-scroll",
     "settings-autoScroll-desc": "Allow auto-scrolling with middle-click (Note: Your desktop environment can still override this with another action)",
     "settings-channel-desc": "Use this setting to change current instance of Discord that ArmCord is running.",
-    "settings-theme-desc": "Window style manages what titlebar ArmCord uses."
+    "settings-theme-desc": "Window style manages what titlebar ArmCord uses.",
+    "settings-hardwareAcceleration": "Hardware acceleration",
+    "settings-hardwareAcceleration-desc": "Hardware acceleration uses your GPU to make ArmCord run faster. If you're experiencing visual glitches, try disabling this."
 }
