@@ -125,6 +125,8 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     console.log("[Config Manager] Current config: " + fs.readFileSync(getConfigLocation(), "utf-8"));
     if (getConfig("hardwareAcceleration") === false) {
         app.disableHardwareAcceleration();
+    } else if (getConfig("hardwareAcceleration") === undefined) {
+        setConfig("hardwareAcceleration", true); // pre 3.3.0
     }
     if (getConfig("smoothScroll") === false) {
         app.commandLine.appendSwitch("disable-smooth-scrolling");
