@@ -76,5 +76,7 @@
     "settings-autoScroll": "Permitir auto-desplazamiento",
     "settings-autoScroll-desc": "Permitir auto-desplazamiento con click medio (Nota: Tu sistema aun puede sobreescribir esta opción con otra acción)",
     "settings-theme-desc": "Window style manages what titlebar ArmCord uses.",
-    "settings-channel-desc": "Use this setting to change current instance of Discord that ArmCord is running."
+    "settings-channel-desc": "Use this setting to change current instance of Discord that ArmCord is running.",
+    "settings-hardwareAcceleration": "Hardware acceleration",
+    "settings-hardwareAcceleration-desc": "Hardware acceleration uses your GPU to make ArmCord run faster. If you're experiencing visual glitches, try disabling this."
 }
