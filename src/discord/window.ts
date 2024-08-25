@@ -19,6 +19,7 @@ import {forceQuit, setForceQuit} from "../common/forceQuit.js";
 import {initQuickCss, injectThemesMain} from "../common/themes.js";
 export let mainWindows: BrowserWindow[] = [];
 export let inviteWindow: BrowserWindow;
+import {join} from "path";
 
 contextMenu({
     showSaveImageAs: true,
@@ -57,6 +58,9 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         }
     }
 
+    if (getConfig("mods").includes("betterdiscord")) {
+        void import(join(app.getPath("userData"), "betterdiscord.asar/renderer.js"));
+    }
     // REVIEW - Test the protocol warning. I was not sure how to get it to pop up. For now I've voided the promises.
 
     const ignoreProtocolWarning = getConfig("ignoreProtocolWarning");

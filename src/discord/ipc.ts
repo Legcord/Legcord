@@ -31,6 +31,13 @@ export function registerIpc(passedWindow: BrowserWindow): void {
             enabled: getConfig("mods").includes("vencord")
         };
     });
+    ipcMain.handle("getBetterDiscordBundle", () => {
+        return {
+            js: fs.readFileSync(path.join(app.getPath("userData"), "betterdiscord.asar/preload.js"), "utf-8"),
+            extra: fs.readFileSync(path.join(app.getPath("userData"), "betterdiscord.asar/renderer.js"), "utf-8"),
+            enabled: getConfig("mods").includes("betterdiscord")
+        };
+    });
     ipcMain.on("splashEnd", () => {
         splashWindow.close();
         if (getConfig("startMinimized")) {
