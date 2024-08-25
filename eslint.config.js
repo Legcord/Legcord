@@ -17,9 +17,6 @@ export default tseslint.config(
                 tryExtensions: [".tsx", ".ts", ".jsx", ".js", ".json", ".node", ".d.ts"]
             }
         },
-        plugins: {
-            n
-        },
         languageOptions: {
             parserOptions: {
                 project: true,
