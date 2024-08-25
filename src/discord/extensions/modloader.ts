@@ -1,4 +1,4 @@
-import {createWriteStream} from "fs";
+import {createWriteStream} from "original-fs"; // NOTE - Electron will NOT download asar files without this
 import {getConfig} from "../../common/config.js";
 import {app} from "electron";
 import {join} from "path";
