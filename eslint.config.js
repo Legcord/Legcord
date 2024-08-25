@@ -9,7 +9,6 @@ export default tseslint.config(
     {ignores: ["ts-out", "src/discord/content/js", "*.config.js", "src/shelter/", "scripts/"]},
     ...tseslint.configs.recommendedTypeChecked,
     ...tseslint.configs.stylisticTypeChecked,
-    n.configs["flat/recommended"],
     prettier,
     {
         settings: {
