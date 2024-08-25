@@ -1,17 +1,20 @@
-import {writeFileSync} from "fs";
+import {createWriteStream} from "fs";
 import {getConfig} from "../../common/config.js";
 import {app} from "electron";
 import {join} from "path";
 import type {LatestReleaseResponseTruncated} from "../../types/GithubApi.d.js";
 import type {ValidMods} from "../../types/settings.d.js";
+import {finished} from "stream/promises";
+import {Readable} from "stream";
+import type {ReadableStream} from "stream/web";
 
-async function fetchMod(fileName: string, url: string) {
+async function fetchMod(file: string, url: string) {
     await fetch(url).then(async (contents) => {
-        const fileContent = await contents.text();
-        if (!contents.ok || !fileContent) {
+        if (!contents.ok) {
             throw new Error("BAD_RESPONSE");
         }
-        writeFileSync(join(app.getPath("userData"), fileName), fileContent);
+        const fileStream = createWriteStream(join(app.getPath("userData"), file));
+        await finished(Readable.fromWeb(contents.body as ReadableStream).pipe(fileStream));
     });
 }
 
@@ -30,7 +33,6 @@ async function betterdiscord() {
     const githubData = await fetch("https://api.github.com/repos/betterdiscord/betterdiscord/releases/latest")
         .then(async (response) => (await response.json()) as LatestReleaseResponseTruncated)
         .then((data) => {
-            console.log(data.assets);
             return data;
         });
 
@@ -39,10 +41,8 @@ async function betterdiscord() {
     if (!asarUrl) {
         throw new Error("MISSING_ASSET");
     }
-
-    await fetch(asarUrl).then((contents) => {
-        console.log(contents);
-    });
+    console.log(asarUrl);
+    await fetchMod("betterdiscord.asar", asarUrl);
 }
 
 async function custom() {
