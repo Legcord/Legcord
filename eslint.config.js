@@ -3,7 +3,6 @@
 import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
 import prettier from "eslint-plugin-prettier/recommended";
-import n from "eslint-plugin-n";
 
 export default tseslint.config(
     eslint.configs.recommended,
@@ -30,8 +29,6 @@ export default tseslint.config(
         },
         rules: {
             "no-constant-binary-expression": 0,
-            "n/no-unpublished-import": 0,
-            "n/no-unsupported-features/node-builtins": 1,
             "@typescript-eslint/no-unused-vars": [
                 2,
                 {
