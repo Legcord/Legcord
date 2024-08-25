@@ -2,7 +2,6 @@ import {createWriteStream} from "original-fs"; // NOTE - Electron will NOT downl
 import {getConfig} from "../../common/config.js";
 import {app} from "electron";
 import {join} from "path";
-import type {LatestReleaseResponseTruncated} from "../../types/GithubApi.d.js";
 import type {ValidMods} from "../../types/settings.d.js";
 import {finished} from "stream/promises";
 import {Readable} from "stream";
@@ -30,19 +29,7 @@ async function vencord() {
 }
 
 async function betterdiscord() {
-    const githubData = await fetch("https://api.github.com/repos/betterdiscord/betterdiscord/releases/latest")
-        .then(async (response) => (await response.json()) as LatestReleaseResponseTruncated)
-        .then((data) => {
-            return data;
-        });
-
-    const asarUrl = githubData.assets.find((asset) => asset.name === "betterdiscord.asar")?.browser_download_url;
-
-    if (!asarUrl) {
-        throw new Error("MISSING_ASSET");
-    }
-    console.log(asarUrl);
-    await fetchMod("betterdiscord.asar", asarUrl);
+    await fetchMod("betterdiscord.asar", "https://betterdiscord.app/Download/betterdiscord.asar");
 }
 
 async function custom() {
