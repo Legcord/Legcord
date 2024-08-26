@@ -38,7 +38,7 @@ function registerCustomHandler(): void {
                     console.log("WebRTC Capturer detected, skipping window creation."); //assume webrtc capturer is used
                     let options: Electron.Streams = {video: sources[0]};
                     if (sources[0] === undefined) return callback({});
-                    if (showAudioDialog() == true) options = {video: sources[0], audio: "loopback"};
+                    if (showAudioDialog() == true) options = {video: sources[0], audio: "loopbackWithMute"};
                     callback(options);
                 } else {
                     capturerWindow = new BrowserWindow({
@@ -64,7 +64,7 @@ function registerCustomHandler(): void {
                         switch (process.platform) {
                             case "win32" || "linux":
                                 options = {video: result};
-                                if (audio) options = {video: result, audio: "loopback"};
+                                if (audio) options = {video: result, audio: "loopbackWithMute"};
                                 callback(options);
                                 break;
                             default:
