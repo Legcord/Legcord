@@ -49,7 +49,7 @@ await sleep(5000).then(() => {
     if (document.getElementById("window-title") == null && ipcRenderer.sendSync("titlebar")) {
         console.warn("Custom titlebar is missing. Switching to native");
         ipcRenderer.send("setConfig", "windowStyle", "native");
-        sleep(2000).then(() => {
+        void sleep(2000).then(() => {
             ipcRenderer.send("restart");
         });
     }
