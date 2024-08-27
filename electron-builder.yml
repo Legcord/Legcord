@@ -15,6 +15,7 @@ appx:
     publisherDisplayName: smartfrigde
 
 linux:
+    icon: build/icon.icns
     target:
         - AppImage
         - deb
