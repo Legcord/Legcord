@@ -46,6 +46,13 @@ if (ipcRenderer.sendSync("mobileMode")) {
 }
 await sleep(5000).then(() => {
     // dirty hack to make clicking notifications focus ArmCord
+    if (document.getElementById("window-title") == null && ipcRenderer.sendSync("titlebar")) {
+        console.warn("Custom titlebar is missing. Switching to native");
+        ipcRenderer.send("setConfig", "windowStyle", "native");
+        sleep(2000).then(() => {
+            ipcRenderer.send("restart");
+        });
+    }
     addScript(`
         (() => {
         const originalSetter = Object.getOwnPropertyDescriptor(Notification.prototype, "onclick").set;
