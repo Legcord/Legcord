@@ -1,3 +1,5 @@
+export type ValidMods = "vencord" | "betterdiscord" | "custom";
+
 export interface Settings {
     // Referenced for detecting a broken config.
     "0"?: string;
@@ -10,13 +12,13 @@ export interface Settings {
     minimizeToTray: boolean;
     multiInstance: boolean;
     spellcheck: boolean;
-    mods: ("vencord" | "custom")[];
+    mods: ValidMods[];
     dynamicIcon: boolean;
     mobileMode: boolean;
     skipSplash: boolean;
     performanceMode: string;
-    customJsBundle: RequestInfo | URL;
-    customCssBundle: RequestInfo | URL;
+    customJsBundle: string;
+    customCssBundle: string;
     startMinimized: boolean;
     useLegacyCapturer: boolean;
     tray: boolean;

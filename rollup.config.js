@@ -26,7 +26,9 @@ export default defineConfig([
             "electron-context-menu",
             "arrpc",
             "stream",
-            "stream/promises"
+            "stream/promises",
+            "url",
+            "original-fs"
         ],
         plugins: [
             commonjs(),

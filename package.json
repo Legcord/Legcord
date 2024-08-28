@@ -33,7 +33,7 @@
     },
     "homepage": "https://github.com/armcord/armcord#readme",
     "devDependencies": {
-        "@eslint/js": "^9.9.0",
+        "@eslint/js": "^9.9.1",
         "@rollup/plugin-commonjs": "^26.0.1",
         "@rollup/plugin-esm-shim": "^0.1.7",
         "@rollup/plugin-json": "^6.1.0",
@@ -45,25 +45,25 @@
         "@uwu/shelter-defs": "^1.4.1",
         "electron": "32.0.1",
         "electron-builder": "^24.13.3",
-        "eslint": "^9.9.0",
+        "eslint": "^9.9.1",
         "eslint-config-prettier": "^9.1.0",
-        "eslint-plugin-n": "^17.10.2",
         "eslint-plugin-prettier": "^5.2.1",
         "prettier": "^3.3.3",
-        "rollup": "^4.21.0",
+        "rollup": "^4.21.1",
         "rollup-plugin-copy": "^3.5.0",
         "rollup-plugin-esbuild": "^6.1.1",
         "typescript": "^5.5.4",
-        "typescript-eslint": "^8.2.0"
+        "typescript-eslint": "^8.3.0"
     },
     "dependencies": {
+        "@electron/asar": "^3.2.10",
         "arrpc": "github:OpenAsar/arrpc#3898488be9de93165fe05b3077154e0f0d946894",
-        "electron-context-menu": "^4.0.1",
+        "electron-context-menu": "^4.0.2",
         "electron-is-dev": "^3.0.1",
         "v8-compile-cache": "^2.4.0",
         "ws": "^8.18.0"
     },
-    "packageManager": "pnpm@9.8.0+sha512.8e4c3550fb500e808dbc30bb0ce4dd1eb614e30b1c55245f211591ec2cdf9c611cabd34e1364b42f564bd54b3945ed0f49d61d1bbf2ec9bd74b866fcdc723276",
+    "packageManager": "pnpm@9.9.0+sha512.60c18acd138bff695d339be6ad13f7e936eea6745660d4cc4a776d5247c540d0edee1a563695c183a66eb917ef88f2b4feb1fc25f32a7adcadc7aaf3438e99c1",
     "package-manager-strict": false,
     "pnpm": {
         "patchedDependencies": {
