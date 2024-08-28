@@ -1,7 +1,6 @@
 import "./bridge.js";
 import "./mods/shelter.js";
 import "./mods/vencord.js";
-import "./mods/betterdiscord.js";
 import "./optimizer.js";
 import {ipcRenderer} from "electron";
 import {readFileSync} from "fs";

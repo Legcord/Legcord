@@ -1,7 +1,7 @@
 import {app, clipboard, desktopCapturer, ipcMain, shell, SourcesOptions, BrowserWindow} from "electron";
 import os from "os";
-import {readFileSync} from "fs";
-import {join} from "path";
+import fs from "fs";
+import path from "path";
 import {mainWindows} from "./window.js";
 import {getConfig, setConfigBulk, getConfigLocation, setConfig} from "../common/config.js";
 import {setLang, getLang, getLangName, getRawLang} from "../common/lang.js";
@@ -13,29 +13,22 @@ import {Settings} from "../types/settings.d.js";
 import isDev from "electron-is-dev";
 
 const userDataPath = app.getPath("userData");
-const storagePath = join(userDataPath, "/storage/");
-const themesPath = join(userDataPath, "/themes/");
-const pluginsPath = join(userDataPath, "/plugins/");
-const quickCssPath = join(userDataPath, "/quickCss.css");
+const storagePath = path.join(userDataPath, "/storage/");
+const themesPath = path.join(userDataPath, "/themes/");
+const pluginsPath = path.join(userDataPath, "/plugins/");
+const quickCssPath = path.join(userDataPath, "/quickCss.css");
 export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.handle("getShelterBundle", () => {
         return {
-            js: readFileSync(join(app.getPath("userData"), "shelter.js"), "utf-8"),
+            js: fs.readFileSync(path.join(app.getPath("userData"), "shelter.js"), "utf-8"),
             enabled: true
         };
     });
     ipcMain.handle("getVencordBundle", () => {
         return {
-            js: readFileSync(join(app.getPath("userData"), "vencord.js"), "utf-8"),
-            css: readFileSync(join(app.getPath("userData"), "vencord.css"), "utf-8"),
+            js: fs.readFileSync(path.join(app.getPath("userData"), "vencord.js"), "utf-8"),
+            css: fs.readFileSync(path.join(app.getPath("userData"), "vencord.css"), "utf-8"),
             enabled: getConfig("mods").includes("vencord")
-        };
-    });
-    ipcMain.handle("getBetterDiscordBundle", () => {
-        return {
-            js: readFileSync(join(app.getPath("userData"), "betterdiscord.asar/renderer.js"), "utf-8"),
-            other: readFileSync(join(app.getPath("userData"), "betterdiscord.asar/injector.js"), "utf-8"),
-            enabled: getConfig("mods").includes("betterdiscord")
         };
     });
     ipcMain.on("splashEnd", () => {
@@ -111,7 +104,7 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         event.returnValue = getConfig("mods");
     });
     ipcMain.on("getEntireConfig", (event) => {
-        const rawData = readFileSync(getConfigLocation(), "utf-8");
+        const rawData = fs.readFileSync(getConfigLocation(), "utf-8");
         const returnData = JSON.parse(rawData) as Settings;
         event.returnValue = returnData;
     });
@@ -156,7 +149,7 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         void shell.openPath(quickCssPath);
     });
     ipcMain.on("openCrashesFolder", () => {
-        shell.showItemInFolder(join(app.getPath("temp"), `${app.getName()} Crashes`));
+        shell.showItemInFolder(path.join(app.getPath("temp"), `${app.getName()} Crashes`));
     });
     ipcMain.on("getLangName", (event) => {
         event.returnValue = getLangName();
@@ -165,7 +158,7 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         process.crash();
     });
     ipcMain.on("copyDebugInfo", () => {
-        const settingsFileContent = readFileSync(getConfigLocation(), "utf-8");
+        const settingsFileContent = fs.readFileSync(getConfigLocation(), "utf-8");
         clipboard.writeText(
             `**OS:** ${os.platform()} ${os.version()}\n**Architecture:** ${os.arch()}\n**ArmCord version:** ${getVersion()}\n**Electron version:** ${
                 process.versions.electron
