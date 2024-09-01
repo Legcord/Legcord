@@ -50,7 +50,7 @@
         "eslint-plugin-n": "^17.10.2",
         "eslint-plugin-prettier": "^5.2.1",
         "prettier": "^3.3.3",
-        "rollup": "^4.21.0",
+        "rollup": "^4.21.2",
         "rollup-plugin-copy": "^3.5.0",
         "rollup-plugin-esbuild": "^6.1.1",
         "typescript": "^5.5.4",
