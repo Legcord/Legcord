@@ -15,7 +15,7 @@ importers:
     dependencies:
       arrpc:
         specifier: github:OpenAsar/arrpc#3898488be9de93165fe05b3077154e0f0d946894
-        version: https://codeload.github.com/OpenAsar/arrpc/tar.gz/3898488be9de93165fe05b3077154e0f0d946894
+        version: git+https://git@github.com:OpenAsar/arrpc.git#3898488be9de93165fe05b3077154e0f0d946894
       electron-context-menu:
         specifier: ^4.0.1
         version: 4.0.1(patch_hash=ngxdsovgwc7grjjbafcuqaw5va)
@@ -48,8 +48,8 @@ importers:
         specifier: ^8.42.3
         version: 8.42.3
       '@types/node':
-        specifier: ^22.5.0
-        version: 22.5.0
+        specifier: ^22.5.2
+        version: 22.5.2
       '@types/ws':
         specifier: ^8.5.12
         version: 8.5.12
@@ -695,8 +695,8 @@ packages:
   '@types/node@20.16.1':
     resolution: {integrity: sha512-zJDo7wEadFtSyNz5QITDfRcrhqDvQI1xQNQ0VoizPjM/dVAODqqIUWbJPkvsxmTI0MYRGRikcdjMPhOssnPejQ==}
 
-  '@types/node@22.5.0':
-    resolution: {integrity: sha512-DkFrJOe+rfdHTqqMg0bSNlGlQ85hSoh2TPzZyhHsXnMtligRWpxUySiyw8FY14ITt24HVCiQPWxS3KO/QlGmWg==}
+  '@types/node@22.5.2':
+    resolution: {integrity: sha512-acJsPTEqYqulZS/Yp/S3GgeE6GZ0qYODUR8aVr/DkhHQ8l9nd4j5x1/ZJy9/gHrRlFMqkO6i0I3E27Alu4jjPg==}
 
   '@types/plist@3.0.5':
     resolution: {integrity: sha512-E6OCaRmAe4WDmWNsL/9RMqdkkzDCY1etutkflWk4c+AcjDU07Pcz1fQwTX0TQz+Pxqn9i4L1TU3UFpjnrcDgxA==}
@@ -881,8 +881,8 @@ packages:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
 
-  arrpc@https://codeload.github.com/OpenAsar/arrpc/tar.gz/3898488be9de93165fe05b3077154e0f0d946894:
-    resolution: {tarball: https://codeload.github.com/OpenAsar/arrpc/tar.gz/3898488be9de93165fe05b3077154e0f0d946894}
+  arrpc@git+https://git@github.com:OpenAsar/arrpc.git#3898488be9de93165fe05b3077154e0f0d946894:
+    resolution: {commit: 3898488be9de93165fe05b3077154e0f0d946894, repo: git@github.com:OpenAsar/arrpc.git, type: git}
     version: 3.4.0
     hasBin: true
 
@@ -3172,7 +3172,7 @@ snapshots:
     dependencies:
       '@types/http-cache-semantics': 4.0.4
       '@types/keyv': 3.1.4
-      '@types/node': 22.5.0
+      '@types/node': 22.5.2
       '@types/responselike': 1.0.3
 
   '@types/debug@4.1.12':
@@ -3192,16 +3192,16 @@ snapshots:
 
   '@types/fs-extra@8.1.5':
     dependencies:
-      '@types/node': 22.5.0
+      '@types/node': 22.5.2
 
   '@types/fs-extra@9.0.13':
     dependencies:
-      '@types/node': 22.5.0
+      '@types/node': 22.5.2
 
   '@types/glob@7.2.0':
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 22.5.0
+      '@types/node': 22.5.2
 
   '@types/http-cache-semantics@4.0.4': {}
 
@@ -3209,7 +3209,7 @@ snapshots:
 
   '@types/keyv@3.1.4':
     dependencies:
-      '@types/node': 22.5.0
+      '@types/node': 22.5.2
 
   '@types/minimatch@5.1.2': {}
 
@@ -3219,30 +3219,30 @@ snapshots:
     dependencies:
       undici-types: 6.19.8
 
-  '@types/node@22.5.0':
+  '@types/node@22.5.2':
     dependencies:
       undici-types: 6.19.8
 
   '@types/plist@3.0.5':
     dependencies:
-      '@types/node': 22.5.0
+      '@types/node': 22.5.2
       xmlbuilder: 15.1.1
     optional: true
 
   '@types/responselike@1.0.3':
     dependencies:
-      '@types/node': 22.5.0
+      '@types/node': 22.5.2
 
   '@types/verror@1.10.10':
     optional: true
 
   '@types/ws@8.5.12':
     dependencies:
-      '@types/node': 22.5.0
+      '@types/node': 22.5.2
 
   '@types/yauzl@2.10.3':
     dependencies:
-      '@types/node': 22.5.0
+      '@types/node': 22.5.2
     optional: true
 
   '@typescript-eslint/eslint-plugin@8.2.0(@typescript-eslint/parser@8.2.0(eslint@9.9.0)(typescript@5.5.4))(eslint@9.9.0)(typescript@5.5.4)':
@@ -3518,7 +3518,7 @@ snapshots:
 
   array-union@2.1.0: {}
 
-  arrpc@https://codeload.github.com/OpenAsar/arrpc/tar.gz/3898488be9de93165fe05b3077154e0f0d946894:
+  arrpc@git+https://git@github.com:OpenAsar/arrpc.git#3898488be9de93165fe05b3077154e0f0d946894:
     dependencies:
       ws: 8.18.0
     transitivePeerDependencies:
