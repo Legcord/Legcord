@@ -15,10 +15,10 @@ importers:
     dependencies:
       arrpc:
         specifier: github:OpenAsar/arrpc#3898488be9de93165fe05b3077154e0f0d946894
-        version: https://codeload.github.com/OpenAsar/arrpc/tar.gz/3898488be9de93165fe05b3077154e0f0d946894
+        version: git+https://git@github.com:OpenAsar/arrpc.git#3898488be9de93165fe05b3077154e0f0d946894
       electron-context-menu:
-        specifier: ^4.0.1
-        version: 4.0.1(patch_hash=ngxdsovgwc7grjjbafcuqaw5va)
+        specifier: ^4.0.4
+        version: 4.0.4(patch_hash=ngxdsovgwc7grjjbafcuqaw5va)
       electron-is-dev:
         specifier: ^3.0.1
         version: 3.0.1
@@ -881,8 +881,8 @@ packages:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
 
-  arrpc@https://codeload.github.com/OpenAsar/arrpc/tar.gz/3898488be9de93165fe05b3077154e0f0d946894:
-    resolution: {tarball: https://codeload.github.com/OpenAsar/arrpc/tar.gz/3898488be9de93165fe05b3077154e0f0d946894}
+  arrpc@git+https://git@github.com:OpenAsar/arrpc.git#3898488be9de93165fe05b3077154e0f0d946894:
+    resolution: {commit: 3898488be9de93165fe05b3077154e0f0d946894, repo: git@github.com:OpenAsar/arrpc.git, type: git}
     version: 3.4.0
     hasBin: true
 
@@ -1203,8 +1203,8 @@ packages:
     engines: {node: '>=14.0.0'}
     hasBin: true
 
-  electron-context-menu@4.0.1:
-    resolution: {integrity: sha512-tPRzsIK48gm+DDP4FLJeocrFg1rJBH7ZgQx3j4ebt5d6euM2ERAB8pdBmKyhHy7na/BiZfrw4ASMq97oVwQXgw==}
+  electron-context-menu@4.0.4:
+    resolution: {integrity: sha512-XPGj35npL8+MG9Lx5ukmK/h8KLmjYJ3e1GvwWKrNZvf2ocv746WXIyltoV1yWtkEPT7g2kQ8hFmu0ZupK5KieA==}
     engines: {node: '>=18'}
 
   electron-dl@4.0.0:
@@ -3518,7 +3518,7 @@ snapshots:
 
   array-union@2.1.0: {}
 
-  arrpc@https://codeload.github.com/OpenAsar/arrpc/tar.gz/3898488be9de93165fe05b3077154e0f0d946894:
+  arrpc@git+https://git@github.com:OpenAsar/arrpc.git#3898488be9de93165fe05b3077154e0f0d946894:
     dependencies:
       ws: 8.18.0
     transitivePeerDependencies:
@@ -3922,7 +3922,7 @@ snapshots:
       - electron-builder-squirrel-windows
       - supports-color
 
-  electron-context-menu@4.0.1(patch_hash=ngxdsovgwc7grjjbafcuqaw5va):
+  electron-context-menu@4.0.4(patch_hash=ngxdsovgwc7grjjbafcuqaw5va):
     dependencies:
       cli-truncate: 4.0.0
       electron-dl: 4.0.0
