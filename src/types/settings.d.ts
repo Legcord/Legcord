@@ -15,8 +15,8 @@ export interface Settings {
     mobileMode: boolean;
     skipSplash: boolean;
     performanceMode: string;
-    customJsBundle: RequestInfo | URL;
-    customCssBundle: RequestInfo | URL;
+    customJsBundle: RequestInfo | URL | string;
+    customCssBundle: RequestInfo | URL | string;
     startMinimized: boolean;
     useLegacyCapturer: boolean;
     tray: boolean;

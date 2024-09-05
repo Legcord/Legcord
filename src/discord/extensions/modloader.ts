@@ -29,4 +29,9 @@ export async function fetchMods() {
         await fetchMod("vencord.js", "https://github.com/Vendicated/Vencord/releases/download/devbuild/browser.js");
         await fetchMod("vencord.css", "https://github.com/Vendicated/Vencord/releases/download/devbuild/browser.css");
     }
+    if (mods.includes("custom")) {
+        console.log("Downloading custom bundles");
+        await fetchMod("custom.js", getConfig("customJsBundle") as string);
+        await fetchMod("custom.css", getConfig("customCssBundle") as string);
+    }
 }

@@ -31,6 +31,13 @@ export function registerIpc(passedWindow: BrowserWindow): void {
             enabled: getConfig("mods").includes("vencord")
         };
     });
+    ipcMain.handle("getCustomBundle", () => {
+        return {
+            js: fs.readFileSync(path.join(app.getPath("userData"), "custom.js"), "utf-8"),
+            css: fs.readFileSync(path.join(app.getPath("userData"), "custom.css"), "utf-8"),
+            enabled: getConfig("mods").includes("custom")
+        };
+    });
     ipcMain.on("splashEnd", () => {
         splashWindow.close();
         if (getConfig("startMinimized")) {
