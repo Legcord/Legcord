@@ -45,7 +45,7 @@
         "@uwu/shelter-defs": "^1.4.1",
         "electron": "32.0.2",
         "electron-builder": "^25.0.5",
-        "eslint": "^9.9.0",
+        "eslint": "^9.9.1",
         "eslint-config-prettier": "^9.1.0",
         "eslint-plugin-n": "^17.10.2",
         "eslint-plugin-prettier": "^5.2.1",
