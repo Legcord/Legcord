@@ -139,16 +139,6 @@ jobs:
                       data: await fs.readFile(`./linux/${file}`)
                     });    
                   }
-                  for (let file of await fs.readdir('windows')) {
-                    // do whatever filtering you want here, I'm just uploading all the files
-                    console.log('uploading', file);
-                    await github.repos.uploadReleaseAsset({
-                      owner, repo,
-                      release_id: release.data.id,
-                      name: file,
-                      data: await fs.readFile(`./windows/${file}`)
-                    });    
-                  }
                   for (let file of await fs.readdir('macos')) {
                     // do whatever filtering you want here, I'm just uploading all the files
                     console.log('uploading', file);
