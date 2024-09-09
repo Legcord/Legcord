@@ -1,5 +1,6 @@
 import "./bridge.js";
 import "./mods/shelter.js";
+import "./mods/custom.js";
 import "./mods/vencord.js";
 import "./optimizer.js";
 import {ipcRenderer} from "electron";

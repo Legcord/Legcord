@@ -116,6 +116,7 @@ export function setup(): void {
         startMinimized: false,
         dynamicIcon: false,
         tray: true,
+        disableHttpCache: false,
         customJsBundle: "https://armcord.app/placeholder.js",
         customCssBundle: "https://armcord.app/placeholder.css",
         disableAutogain: false,
