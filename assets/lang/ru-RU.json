@@ -78,5 +78,7 @@
     "settings-theme-desc": "Стиль окна определяет какой заголовок окна будет использовать ArmCord.",
     "settings-channel-desc": "Используйте эту настройку, чтобы изменить текущий экземпляр Discord, запущенный ArmCord.",
     "settings-hardwareAcceleration": "Hardware acceleration",
-    "settings-hardwareAcceleration-desc": "Hardware acceleration uses your GPU to make ArmCord run faster. If you're experiencing visual glitches, try disabling this."
+    "settings-hardwareAcceleration-desc": "Hardware acceleration uses your GPU to make ArmCord run faster. If you're experiencing visual glitches, try disabling this.",
+    "settings-disableHttpCache-desc": "Disables HTTP cache of Chromium. Turn this on if client mods don't load for you.",
+    "settings-disableHttpCache": "Disable HTTP cache"
 }
