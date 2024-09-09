@@ -122,7 +122,7 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     checkIfConfigIsBroken();
     injectElectronFlags();
     await fetchMods();
-    import("./discord/extensions/plugin.js"); // load chrome extensions
+    void import("./discord/extensions/plugin.js"); // load chrome extensions
     console.log("[Config Manager] Current config: " + fs.readFileSync(getConfigLocation(), "utf-8"));
     if (getConfig("hardwareAcceleration") === false) {
         app.disableHardwareAcceleration();
