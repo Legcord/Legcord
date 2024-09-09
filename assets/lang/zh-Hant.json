@@ -78,5 +78,7 @@
     "settings-channel-desc": "在此更改 Discord 發行版本。",
     "settings-csp-desc": "ArmCord CSP 是載入自訂內容到 Discord 應用程式的系統，如模組與主題。關閉以刪除所有自訂主題與模組。",
     "settings-hardwareAcceleration": "硬體加速",
-    "settings-hardwareAcceleration-desc": "開啟硬體加速功能,透過GPU 使 ArmCord 更順暢。若您遇到畫面播放速率下降的問題,請關閉此功能。"
+    "settings-hardwareAcceleration-desc": "開啟硬體加速功能,透過GPU 使 ArmCord 更順暢。若您遇到畫面播放速率下降的問題,請關閉此功能。",
+    "settings-disableHttpCache": "Disable HTTP cache",
+    "settings-disableHttpCache-desc": "Disables HTTP cache of Chromium. Turn this on if client mods don't load for you."
 }
