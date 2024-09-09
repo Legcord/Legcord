@@ -145,7 +145,7 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
 
         // Patch for linux bug to insure things are loaded before window creation (fixes transparency on some linux systems)
         await new Promise<void>((resolve) => setTimeout(() => (init(), resolve()), 1500));
-        session.fromPartition("some-partition").setPermissionRequestHandler((_webContents, permission, callback) => {
+        session.defaultSession.setPermissionRequestHandler((_webContents, permission, callback) => {
             if (permission === "notifications") {
                 // Approves the permissions request
                 callback(true);

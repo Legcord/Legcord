@@ -67,6 +67,11 @@ await sleep(5000).then(() => {
         });
         })();
         `);
+
+    // remove the annoying "download the app" button
+    addScript(
+        "document.querySelector('.guilds_a4d4d9 .scroller_fea3ef').lastChild.previousSibling.style.display = 'none';"
+    );
     if (ipcRenderer.sendSync("disableAutogain")) {
         addScript(readFileSync(join(import.meta.dirname, "../", "/js/disableAutogain.js"), "utf8"));
     }
