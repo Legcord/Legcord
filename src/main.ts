@@ -135,6 +135,9 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     if (getConfig("autoScroll")) {
         app.commandLine.appendSwitch("enable-blink-features", "MiddleClickAutoscroll");
     }
+    if (getConfig("disableHttpCache")) {
+        app.commandLine.appendSwitch("disable-http-cache");
+    }
     void app.whenReady().then(async () => {
         // NOTE - Awaiting the line above will cause a hang at startup
         if (getConfig("customIcon") !== null) {

@@ -45,7 +45,7 @@ export function setMenu(): void {
                     accelerator: "CmdOrCtrl+R",
                     click() {
                         mainWindows.forEach((mainWindow) => {
-                            mainWindow.reload();
+                            mainWindow.webContents.reloadIgnoringCache();
                         });
                     }
                 },

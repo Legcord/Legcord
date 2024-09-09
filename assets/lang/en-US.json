@@ -50,6 +50,8 @@
     "settings-prfmMode-vaapi": "VAAPI",
     "settings-disableAutogain": "Disable autogain",
     "settings-disableAutogain-desc": "Disables autogain.",
+    "settings-disableHttpCache": "Disable HTTP cache",
+    "settings-disableHttpCache-desc": "Disables HTTP cache of Chromium. Turn this on if client mods don't load for you.",
     "settings-trayIcon": "Tray icon",
     "settings-trayIcon-desc": "Set the icon which will appear in tray menu.",
     "settings-trayIcon-dynamic": "Dynamic",

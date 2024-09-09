@@ -24,6 +24,7 @@ export interface Settings {
     hardwareAcceleration: boolean;
     inviteWebsocket: boolean;
     disableAutogain: boolean;
+    disableHttpCache: boolean;
     trayIcon: string;
     doneSetup: boolean;
     clientName: string;

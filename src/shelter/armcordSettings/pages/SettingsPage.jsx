@@ -180,6 +180,13 @@ export function SettingsPage() {
             >
                 {store.i18n["settings-hardwareAcceleration"]}
             </SwitchItem>
+            <SwitchItem
+                note={store.i18n["settings-disableHttpCache-desc"]}
+                value={store.settings.disableHttpCache}
+                onChange={(e) => set("disableHttpCache", e)}
+            >
+                {store.i18n["settings-disableHttpCache"]}
+            </SwitchItem>
             <Button size={ButtonSizes.MAX} onClick={window.armcord.settings.openStorageFolder}>
                 Open storage folder
             </Button>
