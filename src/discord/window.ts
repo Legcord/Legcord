@@ -10,6 +10,7 @@ import {setMenu} from "./menu.js";
 import * as fs from "fs";
 import contextMenu from "electron-context-menu";
 import os from "os";
+import "./keybinds.js";
 import RPCServer from "arrpc";
 import {tray} from "../tray.js";
 import {iconPath, init} from "../main.js";
