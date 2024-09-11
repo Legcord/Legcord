@@ -1,6 +1,6 @@
 {
     "name": "armcord",
-    "version": "3.3.1",
+    "version": "3.3.2",
     "description": "ArmCord is a custom client designed to enhance your Discord experience while keeping everything lightweight.",
     "main": "ts-out/main.js",
     "engines": {
