@@ -36,7 +36,7 @@
 
 - **Cross-platform support!**
 
-   ArmCord was originally created for ARM64 Linux devices since Discord doesn't support them. We soon decided to support every platform that [Electron supports](https://github.com/electron/electron#platform-support)!
+   ArmCord was originally created for AArch64 Linux devices since Discord doesn't support them. We soon decided to support every platform that [Electron supports](https://github.com/electron/electron#platform-support)!
   
 # How to run/install it?
 
@@ -167,7 +167,7 @@ ArmCord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).
 
 - You are breaking [Discord ToS](https://discord.com/terms#software-in-discord%E2%80%99s-services) by using ArmCord, but no one has been banned from using it or any of the client mods included.
 
-## Can I use this on anything other than ARM?
+## Can I use this on anything other than AArch64/Apple Silicon?
 
 - Yes! ArmCord should work normally under Windows, MacOS, and Linux as long as it has Electron support.  
 
@@ -200,3 +200,4 @@ ArmCord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).
 - [electron-builder](https://electron.build)
   
 Discord is trademark of Discord Inc. ArmCord is not affiliated with or endorsed by Discord Inc.
+ArmCord is not affiliated with or endorsed by ARM Limited.
