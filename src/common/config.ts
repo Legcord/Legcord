@@ -1,12 +1,12 @@
 import {app, dialog} from "electron";
-import path from "path";
-import fs from "fs";
+import {join, dirname} from "path";
+import {readFileSync, writeFileSync, mkdirSync, existsSync, statSync} from "fs";
 import type {Settings} from "../types/settings.d.js";
 import {getWindowStateLocation} from "./windowState.js";
 export let firstRun: boolean;
 export function checkForDataFolder(): void {
-    const dataPath = path.join(path.dirname(app.getPath("exe")), "armcord-data");
-    if (fs.existsSync(dataPath) && fs.statSync(dataPath).isDirectory()) {
+    const dataPath = join(dirname(app.getPath("exe")), "armcord-data");
+    if (existsSync(dataPath) && statSync(dataPath).isDirectory()) {
         console.log("Found armcord-data folder. Running in portable mode.");
         app.setPath("userData", dataPath);
     }
@@ -14,29 +14,26 @@ export function checkForDataFolder(): void {
 
 export function getConfigLocation(): string {
     const userDataPath = app.getPath("userData");
-    const storagePath = path.join(userDataPath, "/storage/");
+    const storagePath = join(userDataPath, "/storage/");
     return `${storagePath}settings.json`;
 }
-// NOTE - If I remember correctly fs doesn't need async. I have adjusted the Promise<Settings[K]> to reflect so.
-// Why touch it when it worked fine? The Async-ness of this function caused headaches in a lot of other places.
-// Tested with src/tray.ts - Seems to work great!
-// Removed getConfigSync<K extends keyof Settings>(object: K) - Redundant now.
+
 export function getConfig<K extends keyof Settings>(object: K): Settings[K] {
-    const rawData = fs.readFileSync(getConfigLocation(), "utf-8");
+    const rawData = readFileSync(getConfigLocation(), "utf-8");
     const returnData = JSON.parse(rawData) as Settings;
     return returnData[object];
 }
 export function setConfig<K extends keyof Settings>(object: K, toSet: Settings[K]): void {
-    const rawData = fs.readFileSync(getConfigLocation(), "utf-8");
+    const rawData = readFileSync(getConfigLocation(), "utf-8");
     const parsed = JSON.parse(rawData) as Settings;
     parsed[object] = toSet;
     const toSave = JSON.stringify(parsed, null, 4);
-    fs.writeFileSync(getConfigLocation(), toSave, "utf-8");
+    writeFileSync(getConfigLocation(), toSave, "utf-8");
 }
 export function setConfigBulk(object: Settings): void {
     let existingData = {};
     try {
-        const existingDataBuffer = fs.readFileSync(getConfigLocation(), "utf-8");
+        const existingDataBuffer = readFileSync(getConfigLocation(), "utf-8");
         existingData = JSON.parse(existingDataBuffer.toString()) as Settings;
     } catch (_error) {
         // Ignore errors when the file doesn't exist or parsing fails
@@ -45,21 +42,21 @@ export function setConfigBulk(object: Settings): void {
     const mergedData = {...existingData, ...object};
     // Write the merged data back to the file
     const toSave = JSON.stringify(mergedData, null, 4);
-    fs.writeFileSync(getConfigLocation(), toSave, "utf-8");
+    writeFileSync(getConfigLocation(), toSave, "utf-8");
 }
 export function checkIfConfigExists(): void {
     const userDataPath = app.getPath("userData");
-    const storagePath = path.join(userDataPath, "/storage/");
+    const storagePath = join(userDataPath, "/storage/");
     const settingsFile = `${storagePath}settings.json`;
 
-    if (!fs.existsSync(app.getPath("userData"))) {
-        fs.mkdirSync(app.getPath("userData"));
+    if (!existsSync(app.getPath("userData"))) {
+        mkdirSync(app.getPath("userData"));
         console.log("Created missing user data folder");
     }
 
-    if (!fs.existsSync(settingsFile)) {
-        if (!fs.existsSync(storagePath)) {
-            fs.mkdirSync(storagePath);
+    if (!existsSync(settingsFile)) {
+        if (!existsSync(storagePath)) {
+            mkdirSync(storagePath);
             console.log("Created missing storage folder");
         }
         console.log("First run of the ArmCord. Starting setup.");
@@ -75,7 +72,7 @@ export function checkIfConfigExists(): void {
 }
 export function checkIfConfigIsBroken(): void {
     try {
-        const settingsData = fs.readFileSync(getConfigLocation(), "utf-8");
+        const settingsData = readFileSync(getConfigLocation(), "utf-8");
         JSON.parse(settingsData);
         console.log("Config is fine");
     } catch (e) {
@@ -88,12 +85,12 @@ export function checkIfConfigIsBroken(): void {
         );
     }
     try {
-        const windowData = fs.readFileSync(getWindowStateLocation(), "utf-8");
+        const windowData = readFileSync(getWindowStateLocation(), "utf-8");
         JSON.parse(windowData);
         console.log("Window config is fine");
     } catch (e) {
         console.error(e);
-        fs.writeFileSync(getWindowStateLocation(), "{}", "utf-8");
+        writeFileSync(getWindowStateLocation(), "{}", "utf-8");
         console.log("Detected a corrupted window config");
     }
 }
@@ -125,7 +122,7 @@ export function setup(): void {
         trayIcon: "default",
         doneSetup: false,
         clientName: "ArmCord",
-        customIcon: path.join(import.meta.dirname, "../", "/assets/desktop.png"),
+        customIcon: join(import.meta.dirname, "../", "/assets/desktop.png"),
         smoothScroll: true,
         autoScroll: false
     };

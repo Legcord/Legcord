@@ -103,7 +103,7 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.on("getTranslations", (event) => {
         event.returnValue = getRawLang();
     });
-    ipcMain.on("getConfig", (event, arg) => {
+    ipcMain.on("getConfig", (event, arg: keyof Settings) => {
         event.returnValue = getConfig(arg);
     });
     ipcMain.on("openThemesWindow", () => {

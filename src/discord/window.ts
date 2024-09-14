@@ -175,45 +175,23 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     );
 
     if (getConfig("trayIcon") == "default" || getConfig("dynamicIcon")) {
-        passedWindow.webContents.on("page-favicon-updated", () => {
-            // NOTE - no need to await if we just .then() - This works!
-            void passedWindow.webContents
-                .executeJavaScript(
-                    `
-                var getFavicon = function(){
-                var favicon = undefined;
-                var nodeList = document.getElementsByTagName("link");
-                for (var i = 0; i < nodeList.length; i++)
-                {
-                    if((nodeList[i].getAttribute("rel") == "icon")||(nodeList[i].getAttribute("rel") == "shortcut icon"))
-                    {
-                        favicon = nodeList[i].getAttribute("href");
-                    }
+        passedWindow.webContents.on("page-favicon-updated", (_, favicons) => {
+            try {
+                let favicon = nativeImage.createFromDataURL(favicons[0]);
+
+                if (process.platform === "darwin" && favicon.getSize().height > 22) {
+                    favicon = favicon.resize({height: 22});
+                } else if (process.platform === "win32" && favicon.getSize().height > 32) {
+                    favicon = favicon.resize({height: 32});
                 }
-                return favicon;
-                }
-                getFavicon()
-            `
-                )
-                .then((faviconBase64: string) => {
-                    const buf = Buffer.from(faviconBase64.replace(/^data:image\/\w+;base64,/, ""), "base64");
-                    fs.writeFileSync(path.join(app.getPath("temp"), "/", "tray.png"), buf, "utf-8");
-                    let trayPath = nativeImage.createFromPath(path.join(app.getPath("temp"), "/", "tray.png"));
-                    if (process.platform === "darwin" && trayPath.getSize().height > 22)
-                        trayPath = trayPath.resize({height: 22});
-                    if (process.platform === "win32" && trayPath.getSize().height > 32)
-                        trayPath = trayPath.resize({height: 32});
-                    if (getConfig("tray")) {
-                        if (getConfig("trayIcon") == "default") {
-                            tray.setImage(trayPath);
-                        }
-                    }
-                    if (getConfig("dynamicIcon")) {
-                        passedWindow.setIcon(trayPath);
-                    }
-                });
+
+                tray.setImage(favicon);
+            } catch {
+                return;
+            }
         });
     }
+
     initQuickCss(passedWindow);
     passedWindow.webContents.on("page-title-updated", (e, title) => {
         const armCordSuffix = " - ArmCord"; /* identify */
@@ -333,7 +311,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
 }
 
 export function createWindow() {
-    let browserWindowOptions: BrowserWindowConstructorOptions = {
+    const browserWindowOptions: BrowserWindowConstructorOptions = {
         width: getWindowState("width") ?? 835,
         height: getWindowState("height") ?? 600,
         x: getWindowState("x"),

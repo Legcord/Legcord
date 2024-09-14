@@ -1,8 +1,9 @@
 import {ipcRenderer} from "electron";
 import {addStyle} from "../../common/dom.js";
-import fs from "fs";
-import path from "path";
-import os from "os";
+import {readFileSync} from "fs";
+import {join} from "path";
+import {platform} from "os";
+import type {Settings} from "../../types/settings.d.js";
 const titlebarHTML = `<nav class="titlebar">
           <div class="window-title" id="window-title"></div>
           <div id="window-controls-container">
@@ -29,13 +30,13 @@ export function injectTitlebar(isOverlay?: boolean): void {
         } else {
             document.getElementById("app-mount")!.prepend(elem);
         }
-        const titlebarcssPath = path.join(import.meta.dirname, "../", "/css/titlebar.css");
-        const wordmarkcssPath = path.join(import.meta.dirname, "../", "/css/logos.css");
-        addStyle(fs.readFileSync(titlebarcssPath, "utf8"));
-        addStyle(fs.readFileSync(wordmarkcssPath, "utf8"));
+        const titlebarcssPath = join(import.meta.dirname, "../", "/css/titlebar.css");
+        const wordmarkcssPath = join(import.meta.dirname, "../", "/css/logos.css");
+        addStyle(readFileSync(titlebarcssPath, "utf8"));
+        addStyle(readFileSync(wordmarkcssPath, "utf8"));
         document.body.setAttribute("customTitlebar", "");
 
-        document.body.setAttribute("armcord-platform", os.platform());
+        document.body.setAttribute("armcord-platform", platform());
 
         const minimize = document.getElementById("minimize");
         const maximize = document.getElementById("maximize");
@@ -57,7 +58,7 @@ export function injectTitlebar(isOverlay?: boolean): void {
                 ipcRenderer.send("win-maximize");
             }
         });
-        const minimizeToTray = ipcRenderer.sendSync("getConfig", "minimizeToTray");
+        const minimizeToTray = ipcRenderer.sendSync("getConfig", "minimizeToTray") as Settings["minimizeToTray"];
         quit!.addEventListener("click", () => {
             if (window.location.href.includes("setup.html")) {
                 ipcRenderer.send("setup-quit");
