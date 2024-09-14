@@ -1,0 +1,15 @@
+Dear Sir/Madam,
+I, the undersigned, state under penalty of perjury that:
+I am the owner, and/or an agent authorized to act on behalf of the owner, of certain intellectual property rights.
+I have a good faith belief that the listings identified in the addendum attached hereto offer items and/or contain materials that are not authorized by the Intellectual Property Owner, its agent, and/or the law.
+Please act expeditiously to remove the listings identified in the addendum.
+I am writing to you on behalf of Arm Limited ("Arm") regarding a matter of significant concern. It has come to our attention that your website, https://github.com/ArmCord, is using the term "ARM" in connection with your software, specifically described as being "cross-platform" on "Windows, macOS, and Linux, including ARM devices."
+Arm Limited holds the exclusive rights to the "ARM" trademark, which is globally recognized and associated with our technologies and products. The use of the "ARM" trademark or any confusingly similar designation in relation to your software, without explicit authorization from Arm, constitutes an infringement of our intellectual property rights. This could lead to confusion among consumers, as they may incorrectly associate your product with Arm Limited.
+ 
+**What would be the best solution for the alleged infringement? Are there specific changes the user can make other than removal? (e.g., transfer of trademarked username to an existing company account, removal of trademarked logo or references to company)**
+ 
+Required Actions:
+Cease and Desist: Immediately cease all use of the term "ARM" or any similar terms in relation to your software, website, marketing materials, and any other associated platforms or media.
+Removal: Remove any and all references to "ARM" from your website, https://armcord.app, and any other channels where such references may exist.
+Confirmation: Provide written confirmation that you have complied with these demands within 3 business days of receiving this notice.
+In case you do not comply with these demands within the above deadline, Arm Limited may take further legal action.
