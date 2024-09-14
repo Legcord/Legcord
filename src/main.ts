@@ -5,13 +5,7 @@ import "./discord/extensions/csp.js";
 import "./tray.js";
 import "./protocol.js";
 import fs from "fs";
-import {
-    createCustomWindow,
-    createNativeWindow,
-    createTitlebarOverlayWindow,
-    createTransparentWindow
-} from "./discord/window.js";
-import path from "path";
+import {createWindow} from "./discord/window.js";
 import {createTManagerWindow} from "./themeManager/main.js";
 import {createSplashWindow} from "./splash/main.js";
 import {createSetupWindow} from "./setup/main.js";
@@ -26,11 +20,9 @@ import {
 } from "./common/config.js";
 import {injectElectronFlags} from "./common/flags.js";
 import {setLang} from "./common/lang.js";
-export let iconPath: string;
 import type {Settings} from "./types/settings.d.js";
 import {fetchMods} from "./discord/extensions/modloader.js";
 export let settings: Settings;
-export let customTitlebar: boolean;
 checkForDataFolder();
 app.on("render-process-gone", (_event, _webContents, details) => {
     if (details.reason == "crashed") {
@@ -63,27 +55,7 @@ export async function init(): Promise<void> {
         if (getConfig("skipSplash") == false) {
             void createSplashWindow(); // NOTE - Awaiting will hang at start
         }
-        switch (getConfig("windowStyle")) {
-            case "default":
-                if (["linux", "darwin"].includes(process.platform)) {
-                    createCustomWindow();
-                } else {
-                    // TODO - Bring titlebar overlay to macOS
-                    createTitlebarOverlayWindow();
-                }
-                customTitlebar = true;
-                break;
-            case "native":
-                createNativeWindow();
-                break;
-            case "transparent":
-                createTransparentWindow();
-                break;
-            default:
-                createCustomWindow();
-                customTitlebar = true;
-                break;
-        }
+        createWindow();
     }
 }
 args();
@@ -139,13 +111,6 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
         app.commandLine.appendSwitch("disable-http-cache");
     }
     void app.whenReady().then(async () => {
-        // NOTE - Awaiting the line above will cause a hang at startup
-        if (getConfig("customIcon") !== null) {
-            iconPath = getConfig("customIcon");
-        } else {
-            iconPath = path.join(import.meta.dirname, "../", "/assets/desktop.png");
-        }
-
         // Patch for linux bug to insure things are loaded before window creation (fixes transparency on some linux systems)
         await new Promise<void>((resolve) => setTimeout(() => (init(), resolve()), 1500));
         session.defaultSession.setPermissionRequestHandler((_webContents, permission, callback) => {

@@ -1,6 +1,7 @@
 import {BrowserWindow, MessageBoxOptions, desktopCapturer, dialog, ipcMain, session} from "electron";
 import path from "path";
-import {iconPath} from "../main.js";
+import {getConfig} from "../common/config.js";
+
 let capturerWindow: BrowserWindow;
 let isDone: boolean;
 function showAudioDialog(): boolean {
@@ -46,7 +47,7 @@ function registerCustomHandler(): void {
                         height: 600,
                         title: "ArmCord Screenshare",
                         darkTheme: true,
-                        icon: iconPath,
+                        icon: getConfig("customIcon") ?? path.join(import.meta.dirname, "../", "/assets/desktop.png"),
                         frame: true,
                         autoHideMenuBar: true,
                         webPreferences: {

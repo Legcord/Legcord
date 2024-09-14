@@ -15,10 +15,10 @@ const titlebarHTML = `<nav class="titlebar">
 const titlebarOverlayHTML = `<nav class="titlebar">
           <div class="window-title" id="window-title"></div>
         </nav>`;
-export function injectTitlebar(): void {
+export function injectTitlebar(isOverlay?: boolean): void {
     window.onload = function () {
         const elem = document.createElement("div");
-        if (process.platform == "win32") {
+        if (isOverlay) {
             elem.innerHTML = titlebarOverlayHTML;
         } else {
             elem.innerHTML = titlebarHTML;
@@ -57,14 +57,14 @@ export function injectTitlebar(): void {
                 ipcRenderer.send("win-maximize");
             }
         });
-
+        const minimizeToTray = ipcRenderer.sendSync("getConfig", "minimizeToTray");
         quit!.addEventListener("click", () => {
             if (window.location.href.includes("setup.html")) {
                 ipcRenderer.send("setup-quit");
             } else {
-                if (ipcRenderer.sendSync("minimizeToTray") === true) {
+                if (minimizeToTray === true) {
                     ipcRenderer.send("win-hide");
-                } else if (ipcRenderer.sendSync("minimizeToTray") === false) {
+                } else if (minimizeToTray === false) {
                     ipcRenderer.send("win-quit");
                 }
             }

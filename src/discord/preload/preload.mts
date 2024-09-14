@@ -13,11 +13,10 @@ import {sleep} from "../../common/sleep.js";
 import type {ArmCordWindow} from "../../types/armcordWindow.d.js";
 
 window.localStorage.setItem("hideNag", "true");
-if (ipcRenderer.sendSync("legacyCapturer")) {
+if (ipcRenderer.sendSync("getConfig", "legacyCapturer")) {
     console.warn("Using legacy capturer module");
     await import("./capturer.js");
 }
-
 const version = ipcRenderer.sendSync("displayVersion") as string;
 function updateLang(): void {
     const value = `; ${document.cookie}`;
@@ -39,15 +38,18 @@ ipcRenderer.on("addTheme", (_event, name: string, css: string) => {
 ipcRenderer.on("removeTheme", (_event, name: string) => {
     document.getElementById(name)!.remove();
 });
-if (ipcRenderer.sendSync("titlebar")) {
+if (ipcRenderer.sendSync("getConfig", "windowStyle") == "default") {
     injectTitlebar();
 }
-if (ipcRenderer.sendSync("mobileMode")) {
+if (ipcRenderer.sendSync("getConfig", "mobileMode")) {
     injectMobileStuff();
 }
 await sleep(5000).then(() => {
     // dirty hack to make clicking notifications focus ArmCord
-    if (document.getElementById("window-title") == null && ipcRenderer.sendSync("titlebar")) {
+    if (
+        document.getElementById("window-title") == null &&
+        ipcRenderer.sendSync("getConfig", "windowStyle") == "default"
+    ) {
         console.warn("Custom titlebar is missing. Switching to native");
         ipcRenderer.send("setConfig", "windowStyle", "native");
         void sleep(2000).then(() => {
@@ -73,7 +75,7 @@ await sleep(5000).then(() => {
     addScript(
         "document.querySelector('.guilds_a4d4d9 .scroller_fea3ef').lastChild.previousSibling.style.display = 'none';"
     );
-    if (ipcRenderer.sendSync("disableAutogain")) {
+    if (ipcRenderer.sendSync("getConfig", "disableAutogain")) {
         addScript(readFileSync(join(import.meta.dirname, "../", "/js/disableAutogain.js"), "utf8"));
     }
     addScript(readFileSync(join(import.meta.dirname, "../", "/js/rpc.js"), "utf8"));

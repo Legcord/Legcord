@@ -1,5 +1,4 @@
 import {contextBridge, ipcRenderer, type SourcesOptions} from "electron";
-import {injectTitlebar} from "./titlebar.mjs";
 import type {ArmCordWindow} from "../../types/armcordWindow.d.js";
 
 const CANCEL_ID = "desktop-capturer-selection__cancel";
@@ -44,10 +43,6 @@ contextBridge.exposeInMainWorld("armcord", {
         minimize: () => ipcRenderer.send("win-minimize"),
         maximize: () => ipcRenderer.send("win-maximize")
     },
-    titlebar: {
-        injectTitlebar: () => injectTitlebar(),
-        isTitlebar: ipcRenderer.sendSync("titlebar") as boolean
-    },
     settings: {
         config: ipcRenderer.sendSync("getEntireConfig") as string,
         setConfig: (key: string, value: string) => ipcRenderer.send("setConfig", key, value),
@@ -56,7 +51,6 @@ contextBridge.exposeInMainWorld("armcord", {
         copyGPUInfo: () => ipcRenderer.send("copyGPUInfo")
     },
     electron: process.versions.electron,
-    channel: ipcRenderer.sendSync("channel") as string,
     setTrayIcon: (favicon: string) => ipcRenderer.send("sendTrayIcon", favicon),
     translations: ipcRenderer.sendSync("getTranslations") as string,
     getLang: async (toGet: string) =>
@@ -65,7 +59,6 @@ contextBridge.exposeInMainWorld("armcord", {
         }),
     getDisplayMediaSelector,
     version: ipcRenderer.sendSync("get-app-version", "app-version") as string,
-    mods: ipcRenderer.sendSync("clientmod") as string,
     restart: () => ipcRenderer.send("restart"),
     openThemesWindow: () => ipcRenderer.send("openThemesWindow"),
     openQuickCssFile: () => ipcRenderer.send("openQuickCssFile")

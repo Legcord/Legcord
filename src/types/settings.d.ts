@@ -4,7 +4,7 @@ export interface Settings {
     // Only used for external url warning dialog.
     ignoreProtocolWarning?: boolean;
     customIcon: string;
-    windowStyle: "default" | "native" | "transparent";
+    windowStyle: "default" | "native" | "transparent" | "overlay";
     channel: "stable" | "ptb" | "canary";
     armcordCSP: boolean;
     minimizeToTray: boolean;

@@ -1,5 +1,4 @@
 import {BrowserWindow, ipcMain} from "electron";
-import {iconPath} from "../main.js";
 import path from "path";
 import isDev from "electron-is-dev";
 import {getConfig} from "../common/config.js";
@@ -12,7 +11,7 @@ export async function createSplashWindow(): Promise<void> {
         title: "ArmCord",
         show: true,
         darkTheme: true,
-        icon: iconPath,
+        icon: getConfig("customIcon") ?? path.join(import.meta.dirname, "../", "/assets/desktop.png"),
         frame: false,
         backgroundColor: "#202225",
         autoHideMenuBar: true,

@@ -1,8 +1,7 @@
 import {BrowserWindow, app, ipcMain} from "electron";
 import path from "path";
 import fs from "fs";
-import {iconPath} from "../main.js";
-import {setConfigBulk, getConfigLocation} from "../common/config.js";
+import {setConfigBulk, getConfigLocation, getConfig} from "../common/config.js";
 import type {Settings} from "../types/settings.d.js";
 import {getLang} from "../common/lang.js";
 
@@ -14,7 +13,7 @@ export async function createSetupWindow(): Promise<void> {
             height: 470,
             title: "ArmCord Setup",
             darkTheme: true,
-            icon: iconPath,
+            icon: getConfig("customIcon") ?? path.join(import.meta.dirname, "../", "/assets/desktop.png"),
             frame: false,
             autoHideMenuBar: true,
             webPreferences: {

@@ -2,11 +2,10 @@ import {app, clipboard, desktopCapturer, ipcMain, shell, SourcesOptions, Browser
 import os from "os";
 import fs from "fs";
 import path from "path";
-import {mainWindows} from "./window.js";
+
 import {getConfig, setConfigBulk, getConfigLocation, setConfig} from "../common/config.js";
 import {setLang, getLang, getLangName, getRawLang} from "../common/lang.js";
 import {getVersion, getDisplayVersion} from "../common/version.js";
-import {customTitlebar} from "../main.js";
 import {splashWindow} from "../splash/main.js";
 import {createTManagerWindow} from "../themeManager/main.js";
 import {Settings} from "../types/settings.d.js";
@@ -46,11 +45,6 @@ export function registerIpc(passedWindow: BrowserWindow): void {
             passedWindow.show();
         }
     });
-
-    if (mainWindows.length !== 1) {
-        return;
-    }
-
     ipcMain.on("setLang", (_event, lang: string) => {
         setLang(lang);
     });
@@ -101,15 +95,6 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.on("setConfig", (_event, key: keyof Settings, value: string) => {
         setConfig(key, value);
     });
-    ipcMain.on("minimizeToTray", (event) => {
-        event.returnValue = getConfig("minimizeToTray");
-    });
-    ipcMain.on("channel", (event) => {
-        event.returnValue = getConfig("channel");
-    });
-    ipcMain.on("clientmod", (event) => {
-        event.returnValue = getConfig("mods");
-    });
     ipcMain.on("getEntireConfig", (event) => {
         const rawData = fs.readFileSync(getConfigLocation(), "utf-8");
         const returnData = JSON.parse(rawData) as Settings;
@@ -118,20 +103,8 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.on("getTranslations", (event) => {
         event.returnValue = getRawLang();
     });
-    ipcMain.on("legacyCapturer", (event) => {
-        event.returnValue = getConfig("useLegacyCapturer");
-    });
-    ipcMain.on("trayIcon", (event) => {
-        event.returnValue = getConfig("trayIcon");
-    });
-    ipcMain.on("disableAutogain", (event) => {
-        event.returnValue = getConfig("disableAutogain");
-    });
-    ipcMain.on("titlebar", (event) => {
-        event.returnValue = customTitlebar;
-    });
-    ipcMain.on("mobileMode", (event) => {
-        event.returnValue = getConfig("mobileMode");
+    ipcMain.on("getConfig", (event, arg) => {
+        event.returnValue = getConfig(arg);
     });
     ipcMain.on("openThemesWindow", () => {
         void createTManagerWindow();

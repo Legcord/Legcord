@@ -2,7 +2,15 @@
 // I had to add most of the window creation code here to split both into separate functions
 // WHY? Because I can't use the same code for both due to annoying bug with value `frame` not responding to variables
 // I'm sorry for this mess but I'm not sure how to fix it.
-import {BrowserWindow, MessageBoxOptions, app, dialog, nativeImage, shell} from "electron";
+import {
+    BrowserWindow,
+    BrowserWindowConstructorOptions,
+    MessageBoxOptions,
+    app,
+    dialog,
+    nativeImage,
+    shell
+} from "electron";
 import path from "path";
 import type EventEmitter from "events";
 import {registerIpc} from "./ipc.js";
@@ -13,7 +21,7 @@ import os from "os";
 import "./keybinds.js";
 import RPCServer from "arrpc";
 import {tray} from "../tray.js";
-import {iconPath, init} from "../main.js";
+import {init} from "../main.js";
 import {getConfig, setConfig, firstRun} from "../common/config.js";
 import {getWindowState, setWindowState} from "../common/windowState.js";
 import {forceQuit, setForceQuit} from "../common/forceQuit.js";
@@ -323,8 +331,9 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         passedWindow.show();
     }
 }
-export function createCustomWindow(): void {
-    const mainWindow = new BrowserWindow({
+
+export function createWindow() {
+    let browserWindowOptions: BrowserWindowConstructorOptions = {
         width: getWindowState("width") ?? 835,
         height: getWindowState("height") ?? 600,
         x: getWindowState("x"),
@@ -332,7 +341,7 @@ export function createCustomWindow(): void {
         title: "ArmCord",
         show: false,
         darkTheme: true,
-        icon: iconPath,
+        icon: getConfig("customIcon") ?? path.join(import.meta.dirname, "../", "/assets/desktop.png"),
         frame: false,
         backgroundColor: "#202225",
         autoHideMenuBar: true,
@@ -341,90 +350,36 @@ export function createCustomWindow(): void {
             preload: path.join(import.meta.dirname, "discord/preload.mjs"),
             spellcheck: getConfig("spellcheck")
         }
-    });
+    };
+    switch (getConfig("windowStyle")) {
+        case "native":
+            browserWindowOptions.frame = true;
+            break;
+        case "overlay":
+            browserWindowOptions.titleBarStyle = "hidden";
+            browserWindowOptions.titleBarOverlay = {
+                color: "#2c2f33",
+                symbolColor: "#99aab5",
+                height: 30
+            };
+            break;
+        case "transparent":
+            browserWindowOptions.backgroundColor = "#00000000";
+            if (os.platform() !== "win32") browserWindowOptions.transparent = true;
+            break;
+    }
+    const mainWindow = new BrowserWindow(browserWindowOptions);
     mainWindows.push(mainWindow);
     doAfterDefiningTheWindow(mainWindow);
 }
-// https://www.electronjs.org/docs/latest/tutorial/window-customization#window-controls-overlay
-export function createTitlebarOverlayWindow(): void {
-    const mainWindow = new BrowserWindow({
-        width: getWindowState("width") ?? 835,
-        height: getWindowState("height") ?? 600,
-        x: getWindowState("x"),
-        y: getWindowState("y"),
-        title: "ArmCord",
-        show: false,
-        darkTheme: true,
-        icon: iconPath,
-        titleBarStyle: "hidden",
-        titleBarOverlay: {
-            color: "#2c2f33",
-            symbolColor: "#99aab5",
-            height: 30
-        },
-        backgroundColor: "#202225",
-        autoHideMenuBar: true,
-        webPreferences: {
-            sandbox: false,
-            preload: path.join(import.meta.dirname, "discord/preload.mjs"),
-            spellcheck: getConfig("spellcheck")
-        }
-    });
-    mainWindows.push(mainWindow);
-    doAfterDefiningTheWindow(mainWindow);
-}
-export function createNativeWindow(): void {
-    const mainWindow = new BrowserWindow({
-        width: getWindowState("width") ?? 835,
-        height: getWindowState("height") ?? 600,
-        x: getWindowState("x"),
-        y: getWindowState("y"),
-        title: "ArmCord",
-        darkTheme: true,
-        icon: iconPath,
-        show: false,
-        frame: true,
-        backgroundColor: "#202225",
-        autoHideMenuBar: true,
-        webPreferences: {
-            sandbox: false,
-            preload: path.join(import.meta.dirname, "discord/preload.mjs"),
-            spellcheck: getConfig("spellcheck")
-        }
-    });
-    mainWindows.push(mainWindow);
-    doAfterDefiningTheWindow(mainWindow);
-}
-export function createTransparentWindow(): void {
-    const mainWindow = new BrowserWindow({
-        width: getWindowState("width") ?? 835,
-        height: getWindowState("height") ?? 600,
-        x: getWindowState("x"),
-        y: getWindowState("y"),
-        title: "ArmCord",
-        darkTheme: true,
-        icon: iconPath,
-        frame: true,
-        backgroundColor: "#00000000",
-        transparent: true,
-        show: false,
-        autoHideMenuBar: true,
-        webPreferences: {
-            sandbox: false,
-            preload: path.join(import.meta.dirname, "discord/preload.mjs"),
-            spellcheck: getConfig("spellcheck")
-        }
-    });
-    mainWindows.push(mainWindow);
-    doAfterDefiningTheWindow(mainWindow);
-}
+
 export function createInviteWindow(code: string): void {
     inviteWindow = new BrowserWindow({
         width: 800,
         height: 600,
         title: "ArmCord Invite Manager",
         darkTheme: true,
-        icon: iconPath,
+        icon: getConfig("customIcon") ?? path.join(import.meta.dirname, "../", "/assets/desktop.png"),
         frame: true,
         autoHideMenuBar: true,
         webPreferences: {

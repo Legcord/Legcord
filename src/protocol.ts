@@ -31,7 +31,6 @@ void app.whenReady().then(() => {
         } else if (req.url.startsWith("armcord://assets/")) {
             const file = req.url.replace("armcord://assets/", "");
             const filePath = path.join(import.meta.dirname, "assets", "app", `${file}`);
-            console.log(filePath);
             if (filePath.includes("..")) {
                 return new Response("bad", {
                     status: 400,
