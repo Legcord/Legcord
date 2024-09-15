@@ -8,7 +8,7 @@ import {setLang, getLang, getLangName, getRawLang} from "../common/lang.js";
 import {getVersion, getDisplayVersion} from "../common/version.js";
 import {splashWindow} from "../splash/main.js";
 import {createTManagerWindow} from "../themeManager/main.js";
-import {Settings} from "../types/settings.d.js";
+import {Settings} from "../@types/settings.js";
 import isDev from "electron-is-dev";
 
 const userDataPath = app.getPath("userData");
@@ -115,7 +115,6 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         console.log(args);
         setConfigBulk(args);
     });
-    // NOTE - The lower 4 functions had await sleep(1000), I'm not sure why. Behavior is same regardless
     ipcMain.on("openStorageFolder", () => {
         shell.showItemInFolder(storagePath);
     });

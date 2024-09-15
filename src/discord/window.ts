@@ -179,10 +179,13 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
             try {
                 let favicon = nativeImage.createFromDataURL(favicons[0]);
 
-                if (process.platform === "darwin" && favicon.getSize().height > 22) {
-                    favicon = favicon.resize({height: 22});
-                } else if (process.platform === "win32" && favicon.getSize().height > 32) {
-                    favicon = favicon.resize({height: 32});
+                switch (process.platform) {
+                    case "darwin":
+                        favicon = favicon.resize({height: 22});
+                        break;
+                    case "win32":
+                        favicon = favicon.resize({height: 32});
+                        break;
                 }
 
                 tray.setImage(favicon);

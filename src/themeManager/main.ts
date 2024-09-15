@@ -3,7 +3,7 @@ import path from "path";
 import fs from "fs";
 import {createInviteWindow, mainWindows} from "../discord/window.js";
 import {installTheme, setThemeEnabled, uninstallTheme} from "../common/themes.js";
-import {ThemeManifest} from "../types/themeManifest.d.js";
+import {ThemeManifest} from "../@types/themeManifest.js";
 let themeWindow: BrowserWindow;
 let instance = 0;
 

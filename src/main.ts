@@ -20,7 +20,7 @@ import {
 } from "./common/config.js";
 import {injectElectronFlags} from "./common/flags.js";
 import {setLang} from "./common/lang.js";
-import type {Settings} from "./types/settings.d.js";
+import type {Settings} from "./@types/settings.js";
 import {fetchMods} from "./discord/extensions/modloader.js";
 export let settings: Settings;
 checkForDataFolder();

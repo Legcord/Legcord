@@ -1,7 +1,7 @@
-import fs from "fs";
+import {unlink} from "fs";
 import {Menu, MessageBoxOptions, Tray, app, dialog, nativeImage} from "electron";
 import {createInviteWindow, mainWindows} from "./discord/window.js";
-import path from "path";
+import {join} from "path";
 import {getConfig, getConfigLocation, setConfig} from "./common/config.js";
 import {getDisplayVersion} from "./common/version.js";
 import {setForceQuit} from "./common/forceQuit.js";
@@ -14,7 +14,7 @@ void app.whenReady().then(async () => {
     if (getConfig("trayIcon") != "default") {
         trayIcon = getConfig("trayIcon");
     }
-    let trayPath = nativeImage.createFromPath(path.join(import.meta.dirname, "../", `/assets/${trayIcon}.png`));
+    let trayPath = nativeImage.createFromPath(join(import.meta.dirname, "../", `/assets/${trayIcon}.png`));
     const trayVerIcon = function () {
         switch (process.platform) {
             case "win32":
@@ -41,7 +41,7 @@ void app.whenReady().then(async () => {
                 {
                     label: `Quit ${clientName}`,
                     click() {
-                        fs.unlink(getConfigLocation(), (err) => {
+                        unlink(getConfigLocation(), (err) => {
                             if (err) throw err;
 
                             console.log('Closed during setup. "settings.json" was deleted');

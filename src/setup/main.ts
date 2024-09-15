@@ -2,7 +2,7 @@ import {BrowserWindow, app, ipcMain} from "electron";
 import path from "path";
 import fs from "fs";
 import {setConfigBulk, getConfigLocation, getConfig} from "../common/config.js";
-import type {Settings} from "../types/settings.d.js";
+import type {Settings} from "../@types/settings.js";
 import {getLang} from "../common/lang.js";
 
 let setupWindow: BrowserWindow;

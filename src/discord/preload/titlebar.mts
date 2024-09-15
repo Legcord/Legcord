@@ -3,7 +3,7 @@ import {addStyle} from "../../common/dom.js";
 import {readFileSync} from "fs";
 import {join} from "path";
 import {platform} from "os";
-import type {Settings} from "../../types/settings.d.js";
+import type {Settings} from "../../@types/settings.js";
 const titlebarHTML = `<nav class="titlebar">
           <div class="window-title" id="window-title"></div>
           <div id="window-controls-container">

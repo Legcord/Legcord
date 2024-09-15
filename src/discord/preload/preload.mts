@@ -10,7 +10,7 @@ import {injectMobileStuff} from "./mobile.js";
 import {injectTitlebar} from "./titlebar.mjs";
 import {addStyle, addScript, addTheme} from "../../common/dom.js";
 import {sleep} from "../../common/sleep.js";
-import type {ArmCordWindow} from "../../types/armcordWindow.d.js";
+import type {ArmCordWindow} from "../../@types/armcordWindow.js";
 
 window.localStorage.setItem("hideNag", "true");
 if (ipcRenderer.sendSync("getConfig", "legacyCapturer")) {
