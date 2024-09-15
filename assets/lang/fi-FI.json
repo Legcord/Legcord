@@ -80,5 +80,6 @@
     "settings-hardwareAcceleration": "Hardware acceleration",
     "settings-hardwareAcceleration-desc": "Hardware acceleration uses your GPU to make ArmCord run faster. If you're experiencing visual glitches, try disabling this.",
     "settings-disableHttpCache-desc": "Disables HTTP cache of Chromium. Turn this on if client mods don't load for you.",
-    "settings-disableHttpCache": "Disable HTTP cache"
+    "settings-disableHttpCache": "Disable HTTP cache",
+    "settings-mod-equicord": "forked and born from vencord contributors, featuring a pretty plugin-rich client."
 }
