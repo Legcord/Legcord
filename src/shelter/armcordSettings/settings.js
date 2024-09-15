@@ -19,4 +19,15 @@ export function set(key, value) {
         console.log(key + ": " + store.settings[key]);
         armcord.settings.setConfig(key, value);
     }
+    if (key == "equicord" && value == true) {
+        store.equicord = true;
+        armcord.settings.setConfig("mods", "equicord");
+    } else if (key == "equicord" && value == false) {
+        store.equicord = false;
+        armcord.settings.setConfig("mods", "none");
+    } else {
+        store.settings[key] = value;
+        console.log(key + ": " + store.settings[key]);
+        armcord.settings.setConfig(key, value);
+    }
 }

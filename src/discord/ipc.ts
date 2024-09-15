@@ -30,6 +30,13 @@ export function registerIpc(passedWindow: BrowserWindow): void {
             enabled: getConfig("mods").includes("vencord")
         };
     });
+    ipcMain.handle("getEquicordBundle", () => {
+        return {
+            js: fs.readFileSync(path.join(app.getPath("userData"), "equicord.js"), "utf-8"),
+            css: fs.readFileSync(path.join(app.getPath("userData"), "equicord.css"), "utf-8"),
+            enabled: getConfig("mods").includes("equicord")
+        };
+    });
     ipcMain.handle("getCustomBundle", () => {
         return {
             js: fs.readFileSync(path.join(app.getPath("userData"), "custom.js"), "utf-8"),
