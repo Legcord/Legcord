@@ -114,46 +114,48 @@
 
             document.getElementById("next-page2").addEventListener("click", () => {
                 options.channel = document.getElementById("channel").value;
-                options.mod = document.getElementById("mod").value;
                 page2.classList.add("hidden");
                 page3.classList.remove("hidden");
-                document.getElementById("next-page3").addEventListener("click", () => {
-                    page3.classList.add("hidden");
-                    page4.classList.remove("hidden");
+            });
+
+            document.getElementById("next-page3").addEventListener("click", () => {
+                options.mod = document.getElementById("mod").value;
+                page3.classList.add("hidden");
+                page4.classList.remove("hidden");
+            });
+
+            if (window.armcordinternal.getOS == "linux") {
+                document.getElementById("tray").value = "false";
+                document.getElementById("linuxNotice").innerHTML =
+                    `Linux may not work well with tray icons. Depending on your system configuration, you may not be able to see the tray icon. Enable at your own risk. Can be changed later.`;
+            }
+            if (window.armcordinternal.getOS == "darwin") {
+                // macOS doesn't really do tray icons
+                document.getElementById("tray").value = "false";
+            }
+            document.getElementById("next-page4").addEventListener("click", () => {
+                window.armcordinternal.saveSettings({
+                    windowStyle: "default",
+                    channel: options.channel,
+                    armcordCSP: true,
+                    minimizeToTray: true,
+                    mobileMode: false,
+                    spellcheck: true,
+                    skipSplash: false,
+                    disableAutogain: false,
+                    mods: options.mod,
+                    dynamicIcon: false,
+                    multiInstance: false,
+                    hardwareAcceleration: true,
+                    useLegacyCapturer: false,
+                    tray: /true/i.test(document.getElementById("tray").value),
+                    startMinimized: false,
+                    performanceMode: "none",
+                    trayIcon: "default",
+                    inviteWebsocket: true,
+                    doneSetup: true
                 });
-                if (window.armcordinternal.getOS == "linux") {
-                    document.getElementById("tray").value = "false";
-                    document.getElementById("linuxNotice").innerHTML =
-                        `Linux may not work well with tray icons. Depending on your system configuration, you may not be able to see the tray icon. Enable at your own risk. Can be changed later.`;
-                }
-                if (window.armcordinternal.getOS == "darwin") {
-                    // macOS doesn't really do tray icons
-                    document.getElementById("tray").value = "false";
-                }
-                document.getElementById("next-page4").addEventListener("click", () => {
-                    window.armcordinternal.saveSettings({
-                        windowStyle: "default",
-                        channel: options.channel,
-                        armcordCSP: true,
-                        minimizeToTray: true,
-                        mobileMode: false,
-                        spellcheck: true,
-                        skipSplash: false,
-                        disableAutogain: false,
-                        mods: options.mod,
-                        dynamicIcon: false,
-                        multiInstance: false,
-                        hardwareAcceleration: true,
-                        useLegacyCapturer: false,
-                        tray: /true/i.test(document.getElementById("tray").value),
-                        startMinimized: false,
-                        performanceMode: "none",
-                        trayIcon: "default",
-                        inviteWebsocket: true,
-                        doneSetup: true
-                    });
-                    setTimeout(() => window.armcordinternal.restart(), 500);
-                });
+                setTimeout(() => window.armcordinternal.restart(), 500);
             });
             document.body.setAttribute("insetup", "");
         </script>
