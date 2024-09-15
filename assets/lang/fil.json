@@ -20,6 +20,7 @@
     "settings-forceNativeCrash": "Force native crash",
     "settings-trayIcon-white-plug": "White Plug",
     "settings-mod-vencord": "lightweight, and easy to use client mod. Features a built-in store for plugins.",
+    "settings-mod-equicord": "forked and born from vencord contributors, featuring a pretty plugin-rich client.",
     "settings-trayIcon": "Tray icon",
     "settings-prfmMode-battery": "Battery",
     "settings-prfmMode": "Performance mode",

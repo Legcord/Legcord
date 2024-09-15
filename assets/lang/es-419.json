@@ -37,6 +37,7 @@
     "settings-pluginsFolder": "Abrir carpeta de plugins",
     "settings-restart": "Reiniciar App",
     "settings-mod-vencord": "programa modificado ligero y fácil de usar. Cuenta con una tienda de plugins integrada.",
+    "settings-mod-equicord": "tomado y nacido de los colaboradores de vencord, viene un cliente bastante rico en plugins.",
     "settings-mod-shelter": "es una nueva generación de programa construido para ser esencialmente a prueba de balas.",
     "settings-prfmMode-desc": "El modo de rendimiento es una función experimental que puede aumentar la capacidad de respuesta y el rendimiento de\nArmCord o... puede disminuirla. Por favor, prueba cada opción y vea lo que te queda mejor.",
     "settings-trayIcon-dynamic": "Dinámico",

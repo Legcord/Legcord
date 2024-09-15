@@ -10,7 +10,7 @@ export interface Settings {
     minimizeToTray: boolean;
     multiInstance: boolean;
     spellcheck: boolean;
-    mods: ("vencord" | "custom")[];
+    mods: ("vencord" | "equicord" | "custom")[];
     dynamicIcon: boolean;
     mobileMode: boolean;
     skipSplash: boolean;

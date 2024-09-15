@@ -29,6 +29,13 @@ export function SettingsPage() {
                 Vencord
             </SwitchItem>
             <SwitchItem
+                note={store.i18n["settings-mod-equicord"]}
+                value={store.equicord}
+                onChange={(e) => set("equicord", e)}
+            >
+                Equicord
+            </SwitchItem>
+            <SwitchItem
                 note={store.i18n["settings-invitewebsocket-desc"]}
                 value={store.settings.inviteWebsocket}
                 onChange={(e) => set("inviteWebsocket", e)}

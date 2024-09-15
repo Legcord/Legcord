@@ -45,6 +45,11 @@ export function onLoad() {
     } else {
         store.vencord = false;
     }
+    if (window.armcord.settings.config.mods == "equicord") {
+        store.equicord = true;
+    } else {
+        store.equicord = false;
+    }
     log("ArmCord Settings");
     settingsPages;
     dispatcher.subscribe("TRACK", restartRequired);

@@ -2,6 +2,7 @@ import "./bridge.js";
 import "./mods/shelter.js";
 import "./mods/custom.js";
 import "./mods/vencord.js";
+import "./mods/equicord.js";
 import "./optimizer.js";
 import {ipcRenderer} from "electron";
 import {readFileSync} from "fs";

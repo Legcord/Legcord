@@ -113,7 +113,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         });
     });
     passedWindow.webContents.setWindowOpenHandler(({url}) => {
-        // Allow about:blank (used by Vencord QuickCss popup)
+        // Allow about:blank (used by Vencord & Equicord QuickCss popup)
         if (url === "about:blank") return {action: "allow"};
         // Saving ics files on future events
         if (url.startsWith("blob:https://discord.com/")) {
