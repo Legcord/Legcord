@@ -80,5 +80,6 @@
     "settings-hardwareAcceleration": "硬體加速",
     "settings-hardwareAcceleration-desc": "開啟硬體加速功能,透過GPU 使 ArmCord 更順暢。若您遇到畫面播放速率下降的問題,請關閉此功能。",
     "settings-disableHttpCache": "Disable HTTP cache",
-    "settings-disableHttpCache-desc": "Disables HTTP cache of Chromium. Turn this on if client mods don't load for you."
+    "settings-disableHttpCache-desc": "Disables HTTP cache of Chromium. Turn this on if client mods don't load for you.",
+    "settings-mod-equicord": "forked and born from vencord contributors, featuring a pretty plugin-rich client."
 }
