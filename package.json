@@ -53,7 +53,7 @@
         "typescript-eslint": "^8.5.0"
     },
     "dependencies": {
-        "arrpc": "github:OpenAsar/arrpc",
+        "arrpc": "github:armcord/arrpc",
         "electron-context-menu": "^4.0.4",
         "electron-is-dev": "^3.0.1",
         "v8-compile-cache": "^2.4.0",

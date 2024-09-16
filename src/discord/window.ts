@@ -12,7 +12,6 @@ import {
     shell
 } from "electron";
 import path from "path";
-import type EventEmitter from "events";
 import {registerIpc} from "./ipc.js";
 import {setMenu} from "./menu.js";
 import * as fs from "fs";
@@ -279,15 +278,12 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         void passedWindow.webContents.executeJavaScript(`document.body.removeAttribute("isMaximized");`);
     });
     if (getConfig("inviteWebsocket") && mainWindows.length === 1) {
-        // NOTE - RPCServer appears to be untyped. cool.
-        // REVIEW - Whatever Ducko has done here to make an async constructor is awful.
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-        new RPCServer().then((server: EventEmitter) => {
-            server.on("activity", (data: string) => passedWindow.webContents.send("rpc", data));
-            server.on("invite", (code: string) => {
-                console.log(code);
-                createInviteWindow(code);
-            });
+        const RPC = new RPCServer();
+
+        RPC.on("activity", (data: string) => passedWindow.webContents.send("rpc", data));
+        RPC.on("invite", (code: string) => {
+            console.log(code);
+            createInviteWindow(code);
         });
     }
     if (firstRun) {
