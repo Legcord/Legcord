@@ -8,7 +8,7 @@ import {setForceQuit} from "./common/forceQuit.js";
 export let tray: Tray;
 
 let trayIcon = "ac_plug_colored";
-void app.whenReady().then(async () => {
+void app.whenReady().then(() => {
     // NOTE - app will hang at startup if line above is awaited.
     const finishedSetup = getConfig("doneSetup");
     trayIcon = getConfig("trayIcon");
