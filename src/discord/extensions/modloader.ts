@@ -28,8 +28,7 @@ export async function fetchMods() {
         console.log("Downloading Vencord");
         await fetchMod("vencord.js", "https://github.com/Vendicated/Vencord/releases/download/devbuild/browser.js");
         await fetchMod("vencord.css", "https://github.com/Vendicated/Vencord/releases/download/devbuild/browser.css");
-    }
-    if (mods.includes("equicord")) {
+    } else if (mods.includes("equicord")) {
         console.log("Downloading Equicord");
         await fetchMod("equicord.js", "https://github.com/Equicord/Equicord/releases/download/latest/browser.js");
         await fetchMod("equicord.css", "https://github.com/Equicord/Equicord/releases/download/latest/browser.css");

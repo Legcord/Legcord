@@ -38,11 +38,16 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         };
     });
     ipcMain.handle("getCustomBundle", () => {
-        return {
-            js: fs.readFileSync(path.join(app.getPath("userData"), "custom.js"), "utf-8"),
-            css: fs.readFileSync(path.join(app.getPath("userData"), "custom.css"), "utf-8"),
-            enabled: getConfig("mods").includes("custom")
-        };
+        const enabled = getConfig("mods").includes("custom");
+        if (enabled) {
+            return {
+                js: fs.readFileSync(path.join(app.getPath("userData"), "custom.js"), "utf-8"),
+                css: fs.readFileSync(path.join(app.getPath("userData"), "custom.css"), "utf-8"),
+                enabled
+            };
+        } else {
+            return null;
+        }
     });
     ipcMain.on("splashEnd", () => {
         splashWindow.close();
