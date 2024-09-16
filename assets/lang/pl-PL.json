@@ -60,8 +60,6 @@
     "settings-theme-transparent": "Przeźroczysty",
     "settings-useLegacyCapturer": "Używaj starszej metody przechwytywania",
     "settings-useLegacyCapturer-desc": "Używaj starszego modułu udostępniania ekranu, zamiast nowego. Jeżeli doświadczasz problemy z udostępnianiem ekranu, możesz spróbować włączyć tą opcję.",
-    "settings-dynamicIcon": "Dynamiczna ikona",
-    "settings-dynamicIcon-desc": "Naśladując zachowanie Discorda na systemie Windows, ta opcja pokazuje ilość nieprzeczytanych wiadomości/oznaczeń na ikonie aplikacji ArmCorda, zamiast w trayu.",
     "settings-spellcheck": "Sprawdzanie pisowni",
     "settings-spellcheck-desc": "Pomaga poprawiać błędnie napisane słowa, podświetlając je.",
     "setup_question5": "Chcesz używać ikony zasobnika?",

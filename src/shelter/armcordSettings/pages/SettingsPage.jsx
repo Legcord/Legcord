@@ -62,7 +62,7 @@ export function SettingsPage() {
                 title={store.i18n["settings-trayIcon"]}
                 note={store.i18n["settings-trayIcon-desc"]}
             >
-                <option value="default">{store.i18n["settings-trayIcon-dynamic"]}</option>
+                <option value="dynamic">{store.i18n["settings-trayIcon-dynamic"]}</option>
                 <option value="dsc-tray">{store.i18n["settings-trayIcon-normal"]}</option>
                 <option value="clsc-dsc-tray">{store.i18n["settings-trayIcon-classic"]}</option>
                 <option value="ac_plug_colored">{store.i18n["settings-trayIcon-colored-plug"]}</option>
@@ -169,13 +169,6 @@ export function SettingsPage() {
                 onChange={(e) => set("useLegacyCapturer", e)}
             >
                 {store.i18n["settings-useLegacyCapturer"]}
-            </SwitchItem>
-            <SwitchItem
-                note={store.i18n["settings-dynamicIcon-desc"]}
-                value={store.settings.dynamicIcon}
-                onChange={(e) => set("dynamicIcon", e)}
-            >
-                {store.i18n["settings-dynamicIcon"]}
             </SwitchItem>
             <Header class={classes.category} tag={HeaderTags.H5}>
                 Debug options

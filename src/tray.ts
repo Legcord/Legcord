@@ -1,8 +1,8 @@
 import {unlink} from "fs";
-import {Menu, MessageBoxOptions, Tray, app, dialog, nativeImage} from "electron";
+import {Menu, Tray, app, nativeImage} from "electron";
 import {createInviteWindow, mainWindows} from "./discord/window.js";
 import {join} from "path";
-import {getConfig, getConfigLocation, setConfig} from "./common/config.js";
+import {getConfig, getConfigLocation} from "./common/config.js";
 import {getDisplayVersion} from "./common/version.js";
 import {setForceQuit} from "./common/forceQuit.js";
 export let tray: Tray;
@@ -11,9 +11,7 @@ let trayIcon = "ac_plug_colored";
 void app.whenReady().then(async () => {
     // NOTE - app will hang at startup if line above is awaited.
     const finishedSetup = getConfig("doneSetup");
-    if (getConfig("trayIcon") != "default") {
-        trayIcon = getConfig("trayIcon");
-    }
+    trayIcon = getConfig("trayIcon");
     let trayPath = nativeImage.createFromPath(join(import.meta.dirname, "../", `/assets/${trayIcon}.png`));
     const trayVerIcon = function () {
         switch (process.platform) {
@@ -114,32 +112,5 @@ void app.whenReady().then(async () => {
                 mainWindow.show();
             });
         });
-    } else {
-        if (getConfig("tray") == undefined) {
-            if (process.platform == "linux") {
-                const options: MessageBoxOptions = {
-                    type: "question",
-                    buttons: ["Yes, please", "No, I don't"],
-                    defaultId: 1,
-                    title: "Tray icon choice",
-                    message: `Do you want to use tray icons?`,
-                    detail: "Linux may not work well with tray icons. Depending on your system configuration, you may not be able to see the tray icon. Enable at your own risk. Can be changed later."
-                };
-
-                await dialog.showMessageBox(mainWindows[0], options).then(({response}) => {
-                    if (response == 0) {
-                        setConfig("tray", true);
-                    } else {
-                        setConfig("tray", false);
-                    }
-                    app.relaunch();
-                    app.exit();
-                });
-            } else {
-                setConfig("tray", true);
-                app.relaunch();
-                app.exit();
-            }
-        }
     }
 });

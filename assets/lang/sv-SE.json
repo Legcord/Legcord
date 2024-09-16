@@ -60,8 +60,6 @@
     "settings-theme-transparent": "Transparent",
     "settings-useLegacyCapturer": "Använd legacy capturer",
     "settings-useLegacyCapturer-desc": "Använd legacy skärmdelnings modulen, istället för den nya. Ifall du har problem med skärmdelning, försöka att aktivera detta.",
-    "settings-dynamicIcon": "Dynamisk ikon",
-    "settings-dynamicIcon-desc": "Följande Discords beteende på Windows, detta visar olästa meddelanden/pingantal på ArmCords ikon istället för dess systembricka.",
     "settings-spellcheck": "Stavningskontroll",
     "settings-spellcheck-desc": "Hjälper dig att rätta till misstavda ord genom att markera dem.",
     "setup_question5": "Vill du använda en ikon i systembrickan?",

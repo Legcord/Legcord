@@ -60,8 +60,6 @@
     "settings-theme-transparent": "شفاف",
     "settings-useLegacyCapturer": "استفاده از ضبط‌کننده قدیمی",
     "settings-useLegacyCapturer-desc": "Use legacy screenshare module, instead of the new one. If you're experiencing issues with screen sharing, try enabling this.",
-    "settings-dynamicIcon": "آیکون پویا",
-    "settings-dynamicIcon-desc": "Following Discord's behaviour on Windows, this shows unread messages/pings count on ArmCord's icon instead of it's tray.",
     "settings-spellcheck": "بررسی املا",
     "settings-spellcheck-desc": "با برجسته کردن کلمات غلط املایی به شما کمک می کند آنها را تصحیح کنید.",
     "setup_question5": "آیا می خواهید از آیکون سینی استفاده کنید؟",

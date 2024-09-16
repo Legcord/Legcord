@@ -23,8 +23,6 @@
     "settings-useLegacyCapturer-desc": "Használd a régi képernyőmegosztási modult az új helyett. Ha problémákat tapasztalsz a képernyőmegosztással kapcsolatban, próbáld meg engedélyezni ezt.",
     "settings-mobileMode": "Mobil mód",
     "settings-mobileMode-desc": "Ha érintőképernyős készüléket használ, ez a funkció önnek van! Aktiválja a Discord rejtett mobil\n                módját telefonokhoz és táblagépekhez. Csak eggyetlen fontos funkció hiányzik, a hang csevegés támogatása. Ez ideális a\n                PinePhone és hasonló eszközök felhasználóinak.",
-    "settings-dynamicIcon": "Dinamikus ikon",
-    "settings-dynamicIcon-desc": "A Discord viselkedését követve a Windows rendszeren, az olvasatlan üzenetek/pingek száma az ArmCord ikonján jelenik meg a tálcája helyett.",
     "settings-channel": "Discord csatorna",
     "settings-invitewebsocket": "Rich Presence (Kisérleti)",
     "settings-invitewebsocket-desc": "Az <a target=\"_blank\" href=\"https://github.com/OpenAsar/arrpc\">arRPC-t</a> használja a Discord RPC (Rich Presence) támogatására a számítógépén lévő helyi programokkal. Fejlesztés alatt.",

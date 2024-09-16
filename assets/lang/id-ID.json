@@ -60,8 +60,6 @@
     "settings-theme-transparent": "Transparan",
     "settings-useLegacyCapturer": "Gunakan penangkap layar lama",
     "settings-useLegacyCapturer-desc": "Gunakan modul penangkap layar lama dibanding yang lebih baru. Jika kamu mendapatkan isu dengan berbagi layar, coba nyalakan ini.",
-    "settings-dynamicIcon": "Ikon dinamis",
-    "settings-dynamicIcon-desc": "Mengikuti perilaku Discord di Windows, opsi ini menunjukkan pesan/jumlah ping pada ikon ArmCord daripada di baki.",
     "settings-spellcheck": "Pengecekan ejaan",
     "settings-spellcheck-desc": "Membantu kamu memperbaiki kesalahan kata dengan menyoroti kesalahannya.",
     "setup_question5": "Apakah kamu mau menggunakan ikon baki?",

@@ -32,8 +32,6 @@
     "settings-useLegacyCapturer-desc": "Verwende das alte Modul für die Bildschirmfreigabe anstelle des neuen Moduls. Wenn du Probleme mit der Bildschirmfreigabe hast, versuche, dies zu aktivieren.",
     "settings-mobileMode": "Mobiler Modus",
     "settings-mobileMode-desc": "Wenn du ein Gerät mit Touchscreen verwendest, ist diese Funktion genau das Richtige für dich!\nSie aktiviert den versteckten mobilen Modus von Discord, der für Handys und Tablets gedacht ist.\nDie einzige wichtige Funktion, die fehlt, ist die Unterstützung von Voice-Chat. Dies ist ideal für Benutzer von PinePhone und ähnlichen Geräten.",
-    "settings-dynamicIcon": "Dynamisches Icon",
-    "settings-dynamicIcon-desc": "In Anlehnung an das Verhalten von Discord unter Windows wird die Anzahl der ungelesenen Nachrichten/Pings auf dem ArmCord-Symbol und nicht in der Taskleiste angezeigt.",
     "settings-spellcheck": "Rechtschreibprüfung",
     "settings-tray-desc": "Toggle whether ArmCord will have a tray icon",
     "settings-spellcheck-desc": "Hilft dir, falsch geschriebene Wörter zu korrigieren, indem es sie hervorhebt.",

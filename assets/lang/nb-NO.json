@@ -60,8 +60,6 @@
     "settings-theme-transparent": "Gjennomsiktig",
     "settings-useLegacyCapturer": "Bruk eldre fanger",
     "settings-useLegacyCapturer-desc": "Bruk den eldre skjermdelingsmodulen i stedet for den nye. Hvis du opplever problemer med skjermdeling, prøv å aktivere dette.",
-    "settings-dynamicIcon": "Dynamisk ikon",
-    "settings-dynamicIcon-desc": "Etter Discords oppførsel på Windows, viser dette antallet uleste meldinger/pinger på ArmCords ikon i stedet for i skuffen.",
     "settings-spellcheck": "Stavekontroll",
     "settings-spellcheck-desc": "Hjelper deg å rette feilstavede ord ved å utheve dem.",
     "setup_question5": "Har du lyst å bruke et skuffeikon?",

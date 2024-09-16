@@ -24,8 +24,6 @@
     "settings-useLegacyCapturer-desc": "Místo nového použijte starší modul pro sdílení obrazovky. Pokud máte problémy se sdílením obrazovky, zkuste tohle povolit.",
     "settings-mobileMode": "Mobilní mód",
     "settings-mobileMode-desc": "Pokud používáte zařízení s dotykovou obrazovkou, tato funkce je pro vás! Aktivuje skrytý mobil Discordu\n                 režim určený pro telefony a tablety. Jedinou hlavní funkcí, která chybí, je podpora hlasového chatu. Toto je ideální pro\n                 uživatelé PinePhone a podobně.",
-    "settings-dynamicIcon": "Dynamická ikona",
-    "settings-dynamicIcon-desc": "Podle chování Discordu ve Windows se ukazuje počet nepřečtených zpráv/pingů na ikoně ArmCordu místo na jejím panelu.",
     "settings-channel": "Discord kanál",
     "settings-invitewebsocket-desc": "Používá <a target=\"_blank\" href=\"https://github.com/OpenAsar/arrpc\">arRPC</a> k podpoře Discord RPC (Rich Presence) s místními programy na vašem počítači. Není dokončeno.",
     "settings-mod": "Mód klienta",

@@ -11,7 +11,6 @@ export interface Settings {
     multiInstance: boolean;
     spellcheck: boolean;
     mods: ("vencord" | "equicord" | "custom")[];
-    dynamicIcon: boolean;
     mobileMode: boolean;
     skipSplash: boolean;
     performanceMode: string;
@@ -25,7 +24,15 @@ export interface Settings {
     inviteWebsocket: boolean;
     disableAutogain: boolean;
     disableHttpCache: boolean;
-    trayIcon: string;
+    trayIcon:
+        | "dynamic"
+        | "dsc-tray"
+        | "clsc-dsc-tray"
+        | "ac_plug_colored"
+        | "ac_white_plug"
+        | "ac_white_plug_hollow"
+        | "ac_black_plug"
+        | "ac_black_plug_hollow";
     doneSetup: boolean;
     clientName: string;
     smoothScroll: boolean;

@@ -60,8 +60,6 @@
     "settings-theme-transparent": "Transparent (Experimental)",
     "settings-useLegacyCapturer": "Use legacy capturer",
     "settings-useLegacyCapturer-desc": "Use legacy screenshare module, instead of the new one. If you're experiencing issues with screen sharing, try enabling this.",
-    "settings-dynamicIcon": "Dynamic icon",
-    "settings-dynamicIcon-desc": "Following Discord's behaviour on Windows, this shows unread messages/pings count on ArmCord's icon instead of it's tray.",
     "settings-spellcheck": "Spellcheck",
     "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them.",
     "setup_question5": "Do you want to use a tray icon?",

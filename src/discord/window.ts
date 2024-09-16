@@ -173,7 +173,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         (_, callback) => callback({cancel: true})
     );
 
-    if (getConfig("trayIcon") == "default" || getConfig("dynamicIcon")) {
+    if (getConfig("trayIcon") == "dynamic") {
         passedWindow.webContents.on("page-favicon-updated", (_, favicons) => {
             try {
                 let favicon = nativeImage.createFromDataURL(favicons[0]);
@@ -199,7 +199,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         const armCordSuffix = " - ArmCord"; /* identify */
 
         // FIXME - This is a bit of a mess. I'm not sure how to clean it up.
-        if (process.platform === "win32" && !getConfig("dynamicIcon")) {
+        if (process.platform === "win32" && getConfig("trayIcon") != "dynamic") {
             if (title.startsWith("•"))
                 return passedWindow.setOverlayIcon(
                     nativeImage.createFromPath(path.join(import.meta.dirname, "../", "/assets/badge-11.ico")),

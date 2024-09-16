@@ -61,8 +61,6 @@
     "settings-theme-transparent": "Transparente",
     "settings-useLegacyCapturer": "Usar captura antigua",
     "settings-useLegacyCapturer-desc": "Utilice el módulo de compartir pantallas antiguo en lugar del nuevo. Si estás experimentando problemas al compartir pantallas, intenta habilitar esto.",
-    "settings-dynamicIcon": "Icono dinámico",
-    "settings-dynamicIcon-desc": "Imitando el comportamiento de Discord en Windows, esto muestra el número de mensajes/pings no leídos sobre el icono de ArmCord en lugar de en la bandeja.",
     "settings-spellcheck": "Revisión ortográfica",
     "settings-spellcheck-desc": "Destaca las palabras mal escritas para ayudarte a corregirlas.",
     "setup_question5": "¿Quieres utilizar un ícono en la barra de tareas?",

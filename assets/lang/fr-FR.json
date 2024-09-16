@@ -60,8 +60,6 @@
     "settings-theme-transparent": "Transparent",
     "settings-useLegacyCapturer": "Utiliser l'ancien système de capture",
     "settings-useLegacyCapturer-desc": "Utilisez l'ancien module de partage d'écran plutôt que le nouveau. Si vous rencontrez des problèmes avec le partage d'écran, essayez de l'activer.",
-    "settings-dynamicIcon": "Icône dynamique",
-    "settings-dynamicIcon-desc": "Suivant le comportement de Discord sous Windows, cela affiche le nombre de messages/pings non lus sur l'icône d'ArmCord au lieu de sa barre d'état.",
     "settings-spellcheck": "Correcteur d'orthographe",
     "settings-spellcheck-desc": "Vous aide à corriger des mots mal orthographiés en les surlignant.",
     "setup_question5": "Voulez-vous activer l'icône de la barre d'état ?",

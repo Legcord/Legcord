@@ -60,8 +60,6 @@
     "settings-theme-transparent": "Trasparente",
     "settings-useLegacyCapturer": "Usa l'acquisitore legacy",
     "settings-useLegacyCapturer-desc": "Usa il modulo di condivisione dello schermo precedente, invece di quello nuovo. Se riscontri problemi con la condivisione dello schermo, prova ad abilitarla.",
-    "settings-dynamicIcon": "Icona dinamica",
-    "settings-dynamicIcon-desc": "Seguendo il comportamento di Discord su Windows, questo mostra il numero di messaggi/ping non letti sull'icona di ArmCord anziché sulla barra delle applicazioni.",
     "settings-spellcheck": "Controllo ortografico",
     "settings-spellcheck-desc": "Ti aiuta a correggere le parole errate evidenziandole.",
     "setup_question5": "Vuoi usare un'icona nella barra delle applicazioni?",

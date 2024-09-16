@@ -23,8 +23,6 @@
     "settings-useLegacyCapturer-desc": "Use legacy screenshare module, instead of the new one. If you're experiencing issues with screen sharing, try enabling this.",
     "settings-mobileMode": "Mobile mode",
     "settings-mobileMode-desc": "If you're on a device with touch-screen this feature is for you! It activates Discord's hidden mobile\n                mode meant for phones and tablets. Only major feature missing is voice chat support. This is ideal for\n                users on PinePhone and similar.",
-    "settings-dynamicIcon": "Dynamic icon",
-    "settings-dynamicIcon-desc": "Following Discord's behaviour on Windows, this shows unread messages/pings count on ArmCord's icon instead of it's tray.",
     "settings-channel": "Discord channel",
     "settings-trayIcon-dynamic": "Dynamic",
     "settings-invitewebsocket": "Rich Presence (Experimental)",

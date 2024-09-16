@@ -60,8 +60,6 @@
     "settings-theme-transparent": "Şeffaf",
     "settings-useLegacyCapturer": "Eski yakalayıcıyı kullanın",
     "settings-useLegacyCapturer-desc": "Yeni modül yerine eski ekran paylaşımı modülünü kullanın. Ekran paylaşımı ile ilgili sorunlar yaşıyorsanız, bunu etkinleştirmeyi deneyin.",
-    "settings-dynamicIcon": "Dinamik simge",
-    "settings-dynamicIcon-desc": "Discord'un Windows'taki davranışına benzer şekilde, ArmCord'un tepsisi yerine simgesinde okunmamış mesajları/pingleri gösterir.",
     "settings-spellcheck": "Yazım Denetimi",
     "settings-spellcheck-desc": "Yanlış yazılmış kelimeleri işaretleyerek onları düzeltmenize yardım eder.",
     "setup_question5": "Tepsi simgesi kullanmak istiyor musunuz?",

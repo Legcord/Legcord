@@ -60,8 +60,6 @@
     "settings-theme-transparent": "透明",
     "settings-useLegacyCapturer": "使用旧版屏幕捕获",
     "settings-useLegacyCapturer-desc": "使用旧版屏幕分享模块替换新版。如果您在分享屏幕时遇到问题，可以尝试启用此选项。",
-    "settings-dynamicIcon": "动态图标",
-    "settings-dynamicIcon-desc": "跟随Disocrd在Windows上的行为，在ArmCord的图标上显示未读信息/提及数量，而不是在托盘图标上。",
     "settings-spellcheck": "拼写检查",
     "settings-spellcheck-desc": "高亮显示拼写错误的词语以便于改正。",
     "setup_question5": "您希望使用托盘图标吗？",

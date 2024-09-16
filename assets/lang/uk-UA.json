@@ -23,8 +23,6 @@
     "settings-startMinimized-desc": "ArmCord запускається у фоновому режимі та не заважає вам.",
     "settings-useLegacyCapturer": "Використовувати застарілий спосіб захоплення екрану",
     "settings-mobileMode-desc": "Якщо ви використовуєте пристрій з сенсорним єкраном ця функція для вас! Ця функція активує скриту мобільну версію Discord. Нажаль, у цьому режимі не працює голосовий чат. Це ідеально підходить для користувачів з PinePhone і аналогічних.",
-    "settings-dynamicIcon": "Устарівша динамічна іконка",
-    "settings-dynamicIcon-desc": "Ця функція показує кількість непрочитанних повідомлень на значку программи.",
     "settings-invitewebsocket-desc": "Використовує <a target=\"_blank\" href=\"https://github.com/OpenAsar/arrpc\">arRPC</a> для підтримки Discord RPC (Rich Presence) з програмами на вашому комп'ютері. В роботі.",
     "settings-useLegacyCapturer-desc": "Використовуйте застарілий спосіб захоплення екрану замість нового. Якщо у вас виникли проблеми із захопленням екрану, спробуйте увімкнути цю функцію.",
     "settings-mobileMode": "Мобільна версія Discord",

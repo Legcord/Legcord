@@ -60,8 +60,6 @@
     "settings-theme-transparent": "透過",
     "settings-useLegacyCapturer": "レガシーキャプチャを使用する",
     "settings-useLegacyCapturer-desc": "新しい画面共有モジュールの代わりに、従来の画面共有モジュールを使用します。もし画面共有で問題が発生している場合は、これを有効にしてみてください。",
-    "settings-dynamicIcon": "ダイナミックアイコン",
-    "settings-dynamicIcon-desc": "Windows版Discordの動作にならって、トレイの代わりにArmCordのアイコンに未読メッセージ/メンション数を表示します。",
     "settings-spellcheck": "スペルチェック",
     "settings-spellcheck-desc": "スペルミスを修正できるように、ミスのある単語をハイライト表示します。",
     "setup_question5": "トレイアイコンを使用しますか？",

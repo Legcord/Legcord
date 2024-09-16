@@ -60,8 +60,6 @@
     "settings-theme-transparent": "Transparente",
     "settings-useLegacyCapturer": "Usar capturador antigo",
     "settings-useLegacyCapturer-desc": "Usar módulo de compartilhamento de tela antigo, ao invés do novo. Se você estiver tendo problemas com o compartilhamento de tela, tente ativar isto.",
-    "settings-dynamicIcon": "Ícone dinâmico",
-    "settings-dynamicIcon-desc": "Seguindo o comportamento do Discord no Windows, isto mostra a contagem de mensagens não lidas/menções no ícone do ArmCord ao invés da bandeja.",
     "settings-spellcheck": "Verificação ortográfica",
     "settings-spellcheck-desc": "Ajuda a corrigir palavras com erros ortográficos destacando-as.",
     "setup_question5": "Você pretende usar o ícone de programa?",
