@@ -5,7 +5,7 @@ import tseslint from "typescript-eslint";
 
 export default tseslint.config(
     eslint.configs.recommended,
-    {ignores: ["ts-out", "src/discord/content/js", "*.config.js", "src/shelter/", "scripts/"]},
+    { ignores: ["ts-out", "src/discord/content/js", "*.config.js", "src/shelter/", "scripts/"] },
     ...tseslint.configs.recommendedTypeChecked,
     ...tseslint.configs.stylisticTypeChecked,
     {
@@ -23,6 +23,12 @@ export default tseslint.config(
                     argsIgnorePattern: "^_",
                     varsIgnorePattern: "^_",
                     caughtErrorsIgnorePattern: "^_"
+                }
+            ],
+            "@typescript-eslint/no-misused-promises": [
+                "error",
+                {
+                    "checksVoidReturn": false
                 }
             ]
         }

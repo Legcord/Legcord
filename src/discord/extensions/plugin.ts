@@ -1,20 +1,18 @@
-import fs from "fs";
+import {readdirSync, existsSync, mkdirSync} from "fs";
 import {app, session} from "electron";
-const userDataPath = app.getPath("userData");
-const pluginFolder = `${userDataPath}/plugins`;
-if (!fs.existsSync(pluginFolder)) {
-    fs.mkdirSync(pluginFolder);
+const pluginFolder = `${app.getPath("userData")}/plugins`;
+if (!existsSync(pluginFolder)) {
+    mkdirSync(pluginFolder);
     console.log("Created missing plugin folder");
 }
 await app.whenReady().then(() => {
-    fs.readdirSync(pluginFolder).forEach((file) => {
+    readdirSync(pluginFolder).forEach(async (file) => {
         try {
-            if (pluginFolder == "loader") return;
-            const manifest = fs.readFileSync(`${pluginFolder}/${file}/manifest.json`, "utf8");
             // NOTE - The below type assertion is just what we need from the chrome manifest
-            const pluginFile = JSON.parse(manifest) as {name: string; author: string};
+            const manifest = (await import(`${pluginFolder}/${file}/manifest.json`)) as {name: string; author: string};
+
             void session.defaultSession.loadExtension(`${pluginFolder}/${file}`); // NOTE - Awaiting this will cause plugins to not inject
-            console.log(`[Mod loader] Loaded ${pluginFile.name} made by ${pluginFile.author}`);
+            console.log(`[Mod loader] Loaded ${manifest.name} made by ${manifest.author}`);
         } catch (err) {
             console.error(err);
         }
