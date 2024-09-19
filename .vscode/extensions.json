@@ -1,5 +1,6 @@
 {
     "recommendations": [
-        "ExodiusStudios.comment-anchors"
+        "ExodiusStudios.comment-anchors",
+        "biomejs.biome"
     ]
 }

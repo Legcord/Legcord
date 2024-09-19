@@ -59,9 +59,7 @@
 .desktop-capturer-selection__btn:hover,
 .desktop-capturer-selection__btn:focus {
     background: #7289da;
-    box-shadow:
-        0 0 4px rgba(0, 0, 0, 0.45),
-        0 0 2px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.45), 0 0 2px rgba(0, 0, 0, 0.25);
     color: #fff;
 }
 .desktop-capturer-selection__thumbnail {
