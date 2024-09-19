@@ -1,15 +1,15 @@
-import {app, clipboard, desktopCapturer, ipcMain, shell, SourcesOptions, BrowserWindow} from "electron";
-import os from "os";
 import fs from "fs";
+import os from "os";
 import path from "path";
+import {BrowserWindow, SourcesOptions, app, clipboard, desktopCapturer, ipcMain, shell} from "electron";
 
-import {getConfig, setConfigBulk, getConfigLocation, setConfig} from "../common/config.js";
-import {setLang, getLang, getLangName, getRawLang} from "../common/lang.js";
-import {getVersion, getDisplayVersion} from "../common/version.js";
+import isDev from "electron-is-dev";
+import {Settings} from "../@types/settings.js";
+import {getConfig, getConfigLocation, setConfig, setConfigBulk} from "../common/config.js";
+import {getLang, getLangName, getRawLang, setLang} from "../common/lang.js";
+import {getDisplayVersion, getVersion} from "../common/version.js";
 import {splashWindow} from "../splash/main.js";
 import {createTManagerWindow} from "../themeManager/main.js";
-import {Settings} from "../@types/settings.js";
-import isDev from "electron-is-dev";
 
 const userDataPath = app.getPath("userData");
 const storagePath = path.join(userDataPath, "/storage/");

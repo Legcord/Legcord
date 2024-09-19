@@ -1,8 +1,8 @@
-import {BrowserWindow, app, ipcMain} from "electron";
-import path from "path";
 import fs from "fs";
-import {setConfigBulk, getConfigLocation, getConfig} from "../common/config.js";
+import path from "path";
+import {BrowserWindow, app, ipcMain} from "electron";
 import type {Settings} from "../@types/settings.js";
+import {getConfig, getConfigLocation, setConfigBulk} from "../common/config.js";
 import {getLang} from "../common/lang.js";
 
 let setupWindow: BrowserWindow;

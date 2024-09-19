@@ -1,4 +1,4 @@
-import {contextBridge, ipcRenderer, type SourcesOptions} from "electron";
+import {type SourcesOptions, contextBridge, ipcRenderer} from "electron";
 import type {ArmCordWindow} from "../../@types/armcordWindow.js";
 
 const CANCEL_ID = "desktop-capturer-selection__cancel";

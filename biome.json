@@ -174,16 +174,6 @@
                         "noArguments": "error",
                         "noVar": "error",
                         "useConst": "error"
-                    },
-                    "suspicious": {
-                        "noDuplicateClassMembers": "off",
-                        "noDuplicateObjectKeys": "off",
-                        "noDuplicateParameters": "off",
-                        "noFunctionAssign": "off",
-                        "noImportAssign": "off",
-                        "noRedeclare": "off",
-                        "noUnsafeNegation": "off",
-                        "useGetterReturn": "off"
                     }
                 }
             }

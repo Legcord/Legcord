@@ -1,6 +1,6 @@
-import {readdirSync, existsSync, mkdirSync} from "fs";
-import {app, session} from "electron";
+import {existsSync, mkdirSync, readdirSync} from "fs";
 import {platform} from "os";
+import {app, session} from "electron";
 const pluginFolder = `${app.getPath("userData")}/plugins`;
 
 let prefix = "";

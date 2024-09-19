@@ -1,6 +1,6 @@
-import {BrowserWindow, app} from "electron";
 import fs from "fs";
 import path from "path";
+import {BrowserWindow, app} from "electron";
 import {ThemeManifest} from "../@types/themeManifest.js";
 import {mainWindows} from "../discord/window.js";
 const userDataPath = app.getPath("userData");

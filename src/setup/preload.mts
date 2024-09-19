@@ -1,6 +1,6 @@
 import {contextBridge, ipcRenderer} from "electron";
-import {injectTitlebar} from "../discord/preload/titlebar.mjs";
 import {Settings} from "../@types/settings.js";
+import {injectTitlebar} from "../discord/preload/titlebar.mjs";
 
 injectTitlebar();
 contextBridge.exposeInMainWorld("armcordinternal", {

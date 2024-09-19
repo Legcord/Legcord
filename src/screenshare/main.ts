@@ -1,5 +1,5 @@
-import {BrowserWindow, MessageBoxOptions, desktopCapturer, dialog, ipcMain, session} from "electron";
 import path from "path";
+import {BrowserWindow, MessageBoxOptions, desktopCapturer, dialog, ipcMain, session} from "electron";
 import {getConfig} from "../common/config.js";
 
 let capturerWindow: BrowserWindow;

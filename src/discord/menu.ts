@@ -1,6 +1,6 @@
 import {BrowserWindow, Menu, app} from "electron";
-import {mainWindows} from "./window.js";
 import {setForceQuit} from "../common/forceQuit.js";
+import {mainWindows} from "./window.js";
 
 export function setMenu(): void {
     const template: Electron.MenuItemConstructorOptions[] = [

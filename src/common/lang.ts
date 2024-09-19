@@ -1,6 +1,6 @@
-import {app} from "electron";
-import path from "path";
 import fs from "fs";
+import path from "path";
+import {app} from "electron";
 import {i18nStrings} from "../@types/i18nStrings.js";
 export function setLang(language: string): void {
     const langConfigFile = `${path.join(app.getPath("userData"), "/storage/")}lang.json`;

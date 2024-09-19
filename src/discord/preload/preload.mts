@@ -4,14 +4,14 @@ import "./mods/custom.js";
 import "./mods/vencord.js";
 import "./mods/equicord.js";
 import "./optimizer.js";
-import {ipcRenderer} from "electron";
 import {readFileSync} from "fs";
 import {join} from "path";
+import {ipcRenderer} from "electron";
+import type {ArmCordWindow} from "../../@types/armcordWindow.js";
+import {addScript, addStyle, addTheme} from "../../common/dom.js";
+import {sleep} from "../../common/sleep.js";
 import {injectMobileStuff} from "./mobile.js";
 import {injectTitlebar} from "./titlebar.mjs";
-import {addStyle, addScript, addTheme} from "../../common/dom.js";
-import {sleep} from "../../common/sleep.js";
-import type {ArmCordWindow} from "../../@types/armcordWindow.js";
 
 window.localStorage.setItem("hideNag", "true");
 if (ipcRenderer.sendSync("getConfig", "legacyCapturer")) {

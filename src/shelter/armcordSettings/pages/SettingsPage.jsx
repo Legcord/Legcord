@@ -1,6 +1,6 @@
 import {DropdownItem} from "../components/DropdownItem";
-import classes from "./SettingsPage.css";
 import {set} from "../settings";
+import classes from "./SettingsPage.css";
 const {
     plugin: {store},
     ui: {SwitchItem, Header, Divider, HeaderTags, Button, ButtonSizes}

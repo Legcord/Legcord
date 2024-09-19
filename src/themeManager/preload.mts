@@ -1,4 +1,4 @@
-import {ipcRenderer, contextBridge} from "electron";
+import {contextBridge, ipcRenderer} from "electron";
 import {ThemeManifest} from "../@types/themeManifest.js";
 contextBridge.exposeInMainWorld("themes", {
     install: async (url: string) => ipcRenderer.invoke("installBDTheme", url) as Promise<null>,

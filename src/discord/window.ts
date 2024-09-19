@@ -1,3 +1,6 @@
+import * as fs from "fs";
+import os from "os";
+import path from "path";
 // To allow seamless switching between custom titlebar and native os titlebar,
 // I had to add most of the window creation code here to split both into separate functions
 // WHY? Because I can't use the same code for both due to annoying bug with value `frame` not responding to variables
@@ -11,20 +14,17 @@ import {
     nativeImage,
     shell
 } from "electron";
-import path from "path";
+import contextMenu from "electron-context-menu";
 import {registerIpc} from "./ipc.js";
 import {setMenu} from "./menu.js";
-import * as fs from "fs";
-import contextMenu from "electron-context-menu";
-import os from "os";
 import "./keybinds.js";
 import RPCServer from "arrpc";
-import {tray} from "../tray.js";
-import {init} from "../main.js";
-import {getConfig, setConfig, firstRun} from "../common/config.js";
-import {getWindowState, setWindowState} from "../common/windowState.js";
+import {firstRun, getConfig, setConfig} from "../common/config.js";
 import {forceQuit, setForceQuit} from "../common/forceQuit.js";
 import {initQuickCss, injectThemesMain} from "../common/themes.js";
+import {getWindowState, setWindowState} from "../common/windowState.js";
+import {init} from "../main.js";
+import {tray} from "../tray.js";
 export let mainWindows: BrowserWindow[] = [];
 export let inviteWindow: BrowserWindow;
 

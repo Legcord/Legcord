@@ -5,23 +5,23 @@ import "./discord/extensions/csp.js";
 import "./tray.js";
 import "./protocol.js";
 import fs from "fs";
-import {createWindow} from "./discord/window.js";
-import {createTManagerWindow} from "./themeManager/main.js";
-import {createSplashWindow} from "./splash/main.js";
-import {createSetupWindow} from "./setup/main.js";
+import type {Settings} from "./@types/settings.js";
 import {
-    setConfig,
     checkForDataFolder,
     checkIfConfigExists,
     checkIfConfigIsBroken,
-    getConfig,
     firstRun,
-    getConfigLocation
+    getConfig,
+    getConfigLocation,
+    setConfig
 } from "./common/config.js";
 import {injectElectronFlags} from "./common/flags.js";
 import {setLang} from "./common/lang.js";
-import type {Settings} from "./@types/settings.js";
 import {fetchMods} from "./discord/extensions/modloader.js";
+import {createWindow} from "./discord/window.js";
+import {createSetupWindow} from "./setup/main.js";
+import {createSplashWindow} from "./splash/main.js";
+import {createTManagerWindow} from "./themeManager/main.js";
 export let settings: Settings;
 checkForDataFolder();
 app.on("render-process-gone", (_event, _webContents, details) => {

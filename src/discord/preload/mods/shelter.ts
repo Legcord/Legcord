@@ -1,6 +1,6 @@
 import {ipcRenderer, webFrame} from "electron";
-import {sleep} from "../../../common/sleep.js";
 import type {ModBundle} from "../../../@types/ModBundle.js";
+import {sleep} from "../../../common/sleep.js";
 const requiredPlugins: Record<string, string> = {
     // "armcord-arrpc": "armcord://plugins/armcordRPC/",
     "armcord-settings": "armcord://plugins/armcordSettings/",

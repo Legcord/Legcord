@@ -1,9 +1,9 @@
-import {BrowserWindow, MessageBoxOptions, app, dialog, ipcMain, shell} from "electron";
-import path from "path";
 import fs from "fs";
-import {createInviteWindow, mainWindows} from "../discord/window.js";
-import {installTheme, setThemeEnabled, uninstallTheme} from "../common/themes.js";
+import path from "path";
+import {BrowserWindow, MessageBoxOptions, app, dialog, ipcMain, shell} from "electron";
 import {ThemeManifest} from "../@types/themeManifest.js";
+import {installTheme, setThemeEnabled, uninstallTheme} from "../common/themes.js";
+import {createInviteWindow, mainWindows} from "../discord/window.js";
 let themeWindow: BrowserWindow;
 let instance = 0;
 

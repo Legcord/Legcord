@@ -1,6 +1,6 @@
-import {app, net, protocol} from "electron";
 import path from "path";
 import Url from "url";
+import {net, app, protocol} from "electron";
 
 protocol.registerSchemesAsPrivileged([
     {

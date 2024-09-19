@@ -16,5 +16,6 @@
         "unmaximize",
         "vaapi"
     ],
-    "cSpell.ignorePaths": ["assets/lang"]
+    "cSpell.ignorePaths": ["assets/lang"],
+    "editor.defaultFormatter": "biomejs.biome"
 }

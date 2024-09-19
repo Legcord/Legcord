@@ -1,26 +1,16 @@
-name: Lint
+name: Code quality
 
-on: push
+on: [push, pull_request]
 
 jobs:
-  run-linters:
-    name: Run linters
+  quality:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check out Git repository
+      - name: Checkout
         uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Biome
+        uses: biomejs/setup-biome@v2
         with:
-          node-version: 22
-          cache: pnpm
-
-      - name: Install Node.js dependencies
-        run: pnpm install
-
-      - name: Run linters
-        run: pnpm run lint
+          version: latest
+      - name: Run Biome
+        run: biome ci .

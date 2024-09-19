@@ -1,5 +1,5 @@
-import {BrowserWindow, ipcMain} from "electron";
 import path from "path";
+import {BrowserWindow, ipcMain} from "electron";
 import isDev from "electron-is-dev";
 import {getConfig} from "../common/config.js";
 

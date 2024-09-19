@@ -1,10 +1,10 @@
 import {unlink} from "fs";
-import {Menu, Tray, app, nativeImage} from "electron";
-import {createInviteWindow, mainWindows} from "./discord/window.js";
 import {join} from "path";
+import {Menu, Tray, app, nativeImage} from "electron";
 import {getConfig, getConfigLocation} from "./common/config.js";
-import {getDisplayVersion} from "./common/version.js";
 import {setForceQuit} from "./common/forceQuit.js";
+import {getDisplayVersion} from "./common/version.js";
+import {createInviteWindow, mainWindows} from "./discord/window.js";
 export let tray: Tray;
 
 let trayIcon = "ac_plug_colored";

@@ -1,12 +1,12 @@
 // @ts-check
 
+import commonjs from "@rollup/plugin-commonjs";
+import esmShim from "@rollup/plugin-esm-shim";
+import json from "@rollup/plugin-json";
 import typescript from "@rollup/plugin-typescript";
+import {defineConfig} from "rollup";
 import copy from "rollup-plugin-copy";
 import {minify} from "rollup-plugin-esbuild";
-import commonjs from "@rollup/plugin-commonjs";
-import json from "@rollup/plugin-json";
-import esmShim from "@rollup/plugin-esm-shim";
-import {defineConfig} from "rollup";
 
 export default defineConfig([
     {

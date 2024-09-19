@@ -1,6 +1,6 @@
 import {SettingsPage} from "./pages/SettingsPage";
 import {ThemesPage} from "./pages/ThemesPage";
-import {refreshSettings, isRestartRequired} from "./settings";
+import {isRestartRequired, refreshSettings} from "./settings";
 const {
     plugin: {store},
     settings: {registerSection},

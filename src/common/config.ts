@@ -1,6 +1,6 @@
+import {existsSync, mkdirSync, readFileSync, statSync, writeFileSync} from "fs";
+import {dirname, join} from "path";
 import {app, dialog} from "electron";
-import {join, dirname} from "path";
-import {readFileSync, writeFileSync, mkdirSync, existsSync, statSync} from "fs";
 import type {Settings} from "../@types/settings.js";
 import {getWindowStateLocation} from "./windowState.js";
 export let firstRun: boolean;
