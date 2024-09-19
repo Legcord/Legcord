@@ -2,6 +2,9 @@ import {app, globalShortcut} from "electron";
 import {mainWindows} from "./window.js";
 let isAudioEngineEnabled = false;
 void app.whenReady().then(() => {
+    globalShortcut.register("Cmd+M", () => {
+        /**/
+    });
     const ret = globalShortcut.register("CommandOrControl+Shift+M", () => {
         console.log("Mute keybind pressed");
         if (!isAudioEngineEnabled) {

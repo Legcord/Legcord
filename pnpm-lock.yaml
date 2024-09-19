@@ -4,11 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-patchedDependencies:
-  electron-context-menu:
-    hash: ngxdsovgwc7grjjbafcuqaw5va
-    path: patches/electron-context-menu.patch
-
 importers:
 
   .:
@@ -18,7 +13,7 @@ importers:
         version: https://codeload.github.com/armcord/arrpc/tar.gz/38b534a248893c2076871126d81cd5750bcad70d
       electron-context-menu:
         specifier: ^4.0.4
-        version: 4.0.4(patch_hash=ngxdsovgwc7grjjbafcuqaw5va)
+        version: 4.0.4
       electron-is-dev:
         specifier: ^3.0.1
         version: 3.0.1
@@ -57,8 +52,8 @@ importers:
         specifier: ^1.4.1
         version: 1.4.1
       electron:
-        specifier: 32.1.0
-        version: 32.1.0
+        specifier: 32.1.1
+        version: 32.1.1
       electron-builder:
         specifier: ^25.0.5
         version: 25.0.5(electron-builder-squirrel-windows@25.0.5(dmg-builder@25.0.5))
@@ -1146,8 +1141,8 @@ packages:
   electron-publish@25.0.3:
     resolution: {integrity: sha512-wSGm+TFK2lArswIFBPLuIRHbo945s3MCvG5y1xVC57zL/PsrElUkaGH2ERtRrcKNpaDNq77rDA9JnMJhAFJjUg==}
 
-  electron@32.1.0:
-    resolution: {integrity: sha512-4etE3K6vPUkHihf7nvawngbB5+jLuUJgZh31f9ki1Gfveo0qwNDkLv/doabw+4zFFWKUXI+uFUpyOpL5+RwS+Q==}
+  electron@32.1.1:
+    resolution: {integrity: sha512-NlWvG6kXOJbZbELmzP3oV7u50I3NHYbCeh+AkUQ9vGyP7b74cFMx9HdTzejODeztW1jhr3SjIBbUZzZ45zflfQ==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
 
@@ -3658,7 +3653,7 @@ snapshots:
       - electron-builder-squirrel-windows
       - supports-color
 
-  electron-context-menu@4.0.4(patch_hash=ngxdsovgwc7grjjbafcuqaw5va):
+  electron-context-menu@4.0.4:
     dependencies:
       cli-truncate: 4.0.0
       electron-dl: 4.0.0
@@ -3684,7 +3679,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  electron@32.1.0:
+  electron@32.1.1:
     dependencies:
       '@electron/get': 2.0.3
       '@types/node': 20.16.5
