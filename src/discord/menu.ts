@@ -37,10 +37,6 @@ export function setMenu(): void {
                     }
                 },
                 {
-                    label: "Fullscreen",
-                    role: "togglefullscreen"
-                },
-                {
                     label: "Reload",
                     accelerator: "CmdOrCtrl+R",
                     click() {
@@ -89,6 +85,16 @@ export function setMenu(): void {
                 {label: "Zoom out", accelerator: "CmdOrCtrl+-", role: "zoomOut"},
                 {type: "separator"},
                 {label: "Reset zoom", accelerator: "CmdOrCtrl+0", role: "resetZoom"}
+            ]
+        },
+        {
+            label: "Window",
+            submenu: [
+                {
+                    label: "Fullscreen",
+                    role: "togglefullscreen"
+                },
+                {label: "Minimize", accelerator: "Cmd+M", role: "minimize"}
             ]
         }
     ];

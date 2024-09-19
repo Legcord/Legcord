@@ -16,24 +16,30 @@ const storagePath = path.join(userDataPath, "/storage/");
 const themesPath = path.join(userDataPath, "/themes/");
 const pluginsPath = path.join(userDataPath, "/plugins/");
 const quickCssPath = path.join(userDataPath, "/quickCss.css");
+
+function ifExistsRead(path: string): string {
+    if (fs.existsSync(path)) return fs.readFileSync(path, "utf-8");
+    else return "";
+}
+
 export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.handle("getShelterBundle", () => {
         return {
-            js: fs.readFileSync(path.join(app.getPath("userData"), "shelter.js"), "utf-8"),
+            js: ifExistsRead(path.join(app.getPath("userData"), "shelter.js")),
             enabled: true
         };
     });
     ipcMain.handle("getVencordBundle", () => {
         return {
-            js: fs.readFileSync(path.join(app.getPath("userData"), "vencord.js"), "utf-8"),
-            css: fs.readFileSync(path.join(app.getPath("userData"), "vencord.css"), "utf-8"),
+            js: ifExistsRead(path.join(app.getPath("userData"), "vencord.js")),
+            css: ifExistsRead(path.join(app.getPath("userData"), "vencord.css")),
             enabled: getConfig("mods").includes("vencord")
         };
     });
     ipcMain.handle("getEquicordBundle", () => {
         return {
-            js: fs.readFileSync(path.join(app.getPath("userData"), "equicord.js"), "utf-8"),
-            css: fs.readFileSync(path.join(app.getPath("userData"), "equicord.css"), "utf-8"),
+            js: ifExistsRead(path.join(app.getPath("userData"), "equicord.js")),
+            css: ifExistsRead(path.join(app.getPath("userData"), "equicord.css")),
             enabled: getConfig("mods").includes("equicord")
         };
     });
@@ -41,8 +47,8 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         const enabled = getConfig("mods").includes("custom");
         if (enabled) {
             return {
-                js: fs.readFileSync(path.join(app.getPath("userData"), "custom.js"), "utf-8"),
-                css: fs.readFileSync(path.join(app.getPath("userData"), "custom.css"), "utf-8"),
+                js: ifExistsRead(path.join(app.getPath("userData"), "custom.js")),
+                css: ifExistsRead(path.join(app.getPath("userData"), "custom.css")),
                 enabled
             };
         } else {
