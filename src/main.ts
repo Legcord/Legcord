@@ -1,39 +1,39 @@
 // Modules to control application life and create native browser window
-import {BrowserWindow, app, crashReporter, session, systemPreferences} from "electron";
+import { BrowserWindow, app, crashReporter, session, systemPreferences } from "electron";
 import "v8-compile-cache";
 import "./discord/extensions/csp.js";
 import "./tray.js";
 import "./protocol.js";
-import fs from "fs";
-import {createWindow} from "./discord/window.js";
-import {createTManagerWindow} from "./themeManager/main.js";
-import {createSplashWindow} from "./splash/main.js";
-import {createSetupWindow} from "./setup/main.js";
+import fs from "node:fs";
+import type { Settings } from "./@types/settings.js";
 import {
-    setConfig,
     checkForDataFolder,
     checkIfConfigExists,
     checkIfConfigIsBroken,
-    getConfig,
     firstRun,
-    getConfigLocation
+    getConfig,
+    getConfigLocation,
+    setConfig,
 } from "./common/config.js";
-import {injectElectronFlags} from "./common/flags.js";
-import {setLang} from "./common/lang.js";
-import type {Settings} from "./@types/settings.js";
-import {fetchMods} from "./discord/extensions/modloader.js";
+import { injectElectronFlags } from "./common/flags.js";
+import { setLang } from "./common/lang.js";
+import { fetchMods } from "./discord/extensions/modloader.js";
+import { createWindow } from "./discord/window.js";
+import { createSetupWindow } from "./setup/main.js";
+import { createSplashWindow } from "./splash/main.js";
+import { createTManagerWindow } from "./themeManager/main.js";
 export let settings: Settings;
 checkForDataFolder();
 app.on("render-process-gone", (_event, _webContents, details) => {
-    if (details.reason == "crashed") {
+    if (details.reason === "crashed") {
         app.relaunch();
     }
 });
 function args(): void {
     let argNum = 2;
-    if (process.argv[0] == "electron") argNum++;
+    if (process.argv[0] === "electron") argNum++;
     const args = process.argv[argNum];
-    if (args == undefined) return;
+    if (args === undefined) return;
     if (args.startsWith("--")) return; //electron flag
     if (args.includes("=")) {
         const e = args.split("=");
@@ -41,18 +41,18 @@ function args(): void {
         console.log(`Setting ${e[0]} to ${e[1]}`);
         app.relaunch();
         app.exit();
-    } else if (args == "themes") {
+    } else if (args === "themes") {
         void app.whenReady().then(async () => {
             await createTManagerWindow();
         });
     }
 }
 export async function init(): Promise<void> {
-    if (firstRun == true || undefined) {
+    if (firstRun === true || undefined) {
         setLang(new Intl.DateTimeFormat().resolvedOptions().locale);
         await createSetupWindow();
     } else {
-        if (getConfig("skipSplash") == false) {
+        if (getConfig("skipSplash") === false) {
             void createSplashWindow(); // NOTE - Awaiting will hang at start
         }
         createWindow();
@@ -66,7 +66,7 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
 } else {
     app.commandLine.appendSwitch("disable-features", "WidgetLayering"); // fix dev tools layers
     // Your data now belongs to CCP
-    crashReporter.start({uploadToServer: false});
+    crashReporter.start({ uploadToServer: false });
     // enable pulseaudio audio sharing on linux
     if (process.platform === "linux") {
         app.commandLine.appendSwitch("enable-features", "PulseaudioLoopbackForScreenShare");
@@ -79,7 +79,7 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     }
     if (process.platform === "darwin") {
         const status = systemPreferences.getMediaAccessStatus("screen");
-        console.log("macOS screenshare permission: " + status);
+        console.log(`macOS screenshare permission: ${status}`);
     }
     // work around chrome 66 disabling autoplay by default
     app.commandLine.appendSwitch("autoplay-policy", "no-user-gesture-required");
@@ -87,7 +87,7 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     // HardwareMediaKeyHandling,MediaSessionService: Prevent Discord from registering as a media service.
     app.commandLine.appendSwitch(
         "disable-features",
-        "WinRetrieveSuggestionsOnlyOnDemand,HardwareMediaKeyHandling,MediaSessionService"
+        "WinRetrieveSuggestionsOnlyOnDemand,HardwareMediaKeyHandling,MediaSessionService",
     );
     app.commandLine.appendSwitch("enable-transparent-visuals");
     checkIfConfigExists();
@@ -95,7 +95,7 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     injectElectronFlags();
     await fetchMods();
     void import("./discord/extensions/plugin.js"); // load chrome extensions
-    console.log("[Config Manager] Current config: " + fs.readFileSync(getConfigLocation(), "utf-8"));
+    console.log(`[Config Manager] Current config: ${fs.readFileSync(getConfigLocation(), "utf-8")}`);
     if (getConfig("hardwareAcceleration") === false) {
         app.disableHardwareAcceleration();
     } else if (getConfig("hardwareAcceleration") === undefined) {
@@ -112,7 +112,15 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     }
     void app.whenReady().then(async () => {
         // Patch for linux bug to insure things are loaded before window creation (fixes transparency on some linux systems)
-        await new Promise<void>((resolve) => setTimeout(() => (init(), resolve()), 1500));
+        await new Promise<void>((resolve) =>
+            setTimeout(
+                () =>
+                    (
+                        // biome-ignore lint/style/noCommaOperator: // FIXME - What?
+                        init(), resolve(), 1500
+                    ),
+            ),
+        );
         session.defaultSession.setPermissionRequestHandler((_webContents, permission, callback) => {
             if (permission === "notifications") {
                 // Approves the permissions request
@@ -123,7 +131,7 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
                 callback(true);
             }
         });
-        app.on("activate", function () {
+        app.on("activate", () => {
             if (BrowserWindow.getAllWindows().length === 0) {
                 void init();
             } else {

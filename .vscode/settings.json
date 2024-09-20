@@ -6,7 +6,9 @@
         "Autogain",
         "clientmod",
         "copyfiles",
+        "discordsays",
         "Ducko",
+        "equicord",
         "modloader",
         "nsis",
         "smartfridge",
@@ -16,7 +18,7 @@
         "unmaximize",
         "vaapi"
     ],
-    "cSpell.ignorePaths": [
-        "assets/lang"
-    ]
+    "cSpell.ignorePaths": ["assets/lang"],
+    "editor.defaultFormatter": "biomejs.biome",
+    "deepscan.enable": true
 }

@@ -16,8 +16,8 @@
         "startWayland": "pnpm run build:dev && electron ./ts-out/main.js --ozone-platform-hint=auto --enable-features=WebRTCPipeWireCapturer,WaylandWindowDecorations",
         "package": "pnpm run build && electron-builder",
         "packageQuick": "pnpm run build && electron-builder --dir",
-        "format": "prettier --write src *.json",
-        "lint": "eslint",
+        "lint": "biome check",
+        "lint:fix": "biome check --write",
         "CIbuild": "pnpm run build && electron-builder --linux zip && electron-builder --windows zip && electron-builder --macos zip",
         "prepare": "git config --local core.hooksPath .hooks/"
     },
@@ -33,7 +33,7 @@
     },
     "homepage": "https://github.com/armcord/armcord#readme",
     "devDependencies": {
-        "@eslint/js": "^9.10.0",
+        "@biomejs/biome": "1.9.2",
         "@rollup/plugin-commonjs": "^26.0.1",
         "@rollup/plugin-esm-shim": "^0.1.7",
         "@rollup/plugin-json": "^6.1.0",
@@ -44,13 +44,10 @@
         "@uwu/shelter-defs": "^1.4.1",
         "electron": "32.1.1",
         "electron-builder": "^25.0.5",
-        "eslint": "^9.10.0",
-        "prettier": "^3.3.3",
-        "rollup": "^4.21.3",
+        "rollup": "^4.22.0",
         "rollup-plugin-copy": "^3.5.0",
         "rollup-plugin-esbuild": "^6.1.1",
-        "typescript": "^5.6.2",
-        "typescript-eslint": "^8.6.0"
+        "typescript": "^5.6.2"
     },
     "dependencies": {
         "arrpc": "github:armcord/arrpc",

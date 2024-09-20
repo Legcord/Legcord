@@ -1,5 +1,3 @@
 {
-    "recommendations": [
-        "ExodiusStudios.comment-anchors"
-    ]
+    "recommendations": ["ExodiusStudios.comment-anchors", "biomejs.biome"]
 }

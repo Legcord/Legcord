@@ -1,6 +1,6 @@
-import {app, net, protocol} from "electron";
-import path from "path";
-import Url from "url";
+import path from "node:path";
+import Url from "node:url";
+import { net, app, protocol } from "electron";
 
 protocol.registerSchemesAsPrivileged([
     {
@@ -11,9 +11,9 @@ protocol.registerSchemesAsPrivileged([
             supportFetchAPI: true,
             corsEnabled: false,
             bypassCSP: true,
-            stream: true
-        }
-    }
+            stream: true,
+        },
+    },
 ]);
 
 void app.whenReady().then(() => {
@@ -24,7 +24,7 @@ void app.whenReady().then(() => {
             if (filePath.includes("..")) {
                 return new Response("bad", {
                     status: 400,
-                    headers: {"content-type": "text/html"}
+                    headers: { "content-type": "text/html" },
                 });
             }
             return net.fetch(Url.pathToFileURL(filePath).toString());
@@ -34,14 +34,14 @@ void app.whenReady().then(() => {
             if (filePath.includes("..")) {
                 return new Response("bad", {
                     status: 400,
-                    headers: {"content-type": "text/html"}
+                    headers: { "content-type": "text/html" },
                 });
             }
             return net.fetch(Url.pathToFileURL(filePath).toString());
         }
         return new Response("bad", {
             status: 400,
-            headers: {"content-type": "text/html"}
+            headers: { "content-type": "text/html" },
         });
     });
 });

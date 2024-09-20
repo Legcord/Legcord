@@ -1,4 +1,4 @@
-import {ipcRenderer} from "electron";
+import { ipcRenderer } from "electron";
 interface IPCSources {
     id: string;
     name: string;
@@ -14,14 +14,14 @@ function addDisplays(): void {
     <ul class="desktop-capturer-selection__list">
       ${sources
           .map(
-              ({id, name, thumbnail}) => `
+              ({ id, name, thumbnail }) => `
         <li class="desktop-capturer-selection__item">
           <button class="desktop-capturer-selection__btn" data-id="${id}" title="${name}">
             <img class="desktop-capturer-selection__thumbnail" src="${thumbnail.toDataURL()}" />
             <span class="desktop-capturer-selection__name">${name}</span>
           </button>
         </li>
-      `
+      `,
           )
           .join("")}
       <li class="desktop-capturer-selection__item">
@@ -47,7 +47,7 @@ function addDisplays(): void {
                         throw new Error("Cancelled by user");
                     } else {
                         const audioElement: HTMLInputElement | null = document.getElementById(
-                            "audio"
+                            "audio",
                         ) as HTMLInputElement;
                         if (audioElement !== null) {
                             ipcRenderer.sendSync("selectScreenshareSource", id, title, audioElement.checked);

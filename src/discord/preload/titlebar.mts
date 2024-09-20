@@ -1,9 +1,9 @@
-import {ipcRenderer} from "electron";
-import {addStyle} from "../../common/dom.js";
-import {readFileSync} from "fs";
-import {join} from "path";
-import {platform} from "os";
-import type {Settings} from "../../@types/settings.js";
+import { readFileSync } from "node:fs";
+import { platform } from "node:os";
+import { join } from "node:path";
+import { ipcRenderer } from "electron";
+import type { Settings } from "../../@types/settings.js";
+import { addStyle } from "../../common/dom.js";
 const titlebarHTML = `<nav class="titlebar">
           <div class="window-title" id="window-title"></div>
           <div id="window-controls-container">
@@ -17,7 +17,7 @@ const titlebarOverlayHTML = `<nav class="titlebar">
           <div class="window-title" id="window-title"></div>
         </nav>`;
 export function injectTitlebar(isOverlay?: boolean): void {
-    window.onload = function () {
+    window.onload = () => {
         const elem = document.createElement("div");
         if (isOverlay) {
             elem.innerHTML = titlebarOverlayHTML;
@@ -51,10 +51,10 @@ export function injectTitlebar(isOverlay?: boolean): void {
         });
 
         maximize!.addEventListener("click", () => {
-            if (ipcRenderer.sendSync("win-isMaximized") == true) {
+            if (ipcRenderer.sendSync("win-isMaximized") === true) {
                 ipcRenderer.send("win-unmaximize");
                 document.body.removeAttribute("isMaximized");
-            } else if (ipcRenderer.sendSync("win-isNormal") == true) {
+            } else if (ipcRenderer.sendSync("win-isNormal") === true) {
                 ipcRenderer.send("win-maximize");
             }
         });

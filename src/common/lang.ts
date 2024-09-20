@@ -1,7 +1,7 @@
-import {app} from "electron";
-import path from "path";
-import fs from "fs";
-import {i18nStrings} from "../@types/i18nStrings.js";
+import fs from "node:fs";
+import path from "node:path";
+import { app } from "electron";
+import type { i18nStrings } from "../@types/i18nStrings.js";
 export function setLang(language: string): void {
     const langConfigFile = `${path.join(app.getPath("userData"), "/storage/")}lang.json`;
     if (!fs.existsSync(langConfigFile)) {
@@ -15,7 +15,7 @@ export function setLang(language: string): void {
 }
 let language: string;
 export function getLang(object: string): string {
-    if (language == undefined) {
+    if (language === undefined) {
         try {
             const userDataPath = app.getPath("userData");
             const storagePath = path.join(userDataPath, "/storage/");
@@ -28,7 +28,7 @@ export function getLang(object: string): string {
             language = "en-US";
         }
     }
-    if (language.length == 2) {
+    if (language.length === 2) {
         language = `${language}-${language.toUpperCase()}`;
     }
     let langPath = path.join(import.meta.dirname, "../", `/assets/lang/${language}.json`);
@@ -37,18 +37,16 @@ export function getLang(object: string): string {
     }
     let rawData = fs.readFileSync(langPath, "utf-8");
     let parsed = JSON.parse(rawData) as i18nStrings;
-    if (parsed[object] == undefined) {
+    if (parsed[object] === undefined) {
         console.log(`${object} is undefined in ${language}`);
         langPath = path.join(import.meta.dirname, "../", "/assets/lang/en-US.json");
         rawData = fs.readFileSync(langPath, "utf-8");
         parsed = JSON.parse(rawData) as i18nStrings;
-        return parsed[object];
-    } else {
-        return parsed[object];
     }
+    return parsed[object];
 }
 export function getRawLang(): i18nStrings {
-    if (language == undefined) {
+    if (language === undefined) {
         try {
             const userDataPath = app.getPath("userData");
             const storagePath = path.join(userDataPath, "/storage/");
@@ -61,7 +59,7 @@ export function getRawLang(): i18nStrings {
             language = "en-US";
         }
     }
-    if (language.length == 2) {
+    if (language.length === 2) {
         language = `${language}-${language.toUpperCase()}`;
     }
     let langPath = path.join(import.meta.dirname, "../", `/assets/lang/${language}.json`);
@@ -73,7 +71,7 @@ export function getRawLang(): i18nStrings {
     return parsed;
 }
 export function getLangName(): string {
-    if (language == undefined) {
+    if (language === undefined) {
         try {
             const userDataPath = app.getPath("userData");
             const storagePath = path.join(userDataPath, "/storage/");
@@ -86,7 +84,7 @@ export function getLangName(): string {
             language = "en-US";
         }
     }
-    if (language.length == 2) {
+    if (language.length === 2) {
         language = `${language}-${language.toUpperCase()}`;
     }
     return language;

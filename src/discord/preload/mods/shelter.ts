@@ -1,10 +1,10 @@
-import {ipcRenderer, webFrame} from "electron";
-import {sleep} from "../../../common/sleep.js";
-import type {ModBundle} from "../../../@types/ModBundle.js";
+import { ipcRenderer, webFrame } from "electron";
+import type { ModBundle } from "../../../@types/ModBundle.js";
+import { sleep } from "../../../common/sleep.js";
 const requiredPlugins: Record<string, string> = {
     // "armcord-arrpc": "armcord://plugins/armcordRPC/",
     "armcord-settings": "armcord://plugins/armcordSettings/",
-    "armcord-screenshare": "armcord://plugins/screenshareQualityFix/"
+    "armcord-screenshare": "armcord://plugins/screenshareQualityFix/",
 };
 try {
     await ipcRenderer.invoke("getShelterBundle").then(async (bundle: ModBundle) => {
@@ -37,7 +37,7 @@ async function addPlugins() {
             try {
                 await webFrame.executeJavaScript(js);
             } catch (_e) {
-                console.log("Plugin " + plugin + " already injected");
+                console.log(`Plugin ${plugin} already injected`);
             }
         }
     });

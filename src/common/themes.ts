@@ -1,8 +1,8 @@
-import {BrowserWindow, app} from "electron";
-import fs from "fs";
-import path from "path";
-import {ThemeManifest} from "../@types/themeManifest.js";
-import {mainWindows} from "../discord/window.js";
+import fs from "node:fs";
+import path from "node:path";
+import { type BrowserWindow, app } from "electron";
+import type { ThemeManifest } from "../@types/themeManifest.js";
+import { mainWindows } from "../discord/window.js";
 const userDataPath = app.getPath("userData");
 const themesFolder = `${userDataPath}/themes/`;
 function parseBDManifest(content: string) {
@@ -10,14 +10,17 @@ function parseBDManifest(content: string) {
     if (!content.startsWith("/**")) {
         throw new Error("Not a manifest.");
     }
-    const manifest: ThemeManifest = {theme: "src.css", name: "null", enabled: false}; // Will be defined later
+    const manifest: ThemeManifest = { theme: "src.css", name: "null", enabled: false }; // Will be defined later
 
+    // FIXME - What the fuck is going on here
+    // biome-ignore lint/suspicious/noImplicitAnyLet: <explanation>
     let match;
+    // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
     while ((match = metaReg.exec(content)) !== null) {
         const [_, key] = match;
         let [value] = match;
         if (key === "import") break;
-        value = value.replace("@" + key, "");
+        value = value.replace(`@${key}`, "");
         value = value.trim();
 
         console.log(key, value);
@@ -98,7 +101,7 @@ export function injectThemesMain(browserWindow: BrowserWindow): void {
                     browserWindow.webContents.send(
                         "addTheme",
                         file,
-                        fs.readFileSync(`${themesFolder}/${file}/${themeFile.theme}`, "utf-8")
+                        fs.readFileSync(`${themesFolder}/${file}/${themeFile.theme}`, "utf-8"),
                     );
                     console.log(`%cLoaded ${themeFile.name} made by ${themeFile.author}`, "color:red");
                 }
@@ -112,10 +115,10 @@ export function injectThemesMain(browserWindow: BrowserWindow): void {
 export function uninstallTheme(id: string) {
     const themePath = path.join(themesFolder, id);
     if (fs.existsSync(themePath)) {
-        fs.rmdirSync(themePath, {recursive: true});
+        fs.rmdirSync(themePath, { recursive: true });
         console.log(`Removed ${id} folder`);
     } else if (fs.existsSync(path.join(themesFolder, `${id}-BD`))) {
-        fs.rmdirSync(path.join(themesFolder, `${id}-BD`), {recursive: true});
+        fs.rmdirSync(path.join(themesFolder, `${id}-BD`), { recursive: true });
         console.log(`Removed ${id} folder`);
     }
 }
@@ -128,7 +131,7 @@ export function setThemeEnabled(id: string, enabled: boolean) {
                 passedWindow.webContents.send(
                     "addTheme",
                     id,
-                    fs.readFileSync(`${themesFolder}/${id}/${manifest.theme}`, "utf-8")
+                    fs.readFileSync(`${themesFolder}/${id}/${manifest.theme}`, "utf-8"),
                 );
                 console.log(`[Theme Manager] Loaded ${manifest.name} made by ${manifest.author}`);
             } else {
@@ -156,7 +159,7 @@ export async function installTheme(linkOrPath: string) {
         fs.mkdirSync(themePath);
         console.log(`Created ${manifest.name} folder`);
     }
-    if (isLinkImport && manifest.updateSrc == undefined) {
+    if (isLinkImport && manifest.updateSrc === undefined) {
         manifest.updateSrc = linkOrPath;
     }
     if (code.includes(".titlebar")) manifest.supportsArmCordTitlebar = true;
@@ -171,8 +174,8 @@ export function initQuickCss(browserWindow: BrowserWindow) {
         fs.writeFileSync(quickCssPath, "");
     }
     browserWindow.webContents.send("addTheme", "armcord-quick-css", fs.readFileSync(quickCssPath, "utf-8"));
-    console.log(`[Theme Manager] Loaded Quick CSS`);
-    fs.watchFile(quickCssPath, {interval: 1000}, () => {
+    console.log("[Theme Manager] Loaded Quick CSS");
+    fs.watchFile(quickCssPath, { interval: 1000 }, () => {
         console.log("[Theme Manager] Quick CSS updated.");
         browserWindow.webContents.send("removeTheme", "armcord-quick-css");
         browserWindow.webContents.send("addTheme", "armcord-quick-css", fs.readFileSync(quickCssPath, "utf-8"));

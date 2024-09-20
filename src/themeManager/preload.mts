@@ -1,10 +1,10 @@
-import {ipcRenderer, contextBridge} from "electron";
-import {ThemeManifest} from "../@types/themeManifest.js";
+import { contextBridge, ipcRenderer } from "electron";
+import type { ThemeManifest } from "../@types/themeManifest.js";
 contextBridge.exposeInMainWorld("themes", {
     install: async (url: string) => ipcRenderer.invoke("installBDTheme", url) as Promise<null>,
     uninstall: (id: string) => ipcRenderer.send("uninstallTheme", id),
     edit: (id: string) => ipcRenderer.send("editTheme", id),
-    folder: (id: string) => ipcRenderer.send("openThemeFolder", id)
+    folder: (id: string) => ipcRenderer.send("openThemeFolder", id),
 });
 ipcRenderer.on("themeManifest", (_event, id: string, json: string) => {
     const manifest = JSON.parse(json) as ThemeManifest;
@@ -22,7 +22,7 @@ ipcRenderer.on("themeManifest", (_event, id: string, json: string) => {
             <p>${manifest.description}</p>
             <div id="${id}-shortcuts"></div>
         </div>
-        `
+        `,
     );
     document.getElementById(`${id}-shortcuts`)!.innerHTML +=
         `<img class="themeInfoIcon" id="${id}-removeTheme" onclick="themes.uninstall('${id}')" title="Remove the theme" src="armcord://assets/Trash.png"></img>
@@ -37,20 +37,20 @@ ipcRenderer.on("themeManifest", (_event, id: string, json: string) => {
         if (manifest.supportsArmCordTitlebar !== undefined) {
             document.getElementById("themeInfoButtons")!.innerHTML +=
                 `<img class="themeInfoIcon" id="compatibility" title="Supports ArmCord Titlebar" src=""></img>`;
-            if (manifest.supportsArmCordTitlebar == true) {
-                (document.getElementById(`compatibility`) as HTMLImageElement).src = "armcord://assets/Window.png";
+            if (manifest.supportsArmCordTitlebar === true) {
+                (document.getElementById("compatibility") as HTMLImageElement).src = "armcord://assets/Window.png";
             } else {
-                (document.getElementById(`compatibility`) as HTMLImageElement).src =
+                (document.getElementById("compatibility") as HTMLImageElement).src =
                     "armcord://assets/WindowUnsupported.png";
             }
         }
-        if (manifest.source != undefined)
+        if (manifest.source !== undefined)
             document.getElementById("themeInfoButtons")!.innerHTML +=
                 `<a href="${manifest.source}" class="button">Source code</a>`;
-        if (manifest.website != undefined)
+        if (manifest.website !== undefined)
             document.getElementById("themeInfoButtons")!.innerHTML +=
                 `<a href="${manifest.website}" class="button">Website</a>`;
-        if (manifest.invite != undefined)
+        if (manifest.invite !== undefined)
             document.getElementById("themeInfoButtons")!.innerHTML +=
                 `<a href="${`https://discord.gg/${manifest.invite}`}" class="button">Support Discord</a>`;
     });

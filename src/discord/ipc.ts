@@ -1,15 +1,15 @@
-import {app, clipboard, desktopCapturer, ipcMain, shell, SourcesOptions, BrowserWindow} from "electron";
-import os from "os";
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
+import { type BrowserWindow, type SourcesOptions, app, clipboard, desktopCapturer, ipcMain, shell } from "electron";
 
-import {getConfig, setConfigBulk, getConfigLocation, setConfig} from "../common/config.js";
-import {setLang, getLang, getLangName, getRawLang} from "../common/lang.js";
-import {getVersion, getDisplayVersion} from "../common/version.js";
-import {splashWindow} from "../splash/main.js";
-import {createTManagerWindow} from "../themeManager/main.js";
-import {Settings} from "../@types/settings.js";
 import isDev from "electron-is-dev";
+import type { Settings } from "../@types/settings.js";
+import { getConfig, getConfigLocation, setConfig, setConfigBulk } from "../common/config.js";
+import { getLang, getLangName, getRawLang, setLang } from "../common/lang.js";
+import { getDisplayVersion, getVersion } from "../common/version.js";
+import { splashWindow } from "../splash/main.js";
+import { createTManagerWindow } from "../themeManager/main.js";
 
 const userDataPath = app.getPath("userData");
 const storagePath = path.join(userDataPath, "/storage/");
@@ -17,30 +17,29 @@ const themesPath = path.join(userDataPath, "/themes/");
 const pluginsPath = path.join(userDataPath, "/plugins/");
 const quickCssPath = path.join(userDataPath, "/quickCss.css");
 
-function ifExistsRead(path: string): string {
+function ifExistsRead(path: string): string | undefined {
     if (fs.existsSync(path)) return fs.readFileSync(path, "utf-8");
-    else return "";
 }
 
 export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.handle("getShelterBundle", () => {
         return {
             js: ifExistsRead(path.join(app.getPath("userData"), "shelter.js")),
-            enabled: true
+            enabled: true,
         };
     });
     ipcMain.handle("getVencordBundle", () => {
         return {
             js: ifExistsRead(path.join(app.getPath("userData"), "vencord.js")),
             css: ifExistsRead(path.join(app.getPath("userData"), "vencord.css")),
-            enabled: getConfig("mods").includes("vencord")
+            enabled: getConfig("mods").includes("vencord"),
         };
     });
     ipcMain.handle("getEquicordBundle", () => {
         return {
             js: ifExistsRead(path.join(app.getPath("userData"), "equicord.js")),
             css: ifExistsRead(path.join(app.getPath("userData"), "equicord.css")),
-            enabled: getConfig("mods").includes("equicord")
+            enabled: getConfig("mods").includes("equicord"),
         };
     });
     ipcMain.handle("getCustomBundle", () => {
@@ -49,10 +48,8 @@ export function registerIpc(passedWindow: BrowserWindow): void {
             return {
                 js: ifExistsRead(path.join(app.getPath("userData"), "custom.js")),
                 css: ifExistsRead(path.join(app.getPath("userData"), "custom.css")),
-                enabled
+                enabled,
             };
-        } else {
-            return null;
         }
     });
     ipcMain.on("splashEnd", () => {
@@ -159,7 +156,7 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         clipboard.writeText(
             `**OS:** ${os.platform()} ${os.version()}\n**Architecture:** ${os.arch()}\n**ArmCord version:** ${getVersion()}\n**Electron version:** ${
                 process.versions.electron
-            }\n\`${settingsFileContent}\``
+            }\n\`${settingsFileContent}\``,
         );
     });
     ipcMain.on("copyGPUInfo", () => {

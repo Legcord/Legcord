@@ -1,9 +1,9 @@
-import {BrowserWindow, MessageBoxOptions, app, dialog, ipcMain, shell} from "electron";
-import path from "path";
-import fs from "fs";
-import {createInviteWindow, mainWindows} from "../discord/window.js";
-import {installTheme, setThemeEnabled, uninstallTheme} from "../common/themes.js";
-import {ThemeManifest} from "../@types/themeManifest.js";
+import fs from "node:fs";
+import path from "node:path";
+import { BrowserWindow, type MessageBoxOptions, app, dialog, ipcMain, shell } from "electron";
+import type { ThemeManifest } from "../@types/themeManifest.js";
+import { installTheme, setThemeEnabled, uninstallTheme } from "../common/themes.js";
+import { createInviteWindow, mainWindows } from "../discord/window.js";
 let themeWindow: BrowserWindow;
 let instance = 0;
 
@@ -21,20 +21,20 @@ export async function createTManagerWindow(): Promise<void> {
         themeWindow = new BrowserWindow({
             width: 700,
             height: 600,
-            title: `ArmCord Theme Manager`,
+            title: "ArmCord Theme Manager",
             darkTheme: true,
             frame: true,
             backgroundColor: "#2f3136",
             autoHideMenuBar: true,
             webPreferences: {
                 sandbox: false,
-                preload: path.join(import.meta.dirname, "themeManager", "preload.mjs")
-            }
+                preload: path.join(import.meta.dirname, "themeManager", "preload.mjs"),
+            },
         });
         //setWindowHandler doesn't work for some reason
-        themeWindow.webContents.on("will-navigate", function (e, url) {
+        themeWindow.webContents.on("will-navigate", (e, url) => {
             /* If url isn't the actual page */
-            if (url != themeWindow.webContents.getURL()) {
+            if (url !== themeWindow.webContents.getURL()) {
                 e.preventDefault();
                 if (url.startsWith("https://discord.gg/")) {
                     createInviteWindow(url.replace("https://discord.gg/", ""));
@@ -61,7 +61,7 @@ export async function createTManagerWindow(): Promise<void> {
         });
         ipcMain.on("editTheme", (_event, id: string) => {
             const manifest = JSON.parse(
-                fs.readFileSync(`${themesFolder}/${id}/manifest.json`, "utf8")
+                fs.readFileSync(`${themesFolder}/${id}/manifest.json`, "utf8"),
             ) as ThemeManifest;
             void shell.openPath(`${themesFolder}/${id}/${manifest.theme}`);
         });
@@ -74,11 +74,11 @@ export async function createTManagerWindow(): Promise<void> {
                 buttons: ["Yes, please", "No, cancel"],
                 defaultId: 1,
                 title: "Remove theme",
-                message: `Are you sure you want to remove this theme?`
+                message: "Are you sure you want to remove this theme?",
             };
 
-            void dialog.showMessageBox(mainWindows[0], options).then(({response}) => {
-                if (response == 0) {
+            void dialog.showMessageBox(mainWindows[0], options).then(({ response }) => {
+                if (response === 0) {
                     uninstallTheme(id);
                     themeWindow.webContents.reload();
                     mainWindows.forEach((mainWindow) => {
@@ -93,7 +93,7 @@ export async function createTManagerWindow(): Promise<void> {
                     dialog.showMessageBoxSync({
                         type: "info",
                         title: "BD Theme import success",
-                        message: "Successfully imported theme from link."
+                        message: "Successfully imported theme from link.",
                     });
                     themeWindow.webContents.reload();
                     mainWindows.forEach((mainWindow) => {
@@ -103,7 +103,7 @@ export async function createTManagerWindow(): Promise<void> {
                 .catch((err) => {
                     dialog.showErrorBox(
                         "BD Theme import fail",
-                        "Failed to import theme from link. Please make sure that it's a valid BetterDiscord Theme."
+                        "Failed to import theme from link. Please make sure that it's a valid BetterDiscord Theme.",
                     );
                     console.error(err);
                 });
@@ -112,10 +112,10 @@ export async function createTManagerWindow(): Promise<void> {
             fs.readdirSync(themesFolder).forEach((file) => {
                 try {
                     const manifest = JSON.parse(
-                        fs.readFileSync(`${themesFolder}/${file}/manifest.json`, "utf8")
+                        fs.readFileSync(`${themesFolder}/${file}/manifest.json`, "utf8"),
                     ) as ThemeManifest;
                     console.log(manifest);
-                    if (manifest.enabled == undefined) {
+                    if (manifest.enabled === undefined) {
                         if (fs.readFileSync(`${userDataPath}/disabled.txt`).toString().includes(file)) {
                             manifest.enabled = false;
                         } else {
