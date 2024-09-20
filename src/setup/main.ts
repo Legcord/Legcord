@@ -1,9 +1,9 @@
-import fs from "fs";
-import path from "path";
-import {BrowserWindow, app, ipcMain} from "electron";
-import type {Settings} from "../@types/settings.js";
-import {getConfig, getConfigLocation, setConfigBulk} from "../common/config.js";
-import {getLang} from "../common/lang.js";
+import fs from "node:fs";
+import path from "node:path";
+import { BrowserWindow, app, ipcMain } from "electron";
+import type { Settings } from "../@types/settings.js";
+import { getConfig, getConfigLocation, setConfigBulk } from "../common/config.js";
+import { getLang } from "../common/lang.js";
 
 let setupWindow: BrowserWindow;
 export async function createSetupWindow(): Promise<void> {
@@ -19,8 +19,8 @@ export async function createSetupWindow(): Promise<void> {
             webPreferences: {
                 sandbox: false,
                 spellcheck: false,
-                preload: path.join(import.meta.dirname, "setup", "preload.mjs")
-            }
+                preload: path.join(import.meta.dirname, "setup", "preload.mjs"),
+            },
         });
         ipcMain.on("saveSettings", (_event, args: Settings) => {
             console.log(args);

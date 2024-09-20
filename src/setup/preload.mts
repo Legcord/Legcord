@@ -1,6 +1,6 @@
-import {contextBridge, ipcRenderer} from "electron";
-import {Settings} from "../@types/settings.js";
-import {injectTitlebar} from "../discord/preload/titlebar.mjs";
+import { contextBridge, ipcRenderer } from "electron";
+import type { Settings } from "../@types/settings.js";
+import { injectTitlebar } from "../discord/preload/titlebar.mjs";
 
 injectTitlebar();
 contextBridge.exposeInMainWorld("armcordinternal", {
@@ -10,5 +10,5 @@ contextBridge.exposeInMainWorld("armcordinternal", {
     getLang: (toGet: string) =>
         ipcRenderer.invoke("setup-getLang", toGet).then((result: string) => {
             return result;
-        })
+        }),
 });

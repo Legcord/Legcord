@@ -1,7 +1,7 @@
-import fs from "fs";
-import path from "path";
-import {app} from "electron";
-import {WindowState} from "../@types/windowState.js";
+import fs from "node:fs";
+import path from "node:path";
+import { app } from "electron";
+import type { WindowState } from "../@types/windowState.js";
 export function getWindowStateLocation() {
     const userDataPath = app.getPath("userData");
     const storagePath = path.join(userDataPath, "/storage/");

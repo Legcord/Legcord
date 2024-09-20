@@ -1,4 +1,4 @@
-import {app} from "electron";
+import { app } from "electron";
 import isDev from "electron-is-dev";
 
 export function getVersion(): string {

@@ -1,20 +1,20 @@
-import {BrowserWindow, Menu, app} from "electron";
-import {setForceQuit} from "../common/forceQuit.js";
-import {mainWindows} from "./window.js";
+import { BrowserWindow, Menu, type MenuItemConstructorOptions, app } from "electron";
+import { setForceQuit } from "../common/forceQuit.js";
+import { mainWindows } from "./window.js";
 
 export function setMenu(): void {
-    const template: Electron.MenuItemConstructorOptions[] = [
+    const template: MenuItemConstructorOptions[] = [
         {
             label: "ArmCord",
             submenu: [
-                {label: "About ArmCord", role: "about"}, //orderFrontStandardAboutPanel
-                {type: "separator"},
+                { label: "About ArmCord", role: "about" }, //orderFrontStandardAboutPanel
+                { type: "separator" },
                 {
                     label: "Developer tools",
                     accelerator: "CmdOrCtrl+Shift+I",
                     click() {
                         BrowserWindow.getFocusedWindow()!.webContents.toggleDevTools();
-                    }
+                    },
                 },
                 {
                     label: "Open settings",
@@ -30,11 +30,11 @@ export function setMenu(): void {
                                 "openWithoutBackstack": false
                             })`);
                             void mainWindow.webContents.executeJavaScript(
-                                `window.shelter.flux.dispatcher.dispatch({type: "LAYER_PUSH", component: "USER_SETTINGS"})`
+                                `window.shelter.flux.dispatcher.dispatch({type: "LAYER_PUSH", component: "USER_SETTINGS"})`,
                             );
                             // TODO - open armcord tab in settings
                         });
-                    }
+                    },
                 },
                 {
                     label: "Reload",
@@ -43,7 +43,7 @@ export function setMenu(): void {
                         mainWindows.forEach((mainWindow) => {
                             mainWindow.webContents.reloadIgnoringCache();
                         });
-                    }
+                    },
                 },
                 {
                     label: "Restart",
@@ -51,7 +51,7 @@ export function setMenu(): void {
                     click() {
                         app.relaunch();
                         app.exit();
-                    }
+                    },
                 },
                 {
                     label: "Quit",
@@ -59,44 +59,44 @@ export function setMenu(): void {
                     click() {
                         setForceQuit(true);
                         app.quit();
-                    }
-                }
-            ]
+                    },
+                },
+            ],
         },
         {
             label: "Edit",
             submenu: [
-                {label: "Undo", accelerator: "CmdOrCtrl+Z", role: "undo"},
-                {label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", role: "redo"},
-                {type: "separator"},
-                {label: "Cut", accelerator: "CmdOrCtrl+X", role: "cut"},
-                {label: "Copy", accelerator: "CmdOrCtrl+C", role: "copy"},
-                {label: "Paste", accelerator: "CmdOrCtrl+V", role: "paste"},
-                {label: "Select All", accelerator: "CmdOrCtrl+A", role: "selectAll"}
-            ]
+                { label: "Undo", accelerator: "CmdOrCtrl+Z", role: "undo" },
+                { label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", role: "redo" },
+                { type: "separator" },
+                { label: "Cut", accelerator: "CmdOrCtrl+X", role: "cut" },
+                { label: "Copy", accelerator: "CmdOrCtrl+C", role: "copy" },
+                { label: "Paste", accelerator: "CmdOrCtrl+V", role: "paste" },
+                { label: "Select All", accelerator: "CmdOrCtrl+A", role: "selectAll" },
+            ],
         },
         {
             label: "Zoom",
             submenu: [
-                {label: "Zoom in", accelerator: "CmdOrCtrl+Plus", role: "zoomIn"},
+                { label: "Zoom in", accelerator: "CmdOrCtrl+Plus", role: "zoomIn" },
                 // Fix for zoom in on keyboards with dedicated + like QWERTZ (or numpad)
                 // See https://github.com/electron/electron/issues/14742 and https://github.com/electron/electron/issues/5256
-                {label: "Zoom in", accelerator: "CmdOrCtrl+=", role: "zoomIn", visible: false},
-                {label: "Zoom out", accelerator: "CmdOrCtrl+-", role: "zoomOut"},
-                {type: "separator"},
-                {label: "Reset zoom", accelerator: "CmdOrCtrl+0", role: "resetZoom"}
-            ]
+                { label: "Zoom in", accelerator: "CmdOrCtrl+=", role: "zoomIn", visible: false },
+                { label: "Zoom out", accelerator: "CmdOrCtrl+-", role: "zoomOut" },
+                { type: "separator" },
+                { label: "Reset zoom", accelerator: "CmdOrCtrl+0", role: "resetZoom" },
+            ],
         },
         {
             label: "Window",
             submenu: [
                 {
                     label: "Fullscreen",
-                    role: "togglefullscreen"
+                    role: "togglefullscreen",
                 },
-                {label: "Minimize", accelerator: "Cmd+M", role: "minimize"}
-            ]
-        }
+                { label: "Minimize", accelerator: "Cmd+M", role: "minimize" },
+            ],
+        },
     ];
 
     Menu.setApplicationMenu(Menu.buildFromTemplate(template));

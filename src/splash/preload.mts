@@ -1,4 +1,4 @@
-import {contextBridge, ipcRenderer} from "electron";
+import { contextBridge, ipcRenderer } from "electron";
 
 contextBridge.exposeInMainWorld("internal", {
     restart: () => ipcRenderer.send("restart"),
@@ -9,5 +9,5 @@ contextBridge.exposeInMainWorld("internal", {
         ipcRenderer.invoke("getLang", toGet).then((result: string) => {
             return result;
         }),
-    splashEnd: () => ipcRenderer.send("splashEnd")
+    splashEnd: () => ipcRenderer.send("splashEnd"),
 });

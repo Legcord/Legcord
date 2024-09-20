@@ -1,7 +1,7 @@
-import path from "path";
-import {BrowserWindow, ipcMain} from "electron";
+import path from "node:path";
+import { BrowserWindow, ipcMain } from "electron";
 import isDev from "electron-is-dev";
-import {getConfig} from "../common/config.js";
+import { getConfig } from "../common/config.js";
 
 export let splashWindow: BrowserWindow;
 export async function createSplashWindow(): Promise<void> {
@@ -17,8 +17,8 @@ export async function createSplashWindow(): Promise<void> {
         autoHideMenuBar: true,
         webPreferences: {
             sandbox: false,
-            preload: path.join(import.meta.dirname, "splash", "preload.mjs")
-        }
+            preload: path.join(import.meta.dirname, "splash", "preload.mjs"),
+        },
     });
     ipcMain.on("splash-isDev", (event) => {
         event.returnValue = isDev;

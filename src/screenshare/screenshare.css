@@ -54,8 +54,6 @@
     background: var(--background-floating);
     text-align: left;
 }
-@media (prefers-reduced-motion: no-preference) {
-}
 .desktop-capturer-selection__btn:hover,
 .desktop-capturer-selection__btn:focus {
     background: #7289da;

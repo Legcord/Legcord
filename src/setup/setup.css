@@ -107,7 +107,7 @@ div {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    content: var(--logo-svg);
+    content: var(--logo-svg); /* FIXME - make this uri */
     width: 292px;
 }
 

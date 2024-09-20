@@ -1,7 +1,7 @@
-import {writeFileSync} from "fs";
-import {join} from "path";
-import {app} from "electron";
-import {getConfig} from "../../common/config.js";
+import { writeFileSync } from "node:fs";
+import { join } from "node:path";
+import { app } from "electron";
+import { getConfig } from "../../common/config.js";
 
 async function fetchMod(fileName: string, url: string) {
     try {

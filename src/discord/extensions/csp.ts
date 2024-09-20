@@ -1,20 +1,20 @@
 import electron from "electron";
-import {getConfig} from "../../common/config.js";
+import { getConfig } from "../../common/config.js";
 
 const unrestrictCSP = (): void => {
     console.log("Setting up CSP unrestricter...");
 
-    electron.session.defaultSession.webRequest.onHeadersReceived(({responseHeaders, resourceType}, done) => {
+    electron.session.defaultSession.webRequest.onHeadersReceived(({ responseHeaders, resourceType }, done) => {
         if (!responseHeaders) return done({});
 
         if (resourceType === "mainFrame") {
-            delete responseHeaders["content-security-policy"];
+            (responseHeaders["content-security-policy"] as unknown) = undefined; // REVIEW - CHECK THIS WORKS
         } else if (resourceType === "stylesheet") {
             // Fix hosts that don't properly set the css content type, such as
             // raw.githubusercontent.com
             responseHeaders["content-type"] = ["text/css"];
         }
-        return done({responseHeaders});
+        return done({ responseHeaders });
     });
 };
 

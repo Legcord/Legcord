@@ -1,5 +1,5 @@
-import {ipcRenderer, webFrame} from "electron";
-import type {ModBundle} from "../../../@types/ModBundle.js";
+import { ipcRenderer, webFrame } from "electron";
+import type { ModBundle } from "../../../@types/ModBundle.js";
 
 try {
     await ipcRenderer.invoke("getVencordBundle").then(async (bundle: ModBundle) => {

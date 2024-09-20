@@ -1,8 +1,8 @@
-import {existsSync, mkdirSync, readFileSync, statSync, writeFileSync} from "fs";
-import {dirname, join} from "path";
-import {app, dialog} from "electron";
-import type {Settings} from "../@types/settings.js";
-import {getWindowStateLocation} from "./windowState.js";
+import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { app, dialog } from "electron";
+import type { Settings } from "../@types/settings.js";
+import { getWindowStateLocation } from "./windowState.js";
 export let firstRun: boolean;
 export function checkForDataFolder(): void {
     const dataPath = join(dirname(app.getPath("exe")), "armcord-data");
@@ -39,7 +39,7 @@ export function setConfigBulk(object: Settings): void {
         // Ignore errors when the file doesn't exist or parsing fails
     }
     // Merge the existing data with the new data
-    const mergedData = {...existingData, ...object};
+    const mergedData = { ...existingData, ...object };
     // Write the merged data back to the file
     const toSave = JSON.stringify(mergedData, null, 4);
     writeFileSync(getConfigLocation(), toSave, "utf-8");
@@ -62,7 +62,7 @@ export function checkIfConfigExists(): void {
         console.log("First run of the ArmCord. Starting setup.");
         setup();
         firstRun = true;
-    } else if (getConfig("doneSetup") == false) {
+    } else if (getConfig("doneSetup") === false) {
         console.log("First run of the ArmCord. Starting setup.");
         setup();
         firstRun = true;
@@ -81,7 +81,7 @@ export function checkIfConfigIsBroken(): void {
         setup();
         dialog.showErrorBox(
             "Oops, something went wrong.",
-            "ArmCord has detected that your configuration file is corrupted, please restart the app and set your settings again. If this issue persists, report it on the support server/Github issues."
+            "ArmCord has detected that your configuration file is corrupted, please restart the app and set your settings again. If this issue persists, report it on the support server/Github issues.",
         );
     }
     try {
@@ -123,9 +123,9 @@ export function setup(): void {
         clientName: "ArmCord",
         customIcon: join(import.meta.dirname, "../", "/assets/desktop.png"),
         smoothScroll: true,
-        autoScroll: false
+        autoScroll: false,
     };
     setConfigBulk({
-        ...defaults
+        ...defaults,
     });
 }

@@ -4,14 +4,14 @@ import "./mods/custom.js";
 import "./mods/vencord.js";
 import "./mods/equicord.js";
 import "./optimizer.js";
-import {readFileSync} from "fs";
-import {join} from "path";
-import {ipcRenderer} from "electron";
-import type {ArmCordWindow} from "../../@types/armcordWindow.js";
-import {addScript, addStyle, addTheme} from "../../common/dom.js";
-import {sleep} from "../../common/sleep.js";
-import {injectMobileStuff} from "./mobile.js";
-import {injectTitlebar} from "./titlebar.mjs";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import { ipcRenderer } from "electron";
+import type { ArmCordWindow } from "../../@types/armcordWindow.js";
+import { addScript, addStyle, addTheme } from "../../common/dom.js";
+import { sleep } from "../../common/sleep.js";
+import { injectMobileStuff } from "./mobile.js";
+import { injectTitlebar } from "./titlebar.mjs";
 
 window.localStorage.setItem("hideNag", "true");
 if (ipcRenderer.sendSync("getConfig", "legacyCapturer")) {
@@ -21,7 +21,7 @@ if (ipcRenderer.sendSync("getConfig", "legacyCapturer")) {
 const version = ipcRenderer.sendSync("displayVersion") as string;
 function updateLang(): void {
     const value = `; ${document.cookie}`;
-    const parts = value.split(`; locale=`);
+    const parts = value.split("; locale=");
     if (parts.length === 2) ipcRenderer.send("setLang", parts.pop()?.split(";").shift());
 }
 
@@ -39,7 +39,7 @@ ipcRenderer.on("addTheme", (_event, name: string, css: string) => {
 ipcRenderer.on("removeTheme", (_event, name: string) => {
     document.getElementById(name)!.remove();
 });
-if (ipcRenderer.sendSync("getConfig", "windowStyle") == "default") {
+if (ipcRenderer.sendSync("getConfig", "windowStyle") === "default") {
     injectTitlebar();
 }
 if (ipcRenderer.sendSync("getConfig", "mobileMode")) {
@@ -49,7 +49,7 @@ await sleep(5000).then(() => {
     // dirty hack to make clicking notifications focus ArmCord
     if (
         document.getElementById("window-title") == null &&
-        ipcRenderer.sendSync("getConfig", "windowStyle") == "default"
+        ipcRenderer.sendSync("getConfig", "windowStyle") === "default"
     ) {
         console.warn("Custom titlebar is missing. Switching to native");
         ipcRenderer.send("setConfig", "windowStyle", "native");
@@ -74,7 +74,7 @@ await sleep(5000).then(() => {
 
     // remove the annoying "download the app" button
     addScript(
-        "document.querySelector('.guilds_a4d4d9 .scroller_fea3ef').lastChild.previousSibling.style.display = 'none';"
+        "document.querySelector('.guilds_a4d4d9 .scroller_fea3ef').lastChild.previousSibling.style.display = 'none';",
     );
     if (ipcRenderer.sendSync("getConfig", "disableAutogain")) {
         addScript(readFileSync(join(import.meta.dirname, "../", "/js/disableAutogain.js"), "utf8"));

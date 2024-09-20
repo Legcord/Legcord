@@ -1,30 +1,30 @@
-import * as fs from "fs";
-import os from "os";
-import path from "path";
+import * as fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
 // To allow seamless switching between custom titlebar and native os titlebar,
 // I had to add most of the window creation code here to split both into separate functions
 // WHY? Because I can't use the same code for both due to annoying bug with value `frame` not responding to variables
 // I'm sorry for this mess but I'm not sure how to fix it.
 import {
     BrowserWindow,
-    BrowserWindowConstructorOptions,
-    MessageBoxOptions,
+    type BrowserWindowConstructorOptions,
+    type MessageBoxOptions,
     app,
     dialog,
     nativeImage,
-    shell
+    shell,
 } from "electron";
 import contextMenu from "electron-context-menu";
-import {registerIpc} from "./ipc.js";
-import {setMenu} from "./menu.js";
+import { registerIpc } from "./ipc.js";
+import { setMenu } from "./menu.js";
 import "./keybinds.js";
 import RPCServer from "arrpc";
-import {firstRun, getConfig, setConfig} from "../common/config.js";
-import {forceQuit, setForceQuit} from "../common/forceQuit.js";
-import {initQuickCss, injectThemesMain} from "../common/themes.js";
-import {getWindowState, setWindowState} from "../common/windowState.js";
-import {init} from "../main.js";
-import {tray} from "../tray.js";
+import { firstRun, getConfig, setConfig } from "../common/config.js";
+import { forceQuit, setForceQuit } from "../common/forceQuit.js";
+import { initQuickCss, injectThemesMain } from "../common/themes.js";
+import { getWindowState, setWindowState } from "../common/windowState.js";
+import { init } from "../main.js";
+import { tray } from "../tray.js";
 export let mainWindows: BrowserWindow[] = [];
 export let inviteWindow: BrowserWindow;
 
@@ -39,7 +39,7 @@ contextMenu({
             visible: parameters.selectionText.trim().length > 0,
             click: () => {
                 void shell.openExternal(`https://google.com/search?q=${encodeURIComponent(parameters.selectionText)}`);
-            }
+            },
         },
         {
             label: "Search with DuckDuckGo",
@@ -47,9 +47,9 @@ contextMenu({
             visible: parameters.selectionText.trim().length > 0,
             click: () => {
                 void shell.openExternal(`https://duckduckgo.com/?q=${encodeURIComponent(parameters.selectionText)}`);
-            }
-        }
-    ]
+            },
+        },
+    ],
 });
 function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     if (getWindowState("isMaximized") ?? false) {
@@ -58,9 +58,9 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         void passedWindow.webContents.executeJavaScript(`document.body.setAttribute("isMaximized", "");`);
         passedWindow.hide(); // please don't flashbang the user
     }
-    if (getConfig("windowStyle") == "transparent" && process.platform === "win32") {
+    if (getConfig("windowStyle") === "transparent" && process.platform === "win32") {
         passedWindow.setBackgroundMaterial("mica");
-        if (getConfig("startMinimized") == false) {
+        if (getConfig("startMinimized") === false) {
             passedWindow.show();
         }
     }
@@ -74,7 +74,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
             "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.149 Mobile Safari/537.36";
     } else {
         let osType = process.platform === "darwin" ? "Macintosh" : process.platform === "win32" ? "Windows" : "Linux";
-        if (osType === "Linux") osType = "X11; " + osType;
+        if (osType === "Linux") osType = `X11; ${osType}`;
         const chromeVersion = process.versions.chrome;
         const userAgent = `Mozilla/5.0 (${osType} ${os.arch()}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chromeVersion} Safari/537.36`;
         passedWindow.webContents.userAgent = userAgent;
@@ -85,7 +85,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
                 // Print out data received from the second instance.
                 console.log(additionalData);
 
-                if (getConfig("multiInstance") == (false ?? undefined)) {
+                if (getConfig("multiInstance") === (false ?? undefined)) {
                     // Someone tried to run a second instance, we should focus our window.
                     if (passedWindow) {
                         if (passedWindow.isMinimized()) passedWindow.restore();
@@ -98,10 +98,10 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
             })();
         });
     }
-    app.on("activate", function () {
+    app.on("activate", () => {
         app.show();
     });
-    passedWindow.webContents.on("frame-created", (_, {frame}) => {
+    passedWindow.webContents.on("frame-created", (_, { frame }) => {
         frame.once("dom-ready", async () => {
             if (
                 frame.url.includes("youtube.com/embed/") ||
@@ -111,12 +111,12 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
             }
         });
     });
-    passedWindow.webContents.setWindowOpenHandler(({url}) => {
+    passedWindow.webContents.setWindowOpenHandler(({ url }) => {
         // Allow about:blank (used by Vencord & Equicord QuickCss popup)
-        if (url === "about:blank") return {action: "allow"};
+        if (url === "about:blank") return { action: "allow" };
         // Saving ics files on future events
         if (url.startsWith("blob:https://discord.com/")) {
-            return {action: "allow", overrideBrowserWindowOptions: {show: false}};
+            return { action: "allow", overrideBrowserWindowOptions: { show: false } };
         }
         // Allow Discord stream popout
         if (
@@ -127,8 +127,8 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
             return {
                 action: "allow",
                 overrideBrowserWindowOptions: {
-                    alwaysOnTop: true
-                }
+                    alwaysOnTop: true,
+                },
             };
         if (url.startsWith("https:") || url.startsWith("http:") || url.startsWith("mailto:")) {
             void shell.openExternal(url);
@@ -143,47 +143,47 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
                 message: `Do you want to open ${url}?`,
                 detail: "This url was detected to not use normal browser protocols. It could mean that this url leads to a local program on your computer. Please check if you recognise it, before proceeding!",
                 checkboxLabel: "Remember my answer and ignore this warning for future sessions",
-                checkboxChecked: false
+                checkboxChecked: false,
             };
 
-            void dialog.showMessageBox(passedWindow, options).then(({response, checkboxChecked}) => {
+            void dialog.showMessageBox(passedWindow, options).then(({ response, checkboxChecked }) => {
                 console.log(response, checkboxChecked);
                 if (checkboxChecked) {
-                    if (response == 0) {
+                    if (response === 0) {
                         setConfig("ignoreProtocolWarning", true);
                     } else {
                         setConfig("ignoreProtocolWarning", false);
                     }
                 }
-                if (response == 0) {
+                if (response === 0) {
                     void shell.openExternal(url);
                 }
             });
         }
 
-        return {action: "deny"};
+        return { action: "deny" };
     });
-    if (getConfig("useLegacyCapturer") == false) {
+    if (getConfig("useLegacyCapturer") === false) {
         console.log("Starting screenshare module...");
         void import("../screenshare/main.js"); // REVIEW - This is probably bad.
     }
 
     passedWindow.webContents.session.webRequest.onBeforeRequest(
-        {urls: ["https://*/api/v*/science", "https://sentry.io/*", "https://*.nel.cloudflare.com/*"]},
-        (_, callback) => callback({cancel: true})
+        { urls: ["https://*/api/v*/science", "https://sentry.io/*", "https://*.nel.cloudflare.com/*"] },
+        (_, callback) => callback({ cancel: true }),
     );
 
-    if (getConfig("trayIcon") == "dynamic") {
+    if (getConfig("trayIcon") === "dynamic") {
         passedWindow.webContents.on("page-favicon-updated", (_, favicons) => {
             try {
                 let favicon = nativeImage.createFromDataURL(favicons[0]);
 
                 switch (process.platform) {
                     case "darwin":
-                        favicon = favicon.resize({height: 22});
+                        favicon = favicon.resize({ height: 22 });
                         break;
                     case "win32":
-                        favicon = favicon.resize({height: 32});
+                        favicon = favicon.resize({ height: 32 });
                         break;
                 }
 
@@ -199,25 +199,23 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         const armCordSuffix = " - ArmCord"; /* identify */
 
         // FIXME - This is a bit of a mess. I'm not sure how to clean it up.
-        if (process.platform === "win32" && getConfig("trayIcon") != "dynamic") {
+        if (process.platform === "win32" && getConfig("trayIcon") !== "dynamic") {
             if (title.startsWith("•"))
                 return passedWindow.setOverlayIcon(
                     nativeImage.createFromPath(path.join(import.meta.dirname, "../", "/assets/badge-11.ico")),
-                    "You have some unread messages."
+                    "You have some unread messages.",
                 );
             if (title.startsWith("(")) {
-                const pings = parseInt(/\((\d+)\)/.exec(title)![1]);
+                const pings = Number.parseInt(/\((\d+)\)/.exec(title)![1]);
                 if (pings > 9) {
                     return passedWindow.setOverlayIcon(
                         nativeImage.createFromPath(path.join(import.meta.dirname, "../", "/assets/badge-10.ico")),
-                        "You have some unread messages."
+                        "You have some unread messages.",
                     );
                 } else {
                     return passedWindow.setOverlayIcon(
-                        nativeImage.createFromPath(
-                            path.join(import.meta.dirname, "../", "/assets/badge-" + pings + ".ico")
-                        ),
-                        "You have some unread messages."
+                        nativeImage.createFromPath(path.join(import.meta.dirname, "../", `/assets/badge-${pings}.ico`)),
+                        "You have some unread messages.",
                     );
                 }
             }
@@ -225,13 +223,13 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         }
         if (process.platform === "darwin") {
             if (title.startsWith("•")) return app.dock.setBadge("•");
-            if (title.startsWith("(")) return app.setBadgeCount(parseInt(/\((\d+)\)/.exec(title)![1]));
+            if (title.startsWith("(")) return app.setBadgeCount(Number.parseInt(/\((\d+)\)/.exec(title)![1]));
             app.setBadgeCount(0);
         }
         if (!title.endsWith(armCordSuffix)) {
             e.preventDefault();
             void passedWindow.webContents.executeJavaScript(
-                `document.title = '${title.replace("Discord |", "") + armCordSuffix}'`
+                `document.title = '${title.replace("Discord |", "") + armCordSuffix}'`,
             );
         }
     });
@@ -243,7 +241,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     setMenu();
     passedWindow.on("close", (e) => {
         if (mainWindows.length > 1) {
-            mainWindows = mainWindows.filter((mainWindow) => mainWindow.id != passedWindow.id);
+            mainWindows = mainWindows.filter((mainWindow) => mainWindow.id !== passedWindow.id);
             passedWindow.destroy();
         }
         if (getConfig("minimizeToTray") && !forceQuit) {
@@ -260,7 +258,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
             height,
             isMaximized: passedWindow.isMaximized(),
             x: passedWindow.getPosition()[0],
-            y: passedWindow.getPosition()[1]
+            y: passedWindow.getPosition()[1],
         });
         setForceQuit(true);
     });
@@ -325,8 +323,8 @@ export function createWindow() {
         webPreferences: {
             sandbox: false,
             preload: path.join(import.meta.dirname, "discord/preload.mjs"),
-            spellcheck: getConfig("spellcheck")
-        }
+            spellcheck: getConfig("spellcheck"),
+        },
     };
     switch (getConfig("windowStyle")) {
         case "native":
@@ -337,7 +335,7 @@ export function createWindow() {
             browserWindowOptions.titleBarOverlay = {
                 color: "#2c2f33",
                 symbolColor: "#99aab5",
-                height: 30
+                height: 30,
             };
             break;
         case "transparent":
@@ -361,12 +359,12 @@ export function createInviteWindow(code: string): void {
         autoHideMenuBar: true,
         webPreferences: {
             sandbox: false,
-            spellcheck: getConfig("spellcheck")
-        }
+            spellcheck: getConfig("spellcheck"),
+        },
     });
     const formInviteURL = `https://discord.com/invite/${code}`;
     inviteWindow.webContents.session.webRequest.onBeforeRequest((details, callback) => {
-        if (details.url.includes("ws://")) return callback({cancel: true});
+        if (details.url.includes("ws://")) return callback({ cancel: true });
         return callback({});
     });
     // NOTE - This shouldn't matter, since below we have an event on it

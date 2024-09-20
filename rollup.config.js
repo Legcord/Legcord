@@ -4,9 +4,11 @@ import commonjs from "@rollup/plugin-commonjs";
 import esmShim from "@rollup/plugin-esm-shim";
 import json from "@rollup/plugin-json";
 import typescript from "@rollup/plugin-typescript";
-import {defineConfig} from "rollup";
+import { defineConfig } from "rollup";
 import copy from "rollup-plugin-copy";
-import {minify} from "rollup-plugin-esbuild";
+import { minify } from "rollup-plugin-esbuild";
+
+const prodEnv = process.env.BUILD === "prod";
 
 export default defineConfig([
     {
@@ -14,7 +16,7 @@ export default defineConfig([
         output: {
             dir: "ts-out",
             format: "esm",
-            sourcemap: true
+            sourcemap: true,
         },
         external: [
             "electron",
@@ -26,24 +28,24 @@ export default defineConfig([
             "electron-context-menu",
             "arrpc",
             "stream",
-            "stream/promises"
+            "stream/promises",
         ],
         plugins: [
             commonjs(),
             esmShim(),
             json(),
-            minify({minify: process.env.BUILD === "prod" ? true : false}),
+            minify({ minify: prodEnv }),
             typescript(),
             copy({
                 targets: [
-                    {src: "src/**/**/*.html", dest: "ts-out/html/"},
-                    {src: "src/**/**/*.css", dest: "ts-out/css/"},
-                    {src: "src/**/**/*.js", dest: "ts-out/js/"},
-                    {src: "package.json", dest: "ts-out/"},
-                    {src: "assets/**/**", dest: "ts-out/assets/"}
-                ]
-            })
-        ]
+                    { src: "src/**/**/*.html", dest: "ts-out/html/" },
+                    { src: "src/**/**/*.css", dest: "ts-out/css/" },
+                    { src: "src/**/**/*.js", dest: "ts-out/js/" },
+                    { src: "package.json", dest: "ts-out/" },
+                    { src: "assets/**/**", dest: "ts-out/assets/" },
+                ],
+            }),
+        ],
     },
     {
         input: "src/discord/preload/preload.mts",
@@ -51,10 +53,10 @@ export default defineConfig([
             dir: "ts-out/discord",
             entryFileNames: "[name].mjs",
             format: "esm",
-            sourcemap: true
+            sourcemap: true,
         },
         external: ["electron", "fs", "path", "os"],
-        plugins: [typescript(), minify({minify: process.env.BUILD === "prod" ? true : false})]
+        plugins: [typescript(), minify({ minify: prodEnv })],
     },
     {
         input: "src/splash/preload.mts",
@@ -62,10 +64,10 @@ export default defineConfig([
             dir: "ts-out/splash",
             format: "esm",
             entryFileNames: "[name].mjs",
-            sourcemap: true
+            sourcemap: true,
         },
         external: ["electron"],
-        plugins: [typescript(), minify({minify: process.env.BUILD === "prod" ? true : false})]
+        plugins: [typescript(), minify({ minify: prodEnv })],
     },
     {
         input: "src/setup/preload.mts",
@@ -73,10 +75,10 @@ export default defineConfig([
             dir: "ts-out/setup",
             format: "esm",
             entryFileNames: "[name].mjs",
-            sourcemap: true
+            sourcemap: true,
         },
         external: ["electron", "fs", "path", "os"],
-        plugins: [typescript(), minify({minify: process.env.BUILD === "prod" ? true : false})]
+        plugins: [typescript(), minify({ minify: prodEnv })],
     },
     {
         input: "src/themeManager/preload.mts",
@@ -84,10 +86,10 @@ export default defineConfig([
             dir: "ts-out/themeManager",
             format: "esm",
             entryFileNames: "[name].mjs",
-            sourcemap: true
+            sourcemap: true,
         },
         external: ["electron", "fs", "path", "os"],
-        plugins: [typescript(), minify({minify: process.env.BUILD === "prod" ? true : false})]
+        plugins: [typescript(), minify({ minify: prodEnv })],
     },
     {
         input: "src/screenshare/preload.mts",
@@ -95,9 +97,9 @@ export default defineConfig([
             dir: "ts-out/screenshare",
             format: "esm",
             entryFileNames: "[name].mjs",
-            sourcemap: true
+            sourcemap: true,
         },
         external: ["electron"],
-        plugins: [typescript(), minify({minify: process.env.BUILD === "prod" ? true : false})]
-    }
+        plugins: [typescript(), minify({ minify: prodEnv })],
+    },
 ]);
