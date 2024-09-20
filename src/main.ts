@@ -113,10 +113,13 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     void app.whenReady().then(async () => {
         // Patch for linux bug to insure things are loaded before window creation (fixes transparency on some linux systems)
         await new Promise<void>((resolve) =>
-            setTimeout(() => {
-                // biome-ignore lint/style/noCommaOperator: // FIXME - What?
-                init(), resolve(), 1500;
-            }),
+            setTimeout(
+                () =>
+                    (
+                        // biome-ignore lint/style/noCommaOperator: // FIXME - What?
+                        init(), resolve(), 1500
+                    ),
+            ),
         );
         session.defaultSession.setPermissionRequestHandler((_webContents, permission, callback) => {
             if (permission === "notifications") {

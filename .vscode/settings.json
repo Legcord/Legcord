@@ -19,5 +19,6 @@
         "vaapi"
     ],
     "cSpell.ignorePaths": ["assets/lang"],
-    "editor.defaultFormatter": "biomejs.biome"
+    "editor.defaultFormatter": "biomejs.biome",
+    "deepscan.enable": true
 }
