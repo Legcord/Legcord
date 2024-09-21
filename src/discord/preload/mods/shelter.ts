@@ -3,13 +3,10 @@ import type { ModBundle } from "../../../@types/ModBundle.js";
 
 const requiredPlugins: Record<string, [string, { isVisible: boolean; allowedActions: Record<string, true> }]> = {
     // "armcord-arrpc": "armcord://plugins/armcordRPC/",
-    "armcord-settings": [
-        "armcord://plugins/armcordSettings/",
-        { isVisible: false, allowedActions: {} }
-    ],
+    "armcord-settings": ["armcord://plugins/armcordSettings/", { isVisible: false, allowedActions: {} }],
     "armcord-screenshare": [
         "armcord://plugins/screenshareQualityFix/",
-        { isVisible: true, allowedActions: { toggle: true } }
+        { isVisible: true, allowedActions: { toggle: true } },
     ],
 };
 try {
