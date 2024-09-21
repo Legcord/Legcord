@@ -1,8 +1,24 @@
 import { BrowserWindow, Menu, type MenuItemConstructorOptions, app } from "electron";
+import type { Keybind, KeybindActions } from "../@types/keybind.js";
+import { getConfig } from "../common/config.js";
 import { setForceQuit } from "../common/forceQuit.js";
+import { runAction } from "../common/keybindActions.js";
 import { mainWindows } from "./window.js";
 
 export function setMenu(): void {
+    const keybinds = getConfig("keybinds");
+    const keybindSubMenu: { label: KeybindActions; accelerator: string; click: () => void }[] = [];
+    keybinds.forEach((keybind: Keybind) => {
+        if (!keybind.global && keybind.enabled) {
+            keybindSubMenu.push({
+                label: keybind.action,
+                accelerator: keybind.accelerator,
+                click: () => {
+                    runAction(keybind.action);
+                },
+            });
+        }
+    });
     const template: MenuItemConstructorOptions[] = [
         {
             label: "ArmCord",
@@ -97,7 +113,10 @@ export function setMenu(): void {
                 { label: "Minimize", accelerator: "Cmd+M", role: "minimize" },
             ],
         },
+        {
+            label: "Keybind",
+            submenu: keybindSubMenu,
+        },
     ];
-
     Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }

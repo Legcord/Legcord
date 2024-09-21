@@ -1,3 +1,5 @@
+import type { Keybind } from "./keybind.js";
+
 export interface Settings {
     // Referenced for detecting a broken config.
     "0"?: string;
@@ -19,7 +21,7 @@ export interface Settings {
     startMinimized: boolean;
     useLegacyCapturer: boolean;
     tray: boolean;
-    keybinds: string[];
+    keybinds: Keybind[];
     hardwareAcceleration: boolean;
     inviteWebsocket: boolean;
     disableAutogain: boolean;

@@ -17,7 +17,7 @@ import {
 import contextMenu from "electron-context-menu";
 import { registerIpc } from "./ipc.js";
 import { setMenu } from "./menu.js";
-import "./keybinds.js";
+import "./globalKeybinds.js";
 import RPCServer from "arrpc";
 import { firstRun, getConfig, setConfig } from "../common/config.js";
 import { forceQuit, setForceQuit } from "../common/forceQuit.js";

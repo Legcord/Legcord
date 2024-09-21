@@ -20,5 +20,8 @@
     ],
     "cSpell.ignorePaths": ["assets/lang"],
     "editor.defaultFormatter": "biomejs.biome",
-    "deepscan.enable": true
+    "deepscan.enable": true,
+    "[typescript]": {
+        "editor.defaultFormatter": "biomejs.biome"
+    }
 }
