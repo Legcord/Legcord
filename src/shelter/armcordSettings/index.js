@@ -1,5 +1,6 @@
 import {SettingsPage} from "./pages/SettingsPage";
 import {ThemesPage} from "./pages/ThemesPage";
+import {KeybindsPage} from "./pages/KeybindsPage";
 import {isRestartRequired, refreshSettings} from "./settings";
 const {
     plugin: {store},
@@ -13,7 +14,8 @@ let settingsPages = [
     registerSection("divider"),
     registerSection("header", "ArmCord"),
     registerSection("section", "armcord-settings", "Settings", SettingsPage),
-    registerSection("section", "armcord-themes", "Themes", ThemesPage)
+    registerSection("section", "armcord-themes", "Themes", ThemesPage),
+    registerSection("section", "armcord-keybinds", "Keybinds", KeybindsPage)
 ];
 
 function restartRequired(payload) {

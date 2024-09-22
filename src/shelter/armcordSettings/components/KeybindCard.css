@@ -1,0 +1,35 @@
+.card {
+    border: 1px solid var(--background-accent);
+    border-radius: 4px;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+.switch {
+    margin-left: auto;
+}
+
+.info {
+    align-self: flex-start;
+}
+
+.eyebrow {
+    margin-bottom: 0px !important;
+}
+.btn {
+    border: none;
+    background: none;
+    color: var(--interactive-active);
+  
+    transition: opacity 250ms;
+  
+    &:hover {
+      color: var(--interactive-hover);
+    }
+  }
+
+.btnContainer {
+    justify-content: flex-end;
+}
