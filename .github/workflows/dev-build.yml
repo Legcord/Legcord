@@ -12,7 +12,7 @@ jobs:
                     - os: macos-latest
                       flags: --universal --x64=false --arm64=false -m
                     - os: ubuntu-latest
-                      flags: --armv7l -l
+                      flags: --armv7l -l flatpak appimage snap
                     - os: windows-latest
                       flags: --ia32 -w
 
@@ -36,6 +36,16 @@ jobs:
             - name: Build TypeScript
               run: pnpm build
 
+            - name: Install Linux build dependencies
+              if: matrix.os == 'ubuntu-latest'
+              uses: awalsh128/cache-apt-pkgs-action@latest
+              with:
+                packages: flatpak-builder snap
+              
+            - name: Install Snapcraft
+              if: matrix.os == 'ubuntu-latest'
+              run: snap install snapcraft --classic
+
             - name: Load Electron Cache
               uses: actions/cache/restore@v4
               with:
@@ -43,7 +53,7 @@ jobs:
                   key: electron-zips.dev.${{matrix.os}}
 
             - name: Build ArmCord
-              run: pnpm electron-builder --x64 --arm64 ${{matrix.flags}} zip flatpak appimage snap --publish never
+              run: pnpm electron-builder --x64 --arm64 ${{matrix.flags}} zip --publish never
               env:
                   GH_TOKEN: ${{secrets.GITHUB_TOKEN}} # MacOS needs the token or it will fail to build
 
