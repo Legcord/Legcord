@@ -44,7 +44,7 @@ jobs:
               
             - name: Install Snapcraft
               if: matrix.os == 'ubuntu-latest'
-              run: snap install snapcraft --classic
+              run: sudo snap install snapcraft --classic
 
             - name: Load Electron Cache
               uses: actions/cache/restore@v4
