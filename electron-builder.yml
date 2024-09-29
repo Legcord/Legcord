@@ -40,3 +40,7 @@ files:
 
 electronDownload:
     cache: .cache
+
+flatpak:
+    baseVersion: 24.08
+    runtimeVersion: 24.08
