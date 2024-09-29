@@ -5,7 +5,7 @@
     margin-top: 0.5rem;
     display: flex;
     flex-wrap: wrap;
-  }
+}
 
 .switch {
     margin-left: auto;
@@ -22,13 +22,13 @@
     border: none;
     background: none;
     color: var(--interactive-active);
-  
+
     transition: opacity 250ms;
-  
+
     &:hover {
-      color: var(--interactive-hover);
+        color: var(--interactive-hover);
     }
-  }
+}
 
 .btnContainer {
     justify-content: flex-end;
