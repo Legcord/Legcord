@@ -37,7 +37,7 @@
         "@rollup/plugin-commonjs": "^26.0.1",
         "@rollup/plugin-esm-shim": "^0.1.7",
         "@rollup/plugin-json": "^6.1.0",
-        "@rollup/plugin-typescript": "^11.1.6",
+        "@rollup/plugin-typescript": "^12.1.0",
         "@types/node": "^22.5.5",
         "@types/ws": "^8.5.12",
         "@uwu/lune": "^1.4.2",

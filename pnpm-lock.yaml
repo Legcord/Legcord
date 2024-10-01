@@ -10,7 +10,7 @@ importers:
     dependencies:
       arrpc:
         specifier: github:armcord/arrpc
-        version: https://codeload.github.com/armcord/arrpc/tar.gz/38b534a248893c2076871126d81cd5750bcad70d
+        version: git+https://git@github.com:armcord/arrpc.git#38b534a248893c2076871126d81cd5750bcad70d
       electron-context-menu:
         specifier: ^4.0.4
         version: 4.0.4
@@ -37,8 +37,8 @@ importers:
         specifier: ^6.1.0
         version: 6.1.0(rollup@4.22.0)
       '@rollup/plugin-typescript':
-        specifier: ^11.1.6
-        version: 11.1.6(rollup@4.22.0)(tslib@2.7.0)(typescript@5.6.2)
+        specifier: ^12.1.0
+        version: 12.1.0(rollup@4.22.0)(tslib@2.7.0)(typescript@5.6.2)
       '@types/node':
         specifier: ^22.5.5
         version: 22.5.5
@@ -511,8 +511,8 @@ packages:
       rollup:
         optional: true
 
-  '@rollup/plugin-typescript@11.1.6':
-    resolution: {integrity: sha512-R92yOmIACgYdJ7dJ97p4K69I8gg6IEHt8M7dUBxN3W6nrO8uUxX5ixl0yU/N3aZTi8WhPuICvOHXQvF6FaykAA==}
+  '@rollup/plugin-typescript@12.1.0':
+    resolution: {integrity: sha512-Kzs8KGJofe7cfTRODsnG1jNGxSvU8gVoNNd7Z/QaY25AYwe2LSSUpx/kPxqF38NYkpR8de3m51r9uwJpDlz6dg==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       rollup: ^2.14.0||^3.0.0||^4.0.0
@@ -770,8 +770,8 @@ packages:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
 
-  arrpc@https://codeload.github.com/armcord/arrpc/tar.gz/38b534a248893c2076871126d81cd5750bcad70d:
-    resolution: {tarball: https://codeload.github.com/armcord/arrpc/tar.gz/38b534a248893c2076871126d81cd5750bcad70d}
+  arrpc@git+https://git@github.com:armcord/arrpc.git#38b534a248893c2076871126d81cd5750bcad70d:
+    resolution: {commit: 38b534a248893c2076871126d81cd5750bcad70d, repo: git@github.com:armcord/arrpc.git, type: git}
     version: 3.5.0
     hasBin: true
 
@@ -2697,7 +2697,7 @@ snapshots:
     optionalDependencies:
       rollup: 4.22.0
 
-  '@rollup/plugin-typescript@11.1.6(rollup@4.22.0)(tslib@2.7.0)(typescript@5.6.2)':
+  '@rollup/plugin-typescript@12.1.0(rollup@4.22.0)(tslib@2.7.0)(typescript@5.6.2)':
     dependencies:
       '@rollup/pluginutils': 5.1.0(rollup@4.22.0)
       resolve: 1.22.8
@@ -2988,7 +2988,7 @@ snapshots:
 
   array-union@2.1.0: {}
 
-  arrpc@https://codeload.github.com/armcord/arrpc/tar.gz/38b534a248893c2076871126d81cd5750bcad70d:
+  arrpc@git+https://git@github.com:armcord/arrpc.git#38b534a248893c2076871126d81cd5750bcad70d:
     dependencies:
       ws: 8.18.0
     transitivePeerDependencies:
