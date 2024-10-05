@@ -1,7 +1,7 @@
 import { DropdownItem } from "../components/DropdownItem.jsx";
 import { set } from "../settings.js";
 import classes from "./SettingsPage.module.css";
-import "@uwu/shelter-defs";
+
 const {
     plugin: { store },
     ui: { SwitchItem, Header, Divider, HeaderTags, Button, ButtonSizes },

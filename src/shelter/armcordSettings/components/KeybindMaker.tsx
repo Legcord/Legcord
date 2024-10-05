@@ -6,7 +6,7 @@ export const KeybindMaker = () => {
         <ModalRoot size={ModalSizes.SMALL}>
             <ModalHeader>Add a keybind</ModalHeader>
             <ModalBody>
-                <TextBox />
+                <TextBox value="uhhh" />
             </ModalBody>
             <ModalConfirmFooter />
         </ModalRoot>

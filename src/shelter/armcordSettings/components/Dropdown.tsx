@@ -1,4 +1,4 @@
-import type { JSX, PropsWithChildren } from "solid-js";
+import type { JSX } from "solid-js";
 import classes from "./Dropdown.module.css";
 
 export const Dropdown = (props: {

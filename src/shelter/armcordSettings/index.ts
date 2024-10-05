@@ -1,3 +1,4 @@
+/// <reference path="../../../node_modules/@uwu/shelter-defs/dist/shelter-defs/rootdefs.d.ts" />
 import { KeybindsPage } from "./pages/KeybindsPage.jsx";
 import { SettingsPage } from "./pages/SettingsPage.jsx";
 import { ThemesPage } from "./pages/ThemesPage.jsx";
