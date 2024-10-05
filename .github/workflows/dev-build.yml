@@ -12,7 +12,7 @@ jobs:
                     - os: macos-latest
                       flags: --universal --x64=false --arm64=false -m
                     - os: ubuntu-latest
-                      flags: --armv7l -l flatpak appimage snap
+                      flags: --armv7l -l
                     - os: windows-latest
                       flags: --ia32 -w
 
@@ -35,16 +35,6 @@ jobs:
 
             - name: Build TypeScript
               run: pnpm build
-
-            - name: Install Linux build dependencies
-              if: matrix.os == 'ubuntu-latest'
-              uses: awalsh128/cache-apt-pkgs-action@latest
-              with:
-                packages: flatpak-builder snap
-              
-            - name: Install Snapcraft
-              if: matrix.os == 'ubuntu-latest'
-              run: sudo snap install snapcraft --classic
 
             - name: Load Electron Cache
               uses: actions/cache/restore@v4
@@ -103,3 +93,4 @@ jobs:
                   draft: false
                   tag: devbuild
                   artifacts: release-files/**/*.zip
+                  
