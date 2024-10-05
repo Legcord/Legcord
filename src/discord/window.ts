@@ -104,8 +104,8 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     passedWindow.webContents.on("frame-created", (_, { frame }) => {
         frame.once("dom-ready", async () => {
             if (
-                frame.url.includes("youtube.com/embed/") ||
-                (frame.url.includes("discordsays") && frame.url.includes("youtube.com"))
+                new URL(frame.url).hostname.endsWith("youtube.com") ||
+                (frame.url.includes("discordsays") && new URL(frame.url).hostname.endsWith("youtube.com"))
             ) {
                 await frame.executeJavaScript(fs.readFileSync(path.join(__dirname, "js/adguard.js"), "utf-8"));
             }
