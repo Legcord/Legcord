@@ -62,7 +62,7 @@ contextBridge.exposeInMainWorld("armcord", {
     restart: () => ipcRenderer.send("restart"),
     openThemesWindow: () => ipcRenderer.send("openThemesWindow"),
     openQuickCssFile: () => ipcRenderer.send("openQuickCssFile"),
-} as ArmCordWindow);
+} as unknown as ArmCordWindow);
 let windowCallback: (arg0: object) => void;
 contextBridge.exposeInMainWorld("ArmCordRPC", {
     // REVIEW - I don't think this is right

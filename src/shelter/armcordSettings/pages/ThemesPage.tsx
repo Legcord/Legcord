@@ -1,5 +1,5 @@
 const {
-    ui: {Button, Header, HeaderTags, ButtonSizes, Divider}
+    ui: { Button, Header, HeaderTags, ButtonSizes, Divider },
 } = shelter;
 
 export function ThemesPage() {

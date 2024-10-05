@@ -9,8 +9,10 @@
         "rootDir": "src",
         "lib": ["ESNext", "DOM", "DOM.Iterable"],
         "target": "ESNext",
+        "jsx": "preserve",
+        "jsxImportSource": "solid-js",
         "sourceMap": true
     },
     "include": ["src/**/*"],
-    "exclude": ["node_modules", "dist", "src/shelter/**/*"]
+    "exclude": ["node_modules", "dist", "src/shelter/armcordRPC/*", "src/shelter/screenshareQualityFix/*"]
 }
