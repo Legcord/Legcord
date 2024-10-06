@@ -1,3 +1,4 @@
+import type { Keybind } from "./keybind.js";
 import type { Settings } from "./settings.js";
 
 export interface ArmCordWindow {
@@ -23,6 +24,9 @@ export interface ArmCordWindow {
         openStorageFolder: () => void;
         copyDebugInfo: () => void;
         copyGPUInfo: () => void;
+        addKeybind: (keybind: Keybind) => void;
+        editKeybind: (id: string, keybind: Keybind) => void;
+        removeKeybind: (id: string) => void;
     };
 }
 

@@ -4,6 +4,7 @@ import path from "node:path";
 import { type BrowserWindow, type SourcesOptions, app, clipboard, desktopCapturer, ipcMain, shell } from "electron";
 
 import isDev from "electron-is-dev";
+import type { Keybind } from "../@types/keybind.js";
 import type { Settings } from "../@types/settings.js";
 import { getConfig, getConfigLocation, setConfig, setConfigBulk } from "../common/config.js";
 import { getLang, getLangName, getRawLang, setLang } from "../common/lang.js";
@@ -109,6 +110,28 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     });
     ipcMain.on("setConfig", (_event, key: keyof Settings, value: string) => {
         setConfig(key, value);
+    });
+    ipcMain.on("addKeybind", (_event, keybind: Keybind) => {
+        const keybinds = getConfig("keybinds");
+        keybinds.push(keybind);
+        setConfig("keybinds", keybinds);
+    });
+    ipcMain.on("editKeybind", (_event, id: string, keybind: Keybind) => {
+        const keybinds = getConfig("keybinds");
+        keybinds.splice(
+            keybinds.findIndex((x) => x.id === id),
+            1,
+        );
+        keybinds.push(keybind);
+        setConfig("keybinds", keybinds);
+    });
+    ipcMain.on("removeKeybind", (_event, id: string) => {
+        const keybinds = getConfig("keybinds");
+        keybinds.splice(
+            keybinds.findIndex((x) => x.id === id),
+            1,
+        );
+        setConfig("keybinds", keybinds);
     });
     ipcMain.on("getEntireConfig", (event) => {
         const rawData = fs.readFileSync(getConfigLocation(), "utf-8");

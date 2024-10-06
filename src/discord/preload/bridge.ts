@@ -1,5 +1,6 @@
 import { type SourcesOptions, contextBridge, ipcRenderer } from "electron";
 import type { ArmCordWindow } from "../../@types/armcordWindow.js";
+import type { Keybind } from "../../@types/keybind.js";
 
 const CANCEL_ID = "desktop-capturer-selection__cancel";
 const desktopCapturer = {
@@ -10,6 +11,7 @@ interface IPCSources {
     name: string;
     thumbnail: HTMLCanvasElement;
 }
+
 async function getDisplayMediaSelector(): Promise<string> {
     const sources = (await desktopCapturer.getSources({
         types: ["screen", "window"],
@@ -46,6 +48,9 @@ contextBridge.exposeInMainWorld("armcord", {
     settings: {
         config: ipcRenderer.sendSync("getEntireConfig") as string,
         setConfig: (key: string, value: string) => ipcRenderer.send("setConfig", key, value),
+        addKeybind: (keybind: Keybind) => ipcRenderer.send("addKeybind", keybind),
+        editKeybind: (id: string, data: Keybind) => ipcRenderer.send("editKeybind", id, data),
+        removeKeybind: (id: string) => ipcRenderer.send("removeKeybind", id),
         openStorageFolder: () => ipcRenderer.send("openStorageFolder"),
         copyDebugInfo: () => ipcRenderer.send("copyDebugInfo"),
         copyGPUInfo: () => ipcRenderer.send("copyGPUInfo"),

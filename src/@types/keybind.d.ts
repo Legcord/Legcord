@@ -4,4 +4,5 @@ export interface Keybind {
     action: KeybindActions;
     global: boolean;
     enabled: boolean;
+    id: string;
 }
