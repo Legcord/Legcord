@@ -1,6 +1,6 @@
 import type { Keybind } from "./keybind.js";
 
-export type ValidMods = "vencord" | "equicord" | "custom";
+export type ValidMods = "vencord" | "equicord" | "custom" | "shelter";
 
 export interface Settings {
     // Referenced for detecting a broken config.
@@ -41,4 +41,5 @@ export interface Settings {
     clientName: string;
     smoothScroll: boolean;
     autoScroll: boolean;
+    modCache?: Record<ValidMods, string>;
 }
