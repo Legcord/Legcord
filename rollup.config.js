@@ -10,13 +10,7 @@ import { minify } from "rollup-plugin-esbuild";
 
 const prodEnv = process.env.BUILD === "prod";
 
-const electronExternals = [
-    "electron",
-    "node:fs",
-    "node:path",
-    "node:os",
-    "node:url",
-]
+const electronExternals = ["electron", "node:fs", "node:path", "node:os", "node:url"];
 
 export default defineConfig([
     {
