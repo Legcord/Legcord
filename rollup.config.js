@@ -10,6 +10,14 @@ import { minify } from "rollup-plugin-esbuild";
 
 const prodEnv = process.env.BUILD === "prod";
 
+const electronExternals = [
+    "electron",
+    "node:fs",
+    "node:path",
+    "node:os",
+    "node:url",
+]
+
 export default defineConfig([
     {
         input: "src/main.ts",
@@ -19,10 +27,8 @@ export default defineConfig([
             sourcemap: true,
         },
         external: [
+            ...electronExternals,
             "electron",
-            "fs",
-            "path",
-            "os",
             "v8-compile-cache",
             "electron-is-dev",
             "electron-context-menu",
@@ -55,7 +61,7 @@ export default defineConfig([
             format: "esm",
             sourcemap: true,
         },
-        external: ["electron", "fs", "path", "os"],
+        external: electronExternals,
         plugins: [typescript(), minify({ minify: prodEnv })],
     },
     {
@@ -66,7 +72,7 @@ export default defineConfig([
             entryFileNames: "[name].mjs",
             sourcemap: true,
         },
-        external: ["electron"],
+        external: electronExternals,
         plugins: [typescript(), minify({ minify: prodEnv })],
     },
     {
@@ -77,7 +83,7 @@ export default defineConfig([
             entryFileNames: "[name].mjs",
             sourcemap: true,
         },
-        external: ["electron", "fs", "path", "os"],
+        external: electronExternals,
         plugins: [typescript(), minify({ minify: prodEnv })],
     },
     {
@@ -88,7 +94,7 @@ export default defineConfig([
             entryFileNames: "[name].mjs",
             sourcemap: true,
         },
-        external: ["electron", "fs", "path", "os"],
+        external: electronExternals,
         plugins: [typescript(), minify({ minify: prodEnv })],
     },
     {
@@ -99,7 +105,7 @@ export default defineConfig([
             entryFileNames: "[name].mjs",
             sourcemap: true,
         },
-        external: ["electron"],
+        external: electronExternals,
         plugins: [typescript(), minify({ minify: prodEnv })],
     },
 ]);

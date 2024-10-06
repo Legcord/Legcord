@@ -118,11 +118,11 @@ button {
     padding: 8px;
     -webkit-user-select: all !important;
     user-select: all !important;
+    margin: 0 auto;
     margin-top: 10px;
     -webkit-app-region: no-drag;
     transition: 0.17s ease;
     display: none;
-    margin: 0 auto;
 }
 button:hover {
     cursor: grab !important;

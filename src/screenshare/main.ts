@@ -71,7 +71,8 @@ function registerCustomHandler(): void {
                         const result = { id, name };
                         let options: Streams = { video: sources[0] };
                         switch (process.platform) {
-                            case "win32" || "linux":
+                            case "win32":
+                            case "linux":
                                 options = { video: result };
                                 if (audio) options = { video: result, audio: "loopbackWithMute" };
                                 callback(options);

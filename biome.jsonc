@@ -3,8 +3,8 @@
     "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
     "files": {
         "ignoreUnknown": false,
-        "ignore": ["src/discord/content/js", "src/shelter/**/*.js*"]
-    }, // TODO - TSX for shelter
+        "ignore": ["src/discord/content/js"]
+    },
     "formatter": {
         "enabled": true,
         "useEditorconfig": true,
@@ -27,9 +27,6 @@
             "style": {
                 "noNonNullAssertion": "off",
                 "noUselessElse": "off" // NOTE - This rule seems broken
-            },
-            "suspicious": {
-                "noShorthandPropertyOverrides": "off"
             }
         }
     }

@@ -1,10 +1,10 @@
 const {
-    util: {log},
+    util: { log },
     flux: {
-        stores: {UserStore, MediaEngineStore},
-        dispatcher
+        stores: { UserStore, MediaEngineStore },
+        dispatcher,
     },
-    plugin: {store}
+    plugin: { store },
 } = shelter;
 store.fps ??= 30; // set default
 store.resolution ??= 720; // set default
@@ -29,4 +29,4 @@ export function onLoad() {
 export function onUnload() {
     dispatcher.unsubscribe("MEDIA_ENGINE_VIDEO_SOURCE_QUALITY_CHANGED", onStreamQualityChange);
 }
-export {default as settings} from "./settings";
+export { default as settings } from "./settings";

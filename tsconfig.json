@@ -11,7 +11,8 @@
         "target": "ESNext",
         "jsx": "preserve",
         "jsxImportSource": "solid-js",
-        "sourceMap": true
+        "sourceMap": true,
+        "noEmit": true
     },
     "include": ["src/**/*"],
     "exclude": ["node_modules", "dist", "src/shelter/armcordRPC/*", "src/shelter/screenshareQualityFix/*"]

@@ -1,3 +1,4 @@
+import type { Settings } from "../../../@types/settings.js";
 import { DropdownItem } from "../components/DropdownItem.jsx";
 import { set } from "../settings.js";
 import classes from "./SettingsPage.module.css";
@@ -48,7 +49,7 @@ export function SettingsPage() {
             </Header>
             <DropdownItem
                 value={store.settings.windowStyle}
-                onChange={(e) => set("windowStyle", (e.target as HTMLInputElement).value)}
+                onChange={(e) => set("windowStyle", (e.target as HTMLInputElement).value as Settings["windowStyle"])}
                 title={store.i18n["settings-theme"]}
                 note={store.i18n["settings-theme-desc"]}
                 link="https://github.com/ArmCord/ArmCord/wiki/Settings-%5Bwip%5D#armcord-theme"
@@ -59,7 +60,7 @@ export function SettingsPage() {
             </DropdownItem>
             <DropdownItem
                 value={store.settings.trayIcon}
-                onChange={(e) => set("trayIcon", (e.target as HTMLInputElement).value)}
+                onChange={(e) => set("trayIcon", (e.target as HTMLInputElement).value as Settings["trayIcon"])}
                 title={store.i18n["settings-trayIcon"]}
                 note={store.i18n["settings-trayIcon-desc"]}
             >
@@ -91,7 +92,7 @@ export function SettingsPage() {
             </Header>
             <DropdownItem
                 value={store.settings.channel}
-                onChange={(e) => set("channel", (e.target as HTMLInputElement).value)}
+                onChange={(e) => set("channel", (e.target as HTMLInputElement).value as Settings["channel"])}
                 title={store.i18n["settings-channel"]}
                 note={store.i18n["settings-channel-desc"]}
                 link="https://support.discord.com/hc/en-us/articles/360035675191-Discord-Testing-Clients"

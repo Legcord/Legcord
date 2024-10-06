@@ -9,6 +9,7 @@ import { KeybindMaker } from "../components/KeybindMaker.jsx";
 export function KeybindsPage() {
     function addNewKeybind() {
         const close = openModal(() => <KeybindMaker />);
+        console.log(close); // FIXME
     }
     return (
         <>

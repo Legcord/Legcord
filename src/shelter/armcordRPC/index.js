@@ -1,12 +1,12 @@
 const {
     flux: {
         dispatcher: FluxDispatcher,
-        stores: {ApplicationStore}
+        stores: { ApplicationStore },
     },
-    http
+    http,
 } = shelter;
-let apps = {};
-let assetCache = {};
+const apps = {};
+const assetCache = {};
 
 const fetchAssetId = async (applicationId, assetName) => {
     // TO-DO Use APPLICATION_ASSETS_UPDATE and APPLICATION_ASSETS_FETCH
@@ -34,20 +34,17 @@ const fetchAssetId = async (applicationId, assetName) => {
 export function onLoad() {
     ArmCordRPC.listen(async (msg) => {
         if (msg.activity?.assets?.large_image.startsWith("https://")) {
-            msg.activity.assets.large_image =
-                "https://images-ext-1.discordapp.net/external/" +
-                msg.activity.assets.large_image.replace("https://", "https/") +
-                "?format=webp&width=300&height=300";
+            msg.activity.assets.large_image = `https://images-ext-1.discordapp.net/external/${msg.activity.assets.large_image.replace("https://", "https/")}?format=webp&width=300&height=300`;
         } else {
             if (msg.activity?.assets?.large_image)
                 msg.activity.assets.large_image = await fetchAssetId(
                     msg.activity.application_id,
-                    msg.activity.assets.large_image
+                    msg.activity.assets.large_image,
                 );
             if (msg.activity?.assets?.small_image)
                 msg.activity.assets.small_image = await fetchAssetId(
                     msg.activity.application_id,
-                    msg.activity.assets.small_image
+                    msg.activity.assets.small_image,
                 );
         }
         if (msg.activity) {
@@ -59,6 +56,6 @@ export function onLoad() {
             if (!msg.activity.name) msg.activity.name = app.name;
         }
         console.warn(msg);
-        FluxDispatcher.dispatch({type: "LOCAL_ACTIVITY_UPDATE", ...msg}); // set RPC status
+        FluxDispatcher.dispatch({ type: "LOCAL_ACTIVITY_UPDATE", ...msg }); // set RPC status
     });
 }

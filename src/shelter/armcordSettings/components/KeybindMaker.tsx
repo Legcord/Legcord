@@ -4,11 +4,21 @@ const {
 export const KeybindMaker = () => {
     return (
         <ModalRoot size={ModalSizes.SMALL}>
-            <ModalHeader>Add a keybind</ModalHeader>
+            <ModalHeader
+                close={() => {
+                    null; //FIXME - IMPLEMENT
+                }}
+            >
+                Add a keybind
+            </ModalHeader>
             <ModalBody>
                 <TextBox value="uhhh" />
             </ModalBody>
-            <ModalConfirmFooter />
+            <ModalConfirmFooter
+                close={() => {
+                    null; //FIXME - IMPLEMENT
+                }}
+            />
         </ModalRoot>
     );
 };

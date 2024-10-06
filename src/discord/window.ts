@@ -85,7 +85,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
                 // Print out data received from the second instance.
                 console.log(additionalData);
 
-                if (getConfig("multiInstance") === (false ?? undefined)) {
+                if (!getConfig("multiInstance")) {
                     // Someone tried to run a second instance, we should focus our window.
                     if (passedWindow) {
                         if (passedWindow.isMinimized()) passedWindow.restore();

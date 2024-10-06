@@ -1,5 +1,7 @@
 import type { Keybind } from "./keybind.js";
 
+export type ValidMods = "vencord" | "equicord" | "custom";
+
 export interface Settings {
     // Referenced for detecting a broken config.
     "0"?: string;
@@ -12,7 +14,7 @@ export interface Settings {
     minimizeToTray: boolean;
     multiInstance: boolean;
     spellcheck: boolean;
-    mods: ("vencord" | "equicord" | "custom")[];
+    mods: ValidMods[];
     mobileMode: boolean;
     skipSplash: boolean;
     performanceMode: string;

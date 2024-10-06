@@ -23,7 +23,7 @@ export const KeybindCard = (props: { keybind: Keybind }) => {
                 </button>
             </div>
             <div class={classes.switch}>
-                <Switch checked={switchState} onChange={setSwitchState} />
+                <Switch checked={switchState()} onChange={setSwitchState} />
             </div>
         </div>
     );

@@ -21,7 +21,7 @@ export const DropdownItem = (props: {
             </Header>
             <div class={classes.note}>{props.note}</div>
             <Show when={props.link} keyed>
-                <LinkButton href={props.link}>Learn more here.</LinkButton>
+                <LinkButton href={props.link!}>Learn more here.</LinkButton>
             </Show>
             {/* biome-ignore lint/correctness/noChildrenProp: FIX-ME, couldn't figure out proper types */}
             <Dropdown value={props.value} onChange={props.onChange} children={props.children} />

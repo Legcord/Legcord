@@ -1,3 +1,5 @@
+import type { Settings, ValidMods } from "../../@types/settings.js";
+
 const {
     plugin: { store },
 } = shelter;
@@ -6,7 +8,7 @@ export function refreshSettings() {
     store.settings = window.armcord.settings.config;
     console.log(store.settings);
 }
-export function set(key: string, value: string | boolean) {
+export function set<K extends keyof Settings>(key: ValidMods | K, value: Settings[K]) {
     isRestartRequired = true;
     if (key === "vencord" && value === true) {
         store.vencord = true;
@@ -25,8 +27,7 @@ export function set(key: string, value: string | boolean) {
     } else {
         store.settings[key] = value;
         console.log(`${key}: ${store.settings[key]}`);
-        // FIXME: types
-        // @ts-expect-error
-        window.armcord.settings.setConfig(key, value);
+
+        window.armcord.settings.setConfig(key as K, value);
     }
 }
