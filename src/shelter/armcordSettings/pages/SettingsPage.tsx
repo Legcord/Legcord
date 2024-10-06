@@ -204,6 +204,10 @@ export function SettingsPage() {
             <Button size={ButtonSizes.MAX} onClick={window.armcord.settings.copyGPUInfo}>
                 Copy GPU info
             </Button>
+            <br />
+            <Button size={ButtonSizes.MAX} onClick={() => setConfig("modCache", {} as Settings["modCache"])}>
+                Clear client mod cache
+            </Button>
         </>
     );
 }

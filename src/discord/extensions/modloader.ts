@@ -1,7 +1,10 @@
 import { writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { app } from "electron";
-import { getConfig } from "../../common/config.js";
+import type { RepoData } from "../../@types/consts.js";
+import type { Settings, ValidMods } from "../../@types/settings.js";
+import { getConfig, setConfig } from "../../common/config.js";
+import { modData } from "../../common/consts.js";
 
 async function fetchMod(fileName: string, url: string) {
     try {
@@ -18,24 +21,46 @@ async function fetchMod(fileName: string, url: string) {
     }
 }
 
+async function getRef(repoData: RepoData) {
+    return await fetch(
+        `https://api.github.com/repos/${repoData.owner}/${repoData.repo}/git/matching-refs/heads/${repoData.branch}`,
+    )
+        .then((response) => response.json())
+        .then((data: { object: { sha: string } }[]) => {
+            return data[0].object.sha;
+        });
+}
+
+async function downloadMod(mod: ValidMods) {
+    console.log(`[Mod Loader]: Downloading ${mod}...`);
+    await fetchMod(`${mod}.js`, modData[mod].js);
+    if (modData[mod].css) {
+        await fetchMod(`${mod}.css`, modData[mod].css);
+    }
+}
+
+async function cacheCheck(mod: ValidMods) {
+    let modCache = getConfig("modCache");
+    if (!modCache) {
+        modCache = new Object() as Settings["modCache"];
+    }
+    const latestRef = await getRef(modData[mod].repoData);
+    if (latestRef === modCache![mod]) {
+        console.log(`[Mod Loader]: ${mod} Cache hit!`);
+        return;
+    } else {
+        downloadMod(mod);
+        modCache![mod] = latestRef;
+        setConfig("modCache", modCache);
+    }
+}
+
 export async function fetchMods() {
-    const mods = getConfig("mods");
-
-    console.log("Downloading Shelter");
-    await fetchMod("shelter.js", "https://raw.githubusercontent.com/uwu/shelter-builds/main/shelter.js");
-
-    if (mods.includes("vencord")) {
-        console.log("Downloading Vencord");
-        await fetchMod("vencord.js", "https://github.com/Vendicated/Vencord/releases/download/devbuild/browser.js");
-        await fetchMod("vencord.css", "https://github.com/Vendicated/Vencord/releases/download/devbuild/browser.css");
-    } else if (mods.includes("equicord")) {
-        console.log("Downloading Equicord");
-        await fetchMod("equicord.js", "https://github.com/Equicord/Equicord/releases/download/latest/browser.js");
-        await fetchMod("equicord.css", "https://github.com/Equicord/Equicord/releases/download/latest/browser.css");
-    }
-    if (mods.includes("custom")) {
-        console.log("Downloading custom bundles");
-        await fetchMod("custom.js", getConfig("customJsBundle") as string);
-        await fetchMod("custom.css", getConfig("customCssBundle") as string);
-    }
+    await cacheCheck("shelter");
+    getConfig("mods").forEach(async (mod) => {
+        if (mod === "custom") {
+            await downloadMod(mod);
+        }
+        await cacheCheck(mod);
+    });
 }
