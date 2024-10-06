@@ -3,31 +3,38 @@ import type { Settings, ValidMods } from "../../@types/settings.js";
 const {
     plugin: { store },
 } = shelter;
+
+const settings = store.settings as Settings;
+
 export let isRestartRequired = false;
 export function refreshSettings() {
-    store.settings = window.armcord.settings.config;
-    console.log(store.settings);
+    store.settings = window.armcord.settings.getConfig();
 }
-export function set<K extends keyof Settings>(key: ValidMods | K, value: Settings[K]) {
-    isRestartRequired = true;
-    if (key === "vencord" && value === true) {
-        store.vencord = true;
-        store.equicord = false;
-        window.armcord.settings.setConfig("mods", ["vencord"]);
-    } else if (key === "vencord" && value === false) {
-        store.vencord = false;
-        window.armcord.settings.setConfig("mods", []);
-    } else if (key === "equicord" && value === true) {
-        store.equicord = true;
-        store.vencord = false;
-        window.armcord.settings.setConfig("mods", ["equicord"]);
-    } else if (key === "equicord" && value === false) {
-        store.equicord = false;
-        window.armcord.settings.setConfig("mods", []);
-    } else {
-        store.settings[key] = value;
-        console.log(`${key}: ${store.settings[key]}`);
 
-        window.armcord.settings.setConfig(key as K, value);
+export function setConfig<K extends keyof Settings>(key: K, value: Settings[K]) {
+    settings[key] = value;
+    console.log(`${key}: ${store.settings[key]}`);
+
+    window.armcord.settings.setConfig(key, value);
+    refreshSettings();
+}
+
+function removeMod(array: ValidMods[], filter: ValidMods) {
+    return array.filter((i) => i !== filter);
+}
+
+export function toggleMod(mod: ValidMods, enabled: boolean) {
+    isRestartRequired = true;
+    const currentMods = settings.mods;
+    if (enabled) {
+        if (mod === "vencord") {
+            currentMods.push("vencord");
+            setConfig("mods", removeMod(currentMods, "equicord"));
+        } else if (mod === "equicord") {
+            currentMods.push("equicord");
+            setConfig("mods", removeMod(currentMods, "vencord"));
+        }
+    } else {
+        setConfig("mods", removeMod(currentMods, mod));
     }
 }

@@ -42,17 +42,6 @@ export function onLoad() {
     refreshSettings();
     // used for restart required dialog later
     store.i18n = window.armcord.translations;
-    // make this better
-    if (window.armcord.settings.config.mods.includes("vencord")) {
-        store.vencord = true;
-    } else {
-        store.vencord = false;
-    }
-    if (window.armcord.settings.config.mods.includes("equicord")) {
-        store.equicord = true;
-    } else {
-        store.equicord = false;
-    }
     log("ArmCord Settings");
     settingsPages;
     dispatcher.subscribe("TRACK", restartRequired);

@@ -16,10 +16,9 @@ export interface ArmCordWindow {
     openThemesWindow: () => void;
     openQuickCssFile: () => void;
     restart: () => void;
-    // FIX-ME wrong types
     translations: string;
     settings: {
-        config: Settings;
+        getConfig: () => Readonly<Settings>;
         setConfig: <K extends keyof Settings>(object: K, toSet: Settings[K]) => void;
         openStorageFolder: () => void;
         copyDebugInfo: () => void;

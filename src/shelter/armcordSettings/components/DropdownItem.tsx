@@ -1,4 +1,4 @@
-import { type JSX, Show } from "solid-js";
+import { type JSX, type JSXElement, Show } from "solid-js";
 import { Dropdown } from "./Dropdown.js";
 import classes from "./DropdownItem.module.css";
 const {
@@ -11,8 +11,7 @@ export const DropdownItem = (props: {
     link?: string;
     value: string;
     onChange: JSX.EventHandler<HTMLSelectElement, Event>;
-    // biome-ignore lint/suspicious/noExplicitAny: couldn't figure out the right type
-    children: any;
+    children: JSXElement[];
 }) => {
     return (
         <div class={classes.item}>

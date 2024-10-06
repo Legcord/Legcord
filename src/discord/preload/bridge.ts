@@ -1,6 +1,7 @@
 import { type SourcesOptions, contextBridge, ipcRenderer } from "electron";
 import type { ArmCordWindow } from "../../@types/armcordWindow.js";
 import type { Keybind } from "../../@types/keybind.js";
+import type { Settings } from "../../@types/settings.js";
 
 const CANCEL_ID = "desktop-capturer-selection__cancel";
 const desktopCapturer = {
@@ -46,7 +47,7 @@ contextBridge.exposeInMainWorld("armcord", {
         maximize: () => ipcRenderer.send("win-maximize"),
     },
     settings: {
-        config: ipcRenderer.sendSync("getEntireConfig") as string,
+        getConfig: () => ipcRenderer.sendSync("getEntireConfig") as Settings,
         setConfig: (key: string, value: string) => ipcRenderer.send("setConfig", key, value),
         addKeybind: (keybind: Keybind) => ipcRenderer.send("addKeybind", keybind),
         editKeybind: (id: string, data: Keybind) => ipcRenderer.send("editKeybind", id, data),
@@ -67,7 +68,8 @@ contextBridge.exposeInMainWorld("armcord", {
     restart: () => ipcRenderer.send("restart"),
     openThemesWindow: () => ipcRenderer.send("openThemesWindow"),
     openQuickCssFile: () => ipcRenderer.send("openQuickCssFile"),
-} as unknown as ArmCordWindow);
+} as ArmCordWindow);
+
 let windowCallback: (arg0: object) => void;
 contextBridge.exposeInMainWorld("ArmCordRPC", {
     // REVIEW - I don't think this is right

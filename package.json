@@ -8,22 +8,19 @@
     },
     "scripts": {
         "build:dev": "rollup -c --environment BUILD:dev",
-        "build": "pnpm build:plugins && rollup -c --environment BUILD:prod",
         "build:plugins": "lune ci --repoSubDir src/shelter --to ts-out/plugins && node ./scripts/fixBundles.js",
-        "start": "pnpm build:plugins && pnpm run build:dev && electron --trace-warnings ./ts-out/main.js",
-        "runElectron": "electron --trace-warnings ./ts-out/main.js",
+        "build": "pnpm build:plugins && rollup -c --environment BUILD:prod",
+        "start": "pnpm build:plugins && pnpm run build:dev && electron --trace-warnings --ozone-platform-hint=auto ./ts-out/main.js",
         "startThemeManager": "pnpm run build:dev && electron ./ts-out/main.js themes",
-        "startWayland": "pnpm run build:dev && electron ./ts-out/main.js --ozone-platform-hint=auto --enable-features=WebRTCPipeWireCapturer,WaylandWindowDecorations",
         "package": "pnpm run build && electron-builder",
         "packageQuick": "pnpm run build && electron-builder --dir",
         "lint": "biome check",
         "lint:fix": "biome check --write",
-        "CIbuild": "pnpm run build && electron-builder --linux zip && electron-builder --windows zip && electron-builder --macos zip",
-        "prepare": "git config --local core.hooksPath .hooks/"
+        "CIbuild": "pnpm run build && electron-builder --linux zip && electron-builder --windows zip && electron-builder --macos zip"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/SomeAspy/armcord.git"
+        "url": "git+https://github.com/armcord/armcord.git"
     },
     "author": "smartfrigde",
     "license": "OSL-3.0",
@@ -57,6 +54,6 @@
         "v8-compile-cache": "^2.4.0",
         "ws": "^8.18.0"
     },
-    "packageManager": "pnpm@9.10.0+sha512.73a29afa36a0d092ece5271de5177ecbf8318d454ecd701343131b8ebc0c1a91c487da46ab77c8e596d6acf1461e3594ced4becedf8921b074fbd8653ed7051c",
+    "packageManager": "pnpm@9.12.0+sha512.4abf725084d7bcbafbd728bfc7bee61f2f791f977fd87542b3579dcb23504d170d46337945e4c66485cd12d588a0c0e570ed9c477e7ccdd8507cf05f3f92eaca",
     "package-manager-strict": false
 }

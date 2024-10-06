@@ -1,12 +1,14 @@
 import type { Settings } from "../../../@types/settings.js";
 import { DropdownItem } from "../components/DropdownItem.jsx";
-import { set } from "../settings.js";
+import { setConfig, toggleMod } from "../settings.js";
 import classes from "./SettingsPage.module.css";
 
 const {
     plugin: { store },
     ui: { SwitchItem, Header, Divider, HeaderTags, Button, ButtonSizes },
 } = shelter;
+
+const settings = store.settings as Settings;
 
 export function SettingsPage() {
     return (
@@ -18,29 +20,29 @@ export function SettingsPage() {
             </Header>
             <SwitchItem
                 note={store.i18n["settings-csp-desc"]}
-                value={store.settings.armcordCSP}
-                onChange={(e: boolean) => set("armcordCSP", e)}
+                value={settings.armcordCSP}
+                onChange={(e: boolean) => setConfig("armcordCSP", e)}
             >
                 ArmCord CSP
             </SwitchItem>
             <SwitchItem
                 note={store.i18n["settings-mod-vencord"]}
-                value={store.vencord}
-                onChange={(e: boolean) => set("vencord", e)}
+                value={settings.mods.includes("vencord")}
+                onChange={(e: boolean) => toggleMod("vencord", e)}
             >
                 Vencord
             </SwitchItem>
             <SwitchItem
                 note={store.i18n["settings-mod-equicord"]}
-                value={store.equicord}
-                onChange={(e: boolean) => set("equicord", e)}
+                value={settings.mods.includes("equicord")}
+                onChange={(e: boolean) => toggleMod("equicord", e)}
             >
                 Equicord
             </SwitchItem>
             <SwitchItem
                 note={store.i18n["settings-invitewebsocket-desc"]}
                 value={store.settings.inviteWebsocket}
-                onChange={(e: boolean) => set("inviteWebsocket", e)}
+                onChange={(e: boolean) => setConfig("inviteWebsocket", e)}
             >
                 {store.i18n["settings-invitewebsocket"]}
             </SwitchItem>
@@ -49,7 +51,9 @@ export function SettingsPage() {
             </Header>
             <DropdownItem
                 value={store.settings.windowStyle}
-                onChange={(e) => set("windowStyle", (e.target as HTMLInputElement).value as Settings["windowStyle"])}
+                onChange={(e) =>
+                    setConfig("windowStyle", (e.target as HTMLInputElement).value as Settings["windowStyle"])
+                }
                 title={store.i18n["settings-theme"]}
                 note={store.i18n["settings-theme-desc"]}
                 link="https://github.com/ArmCord/ArmCord/wiki/Settings-%5Bwip%5D#armcord-theme"
@@ -60,7 +64,7 @@ export function SettingsPage() {
             </DropdownItem>
             <DropdownItem
                 value={store.settings.trayIcon}
-                onChange={(e) => set("trayIcon", (e.target as HTMLInputElement).value as Settings["trayIcon"])}
+                onChange={(e) => setConfig("trayIcon", (e.target as HTMLInputElement).value as Settings["trayIcon"])}
                 title={store.i18n["settings-trayIcon"]}
                 note={store.i18n["settings-trayIcon-desc"]}
             >
@@ -76,14 +80,14 @@ export function SettingsPage() {
             <SwitchItem
                 note={store.i18n["settings-skipSplash-desc"]}
                 value={store.settings.skipSplash}
-                onChange={(e: boolean) => set("skipSplash", e)}
+                onChange={(e: boolean) => setConfig("skipSplash", e)}
             >
                 {store.i18n["settings-skipSplash"]}
             </SwitchItem>
             <SwitchItem
                 note={store.i18n["settings-mobileMode-desc"]}
                 value={store.settings.mobileMode}
-                onChange={(e: boolean) => set("mobileMode", e)}
+                onChange={(e: boolean) => setConfig("mobileMode", e)}
             >
                 {store.i18n["settings-mobileMode"]}
             </SwitchItem>
@@ -92,7 +96,7 @@ export function SettingsPage() {
             </Header>
             <DropdownItem
                 value={store.settings.channel}
-                onChange={(e) => set("channel", (e.target as HTMLInputElement).value as Settings["channel"])}
+                onChange={(e) => setConfig("channel", (e.target as HTMLInputElement).value as Settings["channel"])}
                 title={store.i18n["settings-channel"]}
                 note={store.i18n["settings-channel-desc"]}
                 link="https://support.discord.com/hc/en-us/articles/360035675191-Discord-Testing-Clients"
@@ -103,7 +107,7 @@ export function SettingsPage() {
             </DropdownItem>
             <DropdownItem
                 value={store.settings.performanceMode}
-                onChange={(e) => set("performanceMode", (e.target as HTMLInputElement).value)}
+                onChange={(e) => setConfig("performanceMode", (e.target as HTMLInputElement).value)}
                 title={store.i18n["settings-prfmMode"]}
                 note={store.i18n["settings-prfmMode-desc"]}
                 link="https://github.com/ArmCord/ArmCord/blob/dev/src/common/flags.ts"
@@ -116,49 +120,49 @@ export function SettingsPage() {
             <SwitchItem
                 note={store.i18n["settings-MultiInstance-desc"]}
                 value={store.settings.multiInstance}
-                onChange={(e: boolean) => set("multiInstance", e)}
+                onChange={(e: boolean) => setConfig("multiInstance", e)}
             >
                 {store.i18n["settings-MultiInstance"]}
             </SwitchItem>
             <SwitchItem
                 note={store.i18n["settings-mintoTray-desc"]}
                 value={store.settings.minimizeToTray}
-                onChange={(e: boolean) => set("minimizeToTray", e)}
+                onChange={(e: boolean) => setConfig("minimizeToTray", e)}
             >
                 {store.i18n["settings-mintoTray"]}
             </SwitchItem>
             <SwitchItem
                 note={store.i18n["settings-tray-desc"]}
                 value={store.settings.tray}
-                onChange={(e: boolean) => set("tray", e)}
+                onChange={(e: boolean) => setConfig("tray", e)}
             >
                 {store.i18n["settings-tray"]}
             </SwitchItem>
             <SwitchItem
                 note={store.i18n["settings-startMinimized-desc"]}
                 value={store.settings.startMinimized}
-                onChange={(e: boolean) => set("startMinimized", e)}
+                onChange={(e: boolean) => setConfig("startMinimized", e)}
             >
                 {store.i18n["settings-startMinimized"]}
             </SwitchItem>
             <SwitchItem
                 note={store.i18n["settings-smoothScroll-desc"]}
                 value={store.settings.smoothScroll}
-                onChange={(e: boolean) => set("smoothScroll", e)}
+                onChange={(e: boolean) => setConfig("smoothScroll", e)}
             >
                 {store.i18n["settings-smoothScroll"]}
             </SwitchItem>
             <SwitchItem
                 note={store.i18n["settings-autoScroll-desc"]}
                 value={store.settings.autoScroll}
-                onChange={(e: boolean) => set("autoScroll", e)}
+                onChange={(e: boolean) => setConfig("autoScroll", e)}
             >
                 {store.i18n["settings-autoScroll"]}
             </SwitchItem>
             <SwitchItem
                 note={store.i18n["settings-spellcheck-desc"]}
                 value={store.settings.spellcheck}
-                onChange={(e: boolean) => set("spellcheck", e)}
+                onChange={(e: boolean) => setConfig("spellcheck", e)}
             >
                 {store.i18n["settings-spellcheck"]}
             </SwitchItem>
@@ -168,7 +172,7 @@ export function SettingsPage() {
             <SwitchItem
                 note={store.i18n["settings-useLegacyCapturer-desc"]}
                 value={store.settings.useLegacyCapturer}
-                onChange={(e: boolean) => set("useLegacyCapturer", e)}
+                onChange={(e: boolean) => setConfig("useLegacyCapturer", e)}
             >
                 {store.i18n["settings-useLegacyCapturer"]}
             </SwitchItem>
@@ -178,14 +182,14 @@ export function SettingsPage() {
             <SwitchItem
                 note={store.i18n["settings-hardwareAcceleration-desc"]}
                 value={store.settings.hardwareAcceleration}
-                onChange={(e: boolean) => set("hardwareAcceleration", e)}
+                onChange={(e: boolean) => setConfig("hardwareAcceleration", e)}
             >
                 {store.i18n["settings-hardwareAcceleration"]}
             </SwitchItem>
             <SwitchItem
                 note={store.i18n["settings-disableHttpCache-desc"]}
                 value={store.settings.disableHttpCache}
-                onChange={(e: boolean) => set("disableHttpCache", e)}
+                onChange={(e: boolean) => setConfig("disableHttpCache", e)}
             >
                 {store.i18n["settings-disableHttpCache"]}
             </SwitchItem>

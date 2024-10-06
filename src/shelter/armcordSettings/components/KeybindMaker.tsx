@@ -94,6 +94,8 @@ export const KeybindMaker = () => {
             <ModalBody>
                 <Header tag={HeaderTags.H5}>Accelerator</Header>
                 <div class={classes.grabBox}>
+                    {/* FIXME -  I have no idea what this `disabled` tag is, its not in the typedefs 
+                    // @ts-expect-error*/}
                     <TextBox disabled value={accelerator()} onInput={setAccelerator} />
                     <Button onClick={grabKeys} size={ButtonSizes.MEDIUM}>
                         Record
@@ -101,8 +103,10 @@ export const KeybindMaker = () => {
                 </div>
                 <Divider mt mb />
                 <Header tag={HeaderTags.H5}>Action</Header>
-                {/* @ts-expect-error FIXME e.target.value types*/}
-                <Dropdown value={action()} onChange={(e) => setAction(e.target.value)}>
+                <Dropdown
+                    value={action()}
+                    onChange={(e) => setAction((e.target as HTMLInputElement).value as KeybindActions)}
+                >
                     <option value="mute">Mute</option>
                     <option value="deafen">Deafen</option>
                     <option value="navigateForward">Navigate forward</option>
@@ -119,7 +123,8 @@ export const KeybindMaker = () => {
                     Enabled
                 </SwitchItem>
             </ModalBody>
-            <ModalConfirmFooter confirmText="Add" onConfirm={save} />
+            {/* FIXME - Implement close()? */}
+            <ModalConfirmFooter confirmText="Add" onConfirm={save} close={() => {}} />{" "}
         </ModalRoot>
     );
 };

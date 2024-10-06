@@ -15,5 +15,5 @@
         "noEmit": true
     },
     "include": ["src/**/*"],
-    "exclude": ["node_modules", "dist", "src/shelter/armcordRPC/*", "src/shelter/screenshareQualityFix/*"]
+    "exclude": ["node_modules", "dist"]
 }

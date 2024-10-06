@@ -135,8 +135,7 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     });
     ipcMain.on("getEntireConfig", (event) => {
         const rawData = fs.readFileSync(getConfigLocation(), "utf-8");
-        const returnData = JSON.parse(rawData) as Settings;
-        event.returnValue = returnData;
+        event.returnValue = JSON.parse(rawData) as Settings;
     });
     ipcMain.on("getTranslations", (event) => {
         event.returnValue = getRawLang();
