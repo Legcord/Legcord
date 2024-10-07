@@ -65,6 +65,7 @@ contextBridge.exposeInMainWorld("armcord", {
         }),
     getDisplayMediaSelector,
     version: ipcRenderer.sendSync("get-app-version", "app-version") as string,
+    platform: ipcRenderer.sendSync("getOS") as string,
     restart: () => ipcRenderer.send("restart"),
     openThemesWindow: () => ipcRenderer.send("openThemesWindow"),
     openQuickCssFile: () => ipcRenderer.send("openQuickCssFile"),

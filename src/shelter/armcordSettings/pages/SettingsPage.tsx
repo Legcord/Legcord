@@ -1,3 +1,4 @@
+import { Show } from "solid-js";
 import type { Settings } from "../../../@types/settings.js";
 import { DropdownItem } from "../components/DropdownItem.jsx";
 import { setConfig, toggleMod } from "../settings.js";
@@ -61,6 +62,9 @@ export function SettingsPage() {
                 <option value="default">Default (Custom)</option>
                 <option value="native">Native</option>
                 <option value="transparent">Transparent</option>
+                <Show when={window.armcord.platform === "win32"}>
+                    <option value="overlay">Overlay</option>
+                </Show>
             </DropdownItem>
             <DropdownItem
                 value={store.settings.trayIcon}
