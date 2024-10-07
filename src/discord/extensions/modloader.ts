@@ -27,8 +27,7 @@ async function getRef(repoData: RepoData) {
     )
         .then((response) => response.json())
         .then((data: { object: { sha: string } }[]) => {
-            if (data[0]) return data[0].object.sha;
-            else return "0";
+            return data[0].object.sha;
         });
 }
 
@@ -45,15 +44,21 @@ async function cacheCheck(mod: ValidMods) {
     if (!modCache) {
         modCache = new Object() as Settings["modCache"];
     }
-    const latestRef = await getRef(modData[mod].repoData);
-    if (latestRef === modCache![mod]) {
-        console.log(`[Mod Loader]: ${mod} Cache hit!`);
-        return;
-    } else {
+    try {
+        const latestRef = await getRef(modData[mod].repoData);
+        if (latestRef === modCache![mod]) {
+            console.log(`[Mod Loader]: ${mod} Cache hit!`);
+            return;
+        } else {
+            downloadMod(mod);
+            modCache![mod] = latestRef;
+            setConfig("modCache", modCache);
+        }
+    } catch (e) {
         downloadMod(mod);
-        modCache![mod] = latestRef;
-        setConfig("modCache", modCache);
+        console.error(`[Mod Loader] Failed to compare cache: ${e}`)
     }
+    
 }
 
 export async function fetchMods() {
