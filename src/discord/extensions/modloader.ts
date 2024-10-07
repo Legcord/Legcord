@@ -27,7 +27,8 @@ async function getRef(repoData: RepoData) {
     )
         .then((response) => response.json())
         .then((data: { object: { sha: string } }[]) => {
-            return data[0].object.sha;
+            if (data[0]) return data[0].object.sha;
+            else return "0";
         });
 }
 
