@@ -367,18 +367,12 @@
 
 [armcord-platform="linux"] .window-title,
 [armcord-platform="win32"] .window-title {
-    content: var(--wordmark-svg); /* FIXME - make this uri */
+    content: url("armcord://assets/Wordmark.svg");
     height: 10px;
     margin-left: initial;
     transform: translate(9px, 9.5px);
     float: left;
     padding: 0;
-}
-
-[wordmark="discord"] .window-title {
-    content: var(--discord-wordmark-svg); /* FIXME - make this uri */
-    height: 11.7px;
-    width: 56px;
 }
 
 .withFrame-haYltI {
