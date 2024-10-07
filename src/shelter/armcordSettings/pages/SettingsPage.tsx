@@ -179,6 +179,18 @@ export function SettingsPage() {
             <Header class={classes.category} tag={HeaderTags.H5}>
                 Debug options
             </Header>
+            <DropdownItem
+                value={store.settings.audio}
+                onChange={(e) =>
+                    setConfig("audio", (e.target as HTMLInputElement).value as Settings["audio"])
+                }
+                title={store.i18n["settings-audio"]}
+                note={store.i18n["settings-audio-desc"]}
+                link="https://www.electronjs.org/docs/latest/api/session#sessetdisplaymediarequesthandlerhandler-opts"
+            >
+                <option value="loopback">Loopback</option>
+                <option value="loopbackWithMute">Loopback with mute</option>
+            </DropdownItem>
             <SwitchItem
                 note={store.i18n["settings-hardwareAcceleration-desc"]}
                 value={store.settings.hardwareAcceleration}

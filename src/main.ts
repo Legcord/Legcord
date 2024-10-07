@@ -101,6 +101,9 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     } else if (getConfig("hardwareAcceleration") === undefined) {
         setConfig("hardwareAcceleration", true); // pre 3.3.0
     }
+    if (getConfig("audio") === undefined) {
+        setConfig("audio", "loopbackWithMute"); // pre 3.3.2
+    }
     if (getConfig("smoothScroll") === false) {
         app.commandLine.appendSwitch("disable-smooth-scrolling");
     }
