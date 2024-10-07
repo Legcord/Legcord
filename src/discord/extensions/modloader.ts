@@ -61,6 +61,9 @@ async function cacheCheck(mod: ValidMods) {
 }
 
 export async function fetchMods() {
+    if (typeof getConfig("mods") === "string") {
+        setConfig("mods", [getConfig("mods") as unknown as ValidMods]); // pre 3.3.2
+    }
     await cacheCheck("shelter");
     getConfig("mods").forEach(async (mod) => {
         if (mod === "custom") {

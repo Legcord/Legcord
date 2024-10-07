@@ -5,7 +5,7 @@ import "./discord/extensions/csp.js";
 import "./tray.js";
 import "./protocol.js";
 import fs from "node:fs";
-import type { Settings } from "./@types/settings.js";
+import type { Settings, ValidMods } from "./@types/settings.js";
 import {
     checkForDataFolder,
     checkIfConfigExists,
