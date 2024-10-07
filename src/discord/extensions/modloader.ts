@@ -56,9 +56,8 @@ async function cacheCheck(mod: ValidMods) {
         }
     } catch (e) {
         downloadMod(mod);
-        console.error(`[Mod Loader] Failed to compare cache: ${e}`)
+        console.error(`[Mod Loader] Failed to compare cache: ${e}`);
     }
-    
 }
 
 export async function fetchMods() {

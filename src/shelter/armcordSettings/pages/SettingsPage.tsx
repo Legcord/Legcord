@@ -181,9 +181,7 @@ export function SettingsPage() {
             </Header>
             <DropdownItem
                 value={store.settings.audio}
-                onChange={(e) =>
-                    setConfig("audio", (e.target as HTMLInputElement).value as Settings["audio"])
-                }
+                onChange={(e) => setConfig("audio", (e.target as HTMLInputElement).value as Settings["audio"])}
                 title={store.i18n["settings-audio"]}
                 note={store.i18n["settings-audio-desc"]}
                 link="https://www.electronjs.org/docs/latest/api/session#sessetdisplaymediarequesthandlerhandler-opts"
