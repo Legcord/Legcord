@@ -384,3 +384,8 @@
 .withFrame-haYltI {
     height: 30px !important;
 }
+div#app-mount {
+    height: calc(100% - 30px);
+    position: absolute;
+    bottom: 0;
+}
