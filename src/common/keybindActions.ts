@@ -1,5 +1,7 @@
+import { app, shell } from "electron";
 import type { KeybindActions } from "../@types/keybind.js";
 import { mainWindows } from "../discord/window.js";
+import path from "node:path";
 let isAudioEngineEnabled = false;
 
 export function runAction(action: KeybindActions) {
@@ -15,6 +17,9 @@ export function runAction(action: KeybindActions) {
             break;
         case "navigateForward":
             navigateForward();
+            break;
+        case "openQuickCss":
+            openQuickCss();
             break;
     }
 }
@@ -68,4 +73,8 @@ function navigateForward() {
     mainWindows.forEach((window) => {
         window.webContents.navigationHistory.goForward();
     });
+}
+
+function openQuickCss() {
+    void shell.openPath(path.join(app.getPath("userData"), "/quickCss.css"));
 }

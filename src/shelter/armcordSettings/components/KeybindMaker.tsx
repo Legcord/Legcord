@@ -111,6 +111,7 @@ export const KeybindMaker = () => {
                     <option value="deafen">Deafen</option>
                     <option value="navigateForward">Navigate forward</option>
                     <option value="navigateBack">Navigate back</option>
+                    <option value="openQuickCss">Open Quick CSS</option>
                 </Dropdown>
                 <SwitchItem
                     note="Allows you to assign a specific keyboard shortcut that can be used across different applications and programs."
