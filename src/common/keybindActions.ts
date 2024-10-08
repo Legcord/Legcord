@@ -1,7 +1,7 @@
+import path from "node:path";
 import { app, shell } from "electron";
 import type { KeybindActions } from "../@types/keybind.js";
 import { mainWindows } from "../discord/window.js";
-import path from "node:path";
 let isAudioEngineEnabled = false;
 
 export function runAction(action: KeybindActions) {
