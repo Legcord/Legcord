@@ -13,8 +13,7 @@ export const KeybindCard = (props: { keybind: Keybind }) => {
 
     function toggleKeybind(state: boolean) {
         setSwitchState(state);
-        console.log(`${props.keybind.accelerator}: ${state}`);
-        window.armcord.settings.editKeybind(props.keybind.id, props.keybind);
+        window.armcord.settings.toggleKeybind(props.keybind.id);
         refreshSettings();
         console.log(store.settings.keybinds);
     }

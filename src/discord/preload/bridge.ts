@@ -50,7 +50,7 @@ contextBridge.exposeInMainWorld("armcord", {
         getConfig: () => ipcRenderer.sendSync("getEntireConfig") as Settings,
         setConfig: (key: string, value: string) => ipcRenderer.send("setConfig", key, value),
         addKeybind: (keybind: Keybind) => ipcRenderer.send("addKeybind", keybind),
-        editKeybind: (id: string, data: Keybind) => ipcRenderer.send("editKeybind", id, data),
+        toggleKeybind: (id: string) => ipcRenderer.send("toggleKeybind", id),
         removeKeybind: (id: string) => ipcRenderer.send("removeKeybind", id),
         openStorageFolder: () => ipcRenderer.send("openStorageFolder"),
         copyDebugInfo: () => ipcRenderer.send("copyDebugInfo"),

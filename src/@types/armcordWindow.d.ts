@@ -25,7 +25,7 @@ export interface ArmCordWindow {
         copyDebugInfo: () => void;
         copyGPUInfo: () => void;
         addKeybind: (keybind: Keybind) => void;
-        editKeybind: (id: string, keybind: Keybind) => void;
+        toggleKeybind: (id: string) => void;
         removeKeybind: (id: string) => void;
     };
 }

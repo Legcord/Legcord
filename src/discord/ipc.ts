@@ -116,13 +116,10 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         keybinds.push(keybind);
         setConfig("keybinds", keybinds);
     });
-    ipcMain.on("editKeybind", (_event, id: string, keybind: Keybind) => {
+    ipcMain.on("toggleKeybind", (_event, id: string) => {
         const keybinds = getConfig("keybinds");
-        keybinds.splice(
-            keybinds.findIndex((x) => x.id === id),
-            1,
-        );
-        keybinds.push(keybind);
+        const keybind = keybinds[keybinds.findIndex((x) => x.id === id)]
+        keybind.enabled = (!keybind.enabled)
         setConfig("keybinds", keybinds);
     });
     ipcMain.on("removeKeybind", (_event, id: string) => {
