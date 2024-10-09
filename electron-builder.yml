@@ -29,6 +29,7 @@ snap:
     allowNativeWayland: true
     executableArgs:
         - --no-process-scanning
+    base: core22
 
 files:
     - "!*"
