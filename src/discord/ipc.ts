@@ -11,6 +11,7 @@ import { getLang, getLangName, getRawLang, setLang } from "../common/lang.js";
 import { getDisplayVersion, getVersion } from "../common/version.js";
 import { splashWindow } from "../splash/main.js";
 import { createTManagerWindow } from "../themeManager/main.js";
+import { refreshGlobalKeybinds } from "./globalKeybinds.js";
 
 const userDataPath = app.getPath("userData");
 const storagePath = path.join(userDataPath, "/storage/");
@@ -115,12 +116,14 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         const keybinds = getConfig("keybinds");
         keybinds.push(keybind);
         setConfig("keybinds", keybinds);
+        refreshGlobalKeybinds();
     });
     ipcMain.on("toggleKeybind", (_event, id: string) => {
         const keybinds = getConfig("keybinds");
-        const keybind = keybinds[keybinds.findIndex((x) => x.id === id)]
-        keybind.enabled = (!keybind.enabled)
+        const keybind = keybinds[keybinds.findIndex((x) => x.id === id)];
+        keybind.enabled = !keybind.enabled;
         setConfig("keybinds", keybinds);
+        refreshGlobalKeybinds();
     });
     ipcMain.on("removeKeybind", (_event, id: string) => {
         const keybinds = getConfig("keybinds");
@@ -129,6 +132,7 @@ export function registerIpc(passedWindow: BrowserWindow): void {
             1,
         );
         setConfig("keybinds", keybinds);
+        refreshGlobalKeybinds();
     });
     ipcMain.on("getEntireConfig", (event) => {
         const rawData = fs.readFileSync(getConfigLocation(), "utf-8");

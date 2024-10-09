@@ -18,3 +18,9 @@ app.on("will-quit", () => {
         globalShortcut.unregisterAll();
     } catch (e) {}
 });
+
+export function refreshGlobalKeybinds() {
+    console.log("[Keybind Manager] Refreshing keybinds");
+    globalShortcut.unregisterAll();
+    registerGlobalKeybinds();
+}
