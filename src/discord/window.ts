@@ -1,6 +1,7 @@
 import * as fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import RPCServer from "arrpc";
 // To allow seamless switching between custom titlebar and native os titlebar,
 // I had to add most of the window creation code here to split both into separate functions
 // WHY? Because I can't use the same code for both due to annoying bug with value `frame` not responding to variables
@@ -15,16 +16,15 @@ import {
     shell,
 } from "electron";
 import contextMenu from "electron-context-menu";
-import { registerIpc } from "./ipc.js";
-import { setMenu } from "./menu.js";
-import "./globalKeybinds.js";
-import RPCServer from "arrpc";
 import { firstRun, getConfig, setConfig } from "../common/config.js";
 import { forceQuit, setForceQuit } from "../common/forceQuit.js";
 import { initQuickCss, injectThemesMain } from "../common/themes.js";
 import { getWindowState, setWindowState } from "../common/windowState.js";
 import { init } from "../main.js";
 import { tray } from "../tray.js";
+import { registerGlobalKeybinds } from "./globalKeybinds.js";
+import { registerIpc } from "./ipc.js";
+import { setMenu } from "./menu.js";
 export let mainWindows: BrowserWindow[] = [];
 export let inviteWindow: BrowserWindow;
 
@@ -64,7 +64,6 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
             passedWindow.show();
         }
     }
-
     // REVIEW - Test the protocol warning. I was not sure how to get it to pop up. For now I've voided the promises.
 
     const ignoreProtocolWarning = getConfig("ignoreProtocolWarning");
@@ -287,6 +286,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     if (firstRun) {
         passedWindow.close();
     }
+    registerGlobalKeybinds();
     switch (getConfig("channel")) {
         case "stable":
             void passedWindow.loadURL("https://discord.com/app");

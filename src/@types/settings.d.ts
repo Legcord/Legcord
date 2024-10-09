@@ -10,6 +10,7 @@ export interface Settings {
     customIcon: string;
     windowStyle: "default" | "native" | "transparent" | "overlay";
     channel: "stable" | "ptb" | "canary";
+    audio: "loopback" | "loopbackWithMute";
     armcordCSP: boolean;
     minimizeToTray: boolean;
     multiInstance: boolean;

@@ -13,6 +13,7 @@ export interface ArmCordWindow {
     getLang: (toGet: string) => Promise<string>;
     getDisplayMediaSelector: () => Promise<string>;
     version: string;
+    platform: string;
     openThemesWindow: () => void;
     openQuickCssFile: () => void;
     restart: () => void;

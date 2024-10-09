@@ -103,6 +103,7 @@ export function setup(): void {
         armcordCSP: true,
         minimizeToTray: true,
         keybinds: [],
+        audio: "loopbackWithMute",
         multiInstance: false,
         mods: ["vencord"],
         spellcheck: true,

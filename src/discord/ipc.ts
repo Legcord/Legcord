@@ -173,6 +173,9 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.on("crash", () => {
         process.crash();
     });
+    ipcMain.on("getOS", (event) => {
+        event.returnValue = process.platform;
+    });
     ipcMain.on("copyDebugInfo", () => {
         const settingsFileContent = fs.readFileSync(getConfigLocation(), "utf-8");
         clipboard.writeText(

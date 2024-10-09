@@ -3,7 +3,7 @@ import type { Keybind } from "../@types/keybind.js";
 import { getConfig } from "../common/config.js";
 import { runAction } from "../common/keybindActions.js";
 
-void app.whenReady().then(() => {
+export function registerGlobalKeybinds() {
     const keybinds = getConfig("keybinds");
     keybinds.forEach((keybind: Keybind) => {
         if (keybind.enabled && keybind.global) {
@@ -12,8 +12,9 @@ void app.whenReady().then(() => {
             });
         }
     });
-});
-
+}
 app.on("will-quit", () => {
-    globalShortcut.unregisterAll();
+    try {
+        globalShortcut.unregisterAll();
+    } catch (e) {}
 });

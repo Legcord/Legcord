@@ -1,3 +1,4 @@
+import { Show } from "solid-js";
 import type { Settings } from "../../../@types/settings.js";
 import { DropdownItem } from "../components/DropdownItem.jsx";
 import { setConfig, toggleMod } from "../settings.js";
@@ -61,6 +62,9 @@ export function SettingsPage() {
                 <option value="default">Default (Custom)</option>
                 <option value="native">Native</option>
                 <option value="transparent">Transparent</option>
+                <Show when={window.armcord.platform === "win32"}>
+                    <option value="overlay">Overlay</option>
+                </Show>
             </DropdownItem>
             <DropdownItem
                 value={store.settings.trayIcon}
@@ -179,6 +183,16 @@ export function SettingsPage() {
             <Header class={classes.category} tag={HeaderTags.H5}>
                 Debug options
             </Header>
+            <DropdownItem
+                value={store.settings.audio}
+                onChange={(e) => setConfig("audio", (e.target as HTMLInputElement).value as Settings["audio"])}
+                title={store.i18n["settings-audio"]}
+                note={store.i18n["settings-audio-desc"]}
+                link="https://www.electronjs.org/docs/latest/api/session#sessetdisplaymediarequesthandlerhandler-opts"
+            >
+                <option value="loopback">Loopback</option>
+                <option value="loopbackWithMute">Loopback with mute</option>
+            </DropdownItem>
             <SwitchItem
                 note={store.i18n["settings-hardwareAcceleration-desc"]}
                 value={store.settings.hardwareAcceleration}

@@ -39,8 +39,15 @@ ipcRenderer.on("addTheme", (_event, name: string, css: string) => {
 ipcRenderer.on("removeTheme", (_event, name: string) => {
     document.getElementById(name)!.remove();
 });
-if (ipcRenderer.sendSync("getConfig", "windowStyle") === "default") {
-    injectTitlebar();
+switch (ipcRenderer.sendSync("getConfig", "windowStyle")) {
+    case "default":
+        injectTitlebar(false);
+        break;
+    case "overlay":
+        injectTitlebar(true);
+        break;
+    default:
+        break;
 }
 if (ipcRenderer.sendSync("getConfig", "mobileMode")) {
     injectMobileStuff();

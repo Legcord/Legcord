@@ -79,5 +79,7 @@
     "settings-hardwareAcceleration-desc": "L'accélération utilise votre carte graphique rendre ArmCord plus rapide. Si vous rencontrez des problèmes d'affichage, essayez de le désactiver.",
     "settings-disableHttpCache": "Désactiver le cache HTTP",
     "settings-disableHttpCache-desc": "Désactive le cache HTTP de Chromium. À utiliser si mods du client ne se chargent pas.",
-    "settings-mod-equicord": "bifurqué et né de contributeurs de vencord, qui dispose d'un client rempli de plugins."
+    "settings-mod-equicord": "bifurqué et né de contributeurs de vencord, qui dispose d'un client rempli de plugins.",
+    "settings-audio-desc": "Select which method ArmCord uses to grab audio from your system during screenshare.",
+    "settings-audio": "Audio"
 }

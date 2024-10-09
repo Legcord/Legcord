@@ -44,18 +44,26 @@ async function cacheCheck(mod: ValidMods) {
     if (!modCache) {
         modCache = new Object() as Settings["modCache"];
     }
-    const latestRef = await getRef(modData[mod].repoData);
-    if (latestRef === modCache![mod]) {
-        console.log(`[Mod Loader]: ${mod} Cache hit!`);
-        return;
-    } else {
+    try {
+        const latestRef = await getRef(modData[mod].repoData);
+        if (latestRef === modCache![mod]) {
+            console.log(`[Mod Loader]: ${mod} Cache hit!`);
+            return;
+        } else {
+            downloadMod(mod);
+            modCache![mod] = latestRef;
+            setConfig("modCache", modCache);
+        }
+    } catch (e) {
         downloadMod(mod);
-        modCache![mod] = latestRef;
-        setConfig("modCache", modCache);
+        console.error(`[Mod Loader] Failed to compare cache: ${e}`);
     }
 }
 
 export async function fetchMods() {
+    if (typeof getConfig("mods") === "string") {
+        setConfig("mods", [getConfig("mods") as unknown as ValidMods]); // pre 3.3.2
+    }
     await cacheCheck("shelter");
     getConfig("mods").forEach(async (mod) => {
         if (mod === "custom") {

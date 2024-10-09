@@ -24,16 +24,9 @@ export function injectTitlebar(isOverlay?: boolean): void {
         } else {
             elem.innerHTML = titlebarHTML;
         }
-        elem.classList.add("withFrame-haYltI");
-        if (document.getElementById("app-mount") == null) {
-            document.body.appendChild(elem);
-        } else {
-            document.getElementById("app-mount")!.prepend(elem);
-        }
+        document.body.prepend(elem);
         const titlebarcssPath = join(import.meta.dirname, "../", "/css/titlebar.css");
-        const wordmarkcssPath = join(import.meta.dirname, "../", "/css/logos.css");
         addStyle(readFileSync(titlebarcssPath, "utf8"));
-        addStyle(readFileSync(wordmarkcssPath, "utf8"));
         document.body.setAttribute("customTitlebar", "");
 
         document.body.setAttribute("armcord-platform", platform());
