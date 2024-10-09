@@ -74,6 +74,7 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     }
     // enable webrtc capturer for wayland
     if (process.platform === "linux" && process.env.XDG_SESSION_TYPE?.toLowerCase() === "wayland") {
+        app.commandLine.appendSwitch("disable-features", "UseMultiPlaneFormatForSoftwareVideo");
         app.commandLine.appendSwitch("enable-features", "WebRTCPipeWireCapturer");
         console.log("Wayland detected, using PipeWire for video capture.");
     }
