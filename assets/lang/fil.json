@@ -80,5 +80,12 @@
     "settings-none": "None",
     "settings-csp-desc": "ArmCord CSP is our system that manages loading custom content loading into the Discord app. Stuff like client mods and themes depend on it. Disable if you want to get rid of mods and custom styles.",
     "settings-audio": "Audio",
-    "settings-audio-desc": "Select which method ArmCord uses to grab audio from your system during screenshare."
+    "settings-audio-desc": "Select which method ArmCord uses to grab audio from your system during screenshare.",
+    "settings-theme-overlay": "Overlay",
+    "settings-category-behaviour": "Behaviour",
+    "settings-category-mods": "Mods",
+    "settings-category-lookAndFeel": "Look and feel",
+    "settings-category-legacy": "Legacy features",
+    "settings-category-debug": "Debug options",
+    "settings-clearClientModCache": "Clear client mod cache"
 }
