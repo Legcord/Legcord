@@ -1,14 +1,3 @@
-[customTitlebar] .base-2jDfDU {
-    border-top-left-radius: 8px;
-}
-[customTitlebar] .scroller-3X7KbA {
-    padding: 0;
-    padding-top: 4px;
-}
-[customTitlebar] .backdrop-2ByYRN {
-    top: -30px;
-    padding-top: 30px;
-}
 * {
     outline: none;
 }
@@ -25,11 +14,12 @@
     display: none !important;
 }
 
-.container-3jbRo5.info-1hMolH.browserNotice-1u-Y5o {
+/* custom keybinds are not supported on web information */
+.container_be45f6.info_be45f6.browserNotice_f916fc {
     visibility: hidden;
     display: block !important;
 }
-.container-3jbRo5.info-1hMolH.browserNotice-1u-Y5o:after {
+.container_be45f6.info_be45f6.browserNotice_f916fc:after {
     content: "You can modify global keybinds using the keybind maker on the left sidebar";
     visibility: visible;
 }

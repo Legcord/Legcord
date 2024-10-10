@@ -223,16 +223,12 @@
         no-repeat 50% 50%;
 }
 
-/* ArmCord on MacOS (Why would you do this?) */
-[armcord-platform="darwin"] .withFrame-haYltI {
-    height: 0px !important;
-}
+/* ArmCord on macOS */
+
 [armcord-platform="darwin"] .sidebar-1tnWFu {
     border-top-left-radius: 0px !important;
 }
-[armcord-platform="darwin"] nav.wrapper_fea3ef.guilds_a4d4d9 {
-    padding-top: 35px !important;
-}
+
 [armcord-platform="darwin"] .container__037ed {
     overflow: unset !important;
     padding-top: 48px;
@@ -241,24 +237,14 @@
 [armcord-platform="darwin"] .titlebar {
     height: 48px;
     line-height: 48px;
-    width: 150px !important;
-}
-[armcord-platform="darwin"] section.theme-dark.container_fc4f04.themed_fc4f04 {
-    -webkit-app-region: drag;
 }
 
-[armcord-platform="darwin"] section.title_a7d72e.container_fc4f04.themed_fc4f04 {
-    -webkit-app-region: drag;
-}
-[armcord-platform="darwin"] [class*="searchBar_"] {
-    -webkit-app-region: drag;
-}
 [armcord-platform="darwin"] .titlebar #window-controls-container {
     float: left;
     width: 150px;
     height: 60%;
     line-height: 45px;
-    -webkit-app-region: no-drag;
+    -webkit-app-region: drag;
     transform: translate(-82px, 4px);
 }
 
@@ -362,11 +348,12 @@
 }
 
 [armcord-platform="darwin"] .window-title {
-    display: none;
+    float: none;
+    position: fixed;
+    left: 50%;
 }
 
-[armcord-platform="linux"] .window-title,
-[armcord-platform="win32"] .window-title {
+.window-title {
     content: url("armcord://assets/Wordmark.svg");
     height: 10px;
     margin-left: initial;
@@ -375,9 +362,6 @@
     padding: 0;
 }
 
-.withFrame-haYltI {
-    height: 30px !important;
-}
 div#app-mount {
     height: calc(100% - 30px);
     position: absolute;

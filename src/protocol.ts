@@ -1,4 +1,3 @@
-import fs from "node:fs";
 import path from "node:path";
 import Url from "node:url";
 import { net, app, protocol } from "electron";
