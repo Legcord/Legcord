@@ -10,7 +10,11 @@ function parseBDManifest(content: string) {
     if (!content.startsWith("/**")) {
         throw new Error("Not a manifest.");
     }
-    const manifest: ThemeManifest = { theme: "src.css", name: "null", enabled: false }; // Will be defined later
+    const manifest: ThemeManifest = {
+        theme: "src.css",
+        name: "null",
+        enabled: false,
+    }; // Will be defined later
 
     // FIXME - What the fuck is going on here
     // biome-ignore lint/suspicious/noImplicitAnyLet: <explanation>
@@ -85,28 +89,36 @@ export function injectThemesMain(browserWindow: BrowserWindow): void {
     }
     browserWindow.webContents.on("did-finish-load", () => {
         fs.readdirSync(themesFolder).forEach((file) => {
-            try {
-                const manifest = fs.readFileSync(`${themesFolder}/${file}/manifest.json`, "utf8");
-                const themeFile = JSON.parse(manifest) as ThemeManifest;
-                if (themeFile.enabled === undefined) {
-                    if (fs.readFileSync(`${userDataPath}/disabled.txt`).toString().includes(file)) {
-                        themeFile.enabled = false;
-                    } else {
-                        themeFile.enabled = true;
+            const themePath = `${themesFolder}/${file}`;
+            if (fs.statSync(themePath).isFile()) {
+                console.log(`[Theme Manager] Local theme detected: ${themePath}`);
+                installTheme(themePath).then(() => {
+                    fs.unlinkSync(themePath);
+                });
+            } else {
+                try {
+                    const manifest = fs.readFileSync(`${themePath}/manifest.json`, "utf8");
+                    const themeFile = JSON.parse(manifest) as ThemeManifest;
+                    if (themeFile.enabled === undefined) {
+                        if (fs.readFileSync(`${userDataPath}/disabled.txt`).toString().includes(file)) {
+                            themeFile.enabled = false;
+                        } else {
+                            themeFile.enabled = true;
+                        }
                     }
+                    if (themeFile.enabled === false) {
+                        console.log(`%cSkipped ${themeFile.name} made by ${themeFile.author}`, "color:red");
+                    } else {
+                        browserWindow.webContents.send(
+                            "addTheme",
+                            file,
+                            fs.readFileSync(`${themePath}/${themeFile.theme}`, "utf-8"),
+                        );
+                        console.log(`%cLoaded ${themeFile.name} made by ${themeFile.author}`, "color:red");
+                    }
+                } catch (err) {
+                    console.error(err);
                 }
-                if (themeFile.enabled === false) {
-                    console.log(`%cSkipped ${themeFile.name} made by ${themeFile.author}`, "color:red");
-                } else {
-                    browserWindow.webContents.send(
-                        "addTheme",
-                        file,
-                        fs.readFileSync(`${themesFolder}/${file}/${themeFile.theme}`, "utf-8"),
-                    );
-                    console.log(`%cLoaded ${themeFile.name} made by ${themeFile.author}`, "color:red");
-                }
-            } catch (err) {
-                console.error(err);
             }
         });
     });
