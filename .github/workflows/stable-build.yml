@@ -86,5 +86,5 @@ jobs:
                   prerelease: false
                   tag: stable
                   draft: true
-                  artifacts: release-files/**/*
+                  artifacts: release-files/windows-latest/*,release-files/ubuntu-latest/*,release-files/macos-latest/*
                   
