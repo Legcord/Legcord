@@ -84,6 +84,7 @@ jobs:
               with:
                   name: Stable Release Draft
                   prerelease: false
+                  tag: stable
                   draft: true
                   artifacts: release-files/**/*
                   
