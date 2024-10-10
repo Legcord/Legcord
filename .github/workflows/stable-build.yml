@@ -49,7 +49,7 @@ jobs:
                   CSC_LINK: "https://armcord.app/NewSign.p12"
                   CSC_KEY_PASSWORD: ${{ secrets.MACOS_SIGN_PASS }}
                   APPLE_ID: ${{secrets.APPLE_ID}}
-                  APPLE_ID_PASSWORD: ${{secrets.APPLE_ID_PASSWORD}}
+                  APPLE_APP_SPECIFIC_PASSWORD: ${{secrets.APPLE_ID_PASSWORD}}
                   APPLE_ID_TEAM_ID: ${{secrets.APPLE_TEAM_ID}}
 
             - name: Save Electron Cache
