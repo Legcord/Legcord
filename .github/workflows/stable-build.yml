@@ -1,20 +1,20 @@
 name: Build
 on:
     push:
-        branches: stable
+        branches: new-stable-action
 jobs:
-    Stable-Build:
+    Dev-Build:
         continue-on-error: true
         strategy:
             matrix:
                 os: [macos-latest, ubuntu-latest, windows-latest]
                 include:
                     - os: macos-latest
-                      flags: --universal --x64=false --arm64=false -m
+                      flags: --universal --x64=false --arm64=false
                     - os: ubuntu-latest
-                      flags: --armv7l -l
+                      flags: --armv7l
                     - os: windows-latest
-                      flags: --ia32 -w
+                      flags: --ia32
 
         runs-on: ${{matrix.os}}
         steps:
@@ -40,15 +40,48 @@ jobs:
               uses: actions/cache/restore@v4
               with:
                   path: .cache
-                  key: electron-zips.stable.${{matrix.os}}
+                  key: electron-zips.dev.${{matrix.os}}
 
             - name: Build ArmCord
-              run: pnpm electron-builder --x64 --arm64 ${{matrix.flags}} --publish always
+              run: pnpm electron-builder --x64 --arm64 ${{matrix.flags}} --publish never
               env:
-                  GH_TOKEN: ${{github.token}}
+                  GH_TOKEN: ${{secrets.GITHUB_TOKEN}} # MacOS needs the token or it will fail to build
+                  CSC_LINK: "https://armcord.app/NewSign.p12"
+                  CSC_KEY_PASSWORD: ${{ secrets.MACOS_SIGN_PASS }}
 
             - name: Save Electron Cache
               uses: actions/cache/save@v4
               with:
                   path: .cache
-                  key: electron-zips.stable.${{matrix.os}}
+                  key: electron-zips.dev.${{matrix.os}}
+
+            - name: Upload artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: ${{matrix.os}}
+                  path: dist/*
+
+    DevRelease:
+        runs-on: ubuntu-latest
+        needs:
+            - Dev-Build
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Download artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  path: release-files
+
+            - name: Create release
+              uses: ncipollo/release-action@v1
+              env:
+                  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+              with:
+                  name: Stable Release Draft
+                  prerelease: false
+                  draft: true
+                  tag: devbuild
+                  artifacts: release-files/*
+                  
