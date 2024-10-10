@@ -16,7 +16,6 @@ const {
         HeaderTags,
         Divider,
         SwitchItem,
-        openConfirmationModal,
         genId,
     },
     plugin: { store },
@@ -71,18 +70,6 @@ export const KeybindMaker = () => {
         console.log(current);
         console.log(store.settings.keybinds);
         window.armcord.settings.addKeybind(keybind);
-        if (!global()) {
-            openConfirmationModal({
-                header: () => "Restart required",
-                body: () => "Local keybinds require a restart to take effect.",
-                type: "danger",
-                confirmText: "Restart",
-                cancelText: "I'll do it later",
-            }).then(
-                () => window.armcord.restart(),
-                () => console.log("restart skipped"),
-            );
-        }
     }
     return (
         <ModalRoot size={ModalSizes.SMALL}>
