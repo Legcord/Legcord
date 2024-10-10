@@ -37,7 +37,6 @@
     "settings-updater": "Güncellemeleri kontrol et",
     "settings-restart": "Uygulamayı Yeniden Başlat",
     "settings-mod-vencord": "Hafif yükte, kullanımı kolay bir uygulama modu. Pluginler için uygulama içine yerleşmiş bir mağazaya sahip.",
-    "settings-mod-shelter": "özellikle kurşun geçirmez olmak için tasarlanmış yeni nesil uygulama modudur.",
     "settings-prfmMode-desc": "Performans modu, yanıt süresini ve ArmCord'un performansını geliştiren ya da azaltan deneysel bir özelliktir.\nLütfen bütün seçenekleri deneyin ve hangisi size daha uygun görün.",
     "settings-trayIcon-dynamic": "Dinamik",
     "settings-trayIcon-normal": "Discord Simgesi",

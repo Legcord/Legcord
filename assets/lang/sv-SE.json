@@ -37,7 +37,6 @@
     "settings-updater": "Sök efter uppdateringar",
     "settings-restart": "Starta om appen",
     "settings-mod-vencord": "En klientmodifikation som är lätt och enkel att använda. Har en inbyggd plugin-butik.",
-    "settings-mod-shelter": "är en ny generation av klientmodifikationer som är byggd för att vara i princip skottsäker.",
     "settings-prfmMode-desc": "Prestandaläget är en experimentell funktion som kan antigen öka responsiviteten eller prestandan i\n                ArmCord eller... sänka det. Försök varje inställning för att se vad som passar bäst.",
     "settings-trayIcon-dynamic": "Dynamisk",
     "settings-trayIcon-normal": "Discord Ikonen",

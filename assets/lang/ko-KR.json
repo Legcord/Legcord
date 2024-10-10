@@ -37,7 +37,6 @@
     "settings-restart": "앱 다시 시작",
     "settings-updater": "업데이트 확인",
     "settings-mod-vencord": "가볍고 사용하기 쉬운 클라이언트 모드입니다. 플러그인을 위한 내장 저장소를 제공합니다.",
-    "settings-mod-shelter": "기본적으로 방탄 기능을 갖춘 차세대 클라이언트 모드입니다.",
     "settings-prfmMode-desc": "성능 모드는 ArmCord의 응답성과 성능을 증가시키거나…\n                감소시킬 수 있는 실험적 기능입니다. 모든 옵션을 시도하고 가장 적합한 옵션을 확인하세요.",
     "settings-trayIcon-dynamic": "동적",
     "settings-trayIcon-normal": "디스코드 아이콘",

@@ -36,7 +36,6 @@
     "settings-themesFolder": "Åpne draktmappen",
     "settings-storageFolder": "Åpne lagringsmappen",
     "settings-restart": "Start appen på nytt",
-    "settings-mod-shelter": "er en ny generasjons klient-mod bygget for å være i hovedsak skuddsikker.",
     "settings-mod-vencord": "lett og brukervennlig klient-mod. Har en innebygd butikk for plugins.",
     "settings-prfmMode-desc": "Performance mode is an experimental function that may either increase responsiveness and performance of\n                ArmCord or... decrease it. Please try every option and see which fits you the best.",
     "settings-trayIcon-dynamic": "Dynamisk",

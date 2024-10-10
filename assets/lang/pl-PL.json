@@ -37,7 +37,6 @@
     "settings-storageFolder": "Otwórz folder magazynu",
     "settings-restart": "Zrestartuj Aplikację",
     "settings-mod-vencord": "lekka i łatwa do użycia modyfikacja klienta. Posiada wbudowany sklep z wtyczkami.",
-    "settings-mod-shelter": "to modyfikacja klienta nowej generacji zbudowania do bycia praktycznie kuloodporną.",
     "settings-prfmMode-desc": "Tryb wydajności to eksperymentalna funkcja, która może albo zwiększyć responsywność i wydajność\n                ArmCorda lub... je zmniejszyć. Proszę, wypróbuj każdą opcję i zobacz, która najlepiej Ci odpowiada.",
     "settings-trayIcon-dynamic": "Dynamiczny",
     "settings-trayIcon-normal": "Ikona Discorda",

@@ -38,7 +38,6 @@
     "settings-restart": "アプリを再起動する",
     "settings-trayIcon-dynamic": "ダイナミック",
     "settings-mod-vencord": "軽量で使いやすいクライアントmod。プラグイン用の組み込みストアを備えています。",
-    "settings-mod-shelter": "は、基本的に防弾仕様となるように構築された、新世代のクライアントmodです。",
     "settings-prfmMode-desc": "パフォーマンスモードは、ArmCordの応答性とパフォーマンスを改善する...か、低下させる可能性がある実験的な機能です。\nすべてのオプションを試して、どれが最適か確認してください。",
     "settings-trayIcon-normal": "Discordアイコン",
     "settings-trayIcon-classic": "クラシックDiscordアイコン",

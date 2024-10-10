@@ -41,7 +41,6 @@
     "settings-mod": "Client-Mod",
     "settings-mod-desc1": "Client-Mods sind Programme, mit denen du dein Discord-Erlebnis individuell gestalten kannst. Du kannst das Aussehen des Clients ändern,\nVerhaltensweisen modifizieren oder neue Funktionen hinzufügen!",
     "settings-mod-vencord": "Leichtgewichtiger und einfach zu bedienender Client-Mod. Verfügt über einen eingebauten Speicher für Plugins.",
-    "settings-mod-shelter": "ist ein Client-Mod der neuen Generation, der im Wesentlichen kugelsicher ist.",
     "settings-prfmMode-desc": "Der Leistungsmodus ist eine experimentelle Funktion, die entweder die Reaktionsfähigkeit und Leistung von ArmCord erhöhen oder verringern kann. \nBitte probiere alle Optionen aus und schaue, welches dir am besten passt.",
     "settings-prfmMode-performance": "Leistung",
     "settings-prfmMode-battery": "Batterie",

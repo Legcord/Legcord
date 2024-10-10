@@ -38,7 +38,6 @@
     "settings-restart": "Redémarrer l'Application",
     "settings-copyDebugInfo": "Copier les informations de débogage",
     "settings-mod-vencord": "Client léger et facile à utiliser. Dispose d'un magasin intégré pour les plugins.",
-    "settings-mod-shelter": "est un client de nouvelle génération conçu pour être essentiellement à toutes épreuves.",
     "settings-prfmMode-desc": "Le mode performance est expérimental . Il peut améliorer la rapidité ou la performance d'ArmCord ou… les empirer.\n                 Merci d'essayer toutes les options afin de voir lesquelles vous conviennent le mieux.",
     "settings-trayIcon-dynamic": "Dynamique",
     "settings-trayIcon-normal": "Icone Discord",
