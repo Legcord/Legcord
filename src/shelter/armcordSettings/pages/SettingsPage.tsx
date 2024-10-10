@@ -22,7 +22,7 @@ export function SettingsPage() {
             <SwitchItem
                 note={store.i18n["settings-csp-desc"]}
                 value={settings.armcordCSP}
-                onChange={(e: boolean) => setConfig("armcordCSP", e)}
+                onChange={(e: boolean) => setConfig("armcordCSP", e, true)}
             >
                 ArmCord CSP
             </SwitchItem>
@@ -43,7 +43,7 @@ export function SettingsPage() {
             <SwitchItem
                 note={store.i18n["settings-invitewebsocket-desc"]}
                 value={store.settings.inviteWebsocket}
-                onChange={(e: boolean) => setConfig("inviteWebsocket", e)}
+                onChange={(e: boolean) => setConfig("inviteWebsocket", e, true)}
             >
                 {store.i18n["settings-invitewebsocket"]}
             </SwitchItem>
@@ -53,7 +53,7 @@ export function SettingsPage() {
             <DropdownItem
                 value={store.settings.windowStyle}
                 onChange={(e) =>
-                    setConfig("windowStyle", (e.target as HTMLInputElement).value as Settings["windowStyle"])
+                    setConfig("windowStyle", (e.target as HTMLInputElement).value as Settings["windowStyle"], true)
                 }
                 title={store.i18n["settings-theme"]}
                 note={store.i18n["settings-theme-desc"]}
@@ -68,7 +68,9 @@ export function SettingsPage() {
             </DropdownItem>
             <DropdownItem
                 value={store.settings.trayIcon}
-                onChange={(e) => setConfig("trayIcon", (e.target as HTMLInputElement).value as Settings["trayIcon"])}
+                onChange={(e) =>
+                    setConfig("trayIcon", (e.target as HTMLInputElement).value as Settings["trayIcon"], true)
+                }
                 title={store.i18n["settings-trayIcon"]}
                 note={store.i18n["settings-trayIcon-desc"]}
             >
@@ -91,7 +93,7 @@ export function SettingsPage() {
             <SwitchItem
                 note={store.i18n["settings-mobileMode-desc"]}
                 value={store.settings.mobileMode}
-                onChange={(e: boolean) => setConfig("mobileMode", e)}
+                onChange={(e: boolean) => setConfig("mobileMode", e, true)}
             >
                 {store.i18n["settings-mobileMode"]}
             </SwitchItem>
@@ -100,7 +102,9 @@ export function SettingsPage() {
             </Header>
             <DropdownItem
                 value={store.settings.channel}
-                onChange={(e) => setConfig("channel", (e.target as HTMLInputElement).value as Settings["channel"])}
+                onChange={(e) =>
+                    setConfig("channel", (e.target as HTMLInputElement).value as Settings["channel"], true)
+                }
                 title={store.i18n["settings-channel"]}
                 note={store.i18n["settings-channel-desc"]}
                 link="https://support.discord.com/hc/en-us/articles/360035675191-Discord-Testing-Clients"
@@ -111,7 +115,7 @@ export function SettingsPage() {
             </DropdownItem>
             <DropdownItem
                 value={store.settings.performanceMode}
-                onChange={(e) => setConfig("performanceMode", (e.target as HTMLInputElement).value)}
+                onChange={(e) => setConfig("performanceMode", (e.target as HTMLInputElement).value, true)}
                 title={store.i18n["settings-prfmMode"]}
                 note={store.i18n["settings-prfmMode-desc"]}
                 link="https://github.com/ArmCord/ArmCord/blob/dev/src/common/flags.ts"
@@ -138,7 +142,7 @@ export function SettingsPage() {
             <SwitchItem
                 note={store.i18n["settings-tray-desc"]}
                 value={store.settings.tray}
-                onChange={(e: boolean) => setConfig("tray", e)}
+                onChange={(e: boolean) => setConfig("tray", e, true)}
             >
                 {store.i18n["settings-tray"]}
             </SwitchItem>
@@ -152,21 +156,21 @@ export function SettingsPage() {
             <SwitchItem
                 note={store.i18n["settings-smoothScroll-desc"]}
                 value={store.settings.smoothScroll}
-                onChange={(e: boolean) => setConfig("smoothScroll", e)}
+                onChange={(e: boolean) => setConfig("smoothScroll", e, true)}
             >
                 {store.i18n["settings-smoothScroll"]}
             </SwitchItem>
             <SwitchItem
                 note={store.i18n["settings-autoScroll-desc"]}
                 value={store.settings.autoScroll}
-                onChange={(e: boolean) => setConfig("autoScroll", e)}
+                onChange={(e: boolean) => setConfig("autoScroll", e, true)}
             >
                 {store.i18n["settings-autoScroll"]}
             </SwitchItem>
             <SwitchItem
                 note={store.i18n["settings-spellcheck-desc"]}
                 value={store.settings.spellcheck}
-                onChange={(e: boolean) => setConfig("spellcheck", e)}
+                onChange={(e: boolean) => setConfig("spellcheck", e, true)}
             >
                 {store.i18n["settings-spellcheck"]}
             </SwitchItem>
@@ -176,7 +180,7 @@ export function SettingsPage() {
             <SwitchItem
                 note={store.i18n["settings-useLegacyCapturer-desc"]}
                 value={store.settings.useLegacyCapturer}
-                onChange={(e: boolean) => setConfig("useLegacyCapturer", e)}
+                onChange={(e: boolean) => setConfig("useLegacyCapturer", e, true)}
             >
                 {store.i18n["settings-useLegacyCapturer"]}
             </SwitchItem>
@@ -196,14 +200,14 @@ export function SettingsPage() {
             <SwitchItem
                 note={store.i18n["settings-hardwareAcceleration-desc"]}
                 value={store.settings.hardwareAcceleration}
-                onChange={(e: boolean) => setConfig("hardwareAcceleration", e)}
+                onChange={(e: boolean) => setConfig("hardwareAcceleration", e, true)}
             >
                 {store.i18n["settings-hardwareAcceleration"]}
             </SwitchItem>
             <SwitchItem
                 note={store.i18n["settings-disableHttpCache-desc"]}
                 value={store.settings.disableHttpCache}
-                onChange={(e: boolean) => setConfig("disableHttpCache", e)}
+                onChange={(e: boolean) => setConfig("disableHttpCache", e, true)}
             >
                 {store.i18n["settings-disableHttpCache"]}
             </SwitchItem>

@@ -11,10 +11,12 @@ export function refreshSettings() {
     store.settings = window.armcord.settings.getConfig();
 }
 
-export function setConfig<K extends keyof Settings>(key: K, value: Settings[K]) {
+export function setConfig<K extends keyof Settings>(key: K, value: Settings[K], shouldRestart?: boolean) {
     settings[key] = value;
     console.log(`${key}: ${store.settings[key]}`);
-
+    if (shouldRestart) {
+        isRestartRequired = true;
+    }
     window.armcord.settings.setConfig(key, value);
     refreshSettings();
 }
