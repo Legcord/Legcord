@@ -80,5 +80,12 @@
     "settings-disableHttpCache": "Disable HTTP cache",
     "settings-mod-equicord": "forked and born from vencord contributors, featuring a pretty plugin-rich client.",
     "settings-audio": "Audio",
-    "settings-audio-desc": "Select which method ArmCord uses to grab audio from your system during screenshare."
+    "settings-audio-desc": "Select which method ArmCord uses to grab audio from your system during screenshare.",
+    "settings-category-mods": "Mods",
+    "settings-category-lookAndFeel": "Look and feel",
+    "settings-clearClientModCache": "Clear client mod cache",
+    "settings-theme-overlay": "Overlay",
+    "settings-category-behaviour": "Behaviour",
+    "settings-category-legacy": "Legacy features",
+    "settings-category-debug": "Debug options"
 }
