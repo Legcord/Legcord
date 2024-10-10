@@ -11,6 +11,7 @@ export function setLang(language: string): void {
     const parsed = JSON.parse(rawData) as i18nStrings;
     parsed.lang = language;
     const toSave = JSON.stringify(parsed, null, 4);
+    console.log(`Setting language to ${language}`);
     fs.writeFileSync(langConfigFile, toSave, "utf-8");
 }
 let language: string;

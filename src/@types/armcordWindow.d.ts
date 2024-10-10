@@ -25,6 +25,7 @@ export interface ArmCordWindow {
         openThemesFolder: () => void;
         copyDebugInfo: () => void;
         copyGPUInfo: () => void;
+        setLang(lang: string): () => void;
         addKeybind: (keybind: Keybind) => void;
         toggleKeybind: (id: string) => void;
         removeKeybind: (id: string) => void;

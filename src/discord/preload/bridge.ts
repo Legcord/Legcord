@@ -53,6 +53,7 @@ contextBridge.exposeInMainWorld("armcord", {
         toggleKeybind: (id: string) => ipcRenderer.send("toggleKeybind", id),
         removeKeybind: (id: string) => ipcRenderer.send("removeKeybind", id),
         openStorageFolder: () => ipcRenderer.send("openStorageFolder"),
+        setLang: (lang: string) => ipcRenderer.send("setLang", lang),
         openThemesFolder: () => ipcRenderer.send("openThemesFolder"),
         copyDebugInfo: () => ipcRenderer.send("copyDebugInfo"),
         copyGPUInfo: () => ipcRenderer.send("copyGPUInfo"),

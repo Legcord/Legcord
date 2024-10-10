@@ -19,11 +19,6 @@ if (ipcRenderer.sendSync("getConfig", "legacyCapturer")) {
     await import("./capturer.js");
 }
 const version = ipcRenderer.sendSync("displayVersion") as string;
-function updateLang(): void {
-    const value = `; ${document.cookie}`;
-    const parts = value.split("; locale=");
-    if (parts.length === 2) ipcRenderer.send("setLang", parts.pop()?.split(";").shift());
-}
 
 declare global {
     interface Window {
@@ -89,7 +84,6 @@ await sleep(5000).then(() => {
     addScript(readFileSync(join(import.meta.dirname, "../", "/js/rpc.js"), "utf8"));
     const cssPath = join(import.meta.dirname, "../", "/css/discord.css");
     addStyle(readFileSync(cssPath, "utf8"));
-    updateLang();
 });
 
 // Settings info version injection

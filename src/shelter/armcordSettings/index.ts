@@ -8,7 +8,7 @@ const {
     settings: { registerSection },
     util: { log },
     ui: { openConfirmationModal },
-    flux: { dispatcher },
+    flux: { dispatcher, storesFlat },
 } = shelter;
 
 const settingsPages = [
@@ -43,6 +43,7 @@ export function onLoad() {
     // used for restart required dialog later
     store.i18n = window.armcord.translations;
     log("ArmCord Settings");
+    window.armcord.settings.setLang(storesFlat.LocaleStore.locale);
     settingsPages;
     dispatcher.subscribe("TRACK", restartRequired);
 }
