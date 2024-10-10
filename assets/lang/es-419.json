@@ -80,5 +80,12 @@
     "settings-disableHttpCache-desc": "Disables HTTP cache of Chromium. Turn this on if client mods don't load for you.",
     "settings-disableHttpCache": "Disable HTTP cache",
     "settings-audio": "Audio",
-    "settings-audio-desc": "Select which method ArmCord uses to grab audio from your system during screenshare."
+    "settings-audio-desc": "Select which method ArmCord uses to grab audio from your system during screenshare.",
+    "settings-theme-overlay": "Overlay",
+    "settings-category-behaviour": "Behaviour",
+    "settings-category-mods": "Mods",
+    "settings-category-lookAndFeel": "Look and feel",
+    "settings-category-legacy": "Legacy features",
+    "settings-category-debug": "Debug options",
+    "settings-clearClientModCache": "Clear client mod cache"
 }
