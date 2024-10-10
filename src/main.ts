@@ -24,6 +24,7 @@ import { createSplashWindow } from "./splash/main.js";
 import { createTManagerWindow } from "./themeManager/main.js";
 export let settings: Settings;
 checkForDataFolder();
+checkIfConfigExists();
 app.on("render-process-gone", (_event, _webContents, details) => {
     if (details.reason === "crashed") {
         app.relaunch();
@@ -91,7 +92,6 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
         "WinRetrieveSuggestionsOnlyOnDemand,HardwareMediaKeyHandling,MediaSessionService",
     );
     app.commandLine.appendSwitch("enable-transparent-visuals");
-    checkIfConfigExists();
     checkIfConfigIsBroken();
     injectElectronFlags();
     await fetchMods();

@@ -1,7 +1,6 @@
-
 <div align="center">
-<img src="https://armcord.app/logo.png" width="520">
- <br>ArmCord is a custom client designed to enhance your Discord experience while keeping everything lightweight.
+    <img src="https://github.com/ArmCord/BrandingStuff/raw/main/ac_logo.png" height="256px" /><br>
+     <br>ArmCord is a custom client designed to enhance your Discord experience while keeping everything lightweight.
 </div>
 
 # Features
@@ -146,11 +145,10 @@ ArmCord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).
 ### Pre-built binaries:
 
  Check the **releases tab** for precompiled packages for Linux, Windows, and Mac OS. Alternatively, use our Sourceforge mirror.  
- <a href="https://sourceforge.net/projects/armcord/files/latest/download"><img alt="Download ArmCord" src="https://a.fsdn.com/con/app/sf-download-button" width=276 height=48 srcset="https://a.fsdn.com/con/app/sf-download-button?button_size=2x 2x"></a>
 
 ### Compiling:
 
- Alternatively, you can run ArmCord from source ([NodeJS](https://nodejs.dev), [pnpm](https://pnpm.io/installation#using-npm), and [rust toolchain](https://www.rust-lang.org/tools/install) are required):
+ Alternatively, you can run ArmCord from source ([NodeJS](https://nodejs.dev) and [pnpm](https://pnpm.io/installation#using-npm)) are required):
 
  1. Clone ArmCord repo: `git clone https://github.com/ArmCord/ArmCord.git`
  2. Run `pnpm install` to install dependencies
@@ -169,7 +167,7 @@ ArmCord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).
 
 ## Can I use this on anything other than AArch64/Apple Silicon?
 
-- Yes! ArmCord should work normally under Windows, MacOS, and Linux as long as it has Electron support.  
+- Yes! ArmCord should work normally under Windows, macOS, and Linux as long as it has Electron support.  
 
 ## How can I access the settings?
 
@@ -177,7 +175,7 @@ ArmCord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).
 
 ## How does this work?
 
-- We are using the official web app and wrapping it up in Electron. While you may think this is lame and done like thousands of times before, what makes us unique is that we actually strive for creating a customized experience. You can very easily load themes and mods with no installers/injectors. You can even make the client have transparency effects and follow the fluent design of Windows! At its core, it's just a simple web wrapper, however, we applied many patches to make this work well for you <3
+- We utilize the official web app and package it within Electron. While this approach may seem familiar, our focus is on delivering a truly customized and enhanced experience. Unlike many others, we provide seamless integration for loading themes and mods without the need for installers or injectors. You can easily enable transparency effects and adopt Windows' Fluent Design, offering a modern and sleek interface. Though it's fundamentally a web wrapper, we have implemented numerous optimizations and patches to ensure a smooth and tailored experience for you.
 
 ## Where can I find the source code?
 
@@ -192,11 +190,6 @@ ArmCord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).
 - [ArmCord UI design, branding, and a few features](https://github.com/kckarnige)
 - [OpenAsar](https://github.com/GooseMod/OpenAsar)
 - [arRPC (for Rich Presence)](https://github.com/OpenAsar/arrpc)
-- (pre v3.1.0) [Cumcord](https://github.com/Cumcord/Cumcord)
-- (pre v3.1.0) [GooseMod](https://github.com/GooseMod/GooseMod)
-- (pre v3.1.0) [GooseMod Extension](https://github.com/GooseMod/extension)
-- (pre v3.1.0) [FlickerMod](https://github.com/FlickerMod)
-- (Pre v3.0.0) [custom-electron-titlebar](https://github.com/AlexTorresSk/custom-electron-titlebar)
 - [electron-builder](https://electron.build)
   
 Discord is trademark of Discord Inc. ArmCord is not affiliated with or endorsed by Discord Inc.

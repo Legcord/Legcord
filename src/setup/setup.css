@@ -23,10 +23,9 @@ html,
 body {
     overflow: hidden;
     margin: 0;
-    padding-top: 30px;
     width: 100%;
     height: 100%;
-    background: var(--background-primary);
+    background: #1e2836;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -107,29 +106,10 @@ div {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    content: var(--logo-svg); /* FIXME - make this uri */
+    content: url("armcord://assets/ac_logo.svg");
     width: 292px;
 }
 
-[armcord-platform="win32"] .titlebar #window-controls-container #maximize,
-[armcord-platform="linux"] .titlebar #window-controls-container #maximize {
-    display: none;
-}
-
-[armcord-platform="win32"] .titlebar #window-controls-container #spacer,
-[armcord-platform="linux"] .titlebar #window-controls-container #spacer {
-    float: left;
-    height: 100%;
-    width: 33%;
-}
-[armcord-platform="darwin"] .titlebar #window-controls-container #quit {
-    width: 18% !important;
-}
-[armcord-platform="darwin"] .titlebar #window-controls-container #maximize,
-[armcord-platform="darwin"] .titlebar #window-controls-container #maximize #maximize-icon {
-    background-color: #d6d6d5 !important;
-    pointer-events: none;
-}
 /* }}} */
 
 /* Buttons {{{ */
@@ -144,7 +124,7 @@ div {
     margin-bottom: 10px;
 }
 button {
-    background: var(--brand-experiment);
+    background: #9739ec;
     color: var(--header-primary);
     outline: none;
     border: none;
@@ -153,13 +133,13 @@ button {
     transition: 0.17s ease;
 }
 button:hover {
-    background: var(--brand-experiment-560);
+    background: #aa6ce0;
     cursor: pointer;
     transition: 0.17s ease;
 }
 
 button:active {
-    background: var(--brand-experiment-600);
+    background: #d29fff;
     cursor: pointer;
     transition: 0.17s ease;
 }

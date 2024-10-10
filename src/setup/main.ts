@@ -14,7 +14,9 @@ export async function createSetupWindow(): Promise<void> {
             title: "ArmCord Setup",
             darkTheme: true,
             icon: getConfig("customIcon") ?? path.join(import.meta.dirname, "../", "/assets/desktop.png"),
-            frame: false,
+            frame: true,
+            resizable: false,
+            maximizable: false,
             autoHideMenuBar: true,
             webPreferences: {
                 sandbox: false,

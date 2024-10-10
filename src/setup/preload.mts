@@ -1,8 +1,6 @@
 import { contextBridge, ipcRenderer } from "electron";
 import type { Settings } from "../@types/settings.js";
-import { injectTitlebar } from "../discord/preload/titlebar.mjs";
 
-injectTitlebar();
 contextBridge.exposeInMainWorld("armcordinternal", {
     restart: () => ipcRenderer.send("setup-restart"),
     getOS: ipcRenderer.sendSync("setup-getOS") as string,

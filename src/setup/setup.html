@@ -1,164 +1,167 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <link rel="icon" type="image/ico" href="./favicon.ico" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>ArmCord Setup</title>
-        <style>
-            @import url("../css/setup.css");
-        </style>
-    </head>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/ico" href="./favicon.ico" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ArmCord Setup</title>
+    <style>
+      @import url("../css/setup.css");
+    </style>
+  </head>
 
-    <body>
-        <div class="container">
-            <div id="warning" class="hidden">
-                <p id="setup_offline">You appear to be offline. Please connect to the internet and restart ArmCord.</p>
-            </div>
-            <div id="setup">
-                <div id="logo" class="hidden"></div>
-                <div id="page1" class="hidden">
-                    <p id="setup_question1">Welcome to ArmCord Setup</p>
-                    <div id="buttons">
-                        <button id="full" class="center">Next</button>
-                    </div>
-                </div>
-
-                <div id="page2" class="hidden">
-                    <p class="text-center setup-ask" id="setup_question2">Choose your Discord channel/instance:</p>
-                    <div class="center">
-                        <select name="channel" id="channel" class="dropdown-button">
-                            <option value="stable">Stable</option>
-                            <option value="canary">Canary</option>
-                            <option value="ptb">PTB</option>
-                        </select>
-                    </div>
-                    <div id="buttons">
-                        <button id="next-page2" class="center">Next</button>
-                    </div>
-                </div>
-
-                <div id="page3" class="hidden">
-                    <p class="text-center setup-ask" id="setup_question4">Select a client mod you want to install:</p>
-                    <div class="center">
-                        <select name="mod" id="mod" class="dropdown-button">
-                            <option value="vencord">Vencord</option>
-                            <option value="equicord">Equicord</option>
-                            <option value="none">None</option>
-                        </select>
-                    </div>
-                    <div id="buttons">
-                        <button id="next-page3" class="center">Next</button>
-                    </div>
-                </div>
-                <div id="page4" class="hidden">
-                    <p class="text-center setup-ask" id="setup_question5">Do you want to use a tray icon?</p>
-                    <div class="center">
-                        <select name="tray" id="tray" class="dropdown-button">
-                            <option value="true">Yes</option>
-                            <option value="false">No</option>
-                        </select>
-                    </div>
-                    <p class="text-center" id="linuxNotice"></p>
-                    <div id="buttons">
-                        <button id="next-page4" class="center">Next</button>
-                    </div>
-                </div>
-            </div>
+  <body>
+    <div class="container">
+      <div id="warning" class="hidden">
+        <p id="setup_offline">
+          You appear to be offline. Please connect to the internet and restart
+          ArmCord.
+        </p>
+      </div>
+      <div id="setup">
+        <div id="logo" class="hidden"></div>
+        <div id="page1" class="hidden">
+          <p id="setup_question1">Welcome to ArmCord Setup</p>
+          <div id="buttons">
+            <button id="full" class="center">Next</button>
+          </div>
         </div>
-        <script>
-            async function loadLang() {
-                document.getElementById("next").innerHTML = await armcordinternal.getLang("next");
-                document.getElementById("setup_offline").innerHTML = await armcordinternal.getLang("setup_offline");
-                document.getElementById("setup_question1").innerHTML = await armcordinternal.getLang("setup_question1");
-                document.getElementById("express").innerHTML = await armcordinternal.getLang("setup_question1_answer1");
-                document.getElementById("full").innerHTML = await armcordinternal.getLang("setup_question1_answer2");
-                document.getElementById("setup_question2").innerHTML = await armcordinternal.getLang("setup_question2");
-                document.getElementById("setup_question3").innerHTML = await armcordinternal.getLang("setup_question3");
-                document.getElementById("setup_question4").innerHTML = await armcordinternal.getLang("setup_question4");
-                document.getElementById("setup_question5").innerHTML = await armcordinternal.getLang("setup_question5");
-            }
-            loadLang();
-        </script>
-        <script>
-            document.onload = function () {
-                ipcRenderer.send("win-unmaximize");
-            };
-            // Accessors {{{
-            let options = {};
 
-            let logo = document.getElementById("logo");
-            logo.classList.remove("hidden");
+        <div id="page2" class="hidden">
+          <p class="text-center setup-ask" id="setup_question2">
+            Choose your Discord channel/instance:
+          </p>
+          <div class="center">
+            <select name="channel" id="channel" class="dropdown-button">
+              <option value="stable">Stable</option>
+              <option value="canary">Canary</option>
+              <option value="ptb">PTB</option>
+            </select>
+          </div>
+          <div id="buttons">
+            <button id="next-page2" class="center">Next</button>
+          </div>
+        </div>
 
-            let page1 = document.getElementById("page1");
-            page1.classList.remove("hidden");
-            page1.buttons = document.querySelectorAll("#page1 > #buttons > button");
+        <div id="page3" class="hidden">
+          <p class="text-center setup-ask" id="setup_question4">
+            Select a client mod you want to install:
+          </p>
+          <div class="center">
+            <select name="mod" id="mod" class="dropdown-button">
+              <option value="vencord">Vencord</option>
+              <option value="equicord">Equicord</option>
+              <option value="none">None</option>
+            </select>
+          </div>
+          <div id="buttons">
+            <button id="next-page3" class="center">Next</button>
+          </div>
+        </div>
+        <div id="page4" class="hidden">
+          <p class="text-center setup-ask" id="setup_question5">
+            Do you want to use a tray icon?
+          </p>
+          <div class="center">
+            <select name="tray" id="tray" class="dropdown-button">
+              <option value="true">Yes</option>
+              <option value="false">No</option>
+            </select>
+          </div>
+          <p class="text-center" id="linuxNotice"></p>
+          <div id="buttons">
+            <button id="next-page4" class="center">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      async function loadLang() {
+        document.getElementById("next").innerHTML =
+          await armcordinternal.getLang("next");
+        document.getElementById("setup_offline").innerHTML =
+          await armcordinternal.getLang("setup_offline");
+        document.getElementById("setup_question1").innerHTML =
+          await armcordinternal.getLang("setup_question1");
+        document.getElementById("express").innerHTML =
+          await armcordinternal.getLang("setup_question1_answer1");
+        document.getElementById("full").innerHTML =
+          await armcordinternal.getLang("setup_question1_answer2");
+        document.getElementById("setup_question2").innerHTML =
+          await armcordinternal.getLang("setup_question2");
+        document.getElementById("setup_question3").innerHTML =
+          await armcordinternal.getLang("setup_question3");
+        document.getElementById("setup_question4").innerHTML =
+          await armcordinternal.getLang("setup_question4");
+        document.getElementById("setup_question5").innerHTML =
+          await armcordinternal.getLang("setup_question5");
+      }
+      loadLang();
+    </script>
+    <script>
+              document.onload = function () {
+                  ipcRenderer.send("win-unmaximize");
+              };
+              // Accessors {{{
+              let options = {};
 
-            // Connection check
-            let warning = document.getElementById("warning");
-            if (window.navigator.onLine === false) {
-                warning.classList.remove("hidden");
-            }
+              let logo = document.getElementById("logo");
+              logo.classList.remove("hidden");
 
-            let page2 = document.getElementById("page2");
-            let page3 = document.getElementById("page3");
-            let page4 = document.getElementById("page4");
-            // }}}
+              let page1 = document.getElementById("page1");
+              page1.classList.remove("hidden");
+              page1.buttons = document.querySelectorAll("#page1 > #buttons > button");
 
-            // Full
-            page1.buttons[0].addEventListener("click", () => {
-                page1.classList.add("hidden");
-                page2.classList.remove("hidden");
-            });
+              // Connection check
+              let warning = document.getElementById("warning");
+              if (window.navigator.onLine === false) {
+                  warning.classList.remove("hidden");
+              }
 
-            document.getElementById("next-page2").addEventListener("click", () => {
-                options.channel = document.getElementById("channel").value;
-                page2.classList.add("hidden");
-                page3.classList.remove("hidden");
-            });
+              let page2 = document.getElementById("page2");
+              let page3 = document.getElementById("page3");
+              let page4 = document.getElementById("page4");
+              // }}}
 
-            document.getElementById("next-page3").addEventListener("click", () => {
-                options.mod = document.getElementById("mod").value;
-                page3.classList.add("hidden");
-                page4.classList.remove("hidden");
-            });
+              // Full
+              page1.buttons[0].addEventListener("click", () => {
+                  page1.classList.add("hidden");
+                  page2.classList.remove("hidden");
+              });
 
-            if (window.armcordinternal.getOS == "linux") {
-                document.getElementById("tray").value = "false";
-                document.getElementById("linuxNotice").innerHTML =
-                    `Linux may not work well with tray icons. Depending on your system configuration, you may not be able to see the tray icon. Enable at your own risk. Can be changed later.`;
-            }
-            if (window.armcordinternal.getOS == "darwin") {
-                // macOS doesn't really do tray icons
-                document.getElementById("tray").value = "false";
-            }
-            document.getElementById("next-page4").addEventListener("click", () => {
-                window.armcordinternal.saveSettings({
-                    windowStyle: "default",
+              document.getElementById("next-page2").addEventListener("click", () => {
+                  options.channel = document.getElementById("channel").value;
+                  page2.classList.add("hidden");
+                  page3.classList.remove("hidden");
+              });
+
+              document.getElementById("next-page3").addEventListener("click", () => {
+                  options.mod = document.getElementById("mod").value;
+                  page3.classList.add("hidden");
+                  page4.classList.remove("hidden");
+              });
+
+              if (window.armcordinternal.getOS == "linux") {
+                  document.getElementById("tray").value = "false";
+                  document.getElementById("linuxNotice").innerHTML =
+                      `Linux may not work well with tray icons. Depending on your system configuration, you may not be able to see the tray icon. Enable at your own risk. Can be changed later.`;
+              }
+              if (window.armcordinternal.getOS == "darwin") {
+                  // macOS doesn't really do tray icons
+                  document.getElementById("tray").value = "false";
+              }
+              document.getElementById("next-page4").addEventListener("click", () => {
+                // only overwrite values user actually sets here
+                  window.armcordinternal.saveSettings({
+                    mods: [options.mod],
                     channel: options.channel,
-                    armcordCSP: true,
-                    minimizeToTray: true,
-                    mobileMode: false,
-                    spellcheck: true,
-                    skipSplash: false,
-                    disableAutogain: false,
-                    audio: "loopbackWithMute",
-                    mods: options.mod,
-                    dynamicIcon: false,
-                    multiInstance: false,
-                    hardwareAcceleration: true,
-                    useLegacyCapturer: false,
                     tray: /true/i.test(document.getElementById("tray").value),
-                    startMinimized: false,
-                    performanceMode: "none",
-                    trayIcon: "dynamic",
-                    inviteWebsocket: true,
                     doneSetup: true
-                });
-                setTimeout(() => window.armcordinternal.restart(), 500);
-            });
-            document.body.setAttribute("insetup", "");
-        </script>
-    </body>
+                  });
+                  setTimeout(() => window.armcordinternal.restart(), 500);
+              });
+              document.body.setAttribute("insetup", "");
+    </script>
+  </body>
 </html>
