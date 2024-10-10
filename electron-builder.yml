@@ -2,7 +2,9 @@ appId: com.smartfridge.armcord
 productName: ArmCord
 artifactName: ArmCord-${version}-${os}-${arch}.${ext}
 mac:
-    category: Network
+    category: "public.app-category.social-networking"
+    darkModeSupport: true
+    notarize: true
 
 nsis:
     oneClick: false
