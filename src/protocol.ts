@@ -1,7 +1,7 @@
+import fs from "node:fs";
 import path from "node:path";
 import Url from "node:url";
 import { net, app, protocol } from "electron";
-
 protocol.registerSchemesAsPrivileged([
     {
         scheme: "armcord",
@@ -32,6 +32,17 @@ void app.whenReady().then(() => {
             const file = req.url.replace("armcord://assets/", "");
             const filePath = path.join(import.meta.dirname, "assets", "app", `${file}`);
             if (filePath.includes("..")) {
+                return new Response("bad", {
+                    status: 400,
+                    headers: { "content-type": "text/html" },
+                });
+            }
+            return net.fetch(Url.pathToFileURL(filePath).toString());
+        } else if (req.url.startsWith("armcord://local/")) {
+            const file = req.url.replace("armcord://local/", "");
+            const userDataPath = path.join(app.getPath("userData"), "userAssets");
+            const filePath = path.normalize(path.join(userDataPath, `${file}`));
+            if (!filePath.startsWith(userDataPath)) {
                 return new Response("bad", {
                     status: 400,
                     headers: { "content-type": "text/html" },
