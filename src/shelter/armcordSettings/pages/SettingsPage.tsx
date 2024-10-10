@@ -17,7 +17,7 @@ export function SettingsPage() {
             <Header tag={HeaderTags.H1}>Settings</Header>
             <Divider mt mb />
             <Header class={classes.category} tag={HeaderTags.H5}>
-                Mods
+                {store.i18n["settings-category-mods"]}
             </Header>
             <SwitchItem
                 note={store.i18n["settings-csp-desc"]}
@@ -48,7 +48,7 @@ export function SettingsPage() {
                 {store.i18n["settings-invitewebsocket"]}
             </SwitchItem>
             <Header class={classes.category} tag={HeaderTags.H5}>
-                Look and feel
+                {store.i18n["settings-category-lookAndFeel"]}
             </Header>
             <DropdownItem
                 value={store.settings.windowStyle}
@@ -59,11 +59,11 @@ export function SettingsPage() {
                 note={store.i18n["settings-theme-desc"]}
                 link="https://github.com/ArmCord/ArmCord/wiki/Settings-%5Bwip%5D#armcord-theme"
             >
-                <option value="default">Default (Custom)</option>
-                <option value="native">Native</option>
-                <option value="transparent">Transparent</option>
+                <option value="default">{store.i18n["settings-theme-default"]}</option>
+                <option value="native">{store.i18n["settings-theme-native"]}</option>
+                <option value="transparent">{store.i18n["settings-theme-transparent"]}</option>
                 <Show when={window.armcord.platform === "win32"}>
-                    <option value="overlay">Overlay</option>
+                    <option value="overlay">{store.i18n["settings-theme-overlay"]}</option>
                 </Show>
             </DropdownItem>
             <DropdownItem
@@ -175,7 +175,7 @@ export function SettingsPage() {
                 {store.i18n["settings-spellcheck"]}
             </SwitchItem>
             <Header class={classes.category} tag={HeaderTags.H5}>
-                Legacy features
+                {store.i18n["settings-category-legacy"]}
             </Header>
             <SwitchItem
                 note={store.i18n["settings-useLegacyCapturer-desc"]}
@@ -185,7 +185,7 @@ export function SettingsPage() {
                 {store.i18n["settings-useLegacyCapturer"]}
             </SwitchItem>
             <Header class={classes.category} tag={HeaderTags.H5}>
-                Debug options
+                {store.i18n["settings-category-debug"]}
             </Header>
             <DropdownItem
                 value={store.settings.audio}
@@ -212,19 +212,19 @@ export function SettingsPage() {
                 {store.i18n["settings-disableHttpCache"]}
             </SwitchItem>
             <Button size={ButtonSizes.MAX} onClick={window.armcord.settings.openStorageFolder}>
-                Open storage folder
+                {store.i18n["settings-storageFolder"]}
             </Button>
             <br />
             <Button size={ButtonSizes.MAX} onClick={window.armcord.settings.copyDebugInfo}>
-                Copy debug info
+                {store.i18n["settings-copyDebugInfo"]}
             </Button>
             <br />
             <Button size={ButtonSizes.MAX} onClick={window.armcord.settings.copyGPUInfo}>
-                Copy GPU info
+                {store.i18n["settings-copyGPUInfo"]}
             </Button>
             <br />
             <Button size={ButtonSizes.MAX} onClick={() => setConfig("modCache", {} as Settings["modCache"])}>
-                Clear client mod cache
+                {store.i18n["settings-clearClientModCache"]}
             </Button>
         </>
     );
