@@ -22,6 +22,7 @@ export interface ArmCordWindow {
         getConfig: () => Readonly<Settings>;
         setConfig: <K extends keyof Settings>(object: K, toSet: Settings[K]) => void;
         openStorageFolder: () => void;
+        openThemesFolder: () => void;
         copyDebugInfo: () => void;
         copyGPUInfo: () => void;
         addKeybind: (keybind: Keybind) => void;
