@@ -1,7 +1,7 @@
 name: Stable build and release
 on:
     push:
-        branches: new-stable-action
+        branches: stable
 jobs:
     Stable-Build:
         continue-on-error: true
