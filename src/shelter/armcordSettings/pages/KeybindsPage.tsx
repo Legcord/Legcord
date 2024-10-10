@@ -8,7 +8,7 @@ import { KeybindCard } from "../components/KeybindCard.jsx";
 import { KeybindMaker } from "../components/KeybindMaker.jsx";
 export function KeybindsPage() {
     function addNewKeybind() {
-        const close = openModal(() => <KeybindMaker />);
+        openModal(({ close }: { close: () => void }) => <KeybindMaker close={close} />);
     }
     return (
         <>

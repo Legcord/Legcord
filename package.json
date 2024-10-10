@@ -39,7 +39,7 @@
         "@types/ws": "^8.5.12",
         "@uwu/lune": "^1.4.2",
         "@uwu/shelter-defs": "^1.4.1",
-        "electron": "32.1.2",
+        "electron": "32.2.0",
         "electron-builder": "^25.1.7",
         "rollup": "^4.24.0",
         "rollup-plugin-copy": "^3.5.0",

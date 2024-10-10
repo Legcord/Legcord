@@ -20,7 +20,7 @@ const {
     },
     plugin: { store },
 } = shelter;
-export const KeybindMaker = () => {
+export const KeybindMaker = (props: { close: () => void }) => {
     const [accelerator, setAccelerator] = createSignal("");
     const [global, setGlobal] = createSignal(true);
     const [action, setAction] = createSignal<KeybindActions>("mute");
@@ -73,13 +73,7 @@ export const KeybindMaker = () => {
     }
     return (
         <ModalRoot size={ModalSizes.SMALL}>
-            <ModalHeader
-                close={() => {
-                    null; //FIXME - IMPLEMENT
-                }}
-            >
-                Add a keybind
-            </ModalHeader>
+            <ModalHeader close={props.close}>Add a keybind</ModalHeader>
             <ModalBody>
                 <Header tag={HeaderTags.H5}>Accelerator</Header>
                 <div class={classes.grabBox}>
@@ -119,8 +113,7 @@ export const KeybindMaker = () => {
                     <TextBox value={javascriptCode()} onInput={setJavascriptCode} />
                 </Show>
             </ModalBody>
-            {/* FIXME - Implement close()? */}
-            <ModalConfirmFooter confirmText="Add" onConfirm={save} close={() => {}} />{" "}
+            <ModalConfirmFooter confirmText="Add" onConfirm={save} close={props.close} />
         </ModalRoot>
     );
 };
