@@ -1,4 +1,4 @@
-import { createSignal } from "solid-js";
+import { Show, createSignal } from "solid-js";
 import type { KeybindActions } from "../../../@types/keybind.js";
 import { Dropdown } from "./Dropdown.jsx";
 import classes from "./KeybindMaker.module.css";
@@ -25,6 +25,7 @@ export const KeybindMaker = () => {
     const [accelerator, setAccelerator] = createSignal("");
     const [global, setGlobal] = createSignal(true);
     const [action, setAction] = createSignal<KeybindActions>("mute");
+    const [javascriptCode, setJavascriptCode] = createSignal("");
     const [enabled, setEnabled] = createSignal(true);
     let logged: string[] = [];
     let lock = false;
@@ -63,6 +64,7 @@ export const KeybindMaker = () => {
             enabled: enabled(),
             global: global(),
             id: genId(),
+            ...(action() === "runJavascript" && { js: javascriptCode() }),
         };
         current.push(keybind);
         store.settings.keybinds = current;
@@ -111,6 +113,7 @@ export const KeybindMaker = () => {
                     <option value="deafen">Deafen</option>
                     <option value="navigateForward">Navigate forward</option>
                     <option value="navigateBack">Navigate back</option>
+                    <option value="runJavascript">Run Javascript</option>
                     <option value="openQuickCss">Open Quick CSS</option>
                 </Dropdown>
                 <SwitchItem
@@ -123,6 +126,11 @@ export const KeybindMaker = () => {
                 <SwitchItem hideBorder value={enabled()} onChange={setEnabled}>
                     Enabled
                 </SwitchItem>
+                <Show when={action() === "runJavascript"}>
+                    <Divider mt mb />
+                    <Header tag={HeaderTags.H5}>Javascript code</Header>
+                    <TextBox value={javascriptCode()} onInput={setJavascriptCode} />
+                </Show>
             </ModalBody>
             {/* FIXME - Implement close()? */}
             <ModalConfirmFooter confirmText="Add" onConfirm={save} close={() => {}} />{" "}

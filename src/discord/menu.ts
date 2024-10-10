@@ -14,7 +14,7 @@ export function setMenu(): void {
                 label: keybind.action,
                 accelerator: keybind.accelerator,
                 click: () => {
-                    runAction(keybind.action);
+                    runAction(keybind);
                 },
             });
         }

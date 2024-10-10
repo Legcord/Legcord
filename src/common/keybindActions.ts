@@ -1,11 +1,11 @@
 import path from "node:path";
 import { app, shell } from "electron";
-import type { KeybindActions } from "../@types/keybind.js";
+import type { Keybind } from "../@types/keybind.js";
 import { mainWindows } from "../discord/window.js";
 let isAudioEngineEnabled = false;
 
-export function runAction(action: KeybindActions) {
-    switch (action) {
+export function runAction(keybind: Keybind) {
+    switch (keybind.action) {
         case "mute":
             muteToggle();
             break;
@@ -20,6 +20,10 @@ export function runAction(action: KeybindActions) {
             break;
         case "openQuickCss":
             openQuickCss();
+            break;
+        case "runJavascript":
+            if (!keybind.js) break;
+            runJavascript(keybind.js);
             break;
     }
 }
@@ -77,4 +81,10 @@ function navigateForward() {
 
 function openQuickCss() {
     void shell.openPath(path.join(app.getPath("userData"), "/quickCss.css"));
+}
+
+function runJavascript(js: string) {
+    mainWindows.forEach((window) => {
+        window.webContents.executeJavaScript(js);
+    });
 }

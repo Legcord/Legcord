@@ -8,7 +8,7 @@ export function registerGlobalKeybinds() {
     keybinds.forEach((keybind: Keybind) => {
         if (keybind.enabled && keybind.global) {
             globalShortcut.register(keybind.accelerator, () => {
-                runAction(keybind.action);
+                runAction(keybind);
             });
         }
     });
