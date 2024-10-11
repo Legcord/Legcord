@@ -354,12 +354,13 @@
 }
 
 .window-title {
-    content: url("legcord://assets/Wordmark.svg");
-    height: 10px;
+    content: url("legcord://assets/Wordmark.png");
+    height: 15px;
     margin-left: initial;
-    transform: translate(9px, 9.5px);
+    transform: translate(9px, 9px);
     float: left;
     padding: 0;
+    filter: invert(30%);
 }
 
 div#app-mount {
