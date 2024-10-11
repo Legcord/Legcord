@@ -195,7 +195,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
 
     initQuickCss(passedWindow);
     passedWindow.webContents.on("page-title-updated", (e, title) => {
-        const armCordSuffix = " - ArmCord"; /* identify */
+        const legcordSuffix = " - Legcord"; /* identify */
 
         // FIXME - This is a bit of a mess. I'm not sure how to clean it up.
         if (process.platform === "win32") {
@@ -225,10 +225,10 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
             if (title.startsWith("(")) return app.setBadgeCount(Number.parseInt(/\((\d+)\)/.exec(title)![1]));
             app.setBadgeCount(0);
         }
-        if (!title.endsWith(armCordSuffix)) {
+        if (!title.endsWith(legcordSuffix)) {
             e.preventDefault();
             void passedWindow.webContents.executeJavaScript(
-                `document.title = '${title.replace("Discord |", "") + armCordSuffix}'`,
+                `document.title = '${title.replace("Discord |", "") + legcordSuffix}'`,
             );
         }
     });
@@ -313,7 +313,7 @@ export function createWindow() {
         height: getWindowState("height") ?? 600,
         x: getWindowState("x"),
         y: getWindowState("y"),
-        title: "ArmCord",
+        title: "Legcord",
         show: false,
         darkTheme: true,
         icon: getConfig("customIcon") ?? path.join(import.meta.dirname, "../", "/assets/desktop.png"),
@@ -352,7 +352,7 @@ export function createInviteWindow(code: string): void {
     inviteWindow = new BrowserWindow({
         width: 800,
         height: 600,
-        title: "ArmCord Invite Manager",
+        title: "Legcord Invite Manager",
         darkTheme: true,
         icon: getConfig("customIcon") ?? path.join(import.meta.dirname, "../", "/assets/desktop.png"),
         frame: true,

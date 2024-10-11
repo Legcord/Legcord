@@ -21,9 +21,9 @@ export function setMenu(): void {
     });
     const template: MenuItemConstructorOptions[] = [
         {
-            label: "ArmCord",
+            label: "Legcord",
             submenu: [
-                { label: "About ArmCord", role: "about" }, //orderFrontStandardAboutPanel
+                { label: "About Legcord", role: "about" }, //orderFrontStandardAboutPanel
                 { type: "separator" },
                 {
                     label: "Developer tools",
@@ -48,7 +48,7 @@ export function setMenu(): void {
                             void mainWindow.webContents.executeJavaScript(
                                 `window.shelter.flux.dispatcher.dispatch({type: "LAYER_PUSH", component: "USER_SETTINGS"})`,
                             );
-                            // TODO - open armcord tab in settings
+                            // TODO - open legcord tab in settings
                         });
                     },
                 },

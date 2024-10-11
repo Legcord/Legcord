@@ -8,7 +8,7 @@ export async function createSplashWindow(): Promise<void> {
     splashWindow = new BrowserWindow({
         width: 300,
         height: 350,
-        title: "ArmCord",
+        title: "Legcord",
         show: true,
         darkTheme: true,
         icon: getConfig("customIcon") ?? path.join(import.meta.dirname, "../", "/assets/desktop.png"),

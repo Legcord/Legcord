@@ -21,10 +21,10 @@ export function SettingsPage() {
             </Header>
             <SwitchItem
                 note={store.i18n["settings-csp-desc"]}
-                value={settings.armcordCSP}
-                onChange={(e: boolean) => setConfig("armcordCSP", e, true)}
+                value={settings.legcordCSP}
+                onChange={(e: boolean) => setConfig("legcordCSP", e, true)}
             >
-                ArmCord CSP
+                Legcord CSP
             </SwitchItem>
             <SwitchItem
                 note={store.i18n["settings-mod-vencord"]}
@@ -57,12 +57,12 @@ export function SettingsPage() {
                 }
                 title={store.i18n["settings-theme"]}
                 note={store.i18n["settings-theme-desc"]}
-                link="https://github.com/ArmCord/ArmCord/wiki/Settings-%5Bwip%5D#armcord-theme"
+                link="https://github.com/Legcord/Legcord/wiki/Settings-%5Bwip%5D#legcord-theme"
             >
                 <option value="default">{store.i18n["settings-theme-default"]}</option>
                 <option value="native">{store.i18n["settings-theme-native"]}</option>
                 <option value="transparent">{store.i18n["settings-theme-transparent"]}</option>
-                <Show when={window.armcord.platform === "win32"}>
+                <Show when={window.legcord.platform === "win32"}>
                     <option value="overlay">{store.i18n["settings-theme-overlay"]}</option>
                 </Show>
             </DropdownItem>
@@ -118,7 +118,7 @@ export function SettingsPage() {
                 onChange={(e) => setConfig("performanceMode", (e.target as HTMLInputElement).value, true)}
                 title={store.i18n["settings-prfmMode"]}
                 note={store.i18n["settings-prfmMode-desc"]}
-                link="https://github.com/ArmCord/ArmCord/blob/dev/src/common/flags.ts"
+                link="https://github.com/Legcord/Legcord/blob/dev/src/common/flags.ts"
             >
                 <option value="performance">{store.i18n["settings-prfmMode-performance"]}</option>
                 <option value="battery">{store.i18n["settings-prfmMode-battery"]}</option>
@@ -211,15 +211,15 @@ export function SettingsPage() {
             >
                 {store.i18n["settings-disableHttpCache"]}
             </SwitchItem>
-            <Button size={ButtonSizes.MAX} onClick={window.armcord.settings.openStorageFolder}>
+            <Button size={ButtonSizes.MAX} onClick={window.legcord.settings.openStorageFolder}>
                 {store.i18n["settings-storageFolder"]}
             </Button>
             <br />
-            <Button size={ButtonSizes.MAX} onClick={window.armcord.settings.copyDebugInfo}>
+            <Button size={ButtonSizes.MAX} onClick={window.legcord.settings.copyDebugInfo}>
                 {store.i18n["settings-copyDebugInfo"]}
             </Button>
             <br />
-            <Button size={ButtonSizes.MAX} onClick={window.armcord.settings.copyGPUInfo}>
+            <Button size={ButtonSizes.MAX} onClick={window.legcord.settings.copyGPUInfo}>
                 {store.i18n["settings-copyGPUInfo"]}
             </Button>
             <br />

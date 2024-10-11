@@ -5,9 +5,9 @@ import type { Settings } from "../@types/settings.js";
 import { getWindowStateLocation } from "./windowState.js";
 export let firstRun: boolean;
 export function checkForDataFolder(): void {
-    const dataPath = join(dirname(app.getPath("exe")), "armcord-data");
+    const dataPath = join(dirname(app.getPath("exe")), "legcord-data");
     if (existsSync(dataPath) && statSync(dataPath).isDirectory()) {
-        console.log("Found armcord-data folder. Running in portable mode.");
+        console.log("Found legcord-data folder. Running in portable mode.");
         app.setPath("userData", dataPath);
     }
 }
@@ -59,15 +59,15 @@ export function checkIfConfigExists(): void {
             mkdirSync(storagePath);
             console.log("Created missing storage folder");
         }
-        console.log("First run of the ArmCord. Starting setup.");
+        console.log("First run of the Legcord. Starting setup.");
         setup();
         firstRun = true;
     } else if (getConfig("doneSetup") === false) {
-        console.log("First run of the ArmCord. Starting setup.");
+        console.log("First run of the Legcord. Starting setup.");
         setup();
         firstRun = true;
     } else {
-        console.log("ArmCord has been run before. Skipping setup.");
+        console.log("Legcord has been run before. Skipping setup.");
     }
 }
 export function checkIfConfigIsBroken(): void {
@@ -81,7 +81,7 @@ export function checkIfConfigIsBroken(): void {
         setup();
         dialog.showErrorBox(
             "Oops, something went wrong.",
-            "ArmCord has detected that your configuration file is corrupted, please restart the app and set your settings again. If this issue persists, report it on the support server/Github issues.",
+            "Legcord has detected that your configuration file is corrupted, please restart the app and set your settings again. If this issue persists, report it on the support server/Github issues.",
         );
     }
     try {
@@ -96,11 +96,11 @@ export function checkIfConfigIsBroken(): void {
 }
 
 export function setup(): void {
-    console.log("Setting up temporary ArmCord settings.");
+    console.log("Setting up temporary Legcord settings.");
     const defaults: Settings = {
         windowStyle: "default",
         channel: "stable",
-        armcordCSP: true,
+        legcordCSP: true,
         minimizeToTray: true,
         keybinds: [],
         audio: "loopbackWithMute",
@@ -114,14 +114,14 @@ export function setup(): void {
         startMinimized: false,
         tray: true,
         disableHttpCache: false,
-        customJsBundle: "https://armcord.app/placeholder.js",
-        customCssBundle: "https://armcord.app/placeholder.css",
+        customJsBundle: "https://legcord.app/placeholder.js",
+        customCssBundle: "https://legcord.app/placeholder.css",
         disableAutogain: false,
         useLegacyCapturer: false,
         mobileMode: false,
         trayIcon: "dynamic",
         doneSetup: false,
-        clientName: "ArmCord",
+        clientName: "Legcord",
         customIcon: join(import.meta.dirname, "../", "/assets/desktop.png"),
         smoothScroll: true,
         autoScroll: false,

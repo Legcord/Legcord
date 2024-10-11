@@ -13,15 +13,15 @@ const {
 
 const settingsPages = [
     registerSection("divider"),
-    registerSection("header", "ArmCord"),
-    registerSection("section", "armcord-settings", "Settings", SettingsPage),
-    registerSection("section", "armcord-themes", "Themes", ThemesPage),
-    registerSection("section", "armcord-keybinds", "Keybinds", KeybindsPage),
+    registerSection("header", "Legcord"),
+    registerSection("section", "legcord-settings", "Settings", SettingsPage),
+    registerSection("section", "legcord-themes", "Themes", ThemesPage),
+    registerSection("section", "legcord-keybinds", "Keybinds", KeybindsPage),
 ];
 
 function restartRequired(payload: { event: string; properties: { origin_pane: string } }) {
     if (payload.event === "settings_pane_viewed" && typeof payload.properties.origin_pane !== "undefined") {
-        if (payload.properties.origin_pane === "armcord-settings") {
+        if (payload.properties.origin_pane === "legcord-settings") {
             if (isRestartRequired) {
                 openConfirmationModal({
                     header: () => "Restart required",
@@ -30,7 +30,7 @@ function restartRequired(payload: { event: string; properties: { origin_pane: st
                     confirmText: "Restart",
                     cancelText: "I'll do it later",
                 }).then(
-                    () => window.armcord.restart(),
+                    () => window.legcord.restart(),
                     () => console.log("restart skipped"),
                 );
             }
@@ -41,9 +41,9 @@ function restartRequired(payload: { event: string; properties: { origin_pane: st
 export function onLoad() {
     refreshSettings();
     // used for restart required dialog later
-    store.i18n = window.armcord.translations;
-    log("ArmCord Settings");
-    window.armcord.settings.setLang(storesFlat.LocaleStore.locale);
+    store.i18n = window.legcord.translations;
+    log("Legcord Settings");
+    window.legcord.settings.setLang(storesFlat.LocaleStore.locale);
     settingsPages;
     dispatcher.subscribe("TRACK", restartRequired);
 }

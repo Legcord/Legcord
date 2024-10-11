@@ -11,7 +11,7 @@ window.navigator.mediaDevices.getDisplayMedia = () => new Promise(async (resolve
   try {
     const selectionElem = document.createElement('div');
     selectionElem.classList = ['desktop-capturer-selection'];
-    selectionElem.innerHTML = await window.armcord.getDisplayMediaSelector();
+    selectionElem.innerHTML = await window.legcord.getDisplayMediaSelector();
     document.body.appendChild(selectionElem);
     document
       .querySelectorAll('.desktop-capturer-selection__btn')

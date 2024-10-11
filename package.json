@@ -1,7 +1,7 @@
 {
-    "name": "armcord",
+    "name": "legcord",
     "version": "3.3.2",
-    "description": "ArmCord is a custom client designed to enhance your Discord experience while keeping everything lightweight.",
+    "description": "Legcord is a custom client designed to enhance your Discord experience while keeping everything lightweight.",
     "main": "ts-out/main.js",
     "engines": {
         "node": ">=22"
@@ -20,15 +20,15 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/armcord/armcord.git"
+        "url": "git+https://github.com/Legcord/Legcord.git"
     },
     "author": "smartfrigde",
     "license": "OSL-3.0",
     "type": "module",
     "bugs": {
-        "url": "https://github.com/armcord/armcord/issues"
+        "url": "https://github.com/Legcord/Legcord/issues"
     },
-    "homepage": "https://github.com/armcord/armcord#readme",
+    "homepage": "https://github.com/Legcord/Legcord#readme",
     "devDependencies": {
         "@biomejs/biome": "1.9.3",
         "@rollup/plugin-commonjs": "^28.0.0",
@@ -48,7 +48,7 @@
         "typescript": "^5.6.2"
     },
     "dependencies": {
-        "arrpc": "github:armcord/arrpc",
+        "arrpc": "github:Legcord/arrpc",
         "electron-context-menu": "^4.0.4",
         "electron-is-dev": "^3.0.1",
         "v8-compile-cache": "^2.4.0",

@@ -3,7 +3,7 @@ import Url from "node:url";
 import { net, app, protocol } from "electron";
 protocol.registerSchemesAsPrivileged([
     {
-        scheme: "armcord",
+        scheme: "legcord",
         privileges: {
             standard: true,
             secure: true,
@@ -16,9 +16,9 @@ protocol.registerSchemesAsPrivileged([
 ]);
 
 void app.whenReady().then(() => {
-    protocol.handle("armcord", (req) => {
-        if (req.url.startsWith("armcord://plugins/")) {
-            const url = req.url.replace("armcord://plugins/", "").split("/");
+    protocol.handle("legcord", (req) => {
+        if (req.url.startsWith("legcord://plugins/")) {
+            const url = req.url.replace("legcord://plugins/", "").split("/");
             const filePath = path.join(import.meta.dirname, "plugins", `/${url[0]}/${url[1]}`);
             if (filePath.includes("..")) {
                 return new Response("bad", {
@@ -27,8 +27,8 @@ void app.whenReady().then(() => {
                 });
             }
             return net.fetch(Url.pathToFileURL(filePath).toString());
-        } else if (req.url.startsWith("armcord://assets/")) {
-            const file = req.url.replace("armcord://assets/", "");
+        } else if (req.url.startsWith("legcord://assets/")) {
+            const file = req.url.replace("legcord://assets/", "");
             const filePath = path.join(import.meta.dirname, "assets", "app", `${file}`);
             if (filePath.includes("..")) {
                 return new Response("bad", {
@@ -37,8 +37,8 @@ void app.whenReady().then(() => {
                 });
             }
             return net.fetch(Url.pathToFileURL(filePath).toString());
-        } else if (req.url.startsWith("armcord://local/")) {
-            const file = req.url.replace("armcord://local/", "");
+        } else if (req.url.startsWith("legcord://local/")) {
+            const file = req.url.replace("legcord://local/", "");
             const userDataPath = path.join(app.getPath("userData"), "userAssets");
             const filePath = path.normalize(path.join(userDataPath, `${file}`));
             if (!filePath.startsWith(userDataPath)) {

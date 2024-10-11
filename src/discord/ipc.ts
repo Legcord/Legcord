@@ -180,7 +180,7 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.on("copyDebugInfo", () => {
         const settingsFileContent = fs.readFileSync(getConfigLocation(), "utf-8");
         clipboard.writeText(
-            `**OS:** ${os.platform()} ${os.version()}\n**Architecture:** ${os.arch()}\n**ArmCord version:** ${getVersion()}\n**Electron version:** ${
+            `**OS:** ${os.platform()} ${os.version()}\n**Architecture:** ${os.arch()}\n**Legcord version:** ${getVersion()}\n**Electron version:** ${
                 process.versions.electron
             }\n\`${settingsFileContent}\``,
         );

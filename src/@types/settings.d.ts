@@ -11,7 +11,7 @@ export interface Settings {
     windowStyle: "default" | "native" | "transparent" | "overlay";
     channel: "stable" | "ptb" | "canary";
     audio: "loopback" | "loopbackWithMute";
-    armcordCSP: boolean;
+    legcordCSP: boolean;
     minimizeToTray: boolean;
     multiInstance: boolean;
     spellcheck: boolean;

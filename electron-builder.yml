@@ -1,6 +1,6 @@
-appId: com.smartfridge.armcord
-productName: ArmCord
-artifactName: ArmCord-${version}-${os}-${arch}.${ext}
+appId: app.legcord.Legcord
+productName: Legcord
+artifactName: Legcord-${version}-${os}-${arch}.${ext}
 mac:
     category: "public.app-category.social-networking"
     darkModeSupport: true
@@ -11,9 +11,9 @@ nsis:
     allowToChangeInstallationDirectory: true
 
 appx:
-    applicationId: smartfrigde.ArmCord
-    identityName: 53758smartfrigde.ArmCord
-    publisher: CN=EAB3A6D3-7145-4623-8176-D579F573F339
+    applicationId: smartfrigde.Legcord
+    identityName: 53758smartfrigde.Legcord
+    publisher: 	CN=EAB3A6D3-7145-4623-8176-D579F573F339
     publisherDisplayName: smartfrigde
 
 linux:
@@ -23,7 +23,7 @@ linux:
         - deb
         - rpm
         - tar.gz
-    maintainer: linux@armcord.app
+    maintainer: linux@legcord.app
     category: Network
 
 snap:

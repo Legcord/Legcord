@@ -9,5 +9,5 @@ jobs:
         steps:
             - uses: vedantmgoyal2009/winget-releaser@v2
               with:
-                  identifier: ArmCord.ArmCord
+                  identifier: Legcord.Legcord
                   token: ${{ secrets.WINGET_TOKEN }}

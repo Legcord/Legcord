@@ -8,7 +8,7 @@ const settings = store.settings as Settings;
 
 export let isRestartRequired = false;
 export function refreshSettings() {
-    store.settings = window.armcord.settings.getConfig();
+    store.settings = window.legcord.settings.getConfig();
 }
 
 export function setConfig<K extends keyof Settings>(key: K, value: Settings[K], shouldRestart?: boolean) {
@@ -17,7 +17,7 @@ export function setConfig<K extends keyof Settings>(key: K, value: Settings[K], 
     if (shouldRestart) {
         isRestartRequired = true;
     }
-    window.armcord.settings.setConfig(key, value);
+    window.legcord.settings.setConfig(key, value);
     refreshSettings();
 }
 

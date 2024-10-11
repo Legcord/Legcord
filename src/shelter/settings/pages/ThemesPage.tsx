@@ -7,15 +7,15 @@ export function ThemesPage() {
         <>
             <Header tag={HeaderTags.H1}>Themes</Header>
             <Divider mt mb />
-            <Button size={ButtonSizes.MAX} onClick={window.armcord.openThemesWindow}>
+            <Button size={ButtonSizes.MAX} onClick={window.legcord.openThemesWindow}>
                 Open Theme Manager
             </Button>
             <Divider mt mb />
-            <Button size={ButtonSizes.MAX} onClick={window.armcord.openQuickCssFile}>
+            <Button size={ButtonSizes.MAX} onClick={window.legcord.openQuickCssFile}>
                 Open Quick CSS file
             </Button>
             <Divider mt mb />
-            <Button size={ButtonSizes.MAX} onClick={window.armcord.settings.openThemesFolder}>
+            <Button size={ButtonSizes.MAX} onClick={window.legcord.settings.openThemesFolder}>
                 Open themes folder
             </Button>
         </>
