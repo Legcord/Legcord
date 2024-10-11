@@ -1,6 +1,6 @@
 import { type SourcesOptions, contextBridge, ipcRenderer } from "electron";
-import type { LegcordWindow } from "../../@types/legcordWindow.d.ts";
 import type { Keybind } from "../../@types/keybind.js";
+import type { LegcordWindow } from "../../@types/legcordWindow.d.ts";
 import type { Settings } from "../../@types/settings.js";
 
 const CANCEL_ID = "desktop-capturer-selection__cancel";

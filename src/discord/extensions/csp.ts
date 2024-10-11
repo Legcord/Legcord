@@ -20,7 +20,7 @@ const unrestrictCSP = (): void => {
 
 void electron.app.whenReady().then(() => {
     // NOTE - Awaiting the line above will hang the app.
-    if (getConfig("legcordCSP") === undefined) setConfig("legcordCSP", true)
+    if (getConfig("legcordCSP") === undefined) setConfig("legcordCSP", true);
     if (getConfig("legcordCSP")) {
         unrestrictCSP();
     } else {
