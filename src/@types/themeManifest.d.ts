@@ -13,5 +13,5 @@ export interface ThemeManifest {
     website?: string;
     source?: string;
     updateSrc?: string;
-    supportsArmCordTitlebar?: boolean;
+    supportsLegcordTitlebar?: boolean;
 }

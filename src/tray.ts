@@ -28,7 +28,7 @@ void app.whenReady().then(() => {
 
     if (process.platform === "darwin" && trayPath.getSize().height > 22) trayPath = trayPath.resize({ height: 22 });
     if (getConfig("tray")) {
-        const clientName = getConfig("clientName") ?? "ArmCord";
+        const clientName = getConfig("clientName") ?? "Legcord";
         tray = new Tray(trayPath);
         if (finishedSetup === false) {
             const contextMenu = Menu.buildFromTemplate([
@@ -83,7 +83,7 @@ void app.whenReady().then(() => {
                             void mainWindow.webContents.executeJavaScript(
                                 `window.shelter.flux.dispatcher.dispatch({type: "LAYER_PUSH", component: "USER_SETTINGS"})`,
                             );
-                            // TODO - open armcord tab in settings
+                            // TODO - open legcord tab in settings
                         });
                     },
                 },

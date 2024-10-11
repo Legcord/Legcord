@@ -42,11 +42,11 @@ jobs:
                   path: .cache
                   key: electron-zips.dev.${{matrix.os}}
 
-            - name: Build ArmCord
+            - name: Build Legcord
               run: pnpm electron-builder --x64 --arm64 ${{matrix.flags}} --publish never
               env:
                   GH_TOKEN: ${{secrets.GITHUB_TOKEN}} # MacOS needs the token or it will fail to build
-                  CSC_LINK: "https://armcord.app/NewSign.p12"
+                  CSC_LINK: "https://legcord.app/NewSign.p12"
                   CSC_KEY_PASSWORD: ${{ secrets.MACOS_SIGN_PASS }}
                   APPLE_ID: ${{secrets.APPLE_ID}}
                   APPLE_APP_SPECIFIC_PASSWORD: ${{secrets.APPLE_ID_PASSWORD}}

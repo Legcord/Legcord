@@ -29,7 +29,7 @@ export function injectTitlebar(isOverlay?: boolean): void {
         addStyle(readFileSync(titlebarcssPath, "utf8"));
         document.body.setAttribute("customTitlebar", "");
 
-        document.body.setAttribute("armcord-platform", platform());
+        document.body.setAttribute("legcord-platform", platform());
 
         const minimize = document.getElementById("minimize");
         const maximize = document.getElementById("maximize");

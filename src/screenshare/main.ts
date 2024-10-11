@@ -53,7 +53,7 @@ function registerCustomHandler(): void {
                     capturerWindow = new BrowserWindow({
                         width: 800,
                         height: 600,
-                        title: "ArmCord Screenshare",
+                        title: "Legcord Screenshare",
                         darkTheme: true,
                         icon: getConfig("customIcon") ?? path.join(import.meta.dirname, "../", "/assets/desktop.png"),
                         frame: true,

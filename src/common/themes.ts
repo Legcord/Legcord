@@ -174,8 +174,8 @@ export async function installTheme(linkOrPath: string) {
     if (isLinkImport && manifest.updateSrc === undefined) {
         manifest.updateSrc = linkOrPath;
     }
-    if (code.includes(".titlebar")) manifest.supportsArmCordTitlebar = true;
-    else manifest.supportsArmCordTitlebar = false;
+    if (code.includes(".titlebar")) manifest.supportsLegcordTitlebar = true;
+    else manifest.supportsLegcordTitlebar = false;
     fs.writeFileSync(path.join(themePath, "manifest.json"), JSON.stringify(manifest));
     fs.writeFileSync(path.join(themePath, "src.css"), code);
 }
@@ -185,11 +185,11 @@ export function initQuickCss(browserWindow: BrowserWindow) {
     if (!fs.existsSync(quickCssPath)) {
         fs.writeFileSync(quickCssPath, "");
     }
-    browserWindow.webContents.send("addTheme", "armcord-quick-css", fs.readFileSync(quickCssPath, "utf-8"));
+    browserWindow.webContents.send("addTheme", "legcord-quick-css", fs.readFileSync(quickCssPath, "utf-8"));
     console.log("[Theme Manager] Loaded Quick CSS");
     fs.watchFile(quickCssPath, { interval: 1000 }, () => {
         console.log("[Theme Manager] Quick CSS updated.");
-        browserWindow.webContents.send("removeTheme", "armcord-quick-css");
-        browserWindow.webContents.send("addTheme", "armcord-quick-css", fs.readFileSync(quickCssPath, "utf-8"));
+        browserWindow.webContents.send("removeTheme", "legcord-quick-css");
+        browserWindow.webContents.send("addTheme", "legcord-quick-css", fs.readFileSync(quickCssPath, "utf-8"));
     });
 }

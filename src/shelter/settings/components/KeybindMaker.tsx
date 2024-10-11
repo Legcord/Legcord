@@ -69,7 +69,7 @@ export const KeybindMaker = (props: { close: () => void }) => {
         store.settings.keybinds = current;
         console.log(current);
         console.log(store.settings.keybinds);
-        window.armcord.settings.addKeybind(keybind);
+        window.legcord.settings.addKeybind(keybind);
     }
     return (
         <ModalRoot size={ModalSizes.SMALL}>

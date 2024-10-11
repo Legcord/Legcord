@@ -4,7 +4,7 @@
         lookupApp,
         apps = {};
     console.log("Starting RPC Bridge");
-    ArmCordRPC.listen(async (msg) => {
+    LegcordRPC.listen(async (msg) => {
         if (!Dispatcher) {
             let wpRequire;
             window.webpackChunkdiscord_app.push([[Symbol()], {}, (x) => (wpRequire = x)]);

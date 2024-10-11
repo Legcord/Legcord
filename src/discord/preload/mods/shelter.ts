@@ -2,10 +2,10 @@ import { ipcRenderer, webFrame } from "electron";
 import type { ModBundle } from "../../../@types/ModBundle.js";
 
 const requiredPlugins: Record<string, [string, { isVisible: boolean; allowedActions: Record<string, true> }]> = {
-    // "armcord-arrpc": "armcord://plugins/armcordRPC/",
-    "armcord-settings": ["armcord://plugins/armcordSettings/", { isVisible: false, allowedActions: {} }],
-    "armcord-screenshare": [
-        "armcord://plugins/screenshareQualityFix/",
+    // "legcord-arrpc": "legcord://plugins/rpc/",
+    "legcord-settings": ["legcord://plugins/settings/", { isVisible: false, allowedActions: {} }],
+    "legcord-screenshare": [
+        "legcord://plugins/screenshareQualityFix/",
         { isVisible: true, allowedActions: { toggle: true } },
     ],
 };

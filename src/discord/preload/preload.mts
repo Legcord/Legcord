@@ -7,7 +7,7 @@ import "./optimizer.js";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { ipcRenderer } from "electron";
-import type { ArmCordWindow } from "../../@types/armcordWindow.js";
+import type { LegcordWindow } from "../../@types/legcordWindow.js";
 import { addScript, addStyle, addTheme } from "../../common/dom.js";
 import { sleep } from "../../common/sleep.js";
 import { injectMobileStuff } from "./mobile.js";
@@ -22,11 +22,11 @@ const version = ipcRenderer.sendSync("displayVersion") as string;
 
 declare global {
     interface Window {
-        armcord: ArmCordWindow;
+        legcord: LegcordWindow;
     }
 }
 
-console.log(`ArmCord ${version}`);
+console.log(`Legcord ${version}`);
 ipcRenderer.on("addTheme", (_event, name: string, css: string) => {
     if (document.getElementById(name)) return;
     addTheme(name, css);
@@ -48,7 +48,7 @@ if (ipcRenderer.sendSync("getConfig", "mobileMode")) {
     injectMobileStuff();
 }
 await sleep(5000).then(() => {
-    // dirty hack to make clicking notifications focus ArmCord
+    // dirty hack to make clicking notifications focus Legcord
     if (
         document.getElementById("window-title") == null &&
         ipcRenderer.sendSync("getConfig", "windowStyle") === "default"
@@ -66,7 +66,7 @@ await sleep(5000).then(() => {
             set(onClick) {
             originalSetter.call(this, function() {
                 onClick.apply(this, arguments);
-                armcord.window.show();
+                legcord.window.show();
             })
             },
             configurable: true
@@ -94,6 +94,6 @@ setInterval(() => {
     }
     const el = host.firstElementChild!.cloneNode() as HTMLSpanElement;
     el.id = "ac-ver";
-    el.textContent = `ArmCord Version: ${version}`;
+    el.textContent = `Legcord Version: ${version}`;
     host.append(el);
 }, 1000);

@@ -1,5 +1,5 @@
 import electron from "electron";
-import { getConfig } from "../../common/config.js";
+import { getConfig, setConfig } from "../../common/config.js";
 
 const unrestrictCSP = (): void => {
     console.log("Setting up CSP unrestricter...");
@@ -20,9 +20,10 @@ const unrestrictCSP = (): void => {
 
 void electron.app.whenReady().then(() => {
     // NOTE - Awaiting the line above will hang the app.
-    if (getConfig("armcordCSP")) {
+    if (getConfig("legcordCSP") === undefined) setConfig("legcordCSP", true)
+    if (getConfig("legcordCSP")) {
         unrestrictCSP();
     } else {
-        console.log("ArmCord CSP is disabled. The CSP should be managed by a third-party plugin(s).");
+        console.log("Legcord CSP is disabled. The CSP should be managed by a third-party plugin(s).");
     }
 });

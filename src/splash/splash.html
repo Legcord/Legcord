@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <title>ArmCord</title>
+        <title>Legcord</title>
         <style>
             @import url("../css/splash.css");
         </style>
@@ -17,8 +17,8 @@
 
     <body>
         <div class="container">
-            <video autoplay loop class="logo" id="splashscreen-armcord">
-                <source src="armcord://assets/Loading.webm" type="video/webm" />
+            <video autoplay loop class="logo" id="splashscreen-legcord">
+                <source src="legcord://assets/Loading.webm" type="video/webm" />
             </video>
             <p id="text-splashscreen"></p>
             <button id="ignore">Start anyway</button>
@@ -36,20 +36,20 @@
             } else {
                 text.innerHTML = await internal.getLang("loading_screen_start");
                 if (internal.isDev) {
-                    console.log("Running a development build of ArmCord. Skipping updater.");
+                    console.log("Running a development build of Legcord. Skipping updater.");
                 } else {
-                    const response = await fetch("https://armcord.app/latest.json");
+                    const response = await fetch("https://legcord.app/latest.json");
                     const data = await response.json();
                     const remoteVersion = data.version.replace(/\./g, ""); // easy to compare
                     if (remoteVersion > window.internal.version.replace(/\./g, "")) {
                         var elem = document.createElement("img");
                         elem.classList.add("logo");
-                        elem.src = "armcord://assets/Update.webp";
+                        elem.src = "legcord://assets/Update.webp";
                         document.body.prepend(elem);
-                        document.getElementById("splashscreen-armcord").remove();
+                        document.getElementById("splashscreen-legcord").remove();
                         text.innerHTML = await internal.getLang("loading_screen_update");
                     } else {
-                        console.log("ArmCord is up to date.");
+                        console.log("Legcord is up to date.");
                     }
                 }
 

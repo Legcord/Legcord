@@ -11,7 +11,7 @@ export async function createSetupWindow(): Promise<void> {
         setupWindow = new BrowserWindow({
             width: 390,
             height: 470,
-            title: "ArmCord Setup",
+            title: "Legcord Setup",
             darkTheme: true,
             icon: getConfig("customIcon") ?? path.join(import.meta.dirname, "../", "/assets/desktop.png"),
             frame: true,

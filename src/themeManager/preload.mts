@@ -25,23 +25,23 @@ ipcRenderer.on("themeManifest", (_event, id: string, json: string) => {
         `,
     );
     document.getElementById(`${id}-shortcuts`)!.innerHTML +=
-        `<img class="themeInfoIcon" id="${id}-removeTheme" onclick="themes.uninstall('${id}')" title="Remove the theme" src="armcord://assets/Trash.png"></img>
-                           <img class="themeInfoIcon" id="${id}-updateTheme" onclick="themes.install('${manifest.updateSrc}')" title="Update your theme" src="armcord://assets/UpgradeArrow.png"></img>
-                           <img class="themeInfoIcon" id="${id}-editTheme" onclick="themes.edit('${id}')" title="Edit your theme" src="armcord://assets/Edit.png"></img>
-                           <img class="themeInfoIcon" id="${id}-folderTheme" onclick="themes.folder('${id}')" title="Open this theme folder" src="armcord://assets/Folder.png"></img>`;
+        `<img class="themeInfoIcon" id="${id}-removeTheme" onclick="themes.uninstall('${id}')" title="Remove the theme" src="legcord://assets/Trash.png"></img>
+                           <img class="themeInfoIcon" id="${id}-updateTheme" onclick="themes.install('${manifest.updateSrc}')" title="Update your theme" src="legcord://assets/UpgradeArrow.png"></img>
+                           <img class="themeInfoIcon" id="${id}-editTheme" onclick="themes.edit('${id}')" title="Edit your theme" src="legcord://assets/Edit.png"></img>
+                           <img class="themeInfoIcon" id="${id}-folderTheme" onclick="themes.folder('${id}')" title="Open this theme folder" src="legcord://assets/Folder.png"></img>`;
     (document.getElementById(id) as HTMLInputElement).checked = manifest.enabled;
     document.getElementById(`${id}header`)!.addEventListener("click", () => {
         document.getElementById("themeInfoModal")!.style.display = "block";
         document.getElementById("themeInfoName")!.textContent = `${manifest.name} by ${manifest.author}`;
         document.getElementById("themeInfoDesc")!.textContent = `${manifest.description}\n\n${manifest.version}`;
-        if (manifest.supportsArmCordTitlebar !== undefined) {
+        if (manifest.supportsLegcordTitlebar !== undefined) {
             document.getElementById("themeInfoButtons")!.innerHTML +=
-                `<img class="themeInfoIcon" id="compatibility" title="Supports ArmCord Titlebar" src=""></img>`;
-            if (manifest.supportsArmCordTitlebar === true) {
-                (document.getElementById("compatibility") as HTMLImageElement).src = "armcord://assets/Window.png";
+                `<img class="themeInfoIcon" id="compatibility" title="Supports Legcord Titlebar" src=""></img>`;
+            if (manifest.supportsLegcordTitlebar === true) {
+                (document.getElementById("compatibility") as HTMLImageElement).src = "legcord://assets/Window.png";
             } else {
                 (document.getElementById("compatibility") as HTMLImageElement).src =
-                    "armcord://assets/WindowUnsupported.png";
+                    "legcord://assets/WindowUnsupported.png";
             }
         }
         if (manifest.source !== undefined)

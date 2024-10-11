@@ -1,7 +1,7 @@
 import type { Keybind } from "./keybind.js";
 import type { Settings } from "./settings.js";
 
-export interface ArmCordWindow {
+export interface LegcordWindow {
     window: {
         show: () => void;
         hide: () => void;
@@ -34,6 +34,6 @@ export interface ArmCordWindow {
 
 declare global {
     interface Window {
-        armcord: ArmCordWindow;
+        legcord: LegcordWindow;
     }
 }

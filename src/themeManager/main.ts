@@ -21,7 +21,7 @@ export async function createTManagerWindow(): Promise<void> {
         themeWindow = new BrowserWindow({
             width: 700,
             height: 600,
-            title: "ArmCord Theme Manager",
+            title: "Legcord Theme Manager",
             darkTheme: true,
             frame: true,
             backgroundColor: "#2f3136",

@@ -32,7 +32,7 @@ const fetchAssetId = async (applicationId, assetName) => {
 };
 // https://images-ext-1.discordapp.net/external/1u9jSonO6pasZ41RA1LGqSbTysKHHF0MzoL0YDeTJg0/https/lh3.googleusercontent.com/fhDgRO0LrPPo9CDqsLQlxR3CVZc8xPmSi9Ja8DKAS5zhoWsZKdj2scyWqBUU2t4DHxK1xcbWKY2Q7cpj%3Dw544-h544-l90-rj?format=webp&width=300&height=300
 export function onLoad() {
-    ArmCordRPC.listen(async (msg) => {
+    LegcordRPC.listen(async (msg) => {
         if (msg.activity?.assets?.large_image.startsWith("https://")) {
             msg.activity.assets.large_image = `https://images-ext-1.discordapp.net/external/${msg.activity.assets.large_image.replace("https://", "https/")}?format=webp&width=300&height=300`;
         } else {

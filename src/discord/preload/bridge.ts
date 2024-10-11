@@ -1,5 +1,5 @@
 import { type SourcesOptions, contextBridge, ipcRenderer } from "electron";
-import type { ArmCordWindow } from "../../@types/armcordWindow.js";
+import type { LegcordWindow } from "../../@types/legcordWindow.d.ts";
 import type { Keybind } from "../../@types/keybind.js";
 import type { Settings } from "../../@types/settings.js";
 
@@ -39,7 +39,7 @@ async function getDisplayMediaSelector(): Promise<string> {
   </ul>
 </div>`;
 }
-contextBridge.exposeInMainWorld("armcord", {
+contextBridge.exposeInMainWorld("legcord", {
     window: {
         show: () => ipcRenderer.send("win-show"),
         hide: () => ipcRenderer.send("win-hide"),
@@ -71,10 +71,10 @@ contextBridge.exposeInMainWorld("armcord", {
     restart: () => ipcRenderer.send("restart"),
     openThemesWindow: () => ipcRenderer.send("openThemesWindow"),
     openQuickCssFile: () => ipcRenderer.send("openQuickCssFile"),
-} as ArmCordWindow);
+} as LegcordWindow);
 
 let windowCallback: (arg0: object) => void;
-contextBridge.exposeInMainWorld("ArmCordRPC", {
+contextBridge.exposeInMainWorld("LegcordRPC", {
     // REVIEW - I don't think this is right
     listen: (callback: () => void) => {
         windowCallback = callback;

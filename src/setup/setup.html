@@ -5,7 +5,7 @@
     <link rel="icon" type="image/ico" href="./favicon.ico" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ArmCord Setup</title>
+    <title>Legcord Setup</title>
     <style>
       @import url("../css/setup.css");
     </style>
@@ -16,13 +16,13 @@
       <div id="warning" class="hidden">
         <p id="setup_offline">
           You appear to be offline. Please connect to the internet and restart
-          ArmCord.
+          Legcord.
         </p>
       </div>
       <div id="setup">
         <div id="logo" class="hidden"></div>
         <div id="page1" class="hidden">
-          <p id="setup_question1">Welcome to ArmCord Setup</p>
+          <p id="setup_question1">Welcome to Legcord Setup</p>
           <div id="buttons">
             <button id="full" class="center">Next</button>
           </div>
@@ -79,23 +79,23 @@
     <script>
       async function loadLang() {
         document.getElementById("next").innerHTML =
-          await armcordinternal.getLang("next");
+          await legcordinternal.getLang("next");
         document.getElementById("setup_offline").innerHTML =
-          await armcordinternal.getLang("setup_offline");
+          await legcordinternal.getLang("setup_offline");
         document.getElementById("setup_question1").innerHTML =
-          await armcordinternal.getLang("setup_question1");
+          await legcordinternal.getLang("setup_question1");
         document.getElementById("express").innerHTML =
-          await armcordinternal.getLang("setup_question1_answer1");
+          await legcordinternal.getLang("setup_question1_answer1");
         document.getElementById("full").innerHTML =
-          await armcordinternal.getLang("setup_question1_answer2");
+          await legcordinternal.getLang("setup_question1_answer2");
         document.getElementById("setup_question2").innerHTML =
-          await armcordinternal.getLang("setup_question2");
+          await legcordinternal.getLang("setup_question2");
         document.getElementById("setup_question3").innerHTML =
-          await armcordinternal.getLang("setup_question3");
+          await legcordinternal.getLang("setup_question3");
         document.getElementById("setup_question4").innerHTML =
-          await armcordinternal.getLang("setup_question4");
+          await legcordinternal.getLang("setup_question4");
         document.getElementById("setup_question5").innerHTML =
-          await armcordinternal.getLang("setup_question5");
+          await legcordinternal.getLang("setup_question5");
       }
       loadLang();
     </script>
@@ -142,24 +142,24 @@
                   page4.classList.remove("hidden");
               });
 
-              if (window.armcordinternal.getOS == "linux") {
+              if (window.legcordinternal.getOS == "linux") {
                   document.getElementById("tray").value = "false";
                   document.getElementById("linuxNotice").innerHTML =
                       `Linux may not work well with tray icons. Depending on your system configuration, you may not be able to see the tray icon. Enable at your own risk. Can be changed later.`;
               }
-              if (window.armcordinternal.getOS == "darwin") {
+              if (window.legcordinternal.getOS == "darwin") {
                   // macOS doesn't really do tray icons
                   document.getElementById("tray").value = "false";
               }
               document.getElementById("next-page4").addEventListener("click", () => {
                 // only overwrite values user actually sets here
-                  window.armcordinternal.saveSettings({
+                  window.legcordinternal.saveSettings({
                     mods: [options.mod],
                     channel: options.channel,
                     tray: /true/i.test(document.getElementById("tray").value),
                     doneSetup: true
                   });
-                  setTimeout(() => window.armcordinternal.restart(), 500);
+                  setTimeout(() => window.legcordinternal.restart(), 500);
               });
               document.body.setAttribute("insetup", "");
     </script>
