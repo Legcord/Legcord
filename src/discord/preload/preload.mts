@@ -81,7 +81,7 @@ await sleep(5000).then(() => {
     addScript(`
         shelter.plugins.removePlugin("armcord-settings")
         shelter.plugins.removePlugin("armcord-screenshare")
-    `)
+    `);
     if (ipcRenderer.sendSync("getConfig", "disableAutogain")) {
         addScript(readFileSync(join(import.meta.dirname, "../", "/js/disableAutogain.js"), "utf8"));
     }
