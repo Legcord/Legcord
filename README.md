@@ -83,7 +83,7 @@ Not available yet.
 
 ### Pre-built binaries:
 
- Check the **releases tab** for precompiled packages for Linux, Windows, and macOS. Alternatively, use our Sourceforge mirror.  
+ Check the **releases tab** for precompiled packages for Linux, Windows, and macOS.
 
 ### Compiling:
 
