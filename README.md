@@ -39,97 +39,39 @@
 
 ## Packaging status
 
-[![Packaging status](https://repology.org/badge/vertical-allrepos/Legcord.svg)](https://repology.org/project/Legcord/versions)
+[![Packaging status](https://repology.org/badge/vertical-allrepos/legcord.svg)](https://repology.org/project/legcord/versions)
 
 ### Windows
 
-<a href="https://microsoft.com/store/apps/9PFHLJFD7KJT">
-   <img src="https://get.microsoft.com/images/en-us%20dark.svg" alt="Download Legcord" />
-</a>
-
-If you're using an older version of Windows, you need to use [pre-built installers](https://www.Legcord.app/download).
+You need to use [pre-built installers](https://www.legcord.app/download).
 
 ### Flatpak
 
-<a href='https://flathub.org/apps/details/xyz.Legcord.Legcord'><img width='240' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.svg'/></a>
+Not available yet.
 
 ### Debian, Ubuntu and Raspbian repository
 
-Legcord is available on our official repositories for `apt` package manager. By using this method you'll receive automatic updates and get all the dependencies. Run the following commands to install Legcord from them:
-
-```sh
-curl -fsSL https://apt.Legcord.app/public.gpg | sudo gpg --dearmor -o /usr/share/keyrings/Legcord.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/Legcord.gpg] https://apt.Legcord.app/ stable main" | sudo tee /etc/apt/sources.list.d/Legcord.list
-sudo apt update
-sudo apt install Legcord
-```
-
-If you previously used old Legcord apt repo, here's how you can remove it:
-
-```sh
-sudo rm /etc/apt/sources.list.d/Legcord.list
-sudo rm /usr/share/keyrings/Legcord.gpg
-sudo apt update
-```
+Not available yet.
 
 ### Snap package
 
-Legcord is also available on the Snap store [here](https://snapcraft.io/Legcord).   
-<a href="https://snapcraft.io/Legcord">
-<img alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" />
-</a>  
-
-Similar to `Legcord-git` on AUR, you can install the latest dev builds through snaps by running this command:
-
-```shell
-sudo snap install Legcord --channel=latest/edge
-```
-
-Snapd will automatically update the app including developer builds.
+Not available yet.
 
 ### Winget Package
 
-Legcord is also available on the [winget-pkgs](https://github.com/microsoft/winget-pkgs) repository:
-
-```ps1
-winget install Legcord.Legcord
-```
+Not available yet.
 
 ### Scoop package
 
-Legcord is also available on [Scoop extras](https://github.com/ScoopInstaller/Extras) repo:
-
-```ps1
-scoop bucket add extras
-```
-
-```ps1
-scoop install Legcord
-```
+Not available yet.
 
 ### AUR Package
 
-Legcord is also available on the Arch User Repository (AUR):
-
-- [Legcord-bin](https://aur.archlinux.org/packages/Legcord-bin) - Legcord Release ~ Static binary from release, stable release only
-
-- [Legcord-git](https://aur.archlinux.org/packages/Legcord-git) - Legcord Dev ~ Latest devbuild built from source (takes ~1 minute) using the system electron
-
-Install it via an AUR helper tool like `yay`.
-
-**Example:** `yay -S Legcord-bin`
+Not available yet.
 
 ### Homebrew repository
 
-Legcord also has a homebrew repository
-
-```zsh
-brew tap Legcord/Legcord
-```
-
-```zsh
-brew install --cask Legcord
-```
+Not available yet.
 
 ### FreeBSD
 
@@ -137,16 +79,15 @@ You can also get Legcord running on FreeBSD by following [these instructions](ht
 
 ### Pi-Apps
 
-Legcord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).  
-[![badge](https://github.com/Botspot/pi-apps/blob/master/icons/badge.png?raw=true)](https://github.com/Botspot/pi-apps)
+Not available yet.
 
 ### Pre-built binaries:
 
- Check the **releases tab** for precompiled packages for Linux, Windows, and Mac OS. Alternatively, use our Sourceforge mirror.  
+ Check the **releases tab** for precompiled packages for Linux, Windows, and macOS. Alternatively, use our Sourceforge mirror.  
 
 ### Compiling:
 
- Alternatively, you can run Legcord from source ([NodeJS](https://nodejs.dev) and [pnpm](https://pnpm.io/installation#using-npm)) are required):
+ Alternatively, you can run Legcord from source ([NodeJS](https://nodejs.dev) and [pnpm](https://pnpm.io/installation#using-npm)) are required:
 
  1. Clone Legcord repo: `git clone https://github.com/Legcord/Legcord.git`
  2. Run `pnpm install` to install dependencies
@@ -162,10 +103,6 @@ Legcord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).
 ## Will I get banned for using this?
 
 - You are breaking [Discord ToS](https://discord.com/terms#software-in-discord%E2%80%99s-services) by using Legcord, but no one has been banned from using it or any of the client mods included.
-
-## Can I use this on anything other than AArch64/Apple Silicon?
-
-- Yes! Legcord should work normally under Windows, macOS, and Linux as long as it has Electron support.  
 
 ## How can I access the settings?
 
