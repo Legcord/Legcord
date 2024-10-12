@@ -62,11 +62,11 @@ jobs:
             env:
                   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
             with:
-                name: Rolling Dev Build (${{github.event.commits.id}})
+                name: Rolling Dev Build
                 allowUpdates: true
                 removeArtifacts: true
                 prerelease: true
-                body: "Built against https://github.com/Legcord/Legcord/tree/dev on every commit. Last run triggered on ${{github.event.commits.timestamp}} by ${{github.event.commits.author.username}}"
+                body: "Built against https://github.com/Legcord/Legcord/tree/dev on every commit. NOTE: tarballs do not update."
                 draft: false
                 tag: devbuild
                 artifacts: release-files/**/*.zip
