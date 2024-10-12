@@ -4,6 +4,35 @@ import { app, dialog } from "electron";
 import type { Settings } from "../@types/settings.js";
 import { getWindowStateLocation } from "./windowState.js";
 export let firstRun: boolean;
+const defaults: Settings = {
+    windowStyle: "default",
+    channel: "stable",
+    legcordCSP: true,
+    minimizeToTray: true,
+    keybinds: [],
+    audio: "loopbackWithMute",
+    multiInstance: false,
+    mods: ["vencord"],
+    spellcheck: true,
+    hardwareAcceleration: true,
+    performanceMode: "none",
+    skipSplash: false,
+    inviteWebsocket: true,
+    startMinimized: false,
+    tray: true,
+    disableHttpCache: false,
+    customJsBundle: "https://legcord.app/placeholder.js",
+    customCssBundle: "https://legcord.app/placeholder.css",
+    disableAutogain: false,
+    useLegacyCapturer: false,
+    mobileMode: false,
+    trayIcon: "dynamic",
+    doneSetup: false,
+    clientName: "Legcord",
+    customIcon: join(import.meta.dirname, "../", "/assets/desktop.png"),
+    smoothScroll: true,
+    autoScroll: false,
+};
 export function checkForDataFolder(): void {
     const dataPath = join(dirname(app.getPath("exe")), "legcord-data");
     if (existsSync(dataPath) && statSync(dataPath).isDirectory()) {
@@ -97,35 +126,6 @@ export function checkIfConfigIsBroken(): void {
 
 export function setup(): void {
     console.log("Setting up temporary Legcord settings.");
-    const defaults: Settings = {
-        windowStyle: "default",
-        channel: "stable",
-        legcordCSP: true,
-        minimizeToTray: true,
-        keybinds: [],
-        audio: "loopbackWithMute",
-        multiInstance: false,
-        mods: ["vencord"],
-        spellcheck: true,
-        hardwareAcceleration: true,
-        performanceMode: "none",
-        skipSplash: false,
-        inviteWebsocket: true,
-        startMinimized: false,
-        tray: true,
-        disableHttpCache: false,
-        customJsBundle: "https://legcord.app/placeholder.js",
-        customCssBundle: "https://legcord.app/placeholder.css",
-        disableAutogain: false,
-        useLegacyCapturer: false,
-        mobileMode: false,
-        trayIcon: "dynamic",
-        doneSetup: false,
-        clientName: "Legcord",
-        customIcon: join(import.meta.dirname, "../", "/assets/desktop.png"),
-        smoothScroll: true,
-        autoScroll: false,
-    };
     setConfigBulk({
         ...defaults,
     });
