@@ -10,8 +10,8 @@ export const config: Configuration = {
         darkModeSupport: true,
         notarize: true,
         extendInfo: {
-            NSMicrophoneUsageDescription: "ArmCord requires access to the microphone to function properly.",
-            NSCameraUsageDescription: "ArmCord requires access to the camera to function properly.",
+            NSMicrophoneUsageDescription: "Legcord requires access to the microphone to function properly.",
+            NSCameraUsageDescription: "legcord requires access to the camera to function properly.",
             "com.apple.security.device.audio-input": true,
             "com.apple.security.device.camera": true,
         },

@@ -82,8 +82,8 @@ await sleep(5000).then(() => {
         "document.querySelector('.guilds_a4d4d9 .scroller_fea3ef').lastChild.previousSibling.style.display = 'none';",
     );
     addScript(`
-        shelter.plugins.removePlugin("armcord-settings")
-        shelter.plugins.removePlugin("armcord-screenshare")
+        shelter.plugins.removePlugin("legcord-settings")
+        shelter.plugins.removePlugin("legcord-screenshare")
     `);
     if (ipcRenderer.sendSync("getConfig", "disableAutogain")) {
         addScript(readFileSync(join(import.meta.dirname, "../", "/js/disableAutogain.js"), "utf8"));
