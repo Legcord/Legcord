@@ -71,6 +71,7 @@ jobs:
               with:
                   bodyFile: .github/release.md
                   name: Dev Build ${{steps.vars.outputs.sha_short}}
+                  allowUpdates: true
                   removeArtifacts: true
                   prerelease: true
                   draft: false
