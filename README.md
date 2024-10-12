@@ -71,7 +71,11 @@ Not available yet.
 
 ### Homebrew repository
 
-Not available yet.
+LegCord is also available on the [Homebrew Cask](https://github.com/Homebrew/homebrew-cask) repo
+ 
+```
+brew install --cask legcord
+```
 
 ### FreeBSD
 
