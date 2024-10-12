@@ -72,8 +72,8 @@ Not available yet.
 ### Homebrew repository
 
 LegCord is also available on the [Homebrew Cask](https://github.com/Homebrew/homebrew-cask) repo
- 
-```
+
+```zsh
 brew install --cask legcord
 ```
 
@@ -85,11 +85,11 @@ You can also get Legcord running on FreeBSD by following [these instructions](ht
 
 Not available yet.
 
-### Pre-built binaries:
+### Pre-built binaries
 
  Check the **releases tab** for precompiled packages for Linux, Windows, and macOS.
 
-### Compiling:
+### Compiling
 
  Alternatively, you can run Legcord from source ([NodeJS](https://nodejs.dev) and [pnpm](https://pnpm.io/installation#using-npm)) are required:
 
@@ -102,7 +102,7 @@ Not available yet.
 
 ## Do you have a support Discord?
 
-[![](https://dcbadge.vercel.app/api/server/TnhxcqynZ2)](https://discord.gg/TnhxcqynZ2)
+[![Discord Server](https://dcbadge.vercel.app/api/server/TnhxcqynZ2)](https://discord.gg/TnhxcqynZ2)
 
 ## Will I get banned for using this?
 

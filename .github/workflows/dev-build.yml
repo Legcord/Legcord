@@ -20,27 +20,15 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
-
-            - name: Prepare PNPM
-              uses: pnpm/action-setup@v4
-
-            - name: Prepare Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 22
-                  cache: pnpm
-
-            - name: Install dependencies
-              run: pnpm i
-
+        
             - name: Build TypeScript
-              run: pnpm build
+              uses: ./.github/actions/build-typescript
 
             - name: Load Electron Cache
               uses: actions/cache/restore@v4
               with:
                   path: .cache
-                  key: electron-zips.dev.${{matrix.os}}
+                  key: electron-zips.${{matrix.os}}
 
             - name: Build Legcord
               run: pnpm electron-builder --x64 --arm64 ${{matrix.flags}} zip --publish never
@@ -51,7 +39,7 @@ jobs:
               uses: actions/cache/save@v4
               with:
                   path: .cache
-                  key: electron-zips.dev.${{matrix.os}}
+                  key: electron-zips.${{matrix.os}}
 
             - name: Upload artifact
               uses: actions/upload-artifact@v4
@@ -72,12 +60,6 @@ jobs:
               with:
                   path: release-files
 
-            - name: Delete
-              run: gh release delete devbuild -y --cleanup-tag
-              continue-on-error: true
-              env:
-                  GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
             - name: Get short commit hash
               id: vars
               run: echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_OUTPUT
@@ -89,6 +71,7 @@ jobs:
               with:
                   bodyFile: .github/release.md
                   name: Dev Build ${{steps.vars.outputs.sha_short}}
+                  removeArtifacts: true
                   prerelease: true
                   draft: false
                   tag: devbuild
