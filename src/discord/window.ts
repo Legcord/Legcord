@@ -341,7 +341,13 @@ export function createWindow() {
             break;
         case "transparent":
             browserWindowOptions.backgroundColor = "#00000000";
-            if (os.platform() !== "win32") browserWindowOptions.transparent = true;
+
+            if (os.platform() === "win32" && os.release().startsWith("10")) {
+                browserWindowOptions.transparent = true;
+            } else {
+                browserWindowOptions.transparent = false;
+                browserWindowOptions.frame = true;
+            }
             break;
     }
     const mainWindow = new BrowserWindow(browserWindowOptions);
