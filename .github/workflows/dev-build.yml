@@ -52,29 +52,22 @@ jobs:
         needs:
             - Dev-Build
         steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
+          - name: Download artifacts
+            uses: actions/download-artifact@v4
+            with:
+              path: release-files
 
-            - name: Download artifacts
-              uses: actions/download-artifact@v4
-              with:
-                  path: release-files
-
-            - name: Get short commit hash
-              id: vars
-              run: echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_OUTPUT
-
-            - name: Create release
-              uses: ncipollo/release-action@v1
-              env:
+          - name: Create release
+            uses: ncipollo/release-action@v1
+            env:
                   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-              with:
-                  bodyFile: .github/release.md
-                  name: Dev Build ${{steps.vars.outputs.sha_short}}
-                  allowUpdates: true
-                  removeArtifacts: true
-                  prerelease: true
-                  draft: false
-                  tag: devbuild
-                  artifacts: release-files/**/*.zip
+            with:
+                name: Rolling Dev Build (${{github.event.commits.id}})
+                allowUpdates: true
+                removeArtifacts: true
+                prerelease: true
+                body: "Built against https://github.com/Legcord/Legcord/tree/dev on every commit. Last run triggered on ${{github.event.commits.timestamp}} by ${{github.event.commits.author.username}}"
+                draft: false
+                tag: devbuild
+                artifacts: release-files/**/*.zip
                   
