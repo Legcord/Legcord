@@ -67,7 +67,7 @@ Not available yet.
 
 ### AUR Package
 
-Not available yet.
+- [legcord-git](https://aur.archlinux.org/packages/legcord-git) Built locally against dev branch
 
 ### Homebrew repository
 
