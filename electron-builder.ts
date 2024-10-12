@@ -21,6 +21,8 @@ export const config: Configuration = {
         identityName: "53758smartfrigde.Legcord",
         publisher: "CN=EAB3A6D3-7145-4623-8176-D579F573F339",
         publisherDisplayName: "smartfrigde",
+        backgroundColor: "#0000",
+        showNameOnTiles: true
     },
 
     linux: {
