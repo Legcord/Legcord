@@ -10,11 +10,11 @@ export const config: Configuration = {
         darkModeSupport: true,
         notarize: true,
         extendInfo: {
-            "NSMicrophoneUsageDescription": "ArmCord requires access to the microphone to function properly.",
-            "NSCameraUsageDescription": "ArmCord requires access to the camera to function properly.",
+            NSMicrophoneUsageDescription: "ArmCord requires access to the microphone to function properly.",
+            NSCameraUsageDescription: "ArmCord requires access to the camera to function properly.",
             "com.apple.security.device.audio-input": true,
-            "com.apple.security.device.camera": true
-        }
+            "com.apple.security.device.camera": true,
+        },
     },
 
     nsis: {
@@ -28,7 +28,7 @@ export const config: Configuration = {
         publisher: "CN=EAB3A6D3-7145-4623-8176-D579F573F339",
         publisherDisplayName: "smartfrigde",
         backgroundColor: "white",
-        showNameOnTiles: true
+        showNameOnTiles: true,
     },
 
     linux: {
