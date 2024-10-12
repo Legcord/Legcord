@@ -2,7 +2,6 @@
 import { BrowserWindow, app, crashReporter, session, systemPreferences } from "electron";
 import "v8-compile-cache";
 import "./discord/extensions/csp.js";
-import "./tray.js";
 import "./protocol.js";
 import fs from "node:fs";
 import type { Settings } from "./@types/settings.js";
@@ -25,6 +24,7 @@ import { createTManagerWindow } from "./themeManager/main.js";
 export let settings: Settings;
 checkForDataFolder();
 checkIfConfigExists();
+
 app.on("render-process-gone", (_event, _webContents, details) => {
     if (details.reason === "crashed") {
         app.relaunch();
@@ -102,18 +102,12 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     } else if (getConfig("hardwareAcceleration") === undefined) {
         setConfig("hardwareAcceleration", true); // pre 3.3.0
     }
-    if (getConfig("audio") === undefined) {
-        setConfig("audio", "loopbackWithMute"); // pre 3.3.2
-    }
-    if (getConfig("smoothScroll") === false) {
-        app.commandLine.appendSwitch("disable-smooth-scrolling");
-    }
-    if (getConfig("autoScroll")) {
-        app.commandLine.appendSwitch("enable-blink-features", "MiddleClickAutoscroll");
-    }
-    if (getConfig("disableHttpCache")) {
-        app.commandLine.appendSwitch("disable-http-cache");
-    }
+    if (getConfig("audio") === undefined) setConfig("audio", "loopbackWithMute");
+    if (getConfig("keybinds") === undefined) setConfig("keybinds", []);
+    if (getConfig("trayIcon") === "default") setConfig("trayIcon", "dynamic");
+    if (getConfig("smoothScroll") === false) app.commandLine.appendSwitch("disable-smooth-scrolling");
+    if (getConfig("autoScroll")) app.commandLine.appendSwitch("enable-blink-features", "MiddleClickAutoscroll");
+    if (getConfig("disableHttpCache")) app.commandLine.appendSwitch("disable-http-cache");
     void app.whenReady().then(async () => {
         // Patch for linux bug to insure things are loaded before window creation (fixes transparency on some linux systems)
         await new Promise<void>((resolve) =>

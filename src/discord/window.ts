@@ -21,10 +21,10 @@ import { forceQuit, setForceQuit } from "../common/forceQuit.js";
 import { initQuickCss, injectThemesMain } from "../common/themes.js";
 import { getWindowState, setWindowState } from "../common/windowState.js";
 import { init } from "../main.js";
-import { tray } from "../tray.js";
 import { registerGlobalKeybinds } from "./globalKeybinds.js";
 import { registerIpc } from "./ipc.js";
 import { setMenu } from "./menu.js";
+import { createTray, tray } from "./tray.js";
 export let mainWindows: BrowserWindow[] = [];
 export let inviteWindow: BrowserWindow;
 
@@ -52,6 +52,7 @@ contextMenu({
     ],
 });
 function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
+    createTray();
     if (getWindowState("isMaximized") ?? false) {
         passedWindow.setSize(835, 600); //just so the whole thing doesn't cover whole screen
         passedWindow.maximize();
