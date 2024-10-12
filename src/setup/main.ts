@@ -7,6 +7,7 @@ import { getLang } from "../common/lang.js";
 
 let setupWindow: BrowserWindow;
 export async function createSetupWindow(): Promise<void> {
+    import("./tray.js");
     return new Promise((resolve) => {
         setupWindow = new BrowserWindow({
             width: 390,

@@ -38,6 +38,9 @@ switch (ipcRenderer.sendSync("getConfig", "windowStyle")) {
     case "default":
         injectTitlebar(false);
         break;
+    case "transparent":
+        injectTitlebar(false);
+        break;
     case "overlay":
         injectTitlebar(true);
         break;
