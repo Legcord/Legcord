@@ -19,6 +19,8 @@ jobs:
         runs-on: ${{matrix.os}}
         env:
           SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
@@ -38,12 +40,10 @@ jobs:
 
             - name: Build Legcord
               run: pnpm electron-builder --x64 --arm64 ${{matrix.flags}} zip --publish never
-              env:
-                  GH_TOKEN: ${{secrets.GITHUB_TOKEN}} # MacOS needs the token or it will fail to build
 
             - name: Build and publish Legcord Snap # This action is separate so that it doesn't publish other things it shouldn't
               if: matrix.os == 'ubuntu-latest'
-              run: pnpm electron-builder --x64 --arm64 --armv7l -l snap --publish always --config.snap.publish.channels=edge
+              run: pnpm electron-builder --x64 --arm64 --armv7l -l snap --publish always --config.snap.publish.channel=edge
 
             - name: Save Electron Cache
               uses: actions/cache/save@v4

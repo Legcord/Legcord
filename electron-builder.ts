@@ -43,6 +43,9 @@ export const config: Configuration = {
         allowNativeWayland: true,
         executableArgs: ["--no-process-scanning"],
         base: "core24",
+        publish: {
+            provider: "snapStore",
+        }
     },
 
     files: ["!*", "assets", "node-modules", "ts-out", "package.json", "license.txt"],
