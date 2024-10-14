@@ -11,10 +11,17 @@ export const config: Configuration = {
         notarize: true,
         extendInfo: {
             NSMicrophoneUsageDescription: "Legcord requires access to the microphone to function properly.",
-            NSCameraUsageDescription: "legcord requires access to the camera to function properly.",
+            NSCameraUsageDescription: "Legcord requires access to the camera to function properly.",
             "com.apple.security.device.audio-input": true,
             "com.apple.security.device.camera": true,
         },
+    },
+
+    linux: {
+        icon: "build/icon.icns",
+        target: ["AppImage", "deb", "rpm", "tar.gz"],
+        maintainer: "linux@legcord.app",
+        category: "Network",
     },
 
     nsis: {
@@ -29,13 +36,6 @@ export const config: Configuration = {
         publisherDisplayName: "smartfrigde",
         backgroundColor: "white",
         showNameOnTiles: true,
-    },
-
-    linux: {
-        icon: "build/icon.icns",
-        target: ["AppImage", "deb", "rpm", "tar.gz"],
-        maintainer: "linux@legcord.app",
-        category: "Network",
     },
 
     snap: {

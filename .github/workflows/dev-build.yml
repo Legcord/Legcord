@@ -17,12 +17,18 @@ jobs:
                       flags: --ia32 -w
 
         runs-on: ${{matrix.os}}
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
         
             - name: Build TypeScript
               uses: ./.github/actions/build-typescript
+
+            - name: Install Snapcraft
+              if: matrix.os == 'ubuntu-latest'
+              uses: samuelmeuli/action-snapcraft@v2
 
             - name: Load Electron Cache
               uses: actions/cache/restore@v4
@@ -34,6 +40,10 @@ jobs:
               run: pnpm electron-builder --x64 --arm64 ${{matrix.flags}} zip --publish never
               env:
                   GH_TOKEN: ${{secrets.GITHUB_TOKEN}} # MacOS needs the token or it will fail to build
+
+            - name: Build and publish Legcord Snap # This action is separate so that it doesn't publish other things it shouldn't
+              if: matrix.os == 'ubuntu-latest'
+              run: pnpm electron-builder --x64 --arm64 --armv7l -l snap --publish always --config.snap.channels=edge
 
             - name: Save Electron Cache
               uses: actions/cache/save@v4
