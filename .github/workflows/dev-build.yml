@@ -43,7 +43,7 @@ jobs:
 
             - name: Build and publish Legcord Snap # This action is separate so that it doesn't publish other things it shouldn't
               if: matrix.os == 'ubuntu-latest'
-              run: pnpm electron-builder --x64 --arm64 --armv7l -l snap --publish always --config.snap.channels=edge
+              run: pnpm electron-builder --x64 --arm64 --armv7l -l snap --publish always --config.snap.publish.channels=edge
 
             - name: Save Electron Cache
               uses: actions/cache/save@v4
