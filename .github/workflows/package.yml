@@ -1,49 +1,51 @@
-name: Build
+name: Package
 on:
   push:
-      branches: "n/a" # Keeping this as a reference right now.
+      branches: dev
 jobs:
-    Dev-Build:
+    package:
         continue-on-error: true
         strategy:
             matrix:
-                os: [macos-latest, ubuntu-latest, windows-latest]
-                include:
-                    - os: macos-latest
-                      flags: --universal --x64=false --arm64=false -m
-                    - os: ubuntu-latest
-                      flags: --armv7l -l
-                    - os: windows-latest
-                      flags: --ia32 -w
-
+                os: [macos-latest, windows-latest]
         runs-on: ${{matrix.os}}
         env:
-          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
           GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
-        
+            
             - name: Build TypeScript
               uses: ./.github/actions/build-typescript
 
-            - name: Install Snapcraft
-              if: matrix.os == 'ubuntu-latest'
+            - name: Install SnapCraft
+              if: matrix.os == 'macos-latest'
               uses: samuelmeuli/action-snapcraft@v2
 
-            - name: Load Electron Cache
+            - name: Load Electron cache
               uses: actions/cache/restore@v4
               with:
                   path: .cache
                   key: electron-zips.${{matrix.os}}
 
-            - name: Build Legcord
-              run: pnpm electron-builder --x64 --arm64 ${{matrix.flags}} zip --publish never
+            # Sadly, it makes more sense to separate builds per platform
+            - name: Build Electron for MacOS
+              if: matrix.os == 'macos-latest'
+              run: pnpm electron-builder --universal -m
+              env:
+                CSC_KEY_PASSWORD: ${{ secrets.MACOS_SIGN_PASS }}
+                APPLE_ID: ${{secrets.APPLE_ID}}
+                APPLE_APP_SPECIFIC_PASSWORD: ${{secrets.APPLE_ID_PASSWORD}}
+                APPLE_TEAM_ID: ${{secrets.APPLE_TEAM_ID}}
 
-            - name: Build and publish Legcord Snap # This action is separate so that it doesn't publish other things it shouldn't
-              if: matrix.os == 'ubuntu-latest'
-              run: pnpm electron-builder --x64 --arm64 --armv7l -l snap --publish always # This will push to edge
+            - name: Build Electron for Linux
+              if: matrix.os == 'macos-latest'
+              run: pnpm electron-builder --armv7l --arm64 --x64 -l snap appimage deb rpm zip
+
+            - name: Build Electron for Windows
+              if: matrix.os == 'windows-latest'
+              run: pnpm electron-builder --ia32 --arm64 --x64 -w nsis zip
 
             - name: Save Electron Cache
               uses: actions/cache/save@v4
@@ -51,16 +53,21 @@ jobs:
                   path: .cache
                   key: electron-zips.${{matrix.os}}
 
-            - name: Upload artifact
+            - name: Collect artifacts
+              run: 
+                mkdir artifacts |
+                find dist/. -maxdepth 1 -type f -exec mv -t artifacts {} +
+              shell: bash
+            
+            - name: Upload artifactsstable
               uses: actions/upload-artifact@v4
               with:
-                  name: ${{matrix.os}}
-                  path: dist/**/*.zip
+                path: artifacts/*
 
-    DevRelease:
+    dev-release:
         runs-on: ubuntu-latest
         needs:
-            - Dev-Build
+            - package
         steps:
           - name: Download artifacts
             uses: actions/download-artifact@v4
@@ -79,5 +86,6 @@ jobs:
                 body: "Built against https://github.com/Legcord/Legcord/tree/dev on every commit. NOTE: tarballs do not update."
                 draft: false
                 tag: devbuild
-                artifacts: release-files/**/*.zip
-                  
+                artifacts: release-files/*
+
+              
