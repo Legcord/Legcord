@@ -48,7 +48,7 @@ jobs:
               run: pnpm electron-builder --ia32 --arm64 --x64 -w nsis zip
 
             - name: Build Electron for Linux (RPM)
-              if: matrix.os == 'macos-latest'
+              if: matrix.os == 'ubuntu-latest'
               run: pnpm electron-builder --armv7l --arm64 --x64 -l rpm
 
             - name: Save Electron Cache
