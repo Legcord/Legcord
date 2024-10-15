@@ -47,7 +47,7 @@ jobs:
 
             - name: Build Electron for Linux (Snap)
               if: matrix.os == 'macos-latest'
-              run: pnpm electron-builder --armv7l --x64 -l snap --publish always
+              run: pnpm electron-builder --x64 -l snap --publish always
 
             - name: Build Electron for Windows (NSIS, AppX, & ZIP)
               if: matrix.os == 'windows-latest'
