@@ -7,7 +7,7 @@ jobs:
         continue-on-error: true
         strategy:
             matrix:
-                os: [macos-latest, windows-latest]
+                os: [macos-latest, windows-latest, ubuntu-latest]
         runs-on: ${{matrix.os}}
         env:
           GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -47,6 +47,10 @@ jobs:
               if: matrix.os == 'windows-latest'
               run: pnpm electron-builder --ia32 --arm64 --x64 -w nsis zip
 
+            - name: Build Electron for Linux (RPM)
+              if: matrix.os == 'macos-latest'
+              run: pnpm electron-builder --armv7l --arm64 --x64 -l rpm
+
             - name: Save Electron Cache
               uses: actions/cache/save@v4
               with:
@@ -62,6 +66,7 @@ jobs:
             - name: Upload artifactsstable
               uses: actions/upload-artifact@v4
               with:
+                name: ${{matrix.os}}-artifacts
                 path: artifacts/*
 
     dev-release:
@@ -86,6 +91,4 @@ jobs:
                 body: "Built against https://github.com/Legcord/Legcord/tree/dev on every commit. NOTE: tarballs do not update."
                 draft: false
                 tag: devbuild
-                artifacts: release-files/*
-
-              
+                artifacts: release-files/**/*
