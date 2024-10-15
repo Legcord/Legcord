@@ -36,7 +36,7 @@ jobs:
                   key: electron-zips.${{matrix.os}}
 
             # Sadly, it makes more sense to separate builds per platform
-            - name: Build Electron for MacOS
+            - name: Build Electron for MacOS (DMG)
               if: matrix.os == 'macos-latest'
               run: pnpm electron-builder --universal -m
               env:
@@ -45,11 +45,11 @@ jobs:
                 APPLE_APP_SPECIFIC_PASSWORD: ${{secrets.APPLE_ID_PASSWORD}}
                 APPLE_TEAM_ID: ${{secrets.APPLE_TEAM_ID}}
 
-            - name: Build Electron for Linux
+            - name: Build Electron for Linux (Snap)
               if: matrix.os == 'macos-latest'
-              run: pnpm electron-builder --armv7l --arm64 --x64 -l snap --publish always
+              run: pnpm electron-builder --armv7l --x64 -l snap --publish always
 
-            - name: Build Electron for Windows
+            - name: Build Electron for Windows (NSIS, AppX, & ZIP)
               if: matrix.os == 'windows-latest'
               run: pnpm electron-builder --ia32 --arm64 --x64 -w nsis appx zip
 
