@@ -15,6 +15,10 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
+
+            - name: Add commit to version
+              if: github.ref_name == 'dev'
+              run: cat <<< $(jq --arg ver "$(jq -r '.version' package.json)-$(git rev-parse --short HEAD)" '.version = $ver' package.json) > package.json
             
             - name: Build TypeScript
               uses: ./.github/actions/build-typescript
@@ -41,7 +45,7 @@ jobs:
 
             - name: Build Electron for Linux
               if: matrix.os == 'macos-latest'
-              run: pnpm electron-builder --armv7l --arm64 --x64 -l snap appimage deb rpm zip
+              run: pnpm electron-builder --armv7l --arm64 --x64 -l snap appimage deb zip
 
             - name: Build Electron for Windows
               if: matrix.os == 'windows-latest'
