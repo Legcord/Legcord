@@ -46,13 +46,13 @@ jobs:
 
             - name: Build Electron for Linux
               if: matrix.os == 'macos-latest'
-              run: pnpm electron-builder --armv7l --arm64 --x64 -l snap zip --publish always
+              run: pnpm electron-builder --armv7l --arm64 --x64 -l snap --publish always
 
             - name: Build Electron for Windows
               if: matrix.os == 'windows-latest'
               run: pnpm electron-builder --ia32 --arm64 --x64 -w nsis appx zip
 
-            - name: Build Electron for Linux (RPM)
+            - name: Build Electron for Linux (RPM, DEB, AppImage & ZIP)
               if: matrix.os == 'ubuntu-latest'
               run: pnpm electron-builder --armv7l --arm64 --x64 -l rpm deb appimage zip
 
