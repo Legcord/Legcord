@@ -106,6 +106,9 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     if (getConfig("audio") === undefined) setConfig("audio", "loopbackWithMute");
     if (getConfig("keybinds") === undefined) setConfig("keybinds", []);
     if (getConfig("trayIcon") === "default") setConfig("trayIcon", "dynamic");
+    if (getConfig("transparency") === undefined) setConfig("transparency", "none");
+    // @ts-ignore
+    if (getConfig("windowStyle") === "transparent") setConfig("windowStyle", "default");
     if (getConfig("smoothScroll") === false) app.commandLine.appendSwitch("disable-smooth-scrolling");
     if (getConfig("autoScroll")) app.commandLine.appendSwitch("enable-blink-features", "MiddleClickAutoscroll");
     if (getConfig("disableHttpCache")) app.commandLine.appendSwitch("disable-http-cache");

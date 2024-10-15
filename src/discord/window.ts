@@ -59,7 +59,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         void passedWindow.webContents.executeJavaScript(`document.body.setAttribute("isMaximized", "");`);
         passedWindow.hide(); // please don't flashbang the user
     }
-    if (getConfig("windowStyle") === "transparent" && process.platform === "win32") {
+    if (getConfig("transparency") === "modern" && process.platform === "win32") {
         passedWindow.setBackgroundMaterial("mica");
         if (getConfig("startMinimized") === false) {
             passedWindow.show();
@@ -339,15 +339,18 @@ export function createWindow() {
                 height: 30,
             };
             break;
-        case "transparent":
+    }
+    switch (getConfig("transparency")) {
+        case "universal":
             browserWindowOptions.backgroundColor = "#00000000";
-
-            if (os.platform() === "win32" && os.release().startsWith("10")) {
-                browserWindowOptions.transparent = true;
-            } else {
-                browserWindowOptions.transparent = false;
-                browserWindowOptions.frame = true;
-            }
+            browserWindowOptions.transparent = true;
+            break;
+        case "modern":
+            browserWindowOptions.backgroundColor = "#00000000";
+            browserWindowOptions.transparent = false;
+            browserWindowOptions.frame = true;
+            break;
+        case "none":
             break;
     }
     const mainWindow = new BrowserWindow(browserWindowOptions);

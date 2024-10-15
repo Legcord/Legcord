@@ -13,6 +13,7 @@ const defaults: Settings = {
     audio: "loopbackWithMute",
     multiInstance: false,
     mods: ["vencord"],
+    transparency: "none",
     spellcheck: true,
     hardwareAcceleration: true,
     performanceMode: "none",

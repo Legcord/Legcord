@@ -61,10 +61,24 @@ export function SettingsPage() {
             >
                 <option value="default">{store.i18n["settings-theme-default"]}</option>
                 <option value="native">{store.i18n["settings-theme-native"]}</option>
-                <option value="transparent">{store.i18n["settings-theme-transparent"]}</option>
                 <Show when={window.legcord.platform === "win32"}>
                     <option value="overlay">{store.i18n["settings-theme-overlay"]}</option>
                 </Show>
+            </DropdownItem>
+            <DropdownItem
+                value={store.settings.transparency}
+                onChange={(e) =>
+                    setConfig("transparency", (e.target as HTMLInputElement).value as Settings["transparency"], true)
+                }
+                title={store.i18n["settings-transparency"]}
+                note={store.i18n["settings-transparency-desc"]}
+                link="https://github.com/Legcord/Legcord/wiki/Transparency-options"
+            >
+                <option value="universal">{store.i18n["settings-transparency-universal"]}</option>
+                <Show when={window.legcord.platform === "win32"}>
+                    <option value="modern">{store.i18n["settings-transparency-modern"]}</option>
+                </Show>
+                <option value="none">{store.i18n["settings-none"]}</option>
             </DropdownItem>
             <DropdownItem
                 value={store.settings.trayIcon}

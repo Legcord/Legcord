@@ -8,9 +8,10 @@ export interface Settings {
     // Only used for external url warning dialog.
     ignoreProtocolWarning?: boolean;
     customIcon: string;
-    windowStyle: "default" | "native" | "transparent" | "overlay";
+    windowStyle: "default" | "native" | "overlay";
     channel: "stable" | "ptb" | "canary";
     audio: "loopback" | "loopbackWithMute";
+    transparency: "universal" | "modern" | "none";
     legcordCSP: boolean;
     minimizeToTray: boolean;
     multiInstance: boolean;
