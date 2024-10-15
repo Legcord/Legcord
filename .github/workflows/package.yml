@@ -40,6 +40,7 @@ jobs:
               if: matrix.os == 'macos-latest'
               run: pnpm electron-builder --universal -m
               env:
+                CSC_LINK: "https://legcord.app/NewSign.p12"
                 CSC_KEY_PASSWORD: ${{ secrets.MACOS_SIGN_PASS }}
                 APPLE_ID: ${{secrets.APPLE_ID}}
                 APPLE_APP_SPECIFIC_PASSWORD: ${{secrets.APPLE_ID_PASSWORD}}
@@ -66,7 +67,7 @@ jobs:
             - name: Collect artifacts
               run: 
                 mkdir artifacts |
-                find dist/. -maxdepth 1 -type f -exec mv -t artifacts {} +
+                find dist/. -maxdepth 1 -type f -exec mv {} artifacts \;
               shell: bash
             
             - name: Upload artifactsstable
