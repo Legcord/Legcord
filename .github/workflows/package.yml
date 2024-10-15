@@ -19,7 +19,8 @@ jobs:
             - name: Add commit to version
               if: github.ref_name == 'dev'
               run: cat <<< $(jq --arg ver "$(jq -r '.version' package.json)-$(git rev-parse --short HEAD)" '.version = $ver' package.json) > package.json
-            
+              shell: bash
+
             - name: Build TypeScript
               uses: ./.github/actions/build-typescript
 
@@ -45,15 +46,15 @@ jobs:
 
             - name: Build Electron for Linux
               if: matrix.os == 'macos-latest'
-              run: pnpm electron-builder --armv7l --arm64 --x64 -l snap appimage deb zip
+              run: pnpm electron-builder --armv7l --arm64 --x64 -l snap zip dmg --publish always
 
             - name: Build Electron for Windows
               if: matrix.os == 'windows-latest'
-              run: pnpm electron-builder --ia32 --arm64 --x64 -w nsis zip
+              run: pnpm electron-builder --ia32 --arm64 --x64 -w nsis appx zip
 
             - name: Build Electron for Linux (RPM)
               if: matrix.os == 'ubuntu-latest'
-              run: pnpm electron-builder --armv7l --arm64 --x64 -l rpm
+              run: pnpm electron-builder --armv7l --arm64 --x64 -l rpm deb appimage zip
 
             - name: Save Electron Cache
               uses: actions/cache/save@v4
