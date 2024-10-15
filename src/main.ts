@@ -128,6 +128,10 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
                 // Approves the permissions request
                 callback(true);
             }
+            if (permission === "fullscreen") {
+                // Approves the permissions request
+                callback(true);
+            }
         });
         app.on("activate", () => {
             if (BrowserWindow.getAllWindows().length === 0) {
