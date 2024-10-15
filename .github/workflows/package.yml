@@ -1,7 +1,9 @@
 name: Package
 on:
   push:
-      branches: dev
+      branches: 
+        - dev
+        - stable
 jobs:
     package:
         continue-on-error: true
@@ -22,8 +24,20 @@ jobs:
               run: cat <<< $(jq --arg ver "$(jq -r '.version' package.json)-$(git rev-parse --short HEAD)" '.version = $ver' package.json) > package.json
               shell: bash
 
+            - name: Prepare PNPM
+              uses: pnpm/action-setup@v4
+        
+            - name: Prepare Node.js
+              uses: actions/setup-node@v4
+              with:
+                node-version-file: package.json
+                cache: pnpm
+        
+            - name: Install dependencies
+              run: pnpm i
+        
             - name: Build TypeScript
-              uses: ./.github/actions/build-typescript
+              run: pnpm build
 
             - name: Install SnapCraft
               if: matrix.os == 'macos-latest'
@@ -36,9 +50,9 @@ jobs:
                   key: electron-zips.${{matrix.os}}
 
             # Sadly, it makes more sense to separate builds per platform
-            - name: Build Electron for MacOS (DMG)
+            - name: Build Electron for MacOS (DMG & ZIP)
               if: matrix.os == 'macos-latest'
-              run: pnpm electron-builder --universal -m
+              run: pnpm electron-builder --universal -m zip dmg
               env:
                 CSC_LINK: "https://legcord.app/NewSign.p12"
                 CSC_KEY_PASSWORD: ${{ secrets.MACOS_SIGN_PASS }}
@@ -76,10 +90,12 @@ jobs:
                 name: ${{matrix.os}}-artifacts
                 path: artifacts/*
 
-    dev-release:
+    release:
         runs-on: ubuntu-latest
         needs:
             - package
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         steps:
           - name: Download artifacts
             uses: actions/download-artifact@v4
@@ -87,9 +103,8 @@ jobs:
               path: release-files
 
           - name: Create release
+            if: github.ref_name == 'dev'
             uses: ncipollo/release-action@v1
-            env:
-                  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
             with:
                 name: Rolling Dev Build
                 allowUpdates: true
@@ -99,3 +114,13 @@ jobs:
                 draft: false
                 tag: devbuild
                 artifacts: release-files/**/*
+
+          - name: Create release
+            if: github.ref_name == 'stable'
+            uses: ncipollo/release-action@v1
+            with:
+              name: Stable Release Draft
+              prerelease: false
+              tag: stable
+              draft: true
+              artifacts: release-files/**/*
