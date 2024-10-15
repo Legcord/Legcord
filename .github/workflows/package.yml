@@ -10,6 +10,7 @@ jobs:
                 os: [macos-latest, windows-latest, ubuntu-latest]
         runs-on: ${{matrix.os}}
         env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_TOKEN }}
           GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
         steps:
