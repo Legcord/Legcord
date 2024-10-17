@@ -42,8 +42,15 @@
 [![Packaging status](https://repology.org/badge/vertical-allrepos/legcord.svg)](https://repology.org/project/legcord/versions)
 
 ### Windows
+[Get the .exe installer](https://www.legcord.app/download)
 
-You need to use [pre-built installers](https://www.legcord.app/download).
+[<img src="https://user-images.githubusercontent.com/49786146/159123313-3bdafdd3-5130-4b0d-9003-40618390943a.png" width="200" />](https://winstall.app/apps/smartfrigde.Legcord)
+
+```pwsh
+winget install --id=smartfrigde.Legcord  -e
+```
+
+[<img src="https://learn.microsoft.com/en-us/windows/apps/images/new-badge-light.png" width="200" />](https://apps.microsoft.com/detail/9pdkjpv0wxlg?ocid=webpdpshare)
 
 ### Flatpak
 
@@ -55,11 +62,7 @@ Not available yet.
 
 ### Snap package
 
-Not available yet.
-
-### Winget Package
-
-Not available yet.
+[![Get it from the Snap store](https://assets.ubuntu.com/v1/b16729d2-snap-store-black.svg)](https://snapcraft.io/legcord)
 
 ### Scoop package
 
