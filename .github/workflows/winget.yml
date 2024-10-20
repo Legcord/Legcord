@@ -1,0 +1,12 @@
+name: Publish to WinGet
+on:
+    release:
+        types: [released]
+jobs:
+    publish:
+        runs-on: windows-latest
+        steps:
+            - uses: vedantmgoyal9/winget-releaser@v2
+              with:
+                identifier: smartfrigde.Legcord
+                token: ${{secrets.PUBLIC_REPO_READ}}
