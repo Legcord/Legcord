@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -99,69 +99,69 @@
       loadLang();
     </script>
     <script>
-              document.onload = function () {
-                  ipcRenderer.send("win-unmaximize");
-              };
-              // Accessors {{{
-              let options = {};
+      document.onload = function () {
+        ipcRenderer.send("win-unmaximize");
+      };
+      // Accessors {{{
+      let options = {};
 
-              let page1 = document.getElementById("page1");
-              page1.classList.remove("hidden");
-              page1.buttons = document.querySelectorAll("#page1 > #buttons > button");
+      let page1 = document.getElementById("page1");
+      page1.classList.remove("hidden");
+      page1.buttons = document.querySelectorAll("#page1 > #buttons > button");
 
-              // Connection check
-              let warning = document.getElementById("warning");
-              if (window.navigator.onLine === false) {
-                  warning.classList.remove("hidden");
-              }
+      // Connection check
+      let warning = document.getElementById("warning");
+      if (window.navigator.onLine === false) {
+        warning.classList.remove("hidden");
+      }
 
-              let page2 = document.getElementById("page2");
-              let page3 = document.getElementById("page3");
-              let page4 = document.getElementById("page4");
-              // }}}
+      let page2 = document.getElementById("page2");
+      let page3 = document.getElementById("page3");
+      let page4 = document.getElementById("page4");
+      // }}}
 
-              // Full
-              page1.buttons[0].addEventListener("click", () => {
-                  page1.classList.add("hidden");
-                  page2.classList.remove("hidden");
-              });
+      // Full
+      page1.buttons[0].addEventListener("click", () => {
+        page1.classList.add("hidden");
+        page2.classList.remove("hidden");
+      });
 
-              document.getElementById("next-page2").addEventListener("click", () => {
-                  options.channel = document.getElementById("channel").value;
-                  page2.classList.add("hidden");
-                  page3.classList.remove("hidden");
-              });
-              const mod = document.getElementById("mod").value;
-              document.getElementById("next-page3").addEventListener("click", () => {
-                  if (mod === "none") {
-                      options.mod = "";
-                  } else {
-                      options.mod = document.getElementById("mod").value;
-                  }
-                  page3.classList.add("hidden");
-                  page4.classList.remove("hidden");
-              });
+      document.getElementById("next-page2").addEventListener("click", () => {
+        options.channel = document.getElementById("channel").value;
+        page2.classList.add("hidden");
+        page3.classList.remove("hidden");
+      });
+      const mod = document.getElementById("mod").value;
+      document.getElementById("next-page3").addEventListener("click", () => {
+        if (mod === "none") {
+          options.mod = "";
+        } else {
+          options.mod = document.getElementById("mod").value;
+        }
+        page3.classList.add("hidden");
+        page4.classList.remove("hidden");
+      });
 
-              if (window.legcordinternal.getOS == "linux") {
-                  document.getElementById("tray").value = "false";
-                  document.getElementById("linuxNotice").innerHTML =
-                      `Linux may not work well with tray icons. Depending on your system configuration, you may not be able to see the tray icon. Enable at your own risk. Can be changed later.`;
-              }
-              if (window.legcordinternal.getOS == "darwin") {
-                  // macOS doesn't really do tray icons
-                  document.getElementById("tray").value = "false";
-              }
-              document.getElementById("next-page4").addEventListener("click", () => {
-                // only overwrite values user actually sets here
-                  window.legcordinternal.saveSettings({
-                    mods: [options.mod],
-                    channel: options.channel,
-                    tray: /true/i.test(document.getElementById("tray").value),
-                    doneSetup: true
-                  });
-                  setTimeout(() => window.legcordinternal.restart(), 500);
-              });
-              document.body.setAttribute("insetup", "");
+      if (window.legcordinternal.getOS == "linux") {
+        document.getElementById("tray").value = "false";
+        document.getElementById("linuxNotice").innerHTML =
+          `Linux may not work well with tray icons. Depending on your system configuration, you may not be able to see the tray icon. Enable at your own risk. Can be changed later.`;
+      }
+      if (window.legcordinternal.getOS == "darwin") {
+        // macOS doesn't really do tray icons
+        document.getElementById("tray").value = "false";
+      }
+      document.getElementById("next-page4").addEventListener("click", () => {
+        // only overwrite values user actually sets here
+        window.legcordinternal.saveSettings({
+          mods: [options.mod],
+          channel: options.channel,
+          tray: /true/i.test(document.getElementById("tray").value),
+          doneSetup: true,
+        });
+        setTimeout(() => window.legcordinternal.restart(), 500);
+      });
+      document.body.setAttribute("insetup", "");
     </script>
   </body>
 </html>

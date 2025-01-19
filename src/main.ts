@@ -1,6 +1,5 @@
 // Modules to control application life and create native browser window
 import { BrowserWindow, app, crashReporter, session, systemPreferences } from "electron";
-import "v8-compile-cache";
 import "./discord/extensions/csp.js";
 import "./protocol.js";
 import { readFileSync } from "node:fs";

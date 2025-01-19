@@ -52,7 +52,6 @@
         "electron-context-menu": "^4.0.4",
         "electron-is-dev": "^3.0.1",
         "electron-updater": "^6.3.9",
-        "v8-compile-cache": "^2.4.0",
         "ws": "^8.18.0"
     },
     "packageManager": "pnpm@10.0.0-beta.1+sha512.629de0531b9ae9a3f8e372d014ef8f5a57906d9a48095ced54bbfbd246b4136381478032c8d13819fd1eedde8330517a799ea6756eedd9a136e36524fa3083cf",

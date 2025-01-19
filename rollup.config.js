@@ -23,7 +23,6 @@ export default defineConfig([
         external: [
             ...electronExternals,
             "electron",
-            "v8-compile-cache",
             "electron-is-dev",
             "electron-context-menu",
             "arrpc",
