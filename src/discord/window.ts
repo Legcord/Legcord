@@ -295,7 +295,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     if (firstRun) {
         passedWindow.close();
     }
-    
+
     registerGlobalKeybinds();
     switch (getConfig("channel")) {
         case "stable":
