@@ -12,6 +12,7 @@ import {
     type MessageBoxOptions,
     app,
     dialog,
+    ipcMain,
     nativeImage,
     shell,
 } from "electron";
@@ -292,6 +293,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     if (firstRun) {
         passedWindow.close();
     }
+    
     registerGlobalKeybinds();
     switch (getConfig("channel")) {
         case "stable":

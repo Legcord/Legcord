@@ -18,7 +18,10 @@ const {
     plugin: { store },
 } = shelter;
 
-export const ScreensharePicker = (props: { close: () => void; sources: IPCSources[] }) => {
+export const ScreensharePicker = (props: {
+    close: () => void;
+    sources: IPCSources[];
+}) => {
     const [source, setSource] = createSignal("none");
     const [name, setName] = createSignal("nothing...");
     const [audio, setAudio] = createSignal(false);
@@ -46,6 +49,7 @@ export const ScreensharePicker = (props: { close: () => void; sources: IPCSource
                     <For each={props.sources}>
                         {(source: IPCSources) => (
                             <SourceCard
+                                selected_name={name}
                                 source={source}
                                 onSelect={(srcId, name) => {
                                     setSource(srcId);
@@ -65,9 +69,10 @@ export const ScreensharePicker = (props: { close: () => void; sources: IPCSource
                             <Dropdown
                                 value={store.resolution}
                                 onChange={(e) => {
-                                    store.resolution = Number(e.currentTarget.value);
-                                }}
-                            >
+                                    store.resolution = Number(
+                                        e.currentTarget.value,
+                                    );
+                                }}>
                                 <option value="480">480p</option>
                                 <option value="720">720p</option>
                                 <option value="1080">1080p</option>
@@ -80,8 +85,7 @@ export const ScreensharePicker = (props: { close: () => void; sources: IPCSource
                                 value={store.fps}
                                 onChange={(e) => {
                                     store.fps = Number(e.currentTarget.value);
-                                }}
-                            >
+                                }}>
                                 <option value="5">5</option>
                                 <option value="15">15</option>
                                 <option value="30">30</option>
@@ -92,14 +96,21 @@ export const ScreensharePicker = (props: { close: () => void; sources: IPCSource
                             <Show when={window.legcord.platform !== "darwin"}>
                                 <Header tag={HeaderTags.H4}>Audio</Header>
                                 <div class={classes.checkbox}>
-                                    <Checkbox checked={audio()} onChange={setAudio} />
+                                    <Checkbox
+                                        checked={audio()}
+                                        onChange={setAudio}
+                                    />
                                 </div>
                             </Show>
                         </div>
                     </div>
                 </div>
             </ModalBody>
-            <ModalConfirmFooter confirmText="Share" onConfirm={startScreenshare} close={closeAndSave} />
+            <ModalConfirmFooter
+                confirmText="Share"
+                onConfirm={startScreenshare}
+                close={closeAndSave}
+            />
         </ModalRoot>
     );
 };

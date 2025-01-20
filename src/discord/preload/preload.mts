@@ -1,8 +1,8 @@
 import "./bridge.js";
 import "./mods/shelter.js";
-import "./mods/custom.js";
-import "./mods/vencord.js";
+import "./mods/vencord.js"; // executing vencord earlier seems to fix a problem with a svelt js script that discord hosts, that deletes window.localStorage, causing VencordWeb.js to crash and throw "reading undefined" on localStorage.getItem
 import "./mods/equicord.js";
+import "./mods/custom.js";
 import "./optimizer.js";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -84,9 +84,16 @@ await sleep(5000).then(() => {
         shelter.plugins.removePlugin("armcord-screenshare")
     `);
     if (ipcRenderer.sendSync("getConfig", "disableAutogain")) {
-        addScript(readFileSync(join(import.meta.dirname, "../", "/js/disableAutogain.js"), "utf8"));
+        addScript(
+            readFileSync(
+                join(import.meta.dirname, "../", "/js/disableAutogain.js"),
+                "utf8",
+            ),
+        );
     }
-    addScript(readFileSync(join(import.meta.dirname, "../", "/js/rpc.js"), "utf8"));
+    addScript(
+        readFileSync(join(import.meta.dirname, "../", "/js/rpc.js"), "utf8"),
+    );
     const cssPath = join(import.meta.dirname, "../", "/css/discord.css");
     addStyle(readFileSync(cssPath, "utf8"));
 });
