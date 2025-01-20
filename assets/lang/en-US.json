@@ -21,6 +21,8 @@
     "settings-transparency-universal": "Universal",
     "settings-transparency-modern": "Modern (Windows 11 only)",
     "settings-theme-transparent": "Transparent",
+    "settings-popoutPiP": "Call Popout Always on Top",
+    "settings-popoutPiP-desc": "When enabled, the call popout will be in Always on Top mode.",
     "settings-audio": "Audio",
     "settings-openCustomIconDialog": "Set desktop icon",
     "settings-audio-desc": "Select which method Legcord uses to grab audio from your system during screenshare.",

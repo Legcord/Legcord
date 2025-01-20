@@ -134,6 +134,13 @@ export function SettingsPage() {
             >
                 {store.i18n["settings-MultiInstance"]}
             </SwitchItem>
+            <SwitchItem
+                note={store.i18n["settings-popoutPiP-desc"]}
+                value={store.settings.popoutPiP}
+                onChange={(e: boolean) => setConfig("popoutPiP", e)}
+            >
+                {store.i18n["settings-popoutPiP"]}
+            </SwitchItem>
             <Show when={window.legcord.platform === "darwin"}>
                 <SwitchItem
                     note={store.i18n["settings-useMacSystemPicker-desc"]}

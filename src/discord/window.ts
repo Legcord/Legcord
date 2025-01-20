@@ -128,7 +128,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
             return {
                 action: "allow",
                 overrideBrowserWindowOptions: {
-                    alwaysOnTop: true,
+                    alwaysOnTop: getConfig("popoutPiP"),
                 },
             };
         if (url.startsWith("https:") || url.startsWith("http:") || url.startsWith("mailto:")) {
@@ -164,6 +164,8 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
 
         return { action: "deny" };
     });
+
+    passedWindow.webContents.session.setSpellCheckerLanguages(getConfig("spellcheckLanguage"));
 
     registerCustomHandler();
 

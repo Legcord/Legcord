@@ -44,7 +44,9 @@ export interface Settings {
     disableHttpCache: boolean;
     tray: ValidTrayIcons;
     doneSetup: boolean;
+    spellcheckLanguage: string[];
     smoothScroll: boolean;
+    popoutPiP: boolean;
     autoScroll: boolean;
     additionalArguments: string;
     modCache?: Record<ValidMods, string>;
