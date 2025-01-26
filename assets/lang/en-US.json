@@ -67,8 +67,6 @@
     "settings-bitrateMax-desc": "Maximum bitrate for screenshare.",
     "settings-bitrateTarget": "Target bitrate",
     "settings-bitrateTarget-desc": "Target bitrate for screenshare.",
-    "settings-disableTitlebarChecks": "Disable titlebar checks",
-    "settings-disableTitlebarChecks-desc": "Stops Legcord from restarting when custom titlebar is not found.",
     "settings-invitewebsocket": "Rich Presence",
     "settings-invitewebsocket-desc": "Uses arRPC to support Discord RPC (Rich Presence) with local programs on your machine.",
     "settings-useMacSystemPicker": "Use macOS system picker",

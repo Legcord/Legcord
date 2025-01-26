@@ -51,7 +51,6 @@ export interface Settings {
     useMacSystemPicker: boolean;
     inviteWebsocket: boolean;
     disableAutogain: boolean;
-    disableTitlebarChecks: boolean;
     blockPowerSavingInVoiceChat: boolean;
     disableHttpCache: boolean;
     tray: ValidTrayIcons;

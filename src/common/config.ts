@@ -47,7 +47,6 @@ const defaults: Settings = {
     doneSetup: false,
     popoutPiP: false,
     spellcheckLanguage: ["en-US"],
-    disableTitlebarChecks: false,
     sleepInBackground: false,
     additionalArguments: "",
     customIcon: join(import.meta.dirname, "../", "/assets/desktop.png"),

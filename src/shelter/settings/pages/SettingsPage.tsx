@@ -379,14 +379,6 @@ export function SettingsPage() {
                 {store.i18n["settings-hardwareAcceleration"]}
             </SwitchItem>
             <SwitchItem
-                note={store.i18n["settings-disableTitlebarChecks-desc"]}
-                value={settings.disableTitlebarChecks}
-                onChange={(e: boolean) =>
-                    setConfig("disableTitlebarChecks", e, true)
-                }>
-                {store.i18n["settings-disableTitlebarChecks"]}
-            </SwitchItem>
-            <SwitchItem
                 note={store.i18n["settings-disableHttpCache-desc"]}
                 value={settings.disableHttpCache}
                 onChange={(e: boolean) =>

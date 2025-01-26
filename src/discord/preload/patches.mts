@@ -39,16 +39,6 @@ async function load() {
     };
     await sleep(5000).then(() => {
         // dirty hack to make clicking notifications focus Legcord
-        if (
-            document.getElementById("window-title") == null &&
-            ipcRenderer.sendSync("getConfig", "windowStyle") === "default"
-        ) {
-            console.warn("Custom titlebar is missing. Switching to native");
-            ipcRenderer.send("setConfig", "windowStyle", "native");
-            void sleep(2000).then(() => {
-                ipcRenderer.send("restart");
-            });
-        }
         addScript(`
         (() => {
         const originalSetter = Object.getOwnPropertyDescriptor(Notification.prototype, "onclick").set;

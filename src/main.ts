@@ -172,11 +172,39 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
                 });
             }, 1500),
         );
-        session.defaultSession.setPermissionRequestHandler(
-            async (_webContents, permission, callback) => {
-                switch (permission) {
-                    case "fullscreen":
-                    case "notifications":
+        session.defaultSession.setPermissionRequestHandler(async (_webContents, permission, callback) => {
+            switch (permission) {
+                case "fullscreen":
+                case "notifications":
+                    callback(true);
+                    break;
+                case "clipboard-sanitized-write":
+                    callback(true);
+                    break;
+                case "media": {
+                    if (process.platform === "darwin") {
+                        console.log(`microphone access: ${systemPreferences.getMediaAccessStatus("microphone")}`);
+                        console.log(`camera access: ${systemPreferences.getMediaAccessStatus("camera")}`);
+                        callback(
+                            await new Promise<boolean>((resolve, reject) => {
+                                systemPreferences.askForMediaAccess("microphone").then((isGranted) => {
+                                    if (!isGranted) {
+                                        console.error("Microphone permission rejected by OS");
+                                        reject();
+                                        return;
+                                    }
+                                });
+                                systemPreferences.askForMediaAccess("camera").then((isGranted) => {
+                                    if (!isGranted) {
+                                        console.error("Camera permission rejected by OS");
+                                        reject();
+                                        return;
+                                    }
+                                });
+                                resolve(true);
+                            }),
+                        );
+                    } else {
                         callback(true);
                         break;
                     case "media": {
