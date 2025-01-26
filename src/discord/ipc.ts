@@ -1,41 +1,20 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
-import {
-    type BrowserWindow,
-    app,
-    clipboard,
-    dialog,
-    ipcMain,
-    shell,
-} from "electron";
+import { type BrowserWindow, app, clipboard, dialog, ipcMain, shell } from "electron";
 import isDev from "electron-is-dev";
 import type { Keybind } from "../@types/keybind.js";
 import type { Settings } from "../@types/settings.js";
 import type { ThemeManifest } from "../@types/themeManifest.js";
-import {
-    getConfig,
-    getConfigLocation,
-    setConfig,
-    setConfigBulk,
-} from "../common/config.js";
+import { getConfig, getConfigLocation, setConfig, setConfigBulk } from "../common/config.js";
 import { getLang, getLangName, getRawLang, setLang } from "../common/lang.js";
-import {
-    installTheme,
-    setThemeEnabled,
-    uninstallTheme,
-} from "../common/themes.js";
+import { installTheme, setThemeEnabled, uninstallTheme } from "../common/themes.js";
 import { getDisplayVersion, getVersion } from "../common/version.js";
 import { isPowerSavingEnabled, setPowerSaving } from "../power.js";
+import constPaths from "../shared/consts/paths.js";
 import { splashWindow } from "../splash/main.js";
 import { refreshGlobalKeybinds } from "./globalKeybinds.js";
-import {
-    importGuilds,
-    mainTouchBar,
-    setVoiceState,
-    voiceTouchBar,
-} from "./touchbar.js";
-import constPaths from "../shared/consts/paths.js";
+import { importGuilds, mainTouchBar, setVoiceState, voiceTouchBar } from "./touchbar.js";
 
 const userDataPath = app.getPath("userData");
 const storagePath = path.join(userDataPath, "/storage/");
@@ -57,18 +36,14 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.handle("getVencordBundle", () => {
         return {
             js: ifExistsRead(path.join(app.getPath("userData"), "vencord.js")),
-            css: ifExistsRead(
-                path.join(app.getPath("userData"), "vencord.css"),
-            ),
+            css: ifExistsRead(path.join(app.getPath("userData"), "vencord.css")),
             enabled: getConfig("mods").includes("vencord"),
         };
     });
     ipcMain.handle("getEquicordBundle", () => {
         return {
             js: ifExistsRead(path.join(app.getPath("userData"), "equicord.js")),
-            css: ifExistsRead(
-                path.join(app.getPath("userData"), "equicord.css"),
-            ),
+            css: ifExistsRead(path.join(app.getPath("userData"), "equicord.css")),
             enabled: getConfig("mods").includes("equicord"),
         };
     });
@@ -76,12 +51,8 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         const enabled = getConfig("mods").includes("custom");
         if (enabled) {
             return {
-                js: ifExistsRead(
-                    path.join(app.getPath("userData"), "custom.js"),
-                ),
-                css: ifExistsRead(
-                    path.join(app.getPath("userData"), "custom.css"),
-                ),
+                js: ifExistsRead(path.join(app.getPath("userData"), "custom.js")),
+                css: ifExistsRead(path.join(app.getPath("userData"), "custom.css")),
                 enabled,
             };
         }
@@ -117,9 +88,7 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         setThemeEnabled(name, enabled);
     });
     ipcMain.on("editTheme", (_event, id: string) => {
-        const manifest = JSON.parse(
-            readFileSync(`${themesPath}/${id}/manifest.json`, "utf8"),
-        ) as ThemeManifest;
+        const manifest = JSON.parse(readFileSync(`${themesPath}/${id}/manifest.json`, "utf8")) as ThemeManifest;
         void shell.openPath(`${themesPath}/${id}/${manifest.theme}`);
     });
     ipcMain.on("openThemeFolder", (_event, id: string) => {
@@ -139,10 +108,7 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         for (const folder of themeFolders) {
             if (existsSync(`${themesPath}/${folder}/manifest.json`)) {
                 const manifest = JSON.parse(
-                    readFileSync(
-                        `${themesPath}/${folder}/manifest.json`,
-                        "utf8",
-                    ),
+                    readFileSync(`${themesPath}/${folder}/manifest.json`, "utf8"),
                 ) as ThemeManifest;
                 themes.push({ ...manifest, id: folder });
             }
@@ -277,9 +243,7 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         void shell.openPath(quickCssPath);
     });
     ipcMain.on("openCrashesFolder", () => {
-        shell.showItemInFolder(
-            path.join(app.getPath("temp"), `${app.getName()} Crashes`),
-        );
+        shell.showItemInFolder(path.join(app.getPath("temp"), `${app.getName()} Crashes`));
     });
     ipcMain.on("getLangName", (event) => {
         event.returnValue = getLangName();
@@ -305,9 +269,7 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         dialog
             .showOpenDialog({
                 properties: ["openFile"],
-                filters: [
-                    { name: "Icons", extensions: ["ico", "png", "icns"] },
-                ],
+                filters: [{ name: "Icons", extensions: ["ico", "png", "icns"] }],
             })
             .then((result) => {
                 if (result.canceled) return;

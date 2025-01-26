@@ -1,7 +1,7 @@
+import { join } from "node:path";
 import type { LinkData, Node, PatchBay as PatchBayType } from "@vencord/venmic";
-import { getConfig } from "../common/config.js";
 import { app, ipcMain } from "electron";
-import { join } from "path";
+import { getConfig } from "../common/config.js";
 import constPaths from "../shared/consts/paths.js";
 
 export let PatchBay: typeof PatchBayType | undefined;
@@ -24,18 +24,13 @@ export function importVenmic() {
     console.info(`trying to import ${importPath}`);
 
     try {
-        PatchBay = (require(importPath) as typeof import("@vencord/venmic"))
-            .PatchBay;
+        PatchBay = (require(importPath) as typeof import("@vencord/venmic")).PatchBay;
 
         hasPipewirePulse = PatchBay.hasPipeWire();
-        console.log(
-            `Imported Venmic module. Is PipeWire being used?: ${hasPipewirePulse}`,
-        );
-    } catch (e: any) {
+        console.log(`Imported Venmic module. Is PipeWire being used?: ${hasPipewirePulse}`);
+    } catch (e) {
         console.error("Failed to import Venmic module", e);
-        isGlibCxxOutdated = (e?.stack || e?.message || "")
-            .toLowerCase()
-            .includes("glibc");
+        isGlibCxxOutdated = ((e as Error)?.stack || (e as Error)?.message || "").toLowerCase().includes("glibc");
     }
 }
 
@@ -47,7 +42,7 @@ export function obtainVenmic() {
         initialized = true;
         try {
             patchBayInstance = new PatchBay();
-        } catch (e: any) {
+        } catch (e) {
             console.error("Failed to instantiate Venmic", e);
         }
     }
@@ -69,12 +64,8 @@ export type venmicListObject =
     | { ok: false; isGlibCxxOutdated: boolean };
 
 export function registerVenmicIpc() {
-    if (process.platform !== "linux")
-        return console.info("Client is not Linux");
-    console.info(
-        "Venmic Node module should be on path",
-        join(DIST_DIR, `venmic-${process.arch}.node`),
-    );
+    if (process.platform !== "linux") return console.info("Client is not Linux");
+    console.info("Venmic Node module should be on path", join(DIST_DIR, `venmic-${process.arch}.node`));
 
     ipcMain.handle("venmicList", () => {
         const audioPid = getRendererAudioServicePid();
@@ -83,15 +74,12 @@ export function registerVenmicIpc() {
             ?.list(granularSelect ? ["node.name"] : undefined)
             .filter((s) => s["application.process.id"] !== audioPid);
 
-        return targets
-            ? { ok: true, targets, hasPipewirePulse }
-            : { ok: false, isGlibCxxOutdated };
+        return targets ? { ok: true, targets, hasPipewirePulse } : { ok: false, isGlibCxxOutdated };
     });
 
     ipcMain.handle("venmicStart", (_, include: Node[]) => {
         const pid = getRendererAudioServicePid();
-        const { ignoreDevices, ignoreInputMedia, ignoreVirtual, workaround } =
-            getConfig("audio") ?? {};
+        const { ignoreDevices, ignoreInputMedia, ignoreVirtual, workaround } = getConfig("audio") ?? {};
 
         const data: LinkData = {
             include,
@@ -106,9 +94,7 @@ export function registerVenmicIpc() {
             data.exclude.push({ "node.virtual": "true" });
         }
         if (workaround) {
-            data.workaround = [
-                { "application.process.id": pid, "media.name": "RecordStream" },
-            ];
+            data.workaround = [{ "application.process.id": pid, "media.name": "RecordStream" }];
         }
 
         return obtainVenmic()?.link(data);
@@ -117,14 +103,8 @@ export function registerVenmicIpc() {
     ipcMain.handle("venmicSystemStart", (_, exclude: Node[]) => {
         const pid = getRendererAudioServicePid();
 
-        const {
-            workaround,
-            ignoreDevices,
-            ignoreInputMedia,
-            ignoreVirtual,
-            onlySpeakers,
-            onlyDefaultSpeakers,
-        } = getConfig("audio") ?? {};
+        const { workaround, ignoreDevices, ignoreInputMedia, ignoreVirtual, onlySpeakers, onlyDefaultSpeakers } =
+            getConfig("audio") ?? {};
 
         const data: LinkData = {
             include: [],
@@ -143,9 +123,7 @@ export function registerVenmicIpc() {
         }
 
         if (workaround) {
-            data.workaround = [
-                { "application.process.id": pid, "media.name": "RecordStream" },
-            ];
+            data.workaround = [{ "application.process.id": pid, "media.name": "RecordStream" }];
         }
 
         return obtainVenmic()?.link(data);

@@ -1,10 +1,4 @@
-import {
-    existsSync,
-    mkdirSync,
-    readFileSync,
-    statSync,
-    writeFileSync,
-} from "node:fs";
+import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { app, dialog } from "electron";
 import type { Settings } from "../@types/settings.js";
@@ -72,10 +66,7 @@ export function getConfig<K extends keyof Settings>(object: K): Settings[K] {
     const returnData = JSON.parse(rawData) as Settings;
     return returnData[object];
 }
-export function setConfig<K extends keyof Settings>(
-    object: K,
-    toSet: Settings[K],
-): void {
+export function setConfig<K extends keyof Settings>(object: K, toSet: Settings[K]): void {
     const rawData = readFileSync(getConfigLocation(), "utf-8");
     const parsed = JSON.parse(rawData) as Settings;
     parsed[object] = toSet;
@@ -129,14 +120,10 @@ export function checkIfConfigIsBroken(): void {
         let configWasFine = true;
         const settingsKeys = Object.keys(settingsObject) as (keyof Settings)[];
         const defaultKeys = Object.keys(defaults) as (keyof Settings)[];
-        const missingKeysInSettings = defaultKeys.filter(
-            (key) => !settingsKeys.includes(key),
-        );
+        const missingKeysInSettings = defaultKeys.filter((key) => !settingsKeys.includes(key));
         configWasFine = missingKeysInSettings.length === 0;
         missingKeysInSettings.forEach((missingKey) => {
-            console.log(
-                `Missing config root entry ${missingKey}, setting default config for this entry...`,
-            );
+            console.log(`Missing config root entry ${missingKey}, setting default config for this entry...`);
             setConfig(missingKey, settingsObject[missingKey]);
         });
         console.log(configWasFine ? "Config is fine" : "Config is now fine");

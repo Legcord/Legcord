@@ -1,8 +1,8 @@
+import type { Node } from "@vencord/venmic";
 import { For, Show, createSignal } from "solid-js";
 import { Dropdown } from "../../settings/components/Dropdown.jsx";
 import classes from "./ScreensharePicker.module.css";
 import { type IPCSources, SourceCard } from "./SourceCard.jsx";
-import type { Node } from "@vencord/venmic";
 const {
     ui: {
         ModalRoot,
@@ -25,9 +25,7 @@ export const ScreensharePicker = (props: {
     audioSources: Node[] | undefined;
 }) => {
     const [source, setSource] = createSignal("none");
-    const [audioSource, setAudioSource] = createSignal<Node | undefined>(
-        undefined,
-    );
+    const [audioSource, setAudioSource] = createSignal<Node | undefined>(undefined);
     const [name, setName] = createSignal("nothing...");
     const [audio, setAudio] = createSignal(false);
     if (props.sources.length === 1) {
@@ -40,7 +38,7 @@ export const ScreensharePicker = (props: {
         }
         console.log(source(), name(), audio());
         if (audioSource() !== undefined && audio()) {
-            if (audioSource()!["node.name"] != "Venmic disabled") {
+            if (audioSource()!["node.name"] !== "Venmic disabled") {
                 console.info("audio venmic module source:", audioSource());
                 window.legcord.screenshare.venmicStart([audioSource()!]);
             }
@@ -80,10 +78,9 @@ export const ScreensharePicker = (props: {
                             <Dropdown
                                 value={store.resolution}
                                 onChange={(e) => {
-                                    store.resolution = Number(
-                                        e.currentTarget.value,
-                                    );
-                                }}>
+                                    store.resolution = Number(e.currentTarget.value);
+                                }}
+                            >
                                 <option value="480">480p</option>
                                 <option value="720">720p</option>
                                 <option value="1080">1080p</option>
@@ -96,7 +93,8 @@ export const ScreensharePicker = (props: {
                                 value={store.fps}
                                 onChange={(e) => {
                                     store.fps = Number(e.currentTarget.value);
-                                }}>
+                                }}
+                            >
                                 <option value="5">5</option>
                                 <option value="15">15</option>
                                 <option value="30">30</option>
@@ -106,30 +104,24 @@ export const ScreensharePicker = (props: {
                         <div>
                             <Show
                                 when={
-                                    window.legcord.platform === "linux" &&
-                                    props.audioSources !== undefined &&
-                                    audio()
-                                }>
+                                    window.legcord.platform === "linux" && props.audioSources !== undefined && audio()
+                                }
+                            >
                                 <Header tag={HeaderTags.H4}>Venmic</Header>
                                 <Dropdown
                                     value="Venmic disabled"
                                     onChange={(e) => {
-                                        let source = props.audioSources!.find(
-                                            (node) =>
-                                                node["node.name"] ===
-                                                e.currentTarget.value,
+                                        const source = props.audioSources!.find(
+                                            (node) => node["node.name"] === e.currentTarget.value,
                                         );
                                         if (!source) return;
                                         setAudioSource(source);
-                                    }}>
-                                    <option value="Venmic disabled">
-                                        Venmic disabled
-                                    </option>
+                                    }}
+                                >
+                                    <option value="Venmic disabled">Venmic disabled</option>
                                     <For each={props.audioSources}>
                                         {(source: Node) => (
-                                            <option value={source["node.name"]}>
-                                                {source["node.name"]}
-                                            </option>
+                                            <option value={source["node.name"]}>{source["node.name"]}</option>
                                         )}
                                     </For>
                                 </Dropdown>
@@ -139,21 +131,14 @@ export const ScreensharePicker = (props: {
                             <Show when={window.legcord.platform !== "darwin"}>
                                 <Header tag={HeaderTags.H4}>Audio</Header>
                                 <div class={classes.checkbox}>
-                                    <Checkbox
-                                        checked={audio()}
-                                        onChange={setAudio}
-                                    />
+                                    <Checkbox checked={audio()} onChange={setAudio} />
                                 </div>
                             </Show>
                         </div>
                     </div>
                 </div>
             </ModalBody>
-            <ModalConfirmFooter
-                confirmText="Share"
-                onConfirm={startScreenshare}
-                close={closeAndSave}
-            />
+            <ModalConfirmFooter confirmText="Share" onConfirm={startScreenshare} close={closeAndSave} />
         </ModalRoot>
     );
 };

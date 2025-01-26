@@ -6,9 +6,7 @@ const version = ipcRenderer.sendSync("displayVersion") as string;
 export async function getVirtmic() {
     try {
         const devices = await navigator.mediaDevices.enumerateDevices();
-        const audioDevice = devices.find(
-            ({ label }) => label === "vencord-screen-share",
-        );
+        const audioDevice = devices.find(({ label }) => label === "vencord-screen-share");
         return audioDevice?.deviceId;
     } catch (error) {
         return null;
@@ -70,9 +68,7 @@ async function load() {
     });
     // Settings info version injection
     setInterval(() => {
-        const host = document.querySelector(
-            '[class*="sidebar"] [class*="info"]',
-        );
+        const host = document.querySelector('[class*="sidebar"] [class*="info"]');
         if (!host || host.querySelector("#ac-ver")) {
             return;
         }

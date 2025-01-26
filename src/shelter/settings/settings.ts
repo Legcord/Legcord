@@ -16,11 +16,7 @@ export function refreshThemes() {
     store.themes = window.legcord.themes.getThemes();
 }
 
-export function setConfig<K extends keyof Settings>(
-    key: K,
-    value: Settings[K],
-    shouldRestart?: boolean,
-) {
+export function setConfig<K extends keyof Settings>(key: K, value: Settings[K], shouldRestart?: boolean) {
     settings[key] = value;
     console.log(key, ":", store.settings[key]);
     if (shouldRestart) {

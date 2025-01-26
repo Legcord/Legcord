@@ -1,4 +1,4 @@
-import { join } from "path";
+import { join } from "node:path";
 
 const DIST_DIR = /* @__PURE__ */ join(__dirname, "..", "dist");
 

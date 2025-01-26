@@ -18,10 +18,7 @@ export interface LegcordWindow {
     translations: string;
     settings: {
         getConfig: () => Readonly<Settings>;
-        setConfig: <K extends keyof Settings>(
-            object: K,
-            toSet: Settings[K],
-        ) => void;
+        setConfig: <K extends keyof Settings>(object: K, toSet: Settings[K]) => void;
         openStorageFolder: () => void;
         openThemesFolder: () => void;
         openCustomIconDialog: () => void;
@@ -42,13 +39,12 @@ export interface LegcordWindow {
         isPowerSavingEnabled: () => boolean;
     };
     screenshare: {
-        getSources: void;
+        getSources: undefined;
         start: (id: string, name: string, audio: boolean) => void;
         venmicStart: (include: Node[]) => Promise<boolean>;
         venmicSystemStart: (exclude: Node[]) => Promise<boolean>;
         venmicList: () => Promise<
-            | { ok: true; targets: Node[]; hasPipewirePulse: boolean }
-            | { ok: false; isGlibCxxOutdated: boolean }
+            { ok: true; targets: Node[]; hasPipewirePulse: boolean } | { ok: false; isGlibCxxOutdated: boolean }
         >;
         venmicStop: () => Promise<void>;
     };

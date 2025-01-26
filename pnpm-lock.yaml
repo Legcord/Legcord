@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@vencord/venmic':
-        specifier: ^6.1.0
-        version: 6.1.0
       arrpc:
         specifier: github:Legcord/arrpc
         version: https://codeload.github.com/Legcord/arrpc/tar.gz/38b534a248893c2076871126d81cd5750bcad70d
@@ -29,6 +26,10 @@ importers:
       ws:
         specifier: ^8.18.0
         version: 8.18.0
+    optionalDependencies:
+      '@vencord/venmic':
+        specifier: ^6.1.0
+        version: 6.1.0
     devDependencies:
       '@biomejs/biome':
         specifier: 1.9.4
@@ -3783,6 +3784,7 @@ snapshots:
       pkg-prebuilds: 0.2.1
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   '@xmldom/xmldom@0.8.10': {}
 
@@ -3952,6 +3954,7 @@ snapshots:
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
+    optional: true
 
   balanced-match@1.0.2: {}
 
@@ -4143,6 +4146,7 @@ snapshots:
       yargs: 17.7.2
     transitivePeerDependencies:
       - supports-color
+    optional: true
 
   color-convert@2.0.1:
     dependencies:
@@ -4215,7 +4219,8 @@ snapshots:
     dependencies:
       mimic-response: 3.1.0
 
-  deep-extend@0.6.0: {}
+  deep-extend@0.6.0:
+    optional: true
 
   defaults@1.0.4:
     dependencies:
@@ -4554,6 +4559,7 @@ snapshots:
   follow-redirects@1.15.9(debug@4.3.7):
     optionalDependencies:
       debug: 4.3.7
+    optional: true
 
   foreground-child@3.3.0:
     dependencies:
@@ -4812,7 +4818,8 @@ snapshots:
 
   inherits@2.0.4: {}
 
-  ini@1.3.8: {}
+  ini@1.3.8:
+    optional: true
 
   ip-address@9.0.5:
     dependencies:
@@ -5035,6 +5042,7 @@ snapshots:
   memory-stream@1.0.0:
     dependencies:
       readable-stream: 3.6.2
+    optional: true
 
   merge2@1.4.1: {}
 
@@ -5130,9 +5138,11 @@ snapshots:
   node-addon-api@7.1.1:
     optional: true
 
-  node-addon-api@8.3.0: {}
+  node-addon-api@8.3.0:
+    optional: true
 
-  node-api-headers@1.5.0: {}
+  node-api-headers@1.5.0:
+    optional: true
 
   node-api-version@0.2.0:
     dependencies:
@@ -5235,6 +5245,7 @@ snapshots:
   pkg-prebuilds@0.2.1:
     dependencies:
       yargs: 17.7.2
+    optional: true
 
   plist@3.1.0:
     dependencies:
@@ -5253,7 +5264,8 @@ snapshots:
       err-code: 2.0.3
       retry: 0.12.0
 
-  proxy-from-env@1.1.0: {}
+  proxy-from-env@1.1.0:
+    optional: true
 
   pump@3.0.2:
     dependencies:
@@ -5276,6 +5288,7 @@ snapshots:
       ini: 1.3.8
       minimist: 1.2.8
       strip-json-comments: 2.0.1
+    optional: true
 
   read-binary-file-arch@1.0.6:
     dependencies:
@@ -5576,7 +5589,8 @@ snapshots:
     dependencies:
       ansi-regex: 6.1.0
 
-  strip-json-comments@2.0.1: {}
+  strip-json-comments@2.0.1:
+    optional: true
 
   sumchecker@3.0.1:
     dependencies:
@@ -5674,7 +5688,8 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  url-join@4.0.1: {}
+  url-join@4.0.1:
+    optional: true
 
   utf8-byte-length@1.0.5: {}
 
