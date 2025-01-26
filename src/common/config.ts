@@ -1,4 +1,10 @@
-import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import {
+    existsSync,
+    mkdirSync,
+    readFileSync,
+    statSync,
+    writeFileSync,
+} from "node:fs";
 import { dirname, join } from "node:path";
 import { app, dialog } from "electron";
 import type { Settings } from "../@types/settings.js";
@@ -10,7 +16,17 @@ const defaults: Settings = {
     legcordCSP: true,
     minimizeToTray: true,
     keybinds: [],
-    audio: "loopbackWithMute",
+    audio: {
+        workaround: false,
+        deviceSelect: true,
+        granularSelect: true,
+        ignoreVirtual: false,
+        ignoreDevices: false,
+        ignoreInputMedia: false,
+        onlySpeakers: false,
+        onlyDefaultSpeakers: true,
+        loopbackType: "loopback",
+    },
     multiInstance: false,
     mods: ["vencord"],
     transparency: "none",
@@ -33,9 +49,6 @@ const defaults: Settings = {
     spellcheckLanguage: ["en-US"],
     disableTitlebarChecks: false,
     sleepInBackground: false,
-    bitrateMin: 500000,
-    bitrateMax: 8000000,
-    bitrateTarget: 600000,
     additionalArguments: "",
     customIcon: join(import.meta.dirname, "../", "/assets/desktop.png"),
     smoothScroll: true,
@@ -60,7 +73,10 @@ export function getConfig<K extends keyof Settings>(object: K): Settings[K] {
     const returnData = JSON.parse(rawData) as Settings;
     return returnData[object];
 }
-export function setConfig<K extends keyof Settings>(object: K, toSet: Settings[K]): void {
+export function setConfig<K extends keyof Settings>(
+    object: K,
+    toSet: Settings[K],
+): void {
     const rawData = readFileSync(getConfigLocation(), "utf-8");
     const parsed = JSON.parse(rawData) as Settings;
     parsed[object] = toSet;
@@ -110,8 +126,21 @@ export function checkIfConfigExists(): void {
 export function checkIfConfigIsBroken(): void {
     try {
         const settingsData = readFileSync(getConfigLocation(), "utf-8");
-        JSON.parse(settingsData);
-        console.log("Config is fine");
+        const settingsObject = JSON.parse(settingsData) as Settings;
+        let configWasFine = true;
+        const settingsKeys = Object.keys(settingsObject) as (keyof Settings)[];
+        const defaultKeys = Object.keys(defaults) as (keyof Settings)[];
+        const missingKeysInSettings = defaultKeys.filter(
+            (key) => !settingsKeys.includes(key),
+        );
+        configWasFine = missingKeysInSettings.length === 0;
+        missingKeysInSettings.forEach((missingKey) => {
+            console.log(
+                `Missing config root entry ${missingKey}, setting default config for this entry...`,
+            );
+            setConfig(missingKey, settingsObject[missingKey]);
+        });
+        console.log(configWasFine ? "Config is fine" : "Config is now fine");
     } catch (e) {
         console.error(e);
         console.log("Detected a corrupted config");

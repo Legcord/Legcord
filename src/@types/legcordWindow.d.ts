@@ -1,3 +1,4 @@
+import type { Node } from "@vencord/venmic";
 import type { Keybind } from "./keybind.js";
 import type { Settings } from "./settings.js";
 import type { ThemeManifest } from "./themeManifest.js";
@@ -17,7 +18,10 @@ export interface LegcordWindow {
     translations: string;
     settings: {
         getConfig: () => Readonly<Settings>;
-        setConfig: <K extends keyof Settings>(object: K, toSet: Settings[K]) => void;
+        setConfig: <K extends keyof Settings>(
+            object: K,
+            toSet: Settings[K],
+        ) => void;
         openStorageFolder: () => void;
         openThemesFolder: () => void;
         openCustomIconDialog: () => void;
@@ -38,8 +42,15 @@ export interface LegcordWindow {
         isPowerSavingEnabled: () => boolean;
     };
     screenshare: {
-        getSources: () => void;
+        getSources: void;
         start: (id: string, name: string, audio: boolean) => void;
+        venmicStart: (include: Node[]) => Promise<boolean>;
+        venmicSystemStart: (exclude: Node[]) => Promise<boolean>;
+        venmicList: () => Promise<
+            | { ok: true; targets: Node[]; hasPipewirePulse: boolean }
+            | { ok: false; isGlibCxxOutdated: boolean }
+        >;
+        venmicStop: () => Promise<void>;
     };
     themes: {
         install: (url: string) => void;

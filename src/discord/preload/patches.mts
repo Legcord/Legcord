@@ -2,7 +2,41 @@ import { addScript, addStyle, injectJS } from "../../common/dom.js";
 import { sleep } from "../../common/sleep.js";
 const { ipcRenderer } = require("electron");
 const version = ipcRenderer.sendSync("displayVersion") as string;
+
+export async function getVirtmic() {
+    try {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const audioDevice = devices.find(
+            ({ label }) => label === "vencord-screen-share",
+        );
+        return audioDevice?.deviceId;
+    } catch (error) {
+        return null;
+    }
+}
+
 async function load() {
+    const original = navigator.mediaDevices.getDisplayMedia;
+    navigator.mediaDevices.getDisplayMedia = async function (opts) {
+        const stream = await original.call(this, opts);
+        const id = await getVirtmic();
+
+        if (id) {
+            const audio = await navigator.mediaDevices.getUserMedia({
+                audio: {
+                    deviceId: {
+                        exact: id,
+                    },
+                    autoGainControl: false,
+                    echoCancellation: false,
+                    noiseSuppression: false,
+                },
+            });
+            audio.getAudioTracks().forEach((t) => stream.addTrack(t));
+        }
+
+        return stream;
+    };
     await sleep(5000).then(() => {
         // dirty hack to make clicking notifications focus Legcord
         if (
@@ -46,7 +80,9 @@ async function load() {
     });
     // Settings info version injection
     setInterval(() => {
-        const host = document.querySelector('[class*="sidebar"] [class*="info"]');
+        const host = document.querySelector(
+            '[class*="sidebar"] [class*="info"]',
+        );
         if (!host || host.querySelector("#ac-ver")) {
             return;
         }

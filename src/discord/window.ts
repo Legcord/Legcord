@@ -27,6 +27,7 @@ import { setMenu } from "./menu.js";
 import { registerCustomHandler } from "./screenshare.js";
 import { mainTouchBar } from "./touchbar.js";
 import { createTray, tray } from "./tray.js";
+import { registerVenmicIpc } from "./venmic.js";
 export let mainWindows: BrowserWindow[] = [];
 export let inviteWindow: BrowserWindow;
 
@@ -40,7 +41,9 @@ contextMenu({
             // Only show it when right-clicking text
             visible: parameters.selectionText.trim().length > 0,
             click: () => {
-                void shell.openExternal(`https://google.com/search?q=${encodeURIComponent(parameters.selectionText)}`);
+                void shell.openExternal(
+                    `https://google.com/search?q=${encodeURIComponent(parameters.selectionText)}`,
+                );
             },
         },
         {
@@ -48,7 +51,9 @@ contextMenu({
             // Only show it when right-clicking text
             visible: parameters.selectionText.trim().length > 0,
             click: () => {
-                void shell.openExternal(`https://duckduckgo.com/?q=${encodeURIComponent(parameters.selectionText)}`);
+                void shell.openExternal(
+                    `https://duckduckgo.com/?q=${encodeURIComponent(parameters.selectionText)}`,
+                );
             },
         },
     ],
@@ -58,7 +63,9 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     if (getWindowState("isMaximized") ?? false) {
         passedWindow.setSize(835, 600); //just so the whole thing doesn't cover whole screen
         passedWindow.maximize();
-        void passedWindow.webContents.executeJavaScript(`document.body.setAttribute("isMaximized", "");`);
+        void passedWindow.webContents.executeJavaScript(
+            `document.body.setAttribute("isMaximized", "");`,
+        );
         passedWindow.hide(); // please don't flashbang the user
     }
 
@@ -66,36 +73,46 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
 
     const ignoreProtocolWarning = getConfig("ignoreProtocolWarning");
     registerIpc(passedWindow);
+    registerVenmicIpc();
     if (getConfig("mobileMode")) {
         passedWindow.webContents.userAgent =
             "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.149 Mobile Safari/537.36";
     } else {
-        let osType = process.platform === "darwin" ? "Macintosh" : process.platform === "win32" ? "Windows" : "Linux";
+        let osType =
+            process.platform === "darwin"
+                ? "Macintosh"
+                : process.platform === "win32"
+                  ? "Windows"
+                  : "Linux";
         if (osType === "Linux") osType = `X11; ${osType}`;
         const chromeVersion = process.versions.chrome;
         const userAgent = `Mozilla/5.0 (${osType} ${os.arch()}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chromeVersion} Safari/537.36`;
         passedWindow.webContents.userAgent = userAgent;
     }
     if (mainWindows.length === 1) {
-        app.on("second-instance", (_event, _commandLine, _workingDirectory, additionalData) => {
-            void (async () => {
-                // Print out data received from the second instance.
-                console.log(additionalData);
+        app.on(
+            "second-instance",
+            (_event, _commandLine, _workingDirectory, additionalData) => {
+                void (async () => {
+                    // Print out data received from the second instance.
+                    console.log(additionalData);
 
-                if (!getConfig("multiInstance")) {
-                    // Someone tried to run a second instance, we should focus our window.
-                    if (passedWindow) {
-                        if (passedWindow.isMinimized()) passedWindow.restore();
-                        passedWindow.show();
-                        passedWindow.focus();
+                    if (!getConfig("multiInstance")) {
+                        // Someone tried to run a second instance, we should focus our window.
+                        if (passedWindow) {
+                            if (passedWindow.isMinimized())
+                                passedWindow.restore();
+                            passedWindow.show();
+                            passedWindow.focus();
+                        }
+                    } else {
+                        await init();
                     }
-                } else {
-                    await init();
-                }
-            })();
-        });
+                })();
+            },
+        );
     }
-    app.on("activate", () => {
+    app.on("activate", async () => {
         app.show();
     });
     passedWindow.webContents.on("frame-created", (_, { frame }) => {
@@ -105,9 +122,15 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         frame.once("dom-ready", async () => {
             if (
                 frame.url.includes("youtube.com/embed/") ||
-                (frame.url.includes("discordsays") && frame.url.includes("youtube.com"))
+                (frame.url.includes("discordsays") &&
+                    frame.url.includes("youtube.com"))
             ) {
-                await frame.executeJavaScript(readFileSync(path.join(__dirname, "js/adguard.js"), "utf-8"));
+                await frame.executeJavaScript(
+                    readFileSync(
+                        path.join(__dirname, "js/adguard.js"),
+                        "utf-8",
+                    ),
+                );
             }
         });
     });
@@ -116,7 +139,10 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         if (url === "about:blank") return { action: "allow" };
         // Saving ics files on future events
         if (url.startsWith("blob:https://discord.com/")) {
-            return { action: "allow", overrideBrowserWindowOptions: { show: false } };
+            return {
+                action: "allow",
+                overrideBrowserWindowOptions: { show: false },
+            };
         }
         // Allow Discord stream popout
         if (
@@ -130,7 +156,11 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
                     alwaysOnTop: getConfig("popoutPiP"),
                 },
             };
-        if (url.startsWith("https:") || url.startsWith("http:") || url.startsWith("mailto:")) {
+        if (
+            url.startsWith("https:") ||
+            url.startsWith("http:") ||
+            url.startsWith("mailto:")
+        ) {
             void shell.openExternal(url);
         } else if (ignoreProtocolWarning) {
             void shell.openExternal(url);
@@ -142,34 +172,45 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
                 title: url,
                 message: `Do you want to open ${url}?`,
                 detail: "This url was detected to not use normal browser protocols. It could mean that this url leads to a local program on your computer. Please check if you recognise it, before proceeding!",
-                checkboxLabel: "Remember my answer and ignore this warning for future sessions",
+                checkboxLabel:
+                    "Remember my answer and ignore this warning for future sessions",
                 checkboxChecked: false,
             };
 
-            void dialog.showMessageBox(passedWindow, options).then(({ response, checkboxChecked }) => {
-                console.log(response, checkboxChecked);
-                if (checkboxChecked) {
-                    if (response === 0) {
-                        setConfig("ignoreProtocolWarning", true);
-                    } else {
-                        setConfig("ignoreProtocolWarning", false);
+            void dialog
+                .showMessageBox(passedWindow, options)
+                .then(({ response, checkboxChecked }) => {
+                    console.log(response, checkboxChecked);
+                    if (checkboxChecked) {
+                        if (response === 0) {
+                            setConfig("ignoreProtocolWarning", true);
+                        } else {
+                            setConfig("ignoreProtocolWarning", false);
+                        }
                     }
-                }
-                if (response === 0) {
-                    void shell.openExternal(url);
-                }
-            });
+                    if (response === 0) {
+                        void shell.openExternal(url);
+                    }
+                });
         }
 
         return { action: "deny" };
     });
 
-    passedWindow.webContents.session.setSpellCheckerLanguages(getConfig("spellcheckLanguage"));
+    passedWindow.webContents.session.setSpellCheckerLanguages(
+        getConfig("spellcheckLanguage"),
+    );
 
     registerCustomHandler();
 
     passedWindow.webContents.session.webRequest.onBeforeRequest(
-        { urls: ["https://*/api/v*/science", "https://sentry.io/*", "https://*.nel.cloudflare.com/*"] },
+        {
+            urls: [
+                "https://*/api/v*/science",
+                "https://sentry.io/*",
+                "https://*.nel.cloudflare.com/*",
+            ],
+        },
         (_, callback) => callback({ cancel: true }),
     );
     // fix UMG video playback
@@ -209,19 +250,37 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         if (process.platform === "win32") {
             if (title.startsWith("•"))
                 return passedWindow.setOverlayIcon(
-                    nativeImage.createFromPath(path.join(import.meta.dirname, "../", "/assets/badge-11.ico")),
+                    nativeImage.createFromPath(
+                        path.join(
+                            import.meta.dirname,
+                            "../",
+                            "/assets/badge-11.ico",
+                        ),
+                    ),
                     "You have some unread messages.",
                 );
             if (title.startsWith("(")) {
                 const pings = Number.parseInt(/\((\d+)\)/.exec(title)![1]);
                 if (pings > 9) {
                     return passedWindow.setOverlayIcon(
-                        nativeImage.createFromPath(path.join(import.meta.dirname, "../", "/assets/badge-10.ico")),
+                        nativeImage.createFromPath(
+                            path.join(
+                                import.meta.dirname,
+                                "../",
+                                "/assets/badge-10.ico",
+                            ),
+                        ),
                         "You have some unread messages.",
                     );
                 } else {
                     return passedWindow.setOverlayIcon(
-                        nativeImage.createFromPath(path.join(import.meta.dirname, "../", `/assets/badge-${pings}.ico`)),
+                        nativeImage.createFromPath(
+                            path.join(
+                                import.meta.dirname,
+                                "../",
+                                `/assets/badge-${pings}.ico`,
+                            ),
+                        ),
                         "You have some unread messages.",
                     );
                 }
@@ -230,7 +289,10 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         }
         if (process.platform === "darwin") {
             if (title.startsWith("•")) return app.dock.setBadge("•");
-            if (title.startsWith("(")) return app.setBadgeCount(Number.parseInt(/\((\d+)\)/.exec(title)![1]));
+            if (title.startsWith("("))
+                return app.setBadgeCount(
+                    Number.parseInt(/\((\d+)\)/.exec(title)![1]),
+                );
             app.setBadgeCount(0);
         }
         if (!title.endsWith(legcordSuffix)) {
@@ -248,7 +310,9 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     setMenu();
     passedWindow.on("close", (e) => {
         if (mainWindows.length > 1) {
-            mainWindows = mainWindows.filter((mainWindow) => mainWindow.id !== passedWindow.id);
+            mainWindows = mainWindows.filter(
+                (mainWindow) => mainWindow.id !== passedWindow.id,
+            );
             passedWindow.destroy();
         }
         if (getConfig("minimizeToTray") && !forceQuit) {
@@ -270,22 +334,32 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         setForceQuit(true);
     });
     passedWindow.on("focus", () => {
-        void passedWindow.webContents.executeJavaScript(`document.body.removeAttribute("unFocused");`);
+        void passedWindow.webContents.executeJavaScript(
+            `document.body.removeAttribute("unFocused");`,
+        );
     });
     passedWindow.on("blur", () => {
-        void passedWindow.webContents.executeJavaScript(`document.body.setAttribute("unFocused", "");`);
+        void passedWindow.webContents.executeJavaScript(
+            `document.body.setAttribute("unFocused", "");`,
+        );
     });
 
     passedWindow.on("maximize", () => {
-        void passedWindow.webContents.executeJavaScript(`document.body.setAttribute("isMaximized", "");`);
+        void passedWindow.webContents.executeJavaScript(
+            `document.body.setAttribute("isMaximized", "");`,
+        );
     });
     passedWindow.on("unmaximize", () => {
-        void passedWindow.webContents.executeJavaScript(`document.body.removeAttribute("isMaximized");`);
+        void passedWindow.webContents.executeJavaScript(
+            `document.body.removeAttribute("isMaximized");`,
+        );
     });
     if (getConfig("inviteWebsocket") && mainWindows.length === 1) {
         const RPC = new RPCServer();
 
-        RPC.on("activity", (data: string) => passedWindow.webContents.send("rpc", data));
+        RPC.on("activity", (data: string) =>
+            passedWindow.webContents.send("rpc", data),
+        );
         RPC.on("invite", (code: string) => {
             console.log(code);
             createInviteWindow(code);
@@ -325,12 +399,16 @@ export function createWindow() {
         title: "Legcord",
         show: false,
         darkTheme: true,
-        icon: getConfig("customIcon") ?? path.join(import.meta.dirname, "../", "/assets/desktop.png"),
+        icon:
+            getConfig("customIcon") ??
+            path.join(import.meta.dirname, "../", "/assets/desktop.png"),
         frame: false,
         backgroundColor: "#202225",
         autoHideMenuBar: true,
         webPreferences: {
             sandbox: true,
+            nodeIntegration: false,
+            contextIsolation: true,
             backgroundThrottling: getConfig("sleepInBackground"),
             preload: path.join(import.meta.dirname, "discord/preload.mjs"),
             spellcheck: getConfig("spellcheck"),
@@ -378,7 +456,9 @@ export function createInviteWindow(code: string): void {
         height: 600,
         title: "Legcord Invite Manager",
         darkTheme: true,
-        icon: getConfig("customIcon") ?? path.join(import.meta.dirname, "../", "/assets/desktop.png"),
+        icon:
+            getConfig("customIcon") ??
+            path.join(import.meta.dirname, "../", "/assets/desktop.png"),
         frame: true,
         autoHideMenuBar: true,
         webPreferences: {
@@ -387,10 +467,13 @@ export function createInviteWindow(code: string): void {
         },
     });
     const formInviteURL = `https://discord.com/invite/${code}`;
-    inviteWindow.webContents.session.webRequest.onBeforeRequest((details, callback) => {
-        if (details.url.includes("ws://")) return callback({ cancel: true });
-        return callback({});
-    });
+    inviteWindow.webContents.session.webRequest.onBeforeRequest(
+        (details, callback) => {
+            if (details.url.includes("ws://"))
+                return callback({ cancel: true });
+            return callback({});
+        },
+    );
     // NOTE - This shouldn't matter, since below we have an event on it
     void inviteWindow.loadURL(formInviteURL);
     inviteWindow.webContents.once("did-finish-load", () => {

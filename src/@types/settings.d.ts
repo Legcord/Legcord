@@ -13,6 +13,18 @@ export type ValidTrayIcons =
     | "ac_black_plug_hollow"
     | "disabled";
 
+export interface AudioSettings {
+    workaround: boolean;
+    deviceSelect: boolean;
+    granularSelect: boolean;
+    ignoreVirtual: boolean;
+    ignoreDevices: boolean;
+    ignoreInputMedia: boolean;
+    onlySpeakers: boolean;
+    onlyDefaultSpeakers: boolean;
+    loopbackType: "loopback" | "loopbackWithMute";
+}
+
 export interface Settings {
     // Referenced for detecting a broken config.
     "0"?: string;
@@ -21,8 +33,8 @@ export interface Settings {
     customIcon: string;
     windowStyle: "default" | "native" | "overlay" | "transparent";
     channel: "stable" | "ptb" | "canary";
-    audio: "loopback" | "loopbackWithMute";
     transparency: "universal" | "modern" | "none";
+    audio: AudioSettings;
     legcordCSP: boolean;
     minimizeToTray: boolean;
     multiInstance: boolean;
@@ -51,7 +63,4 @@ export interface Settings {
     autoScroll: boolean;
     additionalArguments: string;
     modCache?: Record<ValidMods, string>;
-    bitrateMin: number;
-    bitrateMax: number;
-    bitrateTarget: number;
 }

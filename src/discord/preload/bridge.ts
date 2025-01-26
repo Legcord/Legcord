@@ -3,6 +3,7 @@ import type { Keybind } from "../../@types/keybind.js";
 import type { LegcordWindow } from "../../@types/legcordWindow.d.ts";
 import type { Settings } from "../../@types/settings.js";
 import type { ThemeManifest } from "../../@types/themeManifest.js";
+import { venmicListObject } from "../venmic.js";
 
 interface IPCSources {
     id: string;
@@ -19,8 +20,10 @@ contextBridge.exposeInMainWorld("legcord", {
     },
     settings: {
         getConfig: () => ipcRenderer.sendSync("getEntireConfig") as Settings,
-        setConfig: (key: string, value: string) => ipcRenderer.send("setConfig", key, value),
-        addKeybind: (keybind: Keybind) => ipcRenderer.send("addKeybind", keybind),
+        setConfig: (key: string, value: string) =>
+            ipcRenderer.send("setConfig", key, value),
+        addKeybind: (keybind: Keybind) =>
+            ipcRenderer.send("addKeybind", keybind),
         toggleKeybind: (id: string) => ipcRenderer.send("toggleKeybind", id),
         removeKeybind: (id: string) => ipcRenderer.send("removeKeybind", id),
         openStorageFolder: () => ipcRenderer.send("openStorageFolder"),
@@ -31,13 +34,18 @@ contextBridge.exposeInMainWorld("legcord", {
         copyGPUInfo: () => ipcRenderer.send("copyGPUInfo"),
     },
     touchbar: {
-        setVoiceTouchbar: (state: boolean) => ipcRenderer.send("setVoiceTouchbar", state),
-        setVoiceState: (mute: boolean, deafen: boolean) => ipcRenderer.send("setVoiceState", mute, deafen),
-        importGuilds: (guilds: Array<string>) => ipcRenderer.send("importGuilds", guilds),
+        setVoiceTouchbar: (state: boolean) =>
+            ipcRenderer.send("setVoiceTouchbar", state),
+        setVoiceState: (mute: boolean, deafen: boolean) =>
+            ipcRenderer.send("setVoiceState", mute, deafen),
+        importGuilds: (guilds: Array<string>) =>
+            ipcRenderer.send("importGuilds", guilds),
     },
     power: {
-        setPowerSaving: (state: boolean) => ipcRenderer.send("setPowerSaving", state),
-        isPowerSavingEnabled: () => ipcRenderer.sendSync("isPowerSavingEnabled"),
+        setPowerSaving: (state: boolean) =>
+            ipcRenderer.send("setPowerSaving", state),
+        isPowerSavingEnabled: () =>
+            ipcRenderer.sendSync("isPowerSavingEnabled"),
     },
     electron: process.versions.electron,
     translations: ipcRenderer.sendSync("getTranslations") as string,
@@ -46,22 +54,48 @@ contextBridge.exposeInMainWorld("legcord", {
             return result as string;
         }),
     screenshare: {
-        getSources: (sources: (event: Electron.IpcRendererEvent, ...args: IPCSources[]) => void) => {
-            ipcRenderer.on("getSources", sources);
+        getSources: (
+            callback: (
+                event: Electron.IpcRendererEvent,
+                sources: IPCSources[],
+                ...args: any[]
+            ) => void,
+        ) => {
+            ipcRenderer.on("getSources", callback);
         },
         start: (source: string, name: string, audio: boolean) =>
             ipcRenderer.send("startScreenshare", source, name, audio),
+        venmicStart: async (include: Node[]) =>
+            await ipcRenderer.invoke("venmicStart", include).then((result) => {
+                return result as venmicListObject;
+            }),
+        venmicSystemStart: async (exclude: Node[]) =>
+            await ipcRenderer
+                .invoke("venmicSystemStart", exclude)
+                .then((result) => {
+                    return result as boolean;
+                }),
+        venmicList: async () =>
+            await ipcRenderer.invoke("venmicList").then((result) => {
+                return result as void;
+            }),
+        venmicStop: async () =>
+            await ipcRenderer.invoke("venmicStop").then((result) => {
+                return result as void;
+            }),
     },
     version: ipcRenderer.sendSync("get-app-version", "app-version") as string,
     platform: ipcRenderer.sendSync("getOS") as string,
     restart: () => ipcRenderer.send("restart"),
     themes: {
-        install: async (url: string) => ipcRenderer.invoke("installBDTheme", url) as Promise<null>,
+        install: async (url: string) =>
+            ipcRenderer.invoke("installBDTheme", url) as Promise<null>,
         uninstall: (id: string) => ipcRenderer.send("uninstallTheme", id),
         edit: (id: string) => ipcRenderer.send("editTheme", id),
         getThemes: () => ipcRenderer.sendSync("getThemes") as ThemeManifest[],
         openImportPicker: () => ipcRenderer.send("openImportPicker"),
-        set: (id: string, state: boolean) => ipcRenderer.send("setThemeEnabled", id, state),
+        set: (id: string, state: boolean) =>
+            ipcRenderer.send("setThemeEnabled", id, state),
         folder: (id: string) => ipcRenderer.send("openThemeFolder", id),
         openQuickCssFile: () => ipcRenderer.send("openQuickCssFile"),
     },

@@ -1,5 +1,11 @@
 // Modules to control application life and create native browser window
-import { BrowserWindow, app, crashReporter, session, systemPreferences } from "electron";
+import {
+    BrowserWindow,
+    app,
+    crashReporter,
+    session,
+    systemPreferences,
+} from "electron";
 import "./discord/extensions/csp.js";
 import "./protocol.js";
 import { readFileSync } from "node:fs";
@@ -71,13 +77,28 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     crashReporter.start({ uploadToServer: false });
     // enable pulseaudio audio sharing on linux
     if (process.platform === "linux") {
-        app.commandLine.appendSwitch("enable-features", "PulseaudioLoopbackForScreenShare");
-        app.commandLine.appendSwitch("disable-features", "WebRtcAllowInputVolumeAdjustment");
+        app.commandLine.appendSwitch(
+            "enable-features",
+            "PulseaudioLoopbackForScreenShare",
+        );
+        app.commandLine.appendSwitch(
+            "disable-features",
+            "WebRtcAllowInputVolumeAdjustment",
+        );
     }
     // enable webrtc capturer for wayland
-    if (process.platform === "linux" && process.env.XDG_SESSION_TYPE?.toLowerCase() === "wayland") {
-        app.commandLine.appendSwitch("disable-features", "UseMultiPlaneFormatForSoftwareVideo");
-        app.commandLine.appendSwitch("enable-features", "WebRTCPipeWireCapturer");
+    if (
+        process.platform === "linux" &&
+        process.env.XDG_SESSION_TYPE?.toLowerCase() === "wayland"
+    ) {
+        app.commandLine.appendSwitch(
+            "disable-features",
+            "UseMultiPlaneFormatForSoftwareVideo",
+        );
+        app.commandLine.appendSwitch(
+            "enable-features",
+            "WebRTCPipeWireCapturer",
+        );
         console.log("Wayland detected, using PipeWire for video capture.");
     }
     if (process.platform === "darwin") {
@@ -92,7 +113,9 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     injectElectronFlags();
     await fetchMods();
     void import("./discord/extensions/plugin.js"); // load chrome extensions
-    console.log(`[Config Manager] Current config: ${readFileSync(getConfigLocation(), "utf-8")}`);
+    console.log(
+        `[Config Manager] Current config: ${readFileSync(getConfigLocation(), "utf-8")}`,
+    );
 
     // OLD CONFIGS MIGRATION
     if (getConfig("hardwareAcceleration") === false) {
@@ -100,11 +123,25 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     } else if (getConfig("hardwareAcceleration") === undefined) {
         setConfig("hardwareAcceleration", true); // pre 3.3.0
     }
-    if (getConfig("audio") === undefined) setConfig("audio", "loopbackWithMute");
+    if (getConfig("audio") === undefined)
+        setConfig("audio", {
+            workaround: false,
+            deviceSelect: true,
+            granularSelect: true,
+            ignoreVirtual: false,
+            ignoreDevices: false,
+            ignoreInputMedia: false,
+            onlySpeakers: false,
+            onlyDefaultSpeakers: true,
+            loopbackType: "loopback",
+        });
     if (getConfig("keybinds") === undefined) setConfig("keybinds", []);
-    if (getConfig("additionalArguments") === undefined) setConfig("additionalArguments", "");
-    if (getConfig("transparency") === undefined) setConfig("transparency", "none");
-    if (getConfig("windowStyle") === "transparent") setConfig("windowStyle", "default");
+    if (getConfig("additionalArguments") === undefined)
+        setConfig("additionalArguments", "");
+    if (getConfig("transparency") === undefined)
+        setConfig("transparency", "none");
+    if (getConfig("windowStyle") === "transparent")
+        setConfig("windowStyle", "default");
     if (typeof getConfig("tray") === "boolean") {
         //@ts-expect-error
         if (getConfig("tray") === true) {
@@ -116,9 +153,15 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     }
     if (getConfig("additionalArguments") !== undefined)
         app.commandLine.appendArgument(getConfig("additionalArguments"));
-    if (getConfig("smoothScroll") === false) app.commandLine.appendSwitch("disable-smooth-scrolling");
-    if (getConfig("autoScroll")) app.commandLine.appendSwitch("enable-blink-features", "MiddleClickAutoscroll");
-    if (getConfig("disableHttpCache")) app.commandLine.appendSwitch("disable-http-cache");
+    if (getConfig("smoothScroll") === false)
+        app.commandLine.appendSwitch("disable-smooth-scrolling");
+    if (getConfig("autoScroll"))
+        app.commandLine.appendSwitch(
+            "enable-blink-features",
+            "MiddleClickAutoscroll",
+        );
+    if (getConfig("disableHttpCache"))
+        app.commandLine.appendSwitch("disable-http-cache");
 
     void app.whenReady().then(async () => {
         // Patch for linux bug to ensure things are loaded before window creation (fixes transparency on some linux systems)
@@ -129,42 +172,58 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
                 });
             }, 1500),
         );
-        session.defaultSession.setPermissionRequestHandler(async (_webContents, permission, callback) => {
-            switch (permission) {
-                case "fullscreen":
-                case "notifications":
-                    callback(true);
-                    break;
-                case "media": {
-                    if (process.platform === "darwin") {
-                        console.log(`microphone access: ${systemPreferences.getMediaAccessStatus("microphone")}`);
-                        console.log(`camera access: ${systemPreferences.getMediaAccessStatus("camera")}`);
-                        callback(
-                            await new Promise<boolean>((resolve, reject) => {
-                                systemPreferences.askForMediaAccess("microphone").then((isGranted) => {
-                                    if (!isGranted) {
-                                        console.error("Microphone permission rejected by OS");
-                                        reject();
-                                        return;
-                                    }
-                                });
-                                systemPreferences.askForMediaAccess("camera").then((isGranted) => {
-                                    if (!isGranted) {
-                                        console.error("Camera permission rejected by OS");
-                                        reject();
-                                        return;
-                                    }
-                                });
-                                resolve(true);
-                            }),
-                        );
-                    } else {
+        session.defaultSession.setPermissionRequestHandler(
+            async (_webContents, permission, callback) => {
+                switch (permission) {
+                    case "fullscreen":
+                    case "notifications":
                         callback(true);
+                        break;
+                    case "media": {
+                        if (process.platform === "darwin") {
+                            console.log(
+                                `microphone access: ${systemPreferences.getMediaAccessStatus("microphone")}`,
+                            );
+                            console.log(
+                                `camera access: ${systemPreferences.getMediaAccessStatus("camera")}`,
+                            );
+                            callback(
+                                await new Promise<boolean>(
+                                    (resolve, reject) => {
+                                        systemPreferences
+                                            .askForMediaAccess("microphone")
+                                            .then((isGranted) => {
+                                                if (!isGranted) {
+                                                    console.error(
+                                                        "Microphone permission rejected by OS",
+                                                    );
+                                                    reject();
+                                                    return;
+                                                }
+                                            });
+                                        systemPreferences
+                                            .askForMediaAccess("camera")
+                                            .then((isGranted) => {
+                                                if (!isGranted) {
+                                                    console.error(
+                                                        "Camera permission rejected by OS",
+                                                    );
+                                                    reject();
+                                                    return;
+                                                }
+                                            });
+                                        resolve(true);
+                                    },
+                                ),
+                            );
+                        } else {
+                            callback(true);
+                        }
+                        break;
                     }
-                    break;
                 }
-            }
-        });
+            },
+        );
         app.on("activate", () => {
             if (BrowserWindow.getAllWindows().length === 0) {
                 void init();

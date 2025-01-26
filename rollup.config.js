@@ -27,6 +27,7 @@ export default defineConfig([
             "electron-updater",
             "electron-context-menu",
             "arrpc",
+            "path",
             "stream",
             "stream/promises",
         ],
