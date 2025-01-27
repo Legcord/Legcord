@@ -111,9 +111,7 @@ export const ScreensharePicker = (props: {
                         </div>
                     </div>
 
-                    <Show when={
-                                    window.legcord.platform === "linux" && props.audioSources !== undefined && audio()
-                                }>
+                    <Show when={window.legcord.platform === "linux" && props.audioSources !== undefined && audio()}>
                         <Divider mt mb />
                         <Header tag={HeaderTags.H4}>Venmic</Header>
                         <Dropdown

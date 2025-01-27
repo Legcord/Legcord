@@ -124,7 +124,7 @@ export function checkIfConfigIsBroken(): void {
         configWasFine = missingKeysInSettings.length === 0;
         missingKeysInSettings.forEach((missingKey) => {
             console.log(`Missing config root entry ${missingKey}, setting default config for this entry...`);
-            setConfig(missingKey, settingsObject[missingKey]);
+            setConfig(missingKey, defaults[missingKey]);
         });
         console.log(configWasFine ? "Config is fine" : "Config is now fine");
     } catch (e) {
