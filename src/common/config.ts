@@ -97,35 +97,56 @@ export function checkIfConfigExists(): void {
         console.log("Created missing user data folder");
     }
 
-    if (!existsSync(settingsFile)) {
-        if (!existsSync(storagePath)) {
-            mkdirSync(storagePath);
-            console.log("Created missing storage folder");
+    try {
+        if (!existsSync(settingsFile)) {
+            if (!existsSync(storagePath)) {
+                mkdirSync(storagePath);
+                console.log("Created missing storage folder");
+            }
+            console.log("First run of the Legcord. Starting setup.");
+            setup();
+            firstRun = true;
+        } else if (!getConfig("doneSetup")) {
+            console.log("First run of the Legcord. Starting setup.");
+            setup();
+            firstRun = true;
+        } else {
+            console.log("Legcord has been run before. Skipping setup.");
         }
-        console.log("First run of the Legcord. Starting setup.");
-        setup();
-        firstRun = true;
-    } else if (getConfig("doneSetup") === false) {
-        console.log("First run of the Legcord. Starting setup.");
-        setup();
-        firstRun = true;
-    } else {
-        console.log("Legcord has been run before. Skipping setup.");
+    } catch {
+        checkIfConfigIsBroken();
     }
 }
 export function checkIfConfigIsBroken(): void {
     try {
         const settingsData = readFileSync(getConfigLocation(), "utf-8");
         const settingsObject = JSON.parse(settingsData) as Settings;
+
         let configWasFine = true;
         const settingsKeys = Object.keys(settingsObject) as (keyof Settings)[];
         const defaultKeys = Object.keys(defaults) as (keyof Settings)[];
+
         const missingKeysInSettings = defaultKeys.filter((key) => !settingsKeys.includes(key));
         configWasFine = missingKeysInSettings.length === 0;
+
+        defaultKeys.forEach((key: keyof Settings) => {
+            const valueInSettings = settingsObject[key];
+            const valueInDefaults = defaults[key];
+            if (!valueInSettings || !valueInDefaults) return;
+            if (typeof valueInDefaults !== typeof valueInSettings) {
+                console.log(
+                    `Root config ${key} type (${typeof valueInSettings}) differs from default type (${typeof valueInDefaults}). Setting default value...`,
+                );
+                setConfig(key, valueInDefaults);
+                configWasFine = false;
+            }
+        });
+
         missingKeysInSettings.forEach((missingKey) => {
             console.log(`Missing config root entry ${missingKey}, setting default config for this entry...`);
             setConfig(missingKey, defaults[missingKey]);
         });
+
         console.log(configWasFine ? "Config is fine" : "Config is now fine");
     } catch (e) {
         console.error(e);
