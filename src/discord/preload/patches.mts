@@ -14,28 +14,29 @@ export async function getVirtmic() {
 }
 
 async function load() {
-    const original = navigator.mediaDevices.getDisplayMedia;
-    navigator.mediaDevices.getDisplayMedia = async function (opts) {
-        const stream = await original.call(this, opts);
-        const id = await getVirtmic();
-
-        if (id) {
-            const audio = await navigator.mediaDevices.getUserMedia({
-                audio: {
-                    deviceId: {
-                        exact: id,
-                    },
-                    autoGainControl: false,
-                    echoCancellation: false,
-                    noiseSuppression: false,
-                },
-            });
-            audio.getAudioTracks().forEach((t) => stream.addTrack(t));
-        }
-
-        return stream;
-    };
     await sleep(5000).then(() => {
+        const original = navigator.mediaDevices.getDisplayMedia;
+        navigator.mediaDevices.getDisplayMedia = async function (opts) {
+            const stream = await original.call(this, opts);
+            const id = await getVirtmic();
+
+            if (id) {
+                const audio = await navigator.mediaDevices.getUserMedia({
+                    audio: {
+                        deviceId: {
+                            exact: id,
+                        },
+                        autoGainControl: false,
+                        echoCancellation: false,
+                        noiseSuppression: false,
+                    },
+                });
+                audio.getAudioTracks().forEach((t) => stream.addTrack(t));
+            }
+
+            return stream;
+        };
+
         // dirty hack to make clicking notifications focus Legcord
         addScript(`
         (() => {

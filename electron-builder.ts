@@ -48,7 +48,16 @@ export const config: Configuration = {
         },
     },
 
-    files: ["!*", "assets", "node-modules", "ts-out", "package.json", "license.txt"],
+    files: [
+        "!*",
+        "assets",
+        "node-modules",
+        "ts-out",
+        "dist/venmic-arm64.node",
+        "dist/venmic-x64.node",
+        "package.json",
+        "license.txt",
+    ],
 
     electronDownload: {
         cache: ".cache",

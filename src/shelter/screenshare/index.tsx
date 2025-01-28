@@ -22,7 +22,7 @@ function onStreamQualityChange() {
     const currentUserId = UserStore.getCurrentUser().id;
     const keptAspectWidth = Math.round(store.resolution * (16 / 9));
     const calculatedTargetBitrate = Math.round(
-        keptAspectWidth * store.resolution * store.fps * 0.035, // width * height * fps * bits per pixel value (apprx.)
+        keptAspectWidth * store.resolution * store.fps * 0.08, // width * height * fps * bits per pixel value (apprx.)
     );
     const streamConnection = mediaConnections.find((connection) => connection.streamUserId === currentUserId);
     if (streamConnection) {
@@ -39,7 +39,22 @@ function onStreamQualityChange() {
         );
     }
 }
-export async function onLoad() {
+
+interface StreamDispatch {
+    streamKey?: string;
+    reason?: string;
+}
+function onStreamEnd(dispatch: StreamDispatch) {
+    if (!dispatch.streamKey) return;
+    const owner = dispatch.streamKey.split(":").at(-1);
+    // @ts-expect-error fix types
+    const currentUserId = UserStore.getCurrentUser().id;
+    if (dispatch.reason === "user_requested" && owner === currentUserId) {
+        window.legcord.screenshare.venmicStop();
+    }
+}
+
+export function onLoad() {
     log("Legcord Screenshare Module");
     // @ts-expect-error fix types
     window.legcord.screenshare.getSources(async (_event: Event, sources: IPCSources[]) => {
@@ -58,8 +73,10 @@ export async function onLoad() {
         ));
     });
     dispatcher.subscribe("MEDIA_ENGINE_VIDEO_SOURCE_QUALITY_CHANGED", onStreamQualityChange);
+    dispatcher.subscribe("STREAM_DELETE", onStreamEnd);
 }
 
 export function onUnload() {
     dispatcher.unsubscribe("MEDIA_ENGINE_VIDEO_SOURCE_QUALITY_CHANGED", onStreamQualityChange);
+    dispatcher.unsubscribe("STREAM_DELETE", onStreamEnd);
 }
