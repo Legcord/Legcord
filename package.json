@@ -37,7 +37,7 @@
         "@rollup/plugin-typescript": "^12.1.1",
         "@types/node": "^22.10.1",
         "@types/ws": "^8.5.13",
-        "@uwu/lune": "^1.5.0",
+        "@uwu/lune": "^1.5.1",
         "@uwu/shelter-defs": "^1.4.1",
         "electron": "34.0.1",
         "electron-builder": "^25.1.8",
