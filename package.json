@@ -35,7 +35,7 @@
         "@rollup/plugin-esm-shim": "^0.1.7",
         "@rollup/plugin-json": "^6.1.0",
         "@rollup/plugin-typescript": "^12.1.1",
-        "@types/node": "^22.10.1",
+        "@types/node": "^22.13.0",
         "@types/ws": "^8.5.13",
         "@uwu/lune": "^1.5.1",
         "@uwu/shelter-defs": "^1.4.1",
