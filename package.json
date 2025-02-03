@@ -42,7 +42,7 @@
         "electron": "34.0.1",
         "electron-builder": "^25.1.8",
         "lucide-react": "^0.474.0",
-        "rollup": "^4.27.4",
+        "rollup": "^4.34.1",
         "rollup-plugin-copy": "^3.5.0",
         "rollup-plugin-esbuild": "^6.1.1",
         "solid-js": "^1.9.3",
