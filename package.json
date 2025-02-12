@@ -37,7 +37,7 @@
         "@rollup/plugin-json": "^6.1.0",
         "@rollup/plugin-node-resolve": "^16.0.0",
         "@rollup/plugin-typescript": "^12.1.1",
-        "@types/node": "^22.10.1",
+        "@types/node": "^22.13.1",
         "@types/ws": "^8.5.13",
         "@uwu/lune": "^1.5.1",
         "@uwu/shelter-defs": "^1.4.1",
