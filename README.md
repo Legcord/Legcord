@@ -84,6 +84,13 @@ Legcord is also available on the [Homebrew Cask](https://github.com/Homebrew/hom
 ```zsh
 brew install --cask legcord
 ```
+### MacPorts
+
+Legcord is available [via MacPorts](https://ports.macports.org/port/Legcord/)
+
+```sh
+sudo port install legcord
+```
 
 ### FreeBSD
 
