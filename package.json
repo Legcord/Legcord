@@ -36,6 +36,7 @@
         "@rollup/plugin-esm-shim": "^0.1.7",
         "@rollup/plugin-json": "^6.1.0",
         "@rollup/plugin-node-resolve": "^16.0.0",
+        "@rollup/plugin-replace": "^6.0.2",
         "@rollup/plugin-typescript": "^12.1.1",
         "@types/node": "^22.10.1",
         "@types/ws": "^8.5.13",
@@ -48,9 +49,9 @@
         "rollup": "^4.27.4",
         "rollup-plugin-copy": "^3.5.0",
         "rollup-plugin-esbuild": "^6.1.1",
-        "@rollup/plugin-replace": "^6.0.2",
         "solid-js": "^1.9.3",
         "solid-motionone": "^1.0.3",
+        "tsx": "^4.19.2",
         "typescript": "^5.7.2"
     },
     "dependencies": {
@@ -58,7 +59,6 @@
         "electron-context-menu": "^4.0.4",
         "electron-is-dev": "^3.0.1",
         "electron-updater": "^6.3.9",
-        "tsx": "^4.19.2",
         "ws": "^8.18.0"
     },
     "optionalDependencies": {
