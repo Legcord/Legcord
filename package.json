@@ -39,7 +39,7 @@
         "@rollup/plugin-replace": "^6.0.2",
         "@rollup/plugin-typescript": "^12.1.1",
         "@types/node": "^22.10.1",
-        "@types/ws": "^8.5.13",
+        "@types/ws": "^8.5.14",
         "@uwu/lune": "^1.5.1",
         "@uwu/shelter-defs": "^1.4.1",
         "babel-preset-solid": "^1.9.3",

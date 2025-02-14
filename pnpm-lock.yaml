@@ -10,7 +10,7 @@ importers:
     dependencies:
       arrpc:
         specifier: https://github.com/Legcord/arrpc.git
-        version: https://codeload.github.com/Legcord/arrpc/tar.gz/acfb7e8b61c442e089c522653f8fdcb1c3989eb0
+        version: git+https://git@github.com:Legcord/arrpc.git#acfb7e8b61c442e089c522653f8fdcb1c3989eb0
       electron-context-menu:
         specifier: ^4.0.4
         version: 4.0.4
@@ -56,8 +56,8 @@ importers:
         specifier: ^22.10.1
         version: 22.10.1
       '@types/ws':
-        specifier: ^8.5.13
-        version: 8.5.13
+        specifier: ^8.5.14
+        version: 8.5.14
       '@uwu/lune':
         specifier: ^1.5.1
         version: 1.5.1
@@ -1223,8 +1223,8 @@ packages:
   '@types/verror@1.10.10':
     resolution: {integrity: sha512-l4MM0Jppn18hb9xmM6wwD1uTdShpf9Pn80aXTStnK1C94gtPvJcV2FrDmbOQUAQfJ1cKZHktkQUDwEqaAKXMMg==}
 
-  '@types/ws@8.5.13':
-    resolution: {integrity: sha512-osM/gWBTPKgHV8XkTunnegTRIsvF6owmf5w+JtAfOw472dptdm0dlGv4xCt6GwQRcC2XVOvvRE/0bAoQcL2QkA==}
+  '@types/ws@8.5.14':
+    resolution: {integrity: sha512-bd/YFLW+URhBzMXurx7lWByOu+xzU9+kb3RboOteXYDfW+tr+JZa99OyNmPINEGB/ahzKrEuc8rcv4gnpJmxTw==}
 
   '@types/yauzl@2.10.3':
     resolution: {integrity: sha512-oJoftv0LSuaDZE3Le4DbKX+KS9G36NzOeSap90UIK0yMA/NhKJhqlSGtNDORNRaIbQfzjXDrQa0ytJ6mNRGz/Q==}
@@ -1329,8 +1329,8 @@ packages:
     resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
     engines: {node: '>=8'}
 
-  arrpc@https://codeload.github.com/Legcord/arrpc/tar.gz/acfb7e8b61c442e089c522653f8fdcb1c3989eb0:
-    resolution: {tarball: https://codeload.github.com/Legcord/arrpc/tar.gz/acfb7e8b61c442e089c522653f8fdcb1c3989eb0}
+  arrpc@git+https://git@github.com:Legcord/arrpc.git#acfb7e8b61c442e089c522653f8fdcb1c3989eb0:
+    resolution: {commit: acfb7e8b61c442e089c522653f8fdcb1c3989eb0, repo: git@github.com:Legcord/arrpc.git, type: git}
     version: 3.5.0
     hasBin: true
 
@@ -3987,7 +3987,7 @@ snapshots:
   '@types/verror@1.10.10':
     optional: true
 
-  '@types/ws@8.5.13':
+  '@types/ws@8.5.14':
     dependencies:
       '@types/node': 22.10.1
 
@@ -4168,7 +4168,7 @@ snapshots:
 
   array-union@2.1.0: {}
 
-  arrpc@https://codeload.github.com/Legcord/arrpc/tar.gz/acfb7e8b61c442e089c522653f8fdcb1c3989eb0:
+  arrpc@git+https://git@github.com:Legcord/arrpc.git#acfb7e8b61c442e089c522653f8fdcb1c3989eb0:
     dependencies:
       ws: 8.18.0
     transitivePeerDependencies:
