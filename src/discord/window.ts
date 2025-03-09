@@ -357,7 +357,7 @@ export function createWindow() {
                 height: 30,
             };
             browserWindowOptions.trafficLightPosition = {
-                x: 13,
+                x: 10,
                 y: 10,
             };
             break;
