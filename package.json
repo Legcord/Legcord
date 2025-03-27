@@ -48,7 +48,7 @@
         "babel-preset-solid": "^1.9.3",
         "electron": "35.1.1",
         "electron-builder": "^26.0.11",
-        "lucide-solid": "^0.475.0",
+        "lucide-solid": "^0.484.0",
         "rolldown": "1.0.0-beta.7",
         "rollup": "^4.27.4",
         "rollup-plugin-copy": "^3.5.0",
