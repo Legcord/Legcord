@@ -1,8 +1,61 @@
-import { app, powerMonitor } from "electron";
+import { powerMonitor } from "electron";
 import { getConfig } from "./config.js";
 
-export let transparency: boolean;
-export function injectElectronFlags(): void {
+interface Preset {
+    switches: [string, string?][];
+    enableFeatures: string[];
+    disableFeatures: string[];
+}
+
+const performance: Preset = {
+    switches: [
+        ["enable-gpu-rasterization"],
+        ["enable-zero-copy"],
+        ["ignore-gpu-blocklist"],
+        ["enable-hardware-overlays", "single-fullscreen,single-on-top,underlay"],
+        ["force_high_performance_gpu"],
+    ],
+    enableFeatures: [
+        "EnableDrDc",
+        "CanvasOopRasterization",
+        "BackForwardCache:TimeToLiveInBackForwardCacheInSeconds/300/should_ignore_blocklists/true/enable_same_site/true",
+        "ThrottleDisplayNoneAndVisibilityHiddenCrossOriginIframes",
+        "UseSkiaRenderer",
+        "WebAssemblyLazyCompilation",
+    ],
+    disableFeatures: ["Vulkan"],
+};
+
+const battery: Preset = {
+    // Known to have better battery life for Chromium?
+    switches: [
+        ["force_low_power_gpu"],
+        ["enable-low-end-device-mode"],
+        ["enable-low-res-tiling"],
+        ["process-per-site"],
+    ],
+    enableFeatures: ["TurnOffStreamingMediaCachingOnBattery"],
+    disableFeatures: [],
+};
+
+const vaapi: Preset = {
+    switches: [
+        ["ignore-gpu-blocklist"],
+        ["enable-gpu-rasterization"],
+        ["enable-zero-copy"],
+        ["force_high_performance_gpu"],
+        ["use-gl", "desktop"],
+    ],
+    enableFeatures: [
+        "AcceleratedVideoDecodeLinuxGL",
+        "AcceleratedVideoEncoder",
+        "AcceleratedVideoDecoder",
+        "AcceleratedVideoDecodeLinuxZeroCopyGL",
+    ],
+    disableFeatures: ["UseChromeOSDirectVideoDecoder"],
+};
+
+export function getPreset(): Preset | undefined {
     //     MIT License
 
     // Copyright (c) 2022 GooseNest
@@ -24,39 +77,25 @@ export function injectElectronFlags(): void {
     // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     // SOFTWARE.
-    const presets = {
-        performance:
-            "--enable-gpu-rasterization --enable-zero-copy --ignore-gpu-blocklist --enable-hardware-overlays=single-fullscreen,single-on-top,underlay --enable-features=EnableDrDc,CanvasOopRasterization,BackForwardCache:TimeToLiveInBackForwardCacheInSeconds/300/should_ignore_blocklists/true/enable_same_site/true,ThrottleDisplayNoneAndVisibilityHiddenCrossOriginIframes,UseSkiaRenderer,WebAssemblyLazyCompilation --disable-features=Vulkan --force_high_performance_gpu", // Performance
-        battery:
-            "--enable-features=TurnOffStreamingMediaCachingOnBattery --force_low_power_gpu --enable-low-end-device-mode --enable-low-res-tiling --process-per-site", // Known to have better battery life for Chromium?
-        vaapi: "--ignore-gpu-blocklist --enable-features=AcceleratedVideoDecodeLinuxGL,AcceleratedVideoEncoder,AcceleratedVideoDecoder,AcceleratedVideoDecodeLinuxZeroCopyGL --enable-gpu-rasterization --enable-zero-copy --force_high_performance_gpu --use-gl=desktop --disable-features=UseChromeOSDirectVideoDecoder",
-    };
     switch (getConfig("performanceMode")) {
         case "dynamic":
             if (powerMonitor.isOnBatteryPower()) {
                 console.log("Battery mode enabled");
-                app.commandLine.appendArgument(presets.battery);
+                return battery;
             } else {
                 console.log("Performance mode enabled");
-                app.commandLine.appendArgument(presets.performance);
+                return performance;
             }
-            break;
         case "performance":
             console.log("Performance mode enabled");
-            app.commandLine.appendArgument(presets.performance);
-            break;
+            return performance;
         case "battery":
             console.log("Battery mode enabled");
-            app.commandLine.appendArgument(presets.battery);
-            break;
+            return battery;
         case "vaapi":
             console.log("VAAPI mode enabled");
-            app.commandLine.appendArgument(presets.vaapi);
-            break;
+            return vaapi;
         default:
             console.log("No performance modes set");
-    }
-    if (getConfig("windowStyle") === "transparent" && process.platform === "win32") {
-        transparency = true;
     }
 }

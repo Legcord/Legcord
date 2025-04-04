@@ -14,7 +14,7 @@ import {
     setConfig,
 } from "./common/config.js";
 import "./updater.js";
-import { injectElectronFlags } from "./common/flags.js";
+import { getPreset } from "./common/flags.js";
 import { setLang } from "./common/lang.js";
 import { fetchMods } from "./discord/extensions/modloader.js";
 import { createWindow } from "./discord/window.js";
@@ -61,24 +61,36 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     app.quit();
 } else {
     app.setAppUserModelId("app.legcord.Legcord");
+
+    const enableFeatures = new Set(app.commandLine.getSwitchValue("enable-features").split(","));
+    const disableFeatures = new Set(app.commandLine.getSwitchValue("disable-features").split(","));
+    const enableBlinkFeatures = new Set(app.commandLine.getSwitchValue("enable-blink-features").split(","));
+    const disableBlinkFeatures = new Set(app.commandLine.getSwitchValue("disable-blink-features").split(","));
+    // unneeded as the last switch is the applied one, however cleans up the commandline
+    app.commandLine.removeSwitch("enable-features");
+    app.commandLine.removeSwitch("disable-features");
+    app.commandLine.removeSwitch("enable-blink-features");
+    app.commandLine.removeSwitch("disable-blink-features");
+
     // WinRetrieveSuggestionsOnlyOnDemand: Work around electron 13 bug w/ async spellchecking on Windows.
     // HardwareMediaKeyHandling,MediaSessionService: Prevent Discord from registering as a media service.
-    app.commandLine.appendSwitch(
-        "disable-features",
-        "WidgetLayering,WinRetrieveSuggestionsOnlyOnDemand,HardwareMediaKeyHandling,MediaSessionService",
-    ); // fix dev tools layers
+    disableFeatures
+        .add("WidgetLayering")
+        .add("WinRetrieveSuggestionsOnlyOnDemand")
+        .add("HardwareMediaKeyHandling")
+        .add("MediaSessionService");
     // Your data now belongs to CCP
     crashReporter.start({ uploadToServer: false });
     // enable pulseaudio audio sharing on linux
     if (process.platform === "linux") {
-        app.commandLine.appendSwitch("enable-features", "PulseaudioLoopbackForScreenShare");
-        app.commandLine.appendSwitch("disable-features", "WebRtcAllowInputVolumeAdjustment");
+        enableFeatures.add("PulseaudioLoopbackForScreenShare");
+        disableFeatures.add("WebRtcAllowInputVolumeAdjustment");
         app.commandLine.appendSwitch("enable-speech-dispatcher");
     }
     // enable webrtc capturer for wayland
     if (process.platform === "linux" && process.env.XDG_SESSION_TYPE?.toLowerCase() === "wayland") {
-        app.commandLine.appendSwitch("disable-features", "UseMultiPlaneFormatForSoftwareVideo");
-        app.commandLine.appendSwitch("enable-features", "WebRTCPipeWireCapturer");
+        enableFeatures.add("WebRTCPipeWireCapturer");
+        disableFeatures.add("UseMultiPlaneFormatForSoftwareVideo");
         console.log("Wayland detected, using PipeWire for video capture.");
     }
     if (process.platform === "darwin") {
@@ -90,7 +102,12 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
 
     app.commandLine.appendSwitch("enable-transparent-visuals");
     checkIfConfigIsBroken();
-    injectElectronFlags();
+    const preset = getPreset();
+    if (preset) {
+        preset.switches.forEach(([key, val]) => app.commandLine.appendSwitch(key, val));
+        preset.enableFeatures.forEach((val) => enableFeatures.add(val));
+        preset.disableFeatures.forEach((val) => disableFeatures.add(val));
+    }
     await fetchMods();
     void import("./discord/extensions/plugin.js"); // load chrome extensions
     console.log(`[Config Manager] Current config: ${readFileSync(getConfigLocation(), "utf-8")}`);
@@ -126,11 +143,43 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
             setConfig("tray", "disabled");
         }
     }
-    if (getConfig("additionalArguments") !== undefined)
-        app.commandLine.appendArgument(getConfig("additionalArguments"));
+    if (getConfig("additionalArguments") !== undefined) {
+        for (const arg of getConfig("additionalArguments").split(" ")) {
+            if (arg.startsWith("--")) {
+                const [key, val] = arg.substring(2).split("=", 1) as [string, string?];
+                if (val === undefined) {
+                    app.commandLine.appendSwitch(key);
+                } else {
+                    if (key === "enable-features") {
+                        val.split(",").forEach((flag) => enableFeatures.add(flag));
+                    } else if (key === "disable-features") {
+                        val.split(",").forEach((flag) => disableFeatures.add(flag));
+                    } else if (key === "enable-blink-features") {
+                        val.split(",").forEach((flag) => enableBlinkFeatures.add(flag));
+                    } else if (key === "disable-blink-features") {
+                        val.split(",").forEach((flag) => disableBlinkFeatures.add(flag));
+                    } else {
+                        app.commandLine.appendSwitch(key, val);
+                    }
+                }
+            }
+        }
+    }
     if (getConfig("smoothScroll") === false) app.commandLine.appendSwitch("disable-smooth-scrolling");
-    if (getConfig("autoScroll")) app.commandLine.appendSwitch("enable-blink-features", "MiddleClickAutoscroll");
+    if (getConfig("autoScroll")) enableBlinkFeatures.add("MiddleClickAutoscroll");
     if (getConfig("disableHttpCache")) app.commandLine.appendSwitch("disable-http-cache");
+
+    enableFeatures.delete("");
+    disableFeatures.delete("");
+    enableBlinkFeatures.delete("");
+    disableBlinkFeatures.delete("");
+    if (enableFeatures.size > 0) app.commandLine.appendSwitch("enable-features", Array.from(enableFeatures).join(","));
+    if (disableFeatures.size > 0)
+        app.commandLine.appendSwitch("disable-features", Array.from(disableFeatures).join(","));
+    if (enableBlinkFeatures.size > 0)
+        app.commandLine.appendSwitch("enable-blink-features", Array.from(enableBlinkFeatures).join(","));
+    if (disableBlinkFeatures.size > 0)
+        app.commandLine.appendSwitch("disable-blink-features", Array.from(disableBlinkFeatures).join(","));
 
     void app.whenReady().then(async () => {
         process.on("SIGINT", () => app.quit());
