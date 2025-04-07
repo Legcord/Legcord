@@ -132,6 +132,10 @@ Legcord is also available in [Pi-Apps](https://github.com/Botspot/pi-apps).
 
 - We utilize the official web app and package it within Electron. While this approach may seem familiar, our focus is on delivering a truly customized and enhanced experience. Unlike many others, we provide seamless integration for loading themes and mods without the need for installers or injectors. You can easily enable transparency effects and adopt Windows' Fluent Design, offering a modern and sleek interface. Though it's fundamentally a web wrapper, we have implemented numerous optimizations and patches to ensure a smooth and tailored experience for you.
 
+## Does Legcord have a portable mode for windows?
+
+- Yes it does! Simply add a folder called "legcord-data" in the folder where your legcord executable is located and start Legcord. Make sure to download the archive/zip file.
+
 ## Where can I find the source code?
 
 - The source code is on [GitHub](https://github.com/Legcord/Legcord/).
