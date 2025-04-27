@@ -58,7 +58,11 @@ Not available yet.
 
 ### Debian, Ubuntu and Raspbian repository
 
-Not available yet.
+legcord-deb is available on [pacstall](https://pacstall.dev/packages/legcord-deb)
+```sh
+sudo bash -c "$(wget -q https://pacstall.dev/q/install -O -)" # Install pacstall if not installed
+pacstall -I legcord-deb
+```
 
 ### Snap package
 
