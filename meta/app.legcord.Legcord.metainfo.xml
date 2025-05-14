@@ -1,84 +1,165 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <component type="desktop-application">
+  <!--Created with jdAppStreamEdit 9.2-->
   <id>app.legcord.Legcord</id>
-  
   <name>Legcord</name>
   <summary>Legcord is a custom client designed to enhance your Discord experience while keeping everything lightweight.</summary>
-  
-  <metadata_license>MIT</metadata_license>
+  <developer>
+    <name>Legcord Contributors</name>
+  </developer>
+  <metadata_license>CC0-1.0</metadata_license>
   <project_license>OSL-3.0</project_license>
-  
+  <project_group>Legcord</project_group>
   <description>
-    <p>
-      # Features
-    </p>
-    <p>
-      - <em>
-    </em>Standalone client<em>
-  </em>
-</p>
-<p>
-  Legcord is built as a standalone client and doesn&apos;t rely on the original Discord client in any way.
-</p>
-<p>
-  - <em>
-</em>Various mods built-in<em>
-</em>
-</p>
-<p>
-  Enjoy [Vencord](https://github.com/Vendicated/Vencord), [Equicord](https://github.com/Equicord/Equicord), [Shelter](https://github.com/uwu/shelter) and their many features, or have a more vanilla experience, it&apos;s your choice!
-</p>
-<p>
-  - <em>
-</em>Themes<em>
-</em>
-</p>
-<p>
-  Legcord natively supports theming of the entire app, you can easily import BetterDiscord themes and manage them
-</p>
-<p>
-  - <em>
-</em>Made for Privacy™<em>
-</em>
-</p>
-<p>
-  Legcord automatically blocks all of Discord&apos;s trackers; even without any client mods, you can feel safe and secure!
-</p>
-<p>
-  - <em>
-</em>Supports Rich Presence<em>
-</em>
-</p>
-<p>
-  Unlike other clients, Legcord supports rich presence (game activity) out of the box thanks to [arRPC](https://arrpc.openasar.dev).
-</p>
-<p>
-  - <em>
-</em>Mobile support<em>
-</em>
-</p>
-<p>
-  Legcord has <em>
-</em>experimental<em>
-</em> mobile support for phones running Linux such as the PinePhone. While this is still far from an ideal solution, we&apos;re slowly trying to improve it.
-</p>
-<p>
-  - <em>
-</em>Much more stable<em>
-</em>
-</p>
-<p>
-  Legcord is using a newer build of Electron than the stock Discord app. This means you can have a much more stable and secure experience, along with slightly better performance.
-</p>
-<p>
-  - <em>
-</em>Cross-platform support!<em>
-</em>
-</p>
-<p>
-  Legcord was originally created for AArch64 Linux devices since Discord doesn&apos;t support them. We soon decided to support every platform that [Electron supports](https://github.com/electron/electron#platform-support)!
-</p>
-</description>
-
-<launchable type="desktop-id">legcord.desktop</launchable>
+    <p>Legcord is a custom client designed to enhance your Discord experience while keeping everything lightweight.</p>
+    <p>Legcord comes bundled with Shelter, Vencord, Equicord and Venmic.</p>
+  </description>
+  <screenshots>
+    <screenshot type="default">
+      <caption>Legcord settings page on MacOS</caption>
+      <image type="source">https://github.com/Legcord/Legcord/blob/77e2ccafb221936a99654c237cb385d486780bc7/assets/screenshots/settings.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Legcord settings open with Shelter configs</caption>
+      <image type="source">https://github.com/Legcord/Legcord/blob/77e2ccafb221936a99654c237cb385d486780bc7/assets/screenshots/shelter.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Legcord settings open with custom keybind settings shown</caption>
+      <image type="source">https://github.com/Legcord/Legcord/blob/77e2ccafb221936a99654c237cb385d486780bc7/assets/screenshots/keybinds.png</image>
+    </screenshot>
+  </screenshots>
+  <releases>
+    <release version="v1.1.3" date="2025-05-04" type="stable">
+      <url>https://github.com/Legcord/Legcord/releases/tag/v1.1.3</url>
+      <description>
+        <p>Improvements &amp; Fixes</p>
+        <ul>
+          <li>🔧 **Fixed the app showing a blank screen on some platforms**.</li>
+        </ul>
+        <p>Special Thanks ❤️</p>
+      </description>
+    </release>
+    <release version="v1.1.2" date="2025-05-04" type="stable">
+      <url>https://github.com/Legcord/Legcord/releases/tag/v1.1.2</url>
+      <description>
+        <p>Improvements &amp; Fixes</p>
+        <ul>
+          <li>🌈 **Full Discord rebrand support - proper styling of custom/overlay titlebars**</li>
+          <li>🚀 **Improved how Blink feature flags are set — now done only once for better reliability.**.</li>
+        </ul>
+        <p>New Contributors 👋</p>
+        <p>Special Thanks ❤️</p>
+      </description>
+    </release>
+    <release version="v1.1.1" date="2025-03-16" type="stable">
+      <url>https://github.com/Legcord/Legcord/releases/tag/v1.1.1</url>
+      <description>
+        <p>Improvements &amp; Fixes</p>
+        <ul>
+          <li>🛠️ **arRPC now runs in a separate process**, resolving #808</li>
+          <li>🌈 **Added modern macOS transparency support**.</li>
+          <li>🚀 **Upgraded Electron**, fixing #839</li>
+          <li>📦 Moved <code>tsx</code> to <code>devDependencies</code> #835</li>
+          <li>🎛️ Fixed traffic lights not being centered in "overlay" mode #860</li>
+          <li>📖 Added MacPorts installation instructions to the README #834</li>
+        </ul>
+        <p>New Contributors 👋</p>
+        <ul>
+          <li>@akierig - #834</li>
+          <li>@fabricionaweb - #835</li>
+          <li>@nihaals - #860</li>
+        </ul>
+        <p>Special Thanks ❤️</p>
+      </description>
+    </release>
+    <release version="v1.1.0" date="2025-01-13" type="stable">
+      <url>https://github.com/Legcord/Legcord/releases/tag/v1.1.0</url>
+      <description>
+        <ul>
+          <li>**Theme Manager v2:**  </li>
+          <li>**Screenshare v3 (rewrite of the rewrite):**  </li>
+          <li>**macOS Touch Bar integration:**  </li>
+          <li>**New built-in Quick CSS Editor**</li>
+          <li>**New first-time setup by @FlintSH**  </li>
+          <li>**New power management features**  </li>
+          <li>**New settings:**</li>
+          <li>**Rewritten preload to be sandboxed**</li>
+        </ul>
+      </description>
+    </release>
+    <release version="v1.0.8" date="2025-01-21" type="stable">
+      <url>https://github.com/Legcord/Legcord/releases/tag/v1.0.8</url>
+      <description/>
+    </release>
+    <release version="v1.0.7" date="2025-01-20" type="stable">
+      <url>https://github.com/Legcord/Legcord/releases/tag/v1.0.7</url>
+      <description/>
+    </release>
+    <release version="v1.0.6" date="2024-12-30" type="stable">
+      <url>https://github.com/Legcord/Legcord/releases/tag/v1.0.6</url>
+      <description/>
+    </release>
+    <release version="v1.0.5" date="2024-11-26" type="stable">
+      <url>https://github.com/Legcord/Legcord/releases/tag/v1.0.5</url>
+      <description/>
+    </release>
+    <release version="v1.0.4" date="2024-11-15" type="stable">
+      <url>https://github.com/Legcord/Legcord/releases/tag/v1.0.4</url>
+      <description/>
+    </release>
+    <release version="v1.0.3" date="2024-11-12" type="stable">
+      <url>https://github.com/Legcord/Legcord/releases/tag/v1.0.3</url>
+      <description/>
+    </release>
+    <release version="v1.0.2" date="2024-11-19" type="stable">
+      <url>https://github.com/Legcord/Legcord/releases/tag/v1.0.2</url>
+      <description/>
+    </release>
+    <release version="devbuild" date="2024-10-12" type="development">
+      <url>https://github.com/Legcord/Legcord/releases/tag/devbuild</url>
+      <description/>
+    </release>
+    <release version="v1.0.0" date="2024-10-11" type="stable">
+      <url>https://github.com/Legcord/Legcord/releases/tag/v1.0.0</url>
+      <description/>
+    </release>
+  </releases>
+  <url type="homepage">https://legcord.app</url>
+  <url type="bugtracker">https://github.com/Legcord/Legcord/issues</url>
+  <url type="faq">https://legcord.app/faq</url>
+  <url type="donation">https://github.com/sponsors/smartfrigde</url>
+  <url type="contact">https://discord.com/invite/TnhxcqynZ2</url>
+  <url type="vcs-browser">https://github.com/Legcord/Legcord</url>
+  <categories>
+    <category>InstantMessaging</category>
+    <category>Network</category>
+  </categories>
+  <requires>
+    <control>pointing</control>
+    <control>keyboard</control>
+    <display_length compare="ge">420</display_length>
+    <internet>always</internet>
+  </requires>
+  <recommends>
+    <control>voice</control>
+    <display_length compare="ge">760</display_length>
+    <display_length compare="le">1200</display_length>
+  </recommends>
+  <content_rating type="oars-1.1">
+    <content_attribute id="money-advertising">moderate</content_attribute>
+    <content_attribute id="money-purchasing">mild</content_attribute>
+    <content_attribute id="social-chat">intense</content_attribute>
+    <content_attribute id="social-audio">intense</content_attribute>
+    <content_attribute id="social-contacts">intense</content_attribute>
+    <content_attribute id="social-info">intense</content_attribute>
+  </content_rating>
+  <launchable type="desktop-id">app.legcord.Legcord.desktop</launchable>
+  <keywords>
+    <keyword>Discord</keyword>
+    <keyword>Vencord</keyword>
+    <keyword>Privacy</keyword>
+    <keyword>Mod</keyword>
+    <keyword>Legcord</keyword>
+    <keyword>Equicord</keyword>
+  </keywords>
 </component>
