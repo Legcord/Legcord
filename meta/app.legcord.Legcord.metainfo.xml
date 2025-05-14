@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>app.legcord.Legcord</id>
+  
+  <name>Legcord</name>
+  <summary>Legcord is a custom client designed to enhance your Discord experience while keeping everything lightweight.</summary>
+  
+  <metadata_license>MIT</metadata_license>
+  <project_license>OSL-3.0</project_license>
+  
+  <description>
+    <p>
+      # Features
+    </p>
+    <p>
+      - <em>
+    </em>Standalone client<em>
+  </em>
+</p>
+<p>
+  Legcord is built as a standalone client and doesn&apos;t rely on the original Discord client in any way.
+</p>
+<p>
+  - <em>
+</em>Various mods built-in<em>
+</em>
+</p>
+<p>
+  Enjoy [Vencord](https://github.com/Vendicated/Vencord), [Equicord](https://github.com/Equicord/Equicord), [Shelter](https://github.com/uwu/shelter) and their many features, or have a more vanilla experience, it&apos;s your choice!
+</p>
+<p>
+  - <em>
+</em>Themes<em>
+</em>
+</p>
+<p>
+  Legcord natively supports theming of the entire app, you can easily import BetterDiscord themes and manage them
+</p>
+<p>
+  - <em>
+</em>Made for Privacy™<em>
+</em>
+</p>
+<p>
+  Legcord automatically blocks all of Discord&apos;s trackers; even without any client mods, you can feel safe and secure!
+</p>
+<p>
+  - <em>
+</em>Supports Rich Presence<em>
+</em>
+</p>
+<p>
+  Unlike other clients, Legcord supports rich presence (game activity) out of the box thanks to [arRPC](https://arrpc.openasar.dev).
+</p>
+<p>
+  - <em>
+</em>Mobile support<em>
+</em>
+</p>
+<p>
+  Legcord has <em>
+</em>experimental<em>
+</em> mobile support for phones running Linux such as the PinePhone. While this is still far from an ideal solution, we&apos;re slowly trying to improve it.
+</p>
+<p>
+  - <em>
+</em>Much more stable<em>
+</em>
+</p>
+<p>
+  Legcord is using a newer build of Electron than the stock Discord app. This means you can have a much more stable and secure experience, along with slightly better performance.
+</p>
+<p>
+  - <em>
+</em>Cross-platform support!<em>
+</em>
+</p>
+<p>
+  Legcord was originally created for AArch64 Linux devices since Discord doesn&apos;t support them. We soon decided to support every platform that [Electron supports](https://github.com/electron/electron#platform-support)!
+</p>
+</description>
+
+<launchable type="desktop-id">legcord.desktop</launchable>
+</component>

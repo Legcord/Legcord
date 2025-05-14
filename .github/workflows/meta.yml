@@ -1,0 +1,47 @@
+name: Update metainfo on release
+
+on:
+    release:
+        types:
+            - published
+    workflow_dispatch:
+
+permissions:
+    contents: write
+
+jobs:
+    update:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  token: ${{ secrets.ETOKEN }}
+
+            - name: Prepare PNPM
+              uses: pnpm/action-setup@v4
+
+            - name: Use Node.js
+              uses: actions/setup-node@v4
+              with:
+                node-version-file: package.json
+                cache: pnpm
+
+            - name: Install dependencies
+              run: pnpm i
+
+            - name: Update metainfo
+              run: pnpm updateMeta
+
+            - name: Commit and merge in changes
+              run: |
+                  git config user.name "github-actions[bot]"
+                  git config user.email "github-actions[bot]@users.noreply.github.com"
+
+                  gh release upload "${{ github.event.release.tag_name }}" meta/app.legcord.Legcord.metainfo.xml
+
+                  git add meta/app.legcord.Legcord.metainfo.xml
+                  git commit -m "metainfo: add entry for ${{ github.event.release.tag_name }}"
+                  git push origin main
+              env:
+                  GITHUB_TOKEN: ${{ secrets.ETOKEN }}

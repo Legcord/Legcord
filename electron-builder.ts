@@ -4,6 +4,7 @@ export const config: Configuration = {
     appId: "app.legcord.Legcord",
     productName: "Legcord",
     artifactName: "Legcord-${version}-${os}-${arch}.${ext}",
+    beforePack: "./scripts/build/sandboxFix.js",
 
     mac: {
         category: "public.app-category.social-networking",
@@ -61,11 +62,6 @@ export const config: Configuration = {
 
     electronDownload: {
         cache: ".cache",
-    },
-
-    flatpak: {
-        baseVersion: "24.08",
-        runtimeVersion: "24.08",
     },
 };
 

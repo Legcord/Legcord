@@ -23,10 +23,6 @@ importers:
       ws:
         specifier: ^8.18.0
         version: 8.18.0
-    optionalDependencies:
-      '@vencord/venmic':
-        specifier: ^6.1.0
-        version: 6.1.0
     devDependencies:
       '@babel/preset-flow':
         specifier: ^7.25.9
@@ -103,6 +99,13 @@ importers:
       typescript:
         specifier: ^5.7.2
         version: 5.7.2
+      xml-formatter:
+        specifier: ^3.6.6
+        version: 3.6.6
+    optionalDependencies:
+      '@vencord/venmic':
+        specifier: ^6.1.0
+        version: 6.1.0
 
 packages:
 
@@ -3141,6 +3144,14 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
+
+  xml-formatter@3.6.6:
+    resolution: {integrity: sha512-yfofQht42x2sN1YThT6Er6GFXiQinfDAsMTNvMPi2uZw5/Vtc2PYHfvALR8U+b2oN2ekBxLd2tGWV06rAM8nQA==}
+    engines: {node: '>= 16'}
+
+  xml-parser-xo@4.1.4:
+    resolution: {integrity: sha512-wo+yWDNeMwd1ctzH4CsiGXaAappDsxuR+VnmPewOzHk/zvefksT2ZlcWpAePl11THOWgnIZM4GjvumevurNWZw==}
+    engines: {node: '>= 16'}
 
   xmlbuilder@15.1.1:
     resolution: {integrity: sha512-yMqGBqtXyeN1e3TGYvgNgDVZ3j84W4cwkOXQswghol6APgZWaff9lnbvN7MHYJOiXsvGPXtjTYJEiC9J2wv9Eg==}
@@ -6382,6 +6393,12 @@ snapshots:
   wrappy@1.0.2: {}
 
   ws@8.18.0: {}
+
+  xml-formatter@3.6.6:
+    dependencies:
+      xml-parser-xo: 4.1.4
+
+  xml-parser-xo@4.1.4: {}
 
   xmlbuilder@15.1.1: {}
 

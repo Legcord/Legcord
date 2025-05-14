@@ -1,0 +1,5 @@
+onlyBuiltDependencies:
+  - '@biomejs/biome'
+  - '@parcel/watcher'
+  - electron
+  - esbuild
