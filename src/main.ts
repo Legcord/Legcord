@@ -12,8 +12,8 @@ import {
     getConfig,
     getConfigLocation,
     setConfig,
-    setup,
     setFirstRun,
+    setup,
 } from "./common/config.js";
 import "./updater.js";
 import { getPreset } from "./common/flags.js";
