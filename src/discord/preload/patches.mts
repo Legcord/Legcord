@@ -65,7 +65,7 @@ async function load() {
     // Settings info version injection
     setInterval(() => {
         const host = document.querySelector('[class*="sidebar"] [class*="info"]');
-        if (!host || host.querySelector("#ac-ver")) {
+        if (!host || host.querySelector("#ac-ver") || !document.title.includes("| User Settings")) {
             return;
         }
         const el = host.firstElementChild!.cloneNode() as HTMLSpanElement;
