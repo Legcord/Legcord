@@ -12,6 +12,8 @@ import {
     getConfig,
     getConfigLocation,
     setConfig,
+    setFirstRun,
+    setup,
 } from "./common/config.js";
 import "./updater.js";
 import { getPreset } from "./common/flags.js";
@@ -21,6 +23,7 @@ import { createWindow } from "./discord/window.js";
 import { createSetupWindow } from "./setup/main.js";
 import { createSplashWindow } from "./splash/main.js";
 export let settings: Settings;
+export let bypassSetup = false;
 checkForDataFolder();
 checkIfConfigExists();
 
@@ -30,6 +33,16 @@ app.on("render-process-gone", (_event, _webContents, details) => {
     }
 });
 function args(): void {
+    // check for bypass-setup flag
+    if (process.argv.includes("--bypass-setup")) {
+        console.log("Bypassing setup and generating default config...");
+        setup(); // default settings
+        setConfig("doneSetup", true);
+        setFirstRun(false);
+        bypassSetup = true;
+        return;
+    }
+
     let argNum = 2;
     if (process.argv[0] === "electron") argNum++;
     const args = process.argv[argNum];
@@ -44,14 +57,15 @@ function args(): void {
     }
 }
 export async function init(): Promise<void> {
-    if (firstRun === true || undefined) {
-        setLang(new Intl.DateTimeFormat().resolvedOptions().locale);
-        await createSetupWindow();
-    } else {
+    // Skip setup if bypass flag was used
+    if (bypassSetup || !(firstRun === true || undefined)) {
         if (getConfig("skipSplash") === false) {
             void createSplashWindow(); // NOTE - Awaiting will hang at start
         }
         createWindow();
+    } else {
+        setLang(new Intl.DateTimeFormat().resolvedOptions().locale);
+        await createSetupWindow();
     }
 }
 args();

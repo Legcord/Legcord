@@ -68,6 +68,12 @@ async function load() {
         if (!host || host.querySelector("#ac-ver")) {
             return;
         }
+
+        const discordVersionInfoPattern = /(stable|ptb|canary) \d+|Electron|Chromium/i;
+        if (!discordVersionInfoPattern.test(host.textContent || "")) {
+            return;
+        }
+
         const el = host.firstElementChild!.cloneNode() as HTMLSpanElement;
         el.id = "ac-ver";
         el.textContent = `Legcord Version: ${version}`;

@@ -179,3 +179,7 @@ export function setup(): void {
         ...defaults,
     });
 }
+
+export function setFirstRun(value: boolean): void {
+    firstRun = value;
+}
