@@ -65,9 +65,15 @@ async function load() {
     // Settings info version injection
     setInterval(() => {
         const host = document.querySelector('[class*="sidebar"] [class*="info"]');
-        if (!host || host.querySelector("#ac-ver") || !document.title.includes("| User Settings")) {
+        if (!host || host.querySelector("#ac-ver")) {
             return;
         }
+
+        const discordVersionInfoPattern = /(stable|ptb|canary) \d+|Electron|Chromium/i;
+        if (!discordVersionInfoPattern.test(host.textContent || "")) {
+            return;
+        }
+
         const el = host.firstElementChild!.cloneNode() as HTMLSpanElement;
         el.id = "ac-ver";
         el.textContent = `Legcord Version: ${version}`;
