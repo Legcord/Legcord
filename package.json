@@ -33,7 +33,7 @@
     },
     "homepage": "https://github.com/Legcord/Legcord#readme",
     "devDependencies": {
-        "@babel/preset-flow": "^7.25.9",
+        "@babel/preset-flow": "^7.27.1",
         "@biomejs/biome": "1.9.4",
         "@rollup/plugin-babel": "^6.0.4",
         "@rollup/plugin-commonjs": "^28.0.1",
