@@ -18,8 +18,8 @@ const hook = async () => {
         return;
     }
     const AppImageTarget = import("app-builder-lib/out/targets/AppImageTarget.js");
-    const oldBuildMethod = AppImageTarget.default.prototype.build;
-    AppImageTarget.default.prototype.build = async function (...args) {
+    const oldBuildMethod = (await AppImageTarget).default
+    AppImageTarget.default = async function (...args) {
         console.log("Running AppImage builder hook", args);
         const oldPath = args[0];
         const newPath = `${oldPath}-appimage-sandbox-fix`;

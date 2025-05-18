@@ -1,5 +1,6 @@
 onlyBuiltDependencies:
   - '@biomejs/biome'
   - '@parcel/watcher'
+  - '@vencord/venmic'
   - electron
   - esbuild
