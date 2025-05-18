@@ -49,7 +49,7 @@
         "electron": "36.2.1",
         "electron-builder": "^26.0.12",
         "lucide-solid": "^0.475.0",
-        "rolldown": "1.0.0-beta.7",
+        "rolldown": "1.0.0-beta.8",
         "rollup": "^4.27.4",
         "rollup-plugin-copy": "^3.5.0",
         "rollup-plugin-esbuild": "^6.1.1",
