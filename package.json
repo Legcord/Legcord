@@ -45,7 +45,7 @@
         "@types/ws": "^8.5.13",
         "@uwu/lune": "^1.5.1",
         "@uwu/shelter-defs": "^1.4.1",
-        "babel-preset-solid": "^1.9.3",
+        "babel-preset-solid": "^1.9.6",
         "electron": "36.2.1",
         "electron-builder": "^26.0.12",
         "lucide-solid": "^0.475.0",
