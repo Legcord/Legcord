@@ -6,8 +6,8 @@
 
 // Based on https://github.com/gergof/electron-builder-sandbox-fix/blob/master/lib/index.js
 
-import { chmod, cp, rename, rm, writeFile } from "node:fs/promises";
-import { join } from "node:path";
+const fs = require("node:fs/promises");
+const path = require("node:path");
 let isApplied = false;
 
 const hook = async () => {
@@ -17,27 +17,26 @@ const hook = async () => {
         // this fix is only required on linux
         return;
     }
-    const AppImageTarget = import("app-builder-lib/out/targets/AppImageTarget.js");
-    const AppImageTargetClass = (await AppImageTarget).default;
-    const oldBuildMethod = AppImageTargetClass.prototype.build;
-    AppImageTargetClass.prototype.build = async function (...args) {
+    const AppImageTarget = require("app-builder-lib/out/targets/AppImageTarget.js");
+    const oldBuildMethod = AppImageTarget.default.prototype.build;
+    AppImageTarget.default.prototype.build = async function (...args) {
         console.log("Running AppImage builder hook", args);
         const oldPath = args[0];
         const newPath = `${oldPath}-appimage-sandbox-fix`;
         // just in case
         try {
-            await rm(newPath, {
+            await fs.rm(newPath, {
                 recursive: true,
             });
         } catch {}
 
         console.log("Copying to apply appimage fix", oldPath, newPath);
-        await cp(oldPath, newPath, {
+        await fs.cp(oldPath, newPath, {
             recursive: true,
         });
         args[0] = newPath;
 
-        const executable = join(newPath, this.packager.executableName);
+        const executable = path.join(newPath, this.packager.executableName);
 
         const loaderScript = `
 #!/usr/bin/env bash
@@ -54,9 +53,9 @@ exec "$SCRIPT_DIR/${this.packager.executableName}.bin" "$([ "$IS_STEAMOS" == 1 ]
                 `.trim();
 
         try {
-            await rename(executable, `${executable}.bin`);
-            await writeFile(executable, loaderScript);
-            await chmod(executable, 0o755);
+            await fs.rename(executable, `${executable}.bin`);
+            await fs.writeFile(executable, loaderScript);
+            await fs.chmod(executable, 0o755);
         } catch (e) {
             console.error(`failed to create loder for sandbox fix: ${e.message}`);
             throw new Error("Failed to create loader for sandbox fix");
@@ -64,7 +63,7 @@ exec "$SCRIPT_DIR/${this.packager.executableName}.bin" "$([ "$IS_STEAMOS" == 1 ]
 
         const ret = await oldBuildMethod.apply(this, args);
 
-        await rm(newPath, {
+        await fs.rm(newPath, {
             recursive: true,
         });
 
@@ -72,4 +71,4 @@ exec "$SCRIPT_DIR/${this.packager.executableName}.bin" "$([ "$IS_STEAMOS" == 1 ]
     };
 };
 
-export default hook;
+module.exports = hook;

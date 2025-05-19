@@ -4,7 +4,7 @@ export const config: Configuration = {
     appId: "app.legcord.Legcord",
     productName: "Legcord",
     artifactName: "Legcord-${version}-${os}-${arch}.${ext}",
-    beforePack: "./scripts/build/sandboxFix.js",
+    beforePack: "./scripts/build/sandboxFix.cjs",
 
     mac: {
         category: "public.app-category.social-networking",
