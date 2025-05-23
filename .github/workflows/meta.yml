@@ -12,6 +12,8 @@ permissions:
 jobs:
     update:
         runs-on: ubuntu-latest
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
         steps:
             - uses: actions/checkout@v4
@@ -20,7 +22,8 @@ jobs:
             - name: Use Node.js 22
               uses: actions/setup-node@v4
               with:
-                  node-version: 22
+                  node-version-file: package.json
+                  cache: pnpm
 
             - name: Install dependencies
               run: pnpm i
