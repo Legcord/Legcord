@@ -15,17 +15,12 @@ jobs:
 
         steps:
             - uses: actions/checkout@v4
-              with:
-                  token: ${{ secrets.ETOKEN }}
+            - uses: pnpm/action-setup@v4 # Install pnpm using packageManager key in package.json
 
-            - name: Prepare PNPM
-              uses: pnpm/action-setup@v4
-
-            - name: Use Node.js
+            - name: Use Node.js 22
               uses: actions/setup-node@v4
               with:
-                node-version-file: package.json
-                cache: pnpm
+                  node-version: 22
 
             - name: Install dependencies
               run: pnpm i
@@ -36,12 +31,12 @@ jobs:
             - name: Commit and merge in changes
               run: |
                   git config user.name "github-actions[bot]"
-                  git config user.email "github-actions[bot]@users.noreply.github.com"
+                  git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
                   gh release upload "${{ github.event.release.tag_name }}" meta/app.legcord.Legcord.metainfo.xml
 
                   git add meta/app.legcord.Legcord.metainfo.xml
                   git commit -m "metainfo: add entry for ${{ github.event.release.tag_name }}"
-                  git push origin main
+                  git push
               env:
-                  GITHUB_TOKEN: ${{ secrets.ETOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
