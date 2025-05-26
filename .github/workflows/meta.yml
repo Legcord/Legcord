@@ -40,6 +40,6 @@ jobs:
 
                   git add meta/app.legcord.Legcord.metainfo.xml
                   git commit -m "metainfo: add entry for ${{ github.event.release.tag_name }}"
-                  git push
+                  git push origin HEAD:dev
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
