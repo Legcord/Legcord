@@ -91,6 +91,16 @@ export default defineConfig([
         external: electronExternals,
     },
     {
+        input: "src/proxy/preload.mts",
+        output: {
+            dir: "ts-out/proxy",
+            format: "esm",
+            entryFileNames: "[name].mjs",
+            sourcemap: true,
+        },
+        external: electronExternals,
+    },
+    {
         input: "src/setup/setup.tsx",
         output: {
             dir: "ts-out/html",

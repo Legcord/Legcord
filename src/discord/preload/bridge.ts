@@ -34,6 +34,7 @@ contextBridge.exposeInMainWorld("legcord", {
         openCustomIconDialog: () => ipcRenderer.send("openCustomIconDialog"),
         copyDebugInfo: () => ipcRenderer.send("copyDebugInfo"),
         copyGPUInfo: () => ipcRenderer.send("copyGPUInfo"),
+        openProxyModal: () => ipcRenderer.send("openProxyModal"),
     },
     touchbar: {
         setVoiceTouchbar: (state: boolean) => ipcRenderer.send("setVoiceTouchbar", state),

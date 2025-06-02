@@ -24,6 +24,7 @@ import { registerCustomHandler } from "./screenshare.js";
 import { mainTouchBar } from "./touchbar.js";
 import { createTray, tray } from "./tray.js";
 import { registerVenmicIpc } from "./venmic.js";
+import { setupProxyListener, setupWindowProxy } from "./proxy.js";
 export let mainWindows: BrowserWindow[] = [];
 export let inviteWindow: BrowserWindow;
 
@@ -166,6 +167,8 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     });
 
     passedWindow.webContents.session.setSpellCheckerLanguages(getConfig("spellcheckLanguage"));
+
+    setupWindowProxy(passedWindow);
 
     registerCustomHandler();
 
@@ -341,6 +344,8 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     if (getConfig("skipSplash")) {
         passedWindow.show();
     }
+
+    setupProxyListener(passedWindow);
 }
 
 export function createWindow() {

@@ -16,6 +16,7 @@ import constPaths from "../shared/consts/paths.js";
 import { splashWindow } from "../splash/main.js";
 import { refreshGlobalKeybinds } from "./globalKeybinds.js";
 import { importGuilds, mainTouchBar, setVoiceState, voiceTouchBar } from "./touchbar.js";
+import { createProxyWindow } from "../proxy/main.js";
 
 const userDataPath = app.getPath("userData");
 const storagePath = path.join(userDataPath, "/storage/");
@@ -288,5 +289,8 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     });
     ipcMain.on("getConstPaths", (event) => {
         event.returnValue = constPaths;
+    });
+    ipcMain.on("openProxyModal", () => {
+        createProxyWindow();
     });
 }

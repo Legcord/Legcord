@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Proxy Configuration</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url("../css/proxy.css");
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Proxy Configuration</h1>
+            <p>Enter your proxy URL to configure connection settings</p>
+        </div>
+
+        <div class="form-group">
+            <label for="proxyUrl">Proxy URL</label>
+            <input 
+                type="text" 
+                id="proxyUrl" 
+                class="input" 
+                placeholder="socks5://localhost:1080"
+                value=""
+            >
+            <div id="error" class="error" style="display: none;"></div>
+        </div>
+
+        <div class="info-box">
+            <h3>Supported Formats:</h3>
+            <ul>
+                <li>• socks5://hostname:port</li>
+                <li>• http://hostname:port</li>
+                <li>• https://hostname:port</li>
+            </ul>
+        </div>
+
+        <div class="buttons">
+            <button onclick="handleCancel()" class="button button-secondary">Cancel</button>
+            <button onclick="handleSave()" class="button button-primary">Save & Restart</button>
+        </div>
+    </div>
+
+    <script>
+        const proxyInput = document.getElementById('proxyUrl');
+        const errorDiv = document.getElementById('error');
+
+        proxyInput.value = window.legcordProxyConfig.getProxy() || '';
+
+        const proxyRegex = /^(https?|socks5?|socks4):\/\/(?:\S+:\S+@)?(?:\d{1,3}\.){3}\d{1,3}:\d{2,5}$/i;
+
+        function showError(message) {
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+
+        function hideError() {
+            errorDiv.style.display = 'none';
+        }
+
+        function handleSave() {
+            const value = proxyInput.value.trim();
+            if (value === "") {
+                window.legcordProxyConfig.saveProxy(undefined);
+                return;
+            }
+            if (!value || !proxyRegex.test(value)) {
+                showError('Please enter a valid proxy URL');
+                return;
+            }
+            hideError();
+            window.legcordProxyConfig.saveProxy(value);
+        }
+
+        function handleCancel() {
+            window.legcordProxyConfig.cancelProxy();
+        }
+
+        proxyInput.addEventListener('input', hideError);
+    </script>
+</body>
+</html> 

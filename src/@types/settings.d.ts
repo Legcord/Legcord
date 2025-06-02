@@ -67,4 +67,5 @@ export interface Settings {
     noBundleUpdates: boolean;
     overlayButtonColor: string;
     modCache?: Record<ValidMods, string>;
+    proxy?: string;
 }

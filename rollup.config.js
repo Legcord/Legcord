@@ -106,6 +106,17 @@ export default defineConfig([
         plugins: [typescript(), minify({ minify: prodEnv })],
     },
     {
+        input: "src/proxy/preload.mts",
+        output: {
+            dir: "ts-out/proxy",
+            format: "esm",
+            entryFileNames: "[name].mjs",
+            sourcemap: true,
+        },
+        external: electronExternals,
+        plugins: [typescript(), minify({ minify: prodEnv })],
+    },
+    {
         input: "src/setup/setup.tsx",
         output: {
             dir: "ts-out/html",

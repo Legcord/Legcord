@@ -1,0 +1,154 @@
+:root {
+    --brand: #5865F2;
+    --brand-hover: #4752C4;
+    --background-primary: #313338;
+    --background-secondary: #2B2D31;
+    --background-tertiary: #1E1F22;
+    --text-normal: #F2F3F5;
+    --text-muted: #949BA4;
+    --interactive-normal: #B5BAC1;
+    --interactive-hover: #FFFFFF;
+    --interactive-active: #FFFFFF;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--background-tertiary);
+    color: var(--text-normal);
+    line-height: 1.5;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 480px;
+    padding: 32px;
+    background: var(--background-primary);
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.24);
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.header h1 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.header p {
+    color: var(--text-muted);
+    font-size: 16px;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--interactive-normal);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.input {
+    width: 100%;
+    padding: 10px;
+    background: var(--background-secondary);
+    border: 2px solid var(--background-tertiary);
+    border-radius: 4px;
+    color: var(--text-normal);
+    font-size: 16px;
+    transition: border-color 0.2s;
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--brand);
+}
+
+.input::placeholder {
+    color: var(--text-muted);
+}
+
+.info-box {
+    background: var(--background-secondary);
+    border-radius: 4px;
+    padding: 16px;
+    margin-bottom: 24px;
+}
+
+.info-box h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.info-box ul {
+    list-style: none;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.info-box li {
+    margin-bottom: 4px;
+}
+
+.error {
+    color: #ED4245;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.button {
+    padding: 12px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.2s;
+}
+
+.button-secondary {
+    background: var(--background-secondary);
+    color: var(--text-normal);
+}
+
+.button-secondary:hover {
+    background: #383A40;
+}
+
+.button-primary {
+    background: var(--brand);
+    color: white;
+}
+
+.button-primary:hover {
+    background: var(--brand-hover);
+}
+
+.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
