@@ -13,6 +13,7 @@ import {
 } from "electron";
 import contextMenu from "electron-context-menu";
 import { firstRun, getConfig, setConfig } from "../common/config.js";
+import { getDetectables } from "../common/detectables.js";
 import { forceQuit, setForceQuit } from "../common/forceQuit.js";
 import { initQuickCss, injectThemesMain } from "../common/themes.js";
 import { getWindowState, setWindowState } from "../common/windowState.js";
@@ -298,7 +299,9 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         void passedWindow.webContents.executeJavaScript(`document.body.removeAttribute("isMaximized");`);
     });
     if (getConfig("inviteWebsocket") && mainWindows.length === 1) {
-        const child = utilityProcess.fork(path.join(import.meta.dirname, "rpc.js"));
+        const child = utilityProcess.fork(path.join(import.meta.dirname, "rpc.js"), undefined, {
+            env: { detectables: getDetectables().toString() },
+        });
 
         child.on("spawn", () => {
             console.log("arRPC process started");
