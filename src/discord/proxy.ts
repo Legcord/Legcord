@@ -1,10 +1,10 @@
-import { BrowserWindow } from "electron";
+import type { BrowserWindow } from "electron";
 import { getConfig } from "../common/config.js";
 
 export function setupProxyListener(passedWindow: BrowserWindow): void {
     const timeout = setTimeout(() => {
         const currentUrl = passedWindow.webContents.getURL();
-        if (currentUrl.endsWith('/app')) {
+        if (currentUrl.endsWith("/app")) {
             void passedWindow.webContents.executeJavaScript(`
                 const button = document.createElement('button');
                 button.innerText = 'Configure Proxy';
@@ -20,19 +20,19 @@ export function setupProxyListener(passedWindow: BrowserWindow): void {
 
     const clearTimeoutListener = () => {
         const currentUrl = passedWindow.webContents.getURL();
-        if(!currentUrl.endsWith('/app')) {
+        if (!currentUrl.endsWith("/app")) {
             clearTimeout(timeout);
-            passedWindow.webContents.removeListener('did-navigate', clearTimeoutListener);
-            passedWindow.webContents.removeListener('did-navigate-in-page', clearTimeoutListener);
+            passedWindow.webContents.removeListener("did-navigate", clearTimeoutListener);
+            passedWindow.webContents.removeListener("did-navigate-in-page", clearTimeoutListener);
             // Remove the button if it exists
             void passedWindow.webContents.executeJavaScript(`
                 const proxyButton = document.querySelector('#proxyModalButton');
                 if (proxyButton) proxyButton.remove();
             `);
         }
-    }
-    passedWindow.webContents.addListener('did-navigate', clearTimeoutListener);
-    passedWindow.webContents.addListener('did-navigate-in-page', clearTimeoutListener);
+    };
+    passedWindow.webContents.addListener("did-navigate", clearTimeoutListener);
+    passedWindow.webContents.addListener("did-navigate-in-page", clearTimeoutListener);
 }
 
 const proxyRegex = /^(https?|socks5?|socks4):\/\/(?:\S+:\S+@)?(?:\d{1,3}\.){3}\d{1,3}:\d{2,5}$/i;

@@ -21,11 +21,11 @@ import { init } from "../main.js";
 import { registerGlobalKeybinds } from "./globalKeybinds.js";
 import { registerIpc } from "./ipc.js";
 import { setMenu } from "./menu.js";
+import { setupProxyListener, setupWindowProxy } from "./proxy.js";
 import { registerCustomHandler } from "./screenshare.js";
 import { mainTouchBar } from "./touchbar.js";
 import { createTray, tray } from "./tray.js";
 import { registerVenmicIpc } from "./venmic.js";
-import { setupProxyListener, setupWindowProxy } from "./proxy.js";
 export let mainWindows: BrowserWindow[] = [];
 export let inviteWindow: BrowserWindow;
 

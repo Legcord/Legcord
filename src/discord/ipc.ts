@@ -12,11 +12,11 @@ import { installTheme, setThemeEnabled, uninstallTheme } from "../common/themes.
 import { getDisplayVersion, getVersion } from "../common/version.js";
 import { openCssEditor } from "../cssEditor/main.js";
 import { isPowerSavingEnabled, setPowerSaving } from "../power.js";
+import { createProxyWindow } from "../proxy/main.js";
 import constPaths from "../shared/consts/paths.js";
 import { splashWindow } from "../splash/main.js";
 import { refreshGlobalKeybinds } from "./globalKeybinds.js";
 import { importGuilds, mainTouchBar, setVoiceState, voiceTouchBar } from "./touchbar.js";
-import { createProxyWindow } from "../proxy/main.js";
 
 const userDataPath = app.getPath("userData");
 const storagePath = path.join(userDataPath, "/storage/");

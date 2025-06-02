@@ -1,5 +1,5 @@
-import path from "node:path";
 import { platform } from "node:os";
+import path from "node:path";
 import { BrowserWindow, type BrowserWindowConstructorOptions, ipcMain } from "electron";
 import { getConfig, setConfig } from "../common/config.js";
 

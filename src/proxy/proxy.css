@@ -1,14 +1,14 @@
 :root {
-    --brand: #5865F2;
-    --brand-hover: #4752C4;
+    --brand: #5865f2;
+    --brand-hover: #4752c4;
     --background-primary: #313338;
-    --background-secondary: #2B2D31;
-    --background-tertiary: #1E1F22;
-    --text-normal: #F2F3F5;
-    --text-muted: #949BA4;
-    --interactive-normal: #B5BAC1;
-    --interactive-hover: #FFFFFF;
-    --interactive-active: #FFFFFF;
+    --background-secondary: #2b2d31;
+    --background-tertiary: #1e1f22;
+    --text-normal: #f2f3f5;
+    --text-muted: #949ba4;
+    --interactive-normal: #b5bac1;
+    --interactive-hover: #ffffff;
+    --interactive-active: #ffffff;
 }
 
 * {
@@ -18,7 +18,7 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background: var(--background-tertiary);
     color: var(--text-normal);
     line-height: 1.5;
@@ -109,7 +109,7 @@ body {
 }
 
 .error {
-    color: #ED4245;
+    color: #ed4245;
     font-size: 14px;
     margin-top: 8px;
 }
@@ -136,7 +136,7 @@ body {
 }
 
 .button-secondary:hover {
-    background: #383A40;
+    background: #383a40;
 }
 
 .button-primary {
