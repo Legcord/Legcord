@@ -1,42 +1,51 @@
 import path from "node:path";
-import { type BrowserWindow, utilityProcess } from "electron";
+import { type BrowserWindow } from "electron";
+import { Worker } from "worker_threads";
 import { getDetectables } from "../common/detectables.js";
 import { createInviteWindow } from "./window.js";
 
-let child: Electron.UtilityProcess;
-export let processList = [];
+let rpcWorker: Worker;
+export let processList: any[] = [];
 
 export function startRPC(window: BrowserWindow) {
-    child = utilityProcess.fork(path.join(import.meta.dirname, "rpc.js"), undefined, {
-        env: { detectables: JSON.stringify(getDetectables()) },
-    });
+  const rpcPath = path.join(__dirname, "rpc.js");
 
-    child.on("spawn", () => {
-        console.log("[arRPC] process started");
-        console.log(child.pid);
-    });
+  rpcWorker = new Worker(rpcPath, {
+    env: {
+      ...process.env,
+      detectables: JSON.stringify(getDetectables())
+    }
+  });
 
-    child.on("message", (message) => {
-        const json = JSON.parse(message);
-        if (json.type === "invite") {
-            createInviteWindow(json.code);
-        } else if (json.type === "activity") {
-            console.log("activity pulse");
-            console.log(json.data);
-            window.webContents.send("rpc", json.data);
-        } else if (json.type === "processList") {
-            console.log("[arRPC] updating process list");
-            console.log(json.data);
-            processList = json.data;
-        }
-    });
+  rpcWorker.on("online", () => {
+    console.log("[arRPC] process started");
+    console.log(rpcWorker.threadId);
+  });
 
-    child.on("exit", () => {
-        console.log("[arRPC] process exited");
-        console.log(child.pid);
-    });
+  rpcWorker.on("message", (message: string) => {
+    const json = JSON.parse(message);
+    if (json.type === "invite") {
+      createInviteWindow(json.code);
+    } else if (json.type === "activity") {
+      console.log("activity pulse");
+      console.log(json.data);
+      window.webContents.send("rpc", json.data);
+    } else if (json.type === "processList") {
+      console.log("[arRPC] updating process list");
+      console.log(json.data);
+      processList = json.data;
+    }
+  });
+
+  rpcWorker.on("error", (err) => {
+    console.error("[arRPC] worker error:", err);
+  });
+
+  rpcWorker.on("exit", (code) => {
+    console.log("[arRPC] worker exited with code", code);
+  });
 }
 
 export function refreshProcessList() {
-    child.postMessage({ message: "refreshProcessList" });
+  rpcWorker.postMessage({ message: "refreshProcessList" });
 }

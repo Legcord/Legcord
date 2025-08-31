@@ -3,6 +3,7 @@ import esmShim from "@rollup/plugin-esm-shim";
 import json from "@rollup/plugin-json";
 import { defineConfig } from "rolldown";
 import copy from "rollup-plugin-copy";
+import builtins from "builtin-modules";
 
 const electronExternals = ["electron", "node:fs", "node:path", "node:os", "node:url", "@vencord/venmic"];
 
@@ -17,6 +18,7 @@ export default defineConfig([
         platform: "node",
         external: [
             ...electronExternals,
+            ...builtins,
             "electron",
             "electron-is-dev",
             "electron-updater",
@@ -47,7 +49,7 @@ export default defineConfig([
             format: "esm",
             sourcemap: true,
         },
-        external: [...electronExternals, "arrpc"],
+        external: [...electronExternals, ...builtins, "arrpc"],
         plugins: [esmShim(), json()],
     },
     {
