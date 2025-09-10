@@ -144,6 +144,13 @@ export function SettingsPage() {
                 <option value="canary">Canary</option>
                 <option value="ptb">PTB</option>
             </DropdownItem>
+            <SwitchItem 
+                note={store.i18n["settings-autoUpdate-desc"]}
+                value={settings.autoUpdate}
+                onChange={(e: boolean) => setConfig("autoUpdate", e, true)}
+            >
+                {store.i18n["settings-autoUpdate"]}
+            </SwitchItem>
             <SwitchItem
                 note={store.i18n["settings-MultiInstance-desc"]}
                 value={settings.multiInstance}

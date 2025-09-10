@@ -50,6 +50,7 @@ export interface Settings {
     hardwareAcceleration: boolean;
     useMacSystemPicker: boolean;
     inviteWebsocket: boolean;
+    autoUpdate: boolean;
     disableAutogain: boolean;
     autoHideMenuBar: boolean;
     blockPowerSavingInVoiceChat: boolean;
