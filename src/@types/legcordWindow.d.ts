@@ -19,6 +19,7 @@ export interface LegcordWindow {
     getLang: (toGet: string) => Promise<string>;
     version: string;
     platform: string;
+    osRelease: string;
     restart: () => void;
     translations: string;
     settings: {

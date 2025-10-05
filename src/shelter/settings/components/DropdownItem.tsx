@@ -12,6 +12,7 @@ export const DropdownItem = (props: {
     value: string;
     onChange: JSX.EventHandler<HTMLSelectElement, Event>;
     children: JSXElement[];
+    extraItems?: JSXElement;
 }) => {
     return (
         <div class={classes.item}>
@@ -24,6 +25,9 @@ export const DropdownItem = (props: {
             </Show>
             {/* biome-ignore lint/correctness/noChildrenProp: FIX-ME, couldn't figure out proper types */}
             <Dropdown value={props.value} onChange={props.onChange} children={props.children} />
+            <Show when={props.extraItems} keyed>
+                {props.extraItems}
+            </Show>
             <Divider />
         </div>
     );

@@ -79,6 +79,7 @@ contextBridge.exposeInMainWorld("legcord", {
     },
     version: ipcRenderer.sendSync("get-app-version", "app-version") as string,
     platform: ipcRenderer.sendSync("getOS") as string,
+    osRelease: ipcRenderer.sendSync("getOSRelease") as string,
     restart: () => ipcRenderer.send("restart"),
     themes: {
         install: async (url: string) => ipcRenderer.invoke("installBDTheme", url) as Promise<null>,

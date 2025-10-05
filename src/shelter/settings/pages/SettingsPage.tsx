@@ -73,6 +73,26 @@ export function SettingsPage() {
                 title={store.i18n["settings-transparency"]}
                 note={store.i18n["settings-transparency-desc"]}
                 link="https://github.com/Legcord/Legcord/wiki/Transparency-options"
+                extraItems={
+                    <Show
+                        when={
+                            store.settings.transparency !== "none" &&
+                            window.legcord.platform === "darwin" &&
+                            parseInt(window.legcord.osRelease) >= 25
+                        }
+                    >
+                        <div
+                            style={{
+                                background: "rgba(255, 255, 210, 0.85)",
+                                border: "1px solid #e6c200",
+                                color: "#2d2100",
+                                padding: "12px 16px",
+                            }}
+                        >
+                            {store.i18n["settings-transparency-tahoe-warning"]}
+                        </div>
+                    </Show>
+                }
             >
                 <option value="universal">{store.i18n["settings-transparency-universal"]}</option>
                 <Show when={window.legcord.platform === "win32" || window.legcord.platform === "darwin"}>

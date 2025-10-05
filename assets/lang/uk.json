@@ -27,6 +27,7 @@
     "settings-transparency-universal": "Універсальний",
     "settings-transparency-modern": "Сучасний",
     "settings-theme-transparent": "Прозорий",
+    "settings-transparency-tahoe-warning": "Прозорість може призвести до надмірного лагу на MacOS 26 Tahoe.",
     "settings-popoutPiP": "Виклик спливаючого вікна завжди зверху",
     "settings-popoutPiP-desc": "Коли цю функцію ввімкнено, спливаюче вікно виклику буде в режимі «Завжди зверху».",
     "settings-venmic-workaround": "Тимчасове вирішення",

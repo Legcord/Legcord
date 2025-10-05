@@ -19,6 +19,7 @@
     "settings-transparency-universal": "Universel",
     "settings-transparency-modern": "Moderne",
     "settings-theme-transparent": "Transparent",
+    "settings-transparency-tahoe-warning": "La transparence peut causer un lag excessif sur MacOS 26 Tahoe.",
     "settings-venmic-deviceSelect": "Sélection du périphérique",
     "settings-venmic-deviceSelect-desc": "Autoriser la sélection d'un périphérique audio.",
     "settings-venmic-granularSelect-desc": "Autoriser la sélection d'une source d'entrée audio.",

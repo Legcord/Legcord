@@ -27,6 +27,7 @@
     "settings-transparency-universal": "Universal",
     "settings-transparency-modern": "Modern",
     "settings-theme-transparent": "Transparent",
+    "settings-transparency-tahoe-warning": "Transparency may cause excessive lag on MacOS 26 Tahoe.",
     "settings-popoutPiP": "Call Popout Always on Top",
     "settings-popoutPiP-desc": "When enabled, the call popout will be in Always on Top mode.",
     "settings-venmic-workaround": "Workaround",
