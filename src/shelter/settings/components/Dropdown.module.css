@@ -1,5 +1,5 @@
 .acDropdown option {
-    color: #fff;
+    color: var(--text-secondary);
     font-weight: 400;
     font-style: normal;
 }
@@ -18,7 +18,7 @@
     background-repeat: no-repeat;
     border: 1px solid var(--background-floating);
     border-radius: 2px;
-    color: #fff;
+    color: var(--text-default);
     font-size: 1.2em;
     overflow: hidden;
     text-overflow: ellipsis;

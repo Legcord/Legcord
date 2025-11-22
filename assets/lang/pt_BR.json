@@ -1,1 +1,22 @@
-{}
+{
+    "loading_screen_start": "Iniciando Legcord…",
+    "loading_screen_update": "Uma nova versão do Legcord está disponível. Por favor, atualize para a versão mais recente.",
+    "setup_question1": "Bem-vindo à configuração do Legcord",
+    "setup_offline": "Você parece estar offline. Por favor, conecte-se à internet e reinicie o Legcord.",
+    "setup_question2": "Escolha o canal/instância do seu Discord:",
+    "yes": "Sim",
+    "no": "Não",
+    "next": "Próximo",
+    "settings-theme": "Estilo de janela",
+    "settings-transparency": "Transparência",
+    "settings-transparency-desc": "Defina o modo de transparência que o Legcord usa.",
+    "settings-transparency-universal": "Universal",
+    "settings-theme-transparent": "Transparente",
+    "settings-venmic-ignoreVirtual": "Ignorar Dispositivos Virtuais",
+    "settings-venmic-ignoreVirtual-desc": "Ignorar dispositivos de áudio virtuais.",
+    "settings-venmic-ignoreDevices": "Ignorar Dispositivos",
+    "settings-venmic-ignoreDevices-desc": "Ignorar dispositivos de áudio específicos.",
+    "settings-venmic-onlySpeakers": "Apenas Alto-falantes",
+    "settings-audio": "Áudio",
+    "settings-audio-desc": "Selecione o método que o Legcord usa para capturar o áudio do seu sistema durante o compartilhamento de tela."
+}

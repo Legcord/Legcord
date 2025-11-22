@@ -1,1 +1,26 @@
-{}
+{
+    "loading_screen_start": "Legcord indítása…",
+    "loading_screen_update": "Egy új Legcord verzió érhető el. Kérlek frissítsd a legújabb verzióra.",
+    "setup_question1": "Üdvözöllek a Legcord Setup-ban",
+    "setup_offline": "Úgy tűnik hogy offline vagy. Kérlek csatlakozz internethez és inditsd újra a Legcordot.",
+    "setup_question2": "Válassz egy Discord csatornát/esetet:",
+    "setup_question3": "Vegye át a Legcord a kliens modok telepítését?",
+    "yes": "Igen",
+    "no": "Nem",
+    "next": "Következő",
+    "setup_question4": "Válassz egy kliens modot amit telepíteni szeretnél:",
+    "setup_question5": "Szeretnéd használni a tálcán lévő ikont?",
+    "settings-bounceOnPing": "Ugráljon a dock-ban pingeléskor",
+    "settings-bounceOnPing-desc": "Ugráljon az app a dock-ban hogyha megpingelnek.",
+    "settings-theme": "Ablakstílus",
+    "settings-theme-default": "Alapértelmezett (Egyedi)",
+    "settings-theme-native": "Natív",
+    "settings-theme-overlay": "Átfedés",
+    "settings-autoHideMenuBar": "Auto-elrejtse a menüsort",
+    "settings-autoHideMenuBar-desc": "Automatikusan elrejti a menüsort amikor nincsen használatban.",
+    "settings-sleepInBackground": "Aludjon a háttérben",
+    "settings-transparency": "Átláthatóság",
+    "settings-transparency-universal": "Univerzális",
+    "settings-transparency-modern": "Modern",
+    "settings-theme-transparent": "Átlátható"
+}

@@ -50,7 +50,9 @@ export const ThemesCard = (props: { theme: ThemeManifest }) => {
         <div class={classes.card}>
             <div class={classes.info}>
                 <div class={classes.mainInfo}>
-                    <Header tag={HeaderTags.H2}>{props.theme.name}</Header>
+                    <Header tag={HeaderTags.H2} class={classes.title}>
+                        {props.theme.name}
+                    </Header>
                     <Header tag={HeaderTags.H3}>by</Header>
                     <Header class={classes.eyebrow} tag={HeaderTags.EYEBROW}>
                         {props.theme.author}

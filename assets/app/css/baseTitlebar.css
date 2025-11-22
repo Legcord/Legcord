@@ -9,7 +9,7 @@
     box-sizing: border-box;
     width: 100%;
     clear: both;
-    height: 36px;
+    height: var(--custom-app-top-bar-height);
     line-height: 30px;
     -webkit-app-region: drag !important;
     user-select: none;
@@ -36,7 +36,7 @@
     right: 0;
     top: 0;
     z-index: 99999999;
-    line-height: 36px;
+    line-height: var(--custom-app-top-bar-height);
     -webkit-app-region: no-drag;
 }
 

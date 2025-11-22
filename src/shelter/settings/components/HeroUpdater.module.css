@@ -1,13 +1,17 @@
 .hero {
-    background: var(--background-surface-high);
-    border-radius: 0.5rem;
-    box-shadow: var(--shadow-elevation-2);
-    color: var(--text-on-surface);
+    background: var(--card-primary-bg);
+    border-radius: 8px;
+    box-shadow: 0 1.5px 6px rgba(0, 0, 0, 0.08);
+    padding: 16px 20px;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    padding: 2rem;
-    position: relative;
-    width: 100%;
-    z-index: 1;
+    align-items: center;
+    max-width: 400px;
+    margin: 32px auto;
+    border-radius: 8px;
+}
+
+.checkButton {
+    width: 120px !important;
+    max-width: 120px !important;
 }

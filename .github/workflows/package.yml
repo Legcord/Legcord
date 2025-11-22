@@ -60,10 +60,6 @@ jobs:
                 APPLE_APP_SPECIFIC_PASSWORD: ${{secrets.APPLE_ID_PASSWORD}}
                 APPLE_TEAM_ID: ${{secrets.APPLE_TEAM_ID}}
 
-            - name: Build Electron for Linux (Snap)
-              if: matrix.os == 'macos-latest'
-              run: pnpm electron-builder --x64 -l snap --publish always
-
             - name: Build Electron for Windows (NSIS, AppX, & ZIP)
               if: matrix.os == 'windows-latest'
               run: pnpm electron-builder --ia32 --arm64 --x64 -w nsis appx zip

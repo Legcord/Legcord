@@ -1,1 +1,6 @@
-{}
+{
+    "loading_screen_start": "Startar Legcord…",
+    "settings-theme-default": "Standard (Anpassad)",
+    "settings-theme-native": "Inbyggd",
+    "settings-theme-overlay": "Överlägg"
+}

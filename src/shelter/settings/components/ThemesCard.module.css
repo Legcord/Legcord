@@ -35,9 +35,10 @@
     filter: brightness(0) invert(1);
 }
 .mainInfo {
-    display: flex;
     flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: center;
     gap: 5px;
-    align-items: center;
-    margin-bottom: 0.5rem;
+    margin-bottom: -0.5em;
+    display: flex;
 }

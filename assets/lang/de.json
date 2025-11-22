@@ -27,6 +27,7 @@
     "settings-transparency-universal": "Universell",
     "settings-transparency-modern": "Modern",
     "settings-theme-transparent": "Transparent",
+    "settings-transparency-tahoe-warning": "Transparenz kann zu großem Lags auf MacOS 26 Tahoe führen.",
     "settings-popoutPiP": "Popup-Fenster immer im Vordergrund anzeigen",
     "settings-popoutPiP-desc": "Wenn diese Option aktiviert ist, wird das Anruf-Popup im Modus „Immer im Vordergrund“ angezeigt.",
     "settings-venmic-workaround": "Umgehungslösung",
