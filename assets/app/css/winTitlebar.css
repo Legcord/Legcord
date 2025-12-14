@@ -1,6 +1,6 @@
 /* Legcord on Windows */
 
-[legcord-platform="win32"] a[href="https://support.discord.com"] {
+[legcord-platform="win32"] div[class^="trailing_"] {
     margin-right: 150px;
 }
 

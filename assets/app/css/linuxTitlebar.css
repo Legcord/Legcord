@@ -1,4 +1,4 @@
-[legcord-platform="linux"] a[href="https://support.discord.com"] {
+[legcord-platform="linux"] div[class^="trailing_"] {
     margin-right: 150px;
 }
 
