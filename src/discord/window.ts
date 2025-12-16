@@ -114,19 +114,24 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     if (!frame) {
       return;
     }
-    // frame.once("dom-ready", async () => {
-    //     if (
-    //         frame.url.includes("youtube.com/embed/") ||
-    //         frame.url.includes("youtube-nocookie.com/embed/") ||
-    //         (frame.url.includes("discordsays") && frame.url.includes("youtube.com"))
-    //     ) {
-    //         try {
-    //             await frame.executeJavaScript(readFileSync(path.join(__dirname, "assets/app/js/adguard.js"), "utf-8"));
-    //         } catch (e) {
-    //             console.warn("adguard.js injection skipped:", e);
-    //         }
-    //     }
-    // });
+    frame.once("dom-ready", async () => {
+      if (
+        frame.url.includes("youtube.com/embed/") ||
+        frame.url.includes("youtube-nocookie.com/embed/") ||
+        (frame.url.includes("discordsays") && frame.url.includes("youtube.com"))
+      ) {
+        try {
+          await frame.executeJavaScript(
+            readFileSync(
+              path.join(__dirname, "assets/app/js/adguard.js"),
+              "utf-8",
+            ),
+          );
+        } catch (e) {
+          console.warn("adguard.js injection skipped:", e);
+        }
+      }
+    });
   });
   passedWindow.webContents.setWindowOpenHandler(({ url }) => {
     // Allow about:blank (used by Vencord & Equicord QuickCss popup)
@@ -235,9 +240,8 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
               }
             `;
           await passedWindow.webContents.executeJavaScript(script);
-        } catch (e) {
-          console.warn("YouTube sandbox attribute fix skipped:", e);
-        }
+          /* Ignore the errors because it works for now. */
+        } catch (e) {}
       }
     });
   });
