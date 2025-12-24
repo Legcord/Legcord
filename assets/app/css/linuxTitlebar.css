@@ -1,4 +1,4 @@
-[legcord-platform="linux"] div[class^="trailing_"] {
+[legcord-platform="linux"] div[class*="title"] + div[class*="trailing"] {
     margin-right: 150px;
 }
 
