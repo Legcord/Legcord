@@ -184,8 +184,8 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     // fix UMG video playback
     passedWindow.webContents.session.webRequest.onBeforeSendHeaders(
         { urls: ["https://www.youtube.com/embed/*"] },
-        ({ requestHeaders, url }, callback) => {
-            requestHeaders.Referer = url;
+        ({ requestHeaders }, callback) => {
+            requestHeaders.Referer = "https://google.com";
             callback({ requestHeaders });
         },
     );
