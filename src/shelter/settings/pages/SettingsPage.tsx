@@ -48,28 +48,22 @@ export function SettingsPage() {
             >
                 {store.i18n["settings-invitewebsocket"]}
             </SwitchItem>
-            <Header class={classes.category} tag={HeaderTags.H5}>
-                {store.i18n["settings-category-lookAndFeel"]}
-            </Header>
             <DropdownItem
                 value={settings.windowStyle}
-                onChange={(e) =>
-                    setConfig("windowStyle", (e.target as HTMLInputElement).value as Settings["windowStyle"], true)
-                }
+                onChange={(v) => setConfig("windowStyle", v as Settings["windowStyle"], true)}
                 title={store.i18n["settings-theme"]}
                 note={store.i18n["settings-theme-desc"]}
                 link="https://github.com/Legcord/Legcord/wiki/Settings-%5Bwip%5D#legcord-theme"
-            >
-                <option value="default">{store.i18n["settings-theme-default"]}</option>
-                <option value="native">{store.i18n["settings-theme-native"]}</option>
-                <option value="overlay">{store.i18n["settings-theme-overlay"]}</option>
-                <option value="legacy">Legacy</option>
-            </DropdownItem>
+                options={[
+                    { label: store.i18n["settings-theme-default"], value: "default" },
+                    { label: store.i18n["settings-theme-native"], value: "native" },
+                    { label: store.i18n["settings-theme-overlay"], value: "overlay" },
+                    { label: "Legacy", value: "legacy" },
+                ]}
+            />
             <DropdownItem
                 value={store.settings.transparency}
-                onChange={(e) =>
-                    setConfig("transparency", (e.target as HTMLInputElement).value as Settings["transparency"], true)
-                }
+                onChange={(v) => setConfig("transparency", v as Settings["transparency"], true)}
                 title={store.i18n["settings-transparency"]}
                 note={store.i18n["settings-transparency-desc"]}
                 link="https://github.com/Legcord/Legcord/wiki/Transparency-options"
@@ -93,13 +87,14 @@ export function SettingsPage() {
                         </div>
                     </Show>
                 }
-            >
-                <option value="universal">{store.i18n["settings-transparency-universal"]}</option>
-                <Show when={window.legcord.platform === "win32" || window.legcord.platform === "darwin"}>
-                    <option value="modern">{store.i18n["settings-transparency-modern"]}</option>
-                </Show>
-                <option value="none">{store.i18n["settings-none"]}</option>
-            </DropdownItem>
+                options={[
+                    { label: store.i18n["settings-transparency-universal"], value: "universal" },
+                    ...(window.legcord.platform === "win32" || window.legcord.platform === "darwin"
+                        ? [{ label: store.i18n["settings-transparency-modern"], value: "modern" }]
+                        : []),
+                    { label: store.i18n["settings-none"], value: "none" },
+                ]}
+            />
             <Show when={settings.windowStyle === "native"}>
                 <SwitchItem
                     note={store.i18n["settings-autoHideMenuBar-desc"]}
@@ -120,20 +115,21 @@ export function SettingsPage() {
             </Show>
             <DropdownItem
                 value={settings.tray}
-                onChange={(e) => setConfig("tray", (e.target as HTMLInputElement).value as Settings["tray"], true)}
+                onChange={(v) => setConfig("tray", v as Settings["tray"], true)}
                 title={store.i18n["settings-trayIcon"]}
                 note={store.i18n["settings-trayIcon-desc"]}
-            >
-                <option value="dynamic">{store.i18n["settings-trayIcon-dynamic"]}</option>
-                <option value="disabled">{store.i18n["settings-trayIcon-disabled"]}</option>
-                <option value="dsc-tray">{store.i18n["settings-trayIcon-normal"]}</option>
-                <option value="clsc-dsc-tray">{store.i18n["settings-trayIcon-classic"]}</option>
-                <option value="ac_plug_colored">{store.i18n["settings-trayIcon-colored-plug"]}</option>
-                <option value="ac_white_plug">{store.i18n["settings-trayIcon-white-plug"]}</option>
-                <option value="ac_white_plug_hollow">{store.i18n["settings-trayIcon-white-plug-alt"]}</option>
-                <option value="ac_black_plug">{store.i18n["settings-trayIcon-black-plug"]}</option>
-                <option value="ac_black_plug_hollow">{store.i18n["settings-trayIcon-black-plug-alt"]}</option>
-            </DropdownItem>
+                options={[
+                    { label: store.i18n["settings-trayIcon-dynamic"], value: "dynamic" },
+                    { label: store.i18n["settings-trayIcon-disabled"], value: "disabled" },
+                    { label: store.i18n["settings-trayIcon-normal"], value: "dsc-tray" },
+                    { label: store.i18n["settings-trayIcon-classic"], value: "clsc-dsc-tray" },
+                    { label: store.i18n["settings-trayIcon-colored-plug"], value: "ac_plug_colored" },
+                    { label: store.i18n["settings-trayIcon-white-plug"], value: "ac_white_plug" },
+                    { label: store.i18n["settings-trayIcon-white-plug-alt"], value: "ac_white_plug_hollow" },
+                    { label: store.i18n["settings-trayIcon-black-plug"], value: "ac_black_plug" },
+                    { label: store.i18n["settings-trayIcon-black-plug-alt"], value: "ac_black_plug_hollow" },
+                ]}
+            />
             <SwitchItem
                 note={store.i18n["settings-skipSplash-desc"]}
                 value={settings.skipSplash}
@@ -153,17 +149,16 @@ export function SettingsPage() {
             </Header>
             <DropdownItem
                 value={settings.channel}
-                onChange={(e) =>
-                    setConfig("channel", (e.target as HTMLInputElement).value as Settings["channel"], true)
-                }
+                onChange={(v) => setConfig("channel", v as Settings["channel"], true)}
                 title={store.i18n["settings-channel"]}
                 note={store.i18n["settings-channel-desc"]}
                 link="https://support.discord.com/hc/en-us/articles/360035675191-Discord-Testing-Clients"
-            >
-                <option value="stable">Stable</option>
-                <option value="canary">Canary</option>
-                <option value="ptb">PTB</option>
-            </DropdownItem>
+                options={[
+                    { label: "Stable", value: "stable" },
+                    { label: "Canary", value: "canary" },
+                    { label: "PTB", value: "ptb" },
+                ]}
+            />
             <SwitchItem
                 note={store.i18n["settings-MultiInstance-desc"]}
                 value={settings.multiInstance}
@@ -241,23 +236,18 @@ export function SettingsPage() {
             </Header>
             <DropdownItem
                 value={settings.performanceMode}
-                onChange={(e) =>
-                    setConfig(
-                        "performanceMode",
-                        (e.target as HTMLInputElement).value as Settings["performanceMode"],
-                        true,
-                    )
-                }
+                onChange={(v) => setConfig("performanceMode", v as Settings["performanceMode"], true)}
                 title={store.i18n["settings-prfmMode"]}
                 note={store.i18n["settings-prfmMode-desc"]}
                 link="https://github.com/Legcord/Legcord/blob/dev/src/common/flags.ts"
-            >
-                <option value="dynamic">{store.i18n["settings-prfmMode-dynamic"]}</option>
-                <option value="performance">{store.i18n["settings-prfmMode-performance"]}</option>
-                <option value="battery">{store.i18n["settings-prfmMode-battery"]}</option>
-                <option value="vaapi">{store.i18n["settings-prfmMode-vaapi"]}</option>
-                <option value="none">{store.i18n["settings-none"]}</option>
-            </DropdownItem>
+                options={[
+                    { label: store.i18n["settings-prfmMode-dynamic"], value: "dynamic" },
+                    { label: store.i18n["settings-prfmMode-performance"], value: "performance" },
+                    { label: store.i18n["settings-prfmMode-battery"], value: "battery" },
+                    { label: store.i18n["settings-prfmMode-vaapi"], value: "vaapi" },
+                    { label: store.i18n["settings-none"], value: "none" },
+                ]}
+            />
             <SwitchItem
                 note={store.i18n["settings-blockPowerSavingInVoiceChat-desc"]}
                 value={settings.blockPowerSavingInVoiceChat}
@@ -367,19 +357,19 @@ export function SettingsPage() {
             </Show>
             <DropdownItem
                 value={settings.audio.loopbackType}
-                onChange={(e) => {
+                onChange={(v) => {
                     const audioSettings = structuredClone({ ...settings.audio });
-                    audioSettings.loopbackType = (e.target as HTMLInputElement)
-                        .value as Settings["audio"]["loopbackType"];
+                    audioSettings.loopbackType = v as Settings["audio"]["loopbackType"];
                     setConfig("audio", audioSettings);
                 }}
                 title={store.i18n["settings-audio"]}
                 note={store.i18n["settings-audio-desc"]}
                 link="https://www.electronjs.org/docs/latest/api/session#sessetdisplaymediarequesthandlerhandler-opts"
-            >
-                <option value="loopback">Loopback</option>
-                <option value="loopbackWithMute">Loopback with mute</option>
-            </DropdownItem>
+                options={[
+                    { label: "Loopback", value: "loopback" },
+                    { label: "Loopback with mute", value: "loopbackWithMute" },
+                ]}
+            />
             <SwitchItem
                 note={store.i18n["settings-hardwareAcceleration-desc"]}
                 value={settings.hardwareAcceleration}

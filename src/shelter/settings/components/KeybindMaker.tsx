@@ -95,16 +95,18 @@ export const KeybindMaker = (props: { close: () => void }) => {
                 <Header tag={HeaderTags.H5}>Action</Header>
                 <Dropdown
                     value={action()}
-                    onChange={(e) => setAction((e.target as HTMLInputElement).value as KeybindActions)}
-                >
-                    <option value="mute">Mute</option>
-                    <option value="deafen">Deafen</option>
-                    <option value="leaveCall">Leave call</option>
-                    <option value="navigateForward">Navigate forward</option>
-                    <option value="navigateBack">Navigate back</option>
-                    <option value="runJavascript">Run Javascript</option>
-                    <option value="openQuickCss">Open Quick CSS</option>
-                </Dropdown>
+                    onChange={(v) => setAction(v as KeybindActions)}
+                    limitHeight
+                    options={[
+                        { label: "Mute", value: "mute" },
+                        { label: "Deafen", value: "deafen" },
+                        { label: "Leave call", value: "leaveCall" },
+                        { label: "Navigate forward", value: "navigateForward" },
+                        { label: "Navigate back", value: "navigateBack" },
+                        { label: "Run Javascript", value: "runJavascript" },
+                        { label: "Open Quick CSS", value: "openQuickCss" },
+                    ]}
+                />
                 <SwitchItem
                     note="Allows you to assign a specific keyboard shortcut that can be used across different applications and programs."
                     value={global()}

@@ -113,30 +113,34 @@ export const ScreensharePicker = (props: {
                             <Header tag={HeaderTags.H4}>Resolution</Header>
                             <Dropdown
                                 value={store.resolution}
-                                onChange={(e) => {
-                                    store.resolution = Number(e.currentTarget.value);
+                                onChange={(v) => {
+                                    store.resolution = Number(v);
                                 }}
-                            >
-                                <option value="480">480p</option>
-                                <option value="720">720p</option>
-                                <option value="1080">1080p</option>
-                                <option value="1440">1440p</option>
-                                <option value="2160">2160p</option>
-                            </Dropdown>
+                                limitHeight
+                                options={[
+                                    { label: "480p", value: "480" },
+                                    { label: "720p", value: "720" },
+                                    { label: "1080p", value: "1080" },
+                                    { label: "1440p", value: "1440" },
+                                    { label: "2160p", value: "2160" },
+                                ]}
+                            />
                         </div>
                         <div>
                             <Header tag={HeaderTags.H4}>FPS</Header>
                             <Dropdown
                                 value={store.fps}
-                                onChange={(e) => {
-                                    store.fps = Number(e.currentTarget.value);
+                                onChange={(v) => {
+                                    store.fps = Number(v);
                                 }}
-                            >
-                                <option value="5">5</option>
-                                <option value="15">15</option>
-                                <option value="30">30</option>
-                                <option value="60">60</option>
-                            </Dropdown>
+                                limitHeight
+                                options={[
+                                    { label: "5", value: "5" },
+                                    { label: "15", value: "15" },
+                                    { label: "30", value: "30" },
+                                    { label: "60", value: "60" },
+                                ]}
+                            />
                         </div>
                         <div>
                             <Show when={window.legcord.platform !== "darwin"}>
@@ -153,19 +157,18 @@ export const ScreensharePicker = (props: {
                         <Header tag={HeaderTags.H4}>Venmic</Header>
                         <Dropdown
                             value="Venmic disabled"
-                            onChange={(e) => {
-                                const source = props.audioSources!.find(
-                                    (node) => node["node.name"] === e.currentTarget.value,
-                                );
+                            onChange={(v) => {
+                                const source = props.audioSources!.find((node) => node["node.name"] === v);
                                 if (!source) return;
                                 setAudioSource(source);
                             }}
-                        >
-                            <option value="Venmic disabled">Venmic disabled</option>
-                            <For each={props.audioSources}>
-                                {(source: Node) => <option value={source["node.name"]}>{source["node.name"]}</option>}
-                            </For>
-                        </Dropdown>
+                            limitHeight
+                            options={[
+                                { label: "Venmic disabled", value: "Venmic disabled" },
+                                ...(props.audioSources?.map((s) => ({ label: s["node.name"], value: s["node.name"] })) ??
+                                    []),
+                            ]}
+                        />
                     </Show>
                 </div>
             </ModalBody>

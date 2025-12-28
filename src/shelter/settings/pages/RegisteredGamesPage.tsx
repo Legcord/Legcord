@@ -1,5 +1,5 @@
 import type { ProcessInfo } from "arrpc";
-import { For, createSignal } from "solid-js";
+import { createSignal } from "solid-js";
 import { sleep } from "../../../common/sleep.js";
 import { Dropdown } from "../components/Dropdown.jsx";
 import classes from "./RegisteredGames.module.css";
@@ -9,7 +9,7 @@ const {
 
 export function RegisteredGamesPage() {
     const [detectables, setDetectables] = createSignal<ProcessInfo[]>();
-    const [selectedDetectable, setSelectedDetectable] = createSignal("");
+    const [selectedDetectable, setSelectedDetectable] = createSignal("refresh");
     function getDetectables() {
         window.legcord.rpc.refreshProcessList();
         sleep(500).then(() => {
@@ -28,23 +28,21 @@ export function RegisteredGamesPage() {
             <div class={classes.addBox}>
                 <Dropdown
                     value={selectedDetectable()}
-                    onChange={(e) => {
-                        const detectable = e.currentTarget.value;
-                        if (detectable === "refresh") {
+                    onChange={(v) => {
+                        if (v === "refresh") {
                             getDetectables();
                             setSelectedDetectable("");
                             console.log("Detectables refreshed");
                         } else {
-                            console.log("Selected detectable:", detectable);
-                            setSelectedDetectable(e.currentTarget.value);
+                            console.log("Selected detectable:", v);
+                            setSelectedDetectable(v);
                         }
                     }}
-                >
-                    <For each={detectables()}>
-                        {(process: ProcessInfo) => <option value={process[1]}>{process[1]}</option>}
-                    </For>
-                    <option value={"refresh"}>Refresh list</option>
-                </Dropdown>
+                    options={[
+                        ...(detectables()?.map((p) => ({ label: p[1], value: p[1] })) ?? []),
+                        { label: "Refresh list", value: "refresh" },
+                    ]}
+                />
                 <Button size={ButtonSizes.MEDIUM} onClick={addGame}>
                     Add
                 </Button>
