@@ -3,6 +3,8 @@ import { For, Show, createSignal } from "solid-js";
 import { Dropdown } from "../../settings/components/Dropdown.jsx";
 import classes from "./ScreensharePicker.module.css";
 import { type IPCSources, SourceCard } from "./SourceCard.jsx";
+import { SegmentedControl } from "../../settings/components/SegmentedControl.jsx";
+
 const {
     ui: {
         ModalRoot,
@@ -110,13 +112,12 @@ export const ScreensharePicker = (props: {
                     <Divider mt mb />
                     <div class={classes.qualityBox}>
                         <div>
-                            <Header tag={HeaderTags.H4}>Resolution</Header>
-                            <Dropdown
+                            <Header class={classes.header} tag={HeaderTags.H4}>Resolution</Header>
+                            <SegmentedControl
                                 value={store.resolution}
                                 onChange={(v) => {
                                     store.resolution = Number(v);
                                 }}
-                                limitHeight
                                 options={[
                                     { label: "480p", value: "480" },
                                     { label: "720p", value: "720" },
@@ -127,13 +128,20 @@ export const ScreensharePicker = (props: {
                             />
                         </div>
                         <div>
-                            <Header tag={HeaderTags.H4}>FPS</Header>
-                            <Dropdown
+                            <Show when={window.legcord.platform !== "darwin"}>
+                                <Header class={classes.header} tag={HeaderTags.H4}>Audio</Header>
+                                <div class={classes.checkbox}>
+                                    <Checkbox checked={audio()} onChange={setAudio} />
+                                </div>
+                            </Show>
+                        </div>
+                        <div>
+                            <Header class={classes.header} tag={HeaderTags.H4}>FPS</Header>
+                            <SegmentedControl
                                 value={store.fps}
                                 onChange={(v) => {
                                     store.fps = Number(v);
                                 }}
-                                limitHeight
                                 options={[
                                     { label: "5", value: "5" },
                                     { label: "15", value: "15" },
@@ -141,14 +149,6 @@ export const ScreensharePicker = (props: {
                                     { label: "60", value: "60" },
                                 ]}
                             />
-                        </div>
-                        <div>
-                            <Show when={window.legcord.platform !== "darwin"}>
-                                <Header tag={HeaderTags.H4}>Audio</Header>
-                                <div class={classes.checkbox}>
-                                    <Checkbox checked={audio()} onChange={setAudio} />
-                                </div>
-                            </Show>
                         </div>
                     </div>
 

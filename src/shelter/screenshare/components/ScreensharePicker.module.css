@@ -1,6 +1,6 @@
 .sources {
     grid-template-columns: auto auto;
-    max-height: 300px;
+    max-height: 260px;
     overflow: hidden;
     display: grid;
     overflow-y: scroll;
@@ -12,10 +12,15 @@
     padding: 10px;
 }
 .qualityBox {
-    gap: 10%;
-    display: flex;
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 10px 10%;
 }
 
 .checkbox {
     padding-top: 10px;
+}
+.header {
+    margin-bottom: 5px;
+    margin-left: 5px;
 }
