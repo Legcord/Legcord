@@ -89,7 +89,7 @@ export const ScreensharePicker = (props: {
         props.close();
     }
     return (
-        <ModalRoot size={ModalSizes.MEDIUM}>
+        <ModalRoot size={ModalSizes.MEDIUM} style="max-height: 90vh;">
             <ModalHeader close={closeAndSave}>Screenshare</ModalHeader>
             <ModalBody>
                 <div class={classes.sources}>
@@ -152,7 +152,8 @@ export const ScreensharePicker = (props: {
                         </div>
                     </div>
 
-                    <Show when={window.legcord.platform === "linux" && props.audioSources !== undefined && audio()}>
+                    {/* when={window.legcord.platform === "linux" && props.audioSources !== undefined && audio()} */}
+                    <Show when={true}>
                         <Divider mt mb />
                         <Header tag={HeaderTags.H4}>Venmic</Header>
                         <Dropdown
