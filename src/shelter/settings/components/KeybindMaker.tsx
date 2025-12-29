@@ -47,7 +47,10 @@ export const KeybindMaker = (props: { close: () => void }) => {
     function stopRecording() {
         if (!recording()) return;
         setRecording(false);
-        if(timeout) clearTimeout(timeout);
+        if(timeout) {
+            clearTimeout(timeout);
+            timeout = null;
+        };
 
         document.body.removeEventListener("keyup", log);
         console.log("Recording stop");
