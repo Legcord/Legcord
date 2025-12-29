@@ -1,4 +1,4 @@
-import { Show, createSignal } from "solid-js";
+import { Show, createSignal, onCleanup } from "solid-js";
 import type { KeybindActions } from "../../../@types/keybind.js";
 import { Dropdown } from "./Dropdown.jsx";
 import classes from "./KeybindMaker.module.css";
@@ -41,17 +41,18 @@ export const KeybindMaker = (props: { close: () => void }) => {
             logged.unshift(key);
             setAccelerator(logged.join("+"));
         }
-        if(timeout) clearInterval(timeout);
+        if(timeout) clearTimeout(timeout);
         timeout = setTimeout(stopRecording, 3000);
     };
     function stopRecording() {
         if (!recording()) return;
         setRecording(false);
-        if(timeout) clearInterval(timeout);
+        if(timeout) clearTimeout(timeout);
 
         document.body.removeEventListener("keyup", log);
         console.log("Recording stop");
     };
+    onCleanup(() => recording() && stopRecording());
 
     function startRecording() {
         if (recording()) return;
