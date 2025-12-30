@@ -71,8 +71,6 @@ export const KeybindMaker = (props: { close: () => void }) => {
         document.body.addEventListener("keyup", log);
     }
     function save() {
-        if (recording()) stopRecording();
-        if (accelerator() === "") return;
         const current = store.settings.keybinds;
         const keybind = {
             accelerator: accelerator(),
