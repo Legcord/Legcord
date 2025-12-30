@@ -11,3 +11,12 @@
     right: 0;
     transform: translate(-7px, -50%);
 }
+.error {
+    color: var(--control-critical-secondary-text-default);
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+
+    margin: 0;
+    margin-left: 5px;
+}
