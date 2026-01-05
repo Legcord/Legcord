@@ -1,5 +1,5 @@
 import type { Node } from "@vencord/venmic";
-import { For, Show, createSignal } from "solid-js";
+import { For, Show, createSignal, onCleanup } from "solid-js";
 import { Dropdown } from "../../settings/components/Dropdown.jsx";
 import { SegmentedControl } from "../../settings/components/SegmentedControl.jsx";
 import classes from "./ScreensharePicker.module.css";
@@ -88,6 +88,8 @@ export const ScreensharePicker = (props: {
         window.legcord.screenshare.start("none", "", false);
         props.close();
     }
+    onCleanup(closeAndSave);
+
     return (
         <ModalRoot size={ModalSizes.MEDIUM} style="max-height: 90vh;">
             <ModalHeader close={closeAndSave}>Screenshare</ModalHeader>
