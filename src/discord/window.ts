@@ -213,43 +213,39 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     passedWindow.setTouchBar(mainTouchBar);
     passedWindow.webContents.on("page-title-updated", (e, title) => {
         const legcordSuffix = " - Legcord"; /* identify */
-
-        // FIXME - This is a bit of a mess. I'm not sure how to clean it up.
-        if (process.platform === "win32") {
-            if (title.startsWith("•"))
-                return passedWindow.setOverlayIcon(
-                    nativeImage.createFromPath(path.join(import.meta.dirname, "../", "/assets/badge-11.ico")),
-                    "You have some unread messages.",
-                );
-            if (title.startsWith("(")) {
-                const pings = Number.parseInt(/\((\d+)\)/.exec(title)![1]);
-                if (pings > 9) {
-                    return passedWindow.setOverlayIcon(
-                        nativeImage.createFromPath(path.join(import.meta.dirname, "../", "/assets/badge-10.ico")),
-                        "You have some unread messages.",
-                    );
-                } else {
-                    return passedWindow.setOverlayIcon(
-                        nativeImage.createFromPath(path.join(import.meta.dirname, "../", `/assets/badge-${pings}.ico`)),
-                        "You have some unread messages.",
-                    );
-                }
-            }
-            passedWindow.setOverlayIcon(null, "");
-        }
-        if (process.platform === "darwin") {
-            if (title.startsWith("•")) return app.dock?.setBadge("•");
-            if (title.startsWith("(")) {
-                if (getConfig("bounceOnPing")) app.dock?.bounce();
-                return app.setBadgeCount(Number.parseInt(/\((\d+)\)/.exec(title)![1]));
-            }
-            app.setBadgeCount(0);
-        }
         if (!title.endsWith(legcordSuffix)) {
             e.preventDefault();
-            void passedWindow.webContents.executeJavaScript(
-                `document.title = '${title.replace("Discord |", "") + legcordSuffix}'`,
-            );
+            const newTitle = title.replace("Discord |", "") + legcordSuffix;
+            passedWindow.setTitle(newTitle);
+        };
+
+        const isWin32 = process.platform === "win32";
+        const isDarwin = process.platform === "darwin";
+        if (!isWin32 && !isDarwin) return;
+
+        const badgeImage = (name: string) => nativeImage.createFromPath(path.join(import.meta.dirname, "../assets", `${name}.ico`));
+        const overlayDesc = "You have some unread messages.";
+
+        if (title.startsWith("(")) {
+            const pings = Number.parseInt(/\((\d+)\)/.exec(title)![1]);
+            if (isWin32) {
+                passedWindow.setOverlayIcon(badgeImage(`badge-${Math.min(10, pings)}`), overlayDesc);
+            } else {
+                if (getConfig("bounceOnPing")) app.dock?.bounce();
+                app.setBadgeCount(pings);
+            }
+        } else if (title.startsWith("•")) {
+            if (isWin32) {
+                passedWindow.setOverlayIcon(badgeImage("badge-11"), overlayDesc);
+            } else {
+                app.dock?.setBadge("•");
+            }
+        } else {
+            if (isWin32) {
+                passedWindow.setOverlayIcon(null, "");
+            } else {
+                app.setBadgeCount(0);
+            }
         }
     });
     injectThemesMain(passedWindow);
