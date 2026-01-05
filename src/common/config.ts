@@ -72,37 +72,36 @@ export function checkForDataFolder(): void {
     }
 }
 
+let configCache: undefined | Settings = undefined;
 export function getConfigLocation(): string {
     const userDataPath = app.getPath("userData");
     const storagePath = join(userDataPath, "/storage/");
     return `${storagePath}settings.json`;
 }
-
+function updateConfigCache() {
+    if(configCache) return;
+    const rawData = readFileSync(getConfigLocation(), "utf-8");
+    configCache = JSON.parse(rawData) as Settings;
+}
 export function getConfig<K extends keyof Settings>(object: K): Settings[K] {
     if (process.argv.includes("--safe-mode")) {
         return safeMode[object];
-    }
-    const rawData = readFileSync(getConfigLocation(), "utf-8");
-    const returnData = JSON.parse(rawData) as Settings;
-    return returnData[object];
+    };
+
+    updateConfigCache();
+    return configCache![object];
 }
 export function setConfig<K extends keyof Settings>(object: K, toSet: Settings[K]): void {
-    const rawData = readFileSync(getConfigLocation(), "utf-8");
-    const parsed = JSON.parse(rawData) as Settings;
-    parsed[object] = toSet;
-    const toSave = JSON.stringify(parsed, null, 4);
+    updateConfigCache();
+    configCache![object] = toSet;
+    const toSave = JSON.stringify(configCache, null, 4);
     writeFileSync(getConfigLocation(), toSave, "utf-8");
 }
 export function setConfigBulk(object: Settings): void {
-    let existingData = {};
-    try {
-        const existingDataBuffer = readFileSync(getConfigLocation(), "utf-8");
-        existingData = JSON.parse(existingDataBuffer.toString()) as Settings;
-    } catch (_error) {
-        // Ignore errors when the file doesn't exist or parsing fails
-    }
+    updateConfigCache();
     // Merge the existing data with the new data
-    const mergedData = { ...existingData, ...object };
+    const mergedData = { ...configCache, ...object };
+    configCache = mergedData;
     // Write the merged data back to the file
     const toSave = JSON.stringify(mergedData, null, 4);
     writeFileSync(getConfigLocation(), toSave, "utf-8");
@@ -139,18 +138,17 @@ export function checkIfConfigExists(): void {
 }
 export function checkIfConfigIsBroken(): void {
     try {
-        const settingsData = readFileSync(getConfigLocation(), "utf-8");
-        const settingsObject = JSON.parse(settingsData) as Settings;
+        updateConfigCache();
 
         let configWasFine = true;
-        const settingsKeys = Object.keys(settingsObject) as (keyof Settings)[];
+        const settingsKeys = Object.keys(configCache!) as (keyof Settings)[];
         const defaultKeys = Object.keys(defaults) as (keyof Settings)[];
 
         const missingKeysInSettings = defaultKeys.filter((key) => !settingsKeys.includes(key));
         configWasFine = missingKeysInSettings.length === 0;
 
         defaultKeys.forEach((key: keyof Settings) => {
-            const valueInSettings = settingsObject[key];
+            const valueInSettings = configCache![key];
             const valueInDefaults = defaults[key];
             if (!valueInSettings || !valueInDefaults) return;
             if (typeof valueInDefaults !== typeof valueInSettings) {
