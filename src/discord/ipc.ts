@@ -33,21 +33,21 @@ function ifExistsRead(path: string): string | undefined {
 export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.handle("getShelterBundle", () => {
         return {
-            js: ifExistsRead(path.join(app.getPath("userData"), "shelter.js")),
+            js: ifExistsRead(path.join(userDataPath, "shelter.js")),
             enabled: true,
         };
     });
     ipcMain.handle("getVencordBundle", () => {
         return {
-            js: ifExistsRead(path.join(app.getPath("userData"), "vencord.js")),
-            css: ifExistsRead(path.join(app.getPath("userData"), "vencord.css")),
+            js: ifExistsRead(path.join(userDataPath, "vencord.js")),
+            css: ifExistsRead(path.join(userDataPath, "vencord.css")),
             enabled: getConfig("mods").includes("vencord"),
         };
     });
     ipcMain.handle("getEquicordBundle", () => {
         return {
-            js: ifExistsRead(path.join(app.getPath("userData"), "equicord.js")),
-            css: ifExistsRead(path.join(app.getPath("userData"), "equicord.css")),
+            js: ifExistsRead(path.join(userDataPath, "equicord.js")),
+            css: ifExistsRead(path.join(userDataPath, "equicord.css")),
             enabled: getConfig("mods").includes("equicord"),
         };
     });
@@ -55,8 +55,8 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         const enabled = getConfig("mods").includes("custom");
         if (enabled) {
             return {
-                js: ifExistsRead(path.join(app.getPath("userData"), "custom.js")),
-                css: ifExistsRead(path.join(app.getPath("userData"), "custom.css")),
+                js: ifExistsRead(path.join(userDataPath, "custom.js")),
+                css: ifExistsRead(path.join(userDataPath, "custom.css")),
                 enabled,
             };
         }
