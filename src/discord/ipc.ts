@@ -248,9 +248,6 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.on("openStorageFolder", () => {
         shell.showItemInFolder(storagePath);
     });
-    ipcMain.on("openThemesFolder", () => {
-        shell.showItemInFolder(themesPath);
-    });
     ipcMain.on("openPluginsFolder", () => {
         shell.showItemInFolder(pluginsPath);
     });
