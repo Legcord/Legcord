@@ -1,9 +1,9 @@
 import type { Node } from "@vencord/venmic";
 import type { Game, GameList, ProcessInfo } from "arrpc";
+import type { IPCSources } from "../shelter/screenshare/components/SourceCard.tsx";
 import type { Keybind } from "./keybind.js";
 import type { Settings } from "./settings.js";
 import type { ThemeManifest } from "./themeManifest.js";
-import type { IPCSources } from "../shelter/screenshare/components/SourceCard.tsx";
 
 export interface LegcordWindow {
     window: {
