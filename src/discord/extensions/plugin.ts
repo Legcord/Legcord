@@ -18,7 +18,7 @@ await app.whenReady().then(() => {
                 with: { type: "json" },
             })) as { name: string; author: string; type: "json" };
 
-            void session.defaultSession.loadExtension(`${pluginFolder}/${file}`); // NOTE - Awaiting this will cause plugins to not inject
+            void session.defaultSession.extensions.loadExtension(`${pluginFolder}/${file}`); // NOTE - Awaiting this will cause plugins to not inject
             console.log(`[Mod loader] Loaded ${manifest.name} made by ${manifest.author}`);
         } catch (err) {
             console.error(err);
