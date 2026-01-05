@@ -3,6 +3,7 @@ import type { Game, GameList, ProcessInfo } from "arrpc";
 import type { Keybind } from "./keybind.js";
 import type { Settings } from "./settings.js";
 import type { ThemeManifest } from "./themeManifest.js";
+import type { IPCSources } from "../shelter/screenshare/components/SourceCard.tsx";
 
 export interface LegcordWindow {
     window: {
@@ -45,7 +46,9 @@ export interface LegcordWindow {
         isPowerSavingEnabled: () => boolean;
     };
     screenshare: {
-        getSources: undefined;
+        getSources: (
+            callback: (event: Electron.IpcRendererEvent, sources: Array<IPCSources>, ...args: unknown[]) => void,
+        ) => void;
         start: (id: string, name: string, audio: boolean) => void;
         venmicStart: (include: Node[]) => Promise<boolean>;
         venmicSystemStart: (exclude: Node[]) => Promise<boolean>;

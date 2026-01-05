@@ -57,8 +57,7 @@ function onStreamEnd(dispatch: StreamDispatch) {
 
 export function onLoad() {
     log("Legcord Screenshare Module");
-    // @ts-expect-error fix types
-    window.legcord.screenshare.getSources(async (_event: Event, sources: IPCSources[]) => {
+    window.legcord.screenshare.getSources(async (_event: Electron.IpcRendererEvent, sources: IPCSources[]) => {
         let audioSources: Node[] | undefined;
         if (window.legcord.platform === "linux") {
             const venmic = await window.legcord.screenshare.venmicList();
