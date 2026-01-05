@@ -52,10 +52,6 @@ async function load() {
         });
         })();
         `);
-        addScript(`
-        shelter.plugins.removePlugin("armcord-settings")
-        shelter.plugins.removePlugin("armcord-screenshare")
-    `);
         if (ipcRenderer.sendSync("getConfig", "disableAutogain")) {
             injectJS("legcord://assets/js/disableAutogain.js");
         }
