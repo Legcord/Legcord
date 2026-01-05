@@ -217,13 +217,14 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
             e.preventDefault();
             const newTitle = title.replace("Discord |", "") + legcordSuffix;
             passedWindow.setTitle(newTitle);
-        };
+        }
 
         const isWin32 = process.platform === "win32";
         const isDarwin = process.platform === "darwin";
         if (!isWin32 && !isDarwin) return;
 
-        const badgeImage = (name: string) => nativeImage.createFromPath(path.join(import.meta.dirname, "../assets", `${name}.ico`));
+        const badgeImage = (name: string) =>
+            nativeImage.createFromPath(path.join(import.meta.dirname, "../assets", `${name}.ico`));
         const overlayDesc = "You have some unread messages.";
 
         if (title.startsWith("(")) {

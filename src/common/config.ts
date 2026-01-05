@@ -79,14 +79,14 @@ export function getConfigLocation(): string {
     return `${storagePath}settings.json`;
 }
 function updateConfigCache() {
-    if(configCache) return;
+    if (configCache) return;
     const rawData = readFileSync(getConfigLocation(), "utf-8");
     configCache = JSON.parse(rawData) as Settings;
 }
 export function getConfig<K extends keyof Settings>(object: K): Settings[K] {
     if (process.argv.includes("--safe-mode")) {
         return safeMode[object];
-    };
+    }
 
     updateConfigCache();
     return configCache![object];

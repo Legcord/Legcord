@@ -74,7 +74,7 @@ async function load() {
 
     observer.observe(document.body, {
         childList: true,
-        subtree: true
+        subtree: true,
     });
 }
 load();
