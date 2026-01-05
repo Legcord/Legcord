@@ -17,7 +17,7 @@ export const TextBoxItem = (props: {
             <div class={classes.note}>{props.note}</div>
             <br />
             <TextBox value={props.value} onInput={props.onInput} />
-            <Divider />
+            <Divider mt />
         </div>
     );
 };
