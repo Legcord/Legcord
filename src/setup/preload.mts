@@ -1,9 +1,11 @@
 const { contextBridge, ipcRenderer } = require("electron");
 import type { Settings } from "../@types/settings.js";
 
+const setupOS = ipcRenderer.sendSync("setup-getOS") as string;
+
 contextBridge.exposeInMainWorld("setup", {
     restart: () => ipcRenderer.send("setup-restart"),
-    os: ipcRenderer.sendSync("setup-getOS") as string,
+    os: setupOS,
     saveSettings: (...args: [Settings]) => ipcRenderer.send("setup-saveSettings", ...args),
     getLang: (toGet: string) =>
         ipcRenderer.invoke("setup-getLang", toGet).then((result: string) => {
@@ -11,7 +13,7 @@ contextBridge.exposeInMainWorld("setup", {
         }),
 });
 
-if (ipcRenderer.sendSync("setup-getOS") !== "darwin") {
+if (setupOS !== "darwin") {
     document.addEventListener("DOMContentLoaded", () => {
         const css = document.createElement("style");
         css.innerHTML = `.bg { 

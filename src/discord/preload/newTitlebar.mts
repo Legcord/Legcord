@@ -1,16 +1,13 @@
 const { ipcRenderer } = require("electron");
 import { addStyle } from "../../common/dom.js";
-import { sleep } from "../../common/sleep.js";
 
-if (
-    ipcRenderer.sendSync("getConfig", "windowStyle") === "default" ||
-    ipcRenderer.sendSync("getConfig", "windowStyle") === "overlay"
-) {
+const windowStyle = ipcRenderer.sendSync("getConfig", "windowStyle");
+if (windowStyle === "default" || windowStyle === "overlay") {
     document.addEventListener("DOMContentLoaded", () => {
-        document.body.setAttribute("legcord-platform", ipcRenderer.sendSync("getOS"));
+        const os = ipcRenderer.sendSync("getOS");
+        document.body.setAttribute("legcord-platform", os);
         addStyle("legcord://assets/css/baseTitlebar.css");
-        sleep(500);
-        switch (ipcRenderer.sendSync("getOS")) {
+        switch (os) {
             case "darwin":
                 // breaks traffic lights with bar__ and hidden__ classes
                 // document.body.setAttribute("class", "platform-osx");
