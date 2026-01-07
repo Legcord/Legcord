@@ -94,7 +94,7 @@ export const KeybindMaker = (props: { close: () => void }) => {
                 <span style="display: flex">
                     <Header tag={HeaderTags.H5}>Accelerator</Header>
                     <Show when={!recording() && accelerator() && !containsNonModifier}>
-                        <p class={classes.error}>Modifier-only shortcuts are not supported.</p>
+                        <p class={classes.error}>This key combination is invalid or not supported.</p>
                     </Show>
                 </span>
                 <div class={classes.grabBox}>

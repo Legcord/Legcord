@@ -8,9 +8,11 @@ export function registerGlobalKeybinds() {
     const keybinds = getConfig("keybinds");
     keybinds.forEach((keybind: Keybind) => {
         if (keybind.enabled && keybind.global) {
-            globalShortcut.register(keybind.accelerator, () => {
-                runAction(keybind);
-            });
+            try {
+                globalShortcut.register(keybind.accelerator, () => {
+                    runAction(keybind);
+                });
+            } catch {}
         }
     });
 }
