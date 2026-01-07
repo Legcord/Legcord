@@ -33,6 +33,7 @@ export const KeybindMaker = (props: { close: () => void }) => {
 
     let logged: string[] = [];
     let containsNonModifier = false;
+    let containsNumpadKey = false;
     let timeout: NodeJS.Timeout | null = null;
     function log(event: KeyboardEvent) {
         const key = event.key.replace(" ", "Space");
@@ -41,7 +42,11 @@ export const KeybindMaker = (props: { close: () => void }) => {
         } else {
             console.log(key);
             logged.unshift(key);
-            if (event.location === 0) containsNonModifier = true;
+            if (event.location === 0) {
+                containsNonModifier = true;
+            } else if (event.location === 3) {
+                containsNumpadKey = true;
+            }
             setAccelerator(logged.join("+"));
         }
         if (timeout) clearTimeout(timeout);
@@ -66,6 +71,7 @@ export const KeybindMaker = (props: { close: () => void }) => {
 
         logged = [];
         containsNonModifier = false;
+        containsNumpadKey = false;
         setAccelerator("");
         console.log("Recording start");
         document.body.addEventListener("keyup", log);
@@ -93,7 +99,7 @@ export const KeybindMaker = (props: { close: () => void }) => {
             <ModalBody>
                 <span style="display: flex">
                     <Header tag={HeaderTags.H5}>Accelerator</Header>
-                    <Show when={!recording() && accelerator() && !containsNonModifier}>
+                    <Show when={containsNumpadKey || (!recording() && accelerator() && !containsNonModifier)}>
                         <p class={classes.error}>This key combination is invalid or not supported.</p>
                     </Show>
                 </span>
@@ -152,7 +158,7 @@ export const KeybindMaker = (props: { close: () => void }) => {
                 confirmText="Add"
                 onConfirm={save}
                 close={props.close}
-                disabled={recording() || !accelerator() || !containsNonModifier}
+                disabled={recording() || !accelerator() || !containsNonModifier || containsNumpadKey}
             />
         </ModalRoot>
     );
