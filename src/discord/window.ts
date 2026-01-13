@@ -12,6 +12,7 @@ import {
 } from "electron";
 import contextMenu from "electron-context-menu";
 import { firstRun, getConfig, setConfig } from "../common/config.js";
+import { navigateTo } from "../common/dom.js";
 import { forceQuit, setForceQuit } from "../common/forceQuit.js";
 import { initQuickCss, injectThemesMain } from "../common/themes.js";
 import { getWindowState, setWindowState } from "../common/windowState.js";
@@ -19,7 +20,7 @@ import { init } from "../main.js";
 import { registerGlobalKeybinds } from "./globalKeybinds.js";
 import { registerIpc } from "./ipc.js";
 import { setMenu } from "./menu.js";
-import { startRPC } from "./rpcProcess.js";
+import { startRPC, stopRPC } from "./rpcProcess.js";
 import { registerCustomHandler } from "./screenshare.js";
 import { mainTouchBar } from "./touchbar.js";
 import { createTray, tray } from "./tray.js";
@@ -67,6 +68,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
 
   // REVIEW - Test the protocol warning. I was not sure how to get it to pop up. For now I've voided the promises.
 
+
   const ignoreProtocolWarning = getConfig("ignoreProtocolWarning");
   registerIpc(passedWindow);
   registerVenmicIpc();
@@ -113,6 +115,45 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
   passedWindow.webContents.on("frame-created", (_, { frame }) => {
     if (!frame) {
       return;
+      
+    const ignoreProtocolWarning = getConfig("ignoreProtocolWarning");
+    registerIpc(passedWindow);
+    registerVenmicIpc();
+    if (getConfig("mobileMode")) {
+        passedWindow.webContents.userAgent =
+            "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.149 Mobile Safari/537.36";
+    } else {
+        let osType = process.platform === "darwin" ? "Macintosh" : process.platform === "win32" ? "Windows" : "Linux";
+        if (osType === "Linux") osType = `X11; ${osType}`;
+        const chromeVersion = process.versions.chrome;
+        const userAgent = `Mozilla/5.0 (${osType} ${os.arch()}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chromeVersion} Safari/537.36`;
+        passedWindow.webContents.userAgent = userAgent;
+    }
+    if (mainWindows.length === 1) {
+        app.on("second-instance", (_event, commandLine, _workingDirectory, additionalData) => {
+            void (async () => {
+                // Print out data received from the second instance.
+                console.log(additionalData);
+
+                if (!getConfig("multiInstance")) {
+                    // Someone tried to run a second instance, we should focus our window.
+                    if (passedWindow) {
+                        if (passedWindow.isMinimized()) passedWindow.restore();
+                        passedWindow.show();
+                        passedWindow.focus();
+                    }
+                    if (commandLine && commandLine.length > 0) {
+                        console.log(commandLine);
+                        const lastArg = commandLine.pop();
+                        if (lastArg?.startsWith("discord://-")) {
+                            navigateTo(passedWindow, lastArg.replace("discord://-", ""));
+                        }
+                    }
+                } else {
+                    await init();
+                }
+            })();
+        });
     }
     frame.once("dom-ready", async () => {
       if (
@@ -246,11 +287,48 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     });
   });
 
+
   if (getConfig("tray") === "dynamic") {
     passedWindow.webContents.on("page-favicon-updated", (_, favicons) => {
       try {
         let favicon = nativeImage.createFromDataURL(favicons[0]);
 
+    // fix UMG video playback
+    passedWindow.webContents.session.webRequest.onBeforeSendHeaders(
+        { urls: ["https://www.youtube.com/embed/*"] },
+        ({ requestHeaders }, callback) => {
+            requestHeaders.Referer = "https://google.com";
+            callback({ requestHeaders });
+        },
+    );
+    if (getConfig("tray") === "dynamic") {
+        passedWindow.webContents.on("page-favicon-updated", (_, favicons) => {
+            try {
+                let favicon = nativeImage.createFromDataURL(favicons[0]);
+
+                switch (process.platform) {
+                    case "darwin":
+                        favicon = favicon.resize({ height: 22 });
+                        break;
+                    case "win32":
+                        favicon = favicon.resize({ height: 32 });
+                        break;
+                }
+
+                tray.setImage(favicon);
+            } catch {
+                return;
+            }
+        });
+    }
+    initQuickCss(passedWindow);
+    passedWindow.setTouchBar(mainTouchBar);
+    app.on("open-url", (_event, url) => {
+        navigateTo(passedWindow, url.replace("discord://-", ""));
+    });
+
+    passedWindow.webContents.on("page-title-updated", (e, title) => {
+        const legcordSuffix = " - Legcord"; /* identify */
         switch (process.platform) {
           case "darwin":
             favicon = favicon.resize({ height: 22 });

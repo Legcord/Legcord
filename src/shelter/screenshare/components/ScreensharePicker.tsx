@@ -1,8 +1,10 @@
 import type { Node } from "@vencord/venmic";
-import { For, Show, createSignal } from "solid-js";
+import { For, Show, createSignal, onCleanup } from "solid-js";
 import { Dropdown } from "../../settings/components/Dropdown.jsx";
+import { SegmentedControl } from "../../settings/components/SegmentedControl.jsx";
 import classes from "./ScreensharePicker.module.css";
 import { type IPCSources, SourceCard } from "./SourceCard.jsx";
+
 const {
     ui: {
         ModalRoot,
@@ -86,8 +88,10 @@ export const ScreensharePicker = (props: {
         window.legcord.screenshare.start("none", "", false);
         props.close();
     }
+    onCleanup(closeAndSave);
+
     return (
-        <ModalRoot size={ModalSizes.MEDIUM}>
+        <ModalRoot size={ModalSizes.MEDIUM} style="max-height: 90vh;">
             <ModalHeader close={closeAndSave}>Screenshare</ModalHeader>
             <ModalBody>
                 <div class={classes.sources}>
@@ -110,41 +114,49 @@ export const ScreensharePicker = (props: {
                     <Divider mt mb />
                     <div class={classes.qualityBox}>
                         <div>
-                            <Header tag={HeaderTags.H4}>Resolution</Header>
-                            <Dropdown
+                            <Header class={classes.header} tag={HeaderTags.H4}>
+                                Resolution
+                            </Header>
+                            <SegmentedControl
                                 value={store.resolution}
-                                onChange={(e) => {
-                                    store.resolution = Number(e.currentTarget.value);
+                                onChange={(v) => {
+                                    store.resolution = Number(v);
                                 }}
-                            >
-                                <option value="480">480p</option>
-                                <option value="720">720p</option>
-                                <option value="1080">1080p</option>
-                                <option value="1440">1440p</option>
-                                <option value="2160">2160p</option>
-                            </Dropdown>
-                        </div>
-                        <div>
-                            <Header tag={HeaderTags.H4}>FPS</Header>
-                            <Dropdown
-                                value={store.fps}
-                                onChange={(e) => {
-                                    store.fps = Number(e.currentTarget.value);
-                                }}
-                            >
-                                <option value="5">5</option>
-                                <option value="15">15</option>
-                                <option value="30">30</option>
-                                <option value="60">60</option>
-                            </Dropdown>
+                                options={[
+                                    { label: "480p", value: "480" },
+                                    { label: "720p", value: "720" },
+                                    { label: "1080p", value: "1080" },
+                                    { label: "1440p", value: "1440" },
+                                    { label: "2160p", value: "2160" },
+                                ]}
+                            />
                         </div>
                         <div>
                             <Show when={window.legcord.platform !== "darwin"}>
-                                <Header tag={HeaderTags.H4}>Audio</Header>
+                                <Header class={classes.header} tag={HeaderTags.H4}>
+                                    Audio
+                                </Header>
                                 <div class={classes.checkbox}>
                                     <Checkbox checked={audio()} onChange={setAudio} />
                                 </div>
                             </Show>
+                        </div>
+                        <div>
+                            <Header class={classes.header} tag={HeaderTags.H4}>
+                                FPS
+                            </Header>
+                            <SegmentedControl
+                                value={store.fps}
+                                onChange={(v) => {
+                                    store.fps = Number(v);
+                                }}
+                                options={[
+                                    { label: "5", value: "5" },
+                                    { label: "15", value: "15" },
+                                    { label: "30", value: "30" },
+                                    { label: "60", value: "60" },
+                                ]}
+                            />
                         </div>
                     </div>
 
@@ -153,19 +165,20 @@ export const ScreensharePicker = (props: {
                         <Header tag={HeaderTags.H4}>Venmic</Header>
                         <Dropdown
                             value="Venmic disabled"
-                            onChange={(e) => {
-                                const source = props.audioSources!.find(
-                                    (node) => node["node.name"] === e.currentTarget.value,
-                                );
+                            onChange={(v) => {
+                                const source = props.audioSources!.find((node) => node["node.name"] === v);
                                 if (!source) return;
                                 setAudioSource(source);
                             }}
-                        >
-                            <option value="Venmic disabled">Venmic disabled</option>
-                            <For each={props.audioSources}>
-                                {(source: Node) => <option value={source["node.name"]}>{source["node.name"]}</option>}
-                            </For>
-                        </Dropdown>
+                            limitHeight
+                            options={[
+                                { label: "Venmic disabled", value: "Venmic disabled" },
+                                ...(props.audioSources?.map((s) => ({
+                                    label: s["node.name"],
+                                    value: s["node.name"],
+                                })) ?? []),
+                            ]}
+                        />
                     </Show>
                 </div>
             </ModalBody>

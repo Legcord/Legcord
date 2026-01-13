@@ -1,6 +1,7 @@
 import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { TouchBar, app, nativeImage } from "electron";
+import { navigateTo } from "../common/dom.js";
 import { deafenToggle, leaveCall, muteToggle } from "../common/keybindActions.js";
 import { mainWindows } from "./window.js";
 
@@ -16,20 +17,8 @@ const scrollableList = new TouchBar({
             select(selectedIndex) {
                 //@ts-expect-error Electron types are wrong
                 const guildID = guildItems[selectedIndex].accessibilityLabel;
-
-                mainWindows.forEach((mainWindow) => {
-                    mainWindow.webContents.executeJavaScript(`shelter.flux.dispatcher.dispatch({
-        "type": "CHANNEL_PRELOAD",
-        "guildId": "${guildID}",
-        "channelId": null,
-        "context": "APP"
-    })`);
-                    mainWindow.webContents.executeJavaScript(`shelter.flux.dispatcher.dispatch({
-            "type": "CHANNEL_SELECT",
-            "guildId": "${guildID}",
-            "channelId": null,
-            "messageId": null
-        })`);
+                mainWindows.forEach((win) => {
+                    navigateTo(win, `/channels/${guildID}`);
                 });
             },
         }),

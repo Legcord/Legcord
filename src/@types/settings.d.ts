@@ -66,5 +66,8 @@ export interface Settings {
     additionalArguments: string;
     noBundleUpdates: boolean;
     overlayButtonColor: string;
+    processScanning: boolean;
+    windowsLegacyScanning: boolean;
+    scanInterval: number;
     modCache?: Record<ValidMods, string>;
 }

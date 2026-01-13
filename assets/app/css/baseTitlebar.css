@@ -47,6 +47,6 @@
     height: 100%;
     width: 33.3%;
     text-align: center;
-    color: var(--interactive-normal);
+    color: var(--interactive-icon-default);
     cursor: default;
 }

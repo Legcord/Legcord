@@ -1,7 +1,5 @@
-import { Show, createSignal } from "solid-js";
-import type { KeybindActions } from "../../../@types/keybind.js";
-import { Dropdown } from "./Dropdown.jsx";
-import classes from "./KeybindMaker.module.css";
+import type { Game } from "arrpc";
+import { createSignal } from "solid-js";
 const {
     ui: {
         ModalRoot,
@@ -17,14 +15,15 @@ const {
     },
     plugin: { store },
 } = shelter;
-export const AddDetectableModal = (props: { close: () => void }) => {
+export const AddDetectableModal = (props: { close: () => void; executable: string }) => {
     const [appName, setAppName] = createSignal("");
     const [appId, setAppId] = createSignal("");
-    const [executable, setExecutable] = createSignal("");
+    const [themes, setThemes] = createSignal("");
+    const [aliases, setAliases] = createSignal("");
     const [enabled, setEnabled] = createSignal(true);
 
     function save() {
-        if (!appName().trim() || !appId().trim() || !executable().trim()) {
+        if (!appName().trim() || !appId().trim() || !props.executable) {
             return showToast({
                 title: "Missing fields",
                 content: "Please fill in all fields before adding.",
@@ -32,15 +31,33 @@ export const AddDetectableModal = (props: { close: () => void }) => {
             });
         }
         const current = store.settings.detectables || [];
-        const detectable = {
+        const game: Game = {
             name: appName().trim(),
+            executables: [
+                {
+                    name: props.executable,
+                    is_launcher: false,
+                    os: window.legcord.platform as "win32" | "linux" | "darwin",
+                },
+            ],
             id: appId().trim(),
-            executable: executable().trim(),
-            enabled: enabled(),
+            aliases:
+                aliases()
+                    .split(",")
+                    .map((a) => a.trim()) || [],
+            hook: false,
+            overlay: true,
+            overlay_compatibility_hook: false,
+            overlay_methods: null,
+            overlay_warn: false,
+            themes:
+                themes()
+                    .split(",")
+                    .map((t) => t.trim()) || [],
         };
-        current.push(detectable);
+        current.push(game);
         store.settings.detectables = current;
-        window.legcord.rpc.addDetectable(detectable);
+        window.legcord.rpc.addDetectable(game);
         props.close();
     }
 
@@ -48,16 +65,18 @@ export const AddDetectableModal = (props: { close: () => void }) => {
         <ModalRoot size={ModalSizes.SMALL}>
             <ModalHeader close={props.close}>Add Detectable Application</ModalHeader>
             <ModalBody>
-                <Header tag={HeaderTags.H5}>App Name</Header>
+                <Header tag={HeaderTags.H5}>App Name*</Header>
                 <TextBox value={appName()} onInput={setAppName} placeholder="e.g. Discord" />
                 <Divider mt mb />
-                <Header tag={HeaderTags.H5}>App ID</Header>
+                <Header tag={HeaderTags.H5}>App ID*</Header>
                 <TextBox value={appId()} onInput={setAppId} placeholder="e.g. 1234567890" />
                 <Divider mt mb />
-                <Header tag={HeaderTags.H5}>Executable</Header>
-                <TextBox value={executable()} onInput={setExecutable} placeholder="e.g. Discord.exe" />
+                <Header tag={HeaderTags.H5}>Themes</Header>
+                <TextBox value={themes()} onInput={setThemes} placeholder="Action, Adventure" />
                 <Divider mt mb />
-                <label style={{ display: "flex", alignItems: "center", gap: "0.5em" }}>
+                <Header tag={HeaderTags.H5}>Aliases</Header>
+                <TextBox value={aliases()} onInput={setAliases} placeholder="Alias1, Alias2" />
+                <label style={{ display: "flex", "align-items": "center", gap: "0.5em" }}>
                     <input
                         type="checkbox"
                         checked={enabled()}

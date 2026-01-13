@@ -17,16 +17,18 @@
 
 .eyebrow {
     margin-bottom: 0px !important;
+    color: var(--text-strong);
 }
+
 .btn {
     border: none;
     background: none;
-    color: var(--interactive-active);
+    color: var(--interactive-text-active);
 
     transition: opacity 250ms;
 
     &:hover {
-        color: var(--interactive-hover);
+        color: var(--interactive-text-hover);
     }
 }
 

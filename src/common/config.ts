@@ -10,6 +10,9 @@ const defaults: Settings = {
     bounceOnPing: false,
     legcordCSP: true,
     minimizeToTray: true,
+    processScanning: true,
+    windowsLegacyScanning: false,
+    scanInterval: 5000,
     overlayButtonColor: "#121214",
     keybinds: [],
     audio: {

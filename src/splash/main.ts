@@ -5,6 +5,7 @@ import { getConfig } from "../common/config.js";
 
 export let splashWindow: BrowserWindow;
 export async function createSplashWindow(): Promise<void> {
+    if (getConfig("startMinimized")) return;
     splashWindow = new BrowserWindow({
         width: 300,
         height: 350,

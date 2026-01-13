@@ -1,5 +1,6 @@
 import type { Node } from "@vencord/venmic";
 import type { Game, GameList, ProcessInfo } from "arrpc";
+import type { IPCSources } from "../shelter/screenshare/components/SourceCard.tsx";
 import type { Keybind } from "./keybind.js";
 import type { Settings } from "./settings.js";
 import type { ThemeManifest } from "./themeManifest.js";
@@ -45,7 +46,9 @@ export interface LegcordWindow {
         isPowerSavingEnabled: () => boolean;
     };
     screenshare: {
-        getSources: undefined;
+        getSources: (
+            callback: (event: Electron.IpcRendererEvent, sources: Array<IPCSources>, ...args: unknown[]) => void,
+        ) => void;
         start: (id: string, name: string, audio: boolean) => void;
         venmicStart: (include: Node[]) => Promise<boolean>;
         venmicSystemStart: (exclude: Node[]) => Promise<boolean>;

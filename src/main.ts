@@ -26,7 +26,7 @@ export let settings: Settings;
 export let bypassSetup = false;
 checkForDataFolder();
 checkIfConfigExists();
-
+app.setAsDefaultProtocolClient("discord");
 app.on("render-process-gone", (_event, _webContents, details) => {
     if (details.reason === "crashed") {
         app.relaunch();

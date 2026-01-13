@@ -10,7 +10,7 @@
     color: var(--text-muted);
 }
 
-div[class^="listItem__"]:has([data-list-item-id="guildsnav___app-download-button"]) {
+div:has(> span [data-list-item-id="guildsnav___app-download-button"]) {
     display: none !important;
 }
 

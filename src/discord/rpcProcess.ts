@@ -1,25 +1,32 @@
 import path from "node:path";
-import { type BrowserWindow, utilityProcess } from "electron";
+import { Worker } from "node:worker_threads";
+import type { GameList } from "arrpc";
+import type { BrowserWindow } from "electron";
 import { getDetectables } from "../common/detectables.js";
-import { createInviteWindow } from "./window.js";
+import { navigateTo } from "../common/dom.js";
 
-let child: Electron.UtilityProcess;
-export let processList = [];
+let rpcWorker: Worker;
+export let processList: GameList[] = [];
 
 export function startRPC(window: BrowserWindow) {
-    child = utilityProcess.fork(path.join(import.meta.dirname, "rpc.js"), undefined, {
-        env: { detectables: JSON.stringify(getDetectables()) },
+    const rpcPath = path.join(__dirname, "rpc.js");
+
+    rpcWorker = new Worker(rpcPath, {
+        env: {
+            ...process.env,
+            detectables: JSON.stringify(getDetectables()),
+        },
     });
 
-    child.on("spawn", () => {
+    rpcWorker.on("online", () => {
         console.log("[arRPC] process started");
-        console.log(child.pid);
+        console.log(rpcWorker.threadId);
     });
 
-    child.on("message", (message) => {
+    rpcWorker.on("message", (message: string) => {
         const json = JSON.parse(message);
         if (json.type === "invite") {
-            createInviteWindow(json.code);
+            navigateTo(window, `/invite/${json.code}`);
         } else if (json.type === "activity") {
             console.log("activity pulse");
             console.log(json.data);
@@ -31,12 +38,22 @@ export function startRPC(window: BrowserWindow) {
         }
     });
 
-    child.on("exit", () => {
-        console.log("[arRPC] process exited");
-        console.log(child.pid);
+    rpcWorker.on("error", (err) => {
+        console.error("[arRPC] worker error:", err);
+    });
+
+    rpcWorker.on("exit", (code) => {
+        console.log("[arRPC] worker exited with code", code);
     });
 }
 
+export function stopRPC() {
+    if (rpcWorker) {
+        rpcWorker.terminate();
+        console.log("[arRPC] process terminated");
+    }
+}
+
 export function refreshProcessList() {
-    child.postMessage({ message: "refreshProcessList" });
+    rpcWorker.postMessage({ message: "refreshProcessList" });
 }

@@ -1,0 +1,32 @@
+.container {
+    min-height: var(--control-input-height-md);
+    background-color: var(--input-background-default);
+    border: 1px solid var(--input-border-default);
+    border-radius: var(--radius-sm);
+    display: flex;
+    overflow: hidden;
+}
+.item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+    cursor: pointer;
+    position: relative;
+    color: var(--text-default);
+    font-weight: var(--font-weight-medium);
+}
+.item:not(:first-child)::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 25%;
+    height: 50%;
+    width: 1px;
+    background-color: var(--border-subtle);
+}
+.item[aria-selected="true"] {
+    background-color: var(--interactive-background-selected);
+    color: var(--interactive-text-active);
+}

@@ -27,6 +27,9 @@
             "style": {
                 "noNonNullAssertion": "off",
                 "noUselessElse": "off" // NOTE - This rule seems broken
+            },
+            "a11y": {
+                "useKeyWithClickEvents": "off"
             }
         }
     }

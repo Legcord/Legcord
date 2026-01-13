@@ -43,8 +43,8 @@
         "@uwu/lune": "^1.5.1",
         "@uwu/shelter-defs": "^1.4.1",
         "babel-preset-solid": "^1.9.3",
-        "electron": "39.1.0",
-        "electron-builder": "^26.0.20",
+        "electron": "39.2.7",
+        "electron-builder": "^26.3.5",
         "lucide-solid": "^0.475.0",
         "rolldown": "1.0.0-beta.31",
         "rollup-plugin-copy": "^3.5.0",
@@ -55,7 +55,7 @@
         "xml-formatter": "^3.6.6"
     },
     "dependencies": {
-        "arrpc": "https://github.com/Legcord/arrpc.git#015c803a80288e3345ec55f8963015a626509007",
+        "arrpc": "https://github.com/Legcord/arrpc.git#0605ca72fda920919e4e75e80945512b9fb347f1",
         "electron-context-menu": "^4.0.4",
         "electron-is-dev": "^3.0.1",
         "electron-updater": "^6.6.2",

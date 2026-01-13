@@ -1,9 +1,11 @@
+import type { NativeImage } from "electron";
 import type { Accessor } from "solid-js";
 import classes from "./SourceCard.module.css";
+
 export interface IPCSources {
     id: string;
     name: string;
-    thumbnail: HTMLCanvasElement;
+    thumbnail: NativeImage;
 }
 interface SourceCardProps {
     source: IPCSources;

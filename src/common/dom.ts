@@ -1,3 +1,5 @@
+import type { BrowserWindow } from "electron";
+
 export function addStyle(styleUrl: string): void {
     const style = document.createElement("link");
     style.rel = "stylesheet";
@@ -27,4 +29,13 @@ export async function injectJS(inject: string): Promise<void> {
     el.appendChild(document.createTextNode(js));
 
     document.body.appendChild(el);
+}
+
+export function navigateTo(passedWindow: BrowserWindow, url: string): void {
+    console.log(`[legcord deeplink] Navigating to ${url}`);
+    passedWindow.webContents.executeJavaScript(`
+        history.pushState({}, null, "${url}");
+        window.dispatchEvent(new PopStateEvent("popstate", {}));
+    `);
+    passedWindow.focus();
 }

@@ -5,7 +5,12 @@ export const config: Configuration = {
     productName: "Legcord",
     artifactName: "Legcord-${version}-${os}-${arch}.${ext}",
     beforePack: "./scripts/build/sandboxFix.cjs",
-
+    protocols: [
+        {
+            name: "Discord",
+            schemes: ["discord"],
+        },
+    ],
     mac: {
         category: "public.app-category.social-networking",
         darkModeSupport: true,

@@ -1,25 +1,29 @@
-import type { ProcessInfo } from "arrpc";
+import type { GameList, ProcessInfo } from "arrpc";
 import { For, createSignal } from "solid-js";
 import { sleep } from "../../../common/sleep.js";
+import { AddDetectableModal } from "../components/AddDetectableModal.jsx";
 import { Dropdown } from "../components/Dropdown.jsx";
 import classes from "./RegisteredGames.module.css";
 const {
-    ui: { Header, HeaderTags, Divider, Button, ButtonSizes },
+    ui: { Header, HeaderTags, Divider, Button, ButtonSizes, openModal },
 } = shelter;
 
 export function RegisteredGamesPage() {
-    const [detectables, setDetectables] = createSignal<ProcessInfo[]>();
-    const [selectedDetectable, setSelectedDetectable] = createSignal("");
+    const [processList, setProcessList] = createSignal<ProcessInfo[]>();
+    const [detectables, setDetectables] = createSignal<GameList>();
+    const [selectedDetectable, setSelectedDetectable] = createSignal("refresh");
     function getDetectables() {
         window.legcord.rpc.refreshProcessList();
+        setDetectables(window.legcord.rpc.getDetectables());
         sleep(500).then(() => {
-            setDetectables(window.legcord.rpc.getProcessList());
+            setProcessList(window.legcord.rpc.getProcessList());
         });
     }
     getDetectables();
-    function addGame() {
-        // Logic to add a game
-        console.log("Game added");
+    function addNewGame() {
+        openModal(({ close }: { close: () => void }) => (
+            <AddDetectableModal close={close} executable={selectedDetectable()} />
+        ));
     }
     return (
         <>
@@ -28,27 +32,26 @@ export function RegisteredGamesPage() {
             <div class={classes.addBox}>
                 <Dropdown
                     value={selectedDetectable()}
-                    onChange={(e) => {
-                        const detectable = e.currentTarget.value;
-                        if (detectable === "refresh") {
+                    onChange={(v) => {
+                        if (v === "refresh") {
                             getDetectables();
                             setSelectedDetectable("");
                             console.log("Detectables refreshed");
                         } else {
-                            console.log("Selected detectable:", detectable);
-                            setSelectedDetectable(e.currentTarget.value);
+                            console.log("Selected detectable:", v);
+                            setSelectedDetectable(v);
                         }
                     }}
-                >
-                    <For each={detectables()}>
-                        {(process: ProcessInfo) => <option value={process[1]}>{process[1]}</option>}
-                    </For>
-                    <option value={"refresh"}>Refresh list</option>
-                </Dropdown>
-                <Button size={ButtonSizes.MEDIUM} onClick={addGame}>
+                    options={[
+                        ...(processList()?.map((p) => ({ label: p[1], value: p[1] })) ?? []),
+                        { label: "Refresh list", value: "refresh" },
+                    ]}
+                />
+                <Button size={ButtonSizes.MEDIUM} onClick={addNewGame}>
                     Add
                 </Button>
             </div>
+            <For each={detectables()}>{(detectable) => <div>{detectable.name}</div>}</For>
         </>
     );
 }

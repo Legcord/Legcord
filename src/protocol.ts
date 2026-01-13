@@ -16,6 +16,7 @@ protocol.registerSchemesAsPrivileged([
 ]);
 
 void app.whenReady().then(() => {
+    // Legcord custom internal protocol
     protocol.handle("legcord", (req) => {
         if (req.url.startsWith("legcord://plugins/")) {
             const url = req.url.replace("legcord://plugins/", "").split("/");

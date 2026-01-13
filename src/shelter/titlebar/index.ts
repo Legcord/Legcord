@@ -24,7 +24,7 @@ function injectButtonControls() {
     const elem = document.createElement("div");
     elem.innerHTML = titlebarNavControls;
     elem.id = "legcordNavControls";
-    document.body.prepend(elem);
+    document.body.append(elem);
     const minimize = document.getElementById("minimize");
     const maximize = document.getElementById("maximize");
     const quit = document.getElementById("quit");

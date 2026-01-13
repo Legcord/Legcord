@@ -1,27 +1,68 @@
-.acDropdown option {
-    color: var(--text-secondary);
-    font-weight: 400;
-    font-style: normal;
+.container {
+    margin-top: 8px;
+    margin-bottom: 24px;
+    position: relative;
 }
-.acDropdown {
-    margin-top: 10px;
-    margin-bottom: 20px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    width: 100%;
-    font-size: 25px;
-    -webkit-appearance: button;
-    -moz-appearance: button;
-    appearance: button;
-    background-color: var(--background-secondary-alt);
-    background-position: center right;
-    background-repeat: no-repeat;
-    border: 1px solid var(--background-floating);
-    border-radius: 2px;
+.valuewrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 8px;
+
     color: var(--text-default);
-    font-size: 1.2em;
+    font-weight: var(--font-weight-medium);
+    background-color: var(--input-background-default);
+    border: 1px solid var(--input-border-default);
+    border-radius: var(--radius-sm);
+    color: var(--input-text-default);
+    transition: border-color .1s ease;
+    box-sizing: border-box;
+    min-height: var(--control-input-height-md);
+
+    &::hover {
+        border-color: var(--input-border-hover);
+        transition: border-color .1s ease;
+    }
+}
+.value {
+    align-items: center;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    outline: none !important;
+    color: var(--text-default);
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.25;
+}
+.list {
+    min-height: 0;
+    margin: 0;
+    margin-top: 8px;
+    background-color: var(--background-surface-higher);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    position: absolute;
+    width: 100%;
+    z-index: 100;
+    overflow-y: auto;
+}
+option {
+    color: var(--text-subtle);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    align-items: center;
+    padding: 12px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--interactive-background-hover);
+        color: var(--interactive-text-hover);
+    }
+    &[aria-selected="true"] {
+        background-color: var(--interactive-background-selected);
+        color: var(--interactive-text-active);
+    }
 }

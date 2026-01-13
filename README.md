@@ -56,7 +56,37 @@ winget install --id=smartfrigde.Legcord  -e
 
 Not available yet.
 
-### Debian, Ubuntu and Raspbian repository
+### Debian, Ubuntu and Raspbian
+
+#### Install via .deb from GitHub Releases
+
+You can install Legcord directly using the `.deb` packages published on the GitHub Releases page.
+
+1. Go to the Releases page: https://github.com/Legcord/Legcord/releases
+2. Download the `.deb` that matches your architecture:
+   - `amd64` (most Intel/AMD 64‑bit PCs)
+   - `arm64` (AArch64, e.g. Raspberry Pi 4/5 64‑bit, ARM laptops)
+3. Install the downloaded file (this resolves dependencies automatically):
+
+```sh
+sudo apt install ./<downloaded-file>.deb
+```
+
+Alternatively, you can copy the asset link from the release and install via terminal:
+
+```sh
+# Replace the URL below with the copied link to the .deb asset from the Releases page
+wget -O legcord.deb "https://github.com/Legcord/Legcord/releases/download/<tag>/<asset>.deb"
+sudo apt install legcord.deb
+```
+
+If your system reports missing dependencies, you can also use this fallback:
+
+```sh
+sudo dpkg -i <downloaded-file>.deb || sudo apt -f install
+```
+
+#### Alternative: pacstall
 
 legcord-deb is available on [pacstall](https://pacstall.dev/packages/legcord-deb)
 ```sh

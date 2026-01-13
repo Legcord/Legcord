@@ -1,9 +1,10 @@
 import { join } from "node:path";
 import { Menu, Tray, app, nativeImage } from "electron";
 import { getConfig } from "../common/config.js";
+import { navigateTo } from "../common/dom.js";
 import { setForceQuit } from "../common/forceQuit.js";
 import { getDisplayVersion } from "../common/version.js";
-import { createInviteWindow, mainWindows } from "./window.js";
+import { mainWindows } from "./window.js";
 export let tray: Tray;
 
 export function createTray() {
@@ -66,7 +67,9 @@ export function createTray() {
         {
             label: "Support Discord Server",
             click() {
-                void createInviteWindow("TnhxcqynZ2");
+                mainWindows.forEach((mainWindow) => {
+                    navigateTo(mainWindow, "/invite/TnhxcqynZ2");
+                });
             },
         },
         {

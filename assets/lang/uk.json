@@ -131,5 +131,11 @@
     "settings-category-mods": "Моди",
     "settings-category-behaviour": "Поведінка",
     "settings-category-legacy": "Застарілі функції",
-    "settings-category-debug": "Параметри налагодження"
+    "settings-category-debug": "Параметри налагодження",
+    "settings-processScanning": "Сканування процесу",
+    "settings-processScanning-desc": "Увімкнення сканування запущених ігор для покращення виявлення Rich Presence.",
+    "settings-windowsLegacyScanning": "Сканування застарілих версій Windows",
+    "settings-windowsLegacyScanning-desc": "Використовує застарілий метод для процесів сканування у Windows (до версії 1.1.6). Може покращити сумісність у деяких системах, але менш ефективний.",
+    "settings-scanInterval": "Інтервал сканування (мс)",
+    "settings-scanInterval-desc": "Встановлює частоту (у мілісекундах) сканування процесу. Нижчі значення можуть покращити швидкість виявлення, але можуть збільшити використання процесора."
 }
