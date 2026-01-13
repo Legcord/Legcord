@@ -61,7 +61,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     passedWindow.setSize(835, 600);
     passedWindow.maximize();
     void passedWindow.webContents.executeJavaScript(
-      `document.body.setAttribute("isMaximized", "");`,
+      'document.body.setAttribute("isMaximized", "");',
     );
     passedWindow.hide();
   }
@@ -119,11 +119,12 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
   passedWindow.webContents.on("frame-created", (_, { frame }) => {
     if (!frame) return;
     frame.once("dom-ready", async () => {
-      if (
+      const isYoutube =
         frame.url.includes("youtube.com/embed/") ||
         frame.url.includes("youtube-nocookie.com/embed/") ||
-        (frame.url.includes("discordsays") && frame.url.includes("youtube.com"))
-      ) {
+        (frame.url.includes("discordsays") && frame.url.includes("youtube.com"));
+
+      if (isYoutube) {
         try {
           await frame.executeJavaScript(
             readFileSync(
@@ -224,13 +225,10 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     passedWindow.webContents.on("page-favicon-updated", (_, favicons) => {
       try {
         let favicon = nativeImage.createFromDataURL(favicons[0]);
-        switch (process.platform) {
-          case "darwin":
-            favicon = favicon.resize({ height: 22 });
-            break;
-          case "win32":
-            favicon = favicon.resize({ height: 32 });
-            break;
+        if (process.platform === "darwin") {
+          favicon = favicon.resize({ height: 22 });
+        } else if (process.platform === "win32") {
+          favicon = favicon.resize({ height: 32 });
         }
         tray.setImage(favicon);
       } catch {
@@ -257,10 +255,15 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
           "You have some unread messages.",
         );
       } else if (title.startsWith("(")) {
-        const pings = Number.parseInt(/\((\d+)\)/.exec(title)![1]);
+        const pingsMatch = /\((\d+)\)/.exec(title);
+        const pings = pingsMatch ? Number.parseInt(pingsMatch[1]) : 0;
         passedWindow.setOverlayIcon(
           nativeImage.createFromPath(
-            path.join(import.meta.dirname, "../", `/assets/badge-${pings > 9 ? 10 : pings}.ico`),
+            path.join(
+              import.meta.dirname,
+              "../",
+              `/assets/badge-${pings > 9 ? 10 : pings}.ico`,
+            ),
           ),
           "You have some unread messages.",
         );
@@ -272,7 +275,8 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
       if (title.startsWith("•")) app.dock?.setBadge("•");
       else if (title.startsWith("(")) {
         if (getConfig("bounceOnPing")) app.dock?.bounce();
-        app.setBadgeCount(Number.parseInt(/\((\d+)\)/.exec(title)![1]));
+        const pingsMatch = /\((\d+)\)/.exec(title);
+        app.setBadgeCount(pingsMatch ? Number.parseInt(pingsMatch[1]) : 0);
       } else {
         app.setBadgeCount(0);
       }
@@ -317,17 +321,25 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
   });
 
   passedWindow.on("focus", () => {
-    void passedWindow.webContents.executeJavaScript(`document.body.removeAttribute("unFocused");`);
+    void passedWindow.webContents.executeJavaScript(
+      'document.body.removeAttribute("unFocused");',
+    );
   });
   passedWindow.on("blur", () => {
-    void passedWindow.webContents.executeJavaScript(`document.body.setAttribute("unFocused", "");`);
+    void passedWindow.webContents.executeJavaScript(
+      'document.body.setAttribute("unFocused", "");',
+    );
   });
 
   passedWindow.on("maximize", () => {
-    void passedWindow.webContents.executeJavaScript(`document.body.setAttribute("isMaximized", "");`);
+    void passedWindow.webContents.executeJavaScript(
+      'document.body.setAttribute("isMaximized", "");',
+    );
   });
   passedWindow.on("unmaximize", () => {
-    void passedWindow.webContents.executeJavaScript(`document.body.removeAttribute("isMaximized");`);
+    void passedWindow.webContents.executeJavaScript(
+      'document.body.removeAttribute("isMaximized");',
+    );
   });
 
   if (getConfig("inviteWebsocket") && mainWindows.length === 1) {
@@ -339,7 +351,12 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
 
   registerGlobalKeybinds();
   const channel = getConfig("channel");
-  const baseUrl = channel === "canary" ? "https://canary.discord.com/app" : channel === "ptb" ? "https://ptb.discord.com/app" : "https://discord.com/app";
+  const baseUrl =
+    channel === "canary"
+      ? "https://canary.discord.com/app"
+      : channel === "ptb"
+        ? "https://ptb.discord.com/app"
+        : "https://discord.com/app";
   void passedWindow.loadURL(baseUrl);
 
   if (getConfig("skipSplash")) {
@@ -356,7 +373,9 @@ export function createWindow() {
     title: "Legcord",
     show: false,
     darkTheme: true,
-    icon: getConfig("customIcon") ?? path.join(import.meta.dirname, "../", "/assets/desktop.png"),
+    icon:
+      getConfig("customIcon") ??
+      path.join(import.meta.dirname, "../", "/assets/desktop.png"),
     frame: false,
     backgroundColor: "#202225",
     autoHideMenuBar: getConfig("autoHideMenuBar"),
@@ -374,7 +393,11 @@ export function createWindow() {
   if (style === "native") browserWindowOptions.frame = true;
   else if (style === "overlay") {
     browserWindowOptions.titleBarStyle = "hidden";
-    browserWindowOptions.titleBarOverlay = { color: getConfig("overlayButtonColor"), symbolColor: "#99aab5", height: 36 };
+    browserWindowOptions.titleBarOverlay = {
+      color: getConfig("overlayButtonColor"),
+      symbolColor: "#99aab5",
+      height: 36,
+    };
   }
 
   const transparency = getConfig("transparency");
@@ -404,7 +427,9 @@ export function createInviteWindow(code: string): void {
     height: 600,
     title: "Legcord Invite Manager",
     darkTheme: true,
-    icon: getConfig("customIcon") ?? path.join(import.meta.dirname, "../", "/assets/desktop.png"),
+    icon:
+      getConfig("customIcon") ??
+      path.join(import.meta.dirname, "../", "/assets/desktop.png"),
     frame: true,
     autoHideMenuBar: getConfig("autoHideMenuBar"),
     webPreferences: {
@@ -412,10 +437,12 @@ export function createInviteWindow(code: string): void {
       spellcheck: getConfig("spellcheck"),
     },
   });
-  inviteWindow.webContents.session.webRequest.onBeforeRequest((details, callback) => {
-    if (details.url.includes("ws://")) return callback({ cancel: true });
-    return callback({});
-  });
+  inviteWindow.webContents.session.webRequest.onBeforeRequest(
+    (details, callback) => {
+      if (details.url.includes("ws://")) return callback({ cancel: true });
+      return callback({});
+    },
+  );
   void inviteWindow.loadURL(`https://discord.com/invite/${code}`);
   inviteWindow.webContents.once("did-finish-load", () => {
     if (mainWindows[0] && !mainWindows[0].webContents.isLoading()) {
