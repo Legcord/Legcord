@@ -25,6 +25,7 @@ import { registerCustomHandler } from "./screenshare.js";
 import { mainTouchBar } from "./touchbar.js";
 import { createTray, tray } from "./tray.js";
 import { registerVenmicIpc } from "./venmic.js";
+
 export let mainWindows: BrowserWindow[] = [];
 export let inviteWindow: BrowserWindow;
 
@@ -35,7 +36,6 @@ contextMenu({
   prepend: (_defaultActions, parameters) => [
     {
       label: "Search with Google",
-      // Only show it when right-clicking text
       visible: parameters.selectionText.trim().length > 0,
       click: () => {
         void shell.openExternal(
@@ -45,7 +45,6 @@ contextMenu({
     },
     {
       label: "Search with DuckDuckGo",
-      // Only show it when right-clicking text
       visible: parameters.selectionText.trim().length > 0,
       click: () => {
         void shell.openExternal(
@@ -55,23 +54,22 @@ contextMenu({
     },
   ],
 });
+
 function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
   createTray();
   if (getWindowState("isMaximized") ?? false) {
-    passedWindow.setSize(835, 600); //just so the whole thing doesn't cover whole screen
+    passedWindow.setSize(835, 600);
     passedWindow.maximize();
     void passedWindow.webContents.executeJavaScript(
       `document.body.setAttribute("isMaximized", "");`,
     );
-    passedWindow.hide(); // please don't flashbang the user
+    passedWindow.hide();
   }
-
-  // REVIEW - Test the protocol warning. I was not sure how to get it to pop up. For now I've voided the promises.
-
 
   const ignoreProtocolWarning = getConfig("ignoreProtocolWarning");
   registerIpc(passedWindow);
   registerVenmicIpc();
+
   if (getConfig("mobileMode")) {
     passedWindow.webContents.userAgent =
       "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.149 Mobile Safari/537.36";
@@ -87,20 +85,24 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     const userAgent = `Mozilla/5.0 (${osType} ${os.arch()}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chromeVersion} Safari/537.36`;
     passedWindow.webContents.userAgent = userAgent;
   }
+
   if (mainWindows.length === 1) {
     app.on(
       "second-instance",
-      (_event, _commandLine, _workingDirectory, additionalData) => {
+      (_event, commandLine, _workingDirectory, additionalData) => {
         void (async () => {
-          // Print out data received from the second instance.
           console.log(additionalData);
-
           if (!getConfig("multiInstance")) {
-            // Someone tried to run a second instance, we should focus our window.
             if (passedWindow) {
               if (passedWindow.isMinimized()) passedWindow.restore();
               passedWindow.show();
               passedWindow.focus();
+            }
+            if (commandLine && commandLine.length > 0) {
+              const lastArg = commandLine.pop();
+              if (lastArg?.startsWith("discord://-")) {
+                navigateTo(passedWindow, lastArg.replace("discord://-", ""));
+              }
             }
           } else {
             await init();
@@ -109,52 +111,13 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
       },
     );
   }
+
   app.on("activate", async () => {
     app.show();
   });
-  passedWindow.webContents.on("frame-created", (_, { frame }) => {
-    if (!frame) {
-      return;
-      
-    const ignoreProtocolWarning = getConfig("ignoreProtocolWarning");
-    registerIpc(passedWindow);
-    registerVenmicIpc();
-    if (getConfig("mobileMode")) {
-        passedWindow.webContents.userAgent =
-            "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.149 Mobile Safari/537.36";
-    } else {
-        let osType = process.platform === "darwin" ? "Macintosh" : process.platform === "win32" ? "Windows" : "Linux";
-        if (osType === "Linux") osType = `X11; ${osType}`;
-        const chromeVersion = process.versions.chrome;
-        const userAgent = `Mozilla/5.0 (${osType} ${os.arch()}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chromeVersion} Safari/537.36`;
-        passedWindow.webContents.userAgent = userAgent;
-    }
-    if (mainWindows.length === 1) {
-        app.on("second-instance", (_event, commandLine, _workingDirectory, additionalData) => {
-            void (async () => {
-                // Print out data received from the second instance.
-                console.log(additionalData);
 
-                if (!getConfig("multiInstance")) {
-                    // Someone tried to run a second instance, we should focus our window.
-                    if (passedWindow) {
-                        if (passedWindow.isMinimized()) passedWindow.restore();
-                        passedWindow.show();
-                        passedWindow.focus();
-                    }
-                    if (commandLine && commandLine.length > 0) {
-                        console.log(commandLine);
-                        const lastArg = commandLine.pop();
-                        if (lastArg?.startsWith("discord://-")) {
-                            navigateTo(passedWindow, lastArg.replace("discord://-", ""));
-                        }
-                    }
-                } else {
-                    await init();
-                }
-            })();
-        });
-    }
+  passedWindow.webContents.on("frame-created", (_, { frame }) => {
+    if (!frame) return;
     frame.once("dom-ready", async () => {
       if (
         frame.url.includes("youtube.com/embed/") ||
@@ -164,7 +127,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         try {
           await frame.executeJavaScript(
             readFileSync(
-              path.join(__dirname, "assets/app/js/adguard.js"),
+              path.join(import.meta.dirname, "assets/app/js/adguard.js"),
               "utf-8",
             ),
           );
@@ -174,28 +137,27 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
       }
     });
   });
+
   passedWindow.webContents.setWindowOpenHandler(({ url }) => {
-    // Allow about:blank (used by Vencord & Equicord QuickCss popup)
     if (url === "about:blank") return { action: "allow" };
-    // Saving ics files on future events
     if (url.startsWith("blob:https://discord.com/")) {
       return {
         action: "allow",
         overrideBrowserWindowOptions: { show: false },
       };
     }
-    // Allow Discord stream popout
     if (
       url === "https://discord.com/popout" ||
       url === "https://canary.discord.com/popout" ||
       url === "https://ptb.discord.com/popout"
-    )
+    ) {
       return {
         action: "allow",
         overrideBrowserWindowOptions: {
           alwaysOnTop: getConfig("popoutPiP"),
         },
       };
+    }
     if (
       url.startsWith("https:") ||
       url.startsWith("http:") ||
@@ -211,30 +173,22 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         defaultId: 1,
         title: url,
         message: `Do you want to open ${url}?`,
-        detail:
-          "This url was detected to not use normal browser protocols. It could mean that this url leads to a local program on your computer. Please check if you recognise it, before proceeding!",
-        checkboxLabel:
-          "Remember my answer and ignore this warning for future sessions",
+        detail: "This url was detected to not use normal browser protocols.",
+        checkboxLabel: "Remember my answer",
         checkboxChecked: false,
       };
 
       void dialog
         .showMessageBox(passedWindow, options)
         .then(({ response, checkboxChecked }) => {
-          console.log(response, checkboxChecked);
           if (checkboxChecked) {
-            if (response === 0) {
-              setConfig("ignoreProtocolWarning", true);
-            } else {
-              setConfig("ignoreProtocolWarning", false);
-            }
+            setConfig("ignoreProtocolWarning", response === 0);
           }
           if (response === 0) {
             void shell.openExternal(url);
           }
         });
     }
-
     return { action: "deny" };
   });
 
@@ -258,77 +212,18 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     },
   );
 
-  // fix UMG video playback
-  passedWindow.webContents.on("frame-created", (_, { frame }) => {
-    if (!frame) {
-      return;
-    }
-    frame.once("dom-ready", async () => {
-      if (
-        frame.url.includes("youtube.com/embed/") ||
-        frame.url.includes("youtube-nocookie.com/embed/") ||
-        (frame.url.includes("discordsays") && frame.url.includes("youtube.com"))
-      ) {
-        try {
-          const script = `
-              let iframe = document.querySelector('iframe[src*="youtube.com/embed/"], iframe[src*="youtube-nocookie.com/embed/"]');
-              if (iframe) {
-                iframe.removeAttribute('sandbox');
-               
-                if (!iframe.getAttribute('allow')) {
-                  iframe.setAttribute('allow', 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen');
-                }
-              }
-            `;
-          await passedWindow.webContents.executeJavaScript(script);
-          /* Ignore the errors because it works for now. */
-        } catch (e) {}
-      }
-    });
-  });
-
+  passedWindow.webContents.session.webRequest.onBeforeSendHeaders(
+    { urls: ["https://www.youtube.com/embed/*"] },
+    ({ requestHeaders }, callback) => {
+      requestHeaders.Referer = "https://google.com";
+      callback({ requestHeaders });
+    },
+  );
 
   if (getConfig("tray") === "dynamic") {
     passedWindow.webContents.on("page-favicon-updated", (_, favicons) => {
       try {
         let favicon = nativeImage.createFromDataURL(favicons[0]);
-
-    // fix UMG video playback
-    passedWindow.webContents.session.webRequest.onBeforeSendHeaders(
-        { urls: ["https://www.youtube.com/embed/*"] },
-        ({ requestHeaders }, callback) => {
-            requestHeaders.Referer = "https://google.com";
-            callback({ requestHeaders });
-        },
-    );
-    if (getConfig("tray") === "dynamic") {
-        passedWindow.webContents.on("page-favicon-updated", (_, favicons) => {
-            try {
-                let favicon = nativeImage.createFromDataURL(favicons[0]);
-
-                switch (process.platform) {
-                    case "darwin":
-                        favicon = favicon.resize({ height: 22 });
-                        break;
-                    case "win32":
-                        favicon = favicon.resize({ height: 32 });
-                        break;
-                }
-
-                tray.setImage(favicon);
-            } catch {
-                return;
-            }
-        });
-    }
-    initQuickCss(passedWindow);
-    passedWindow.setTouchBar(mainTouchBar);
-    app.on("open-url", (_event, url) => {
-        navigateTo(passedWindow, url.replace("discord://-", ""));
-    });
-
-    passedWindow.webContents.on("page-title-updated", (e, title) => {
-        const legcordSuffix = " - Legcord"; /* identify */
         switch (process.platform) {
           case "darwin":
             favicon = favicon.resize({ height: 22 });
@@ -337,58 +232,50 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
             favicon = favicon.resize({ height: 32 });
             break;
         }
-
         tray.setImage(favicon);
       } catch {
         return;
       }
     });
   }
+
   initQuickCss(passedWindow);
   passedWindow.setTouchBar(mainTouchBar);
-  passedWindow.webContents.on("page-title-updated", (e, title) => {
-    const legcordSuffix = " - Legcord"; /* identify */
 
-    // FIXME - This is a bit of a mess. I'm not sure how to clean it up.
+  app.on("open-url", (_event, url) => {
+    navigateTo(passedWindow, url.replace("discord://-", ""));
+  });
+
+  passedWindow.webContents.on("page-title-updated", (e, title) => {
+    const legcordSuffix = " - Legcord";
     if (process.platform === "win32") {
-      if (title.startsWith("•"))
-        return passedWindow.setOverlayIcon(
+      if (title.startsWith("•")) {
+        passedWindow.setOverlayIcon(
           nativeImage.createFromPath(
             path.join(import.meta.dirname, "../", "/assets/badge-11.ico"),
           ),
           "You have some unread messages.",
         );
-      if (title.startsWith("(")) {
+      } else if (title.startsWith("(")) {
         const pings = Number.parseInt(/\((\d+)\)/.exec(title)![1]);
-        if (pings > 9) {
-          return passedWindow.setOverlayIcon(
-            nativeImage.createFromPath(
-              path.join(import.meta.dirname, "../", "/assets/badge-10.ico"),
-            ),
-            "You have some unread messages.",
-          );
-        } else {
-          return passedWindow.setOverlayIcon(
-            nativeImage.createFromPath(
-              path.join(
-                import.meta.dirname,
-                "../",
-                `/assets/badge-${pings}.ico`,
-              ),
-            ),
-            "You have some unread messages.",
-          );
-        }
+        passedWindow.setOverlayIcon(
+          nativeImage.createFromPath(
+            path.join(import.meta.dirname, "../", `/assets/badge-${pings > 9 ? 10 : pings}.ico`),
+          ),
+          "You have some unread messages.",
+        );
+      } else {
+        passedWindow.setOverlayIcon(null, "");
       }
-      passedWindow.setOverlayIcon(null, "");
     }
     if (process.platform === "darwin") {
-      if (title.startsWith("•")) return app.dock?.setBadge("•");
-      if (title.startsWith("(")) {
+      if (title.startsWith("•")) app.dock?.setBadge("•");
+      else if (title.startsWith("(")) {
         if (getConfig("bounceOnPing")) app.dock?.bounce();
-        return app.setBadgeCount(Number.parseInt(/\((\d+)\)/.exec(title)![1]));
+        app.setBadgeCount(Number.parseInt(/\((\d+)\)/.exec(title)![1]));
+      } else {
+        app.setBadgeCount(0);
       }
-      app.setBadgeCount(0);
     }
     if (!title.endsWith(legcordSuffix)) {
       e.preventDefault();
@@ -397,6 +284,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
       );
     }
   });
+
   injectThemesMain(passedWindow);
   passedWindow.on("unresponsive", () => {
     passedWindow.webContents.reload();
@@ -405,9 +293,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
   setMenu();
   passedWindow.on("close", (e) => {
     if (mainWindows.length > 1) {
-      mainWindows = mainWindows.filter(
-        (mainWindow) => mainWindow.id !== passedWindow.id,
-      );
+      mainWindows = mainWindows.filter((w) => w.id !== passedWindow.id);
       passedWindow.destroy();
     }
     if (getConfig("minimizeToTray") && !forceQuit) {
@@ -417,6 +303,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
       app.quit();
     }
   });
+
   app.on("before-quit", () => {
     const [width, height] = passedWindow.getSize();
     setWindowState({
@@ -428,28 +315,22 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     });
     setForceQuit(true);
   });
+
   passedWindow.on("focus", () => {
-    void passedWindow.webContents.executeJavaScript(
-      `document.body.removeAttribute("unFocused");`,
-    );
+    void passedWindow.webContents.executeJavaScript(`document.body.removeAttribute("unFocused");`);
   });
   passedWindow.on("blur", () => {
-    void passedWindow.webContents.executeJavaScript(
-      `document.body.setAttribute("unFocused", "");`,
-    );
+    void passedWindow.webContents.executeJavaScript(`document.body.setAttribute("unFocused", "");`);
   });
 
   passedWindow.on("maximize", () => {
-    void passedWindow.webContents.executeJavaScript(
-      `document.body.setAttribute("isMaximized", "");`,
-    );
+    void passedWindow.webContents.executeJavaScript(`document.body.setAttribute("isMaximized", "");`);
   });
   passedWindow.on("unmaximize", () => {
-    void passedWindow.webContents.executeJavaScript(
-      `document.body.removeAttribute("isMaximized");`,
-    );
+    void passedWindow.webContents.executeJavaScript(`document.body.removeAttribute("isMaximized");`);
   });
-  if (false && getConfig("inviteWebsocket") && mainWindows.length === 1) {
+
+  if (getConfig("inviteWebsocket") && mainWindows.length === 1) {
     startRPC(passedWindow);
   }
   if (firstRun) {
@@ -457,20 +338,9 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
   }
 
   registerGlobalKeybinds();
-  switch (getConfig("channel")) {
-    case "stable":
-      void passedWindow.loadURL("https://discord.com/app");
-      break;
-    case "canary":
-      void passedWindow.loadURL("https://canary.discord.com/app");
-      break;
-    case "ptb":
-      void passedWindow.loadURL("https://ptb.discord.com/app");
-      break;
-    default:
-      void passedWindow.loadURL("https://discord.com/app");
-      break;
-  }
+  const channel = getConfig("channel");
+  const baseUrl = channel === "canary" ? "https://canary.discord.com/app" : channel === "ptb" ? "https://ptb.discord.com/app" : "https://discord.com/app";
+  void passedWindow.loadURL(baseUrl);
 
   if (getConfig("skipSplash")) {
     passedWindow.show();
@@ -486,9 +356,7 @@ export function createWindow() {
     title: "Legcord",
     show: false,
     darkTheme: true,
-    icon:
-      getConfig("customIcon") ??
-      path.join(import.meta.dirname, "../", "/assets/desktop.png"),
+    icon: getConfig("customIcon") ?? path.join(import.meta.dirname, "../", "/assets/desktop.png"),
     frame: false,
     backgroundColor: "#202225",
     autoHideMenuBar: getConfig("autoHideMenuBar"),
@@ -501,43 +369,30 @@ export function createWindow() {
       spellcheck: getConfig("spellcheck"),
     },
   };
-  switch (getConfig("windowStyle")) {
-    case "native":
+
+  const style = getConfig("windowStyle");
+  if (style === "native") browserWindowOptions.frame = true;
+  else if (style === "overlay") {
+    browserWindowOptions.titleBarStyle = "hidden";
+    browserWindowOptions.titleBarOverlay = { color: getConfig("overlayButtonColor"), symbolColor: "#99aab5", height: 36 };
+  }
+
+  const transparency = getConfig("transparency");
+  if (transparency === "universal") {
+    browserWindowOptions.backgroundColor = "#00000000";
+    browserWindowOptions.transparent = true;
+  } else if (transparency === "modern") {
+    browserWindowOptions.backgroundColor = "#00000000";
+    if (os.platform() === "win32") {
+      browserWindowOptions.transparent = false;
       browserWindowOptions.frame = true;
-      break;
-    case "overlay":
-      browserWindowOptions.titleBarStyle = "hidden";
-      browserWindowOptions.titleBarOverlay = {
-        color: getConfig("overlayButtonColor"),
-        symbolColor: "#99aab5",
-        height: 36,
-      };
-      browserWindowOptions.trafficLightPosition = {
-        x: 10,
-        y: 10,
-      };
-      break;
-  }
-  switch (getConfig("transparency")) {
-    case "universal":
-      browserWindowOptions.backgroundColor = "#00000000";
+      browserWindowOptions.backgroundMaterial = "acrylic";
+    } else if (os.platform() === "darwin") {
+      browserWindowOptions.vibrancy = "fullscreen-ui";
       browserWindowOptions.transparent = true;
-      break;
-    case "modern":
-      if (os.platform() === "win32") {
-        browserWindowOptions.backgroundColor = "#00000000";
-        browserWindowOptions.transparent = false;
-        browserWindowOptions.frame = true;
-        browserWindowOptions.backgroundMaterial = "acrylic";
-      } else if (os.platform() === "darwin") {
-        browserWindowOptions.backgroundColor = "#00000000";
-        browserWindowOptions.vibrancy = "fullscreen-ui";
-        browserWindowOptions.transparent = true;
-      }
-      break;
-    case "none":
-      break;
+    }
   }
+
   const mainWindow = new BrowserWindow(browserWindowOptions);
   mainWindows.push(mainWindow);
   doAfterDefiningTheWindow(mainWindow);
@@ -549,9 +404,7 @@ export function createInviteWindow(code: string): void {
     height: 600,
     title: "Legcord Invite Manager",
     darkTheme: true,
-    icon:
-      getConfig("customIcon") ??
-      path.join(import.meta.dirname, "../", "/assets/desktop.png"),
+    icon: getConfig("customIcon") ?? path.join(import.meta.dirname, "../", "/assets/desktop.png"),
     frame: true,
     autoHideMenuBar: getConfig("autoHideMenuBar"),
     webPreferences: {
@@ -559,21 +412,15 @@ export function createInviteWindow(code: string): void {
       spellcheck: getConfig("spellcheck"),
     },
   });
-  const formInviteURL = `https://discord.com/invite/${code}`;
-  inviteWindow.webContents.session.webRequest.onBeforeRequest(
-    (details, callback) => {
-      if (details.url.includes("ws://")) return callback({ cancel: true });
-      return callback({});
-    },
-  );
-  // NOTE - This shouldn't matter, since below we have an event on it
-  void inviteWindow.loadURL(formInviteURL);
+  inviteWindow.webContents.session.webRequest.onBeforeRequest((details, callback) => {
+    if (details.url.includes("ws://")) return callback({ cancel: true });
+    return callback({});
+  });
+  void inviteWindow.loadURL(`https://discord.com/invite/${code}`);
   inviteWindow.webContents.once("did-finish-load", () => {
-    if (!mainWindows[0].webContents.isLoading()) {
+    if (mainWindows[0] && !mainWindows[0].webContents.isLoading()) {
       inviteWindow.show();
-      inviteWindow.webContents.once("will-navigate", () => {
-        inviteWindow.close();
-      });
+      inviteWindow.webContents.once("will-navigate", () => inviteWindow.close());
     }
   });
 }
