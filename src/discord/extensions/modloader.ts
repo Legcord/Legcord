@@ -16,8 +16,11 @@ async function fetchMod(fileName: string, url: string) {
             writeFileSync(join(app.getPath("userData"), fileName), fileContent);
         });
     } catch (error) {
-        console.error(error);
-        console.error(`Something went wrong downloading ${fileName} from ${url} - skipping!`);
+        if (error instanceof Error) {
+            console.error(`[Mod Loader] Failed to download ${fileName}: ${error.message}`);
+        } else {
+            console.error(`[Mod Loader] Failed to download ${fileName}: ${error}`);
+        }
     }
 }
 
