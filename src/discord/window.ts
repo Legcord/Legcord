@@ -364,6 +364,11 @@ export function createWindow() {
         },
     };
     switch (getConfig("windowStyle")) {
+        case "default":
+            if (os.platform() === "win32") {
+                browserWindowOptions.titleBarStyle = "hidden";
+                browserWindowOptions.titleBarOverlay = false;
+            }
         case "native":
             browserWindowOptions.frame = true;
             break;
@@ -372,7 +377,7 @@ export function createWindow() {
             browserWindowOptions.titleBarOverlay = {
                 color: getConfig("overlayButtonColor"),
                 symbolColor: "#99aab5",
-                height: 36,
+                height: 30,
             };
             browserWindowOptions.trafficLightPosition = {
                 x: 10,

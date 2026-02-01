@@ -1,11 +1,11 @@
 /* Legcord on Windows */
 
 [legcord-platform="win32"] div[class*="title"] + div[class*="trailing"] {
-    margin-right: 150px;
+    margin-right: 173px;
 }
 
 [legcord-platform="win32"] #window-controls-container {
-    width: 142px;
+    width: 165px;
 }
 [legcord-platform="win32"] #window-controls-container #minimize:hover {
     background-color: var(--interactive-background-hover);
