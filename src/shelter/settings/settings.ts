@@ -49,3 +49,8 @@ export function toggleMod(mod: ValidMods, enabled: boolean) {
         setConfig("mods", removeMod(currentMods, mod));
     }
 }
+
+export function isMinWindowsVersion(major: number, minor: number, build: number) {
+    let [sys_major, sys_minor, sys_build] = window.legcord.osRelease.split(".").map((val, _, __) => Number.parseInt(val))
+    return sys_major >= major && sys_minor >= minor && sys_build >= build;
+}
