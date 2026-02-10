@@ -64,9 +64,9 @@ async function load() {
     injectJS("legcord://assets/js/patchVencordQuickCSS.js");
     // Settings info version injection
     const observer = new MutationObserver(() => {
-        if (document.querySelector("#ac-ver")) return;
+        if (document.body.querySelector("#ac-ver")) return;
 
-        const info = document.querySelector('[class*="sidebar"] [class*="compactInfo"]');
+        const info = document.body.querySelector('[class*="sidebar"] [class*="compactInfo"]');
         const host = info?.parentElement;
         if (!host || !/(stable|ptb|canary) \d+|Electron|Chromium/i.test(host.textContent)) return;
 
