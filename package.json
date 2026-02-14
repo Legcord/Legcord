@@ -36,7 +36,6 @@
         "@babel/preset-typescript": "^7.27.1",
         "@biomejs/biome": "1.9.4",
         "@rollup/plugin-babel": "^6.0.4",
-        "@rollup/plugin-json": "^6.1.0",
         "@rollup/plugin-esm-shim": "^0.1.7",
         "@types/node": "^22.10.1",
         "@types/ws": "^8.5.13",
