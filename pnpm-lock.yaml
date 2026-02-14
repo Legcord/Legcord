@@ -39,6 +39,9 @@ importers:
       '@rollup/plugin-esm-shim':
         specifier: ^0.1.7
         version: 0.1.8
+      '@types/minimatch':
+        specifier: ^6.0.0
+        version: 6.0.0
       '@types/node':
         specifier: ^22.10.1
         version: 22.19.7
