@@ -45,7 +45,7 @@ export default defineConfig([
             format: "esm",
             sourcemap: true,
         },
-        external: [...electronExternals, "arrpc"],
+        external: [...electronExternals, "arrpc", "node:worker_threads"],
         plugins: [esmShim()],
     },
     {
