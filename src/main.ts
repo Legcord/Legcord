@@ -1,5 +1,6 @@
 // Modules to control application life and create native browser window
 import { BrowserWindow, app, crashReporter, session, systemPreferences } from "electron";
+import isDev from "electron-is-dev";
 import "./discord/extensions/csp.js";
 import "./protocol.js";
 import { readFileSync } from "node:fs";
@@ -18,6 +19,40 @@ import {
 import "./updater.js";
 import { getPreset } from "./common/flags.js";
 import { setLang } from "./common/lang.js";
+
+// Chrome flags tracking
+export interface AppliedFlagsOutput {
+    switches: Record<string, string | boolean>;
+    enableFeatures: string[];
+    disableFeatures: string[];
+    enableBlinkFeatures: string[];
+    disableBlinkFeatures: string[];
+}
+
+const tracker = {
+    switches: new Map<string, string | boolean>(),
+    enableFeatures: new Set<string>(),
+    disableFeatures: new Set<string>(),
+    enableBlinkFeatures: new Set<string>(),
+    disableBlinkFeatures: new Set<string>(),
+};
+
+const trackSwitch = (key: string, value?: string) => tracker.switches.set(key, value ?? true);
+const trackEnableFeatures = (features: string[]) => features.forEach(f => tracker.enableFeatures.add(f));
+const trackDisableFeatures = (features: string[]) => features.forEach(f => tracker.disableFeatures.add(f));
+const trackEnableBlinkFeatures = (features: string[]) => features.forEach(f => tracker.enableBlinkFeatures.add(f));
+const trackDisableBlinkFeatures = (features: string[]) => features.forEach(f => tracker.disableBlinkFeatures.add(f));
+
+export function getAppliedFlags(): AppliedFlagsOutput {
+    return {
+        switches: Object.fromEntries(tracker.switches),
+        enableFeatures: Array.from(tracker.enableFeatures),
+        disableFeatures: Array.from(tracker.disableFeatures),
+        enableBlinkFeatures: Array.from(tracker.enableBlinkFeatures),
+        disableBlinkFeatures: Array.from(tracker.disableBlinkFeatures),
+    };
+}
+
 import { fetchMods } from "./discord/extensions/modloader.js";
 import { createWindow } from "./discord/window.js";
 import { createSetupWindow } from "./setup/main.js";
@@ -98,9 +133,11 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     // enable pulseaudio audio sharing on linux
     if (process.platform === "linux") {
         app.commandLine.appendSwitch("gtk-version", "3");
+        trackSwitch("gtk-version", "3");
         enableFeatures.add("PulseaudioLoopbackForScreenShare");
         disableFeatures.add("WebRtcAllowInputVolumeAdjustment");
         app.commandLine.appendSwitch("enable-speech-dispatcher");
+        trackSwitch("enable-speech-dispatcher");
     }
     // enable webrtc capturer for wayland
     if (process.platform === "linux" && process.env.XDG_SESSION_TYPE?.toLowerCase() === "wayland") {
@@ -114,12 +151,17 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     }
     // work around chrome 66 disabling autoplay by default
     app.commandLine.appendSwitch("autoplay-policy", "no-user-gesture-required");
+    trackSwitch("autoplay-policy", "no-user-gesture-required");
 
     app.commandLine.appendSwitch("enable-transparent-visuals");
+    trackSwitch("enable-transparent-visuals");
     checkIfConfigIsBroken();
     const preset = getPreset();
     if (preset) {
-        preset.switches.forEach(([key, val]) => app.commandLine.appendSwitch(key, val));
+        preset.switches.forEach(([key, val]) => {
+            app.commandLine.appendSwitch(key, val);
+            trackSwitch(key, val);
+        });
         preset.enableFeatures.forEach((val) => enableFeatures.add(val));
         preset.disableFeatures.forEach((val) => disableFeatures.add(val));
     }
@@ -162,42 +204,69 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     if (getConfig("additionalArguments") !== undefined) {
         for (const arg of getConfig("additionalArguments").split(" ")) {
             if (arg.startsWith("--")) {
-                const [key, val] = arg.substring(2).split("=", 1) as [string, string?];
+                const [key, ...rest] = arg.substring(2).split("=");
+                const val = rest.length > 0 ? rest.join("=") : undefined;
                 if (val === undefined) {
                     app.commandLine.appendSwitch(key);
+                    trackSwitch(key);
                 } else {
                     if (key === "enable-features") {
-                        val.split(",").forEach((flag) => enableFeatures.add(flag));
+                        const flags = val.split(",");
+                        flags.forEach((flag) => enableFeatures.add(flag));
                     } else if (key === "disable-features") {
-                        val.split(",").forEach((flag) => disableFeatures.add(flag));
+                        const flags = val.split(",");
+                        flags.forEach((flag) => disableFeatures.add(flag));
                     } else if (key === "enable-blink-features") {
-                        val.split(",").forEach((flag) => enableBlinkFeatures.add(flag));
+                        const flags = val.split(",");
+                        flags.forEach((flag) => enableBlinkFeatures.add(flag));
                     } else if (key === "disable-blink-features") {
-                        val.split(",").forEach((flag) => disableBlinkFeatures.add(flag));
+                        const flags = val.split(",");
+                        flags.forEach((flag) => disableBlinkFeatures.add(flag));
                     } else {
                         app.commandLine.appendSwitch(key, val);
+                        trackSwitch(key, val);
                     }
                 }
             }
         }
     }
-    if (getConfig("smoothScroll") === false) app.commandLine.appendSwitch("disable-smooth-scrolling");
+    if (getConfig("smoothScroll") === false) {
+        app.commandLine.appendSwitch("disable-smooth-scrolling");
+        trackSwitch("disable-smooth-scrolling");
+    }
     if (getConfig("autoScroll")) enableBlinkFeatures.add("MiddleClickAutoscroll");
-    if (getConfig("disableHttpCache")) app.commandLine.appendSwitch("disable-http-cache");
+    if (getConfig("disableHttpCache")) {
+        app.commandLine.appendSwitch("disable-http-cache");
+        trackSwitch("disable-http-cache");
+    }
 
     enableFeatures.delete("");
     disableFeatures.delete("");
     enableBlinkFeatures.delete("");
     disableBlinkFeatures.delete("");
-    if (enableFeatures.size > 0) app.commandLine.appendSwitch("enable-features", Array.from(enableFeatures).join(","));
-    if (disableFeatures.size > 0)
-        app.commandLine.appendSwitch("disable-features", Array.from(disableFeatures).join(","));
-    if (enableBlinkFeatures.size > 0)
-        app.commandLine.appendSwitch("enable-blink-features", Array.from(enableBlinkFeatures).join(","));
-    if (disableBlinkFeatures.size > 0)
-        app.commandLine.appendSwitch("disable-blink-features", Array.from(disableBlinkFeatures).join(","));
+    if (enableFeatures.size > 0) {
+        const featuresStr = Array.from(enableFeatures).join(",");
+        app.commandLine.appendSwitch("enable-features", featuresStr);
+        trackEnableFeatures(Array.from(enableFeatures));
+    }
+    if (disableFeatures.size > 0) {
+        const featuresStr = Array.from(disableFeatures).join(",");
+        app.commandLine.appendSwitch("disable-features", featuresStr);
+        trackDisableFeatures(Array.from(disableFeatures));
+    }
+    if (enableBlinkFeatures.size > 0) {
+        const featuresStr = Array.from(enableBlinkFeatures).join(",");
+        app.commandLine.appendSwitch("enable-blink-features", featuresStr);
+        trackEnableBlinkFeatures(Array.from(enableBlinkFeatures));
+    }
+    if (disableBlinkFeatures.size > 0) {
+        const featuresStr = Array.from(disableBlinkFeatures).join(",");
+        app.commandLine.appendSwitch("disable-blink-features", featuresStr);
+        trackDisableBlinkFeatures(Array.from(disableBlinkFeatures));
+    }
 
     void app.whenReady().then(async () => {
+        if (isDev) console.log(JSON.stringify(getAppliedFlags()));
         process.on("SIGINT", () => app.quit());
         process.on("SIGTERM", () => app.quit());
         // Patch for linux bug to ensure things are loaded before window creation (fixes transparency on some linux systems)

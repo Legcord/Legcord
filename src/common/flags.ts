@@ -1,4 +1,7 @@
-import { powerMonitor } from "electron";
+import { powerMonitor, app } from "electron";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import isDev from "electron-is-dev";
 import { getConfig } from "./config.js";
 
 interface Preset {
@@ -6,6 +9,9 @@ interface Preset {
     enableFeatures: string[];
     disableFeatures: string[];
 }
+
+// Cache for custom flags to avoid repeated file reads
+let customFlagsCache: Preset | null = null;
 
 const performance: Preset = {
     switches: [
@@ -81,6 +87,79 @@ const vaapi: Preset = {
     disableFeatures: ["UseChromeOSDirectVideoDecoder"],
 };
 
+/**
+ * Load custom flags from JSON file in user data directory (cached after first load)
+ * Path:
+ *   - Windows: %APPDATA%\legcord\flags.json (typically C:\Users\{username}\AppData\Roaming\legcord\flags.json)
+ *   - macOS: ~/Library/Application Support/legcord/flags.json
+ *   - Linux: ~/.config/legcord/flags.json
+ * Returns an empty preset if file doesn't exist or is invalid
+ */
+function loadCustomFlags(): Preset {
+    // Return cached result to avoid repeated disk reads
+    if (customFlagsCache !== null) {
+        return customFlagsCache;
+    }
+
+    const customPreset: Preset = {
+        switches: [],
+        enableFeatures: [],
+        disableFeatures: [],
+    };
+
+    try {
+        const userDataPath = app.getPath("userData");
+        const customFlagsPath = join(userDataPath, "flags.json");
+
+        try {
+            const fileContent = readFileSync(customFlagsPath, "utf-8");
+            const customFlags = JSON.parse(fileContent);
+
+            // Merge switches
+            if (Array.isArray(customFlags.switches)) {
+                customPreset.switches = customFlags.switches;
+            }
+
+            // Merge enableFeatures
+            if (Array.isArray(customFlags.enableFeatures)) {
+                customPreset.enableFeatures = customFlags.enableFeatures;
+            }
+
+            // Merge disableFeatures
+            if (Array.isArray(customFlags.disableFeatures)) {
+                customPreset.disableFeatures = customFlags.disableFeatures;
+            }
+
+            if (isDev) console.log(`Custom flags loaded from ${customFlagsPath}`);
+        } catch (fileError) {
+            if ((fileError as NodeJS.ErrnoException).code === "ENOENT") {
+                if (isDev) console.log(`Custom flags file not found at ${customFlagsPath}`);
+            } else if (isDev) {
+                console.error(`Error reading custom flags file: ${fileError}`);
+            }
+        }
+    } catch (error) {
+        if (isDev) console.error(`Error loading custom flags: ${error}`);
+    }
+
+    customFlagsCache = customPreset;
+    return customPreset;
+}
+
+/**
+ * Merge a preset with custom flags
+ * Custom flags will be appended to the preset's arrays
+ */
+function mergeWithCustomFlags(preset: Preset): Preset {
+    const customFlags = loadCustomFlags();
+
+    return {
+        switches: [...preset.switches, ...customFlags.switches],
+        enableFeatures: [...preset.enableFeatures, ...customFlags.enableFeatures],
+        disableFeatures: [...preset.disableFeatures, ...customFlags.disableFeatures],
+    };
+}
+
 export function getPreset(): Preset | undefined {
     //     MIT License
 
@@ -107,24 +186,31 @@ export function getPreset(): Preset | undefined {
         case "dynamic":
             if (powerMonitor.isOnBatteryPower()) {
                 console.log("Battery mode enabled");
-                return battery;
+                return mergeWithCustomFlags(battery);
             } else {
                 console.log("Performance mode enabled");
-                return performance;
+                return mergeWithCustomFlags(performance);
             }
         case "performance":
             console.log("Performance mode enabled");
-            return performance;
+            return mergeWithCustomFlags(performance);
         case "battery":
             console.log("Battery mode enabled");
-            return battery;
+            return mergeWithCustomFlags(battery);
         case "vaapi":
             console.log("VAAPI mode enabled");
-            return vaapi;
+            return mergeWithCustomFlags(vaapi);
         case "smoothScreenshare":
             console.log("Smooth screenshare mode enabled");
-            return smoothExperiment;
+            return mergeWithCustomFlags(smoothExperiment);
         default:
             console.log("No performance modes set");
     }
+}
+
+/**
+ * Get the currently applied preset for debugging purposes
+ */
+export function getCurrentPreset(): Preset | undefined {
+    return getPreset();
 }

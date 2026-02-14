@@ -5,6 +5,7 @@ import type { LegcordWindow } from "../../@types/legcordWindow.d.ts";
 import type { Settings } from "../../@types/settings.js";
 import type { ThemeManifest } from "../../@types/themeManifest.js";
 import type { venmicListObject } from "../venmic.js";
+import type { AppliedFlagsOutput } from "../../main.js";
 let windowCallback: (arg0: object) => void;
 
 interface IPCSources {
@@ -36,6 +37,7 @@ contextBridge.exposeInMainWorld("legcord", {
         openCustomIconDialog: () => ipcRenderer.send("openCustomIconDialog"),
         copyDebugInfo: () => ipcRenderer.send("copyDebugInfo"),
         copyGPUInfo: () => ipcRenderer.send("copyGPUInfo"),
+        dumpFlags: () => ipcRenderer.sendSync("dumpFlags") as AppliedFlagsOutput,
     },
     touchbar: {
         setVoiceTouchbar: (state: boolean) => ipcRenderer.send("setVoiceTouchbar", state),

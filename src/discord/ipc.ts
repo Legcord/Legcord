@@ -8,6 +8,7 @@ import type { Keybind } from "../@types/keybind.js";
 import type { Settings } from "../@types/settings.js";
 import type { ThemeManifest } from "../@types/themeManifest.js";
 import { getConfig, getConfigLocation, setConfig, setConfigBulk } from "../common/config.js";
+import { getAppliedFlags } from "../main.js";
 import { addDetectable, getDetectables, removeDetectable } from "../common/detectables.js";
 import { getLang, getLangName, getRawLang, setLang } from "../common/lang.js";
 import { installTheme, setThemeEnabled, uninstallTheme } from "../common/themes.js";
@@ -226,6 +227,11 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     });
     ipcMain.on("isDev", (event) => {
         event.returnValue = isDev;
+    });
+    ipcMain.on("dumpFlags", (event) => {
+        const flags = getAppliedFlags();
+        console.log(`=== Chrome Flags === ${JSON.stringify(flags)}`);
+        event.returnValue = flags;
     });
     ipcMain.on("setConfig", (_event, key: keyof Settings, value: string) => {
         setConfig(key, value);
