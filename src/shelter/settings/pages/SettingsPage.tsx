@@ -1,4 +1,4 @@
-import { Show } from "solid-js";
+import { Show, createSignal } from "solid-js";
 import type { Settings } from "../../../@types/settings.js";
 import { BackupSection } from "../components/BackupSection.jsx";
 import { DropdownItem } from "../components/DropdownItem.jsx";
@@ -20,6 +20,25 @@ const noBundleUpdates = () => {
 };
 
 export function SettingsPage() {
+    const currentDownloadManager = (store.settings as Settings).downloadManager ?? "default";
+    const [downloadManager, setDownloadManager] = createSignal(currentDownloadManager);
+
+    const updateGopeedConfig = (patch: Partial<Settings["gopeed"]>) => {
+        const currentGopeed = (store.settings as Settings).gopeed ?? {
+            host: "http://127.0.0.1:9999",
+            token: "",
+        };
+        setConfig("gopeed", {
+            ...currentGopeed,
+            ...patch,
+        });
+    };
+
+    const handleDownloadManagerChange = (value: string) => {
+        setDownloadManager(value);
+        setConfig("downloadManager", value);
+    };
+
     return (
         <>
             <Show when={!settings.supportBannerDismissed}>
@@ -270,6 +289,36 @@ export function SettingsPage() {
             >
                 {store.i18n["settings-spellcheck"]}
             </SwitchItem>
+            <Header class={classes.category} tag={HeaderTags.H5}>
+                {store.i18n["settings-category-downloader"]}
+            </Header>
+            <DropdownItem
+                title={store.i18n["settings-downloadManager"]}
+                note={store.i18n["settings-downloadManager-desc"]}
+                value={downloadManager()}
+                onChange={handleDownloadManagerChange}
+                options={[
+                    { label: store.i18n["settings-downloadManager-default"], value: "default" },
+                    { label: store.i18n["settings-downloadManager-gopeed"], value: "gopeed" },
+                    ...(window.legcord.platform === "win32"
+                        ? [{ label: store.i18n["settings-downloadManager-idm"], value: "idm" }]
+                        : []),
+                ]}
+            />
+            <Show when={downloadManager() === "gopeed"}>
+                <TextBoxItem
+                    title={store.i18n["settings-gopeed-host"]}
+                    note={store.i18n["settings-gopeed-host-desc"]}
+                    value={(store.settings as Settings).gopeed?.host ?? "http://127.0.0.1:9999"}
+                    onInput={(host: string) => updateGopeedConfig({ host })}
+                />
+                <TextBoxItem
+                    title={store.i18n["settings-gopeed-token"]}
+                    note={store.i18n["settings-gopeed-token-desc"]}
+                    value={(store.settings as Settings).gopeed?.token ?? ""}
+                    onInput={(token: string) => updateGopeedConfig({ token })}
+                />
+            </Show>
             <Header class={classes.category} tag={HeaderTags.H5}>
                 {store.i18n["settings-category-powerManagement"]}
             </Header>
