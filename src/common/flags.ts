@@ -23,7 +23,6 @@ const performance: Preset = {
     ],
     enableFeatures: [
         "EnableDrDc",
-        "CanvasOopRasterization",
         "BackForwardCache:TimeToLiveInBackForwardCacheInSeconds/300/should_ignore_blocklists/true/enable_same_site/true",
         "ThrottleDisplayNoneAndVisibilityHiddenCrossOriginIframes",
         "UseSkiaRenderer",
