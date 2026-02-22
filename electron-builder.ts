@@ -29,6 +29,11 @@ export const config: Configuration = {
         target: ["AppImage", "deb", "rpm", "tar.gz"],
         maintainer: "linux@legcord.app",
         category: "Network",
+        desktop: {
+            entry: {
+                StartupWMClass: "legcord",
+            },
+        },
     },
 
     nsis: {
