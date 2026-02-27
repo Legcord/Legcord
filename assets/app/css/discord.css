@@ -23,3 +23,8 @@ div:has(> span [data-list-item-id="guildsnav___app-download-button"]) {
     content: "You can modify global keybinds using the keybind maker on the left sidebar";
     visibility: visible;
 }
+
+[class*="textContainer"]:has(code) {
+    scrollbar-color: var(--scrollbar-auto-scrollbar-color-thumb) var(--scrollbar-auto-scrollbar-color-track);
+    scrollbar-width: thin;
+}
