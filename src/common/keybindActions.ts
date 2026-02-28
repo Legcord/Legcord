@@ -12,6 +12,9 @@ export function runAction(keybind: Keybind) {
         case "deafen":
             deafenToggle();
             break;
+        case "pushToTalk":
+            pushToTalk();
+            break;
         case "leaveCall":
             leaveCall();
             break;
@@ -80,6 +83,19 @@ export function leaveCall() {
             "currentVoiceChannelId": "",
             "video": false,
             "stream": false
+        })
+        `);
+    });
+}
+
+export function pushToTalk() {
+    console.log("[Keybind action] Push to talk");
+    mainWindows.forEach((window) => {
+        void window.webContents.executeJavaScript(`
+        window.shelter.flux.dispatcher.dispatch({
+            "type": "PUSH_TO_TALK_STATE_CHANGE",
+            "isActive": true,
+            "isPriority": false
         })
         `);
     });

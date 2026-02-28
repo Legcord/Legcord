@@ -30,7 +30,7 @@ export function startRPC(window: BrowserWindow) {
         } else if (json.type === "activity") {
             console.log("activity pulse");
             console.log(json.data);
-            window.webContents.send("rpc", json.data);
+            window.webContents.executeJavaScript(`window.legcordRPC.listen(${JSON.stringify(json.data)})`);
         } else if (json.type === "processList") {
             console.log("[arRPC] updating process list");
             console.log(json.data);

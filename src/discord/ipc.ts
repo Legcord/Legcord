@@ -7,12 +7,18 @@ import isDev from "electron-is-dev";
 import type { Keybind } from "../@types/keybind.js";
 import type { Settings } from "../@types/settings.js";
 import type { ThemeManifest } from "../@types/themeManifest.js";
+import {
+    blacklistGame as blacklistGameAdd,
+    unblacklistGame as blacklistGameRemove,
+    getBlacklist,
+} from "../common/blacklistGame.js";
 import { getConfig, getConfigLocation, setConfig, setConfigBulk } from "../common/config.js";
 import { addDetectable, getDetectables, removeDetectable } from "../common/detectables.js";
 import { getLang, getLangName, getRawLang, setLang } from "../common/lang.js";
-import { installTheme, setThemeEnabled, uninstallTheme } from "../common/themes.js";
+import { disableQuickCss, initQuickCss, installTheme, setThemeEnabled, uninstallTheme } from "../common/themes.js";
 import { getDisplayVersion, getVersion } from "../common/version.js";
 import { openCssEditor } from "../cssEditor/main.js";
+import { getAppliedFlags } from "../main.js";
 import { isPowerSavingEnabled, setPowerSaving } from "../power.js";
 import constPaths from "../shared/consts/paths.js";
 import { splashWindow } from "../splash/main.js";
@@ -79,6 +85,14 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     });
 
     // theming
+    ipcMain.on("enableQuickCss", () => {
+        console.log("Enabling quick CSS");
+        initQuickCss(passedWindow);
+    });
+    ipcMain.on("disableQuickCss", () => {
+        console.log("Disabling quick CSS");
+        disableQuickCss(passedWindow);
+    });
     ipcMain.on("openQuickCss", () => {
         if (getConfig("useSystemCssEditor")) {
             void shell.openPath(quickCssPath);
@@ -227,8 +241,25 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.on("isDev", (event) => {
         event.returnValue = isDev;
     });
-    ipcMain.on("setConfig", (_event, key: keyof Settings, value: string) => {
+    ipcMain.on("dumpFlags", (event) => {
+        const flags = getAppliedFlags();
+        console.log(`=== Chrome Flags === ${JSON.stringify(flags)}`);
+        event.returnValue = flags;
+    });
+    ipcMain.on("setConfig", (event, key: keyof Settings, value: Settings[keyof Settings]) => {
         setConfig(key, value);
+        event.returnValue = undefined;
+    });
+    ipcMain.on("getRpcBlacklist", (event) => {
+        event.returnValue = getBlacklist();
+    });
+    ipcMain.on("blacklistGame", (event, name: string, id: number) => {
+        blacklistGameAdd(name, id);
+        event.returnValue = undefined;
+    });
+    ipcMain.on("unblacklistGame", (event, id: number) => {
+        blacklistGameRemove(id);
+        event.returnValue = undefined;
     });
     ipcMain.on("addKeybind", (_event, keybind: Keybind) => {
         const keybinds = getConfig("keybinds");

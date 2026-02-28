@@ -67,22 +67,25 @@ export interface LegcordWindow {
         edit: (id: string) => void;
         folder: (id: string) => void;
         importQuickCss: (css: string) => void;
+        disableQuickCss: () => void;
+        enableQuickCss: () => void;
     };
     rpc: {
-        listen: (
-            callback: (msg: {
-                activity: {
-                    assets: { large_image: string | null; small_image: string | null };
-                    application_id: number;
-                    name: string;
-                };
-            }) => void,
-        ) => void;
+        listen: (msg: {
+            activity: {
+                assets: { large_image: string | null; small_image: string | null };
+                application_id: number;
+                name: string;
+            };
+        }) => void;
         getProcessList: () => ProcessInfo[];
         refreshProcessList: () => void;
         addDetectable: (e: Game) => void;
         removeDetectable: (id: string) => void;
         getDetectables: () => GameList;
+        getBlacklist: () => DetectedGame[];
+        blacklistGame: (name: string, id: number) => void;
+        unblacklistGame: (id: number) => void;
     };
     /** Plugin storage API. Requires user to enable "Extended plugin abilities" in Legcord settings. */
     fs: {
@@ -96,4 +99,27 @@ export interface LegcordWindow {
             relativePath: string,
         ) => Promise<{ ok: true; data: string } | { ok: false; error: string }>;
     };
+}
+
+export interface DetectedGame {
+    name: string;
+    id: number;
+}
+
+export interface LegcordRPC {
+    lastDetectedGames: DetectedGame[];
+    onLastDetectedUpdate: ((list: DetectedGame[]) => void) | null;
+    listen: (msg: {
+        activity: {
+            assets: { large_image: string | null; small_image: string | null };
+            application_id: number;
+            name: string;
+        };
+    }) => void;
+}
+
+declare global {
+    interface Window {
+        legcordRPC?: LegcordRPC;
+    }
 }

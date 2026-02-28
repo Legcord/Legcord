@@ -29,6 +29,25 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.2.2" date="2026-02-21" type="stable">
+      <url>https://github.com/Legcord/Legcord/releases/tag/v1.2.2</url>
+      <description>
+        <p>What’s New in Legcord v1.2.2 ✨</p>
+        <ul>
+          <li>🚫 **Game blacklist for arRPC detection**</li>
+        </ul>
+        <ul>
+          <li>⚡ **Electron updated** for better stability and compatibility.</li>
+          <li>🎨 **Quick CSS toggle added**.</li>
+          <li>🪟 Fixed **Windows titlebar duplication** ([https://github.com/Legcord/Legcord/pull/1009](https://github.com/Legcord/Legcord/pull/1009) by @passionvine).</li>
+          <li>🧪 **Custom Chromium flags support**</li>
+        </ul>
+        <ul>
+          <li>🛠️ Fixed **settings menu version patch** ([https://github.com/Legcord/Legcord/pull/1014](https://github.com/Legcord/Legcord/pull/1014) by @MahmodZE).</li>
+          <li>🧹 Fixed various **build warnings** ([https://github.com/Legcord/Legcord/pull/1017](https://github.com/Legcord/Legcord/pull/1017) by @MahmodZE).</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.2.1" date="2026-01-30" type="stable">
       <url>https://github.com/Legcord/Legcord/releases/tag/v1.2.1</url>
       <description>

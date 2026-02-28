@@ -1,14 +1,15 @@
 import { For, createSignal } from "solid-js";
+import type { Settings } from "../../../@types/settings.js";
 import type { ThemeManifest } from "../../../@types/themeManifest.js";
 import { ThemesCard } from "../components/ThemesCard.jsx";
-import { refreshThemes } from "../settings.js";
+import { refreshThemes, setConfig } from "../settings.js";
 import classes from "./ThemesPages.module.css";
 
 const {
-    ui: { Button, Header, HeaderTags, ButtonSizes, Divider, TextBox, showToast },
+    ui: { Button, Header, HeaderTags, ButtonSizes, TextBox, showToast, SwitchItem },
     plugin: { store },
 } = shelter;
-
+const settings = store.settings as Settings;
 export function ThemesPage() {
     const [downloadUrl, setDownloadUrl] = createSignal("");
     refreshThemes();
@@ -30,9 +31,27 @@ export function ThemesPage() {
     return (
         <>
             <Header tag={HeaderTags.H1}>Themes</Header>
-            <Divider mt mb />
+            <SwitchItem
+                note={store.i18n["settings-quickCss-desc"]}
+                value={settings.quickCss}
+                onChange={(e: boolean) => {
+                    console.log("Toggled quick CSS", e);
+                    if (e) {
+                        window.legcord.themes.enableQuickCss();
+                    } else {
+                        window.legcord.themes.disableQuickCss();
+                    }
+                    setConfig("quickCss", e);
+                }}
+            >
+                {store.i18n["settings-quickCss"]}
+            </SwitchItem>
             <div class={classes.buttonBox}>
-                <Button size={ButtonSizes.LARGE} onClick={window.legcord.themes.openQuickCss}>
+                <Button
+                    size={ButtonSizes.LARGE}
+                    onClick={window.legcord.themes.openQuickCss}
+                    disabled={!settings.quickCss}
+                >
                     {t["themes-openQuickCss"]}
                 </Button>
                 <Button size={ButtonSizes.LARGE} onClick={window.legcord.themes.openImportPicker}>

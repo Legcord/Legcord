@@ -4,8 +4,8 @@ import type { Keybind } from "../../@types/keybind.js";
 import type { LegcordWindow } from "../../@types/legcordWindow.d.ts";
 import type { Settings } from "../../@types/settings.js";
 import type { ThemeManifest } from "../../@types/themeManifest.js";
+import type { AppliedFlagsOutput } from "../../main.js";
 import type { venmicListObject } from "../venmic.js";
-let windowCallback: (arg0: object) => void;
 
 interface IPCSources {
     id: string;
@@ -26,7 +26,7 @@ contextBridge.exposeInMainWorld("legcord", {
     },
     settings: {
         getConfig: () => ipcRenderer.sendSync("getEntireConfig") as Settings,
-        setConfig: (key: string, value: string) => ipcRenderer.send("setConfig", key, value),
+        setConfig: (key: string, value: unknown) => ipcRenderer.sendSync("setConfig", key, value),
         addKeybind: (keybind: Keybind) => ipcRenderer.send("addKeybind", keybind),
         toggleKeybind: (id: string) => ipcRenderer.send("toggleKeybind", id),
         removeKeybind: (id: string) => ipcRenderer.send("removeKeybind", id),
@@ -36,6 +36,7 @@ contextBridge.exposeInMainWorld("legcord", {
         openCustomIconDialog: () => ipcRenderer.send("openCustomIconDialog"),
         copyDebugInfo: () => ipcRenderer.send("copyDebugInfo"),
         copyGPUInfo: () => ipcRenderer.send("copyGPUInfo"),
+        dumpFlags: () => ipcRenderer.sendSync("dumpFlags") as AppliedFlagsOutput,
     },
     touchbar: {
         setVoiceTouchbar: (state: boolean) => ipcRenderer.send("setVoiceTouchbar", state),
@@ -91,16 +92,18 @@ contextBridge.exposeInMainWorld("legcord", {
         folder: (id: string) => ipcRenderer.send("openThemeFolder", id),
         openQuickCss: () => ipcRenderer.send("openQuickCss"),
         importQuickCss: (css: string) => ipcRenderer.send("importQuickCss", css),
+        enableQuickCss: () => ipcRenderer.send("enableQuickCss"),
+        disableQuickCss: () => ipcRenderer.send("disableQuickCss"),
     },
     rpc: {
-        listen: (callback: () => void) => {
-            windowCallback = callback;
-        },
         refreshProcessList: () => ipcRenderer.send("refreshProcessList"),
         getProcessList: () => ipcRenderer.sendSync("getProcessList"),
         addDetectable: (detectable: Game) => ipcRenderer.send("addDetectable", detectable),
         removeDetectable: (id: string) => ipcRenderer.send("removeDetectable", id),
         getDetectables: () => ipcRenderer.sendSync("getDetectables") as Game[],
+        getBlacklist: () => ipcRenderer.sendSync("getRpcBlacklist") as { name: string; id: number }[],
+        blacklistGame: (name: string, id: number) => ipcRenderer.sendSync("blacklistGame", name, id),
+        unblacklistGame: (id: number) => ipcRenderer.sendSync("unblacklistGame", id),
     },
     fs: {
         /**
@@ -127,9 +130,3 @@ contextBridge.exposeInMainWorld("legcord", {
             >,
     },
 } as unknown as LegcordWindow);
-
-// biome-ignore lint/suspicious/noExplicitAny: FIX-ME
-ipcRenderer.on("rpc", (_event: any, data: object) => {
-    console.log(data);
-    windowCallback(data);
-});
