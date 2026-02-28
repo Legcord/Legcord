@@ -106,7 +106,7 @@ export function SettingsPage() {
                 when={
                     window.legcord.platform === "win32" &&
                     isMinWindowsVersion(10, 0, 22000) &&
-                    store.settings.transparency == "modern"
+                    store.settings.transparency === "modern"
                 }
             >
                 <DropdownItem
