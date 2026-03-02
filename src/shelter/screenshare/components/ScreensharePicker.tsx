@@ -21,7 +21,7 @@ const {
     plugin: { store },
 } = shelter;
 
-export async function getVirtmic() {
+async function getVirtmic() {
     try {
         const devices = await navigator.mediaDevices.enumerateDevices();
         const audioDevice = devices.find(({ label }) => label === "vencord-screen-share");
@@ -30,20 +30,41 @@ export async function getVirtmic() {
         return null;
     }
 }
-function patchNavigator() {
-    const original = navigator.mediaDevices.getDisplayMedia;
+
+const original = navigator.mediaDevices.getDisplayMedia;
+export async function patchNavigator() {
     navigator.mediaDevices.getDisplayMedia = async function (opts) {
         const stream = await original.call(this, opts);
-        const id = await getVirtmic();
-        if (id) {
+        const video = stream.getVideoTracks()[0];
+
+        const width = store.resolution * (16 / 9);
+        const height = store.resolution;
+
+        const stream_constraints: MediaTrackConstraints = {
+            frameRate: store.fps,
+            width: width,
+            height: height,
+        };
+
+        video
+            .applyConstraints(stream_constraints)
+            .then(() => console.info("Applied video stream track settings.", stream_constraints))
+            .catch(() => {
+                console.error("Failed to apply video stream track settings.", stream_constraints);
+            });
+
+        const virtmic_id = await getVirtmic();
+        stream.getAudioTracks().forEach((t) => stream.removeTrack(t));
+        if (virtmic_id) {
             const audio = await navigator.mediaDevices.getUserMedia({
                 audio: {
                     deviceId: {
-                        exact: id,
+                        exact: virtmic_id,
                     },
                     autoGainControl: false,
                     echoCancellation: false,
                     noiseSuppression: false,
+                    channelCount: 2,
                 },
             });
             audio.getAudioTracks().forEach((t) => stream.addTrack(t));
@@ -66,29 +87,29 @@ export const ScreensharePicker = (props: {
         setSource(props.sources[0].id);
         setName(props.sources[0].name);
     }
+
     const t = store.i18n;
     function startScreenshare() {
         if (source() === "") {
             showToast(t["screenshare-selectSource"], "error");
         }
-        console.log(source(), name(), audio());
-        if (audioSource() !== undefined && audio()) {
-            if (audioSource()!["node.name"] !== "Venmic disabled") {
-                console.info("audio venmic module source:", audioSource());
-                window.legcord.screenshare.venmicStart([audioSource()!]).then((done) => {
-                    if (done) {
-                        patchNavigator();
-                    }
-                });
-            }
-        }
+
+        patchNavigator();
+
         window.legcord.screenshare.start(source(), name(), audio());
+
         props.close();
     }
+
     function closeAndSave() {
         window.legcord.screenshare.start("none", "", false);
         props.close();
     }
+
+    async function updateVenmicSource(source: Node) {
+        return await window.legcord.screenshare.venmicStart([source]);
+    }
+
     onCleanup(closeAndSave);
 
     return (
@@ -165,15 +186,19 @@ export const ScreensharePicker = (props: {
                         <Divider mt mb />
                         <Header tag={HeaderTags.H4}>Venmic</Header>
                         <Dropdown
-                            value="Venmic disabled"
+                            value={audioSource()?.["node.name"] ?? "Venmic disabled"}
                             onChange={(v) => {
                                 const source = props.audioSources!.find((node) => node["node.name"] === v);
                                 if (!source) return;
                                 setAudioSource(source);
+                                updateVenmicSource(source);
                             }}
                             limitHeight
                             options={[
-                                { label: t["screenshare-venmicDisabled"], value: "Venmic disabled" },
+                                {
+                                    label: t["screenshare-venmicDisabled"],
+                                    value: "Venmic disabled",
+                                },
                                 ...(props.audioSources?.map((s) => ({
                                     label: s["node.name"],
                                     value: s["node.name"],
