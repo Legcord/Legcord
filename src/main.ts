@@ -16,7 +16,6 @@ import {
     setFirstRun,
     setup,
 } from "./common/config.js";
-import "./updater.js";
 import { getPreset } from "./common/flags.js";
 import { setLang } from "./common/lang.js";
 

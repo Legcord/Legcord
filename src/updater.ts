@@ -17,10 +17,10 @@ if (platform() === "linux") {
     const appimage = new AppImageUpdater(updateProvider);
     const deb = new DebUpdater(updateProvider);
 
-    deb.on("update-downloaded", (e) => {
+    deb.on("update-downloaded", (_e) => {
         deb.quitAndInstall();
     });
-    appimage.on("update-downloaded", (e) => {
+    appimage.on("update-downloaded", (_e) => {
         appimage.quitAndInstall();
     });
 

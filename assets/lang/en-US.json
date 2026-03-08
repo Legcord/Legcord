@@ -60,6 +60,8 @@
     "settings-MultiInstance-desc": "When enabled you'll be able to start up many instances of Legcord.",
     "settings-noBundleUpdates": "No bundle updates",
     "settings-noBundleUpdates-desc": "Disables automatic updates for client mods.",
+    "settings-automaticClientUpdates": "Automatic client updates",
+    "settings-automaticClientUpdates-desc": "Disables automatic Legcord updates",
     "settings-hardwareAcceleration": "Hardware acceleration",
     "settings-hardwareAcceleration-desc": "Hardware acceleration uses your GPU to make Legcord run faster. If you're experiencing visual glitches, try disabling this.",
     "settings-processScanning": "Process scanning",

@@ -66,6 +66,7 @@ export interface Settings {
     autoScroll: boolean;
     additionalArguments: string;
     noBundleUpdates: boolean;
+    automaticUpdates: boolean;
     overlayButtonColor: string;
     processScanning: boolean;
     windowsLegacyScanning: boolean;
