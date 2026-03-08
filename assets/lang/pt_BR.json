@@ -90,5 +90,7 @@
     "detectable-placeholderThemes": "Ação, Aventura",
     "detectable-placeholderId": "ex. 1234567890",
     "detectable-placeholderName": "ex. Discord",
-    "detectable-aliases": "Apelidos"
+    "detectable-aliases": "Apelidos",
+    "settings-bounceOnPing": "Agitar na barra de tarefas às notificações",
+    "settings-bounceOnPing-desc": "Agitar o aplicativo na barra de tarefas quando você receber uma notificação."
 }

@@ -28,7 +28,7 @@ RPC.on("invite", (code: string) => {
     parentPort?.postMessage(JSON.stringify(response));
 });
 
-parentPort.once("message", async (e) => {
+parentPort.on("message", async (e) => {
     if (e.message === "refreshProcessList") {
         const processes = await RPC.getProcessesList();
         console.log(processes);
