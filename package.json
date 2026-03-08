@@ -1,6 +1,6 @@
 {
     "name": "legcord",
-    "version": "1.2.2",
+    "version": "1.2.3",
     "description": "Legcord is a custom client designed to enhance your Discord experience while keeping everything lightweight.",
     "main": "ts-out/main.js",
     "engines": {

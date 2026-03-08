@@ -1,4 +1,5 @@
 import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { platform } from "node:os";
 import { dirname, join } from "node:path";
 import { app, dialog } from "electron";
 import type { Settings } from "../@types/settings.js";
@@ -52,6 +53,7 @@ const defaults: Settings = {
     tray: "dynamic",
     doneSetup: false,
     popoutPiP: false,
+    vaapi: platform() === "linux",
     spellcheckLanguage: ["en-US"],
     sleepInBackground: false,
     noBundleUpdates: false,
@@ -70,6 +72,8 @@ const safeMode: Settings = {
     windowStyle: "native",
     hardwareAcceleration: false,
     disableHttpCache: true,
+    vaapi: false,
+    additionalArguments: "",
     extendedPluginAbilities: false,
     quickCss: false,
 };

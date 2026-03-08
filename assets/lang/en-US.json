@@ -74,6 +74,8 @@
     "settings-mobileMode-desc": "If you're on a device with touch-screen this feature is for you! It activates Discord's hidden mobile mode meant for phones and tablets. Only major feature missing is voice chat support. This is ideal for\n                users on PinePhone and similar.",
     "settings-spellcheck": "Spellcheck",
     "settings-spellcheck-desc": "Helps you correct misspelled words by highlighting them.",
+    "settings-vaapi": "VAAPI",
+    "settings-vaapi-desc": "Use VAAPI (HW acceleration) for video decoding on Linux. This greatly reduces CPU usage during screenshare but may cause issues on some systems. Disable if you experience crashes or black screens during screenshare.",
     "settings-channel": "Discord channel",
     "settings-channel-desc": "Use this setting to change current instance of Discord that Legcord is running.",
     "settings-bitrateMin": "Minimum bitrate",

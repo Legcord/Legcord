@@ -182,6 +182,10 @@ export function getPreset(): Preset | undefined {
     // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     // SOFTWARE.
+    if (getConfig("vaapi")) {
+        console.log("VAAPI mode enabled");
+        mergeWithCustomFlags(vaapi);
+    }
     switch (getConfig("performanceMode")) {
         case "dynamic":
             if (powerMonitor.isOnBatteryPower()) {
@@ -197,9 +201,6 @@ export function getPreset(): Preset | undefined {
         case "battery":
             console.log("Battery mode enabled");
             return mergeWithCustomFlags(battery);
-        case "vaapi":
-            console.log("VAAPI mode enabled");
-            return mergeWithCustomFlags(vaapi);
         case "smoothScreenshare":
             console.log("Smooth screenshare mode enabled");
             return mergeWithCustomFlags(smoothExperiment);
