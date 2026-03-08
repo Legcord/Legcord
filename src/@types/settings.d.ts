@@ -42,7 +42,7 @@ export interface Settings {
     mods: ValidMods[];
     mobileMode: boolean;
     skipSplash: boolean;
-    performanceMode: "battery" | "dynamic" | "performance" | "vaapi" | "smoothScreenshare" | "none";
+    performanceMode: "battery" | "dynamic" | "performance" | "smoothScreenshare" | "none";
     customJsBundle: RequestInfo | URL | string;
     customCssBundle: RequestInfo | URL | string;
     startMinimized: boolean;
@@ -52,6 +52,7 @@ export interface Settings {
     inviteWebsocket: boolean;
     disableAutogain: boolean;
     autoHideMenuBar: boolean;
+    vaapi: boolean;
     blockPowerSavingInVoiceChat: boolean;
     disableHttpCache: boolean;
     tray: ValidTrayIcons;

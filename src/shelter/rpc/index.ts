@@ -13,7 +13,14 @@ async function listen(msg: {
         name: string;
     };
 }) {
-    if (!msg.activity || !window.legcordRPC) return;
+    if (!window.legcordRPC) return;
+
+    // Handle game closing (activity: null) by dispatching update to clear status
+    if (!msg.activity) {
+        console.log("RPC activity cleared (game closed)");
+        FluxDispatcher.dispatch({ type: "LOCAL_ACTIVITY_UPDATE", activity: null });
+        return;
+    }
 
     const appId = msg.activity.application_id;
     const app = await fetchApp(appId);

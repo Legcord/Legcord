@@ -274,7 +274,6 @@ export function SettingsPage() {
                         value: "performance",
                     },
                     { label: store.i18n["settings-prfmMode-battery"], value: "battery" },
-                    { label: store.i18n["settings-prfmMode-vaapi"], value: "vaapi" },
                     { label: store.i18n["settings-none"], value: "none" },
                 ]}
             />
@@ -451,6 +450,15 @@ export function SettingsPage() {
             >
                 {store.i18n["settings-noBundleUpdates"]}
             </SwitchItem>
+            <Show when={window.legcord.platform === "linux"}>
+                <SwitchItem
+                    note={store.i18n["settings-vaapi-desc"]}
+                    value={settings.vaapi}
+                    onChange={(e: boolean) => setConfig("vaapi", e, true)}
+                >
+                    {store.i18n["settings-vaapi"]}
+                </SwitchItem>
+            </Show>
             <SwitchItem
                 note={store.i18n["settings-automaticClientUpdates-desc"]}
                 value={settings.automaticUpdates}
