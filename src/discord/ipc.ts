@@ -1,3 +1,4 @@
+import { execFile } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -18,7 +19,7 @@ import { getLang, getLangName, getRawLang, setLang } from "../common/lang.js";
 import { disableQuickCss, initQuickCss, installTheme, setThemeEnabled, uninstallTheme } from "../common/themes.js";
 import { getDisplayVersion, getVersion } from "../common/version.js";
 import { openCssEditor } from "../cssEditor/main.js";
-import { getAppliedFlags } from "../main.js";
+import { getAppliedFlags, handleRestart } from "../main.js";
 import { isPowerSavingEnabled, setPowerSaving } from "../power.js";
 import constPaths from "../shared/consts/paths.js";
 import { splashWindow } from "../splash/main.js";
@@ -115,8 +116,14 @@ export function registerIpc(passedWindow: BrowserWindow): void {
                 buttonLabel: getLang("dialog-importTheme-button"),
                 properties: ["openFile", "multiSelections"],
                 filters: [
-                    { name: getLang("dialog-importTheme-discordStyles"), extensions: ["scss", "css"] },
-                    { name: getLang("dialog-importTheme-allFiles"), extensions: ["*"] },
+                    {
+                        name: getLang("dialog-importTheme-discordStyles"),
+                        extensions: ["scss", "css"],
+                    },
+                    {
+                        name: getLang("dialog-importTheme-allFiles"),
+                        extensions: ["*"],
+                    },
                 ],
             })
             .then((result) => {
@@ -235,8 +242,8 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         event.returnValue = getDisplayVersion();
     });
     ipcMain.on("restart", () => {
-        app.relaunch();
-        app.exit();
+        // workaround electron trying to relaunch from squashfs
+        handleRestart();
     });
     ipcMain.on("isDev", (event) => {
         event.returnValue = isDev;
@@ -336,7 +343,12 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         dialog
             .showOpenDialog({
                 properties: ["openFile"],
-                filters: [{ name: getLang("dialog-customIcon-filters"), extensions: ["ico", "png", "icns"] }],
+                filters: [
+                    {
+                        name: getLang("dialog-customIcon-filters"),
+                        extensions: ["ico", "png", "icns"],
+                    },
+                ],
             })
             .then((result) => {
                 if (result.canceled) return;
@@ -387,7 +399,10 @@ export function registerIpc(passedWindow: BrowserWindow): void {
                 writeFileSync(resolved, data, "utf-8");
                 return { ok: true };
             } catch (err) {
-                return { ok: false, error: err instanceof Error ? err.message : "UNKNOWN" };
+                return {
+                    ok: false,
+                    error: err instanceof Error ? err.message : "UNKNOWN",
+                };
             }
         },
     );
@@ -411,7 +426,10 @@ export function registerIpc(passedWindow: BrowserWindow): void {
                 const data = readFileSync(resolved, "utf-8");
                 return { ok: true, data };
             } catch (err) {
-                return { ok: false, error: err instanceof Error ? err.message : "UNKNOWN" };
+                return {
+                    ok: false,
+                    error: err instanceof Error ? err.message : "UNKNOWN",
+                };
             }
         },
     );

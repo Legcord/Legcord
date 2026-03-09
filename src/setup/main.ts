@@ -5,6 +5,7 @@ import { BrowserWindow, type BrowserWindowConstructorOptions, app, ipcMain } fro
 import type { Settings } from "../@types/settings.js";
 import { getConfig, getConfigLocation, setConfigBulk } from "../common/config.js";
 import { getLang, getRawLang } from "../common/lang.js";
+import { handleRestart } from "../main.js";
 
 let setupWindow: BrowserWindow;
 export async function createSetupWindow(): Promise<void> {
@@ -66,8 +67,8 @@ export async function createSetupWindow(): Promise<void> {
             return getRawLang();
         });
         ipcMain.on("setup-restart", () => {
-            app.relaunch();
-            app.exit();
+            // workaround electron trying to relaunch from squashfs
+            handleRestart();
         });
         void setupWindow.loadFile(path.join(import.meta.dirname, "/html/setup.html"));
     });

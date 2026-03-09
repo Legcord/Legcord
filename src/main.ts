@@ -102,6 +102,17 @@ export async function init(): Promise<void> {
         await createSetupWindow();
     }
 }
+export function handleRestart(exit_code = 0): void {
+    // workaround for squashfs on appimage restarts
+    const options: { execPath?: string; args?: string[] } = {};
+    if (process.env.APPIMAGE) {
+        options.args = process.argv;
+        options.args.unshift("--appimage-extract-and-run"); // the holy line code
+        options.execPath = process.env.APPIMAGE;
+    }
+    app.relaunch(options);
+    app.exit(exit_code);
+}
 args();
 if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     // if value isn't set after 3.2.4

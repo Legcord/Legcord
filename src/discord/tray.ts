@@ -1,10 +1,12 @@
+import { execFile } from "node:child_process";
 import { join } from "node:path";
-import { Menu, Tray, app, nativeImage } from "electron";
+import { Menu, Tray, app, ipcMain, nativeImage } from "electron";
 import { getConfig } from "../common/config.js";
 import { navigateTo } from "../common/dom.js";
 import { setForceQuit } from "../common/forceQuit.js";
 import { getLang } from "../common/lang.js";
 import { getDisplayVersion } from "../common/version.js";
+import { handleRestart } from "../main.js";
 import { mainWindows } from "./window.js";
 export let tray: Tray;
 
@@ -79,9 +81,7 @@ export function createTray() {
         {
             label: getLang("tray-restartLegcord"),
             click() {
-                app.relaunch();
-                setForceQuit(true);
-                app.quit();
+                handleRestart();
             },
         },
         {
