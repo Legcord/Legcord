@@ -15,10 +15,10 @@ async function listen(msg: {
 }) {
     if (!window.legcordRPC) return;
 
-    // Handle game closing (activity: null) by dispatching update to clear status
+    // Handle game closing by dispatching update to clear status
     if (!msg.activity) {
         console.log("RPC activity cleared (game closed)");
-        FluxDispatcher.dispatch({ type: "LOCAL_ACTIVITY_UPDATE", activity: null });
+        FluxDispatcher.dispatch({ type: "LOCAL_ACTIVITY_UPDATE", ...msg });
         return;
     }
 
@@ -70,6 +70,7 @@ async function listen(msg: {
                 msg.activity.assets.small_image,
             );
     }
+
     console.log("RPC activity update", msg.activity);
     FluxDispatcher.dispatch({ type: "LOCAL_ACTIVITY_UPDATE", ...msg }); // set RPC status
 }
