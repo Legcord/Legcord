@@ -53,7 +53,7 @@ export function muteToggle() {
                     "type": "AUDIO_TOGGLE_SELF_MUTE",
                     "context": "default",
                     "syncRemote": true,
-                    "skipMuteUnmuteSoundEffect": false
+                    "playSoundEffect": true
                 })
                 `);
     });
