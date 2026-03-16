@@ -3,6 +3,32 @@ import { sleep } from "../../common/sleep.js";
 const { ipcRenderer } = require("electron");
 const version = ipcRenderer.sendSync("displayVersion") as string;
 
+{
+    const script = document.createElement("script");
+    script.textContent = `if (window.PublicKeyCredential) {
+    try {
+        Object.defineProperty(PublicKeyCredential, "isConditionalMediationAvailable", {
+            value: async () => false, writable: true, configurable: true
+        });
+        Object.defineProperty(PublicKeyCredential, "getClientCapabilities", {
+            value: async () => ({}), writable: true, configurable: true
+        });
+    } catch {}
+}`;
+
+    if (document.documentElement) {
+        document.documentElement.prepend(script);
+    } else {
+        const observer = new MutationObserver(() => {
+            if (document.documentElement) {
+                observer.disconnect();
+                document.documentElement.prepend(script);
+            }
+        });
+        observer.observe(document, { childList: true });
+    }
+}
+
 export async function getVirtmic() {
     try {
         const devices = await navigator.mediaDevices.enumerateDevices();
