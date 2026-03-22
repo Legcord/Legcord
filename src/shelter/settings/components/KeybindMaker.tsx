@@ -105,7 +105,9 @@ export const KeybindMaker = (props: { close: () => void }) => {
                     </Show>
                 </span>
                 <div class={classes.grabBox}>
-                    <TextBox disabled value={accelerator()} onInput={setAccelerator} />
+                    <div style={{ flex: "1", "min-width": "0" }}>
+                        <TextBox disabled value={accelerator()} onInput={setAccelerator} />
+                    </div>
                     {recording() ? (
                         <Button
                             class={classes.recBtn}

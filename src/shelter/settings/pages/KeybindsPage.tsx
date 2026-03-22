@@ -14,9 +14,11 @@ export function KeybindsPage() {
         <>
             <Header tag={HeaderTags.H1}>Keybinds</Header>
             <Divider mt mb />
-            <Button size={ButtonSizes.MAX} onClick={addNewKeybind}>
-                Create a keybind
-            </Button>
+            <div style={{ display: "flex", "justify-content": "flex-end", "margin-bottom": "12px" }}>
+                <Button size={ButtonSizes.LARGE} onClick={addNewKeybind}>
+                    Create a keybind
+                </Button>
+            </div>
             <For each={store.settings.keybinds}>{(keybind: Keybind) => <KeybindCard keybind={keybind} />}</For>
         </>
     );
