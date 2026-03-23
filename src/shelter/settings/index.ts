@@ -1,9 +1,9 @@
+import { ContributorsPage } from "./pages/ContributorsPage.jsx";
 /// <reference path="../../../node_modules/@uwu/shelter-defs/dist/shelter-defs/rootdefs.d.ts" />
 import { KeybindsPage } from "./pages/KeybindsPage.jsx";
 import { RegisteredGamesPage } from "./pages/RegisteredGamesPage.jsx";
 import { SettingsPage } from "./pages/SettingsPage.jsx";
 import { ThemesPage } from "./pages/ThemesPage.jsx";
-import { ContributorsPage } from "./pages/ContributorsPage.jsx";
 
 import { isRestartRequired, refreshSettings, refreshThemes } from "./settings.js";
 const {
