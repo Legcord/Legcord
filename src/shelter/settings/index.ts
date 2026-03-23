@@ -3,6 +3,7 @@ import { KeybindsPage } from "./pages/KeybindsPage.jsx";
 import { RegisteredGamesPage } from "./pages/RegisteredGamesPage.jsx";
 import { SettingsPage } from "./pages/SettingsPage.jsx";
 import { ThemesPage } from "./pages/ThemesPage.jsx";
+import { ContributorsPage } from "./pages/ContributorsPage.jsx";
 
 import { isRestartRequired, refreshSettings, refreshThemes } from "./settings.js";
 const {
@@ -20,6 +21,7 @@ const settingsPages = [
     registerSection("section", "legcord-themes", "Themes", ThemesPage),
     registerSection("section", "legcord-keybinds", "Keybinds", KeybindsPage),
     registerSection("section", "legcord-games", "Games", RegisteredGamesPage),
+    registerSection("section", "legcord-contributors", "Contributors", ContributorsPage),
 ];
 
 function restartRequired(payload: { event: string; properties: { origin_pane: string } }) {
