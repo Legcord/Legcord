@@ -298,5 +298,7 @@
     "keybind-deafen": "Süketítés",
     "detectable-placeholderThemes": "Akció, kaland",
     "settings-vaapi": "VAAPI",
-    "settings-vaapi-desc": "VAAPI (hardvergyorsítás) használata videó dekódolásához Linuxon. Ez jelentősen csökkenti a CPU-használatot képernyőmegosztás közben, de egyes rendszereken problémákat okozhat. Kapcsolja ki, ha képernyőmegosztás közben összeomlásokat vagy fekete képernyőt tapasztal."
+    "settings-vaapi-desc": "VAAPI (hardvergyorsítás) használata videó dekódolásához Linuxon. Ez jelentősen csökkenti a CPU-használatot képernyőmegosztás közben, de egyes rendszereken problémákat okozhat. Kapcsolja ki, ha képernyőmegosztás közben összeomlásokat vagy fekete képernyőt tapasztal.",
+    "settings-automaticClientUpdates": "Automatikus kliens frissítések",
+    "settings-automaticClientUpdates-desc": "Automatikus Legcord frissítések kikapcsolása"
 }
