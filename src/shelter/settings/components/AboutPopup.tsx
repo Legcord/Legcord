@@ -26,7 +26,7 @@ export const AboutPopup = (props: { close: () => void }) => {
                 return response.json();
             })
             .then((data) => {
-                setContributors(data.filter((contributor: Contributor) => contributor.type === "User"));
+                setContributors(data);
                 setLoading(false);
             })
             .catch((err) => {
