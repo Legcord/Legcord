@@ -2,19 +2,64 @@ import { Show } from "solid-js";
 import type { Settings } from "../../../@types/settings.js";
 import { DropdownItem } from "../components/DropdownItem.jsx";
 import { TextBoxItem } from "../components/TextBoxItem.jsx";
+import { AboutPopup } from "../components/AboutPopup.jsx";
+import { InfoIcon } from "../components/icons/InfoIcon.jsx";
 import { setConfig, toggleMod } from "../settings.js";
 import classes from "./SettingsPage.module.css";
+import bannerClasses from "../components/SupportBanner.module.css";
 
 const {
     plugin: { store },
-    ui: { SwitchItem, Header, HeaderTags, Button, ButtonSizes },
+    ui: { SwitchItem, Header, HeaderTags, Button, ButtonSizes, openModal },
 } = shelter;
 
 const settings = store.settings as Settings;
 
+function openAboutModal() {
+    openModal((close: () => void) => <AboutPopup close={close} />);
+}
+
+function dismissSupportBanner() {
+    setConfig("supportBannerDismissed", true);
+}
+
 export function SettingsPage() {
     return (
         <>
+            {/* Support Banner */}
+            <Show when={!settings.supportBannerDismissed}>
+                <div class={bannerClasses.supportBanner}>
+                    <button
+                        type="button"
+                        class={bannerClasses.infoButton}
+                        onClick={openAboutModal}
+                        title="About Legcord"
+                    >
+                        <InfoIcon />
+                    </button>
+                    <div class={bannerClasses.supportBannerContent}>
+                        <h3>Support the Project</h3>
+                        <p>
+                            Help us continue developing Legcord by making a donation. Your support keeps the project alive and allows us to add new features.
+                        </p>
+                        <Button
+                            size={ButtonSizes.MAX}
+                            class={bannerClasses.donateButton}
+                            onClick={() => window.open("https://github.com/sponsors/smartfrigde", "_blank")}
+                        >
+                            Donate
+                        </Button>
+                    </div>
+                    <button
+                        type="button"
+                        class={bannerClasses.dismissButton}
+                        onClick={dismissSupportBanner}
+                        title="Dismiss this banner"
+                    >
+                        Dismiss
+                    </button>
+                </div>
+            </Show>
             <Header class={classes.category} tag={HeaderTags.H5}>
                 {store.i18n["settings-category-mods"]}
             </Header>

@@ -1,4 +1,3 @@
-import { ContributorsPage } from "./pages/ContributorsPage.jsx";
 /// <reference path="../../../node_modules/@uwu/shelter-defs/dist/shelter-defs/rootdefs.d.ts" />
 import { KeybindsPage } from "./pages/KeybindsPage.jsx";
 import { RegisteredGamesPage } from "./pages/RegisteredGamesPage.jsx";
@@ -21,7 +20,6 @@ const settingsPages = [
     registerSection("section", "legcord-themes", "Themes", ThemesPage),
     registerSection("section", "legcord-keybinds", "Keybinds", KeybindsPage),
     registerSection("section", "legcord-games", "Games", RegisteredGamesPage),
-    registerSection("section", "legcord-contributors", "Contributors", ContributorsPage),
 ];
 
 function restartRequired(payload: { event: string; properties: { origin_pane: string } }) {

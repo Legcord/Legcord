@@ -74,4 +74,5 @@ export interface Settings {
     scanInterval: number;
     modCache?: Record<ValidMods, string>;
     extendedPluginAbilities: boolean;
+    supportBannerDismissed: boolean;
 }

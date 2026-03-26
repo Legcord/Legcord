@@ -65,6 +65,7 @@ const defaults: Settings = {
     useSystemCssEditor: false,
     extendedPluginAbilities: false,
     quickCss: true,
+    supportBannerDismissed: false,
 };
 
 const safeMode: Settings = {

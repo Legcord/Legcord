@@ -7,3 +7,4 @@ package-lock.json
 .cache
 .DS_Store
 pnpm-workspace.yaml
+/build

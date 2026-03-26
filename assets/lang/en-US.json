@@ -300,5 +300,11 @@
     "contextMenu-searchGoogle": "Search with Google",
     "contextMenu-searchDuckDuckGo": "Search with DuckDuckGo",
     "touchbar-servers": "Servers",
+    "settings-contributors": "Contributors",
+    "settings-contributors-loading": "Loading contributors...",
+    "settings-contributors-error": "Failed to load contributors",
+    "settings-contributions": "Contributions",
+    "settings-contributor-bot": "Bot",
+    "settings-about": "About Legcord",
     "splash-title": "Legcord"
 }
