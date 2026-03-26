@@ -1,0 +1,383 @@
+/* Support Banner Styles */
+.supportBanner {
+    background: linear-gradient(135deg, #4a69bd 0%, #1e3799 100%);
+    border-radius: 12px;
+    margin: 16px;
+    padding: 20px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 4px 20px rgba(74, 105, 189, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.supportBanner.hidden {
+    display: none;
+}
+
+.infoButton {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    color: white;
+}
+
+.infoButton:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.supportBannerContent {
+    flex: 1;
+    color: white;
+    text-align: center;
+    padding: 0 60px;
+}
+
+.supportBannerContent h3 {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+}
+
+.supportBannerContent p {
+    margin: 0 0 16px 0;
+    font-size: 14px;
+    line-height: 1.4;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.donateButton {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    padding: 12px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.donateButton:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.donateButton:active {
+    transform: translateY(0);
+}
+
+.dismissButton {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.6);
+    border-radius: 4px;
+    padding: 4px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.dismissButton:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.dismissButton:active {
+    transform: scale(0.95);
+}
+
+/* About Popup Styles */
+.aboutContainer {
+    padding: 16px;
+    background: var(--background-primary);
+    border-radius: 0;
+    min-height: auto;
+}
+
+.aboutHeader {
+    text-align: center;
+    margin-bottom: 32px;
+    padding: 24px;
+    background: var(--background-secondary);
+    border: 1px solid var(--background-modifier-accent);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.aboutTitle {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0 0 20px 0;
+    color: var(--header-primary);
+    letter-spacing: -0.5px;
+}
+
+.aboutDescription {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin: 0 0 24px 0;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 400;
+}
+
+.aboutVersion {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin: 0;
+    padding: 10px 18px;
+    background: var(--background-tertiary);
+    border-radius: 8px;
+    display: inline-block;
+    font-family: var(--font-mono);
+    border: 1px solid var(--background-modifier-accent);
+    font-weight: 500;
+}
+
+.quickActions {
+    background: var(--background-secondary);
+    border: 1px solid var(--background-modifier-accent);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 0 0 32px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.quickActionsTitle {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 20px 0;
+    color: var(--header-primary);
+    letter-spacing: -0.3px;
+}
+
+.quickActionsList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.quickActionButton {
+    background: var(--background-secondary-alt);
+    border: 1px solid var(--background-modifier-accent);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-normal);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    width: 100%;
+    transition: all 0.15s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.quickActionButton:hover {
+    background: var(--background-tertiary);
+    border-color: var(--background-modifier-hover);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+}
+
+.quickActionButton:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.quickActionButtonIcon {
+    margin-right: 12px;
+    font-size: 18px;
+    color: var(--interactive-normal);
+    transition: color 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+}
+
+.quickActionButton:hover .quickActionButtonIcon {
+    color: var(--interactive-hover);
+}
+
+.contributorsSection {
+    padding: 0;
+    background: var(--background-secondary);
+    border: 1px solid var(--background-modifier-accent);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.contributorsTitle {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 24px 0;
+    color: var(--header-primary);
+    text-align: center;
+    letter-spacing: -0.3px;
+}
+
+.contributorsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    padding: 0;
+    max-width: 100%;
+    width: 100%;
+    justify-items: center;
+    max-height: 40vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--background-modifier-accent) transparent;
+}
+
+.contributorsGrid::-webkit-scrollbar {
+    width: 6px;
+}
+
+.contributorsGrid::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.contributorsGrid::-webkit-scrollbar-thumb {
+    background: var(--background-modifier-accent);
+    border-radius: 3px;
+}
+
+.contributorsGrid::-webkit-scrollbar-thumb:hover {
+    background: var(--background-modifier-hover);
+}
+
+.contributorCard {
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-accent);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.15s ease;
+    min-width: 180px;
+    max-width: 100%;
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    position: relative;
+}
+
+.contributorCard:hover {
+    background: var(--background-secondary);
+    border-color: var(--background-modifier-hover);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+.contributorLink {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.contributorAvatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    margin-bottom: 16px;
+    max-width: 100%;
+    border: 3px solid var(--background-modifier-accent);
+    object-fit: cover;
+    transition: all 0.15s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contributorCard:hover .contributorAvatar {
+    border-color: var(--brand-experiment);
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.contributorName {
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: var(--header-primary);
+    word-break: break-word;
+    overflow-wrap: break-word;
+    text-align: center;
+    transition: color 0.15s ease;
+    letter-spacing: -0.2px;
+}
+
+.contributorCard:hover .contributorName {
+    color: var(--interactive-hover);
+}
+
+.contributorInfo {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0;
+    text-align: center;
+    font-weight: 400;
+    line-height: 1.4;
+}
+
+.loadingState,
+.errorState {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--text-normal);
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.errorState {
+    color: var(--text-danger);
+    background: rgba(240, 71, 71, 0.1);
+    border: 1px solid rgba(240, 71, 71, 0.2);
+    border-radius: 8px;
+    margin: 16px;
+}
