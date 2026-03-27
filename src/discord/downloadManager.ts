@@ -1,9 +1,9 @@
-import { getConfig } from "../common/config.js";
 import { Buffer } from "node:buffer";
 import { spawn } from "node:child_process";
 import { join } from "node:path";
 import { app } from "electron";
 import isDev from "electron-is-dev";
+import { getConfig } from "../common/config.js";
 
 // ============================================================================
 // Error Types
@@ -13,7 +13,7 @@ export class DownloadManagerError extends Error {
     constructor(
         public managerType: string,
         message: string,
-        public cause?: Error
+        public cause?: Error,
     ) {
         super(`[${managerType}] ${message}`);
         this.name = "DownloadManagerError";
@@ -67,14 +67,13 @@ export abstract class DownloadManager {
     protected config: DownloadManagerConfig;
 
     constructor(configKey: string) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        this.config = (getConfig(configKey as any) as DownloadManagerConfig) ?? {};
+        this.config = (getConfig(configKey) as DownloadManagerConfig) ?? {};
     }
 
     abstract createTask(url: string, options?: DownloadManagerTaskOptions): Promise<string>;
     abstract isConfigured(): boolean;
     abstract getMetadata(): DownloadManagerMetadata;
-    
+
     /**
      * Validate configuration before attempting downloads.
      * Returns validation result with errors if any.
@@ -82,7 +81,7 @@ export abstract class DownloadManager {
     validateConfig(): { valid: boolean; errors: string[] } {
         return { valid: this.isConfigured(), errors: [] };
     }
-    
+
     /**
      * Check if this manager can handle the given URL.
      * Default implementation accepts all HTTP(S) URLs.
@@ -95,7 +94,7 @@ export abstract class DownloadManager {
             return false;
         }
     }
-    
+
     /**
      * Bring this download manager's window to the foreground.
      * Default implementation does nothing. Override in subclasses if needed.
@@ -135,13 +134,13 @@ export class GopeedDownloadManager extends DownloadManager implements DeepLinkCa
     validateConfig(): { valid: boolean; errors: string[] } {
         const errors: string[] = [];
         const host = this.normalizeHost(this.config.host);
-        
+
         try {
             new URL(host);
         } catch {
             errors.push("Invalid host URL format");
         }
-        
+
         return { valid: errors.length === 0, errors };
     }
 
@@ -186,7 +185,7 @@ export class GopeedDownloadManager extends DownloadManager implements DeepLinkCa
         url: string,
         headers?: Record<string, string>,
         filename?: string,
-        method?: "GET" | "POST"
+        method?: "GET" | "POST",
     ): {
         req: { url: string; extra?: { header?: Record<string, string>; method?: "GET" | "POST" } };
         opts?: { name?: string };
@@ -248,7 +247,7 @@ export class GopeedDownloadManager extends DownloadManager implements DeepLinkCa
             throw new NetworkError(
                 "gopeed",
                 `Failed to connect to Gopeed at ${host}`,
-                error instanceof Error ? error : undefined
+                error instanceof Error ? error : undefined,
             );
         }
 
@@ -259,10 +258,7 @@ export class GopeedDownloadManager extends DownloadManager implements DeepLinkCa
 
         const json = this.parseApiResult(bodyText);
         if (json.code !== 0) {
-            throw new DownloadManagerError(
-                "gopeed",
-                json.msg ?? json.message ?? "Unknown Gopeed API error"
-            );
+            throw new DownloadManagerError("gopeed", json.msg ?? json.message ?? "Unknown Gopeed API error");
         }
 
         return json.data;
@@ -283,14 +279,14 @@ function getIDMHelperScriptPath(): string {
     // Get the VBScript helper path relative to app root
     // This function is called at runtime, after app initialization
     let scriptPath = join(app.getAppPath(), "scripts", "idm_helper.vbs");
-    
+
     // When packaged in ASAR, external processes (like cscript) cannot access files inside the archive.
     // Electron-builder unpacks these files to app.asar.unpacked, so we must point to that location.
     // Use regex to replace only the app.asar part of the path, ensuring we don't accidentally replace parts of user directories
-    if (app.isPackaged && scriptPath.includes("app.asar")) { 
+    if (app.isPackaged && scriptPath.includes("app.asar")) {
         scriptPath = scriptPath.replace(/app\.asar([\\/])scripts/, "app.asar.unpacked$1scripts");
     }
-    
+
     if (isDev) console.debug(`[IDM] Helper script path: ${scriptPath}`);
     return scriptPath;
 }
@@ -325,14 +321,14 @@ export class IDMDownloadManager extends DownloadManager {
 
     async bringToFront(): Promise<void> {
         let helperScript = join(app.getAppPath(), "scripts", "bring_idm_to_front.vbs");
-        
+
         // Similar check for packaged app - point to unpacked version
         if (app.isPackaged && helperScript.includes("app.asar")) {
             helperScript = helperScript.replace(/app\.asar([\\/])scripts/, "app.asar.unpacked$1scripts");
         }
 
         if (isDev) console.debug(`[IDM] Bringing to front using script: ${helperScript}`);
-        
+
         // Fire and forget - don't wait for completion
         try {
             const process = spawn("cscript.exe", [helperScript], {
@@ -341,7 +337,10 @@ export class IDMDownloadManager extends DownloadManager {
             });
             process.unref();
         } catch (error) {
-            if (isDev) console.debug(`[IDM] Failed to bring to front: ${error instanceof Error ? error.message : String(error)}`);
+            if (isDev)
+                console.debug(
+                    `[IDM] Failed to bring to front: ${error instanceof Error ? error.message : String(error)}`,
+                );
             // Silently fail if script cannot be executed
         }
     }
@@ -350,11 +349,11 @@ export class IDMDownloadManager extends DownloadManager {
         url: string,
         referrer: string,
         cookie: string,
-        filename?: string
+        filename?: string,
     ): Promise<IDMTaskResult> {
         return new Promise((resolve, reject) => {
             const helperScript = getIDMHelperScriptPath();
-            
+
             // VBScript expects: cscript.exe idm_helper.vbs url referrer cookie postData username password outputPath outputFilename userAgent flags
             const args = [
                 helperScript,
@@ -389,7 +388,7 @@ export class IDMDownloadManager extends DownloadManager {
                     const jsonMatch = output.match(/\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}/);
                     const jsonStr = jsonMatch ? jsonMatch[0] : output.trim();
                     const result = JSON.parse(jsonStr) as IDMTaskResult;
-                    
+
                     if (result.success) {
                         resolve(result);
                     } else {
@@ -401,8 +400,8 @@ export class IDMDownloadManager extends DownloadManager {
                     reject(
                         new DownloadManagerError(
                             "idm",
-                            `Failed to execute IDM helper: ${errorMsg}\nDebug info: ${details}`
-                        )
+                            `Failed to execute IDM helper: ${errorMsg}\nDebug info: ${details}`,
+                        ),
                     );
                 }
             });
@@ -412,8 +411,8 @@ export class IDMDownloadManager extends DownloadManager {
                     new DownloadManagerError(
                         "idm",
                         `Failed to execute IDM helper script: ${err.message}\nScript path: ${helperScript}`,
-                        err
-                    )
+                        err,
+                    ),
                 );
             });
         });
@@ -430,7 +429,7 @@ export class IDMDownloadManager extends DownloadManager {
             throw new DownloadManagerError(
                 "idm",
                 `Failed to send download to IDM: ${error instanceof Error ? error.message : String(error)}`,
-                error instanceof Error ? error : undefined
+                error instanceof Error ? error : undefined,
             );
         }
     }
@@ -440,66 +439,66 @@ export class IDMDownloadManager extends DownloadManager {
 // Download Manager Factory
 // ============================================================================
 
-export class DownloadManagerFactory {
-    private static managers = new Map<string, new () => DownloadManager>([
-        ["gopeed", GopeedDownloadManager],
-        ["idm", IDMDownloadManager],
-    ]);
+const managers = new Map<string, new () => DownloadManager>([
+    ["gopeed", GopeedDownloadManager],
+    ["idm", IDMDownloadManager],
+]);
 
+export const DownloadManagerFactory = {
     /**
      * Create a download manager instance by type.
      * Returns null if the type is not registered or not supported on this platform.
      */
-    static create(type: string): DownloadManager | null {
-        const ManagerClass = this.managers.get(type);
+    create(type: string): DownloadManager | null {
+        const ManagerClass = managers.get(type);
         if (!ManagerClass) {
             return null;
         }
 
         const manager = new ManagerClass();
         const metadata = manager.getMetadata();
-        
+
         // Check platform compatibility
         if (!metadata.platforms.includes(process.platform as "win32" | "darwin" | "linux")) {
             return null;
         }
 
         return manager;
-    }
+    },
 
     /**
      * Register a new download manager type.
      * Allows adding custom download managers at runtime.
      */
-    static register(type: string, managerClass: new () => DownloadManager): void {
-        this.managers.set(type, managerClass);
-    }
+    register(type: string, managerClass: new () => DownloadManager): void {
+        managers.set(type, managerClass);
+    },
 
     /**
      * Get all registered manager types.
      */
-    static getRegisteredTypes(): string[] {
-        return Array.from(this.managers.keys());
-    }
+    getRegisteredTypes(): string[] {
+        return Array.from(managers.keys());
+    },
 
     /**
      * Get all managers compatible with the current platform.
      */
-    static getAvailableManagers(): DownloadManager[] {
-        const managers: DownloadManager[] = [];
-        for (const type of this.managers.keys()) {
+    getAvailableManagers(): DownloadManager[] {
+        const managersList: DownloadManager[] = [];
+        for (const type of managers.keys()) {
             const manager = this.create(type);
             if (manager) {
-                managers.push(manager);
+                managersList.push(manager);
             }
         }
-        return managers;
-    }
+        return managersList;
+    },
 
     /**
      * Get metadata for all available managers.
      */
-    static getAvailableMetadata(): DownloadManagerMetadata[] {
-        return this.getAvailableManagers().map(m => m.getMetadata());
-    }
-}
+    getAvailableMetadata(): DownloadManagerMetadata[] {
+        return this.getAvailableManagers().map((m) => m.getMetadata());
+    },
+};
