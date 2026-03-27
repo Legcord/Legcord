@@ -9,6 +9,7 @@ import { mainWindows } from "./window.js";
 const keybindActionLabels: Record<KeybindActions, string> = {
     mute: "keybind-mute",
     deafen: "keybind-deafen",
+    pushToTalk: "keybind-pushToTalk",
     leaveCall: "keybind-leaveCall",
     navigateForward: "keybind-navigateForward",
     navigateBack: "keybind-navigateBack",
@@ -54,14 +55,14 @@ export function setMenu(): void {
                             mainWindow.show();
                             void mainWindow.webContents.executeJavaScript(`window.shelter.flux.dispatcher.dispatch({
                                 "type": "USER_SETTINGS_MODAL_OPEN",
-                                "section": "My Account",
+                                "section": "legcord-settings",
                                 "subsection": null,
                                 "openWithoutBackstack": false
                             })`);
                             void mainWindow.webContents.executeJavaScript(
                                 `window.shelter.flux.dispatcher.dispatch({type: "LAYER_PUSH", component: "USER_SETTINGS"})`,
                             );
-                            // TODO - open legcord tab in settings
+                            // this opens the legcord tab directly in the settings modal
                         });
                     },
                 },
