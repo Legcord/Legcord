@@ -78,9 +78,7 @@ export const config: Configuration = {
         "license.txt",
     ],
 
-    asarUnpack: [
-        "scripts/**/*.vbs",
-    ],
+    asarUnpack: ["scripts/**/*.vbs"],
 
     electronDownload: {
         cache: ".cache",

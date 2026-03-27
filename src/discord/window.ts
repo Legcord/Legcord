@@ -1,8 +1,8 @@
+import { Buffer } from "node:buffer";
+import { spawn } from "node:child_process";
 import { readFileSync } from "node:fs";
 import os from "node:os";
 import path, { join } from "node:path";
-import { Buffer } from "node:buffer";
-import { spawn } from "node:child_process";
 import {
     BrowserWindow,
     type BrowserWindowConstructorOptions,
@@ -16,22 +16,22 @@ import {
     shell,
 } from "electron";
 import contextMenu from "electron-context-menu";
+import isDev from "electron-is-dev";
 import { firstRun, getConfig, setConfig } from "../common/config.js";
 import { navigateTo } from "../common/dom.js";
-import isDev from "electron-is-dev";
 import { forceQuit, setForceQuit } from "../common/forceQuit.js";
 import { getLang } from "../common/lang.js";
 import { injectThemesMain } from "../common/themes.js";
 import { getWindowState, setWindowState } from "../common/windowState.js";
 import { init } from "../main.js";
-import { registerGlobalKeybinds } from "./globalKeybinds.js";
 import {
-    GopeedDownloadManager,
-    IDMDownloadManager,
+    type DeepLinkCapable,
     DownloadManagerFactory,
     type DownloadManagerTaskOptions,
-    type DeepLinkCapable,
+    GopeedDownloadManager,
+    IDMDownloadManager,
 } from "./downloadManager.js";
+import { registerGlobalKeybinds } from "./globalKeybinds.js";
 import { registerIpc } from "./ipc.js";
 import { setMenu } from "./menu.js";
 import { startRPC, stopRPC } from "./rpcProcess.js";
@@ -155,7 +155,7 @@ async function queueDownloadToManager(
     passedWindow: BrowserWindow,
     url: string,
     managerType: "gopeed" | "idm",
-    filename?: string
+    filename?: string,
 ): Promise<boolean> {
     try {
         const manager = DownloadManagerFactory.create(managerType);
@@ -176,7 +176,7 @@ async function queueDownloadToManager(
 
         if (isDev) {
             console.debug(
-                `[${managerType.toUpperCase()}] Queueing download: ${url}${filename ? ` as ${filename}` : ""}`
+                `[${managerType.toUpperCase()}] Queueing download: ${url}${filename ? ` as ${filename}` : ""}`,
             );
         }
 
@@ -196,10 +196,10 @@ async function queueDownloadToManager(
         // Standard task creation
         await manager.createTask(url, taskOptions);
         if (isDev) console.debug(`[${managerType.toUpperCase()}] Download queued successfully`);
-        
+
         // Bring manager window to front
         await manager.bringToFront();
-        
+
         return true;
     } catch (error) {
         console.error(`Failed to queue download to ${managerType}:`, error);
@@ -423,11 +423,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
             };
         const isHttpOrHttps = isHttpUrl(url);
         const shouldRoute = isHttpOrHttps && getCachedRouteDecision(url);
-        if (
-            isHttpOrHttps &&
-            isDownloadManagerEnabled() &&
-            shouldRoute
-        ) {
+        if (isHttpOrHttps && isDownloadManagerEnabled() && shouldRoute) {
             void (async () => {
                 try {
                     const manager = getActiveDownloadManager();
