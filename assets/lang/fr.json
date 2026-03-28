@@ -76,7 +76,6 @@
     "settings-skipSplash-desc": "Ignore l'écran de chargement de Legcord lorsque vous lancez l'application.",
     "settings-copyDebugInfo": "Copier les informations de débogage",
     "settings-copyGPUInfo": "Copier les informations de la carte graphique",
-    "settings-copyConsoleInfo": "Copier la console",
     "settings-smoothScroll": "Utiliser le défilement naturel",
     "settings-smoothScroll-desc": "Activer ou désactiver le défilement naturel",
     "settings-autoScroll": "Autoriser le défilement automatique",
