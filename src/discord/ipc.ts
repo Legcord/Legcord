@@ -345,18 +345,19 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         clipboard.writeText(JSON.stringify(app.getGPUFeatureStatus()));
     });
     interface ConsoleLogEntry {
-    type: string;
-    timestamp: string;
-    message: string;
-}
+        type: string;
+        timestamp: string;
+        message: string;
+    }
 
-ipcMain.on("copyConsoleInfo", () => {
-        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    ipcMain.on("copyConsoleInfo", () => {
+        const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
         const fileName = `legcord-console-${timestamp}.txt`;
         const filePath = path.join(app.getPath("documents"), fileName);
-        
+
         // Get console logs from the renderer process
-        passedWindow.webContents.executeJavaScript(`
+        passedWindow.webContents
+            .executeJavaScript(`
             (function() {
                 // Create a log storage if it doesn't exist
                 if (!window.legcordConsoleLogs) {
@@ -433,15 +434,18 @@ ipcMain.on("copyConsoleInfo", () => {
                     url: window.location.href
                 };
             })()
-        `).then(result => {
-            const formatLogs = (logs: ConsoleLogEntry[]) => {
-                return logs.map((log: ConsoleLogEntry) => {
-                    const time = new Date(log.timestamp).toLocaleTimeString();
-                    return `[${time}] [${log.type.toUpperCase()}] ${log.message}`;
-                }).join('\n');
-            };
-            
-            const logContent = `Legcord Console Export - ${new Date().toISOString()}
+        `)
+            .then((result) => {
+                const formatLogs = (logs: ConsoleLogEntry[]) => {
+                    return logs
+                        .map((log: ConsoleLogEntry) => {
+                            const time = new Date(log.timestamp).toLocaleTimeString();
+                            return `[${time}] [${log.type.toUpperCase()}] ${log.message}`;
+                        })
+                        .join("\n");
+                };
+
+                const logContent = `Legcord Console Export - ${new Date().toISOString()}
 =====================================
 User Agent: ${result.userAgent}
 URL: ${result.url}
@@ -453,12 +457,13 @@ ${formatLogs(result.logs)}
 Note: This captures console logs from the moment the feature is first used.
 For complete logs including startup, please open Developer Tools (F12) and manually copy the console output.
 `;
-            
-            writeFileSync(filePath, logContent, 'utf-8');
-            shell.showItemInFolder(filePath);
-        }).catch(_err => {
-            // Fallback: create a basic file with timestamp
-            const fallbackContent = `Legcord Console Export - ${new Date().toISOString()}
+
+                writeFileSync(filePath, logContent, "utf-8");
+                shell.showItemInFolder(filePath);
+            })
+            .catch((_err) => {
+                // Fallback: create a basic file with timestamp
+                const fallbackContent = `Legcord Console Export - ${new Date().toISOString()}
 =====================================
 Unable to capture detailed console logs due to browser restrictions.
 =====================================
@@ -468,9 +473,9 @@ Timestamp: ${new Date().toISOString()}
 
 Note: For detailed console logs, please open Developer Tools (F12) and manually copy the console output.
 `;
-            writeFileSync(filePath, fallbackContent, 'utf-8');
-            shell.showItemInFolder(filePath);
-        });
+                writeFileSync(filePath, fallbackContent, "utf-8");
+                shell.showItemInFolder(filePath);
+            });
     });
     ipcMain.on("openCustomIconDialog", () => {
         dialog
