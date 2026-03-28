@@ -344,6 +344,134 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.on("copyGPUInfo", () => {
         clipboard.writeText(JSON.stringify(app.getGPUFeatureStatus()));
     });
+    interface ConsoleLogEntry {
+    type: string;
+    timestamp: string;
+    message: string;
+}
+
+ipcMain.on("copyConsoleInfo", () => {
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+        const fileName = `legcord-console-${timestamp}.txt`;
+        const filePath = path.join(app.getPath("documents"), fileName);
+        
+        // Get console logs from the renderer process
+        passedWindow.webContents.executeJavaScript(`
+            (function() {
+                // Create a log storage if it doesn't exist
+                if (!window.legcordConsoleLogs) {
+                    window.legcordConsoleLogs = [];
+                    
+                    // Override console methods to capture all logs
+                    const originalLog = console.log;
+                    const originalError = console.error;
+                    const originalWarn = console.warn;
+                    const originalInfo = console.info;
+                    const originalDebug = console.debug;
+                    
+                    console.log = function(...args) {
+                        window.legcordConsoleLogs.push({
+                            type: 'log',
+                            timestamp: new Date().toISOString(),
+                            message: args.map(arg => 
+                                typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+                            ).join(' ')
+                        });
+                        originalLog.apply(console, args);
+                    };
+                    
+                    console.error = function(...args) {
+                        window.legcordConsoleLogs.push({
+                            type: 'error',
+                            timestamp: new Date().toISOString(),
+                            message: args.map(arg => 
+                                typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+                            ).join(' ')
+                        });
+                        originalError.apply(console, args);
+                    };
+                    
+                    console.warn = function(...args) {
+                        window.legcordConsoleLogs.push({
+                            type: 'warn',
+                            timestamp: new Date().toISOString(),
+                            message: args.map(arg => 
+                                typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+                            ).join(' ')
+                        });
+                        originalWarn.apply(console, args);
+                    };
+                    
+                    console.info = function(...args) {
+                        window.legcordConsoleLogs.push({
+                            type: 'info',
+                            timestamp: new Date().toISOString(),
+                            message: args.map(arg => 
+                                typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+                            ).join(' ')
+                        });
+                        originalInfo.apply(console, args);
+                    };
+                    
+                    console.debug = function(...args) {
+                        window.legcordConsoleLogs.push({
+                            type: 'debug',
+                            timestamp: new Date().toISOString(),
+                            message: args.map(arg => 
+                                typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+                            ).join(' ')
+                        });
+                        originalDebug.apply(console, args);
+                    };
+                }
+                
+                // Return what we can gather
+                return {
+                    timestamp: new Date().toISOString(),
+                    logs: window.legcordConsoleLogs || [],
+                    userAgent: navigator.userAgent,
+                    url: window.location.href
+                };
+            })()
+        `).then(result => {
+            const formatLogs = (logs: ConsoleLogEntry[]) => {
+                return logs.map((log: ConsoleLogEntry) => {
+                    const time = new Date(log.timestamp).toLocaleTimeString();
+                    return `[${time}] [${log.type.toUpperCase()}] ${log.message}`;
+                }).join('\n');
+            };
+            
+            const logContent = `Legcord Console Export - ${new Date().toISOString()}
+=====================================
+User Agent: ${result.userAgent}
+URL: ${result.url}
+=====================================
+Console Logs:
+${formatLogs(result.logs)}
+=====================================
+
+Note: This captures console logs from the moment the feature is first used.
+For complete logs including startup, please open Developer Tools (F12) and manually copy the console output.
+`;
+            
+            writeFileSync(filePath, logContent, 'utf-8');
+            shell.showItemInFolder(filePath);
+        }).catch(_err => {
+            // Fallback: create a basic file with timestamp
+            const fallbackContent = `Legcord Console Export - ${new Date().toISOString()}
+=====================================
+Unable to capture detailed console logs due to browser restrictions.
+=====================================
+Basic Information:
+Timestamp: ${new Date().toISOString()}
+=====================================
+
+Note: For detailed console logs, please open Developer Tools (F12) and manually copy the console output.
+`;
+            writeFileSync(filePath, fallbackContent, 'utf-8');
+            shell.showItemInFolder(filePath);
+        });
+    });
     ipcMain.on("openCustomIconDialog", () => {
         dialog
             .showOpenDialog({

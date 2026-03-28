@@ -554,6 +554,10 @@ export function SettingsPage() {
                 {store.i18n["settings-copyGPUInfo"]}
             </Button>
             <br />
+            <Button size={ButtonSizes.MAX} onClick={window.legcord.settings.copyConsoleInfo}>
+                {store.i18n["settings-copyConsoleInfo"]}
+            </Button>
+            <br />
             <Button size={ButtonSizes.MAX} onClick={() => setConfig("modCache", {} as Settings["modCache"])}>
                 {store.i18n["settings-clearClientModCache"]}
             </Button>
