@@ -102,7 +102,7 @@ async function load() {
         info.after(el);
     });
     observer.observe(document.body, { childList: true, subtree: true });
-    
+
     // Better Folders CSS Grid compatibility fix
     const betterFoldersFix = () => {
         const betterFoldersGrid = document.querySelector(".vc-betterFolders-sidebar-grid");
@@ -126,10 +126,10 @@ async function load() {
             console.log("[Legcord] Better Folders CSS Grid patch applied");
         }
     };
-    
+
     // Apply fix immediately if already loaded
     betterFoldersFix();
-    
+
     // Observer for dynamic patch application
     const betterFoldersObserver = new MutationObserver(() => {
         betterFoldersFix();
