@@ -102,5 +102,38 @@ async function load() {
         info.after(el);
     });
     observer.observe(document.body, { childList: true, subtree: true });
+    
+    // Better Folders CSS Grid compatibility fix
+    const betterFoldersFix = () => {
+        const betterFoldersGrid = document.querySelector(".vc-betterFolders-sidebar-grid");
+        if (betterFoldersGrid && !document.querySelector("#legcord-betterfolders-fix")) {
+            const style = document.createElement("style");
+            style.id = "legcord-betterfolders-fix";
+            style.textContent = `
+                .vc-betterFolders-sidebar-grid {
+                    grid-template-columns: [start] min-content [guildsEnd] min-content [sidebarEnd] min-content [channelsEnd] 1fr [end] !important;
+                    grid-template-areas:
+                        "titleBar titleBar titleBar titleBar"
+                        "guildsList betterFoldersSidebar notice notice"
+                        "guildsList betterFoldersSidebar channelsList page" !important;
+                }
+                .vc-betterFolders-sidebar {
+                    z-index: 10 !important;
+                    position: relative !important;
+                }
+            `;
+            document.head.appendChild(style);
+            console.log("[Legcord] Better Folders CSS Grid patch applied");
+        }
+    };
+    
+    // Apply fix immediately if already loaded
+    betterFoldersFix();
+    
+    // Observer for dynamic patch application
+    const betterFoldersObserver = new MutationObserver(() => {
+        betterFoldersFix();
+    });
+    betterFoldersObserver.observe(document.body, { childList: true, subtree: true });
 }
 load();
