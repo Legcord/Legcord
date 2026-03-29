@@ -2,7 +2,7 @@ import { Show } from "solid-js";
 import type { Settings } from "../../../@types/settings.js";
 import { DropdownItem } from "../components/DropdownItem.jsx";
 import { TextBoxItem } from "../components/TextBoxItem.jsx";
-import { setConfig, toggleMod, isMinWindowsVersion } from "../settings.js";
+import { isMinWindowsVersion, setConfig, toggleMod } from "../settings.js";
 import classes from "./SettingsPage.module.css";
 
 const {
