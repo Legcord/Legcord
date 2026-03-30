@@ -40,39 +40,51 @@ const version = ipcRenderer.sendSync("displayVersion") as string;
     cameraFixScript.textContent = `(function() {
     var _origGUM = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
     var _activeVideoStreams = [];
+    var _activeAudioStreams = [];
 
-    function stopActiveVideoTracks() {
-        for (var i = 0; i < _activeVideoStreams.length; i++) {
-            var stream = _activeVideoStreams[i].deref();
+    function stopTrackedStreams(list, kind) {
+        for (var i = 0; i < list.length; i++) {
+            var stream = list[i].deref();
             if (stream) {
-                var tracks = stream.getVideoTracks();
+                var tracks = kind === "video" ? stream.getVideoTracks() : stream.getAudioTracks();
                 for (var j = 0; j < tracks.length; j++) {
-                    tracks[j].stop();
+                    if (tracks[j].readyState === "live") tracks[j].stop();
                 }
             }
         }
-        _activeVideoStreams = [];
+        list.length = 0;
+    }
+
+    function trackStream(stream) {
+        var ref = new WeakRef(stream);
+        if (stream.getVideoTracks().length > 0) _activeVideoStreams.push(ref);
+        if (stream.getAudioTracks().length > 0) _activeAudioStreams.push(ref);
     }
 
     navigator.mediaDevices.getUserMedia = async function(constraints) {
-        if (!constraints || !constraints.video || typeof constraints.video === "boolean" ||
-            !constraints.video.deviceId || typeof constraints.video.deviceId !== "string") {
-            return _origGUM(constraints);
+        var hasVideo = constraints && constraints.video && typeof constraints.video !== "boolean";
+        var hasAudio = constraints && constraints.audio && typeof constraints.audio !== "boolean";
+
+        // Release previous hardware when new request comes in for the same kind
+        if (hasVideo && _activeVideoStreams.length > 0) stopTrackedStreams(_activeVideoStreams, "video");
+        if (hasAudio && _activeAudioStreams.length > 0) stopTrackedStreams(_activeAudioStreams, "audio");
+
+        var hasStringVideoDeviceId = hasVideo && typeof constraints.video.deviceId === "string";
+        if (!hasStringVideoDeviceId) {
+            var stream = await _origGUM(constraints);
+            trackStream(stream);
+            return stream;
         }
 
+        // Promote video "ideal" (plain string) to "exact" to force device selection
         var requestedId = constraints.video.deviceId;
-
-        // Stop existing video tracks so macOS releases the camera hardware
-        stopActiveVideoTracks();
-
-        // Promote "ideal" (plain string) to "exact" to force device selection
         var modified = Object.assign({}, constraints);
         modified.video = Object.assign({}, constraints.video, {
             deviceId: { exact: requestedId }
         });
 
         // Retry with exponential backoff — first attempt is immediate, subsequent
-        // attempts double the delay (50, 100, 200, 400...) until the camera is released.
+        // attempts double the delay (50, 100, 200, 400...) until the device is released.
         var MAX_RETRIES = 5;
         var lastErr;
         var delay = 50;
@@ -83,17 +95,11 @@ const version = ipcRenderer.sendSync("displayVersion") as string;
             }
             try {
                 var stream = await _origGUM(modified);
-                if (stream.getVideoTracks().length > 0) {
-                    _activeVideoStreams.push(new WeakRef(stream));
-                }
+                trackStream(stream);
                 return stream;
             } catch(e) {
                 lastErr = e;
-                if (e.name === "NotReadableError") {
-                    // Camera hardware still held — retry after next delay
-                    continue;
-                }
-                // OverconstrainedError or other — stop retrying
+                if (e.name === "NotReadableError") continue;
                 break;
             }
         }
@@ -103,12 +109,9 @@ const version = ipcRenderer.sendSync("displayVersion") as string;
             console.warn("[Legcord] Exact deviceId failed, falling back to ideal:", lastErr.name, lastErr.message);
         }
         var fallbackStream = await _origGUM(constraints);
-        if (fallbackStream.getVideoTracks().length > 0) {
-            _activeVideoStreams.push(new WeakRef(fallbackStream));
-        }
+        trackStream(fallbackStream);
         return fallbackStream;
     };
-    console.log("[Legcord] Camera device selection fix applied");
 })();`;
 
     if (document.documentElement) {
