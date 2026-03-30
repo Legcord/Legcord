@@ -64,7 +64,6 @@ const version = ipcRenderer.sendSync("displayVersion") as string;
 
         // Stop existing video tracks so macOS releases the camera hardware
         stopActiveVideoTracks();
-        await new Promise(function(r) { setTimeout(r, 300); });
 
         // Promote "ideal" (plain string) to "exact" to force device selection
         var modified = Object.assign({}, constraints);
@@ -72,23 +71,42 @@ const version = ipcRenderer.sendSync("displayVersion") as string;
             deviceId: { exact: requestedId }
         });
 
-        var stream;
-        try {
-            stream = await _origGUM(modified);
-        } catch(e) {
-            if (e.name === "OverconstrainedError") {
-                // exact failed — fall back to original ideal constraint
-                console.warn("[Legcord] Exact deviceId failed, falling back to ideal:", e.message);
-                stream = await _origGUM(constraints);
-            } else {
-                throw e;
+        // Retry with exponential backoff — first attempt is immediate, subsequent
+        // attempts double the delay (50, 100, 200, 400...) until the camera is released.
+        var MAX_RETRIES = 5;
+        var lastErr;
+        var delay = 50;
+        for (var i = 0; i < MAX_RETRIES; i++) {
+            if (i > 0) {
+                await new Promise(function(r) { setTimeout(r, delay); });
+                delay *= 2;
+            }
+            try {
+                var stream = await _origGUM(modified);
+                if (stream.getVideoTracks().length > 0) {
+                    _activeVideoStreams.push(new WeakRef(stream));
+                }
+                return stream;
+            } catch(e) {
+                lastErr = e;
+                if (e.name === "NotReadableError") {
+                    // Camera hardware still held — retry after next delay
+                    continue;
+                }
+                // OverconstrainedError or other — stop retrying
+                break;
             }
         }
 
-        if (stream.getVideoTracks().length > 0) {
-            _activeVideoStreams.push(new WeakRef(stream));
+        // All retries exhausted or non-retryable error — fall back to original ideal constraint
+        if (lastErr) {
+            console.warn("[Legcord] Exact deviceId failed, falling back to ideal:", lastErr.name, lastErr.message);
         }
-        return stream;
+        var fallbackStream = await _origGUM(constraints);
+        if (fallbackStream.getVideoTracks().length > 0) {
+            _activeVideoStreams.push(new WeakRef(fallbackStream));
+        }
+        return fallbackStream;
     };
     console.log("[Legcord] Camera device selection fix applied");
 })();`;
