@@ -61,6 +61,7 @@
         "electron-context-menu": "^4.0.4",
         "electron-is-dev": "^3.0.1",
         "electron-updater": "^6.6.2",
+        "handlebars": "4.7.9",
         "ws": "^8.18.0"
     },
     "optionalDependencies": {
