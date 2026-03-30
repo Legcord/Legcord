@@ -29,6 +29,83 @@ const version = ipcRenderer.sendSync("displayVersion") as string;
     }
 }
 
+// Fix: Chromium on macOS ignores video deviceId when passed as an "ideal" constraint
+// (plain string), always returning the first camera. Discord passes deviceId this way.
+// This patch promotes "ideal" to "exact", stops active tracks before switching so macOS
+// releases the hardware, and falls back to the original behavior if "exact" fails.
+// Injected into the page context because contextIsolation is enabled.
+// See: https://github.com/electron/electron/issues/44502
+{
+    const cameraFixScript = document.createElement("script");
+    cameraFixScript.textContent = `(function() {
+    var _origGUM = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+    var _activeVideoStreams = [];
+
+    function stopActiveVideoTracks() {
+        for (var i = 0; i < _activeVideoStreams.length; i++) {
+            var stream = _activeVideoStreams[i].deref();
+            if (stream) {
+                var tracks = stream.getVideoTracks();
+                for (var j = 0; j < tracks.length; j++) {
+                    tracks[j].stop();
+                }
+            }
+        }
+        _activeVideoStreams = [];
+    }
+
+    navigator.mediaDevices.getUserMedia = async function(constraints) {
+        if (!constraints || !constraints.video || typeof constraints.video === "boolean" ||
+            !constraints.video.deviceId || typeof constraints.video.deviceId !== "string") {
+            return _origGUM(constraints);
+        }
+
+        var requestedId = constraints.video.deviceId;
+
+        // Stop existing video tracks so macOS releases the camera hardware
+        stopActiveVideoTracks();
+        await new Promise(function(r) { setTimeout(r, 300); });
+
+        // Promote "ideal" (plain string) to "exact" to force device selection
+        var modified = Object.assign({}, constraints);
+        modified.video = Object.assign({}, constraints.video, {
+            deviceId: { exact: requestedId }
+        });
+
+        var stream;
+        try {
+            stream = await _origGUM(modified);
+        } catch(e) {
+            if (e.name === "OverconstrainedError") {
+                // exact failed — fall back to original ideal constraint
+                console.warn("[Legcord] Exact deviceId failed, falling back to ideal:", e.message);
+                stream = await _origGUM(constraints);
+            } else {
+                throw e;
+            }
+        }
+
+        if (stream.getVideoTracks().length > 0) {
+            _activeVideoStreams.push(new WeakRef(stream));
+        }
+        return stream;
+    };
+    console.log("[Legcord] Camera device selection fix applied");
+})();`;
+
+    if (document.documentElement) {
+        document.documentElement.prepend(cameraFixScript);
+    } else {
+        const fixObserver = new MutationObserver(() => {
+            if (document.documentElement) {
+                fixObserver.disconnect();
+                document.documentElement.prepend(cameraFixScript);
+            }
+        });
+        fixObserver.observe(document, { childList: true });
+    }
+}
+
 export async function getVirtmic() {
     try {
         const devices = await navigator.mediaDevices.enumerateDevices();
