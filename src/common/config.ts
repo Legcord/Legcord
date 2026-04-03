@@ -36,6 +36,7 @@ const defaults: Settings = {
     multiInstance: false,
     mods: ["vencord"],
     transparency: "none",
+    windowMaterial: "mica",
     spellcheck: true,
     hardwareAcceleration: true,
     performanceMode: "none",

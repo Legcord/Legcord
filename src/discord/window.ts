@@ -404,7 +404,7 @@ export function createWindow() {
                 browserWindowOptions.backgroundColor = "#00000000";
                 browserWindowOptions.transparent = false;
                 browserWindowOptions.frame = true;
-                browserWindowOptions.backgroundMaterial = "acrylic";
+                browserWindowOptions.backgroundMaterial = getConfig("windowMaterial");
             } else if (os.platform() === "darwin") {
                 browserWindowOptions.backgroundColor = "#00000000";
                 browserWindowOptions.vibrancy = "fullscreen-ui";
