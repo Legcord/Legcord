@@ -63,21 +63,19 @@ async function load() {
             return stream;
         };
 
-        // dirty hack to make clicking notifications focus Legcord
-        addScript(`
-        (() => {
-        const originalSetter = Object.getOwnPropertyDescriptor(Notification.prototype, "onclick").set;
-        Object.defineProperty(Notification.prototype, "onclick", {
-            set(onClick) {
-            originalSetter.call(this, function() {
-                onClick.apply(this, arguments);
-                legcord.window.show();
-            })
-            },
-            configurable: true
-        });
-        })();
-        `);
+        /* Handle notification clicks to focus Legcord window via IPC */
+        const originalSetter = Object.getOwnPropertyDescriptor(Notification.prototype, "onclick")?.set;
+        if (originalSetter) {
+            Object.defineProperty(Notification.prototype, "onclick", {
+                set(onClick: (this: Notification, ev: Event) => void) {
+                    originalSetter.call(this, function(this: Notification, ev: Event) {
+                        onClick.call(this, ev);
+                        ipcRenderer.send("win-show");
+                    });
+                },
+                configurable: true,
+            });
+        }
         addScript(`
         shelter.plugins.removePlugin("armcord-settings")
         shelter.plugins.removePlugin("armcord-screenshare")

@@ -75,4 +75,5 @@ export interface Settings {
     modCache?: Record<ValidMods, string>;
     extendedPluginAbilities: boolean;
     supportBannerDismissed: boolean;
+    windowsNativeNotifications: boolean;
 }

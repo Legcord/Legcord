@@ -295,8 +295,15 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
         session.defaultSession.setPermissionRequestHandler(async (_webContents, permission, callback) => {
             switch (permission) {
                 case "fullscreen":
-                case "notifications":
                     callback(true);
+                    break;
+                case "notifications":
+                    // Only allow native notifications if enabled in settings (Windows only)
+                    if (process.platform === "win32") {
+                        callback(getConfig("windowsNativeNotifications"));
+                    } else {
+                        callback(true);
+                    }
                     break;
                 case "clipboard-sanitized-write":
                     callback(true);
