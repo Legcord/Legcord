@@ -38,7 +38,7 @@ export function SupportBanner() {
                     class={classes.donateButton}
                     onClick={() => window.open("https://github.com/sponsors/smartfrigde", "_blank")}
                 >
-                    < DonateIcon/> {store.i18n["supportBanner-donate"]}
+                    <DonateIcon /> {store.i18n["supportBanner-donate"]}
                 </button>
 
                 <button type="button" class={classes.infoButton} onClick={openAboutModal} title="About Legcord">
