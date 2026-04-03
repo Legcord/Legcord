@@ -34,6 +34,7 @@ export interface Settings {
     windowStyle: "default" | "native" | "overlay" | "transparent" | "legacy" | "rebrand";
     channel: "stable" | "ptb" | "canary";
     transparency: "universal" | "modern" | "none";
+    windowMaterial: "mica" | "tabbed" | "acrylic" | "none";
     audio: AudioSettings;
     legcordCSP: boolean;
     minimizeToTray: boolean;
@@ -75,4 +76,5 @@ export interface Settings {
     modCache?: Record<ValidMods, string>;
     extendedPluginAbilities: boolean;
     supportBannerDismissed: boolean;
+    windowsNativeNotifications: boolean;
 }

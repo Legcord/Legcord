@@ -21,10 +21,7 @@ export const Dropdown = (props: {
     createEffect(() => {
         if (!open() || !props.limitHeight) return;
 
-        const rect = container?.parentElement?.getBoundingClientRect();
-        if (!rect) return;
-
-        setMaxHeight(`${rect.bottom - container!.getBoundingClientRect().bottom - 20}px`);
+        setMaxHeight("300px");
     });
 
     const text = createMemo(() => props.options.find((o) => o.value === props.value)?.label ?? props.value);

@@ -18,6 +18,7 @@ export const config: Configuration = {
         extendInfo: {
             NSMicrophoneUsageDescription: "Legcord requires access to the microphone to function properly.",
             NSCameraUsageDescription: "Legcord requires access to the camera to function properly.",
+            NSCameraUseContinuityCameraDeviceType: true,
             "com.apple.security.device.audio-input": true,
             "com.apple.security.device.camera": true,
         },

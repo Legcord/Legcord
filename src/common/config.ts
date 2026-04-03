@@ -36,6 +36,7 @@ const defaults: Settings = {
     multiInstance: false,
     mods: ["vencord"],
     transparency: "none",
+    windowMaterial: "mica",
     spellcheck: true,
     hardwareAcceleration: true,
     performanceMode: "none",
@@ -66,6 +67,7 @@ const defaults: Settings = {
     extendedPluginAbilities: false,
     quickCss: true,
     supportBannerDismissed: false,
+    windowsNativeNotifications: false,
 };
 
 const safeMode: Settings = {
@@ -78,6 +80,7 @@ const safeMode: Settings = {
     additionalArguments: "",
     extendedPluginAbilities: false,
     quickCss: false,
+    windowsNativeNotifications: false,
 };
 
 export function checkForDataFolder(): void {

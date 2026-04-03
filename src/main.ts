@@ -298,7 +298,12 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
                     callback(true);
                     break;
                 case "notifications":
-                    callback(true);
+                    // Only allow native notifications if enabled in settings (Windows only)
+                    if (process.platform === "win32") {
+                        callback(getConfig("windowsNativeNotifications"));
+                    } else {
+                        callback(true);
+                    }
                     break;
                 case "clipboard-sanitized-write":
                     callback(true);

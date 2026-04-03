@@ -47,6 +47,29 @@
     width: 100%;
     z-index: 100;
     overflow-y: auto;
+    overflow-x: hidden;
+
+    /* Discord-style scrollbar - visible but no background */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+
+    &::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: 4px;
+        border: none;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
 }
 option {
     color: var(--text-subtle);
