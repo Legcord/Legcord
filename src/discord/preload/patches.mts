@@ -166,11 +166,7 @@ async function load() {
         if (originalSetter) {
             Object.defineProperty(Notification.prototype, "onclick", {
                 set(onClick: (this: Notification, ev: Event) => void) {
-<<<<<<< HEAD
                     originalSetter.call(this, function (this: Notification, ev: Event) {
-=======
-                    originalSetter.call(this, function(this: Notification, ev: Event) {
->>>>>>> d85841e1d55a88eeeab9b8355d38019955bcd321
                         onClick.call(this, ev);
                         ipcRenderer.send("win-show");
                     });
