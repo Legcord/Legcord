@@ -184,7 +184,7 @@ export function getPreset(): Preset | undefined {
     // SOFTWARE.
     if (getConfig("vaapi")) {
         console.log("VAAPI mode enabled");
-        mergeWithCustomFlags(vaapi);
+        return mergeWithCustomFlags(vaapi);
     }
     switch (getConfig("performanceMode")) {
         case "dynamic":

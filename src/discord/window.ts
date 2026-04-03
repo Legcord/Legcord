@@ -177,27 +177,52 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     passedWindow.webContents.session.setSpellCheckerLanguages(getConfig("spellcheckLanguage"));
 
     registerCustomHandler();
+    registerGlobalWebRequestHandlers();
 
     const blockedPatterns = [
         /https:\/\/.*\/api\/v\d+\/science/,
         /https:\/\/sentry\.io\/.*/,
         /https:\/\/.*\.nel\.cloudflare\.com\/.*/,
     ];
-    passedWindow.webContents.session.webRequest.onBeforeRequest((details, callback) => {
-        if (blockedPatterns.some((pattern) => pattern.test(details.url))) {
-            return callback({ cancel: true });
-        }
-        return callback({});
-    });
 
-    // fix UMG video playback
-    passedWindow.webContents.session.webRequest.onBeforeSendHeaders(
-        { urls: ["https://www.youtube.com/embed/*"] },
-        ({ requestHeaders }, callback) => {
-            requestHeaders.Referer = "https://google.com";
-            callback({ requestHeaders });
-        },
-    );
+    let webRequestHandlersRegistered = false;
+
+    function registerGlobalWebRequestHandlers(): void {
+        if (webRequestHandlersRegistered) return;
+        webRequestHandlersRegistered = true;
+
+        const session =
+            BrowserWindow.getAllWindows()[0]?.webContents.session ?? require("electron").session.defaultSession;
+
+        session.webRequest.onBeforeRequest((details, callback) => {
+            if (blockedPatterns.some((pattern) => pattern.test(details.url))) {
+                return callback({ cancel: true });
+            }
+            return callback({});
+        });
+
+        // Fix UMG video playback
+        session.webRequest.onBeforeSendHeaders(
+            { urls: ["https://www.youtube.com/embed/*"] },
+            ({ requestHeaders }, callback) => {
+                requestHeaders.Referer = "https://google.com";
+                callback({ requestHeaders });
+            },
+        );
+
+        // Lune Dev exceptions for shelter dev mode
+        session.webRequest.onBeforeRequest((details, callback) => {
+            if (
+                details.url.includes("ws://127.0.0.1:") &&
+                !details.url.includes("127.0.0.1:1211") &&
+                !details.url.includes("127.0.0.1:1112") &&
+                !details.url.includes("127.0.0.1:6888")
+            ) {
+                return callback({ cancel: true });
+            }
+            return callback({});
+        });
+    }
     if (getConfig("tray") === "dynamic") {
         passedWindow.webContents.on("page-favicon-updated", (_, favicons) => {
             try {
@@ -273,11 +298,12 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
 
     setMenu();
     passedWindow.on("close", (e) => {
-        if (mainWindows.length > 1) {
-            mainWindows = mainWindows.filter((mainWindow) => mainWindow.id !== passedWindow.id);
+        // Always remove from mainWindows array to prevent memory leak
+        mainWindows = mainWindows.filter((mainWindow) => mainWindow.id !== passedWindow.id);
+
+        if (mainWindows.length > 0) {
             passedWindow.destroy();
-        }
-        if (getConfig("minimizeToTray") && !forceQuit) {
+        } else if (getConfig("minimizeToTray") && !forceQuit) {
             e.preventDefault();
             passedWindow.hide();
         } else if (!getConfig("minimizeToTray")) {
@@ -295,18 +321,6 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
             y: passedWindow.getPosition()[1],
         });
         setForceQuit(true);
-    });
-    passedWindow.webContents.session.webRequest.onBeforeRequest((details, callback) => {
-        // Lune Dev exceptions, https://github.com/uwu/shelter/blob/8d4ca369bf01abf348df9d4e111d534800c7a38c/packages/shelter/src/devmode/index.tsx#L24
-        if (
-            details.url.includes("ws://127.0.0.1:") &&
-            !details.url.includes("127.0.0.1:1211") &&
-            !details.url.includes("127.0.0.1:1112") &&
-            !details.url.includes("127.0.0.1:6888")
-        ) {
-            return callback({ cancel: true });
-        }
-        return callback({});
     });
     passedWindow.on("focus", () => {
         void passedWindow.webContents.executeJavaScript(`document.body.removeAttribute("unFocused");`);

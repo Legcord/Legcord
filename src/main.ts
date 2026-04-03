@@ -295,6 +295,8 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
         session.defaultSession.setPermissionRequestHandler(async (_webContents, permission, callback) => {
             switch (permission) {
                 case "fullscreen":
+                    callback(true);
+                    break;
                 case "notifications":
                     callback(true);
                     break;

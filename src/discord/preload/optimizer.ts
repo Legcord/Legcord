@@ -1,10 +1,21 @@
 type OptimizableFunction<T extends Node> = (child: T) => T;
 
+const timeouts = new WeakMap<Element, ReturnType<typeof setTimeout>>();
+
 const optimize = <T extends Node>(orig: OptimizableFunction<T>) => {
     return function (this: Element, ...args: [Element]) {
+        // Clear any existing timeout for this element
+        const existingTimeout = timeouts.get(this);
+        if (existingTimeout) clearTimeout(existingTimeout);
+
         if (typeof args[0]?.className === "string" && args[0].className.includes("activity")) {
-            // @ts-expect-error - // FIXME
-            return setTimeout(() => orig.apply(this, args), 100);
+            const timeout = setTimeout(() => {
+                // @ts-expect-error - // FIXME
+                orig.apply(this, args);
+                timeouts.delete(this);
+            }, 100);
+            timeouts.set(this, timeout);
+            return;
         }
         // @ts-expect-error - // FIXME
         return orig.apply(this, args);
