@@ -23,7 +23,9 @@ function parseBDManifest(content: string) {
     }; // Will be defined later
 
     let match: RegExpExecArray | null;
-    while ((match = metaReg.exec(content)) !== null) {
+    for (;;) {
+        match = metaReg.exec(content);
+        if (match === null) break;
         const [, key, value] = match;
         if (key === "import") break;
 
