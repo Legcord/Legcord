@@ -22,16 +22,10 @@ function parseBDManifest(content: string) {
         enabled: false,
     }; // Will be defined later
 
-    // FIXME - What the fuck is going on here
-    // biome-ignore lint/suspicious/noImplicitAnyLet: <explanation>
-    let match;
-    // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+    let match: RegExpExecArray | null;
     while ((match = metaReg.exec(content)) !== null) {
-        const [_, key] = match;
-        let [value] = match;
+        const [, key, value] = match;
         if (key === "import") break;
-        value = value.replace(`@${key}`, "");
-        value = value.trim();
 
         console.log(key, value);
 
