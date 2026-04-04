@@ -7,10 +7,11 @@ export const Dropdown = (props: {
     options: { label: string; value: string | number }[];
     styles?: { [key: string]: string };
     limitHeight?: boolean | undefined;
+    maxHeight?: number;
     class?: string;
 }) => {
     const [open, set] = createSignal(false);
-    const [maxHeight, setMaxHeight] = createSignal("");
+    const [maxHeight, setMaxHeight] = createSignal(`${props.maxHeight}px`);
     let container: HTMLDivElement | undefined;
 
     const handler = (e: MouseEvent) => !container?.contains(e.target as Node) && set(false);
@@ -19,9 +20,13 @@ export const Dropdown = (props: {
     onCleanup(() => document.removeEventListener("click", handler));
 
     createEffect(() => {
-        if (!open() || !props.limitHeight) return;
+        if (!open() || !props.limitHeight || props.maxHeight) return;
 
-        setMaxHeight("300px");
+        const rect = container?.parentElement?.getBoundingClientRect();
+        if (!rect) return;
+
+        const availableSpace = rect.bottom - container!.getBoundingClientRect().bottom - 20;
+        setMaxHeight(`${availableSpace}px`);
     });
 
     const text = createMemo(() => props.options.find((o) => o.value === props.value)?.label ?? props.value);
