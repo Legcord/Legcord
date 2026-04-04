@@ -1,6 +1,7 @@
 import { AboutPopup } from "./AboutPopup.jsx";
 import classes from "./SupportBanner.module.css";
 import { InfoIcon } from "./icons/InfoIcon.jsx";
+import { DonateIcon, XIcon } from "./icons/QuickActionIcons.jsx";
 
 const {
     plugin: { store },
@@ -14,30 +15,36 @@ function openAboutModal() {
 export function SupportBanner() {
     return (
         <div class={classes.supportBanner}>
-            <div class={classes.bannerTopRow}>
-                <button type="button" class={classes.infoButton} onClick={openAboutModal} title="About Legcord">
-                    <InfoIcon />
-                </button>
-                <h3 class={classes.topRowTitle}>{store.i18n["supportBanner-title"]}</h3>
-                <button
-                    type="button"
-                    class={classes.dismissButton}
-                    onClick={() => window.legcord.settings.setConfig("supportBannerDismissed", true)}
-                    title="Dismiss this banner"
-                >
-                    X
-                </button>
-            </div>
-            <div class={classes.supportBannerContent}>
-                <p>{store.i18n["supportBanner-subtitle"]}</p>
+            <button
+                type="button"
+                class={classes.dismissButton}
+                onClick={() => window.legcord.settings.setConfig("supportBannerDismissed", true)}
+            >
+                <XIcon />
+            </button>
+
+            <h3 class={classes.title}>{store.i18n["supportBanner-title"]}</h3>
+            <p class={classes.subtitle}>{store.i18n["supportBanner-subtitle"]}</p>
+
+            <span
+                style={{
+                    display: "flex",
+                    "justify-content": "center",
+                    gap: "16px",
+                }}
+            >
                 <button
                     type="button"
                     class={classes.donateButton}
                     onClick={() => window.open("https://github.com/sponsors/smartfrigde", "_blank")}
                 >
-                    {store.i18n["supportBanner-donate"]}
+                    <DonateIcon /> {store.i18n["supportBanner-donate"]}
                 </button>
-            </div>
+
+                <button type="button" class={classes.infoButton} onClick={openAboutModal} title="About Legcord">
+                    <InfoIcon /> {store.i18n["menu-about"]}
+                </button>
+            </span>
         </div>
     );
 }

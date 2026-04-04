@@ -1,106 +1,86 @@
 /* Support Banner Styles */
 .supportBanner {
-    background: linear-gradient(135deg, #4a69bd 0%, #1e3799 100%);
-    border-radius: 12px;
-    margin: 16px;
-    padding: 14px 16px 16px;
-    box-shadow: 0 4px 20px rgba(74, 105, 189, 0.3);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.bannerTopRow {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    margin-bottom: 6px;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    background: linear-gradient(
+            190deg,
+            var(--premium-tier-0-header-gradient-1) 42.31%,
+            var(--premium-tier-0-header-gradient-2) 72.74%,
+            var(--premium-tier-0-header-gradient-3) 86.45%,
+            var(--premium-tier-0-header-gradient-4) 98.78%,
+            var(--premium-tier-0-header-gradient-5) 123.01%
+        ), linear-gradient(180deg, var(--primary-700) 26.55%, var(--primary-660) 71.14%, var(--primary-630) 100%);
+    border-radius: 12px;
+    margin-bottom: 18px;
+    padding: 24px;
+    box-shadow: 0 4px 15px #4a69bd4d;
 }
 
-.topRowTitle {
-    margin: 0;
+.title {
+    font-family: var(--font-headline);
     color: white;
-    font-size: 17px;
+    font-size: 24px;
     font-weight: 650;
     text-align: center;
     flex: 1;
 }
 
-.infoButton {
-    background: rgba(255, 255, 255, 0.18);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 8px;
-    width: 34px;
-    height: 34px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.infoButton:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-1px);
-}
-
-.supportBannerContent {
-    color: white;
-    text-align: center;
-}
-
-.supportBannerContent h3 {
-    margin: 0 0 4px 0;
-    font-size: 17px;
-    font-weight: 600;
-    color: white;
-}
-
-.supportBannerContent p {
-    margin: 0 0 10px 0;
-    font-size: 14px;
-    line-height: 1.4;
+.subtitle {
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: 400;
     color: rgba(255, 255, 255, 0.9);
 }
 
+.infoButton,
 .donateButton {
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    color: white;
+    display: flex;
+    align-items: center;
+    gap: 5px;
     border-radius: 8px;
     padding: 8px 12px;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
+    font-size: 16px;
+    font-weight: 500;
+    transition: .2s;
 }
 
+.infoButton {
+    color: var(--white);
+    background: transparent;
+    border: 1px solid var(--white);
+}
+
+.donateButton {
+    color: hsl(235, calc(var(--saturation-factor, 1) * 85.6%), 64.7%);
+    background: var(--control-overlay-primary-background-default);
+}
+
+.infoButton:hover,
 .donateButton:hover {
-    background: rgba(255, 255, 255, 0.28);
     transform: translateY(-1px);
 }
 
 .dismissButton {
-    background: rgba(255, 255, 255, 0.18);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: rgba(255, 255, 255, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    color: rgb(171, 172, 178);
+    background: transparent;
     border-radius: 8px;
-    width: 34px;
-    height: 34px;
-    font-size: 13px;
+    width: 32px;
+    height: 32px;
     cursor: pointer;
-    transition: all 0.2s ease;
-    font-weight: 700;
+    transition: 0.2s ease;
 }
 
 .dismissButton:hover {
-    background: rgba(255, 255, 255, 0.24);
-    transform: translateY(-1px);
-}
-
-.dismissButton:active {
-    transform: translateY(0);
+    color: rgb(251, 251, 251);
+    background: rgba(151, 151, 159, 0.16);
 }
 
 /* About Popup Styles */
