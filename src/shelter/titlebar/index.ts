@@ -16,8 +16,6 @@ const titlebarNavControls = `
           </div>
 `;
 
-let isTitlebarOn = false;
-
 const settings = window.legcord.settings.getConfig();
 
 function injectButtonControls() {
@@ -57,7 +55,6 @@ function layerPush(payload: { type: string; component: string }) {
         const elem = document.createElement("div");
         elem.innerHTML = titlebarOverlayHTML;
         elem.id = "legcordTitlebar";
-        isTitlebarOn = true;
         document.body.prepend(elem);
     }
 }
@@ -65,7 +62,6 @@ function layerPush(payload: { type: string; component: string }) {
 function layerPop() {
     console.log("pop!");
     document.getElementById("legcordTitlebar")?.remove();
-    isTitlebarOn = false;
 }
 
 export function onLoad() {

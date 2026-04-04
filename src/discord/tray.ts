@@ -1,6 +1,5 @@
-import { execFile } from "node:child_process";
 import { join } from "node:path";
-import { Menu, Tray, app, ipcMain, nativeImage } from "electron";
+import { Menu, Tray, app, nativeImage } from "electron";
 import { getConfig } from "../common/config.js";
 import { navigateTo } from "../common/dom.js";
 import { setForceQuit } from "../common/forceQuit.js";

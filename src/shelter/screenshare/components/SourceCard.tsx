@@ -1,4 +1,3 @@
-import type { NativeImage } from "electron";
 import type { Accessor } from "solid-js";
 import classes from "./SourceCard.module.css";
 

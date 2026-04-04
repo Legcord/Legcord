@@ -90,6 +90,8 @@ export function RegisteredGamesPage() {
             <div class={classes.addBox}>
                 <Dropdown
                     class={classes.dropdown}
+                    limitHeight
+                    maxHeight={300}
                     value={selectedDetectable()}
                     onChange={(v) => {
                         if (v === "refresh") {
