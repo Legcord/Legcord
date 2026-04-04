@@ -135,6 +135,20 @@ function writeFileEnsuringDirs(filePath: string, data: Buffer): void {
     writeFileSync(filePath, data);
 }
 
+/**
+ * Resolve a path relative to baseDir, rejecting traversal outside baseDir (zip slip).
+ * `relativePath` uses forward slashes as stored in the archive.
+ */
+function resolvePathUnderBaseDir(baseDir: string, relativePath: string): string | null {
+    const base = path.resolve(baseDir);
+    const resolved = path.resolve(base, relativePath);
+    const rel = path.relative(base, resolved);
+    if (rel.startsWith("..") || path.isAbsolute(rel)) {
+        return null;
+    }
+    return resolved;
+}
+
 /** Apply extracted zip entries to disk. Returns client mod blob for the renderer. */
 export function applyBackupFromMap(
     map: Map<string, Buffer>,
@@ -171,21 +185,36 @@ export function applyBackupFromMap(
         if (name.startsWith("data/themes/")) {
             if (!inc.legcordThemesAndQuickCss) continue;
             const rest = name.slice("data/themes/".length);
-            writeFileEnsuringDirs(path.join(paths.themesPath, rest), data);
+            const dest = resolvePathUnderBaseDir(paths.themesPath, rest);
+            if (!dest) {
+                console.warn(`[backup] Skipping unsafe zip path (themes): ${name}`);
+                continue;
+            }
+            writeFileEnsuringDirs(dest, data);
             continue;
         }
 
         if (name.startsWith("data/plugins/")) {
             if (!inc.legcordExtensionPlugins) continue;
             const rest = name.slice("data/plugins/".length);
-            writeFileEnsuringDirs(path.join(paths.pluginsPath, rest), data);
+            const dest = resolvePathUnderBaseDir(paths.pluginsPath, rest);
+            if (!dest) {
+                console.warn(`[backup] Skipping unsafe zip path (plugins): ${name}`);
+                continue;
+            }
+            writeFileEnsuringDirs(dest, data);
             continue;
         }
 
         if (name.startsWith("data/plugin-storage/")) {
             if (!inc.legcordExtensionPlugins) continue;
             const rest = name.slice("data/plugin-storage/".length);
-            writeFileEnsuringDirs(path.join(paths.pluginStoragePath, rest), data);
+            const dest = resolvePathUnderBaseDir(paths.pluginStoragePath, rest);
+            if (!dest) {
+                console.warn(`[backup] Skipping unsafe zip path (plugin-storage): ${name}`);
+                continue;
+            }
+            writeFileEnsuringDirs(dest, data);
             continue;
         }
 
