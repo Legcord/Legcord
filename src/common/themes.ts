@@ -5,7 +5,7 @@ import type { ThemeManifest } from "../@types/themeManifest.js";
 import { mainWindows } from "../discord/window.js";
 import { getConfig } from "./config.js";
 
-// Performance optimization: Cache theme manifests to avoid reading on every call
+// Performance optimization: Cache theme manifests to avoid reading on every calll
 const themeManifestCache = new Map<string, { manifest: ThemeManifest; mtime: number }>();
 let quickCssWatcher: fs.FSWatcher | null = null;
 
