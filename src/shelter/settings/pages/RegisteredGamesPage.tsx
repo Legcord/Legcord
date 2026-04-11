@@ -11,6 +11,14 @@ const {
     ui: { Header, HeaderTags, Divider, Button, ButtonSizes, openModal },
 } = shelter;
 
+function formatProcessName(processName: string) {
+    if (window.legcord.platform === "darwin") {
+        return processName.split("/").filter(Boolean).at(-1) ?? processName;
+    }
+
+    return processName;
+}
+
 export function RegisteredGamesPage() {
     const [processList, setProcessList] = createSignal<ProcessInfo[]>();
     const [detectables, setDetectables] = createSignal<GameList>([]);
@@ -98,11 +106,15 @@ export function RegisteredGamesPage() {
                             refreshDetectables();
                             setSelectedDetectable("");
                         } else {
-                            setSelectedDetectable(v);
+                            setSelectedDetectable(formatProcessName(v));
                         }
                     }}
                     options={[
-                        ...(processList()?.map((p) => ({ label: p[1], value: p[1] })) ?? []),
+                        ...(processList()?.map((p) => {
+                            const processName = formatProcessName(p[1]);
+
+                            return { label: processName, value: processName };
+                        }) ?? []),
                         { label: t["games-refreshList"], value: "refresh" },
                     ]}
                 />

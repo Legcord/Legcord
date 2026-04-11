@@ -1,13 +1,13 @@
 type OptimizableFunction<T extends Node> = (child: T) => T;
 
 const optimize = <T extends Node>(orig: OptimizableFunction<T>) => {
-    return function (this: Element, ...args: [Element]) {
+    return function (this: Element, ...args: [Element]): T | number {
         if (typeof args[0]?.className === "string" && args[0].className.includes("activity")) {
-            // @ts-expect-error - // FIXME
-            return setTimeout(() => orig.apply(this, args), 100);
+            // fix by xql.dev <@1356430365774053448>
+            setTimeout(() => orig.apply(this, args as unknown as [T]), 100);
+            return args[0] as unknown as T;
         }
-        // @ts-expect-error - // FIXME
-        return orig.apply(this, args);
+        return orig.apply(this, args as unknown as [T]);
     } as unknown as OptimizableFunction<T>;
 };
 

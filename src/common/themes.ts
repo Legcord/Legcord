@@ -5,7 +5,7 @@ import type { ThemeManifest } from "../@types/themeManifest.js";
 import { mainWindows } from "../discord/window.js";
 import { getConfig } from "./config.js";
 
-// Performance optimization: Cache theme manifests to avoid reading on every call
+// Performance optimization: Cache theme manifests to avoid reading on every calll
 const themeManifestCache = new Map<string, { manifest: ThemeManifest; mtime: number }>();
 let quickCssWatcher: fs.FSWatcher | null = null;
 
@@ -22,16 +22,12 @@ function parseBDManifest(content: string) {
         enabled: false,
     }; // Will be defined later
 
-    // FIXME - What the fuck is going on here
-    // biome-ignore lint/suspicious/noImplicitAnyLet: <explanation>
-    let match;
-    // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-    while ((match = metaReg.exec(content)) !== null) {
-        const [_, key] = match;
-        let [value] = match;
+    let match: RegExpExecArray | null;
+    for (;;) {
+        match = metaReg.exec(content);
+        if (match === null) break;
+        const [, key, value] = match;
         if (key === "import") break;
-        value = value.replace(`@${key}`, "");
-        value = value.trim();
 
         console.log(key, value);
 

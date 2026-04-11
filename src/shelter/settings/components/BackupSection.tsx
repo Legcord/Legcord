@@ -133,6 +133,17 @@ function applyClientModsFromRestore(raw: unknown): void {
     if (typeof cm.equicordLocalStorage === "string" && cm.equicordLocalStorage.length > 0) {
         localStorage.setItem("EquicordSettings", cm.equicordLocalStorage);
     }
+    if (cm.shelter && typeof cm.shelter === "object") {
+        const shelterData = cm.shelter as { plugins?: unknown; enabledPlugins?: unknown };
+        console.log("Restoring shelter plugins", shelterData);
+        if (shelterData.plugins && typeof shelterData.plugins === "object") {
+            for (const [id, data] of Object.entries(
+                shelterData.plugins as Record<string, { src: string; update: boolean }>,
+            )) {
+                shelter.plugins.addRemotePlugin(id, data.src, data.update);
+            }
+        }
+    }
 }
 
 export function BackupSection() {

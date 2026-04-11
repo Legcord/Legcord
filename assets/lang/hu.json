@@ -333,5 +333,11 @@
     "backup-restoreDoneTitle": "Visszaállítás sikeres",
     "backup-restoreDoneBody": "Az adataid vissza lettek állítva. Indítsd újra a Legcordot, hogy minden változtatás érvénybe lépjen.",
     "supportBanner-title": "Támogasd a projektet",
-    "supportBanner-subtitle": "Segíts a Legcord fejlesztésének folytatásában. A támogatásod életben tartja a projektet, és lehetővé teszi, hogy még több funkciót készítsünk és adjunk ki."
+    "supportBanner-subtitle": "Segíts a Legcord fejlesztésének folytatásában. A támogatásod életben tartja a projektet, és lehetővé teszi, hogy még több funkciót készítsünk és adjunk ki.",
+    "settings-material": "Ablak kinézet",
+    "settings-material-desc": "Beállítja a Legcord által használt ablak kinézetet.",
+    "settings-material-mica": "Mica",
+    "settings-material-mica-alt": "Mica Alt",
+    "settings-material-acrylic": "Akril",
+    "settings-material-none": "None"
 }

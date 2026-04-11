@@ -1,3 +1,4 @@
+import { setConfig } from "../settings.js";
 import { AboutPopup } from "./AboutPopup.jsx";
 import classes from "./SupportBanner.module.css";
 import { InfoIcon } from "./icons/InfoIcon.jsx";
@@ -18,7 +19,7 @@ export function SupportBanner() {
             <button
                 type="button"
                 class={classes.dismissButton}
-                onClick={() => window.legcord.settings.setConfig("supportBannerDismissed", true)}
+                onClick={() => setConfig("supportBannerDismissed", true)}
             >
                 <XIcon />
             </button>
