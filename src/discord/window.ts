@@ -1,16 +1,22 @@
+import { Buffer } from "node:buffer";
+import { spawn } from "node:child_process";
 import { readFileSync } from "node:fs";
 import os from "node:os";
-import path from "node:path";
+import path, { join } from "node:path";
 import {
     BrowserWindow,
     type BrowserWindowConstructorOptions,
+    type DownloadItem,
     type MessageBoxOptions,
+    type Session,
+    type WebContents,
     app,
     dialog,
     nativeImage,
     shell,
 } from "electron";
 import contextMenu from "electron-context-menu";
+import isDev from "electron-is-dev";
 import { firstRun, getConfig, setConfig } from "../common/config.js";
 import { navigateTo } from "../common/dom.js";
 import { forceQuit, setForceQuit } from "../common/forceQuit.js";
@@ -18,6 +24,13 @@ import { getLang } from "../common/lang.js";
 import { injectThemesMain } from "../common/themes.js";
 import { getWindowState, setWindowState } from "../common/windowState.js";
 import { init } from "../main.js";
+import {
+    type DeepLinkCapable,
+    DownloadManagerFactory,
+    type DownloadManagerTaskOptions,
+    GopeedDownloadManager,
+    IDMDownloadManager,
+} from "./downloadManager.js";
 import { registerGlobalKeybinds } from "./globalKeybinds.js";
 import { registerIpc } from "./ipc.js";
 import { setMenu } from "./menu.js";
@@ -28,6 +41,270 @@ import { createTray, tray } from "./tray.js";
 import { registerVenmicIpc } from "./venmic.js";
 export let mainWindows: BrowserWindow[] = [];
 export let inviteWindow: BrowserWindow;
+let downloadManagerHandlerRegistered = false;
+const bypassUrls = new Set<string>();
+const BYPASS_URLS_MAX = 256;
+const ROUTE_CACHE_MAX = 512;
+const routeCache = new Map<string, boolean>();
+const DISCORD_DOWNLOAD_HOSTS = new Set(["cdn.discordapp.com", "cdn.discordapp.net", "media.discordapp.net"]);
+const DOWNLOAD_FILENAME_QUERY_KEYS = ["filename", "file", "name"];
+
+function isHttpUrl(url: string): boolean {
+    const lowerUrl = url.toLowerCase();
+    return lowerUrl.startsWith("http://") || lowerUrl.startsWith("https://");
+}
+
+function getActiveDownloadManager(): "default" | "gopeed" | "idm" {
+    const downloadManager = getConfig("downloadManager") as unknown;
+    if (downloadManager === "gopeed" || downloadManager === "idm") {
+        return downloadManager;
+    }
+    return "default";
+}
+
+function isDownloadManagerEnabled(): boolean {
+    return getActiveDownloadManager() !== "default";
+}
+
+function getDownloadUrl(item: DownloadItem): string {
+    const chain = item.getURLChain();
+    return chain.at(-1) ?? item.getURL();
+}
+
+function getRelevantQueryFilename(searchParams: URLSearchParams): string {
+    for (const key of DOWNLOAD_FILENAME_QUERY_KEYS) {
+        const value = searchParams.get(key);
+        if (value) {
+            return value;
+        }
+    }
+    return "";
+}
+
+function bringGopeedToFront(): void {
+    const manager = new GopeedDownloadManager();
+    void manager.bringToFront();
+}
+
+function bringIDMToFront(): void {
+    const manager = new IDMDownloadManager();
+    void manager.bringToFront();
+}
+
+function rememberBypassUrl(url: string): void {
+    if (bypassUrls.has(url)) {
+        bypassUrls.delete(url);
+    }
+    bypassUrls.add(url);
+    if (bypassUrls.size > BYPASS_URLS_MAX) {
+        const oldest = bypassUrls.values().next().value;
+        if (oldest) {
+            bypassUrls.delete(oldest);
+        }
+    }
+}
+
+function getCachedRouteDecision(url: string): boolean {
+    const cached = routeCache.get(url);
+    if (cached !== undefined) {
+        routeCache.delete(url);
+        routeCache.set(url, cached);
+        return cached;
+    }
+
+    const shouldRoute = computeRouteDecision(url);
+    routeCache.set(url, shouldRoute);
+    if (routeCache.size > ROUTE_CACHE_MAX) {
+        const oldest = routeCache.keys().next().value;
+        if (oldest) {
+            routeCache.delete(oldest);
+        }
+    }
+
+    return shouldRoute;
+}
+
+async function buildDownloadRequestHeaders(passedWindow: BrowserWindow, url: string): Promise<Record<string, string>> {
+    const headers: Record<string, string> = {};
+
+    const userAgent = passedWindow.webContents.userAgent;
+    if (typeof userAgent === "string" && userAgent.length > 0) {
+        headers["User-Agent"] = userAgent;
+    }
+
+    const currentUrl = passedWindow.webContents.getURL();
+    if (isHttpUrl(currentUrl)) {
+        headers.Referer = currentUrl;
+    }
+
+    try {
+        const cookies = await passedWindow.webContents.session.cookies.get({ url });
+        if (cookies.length > 0) {
+            headers.Cookie = cookies
+                .map((cookie: { name: string; value: string }) => `${cookie.name}=${cookie.value}`)
+                .join("; ");
+        }
+    } catch {
+        // best-effort header collection
+    }
+
+    return headers;
+}
+
+async function queueDownloadToManager(
+    passedWindow: BrowserWindow,
+    url: string,
+    managerType: "gopeed" | "idm",
+    filename?: string,
+): Promise<boolean> {
+    try {
+        const manager = DownloadManagerFactory.create(managerType);
+        if (!manager) {
+            console.error(`Download manager "${managerType}" not available on this platform`);
+            return false;
+        }
+
+        // Check if manager can handle this URL
+        const canHandle = await manager.canCreateTask(url);
+        if (!canHandle) {
+            console.error(`Download manager "${managerType}" cannot handle URL: ${url}`);
+            return false;
+        }
+
+        const headers = await buildDownloadRequestHeaders(passedWindow, url);
+        const taskOptions: DownloadManagerTaskOptions = { filename, headers };
+
+        if (isDev) {
+            console.debug(
+                `[${managerType.toUpperCase()}] Queueing download: ${url}${filename ? ` as ${filename}` : ""}`,
+            );
+        }
+
+        // Try deep link if supported (Gopeed optimization)
+        if (manager instanceof GopeedDownloadManager && manager.canUseDeepLink()) {
+            try {
+                const deepLink = manager.createDeepLink(url, headers, filename);
+                await shell.openExternal(deepLink);
+                if (isDev) console.debug(`[${managerType.toUpperCase()}] Used deep link`);
+                return true;
+            } catch {
+                // Fallback to REST API below
+                if (isDev) console.debug(`[${managerType.toUpperCase()}] Deep link failed, falling back to REST`);
+            }
+        }
+
+        // Standard task creation
+        await manager.createTask(url, taskOptions);
+        if (isDev) console.debug(`[${managerType.toUpperCase()}] Download queued successfully`);
+
+        // Bring manager window to front
+        await manager.bringToFront();
+
+        return true;
+    } catch (error) {
+        console.error(`Failed to queue download to ${managerType}:`, error);
+        return false;
+    }
+}
+
+function pickGopeedWindow(webContents: WebContents): BrowserWindow | null {
+    const ownerWindow = BrowserWindow.fromWebContents(webContents);
+    if (ownerWindow && !ownerWindow.isDestroyed()) {
+        return ownerWindow;
+    }
+
+    const focusedWindow = BrowserWindow.getFocusedWindow();
+    if (focusedWindow && !focusedWindow.isDestroyed()) {
+        return focusedWindow;
+    }
+
+    return mainWindows.find((window) => !window.isDestroyed()) ?? null;
+}
+
+function registerDownloadManagerHandler(session: Session): void {
+    if (downloadManagerHandlerRegistered) {
+        return;
+    }
+
+    downloadManagerHandlerRegistered = true;
+    session.on("will-download", (event, item, webContents) => {
+        const sourceUrl = getDownloadUrl(item);
+        if (!sourceUrl) {
+            return;
+        }
+
+        if (bypassUrls.has(sourceUrl)) {
+            bypassUrls.delete(sourceUrl);
+            return;
+        }
+
+        if (!isDownloadManagerEnabled()) {
+            return;
+        }
+
+        if (!isHttpUrl(sourceUrl)) {
+            return;
+        }
+
+        event.preventDefault();
+        item.cancel();
+
+        void (async () => {
+            try {
+                const targetWindow = pickGopeedWindow(webContents);
+                if (!targetWindow) {
+                    throw new Error("No available BrowserWindow for download manager routing");
+                }
+
+                const manager = getActiveDownloadManager();
+                const queued = await queueDownloadToManager(targetWindow, sourceUrl, manager, item.getFilename());
+                if (!queued) {
+                    rememberBypassUrl(sourceUrl);
+                    if (!webContents.isDestroyed()) {
+                        try {
+                            await shell.openExternal(sourceUrl);
+                        } catch (error) {
+                            console.error("Failed to open default browser for download fallback:", error);
+                            webContents.downloadURL(sourceUrl);
+                        }
+                    }
+                    return;
+                }
+            } catch {
+                rememberBypassUrl(sourceUrl);
+                if (!webContents.isDestroyed()) {
+                    webContents.downloadURL(sourceUrl);
+                }
+            }
+        })();
+
+        return;
+    });
+}
+
+function computeRouteDecision(url: string): boolean {
+    try {
+        const parsed = new URL(url);
+        const hostname = parsed.hostname.toLowerCase();
+        const lowerPath = parsed.pathname.toLowerCase();
+
+        if (lowerPath.includes("/attachments/") || DISCORD_DOWNLOAD_HOSTS.has(hostname)) {
+            return true;
+        }
+
+        if (
+            parsed.searchParams.has("download") ||
+            parsed.searchParams.has("response-content-disposition") ||
+            getRelevantQueryFilename(parsed.searchParams).length > 0
+        ) {
+            return true;
+        }
+
+        return false;
+    } catch {
+        return false;
+    }
+}
 
 contextMenu({
     showSaveImageAs: true,
@@ -53,6 +330,10 @@ contextMenu({
     ],
 });
 function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
+    const openExternalWithReason = (url: string): void => {
+        void shell.openExternal(url);
+    };
+
     createTray();
     if (getWindowState("isMaximized") ?? false) {
         passedWindow.setSize(835, 600); //just so the whole thing doesn't cover whole screen
@@ -140,10 +421,26 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
                     alwaysOnTop: getConfig("popoutPiP"),
                 },
             };
-        if (url.startsWith("https:") || url.startsWith("http:") || url.startsWith("mailto:")) {
-            void shell.openExternal(url);
+        const isHttpOrHttps = isHttpUrl(url);
+        const shouldRoute = isHttpOrHttps && getCachedRouteDecision(url);
+        if (isHttpOrHttps && isDownloadManagerEnabled() && shouldRoute) {
+            void (async () => {
+                try {
+                    const manager = getActiveDownloadManager();
+                    const queued = await queueDownloadToManager(passedWindow, url, manager);
+                    if (!queued) {
+                        openExternalWithReason(url);
+                    }
+                } catch {
+                    openExternalWithReason(url);
+                }
+            })();
+        } else if (isHttpOrHttps && isDownloadManagerEnabled() && !shouldRoute) {
+            openExternalWithReason(url);
+        } else if (isHttpOrHttps || url.startsWith("mailto:")) {
+            openExternalWithReason(url);
         } else if (ignoreProtocolWarning) {
-            void shell.openExternal(url);
+            openExternalWithReason(url);
         } else {
             const options: MessageBoxOptions = {
                 type: "question",
@@ -166,7 +463,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
                     }
                 }
                 if (response === 0) {
-                    void shell.openExternal(url);
+                    openExternalWithReason(url);
                 }
             });
         }
@@ -174,7 +471,34 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         return { action: "deny" };
     });
 
+    passedWindow.webContents.on("will-navigate", (event, url) => {
+        if (!isHttpUrl(url)) {
+            return;
+        }
+
+        if (!isDownloadManagerEnabled()) {
+            return;
+        }
+
+        if (!getCachedRouteDecision(url)) {
+            return;
+        }
+        event.preventDefault();
+        void (async () => {
+            try {
+                const manager = getActiveDownloadManager();
+                const queued = await queueDownloadToManager(passedWindow, url, manager);
+                if (!queued) {
+                    openExternalWithReason(url);
+                }
+            } catch {
+                openExternalWithReason(url);
+            }
+        })();
+    });
+
     passedWindow.webContents.session.setSpellCheckerLanguages(getConfig("spellcheckLanguage"));
+    registerDownloadManagerHandler(passedWindow.webContents.session);
 
     registerCustomHandler();
 
@@ -183,21 +507,28 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         /https:\/\/sentry\.io\/.*/,
         /https:\/\/.*\.nel\.cloudflare\.com\/.*/,
     ];
+
     passedWindow.webContents.session.webRequest.onBeforeRequest((details, callback) => {
+        if (details.url.includes("ws://127.0.0.1:")) {
+            return callback({ cancel: true });
+        }
+
         if (blockedPatterns.some((pattern) => pattern.test(details.url))) {
             return callback({ cancel: true });
         }
+
         return callback({});
     });
 
-    // fix UMG video playback
-    passedWindow.webContents.session.webRequest.onBeforeSendHeaders(
-        { urls: ["https://www.youtube.com/embed/*"] },
-        ({ requestHeaders }, callback) => {
-            requestHeaders.Referer = "https://google.com";
-            callback({ requestHeaders });
-        },
-    );
+    passedWindow.webContents.session.webRequest.onBeforeSendHeaders((details, callback) => {
+        if (details.url.startsWith("https://www.youtube.com/embed/")) {
+            details.requestHeaders.Referer = "https://google.com";
+        }
+
+        callback({ requestHeaders: details.requestHeaders });
+    });
+
+    // fix UMG video playback handled in unified onBeforeSendHeaders above
     if (getConfig("tray") === "dynamic") {
         passedWindow.webContents.on("page-favicon-updated", (_, favicons) => {
             try {

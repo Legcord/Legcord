@@ -25,6 +25,11 @@ export interface AudioSettings {
     loopbackType: "loopback" | "loopbackWithMute";
 }
 
+export interface GopeedSettings {
+    host: string;
+    token: string;
+}
+
 export interface Settings {
     // Referenced for detecting a broken config.
     "0"?: string;
@@ -76,4 +81,6 @@ export interface Settings {
     modCache?: Record<ValidMods, string>;
     extendedPluginAbilities: boolean;
     supportBannerDismissed: boolean;
+    downloadManager: "default" | "gopeed" | "idm";
+    gopeed: GopeedSettings;
 }

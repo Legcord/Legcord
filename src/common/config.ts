@@ -67,6 +67,11 @@ const defaults: Settings = {
     extendedPluginAbilities: false,
     quickCss: true,
     supportBannerDismissed: false,
+    downloadManager: "default",
+    gopeed: {
+        host: "http://127.0.0.1:9999",
+        token: "",
+    },
 };
 
 const safeMode: Settings = {

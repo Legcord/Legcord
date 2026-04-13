@@ -34,6 +34,7 @@ export default defineConfig([
                     { src: "src/**/**/*.js", dest: "ts-out/js/" },
                     { src: "package.json", dest: "ts-out/" },
                     { src: "assets/**/**", dest: "ts-out/assets/" },
+                    { src: "scripts/*.vbs", dest: "ts-out/scripts/" },
                 ],
             }),
         ],
