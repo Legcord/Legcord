@@ -268,9 +268,9 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         // Update window title with Legcord suffix
         if (!title.endsWith(legcordSuffix)) {
             e.preventDefault();
-            void passedWindow.webContents.executeJavaScript(
-                `document.title = '${title.replace("Discord |", "") + legcordSuffix}'`,
-            );
+            // Security: Use JSON.stringify to prevent code injection via title
+            const safeTitle = JSON.stringify(title.replace("Discord |", "") + legcordSuffix);
+            void passedWindow.webContents.executeJavaScript(`document.title = ${safeTitle}`);
         }
     });
     injectThemesMain(passedWindow);

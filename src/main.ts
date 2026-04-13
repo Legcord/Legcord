@@ -324,11 +324,16 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
                                 resolve(true);
                             }),
                         );
-                    } else {
-                        callback(true);
                         break;
                     }
+                    callback(true);
+                    break;
                 }
+                default:
+                    // Security: Deny all unknown/unhandled permissions by default
+                    console.log(`[Permission] Denied unknown permission: ${permission}`);
+                    callback(false);
+                    break;
             }
         });
         app.on("activate", () => {

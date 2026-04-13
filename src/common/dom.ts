@@ -33,8 +33,9 @@ export async function injectJS(inject: string): Promise<void> {
 
 export function navigateTo(passedWindow: BrowserWindow, url: string): void {
     console.log(`[legcord deeplink] Navigating to ${url}`);
+    const safeUrl = JSON.stringify(url);
     passedWindow.webContents.executeJavaScript(`
-        history.pushState({}, null, "${url}");
+        history.pushState({}, null, ${safeUrl});
         window.dispatchEvent(new PopStateEvent("popstate", {}));
     `);
     passedWindow.focus();
