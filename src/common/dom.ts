@@ -32,10 +32,11 @@ export async function injectJS(inject: string): Promise<void> {
 }
 
 export function navigateTo(passedWindow: BrowserWindow, url: string): void {
-    console.log(`[legcord deeplink] Navigating to ${url}`);
-    passedWindow.webContents.executeJavaScript(`
-        history.pushState({}, null, "${url}");
-        window.dispatchEvent(new PopStateEvent("popstate", {}));
-    `);
+    // Sanitize: only allow path-like URLs (no protocol, no quotes)
+    const sanitized = url.replace(/[^a-zA-Z0-9/_\-@.]/g, "");
+    console.log(`[legcord deeplink] Navigating to ${sanitized}`);
+    passedWindow.webContents.executeJavaScript(
+        `history.pushState({}, null, ${JSON.stringify(sanitized)});window.dispatchEvent(new PopStateEvent("popstate", {}));`,
+    );
     passedWindow.focus();
 }
