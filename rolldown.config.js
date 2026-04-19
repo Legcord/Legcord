@@ -1,4 +1,4 @@
-import babel from "@rollup/plugin-babel";
+import solid from "@rolldown-plugin/solid";
 import esmShim from "@rollup/plugin-esm-shim";
 import { defineConfig } from "rolldown";
 import copy from "rollup-plugin-copy";
@@ -97,14 +97,7 @@ export default defineConfig([
             sourcemap: true,
         },
         platform: "browser",
-        external: electronExternals,
-        plugins: [
-            babel({
-                presets: ["solid", "@babel/preset-flow", "@babel/preset-typescript"],
-                babelHelpers: "inline",
-                exclude: "node_modules/**",
-                extensions: [".ts", ".tsx"],
-            }),
-        ],
+        external: [...electronExternals],
+        plugins: [solid()],
     },
 ]);
