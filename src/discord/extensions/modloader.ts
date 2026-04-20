@@ -33,9 +33,17 @@ async function getRef(repoData: RepoData) {
 
 async function downloadMod(mod: ValidMods) {
     console.log(`[Mod Loader]: Downloading ${mod}...`);
-    await fetchMod(`${mod}.js`, modData[mod].js);
+    const jsUrl = modData[mod].js;
+    if (!jsUrl || jsUrl === "DoNotChange" || !jsUrl.startsWith("http")) {
+        console.log(`[Mod Loader]: Skipping ${mod} - no valid URL configured`);
+        return;
+    }
+    await fetchMod(`${mod}.js`, jsUrl);
     if (modData[mod].css) {
-        await fetchMod(`${mod}.css`, modData[mod].css);
+        const cssUrl = modData[mod].css;
+        if (cssUrl?.startsWith("http")) {
+            await fetchMod(`${mod}.css`, cssUrl);
+        }
     }
 }
 

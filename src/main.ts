@@ -207,6 +207,17 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     }
     // @ts-expect-error old types
     if (getConfig("performanceMode") === "vaapi") setConfig("vaapi", true);
+    // @ts-expect-error old types
+    if (getConfig("legcordCSP") === true) {
+        setConfig("csp", "none");
+        // @ts-expect-error old types
+        setConfig("legcordCSP", undefined);
+        //@ts-expect-error old types
+    } else if (getConfig("legcordCSP") === false) {
+        setConfig("csp", "vanilla");
+        // @ts-expect-error old types
+        setConfig("legcordCSP", undefined);
+    }
     if (typeof getConfig("tray") === "boolean") {
         //@ts-expect-error
         if (getConfig("tray") === true) {
@@ -324,11 +335,16 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
                                 resolve(true);
                             }),
                         );
-                    } else {
-                        callback(true);
                         break;
                     }
+                    callback(true);
+                    break;
                 }
+                default:
+                    // Security: Deny all unknown/unhandled permissions by default
+                    console.log(`[Permission] Denied unknown permission: ${permission}`);
+                    callback(false);
+                    break;
             }
         });
         app.on("activate", () => {

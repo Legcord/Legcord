@@ -30,13 +30,18 @@ export function SettingsPage() {
             <Header class={classes.category} tag={HeaderTags.H5}>
                 {store.i18n["settings-category-mods"]}
             </Header>
-            <SwitchItem
+            <DropdownItem
+                value={settings.csp}
+                onChange={(v) => setConfig("csp", v as Settings["csp"], true)}
+                title={store.i18n["settings-csp"]}
                 note={store.i18n["settings-csp-desc"]}
-                value={settings.legcordCSP}
-                onChange={(e: boolean) => setConfig("legcordCSP", e, true)}
-            >
-                Legcord CSP
-            </SwitchItem>
+                link="https://github.com/Legcord/Legcord/wiki/CSP-Options"
+                options={[
+                    { label: store.i18n["settings-csp-none"], value: "none" },
+                    { label: store.i18n["settings-csp-strict"], value: "strict" },
+                    { label: store.i18n["settings-csp-vanilla"], value: "vanilla" },
+                ]}
+            />
             <SwitchItem
                 note={store.i18n["settings-mod-vencord"]}
                 value={settings.mods.includes("vencord")}

@@ -1,6 +1,6 @@
 {
     "name": "legcord",
-    "version": "1.2.3",
+    "version": "1.2.4",
     "description": "Legcord is a custom client designed to enhance your Discord experience while keeping everything lightweight.",
     "main": "ts-out/main.js",
     "engines": {
@@ -32,10 +32,8 @@
     },
     "homepage": "https://github.com/Legcord/Legcord#readme",
     "devDependencies": {
-        "@babel/preset-flow": "^7.25.9",
-        "@babel/preset-typescript": "^7.27.1",
         "@biomejs/biome": "1.9.4",
-        "@rollup/plugin-babel": "^6.0.4",
+        "@rolldown-plugin/solid": "^0.0.4",
         "@rollup/plugin-esm-shim": "^0.1.7",
         "@types/adm-zip": "^0.5.8",
         "@types/minimatch": "^6.0.0",
@@ -60,6 +58,7 @@
         "arrpc": "https://github.com/Legcord/arrpc.git#efe7589762470d32b9ba10d529be5acc23cd0e19",
         "electron-context-menu": "^4.0.4",
         "electron-is-dev": "^3.0.1",
+        "tslib": "^2.8.1",
         "electron-updater": "^6.6.2",
         "ws": "^8.18.0"
     },

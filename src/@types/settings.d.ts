@@ -36,7 +36,7 @@ export interface Settings {
     transparency: "universal" | "modern" | "none";
     windowMaterial: "mica" | "tabbed" | "acrylic" | "none";
     audio: AudioSettings;
-    legcordCSP: boolean;
+    csp: "vanilla" | "strict" | "none";
     minimizeToTray: boolean;
     multiInstance: boolean;
     spellcheck: boolean;

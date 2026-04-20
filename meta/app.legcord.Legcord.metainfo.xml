@@ -29,6 +29,93 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.2.4" date="2026-04-15" type="stable">
+      <url>https://github.com/Legcord/Legcord/releases/tag/v1.2.4</url>
+      <description>
+        <p>What’s New in Legcord v1.2.4 ✨</p>
+        <ul>
+          <li>🐧 **Huge streaming performance improvements on Linux**</li>
+        </ul>
+        <ul>
+          <li>🔄 **Separate “No Bundle Updates” setting for each client mod**</li>
+        </ul>
+        <ul>
+          <li>💾 **Backup &amp; Restore added**</li>
+        </ul>
+        <ul>
+          <li>🎮 **Improved macOS game detection**</li>
+        </ul>
+        <ul>
+          <li>🛡️ **New CSP options setting**</li>
+        </ul>
+        <ul>
+          <li>🪟 **Window material setting added** for supported systems ([https://github.com/Legcord/Legcord/pull/1025](https://github.com/Legcord/Legcord/pull/1025) by @passionvine).</li>
+          <li>📦 **OPTIONAL automatic Linux updates added** ([https://github.com/Legcord/Legcord/pull/1027](https://github.com/Legcord/Legcord/pull/1027) by @KarboXXX).</li>
+          <li>🎛️ **Support banner popup added**</li>
+        </ul>
+        <ul>
+          <li>🖥️ Fixed Linux `StartupWMClass` to `legcord` ([https://github.com/Legcord/Legcord/pull/1021](https://github.com/Legcord/Legcord/pull/1021) by @khancyr).</li>
+          <li>📺 Fixed screensharing quality, FPS, and audio ([https://github.com/Legcord/Legcord/pull/1026](https://github.com/Legcord/Legcord/pull/1026) by @KarboXXX).</li>
+          <li>🎚️ Fixed scrollbar styling on file preview ([https://github.com/Legcord/Legcord/pull/1024](https://github.com/Legcord/Legcord/pull/1024) by @MahmodZE).</li>
+          <li>🔊 Fixed mute toggle sound effect playback ([https://github.com/Legcord/Legcord/pull/1031](https://github.com/Legcord/Legcord/pull/1031) by @psw01).</li>
+          <li>🎮 Fixed RPC status not disappearing properly ([https://github.com/Legcord/Legcord/pull/1032](https://github.com/Legcord/Legcord/pull/1032) by @Adrigamer2950).</li>
+          <li>🔐 Fixed security prompt appearing with no passkey ([https://github.com/Legcord/Legcord/pull/1033](https://github.com/Legcord/Legcord/pull/1033) by @dequeues).</li>
+          <li>🇫🇷 Added missing French translations for settings categories ([https://github.com/Legcord/Legcord/pull/1028](https://github.com/Legcord/Legcord/pull/1028) by @youtsuhodev).</li>
+          <li>⌨️ Polished keybinds UI ([https://github.com/Legcord/Legcord/pull/1038](https://github.com/Legcord/Legcord/pull/1038) by @youtsuhodev).</li>
+          <li>🎥 Fixed camera/mic device switching not working ([https://github.com/Legcord/Legcord/pull/1051](https://github.com/Legcord/Legcord/pull/1051) by @narasaka).</li>
+          <li>⚙️ Fixed settings shortcut behavior ([https://github.com/Legcord/Legcord/pull/1046](https://github.com/Legcord/Legcord/pull/1046) by @KirobotDev).</li>
+          <li>📏 Fixed dropdown height limit in Games settings ([https://github.com/Legcord/Legcord/pull/1045](https://github.com/Legcord/Legcord/pull/1045) by @youtsuhodev).</li>
+          <li>📐 Fixed dropdown max height calculation ([https://github.com/Legcord/Legcord/pull/1059](https://github.com/Legcord/Legcord/pull/1059) by @MahmodZE).</li>
+          <li>🧹 Cleanup of old fix-me notes and code polish ([https://github.com/Legcord/Legcord/pull/1060](https://github.com/Legcord/Legcord/pull/1060) by @KirobotDev).</li>
+          <li>📂 Fixed restore zip path traversal issue ([https://github.com/Legcord/Legcord/pull/1061](https://github.com/Legcord/Legcord/pull/1061) by @youtsuhodev).</li>
+          <li>🛡️ Added stricter CSP, better permission handling, and mod validation ([https://github.com/Legcord/Legcord/pull/1069](https://github.com/Legcord/Legcord/pull/1069) by @KirobotDev).</li>
+          <li>Fixed first time setup</li>
+        </ul>
+      </description>
+    </release>
+    <release version="1.2.3" date="2026-04-15" type="stable">
+      <url>https://github.com/Legcord/Legcord/releases/tag/v1.2.3</url>
+      <description>
+        <p>What’s New in Legcord v1.2.3 ✨</p>
+        <ul>
+          <li>🐧 **Huge streaming performance improvements on Linux**</li>
+        </ul>
+        <ul>
+          <li>🔄 **Separate “No Bundle Updates” setting for each client mod**</li>
+        </ul>
+        <ul>
+          <li>💾 **Backup &amp; Restore added**</li>
+        </ul>
+        <ul>
+          <li>🎮 **Improved macOS game detection**</li>
+        </ul>
+        <ul>
+          <li>🛡️ **New CSP options setting**</li>
+        </ul>
+        <ul>
+          <li>🪟 **Window material setting added** for supported systems ([https://github.com/Legcord/Legcord/pull/1025](https://github.com/Legcord/Legcord/pull/1025) by @passionvine).</li>
+          <li>📦 **OPTIONAL automatic Linux updates added** ([https://github.com/Legcord/Legcord/pull/1027](https://github.com/Legcord/Legcord/pull/1027) by @KarboXXX).</li>
+          <li>🎛️ **Support banner popup added**</li>
+        </ul>
+        <ul>
+          <li>🖥️ Fixed Linux `StartupWMClass` to `legcord` ([https://github.com/Legcord/Legcord/pull/1021](https://github.com/Legcord/Legcord/pull/1021) by @khancyr).</li>
+          <li>📺 Fixed screensharing quality, FPS, and audio ([https://github.com/Legcord/Legcord/pull/1026](https://github.com/Legcord/Legcord/pull/1026) by @KarboXXX).</li>
+          <li>🎚️ Fixed scrollbar styling on file preview ([https://github.com/Legcord/Legcord/pull/1024](https://github.com/Legcord/Legcord/pull/1024) by @MahmodZE).</li>
+          <li>🔊 Fixed mute toggle sound effect playback ([https://github.com/Legcord/Legcord/pull/1031](https://github.com/Legcord/Legcord/pull/1031) by @psw01).</li>
+          <li>🎮 Fixed RPC status not disappearing properly ([https://github.com/Legcord/Legcord/pull/1032](https://github.com/Legcord/Legcord/pull/1032) by @Adrigamer2950).</li>
+          <li>🔐 Fixed security prompt appearing with no passkey ([https://github.com/Legcord/Legcord/pull/1033](https://github.com/Legcord/Legcord/pull/1033) by @dequeues).</li>
+          <li>🇫🇷 Added missing French translations for settings categories ([https://github.com/Legcord/Legcord/pull/1028](https://github.com/Legcord/Legcord/pull/1028) by @youtsuhodev).</li>
+          <li>⌨️ Polished keybinds UI ([https://github.com/Legcord/Legcord/pull/1038](https://github.com/Legcord/Legcord/pull/1038) by @youtsuhodev).</li>
+          <li>🎥 Fixed camera/mic device switching not working ([https://github.com/Legcord/Legcord/pull/1051](https://github.com/Legcord/Legcord/pull/1051) by @narasaka).</li>
+          <li>⚙️ Fixed settings shortcut behavior ([https://github.com/Legcord/Legcord/pull/1046](https://github.com/Legcord/Legcord/pull/1046) by @KirobotDev).</li>
+          <li>📏 Fixed dropdown height limit in Games settings ([https://github.com/Legcord/Legcord/pull/1045](https://github.com/Legcord/Legcord/pull/1045) by @youtsuhodev).</li>
+          <li>📐 Fixed dropdown max height calculation ([https://github.com/Legcord/Legcord/pull/1059](https://github.com/Legcord/Legcord/pull/1059) by @MahmodZE).</li>
+          <li>🧹 Cleanup of old fix-me notes and code polish ([https://github.com/Legcord/Legcord/pull/1060](https://github.com/Legcord/Legcord/pull/1060) by @KirobotDev).</li>
+          <li>📂 Fixed restore zip path traversal issue ([https://github.com/Legcord/Legcord/pull/1061](https://github.com/Legcord/Legcord/pull/1061) by @youtsuhodev).</li>
+          <li>🛡️ Added stricter CSP, better permission handling, and mod validation ([https://github.com/Legcord/Legcord/pull/1069](https://github.com/Legcord/Legcord/pull/1069) by @KirobotDev).</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.2.2" date="2026-02-21" type="stable">
       <url>https://github.com/Legcord/Legcord/releases/tag/v1.2.2</url>
       <description>
