@@ -1,9 +1,117 @@
-.card:hover {
-    cursor: "pointer";
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.1s ease, border-color 0.25s ease;
+    border: 2px solid transparent;
+    position: relative;
+    user-select: none;
+    overflow: visible;
 }
+
+.card:hover {
+    background-color: var(--background-modifier-hover);
+}
+
+.card:active {
+    transform: scale(0.98);
+}
+
+.cardSelected {
+    border-color: var(--brand-experiment-560);
+    background-color: color-mix(in srgb, var(--brand-experiment-560) 10%, transparent);
+}
+
+.cardSelected:hover {
+    background-color: color-mix(in srgb, var(--brand-experiment-560) 16%, transparent);
+}
+
+.checkBadge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 22px;
+    height: 22px;
+    border-radius: 0 7px 0 7px;
+    background-color: var(--brand-experiment-560);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    animation: badgeIn 0.2s ease-out;
+}
+
+@keyframes badgeIn {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.checkIcon {
+    width: 12px;
+    height: 12px;
+    color: #fff;
+}
+
+.thumbnailWrapper {
+    width: 100%;
+    position: relative;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.thumbnail {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+.thumbnailUnselected {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.2s ease, filter 0.2s ease;
+    opacity: 0.55;
+    filter: brightness(0.85);
+}
+
+.thumbnailSelected {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.2s ease, filter 0.2s ease;
+    opacity: 1;
+}
+
+.card:hover .thumbnailUnselected {
+    opacity: 0.75;
+    filter: brightness(0.95);
+}
+
 .name {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    max-width: 190px;
+    width: 100%;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    text-align: center;
+}
+
+.cardSelected .name {
+    color: var(--text-default);
 }

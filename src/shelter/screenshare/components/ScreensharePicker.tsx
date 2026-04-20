@@ -130,12 +130,18 @@ export const ScreensharePicker = (props: {
                         )}
                     </For>
                 </div>
-                <div>
-                    <br />
-                    <Header tag={HeaderTags.EYEBROW}>Picked {name()}</Header>
-                    <Divider mt mb />
+                <div class={classes.settingsSection}>
+                    <div class={classes.selectedBanner}>
+                        <svg class={classes.selectedIcon} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <title>Monitor</title>
+                            <rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2" />
+                            <path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <span class={classes.selectedLabel}>Sharing:</span>
+                        <span class={classes.selectedName}>{name()}</span>
+                    </div>
                     <div class={classes.qualityBox}>
-                        <div>
+                        <div class={classes.controlGroup}>
                             <Header class={classes.header} tag={HeaderTags.H4}>
                                 Resolution
                             </Header>
@@ -153,17 +159,7 @@ export const ScreensharePicker = (props: {
                                 ]}
                             />
                         </div>
-                        <div>
-                            <Show when={window.legcord.platform !== "darwin"}>
-                                <Header class={classes.header} tag={HeaderTags.H4}>
-                                    Audio
-                                </Header>
-                                <div class={classes.checkbox}>
-                                    <Checkbox checked={audio()} onChange={setAudio} />
-                                </div>
-                            </Show>
-                        </div>
-                        <div>
+                        <div class={classes.controlGroup}>
                             <Header class={classes.header} tag={HeaderTags.H4}>
                                 FPS
                             </Header>
@@ -181,6 +177,31 @@ export const ScreensharePicker = (props: {
                             />
                         </div>
                     </div>
+                    <Show when={window.legcord.platform !== "darwin"}>
+                        <div class={classes.audioRow} style="margin-top: 12px;">
+                            <div class={classes.audioLabel}>
+                                <svg class={classes.audioIcon} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <title>Audio</title>
+                                    <path
+                                        d="M11 5L6 9H2v6h4l5 4V5z"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                    <path
+                                        d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                                Share Audio
+                            </div>
+                            <Checkbox checked={audio()} onChange={setAudio} />
+                        </div>
+                    </Show>
 
                     <Show when={window.legcord.platform === "linux" && props.audioSources !== undefined && audio()}>
                         <Divider mt mb />

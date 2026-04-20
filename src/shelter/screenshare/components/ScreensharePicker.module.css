@@ -1,26 +1,111 @@
 .sources {
-    grid-template-columns: auto auto;
-    max-height: 260px;
-    overflow: hidden;
     display: grid;
-    overflow-y: scroll;
-    text-align: center;
-    font-weight: 500;
-    border: 3px solid #1e2124;
-    border-radius: 5px;
-    border-style: dashed;
-    padding: 10px;
-}
-.qualityBox {
-    display: grid;
-    grid-template-columns: auto auto;
-    gap: 10px 10%;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    max-height: 340px;
+    overflow-y: auto;
+    font-weight: var(--font-weight-medium);
+    background-color: var(--background-surface-lowest);
+    border-radius: 8px;
+    padding: 6px;
+    gap: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
 }
 
-.checkbox {
-    padding-top: 10px;
+.sources::-webkit-scrollbar {
+    width: 5px;
 }
+
+.sources::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 4px;
+}
+
+.sources::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.sources::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.settingsSection {
+    margin-top: 16px;
+}
+
+.selectedBanner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background-color: var(--background-surface-higher);
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.selectedIcon {
+    width: 20px;
+    height: 20px;
+    color: var(--interactive-text-active);
+    flex-shrink: 0;
+}
+
+.selectedLabel {
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.selectedName {
+    color: var(--text-default);
+    font-weight: 600;
+    font-size: 13px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.qualityBox {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 16px;
+}
+
+.controlGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
 .header {
-    margin-bottom: 5px;
-    margin-left: 5px;
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    font-family: var(--font-primary);
+}
+
+.audioRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background-color: var(--background-surface-higher);
+    border-radius: 8px;
+}
+
+.audioLabel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-default);
+    font-size: 14px;
+    font-weight: var(--font-weight-medium);
+}
+
+.audioIcon {
+    width: 18px;
+    height: 18px;
+    color: var(--interactive-icon-default);
 }
