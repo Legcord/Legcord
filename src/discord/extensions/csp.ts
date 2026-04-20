@@ -7,7 +7,7 @@ const LEGCORD_CSP = [
     "style-src 'self' 'unsafe-inline' https://*.discord.com https://discord.com https://fonts.googleapis.com",
     "img-src 'self' blob: data: https://*.discord.com https://discord.com https://*.discordapp.com https://cdn.discordapp.com https://*.githubusercontent.com https://*.github.com https://raw.githubusercontent.com",
     "font-src 'self' data: https://fonts.gstatic.com",
-    "connect-src 'self' blob: https://*.discord.com https://discord.com wss://*.discord.com wss://gateway.discord.gg https://*.githubusercontent.com https://*.github.com https://api.github.com",
+    "connect-src 'self' blob: https://*.discord.com https://discord.com wss://*.discord.com wss://gateway.discord.gg https://*.githubusercontent.com https://*.github.com https://api.github.com https://*.spikehd.dev https://spikehd.dev",
     "media-src 'self' blob: https://*.discord.com https://discord.com",
     "worker-src 'self' blob:",
     "frame-src 'self' https://*.discord.com https://discord.com https://*.youtube.com https://youtube.com https://*.twitch.tv https://open.spotify.com",
