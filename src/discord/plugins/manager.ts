@@ -4,6 +4,7 @@ import { pathToFileURL } from "node:url";
 import { BrowserWindow, app, dialog, ipcMain, shell } from "electron";
 import { after, before, instead } from "spitroast/dist/index.mjs";
 import { getConfig, setConfig } from "../../common/config.js";
+import { VALID_PLUGIN_ID } from "./pluginId.js";
 
 type PluginTarget = "main" | "preload" | "renderer";
 type Cleanup = () => void;
@@ -52,7 +53,6 @@ interface PluginMainApi {
 const pluginFolder = path.join(app.getPath("userData"), "/plugins");
 const currentLegcordVersion = app.getVersion();
 const records = new Map<string, PluginRecord>();
-const VALID_PLUGIN_ID = /^[a-zA-Z0-9._-]{1,64}$/;
 const VALID_ENTRY_PATH = /^[^<>:"|?*\0]+$/;
 
 function getPluginStates() {

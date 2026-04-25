@@ -5,9 +5,11 @@ type RuntimeEntry = {
     id: string;
     name: string;
     path: string;
+    storageToken: string;
 };
 
 const cleanupMap = new Map<string, Array<() => void>>();
+const runtimeBootstrapTokenPromise = ipcRenderer.invoke("plugins:register-runtime-client") as Promise<string | null>;
 
 function addCleanup(pluginId: string, cleanup: () => void) {
     const current = cleanupMap.get(pluginId) ?? [];
@@ -27,7 +29,7 @@ function clearCleanup(pluginId: string) {
     }
 }
 
-function createApi(pluginId: string, pluginName: string) {
+function createApi(pluginId: string, pluginName: string, storageToken: string) {
     const loggerPrefix = `[Plugin:${pluginId}]`;
     return {
         id: pluginId,
@@ -54,6 +56,16 @@ function createApi(pluginId: string, pluginName: string) {
                 return unpatch;
             },
         },
+        fs: {
+            writeFile: (relativePath: string, data: string) =>
+                ipcRenderer.invoke("pluginWriteFile", storageToken, relativePath, data) as Promise<
+                    { ok: true } | { ok: false; error: string }
+                >,
+            readFile: (relativePath: string) =>
+                ipcRenderer.invoke("pluginReadFile", storageToken, relativePath) as Promise<
+                    { ok: true; data: string } | { ok: false; error: string }
+                >,
+        },
         onCleanup: (cleanup: () => void) => addCleanup(pluginId, cleanup),
     };
 }
@@ -76,25 +88,42 @@ if (typeof activate === "function") {
 }
 
 async function loadPreloadPlugins() {
-    const entries = (await ipcRenderer.invoke("plugins:get-runtime-entries", "preload")) as RuntimeEntry[];
+    const runtimeBootstrapToken = await runtimeBootstrapTokenPromise;
+    if (!runtimeBootstrapToken) {
+        console.error("[Plugin Runtime] Failed to register preload runtime client");
+        return;
+    }
+    const entries = (await ipcRenderer.invoke(
+        "plugins:get-runtime-entries",
+        runtimeBootstrapToken,
+        "preload",
+    )) as RuntimeEntry[];
     for (const entry of entries) {
         clearCleanup(entry.id);
         try {
-            const source = (await ipcRenderer.invoke("plugins:get-runtime-script", entry.id, "preload")) as
-                | string
-                | null;
+            const source = (await ipcRenderer.invoke(
+                "plugins:get-runtime-script",
+                runtimeBootstrapToken,
+                entry.id,
+                "preload",
+            )) as string | null;
             if (!source) continue;
-            await executePreloadPluginSource(entry.id, source, createApi(entry.id, entry.name));
+            await executePreloadPluginSource(entry.id, source, createApi(entry.id, entry.name, entry.storageToken));
         } catch (error) {
             console.error(`[Plugin:${entry.id}] preload entry failed`, error);
         }
     }
 }
 
-function getRendererBootstrap(pluginId: string, pluginName: string, source: string) {
+function getRendererBootstrap(pluginId: string, pluginName: string, source: string, storageToken: string) {
+    const encodedPluginId = JSON.stringify(pluginId);
+    const encodedPluginName = JSON.stringify(pluginName);
+    const encodedStorageToken = JSON.stringify(storageToken);
     return `
 (() => {
   const g = globalThis;
+  const runtime = g.__legcordPluginRuntime;
+  if (!runtime) throw new Error("Legcord plugin runtime bridge unavailable");
   const stores = g.__legcordPluginPatches ?? (g.__legcordPluginPatches = new WeakMap());
   const unpatchAll = () => { g.__legcordPluginPatches = new WeakMap(); };
   const patch = (type, name, parent, callback, oneTime = false) => {
@@ -138,18 +167,22 @@ function getRendererBootstrap(pluginId: string, pluginName: string, source: stri
     return remove;
   };
   const api = {
-    id: "${pluginId}",
-    name: "${pluginName}",
+        id: ${encodedPluginId},
+        name: ${encodedPluginName},
     logger: {
-      log: (...args) => console.log("[Plugin:${pluginId}]", ...args),
-      warn: (...args) => console.warn("[Plugin:${pluginId}]", ...args),
-      error: (...args) => console.error("[Plugin:${pluginId}]", ...args),
+            log: (...args) => console.log("[Plugin:${pluginId}]", ...args),
+            warn: (...args) => console.warn("[Plugin:${pluginId}]", ...args),
+            error: (...args) => console.error("[Plugin:${pluginId}]", ...args),
     },
     patcher: {
       before: (name, parent, cb, once) => patch("b", name, parent, cb, once),
       instead: (name, parent, cb, once) => patch("i", name, parent, cb, once),
       after: (name, parent, cb, once) => patch("a", name, parent, cb, once),
       unpatchAll
+        },
+        fs: {
+            writeFile: (relativePath, data) => runtime.writeFile(${encodedStorageToken}, relativePath, data),
+            readFile: (relativePath) => runtime.readFile(${encodedStorageToken}, relativePath),
     }
   };
   const mod = { exports: {} };
@@ -164,14 +197,26 @@ function getRendererBootstrap(pluginId: string, pluginName: string, source: stri
 }
 
 async function loadRendererPlugins() {
-    const entries = (await ipcRenderer.invoke("plugins:get-runtime-entries", "renderer")) as RuntimeEntry[];
+    const runtimeBootstrapToken = await runtimeBootstrapTokenPromise;
+    if (!runtimeBootstrapToken) {
+        console.error("[Plugin Runtime] Failed to register renderer runtime client");
+        return;
+    }
+    const entries = (await ipcRenderer.invoke(
+        "plugins:get-runtime-entries",
+        runtimeBootstrapToken,
+        "renderer",
+    )) as RuntimeEntry[];
     for (const entry of entries) {
         try {
-            const source = (await ipcRenderer.invoke("plugins:get-runtime-script", entry.id, "renderer")) as
-                | string
-                | null;
+            const source = (await ipcRenderer.invoke(
+                "plugins:get-runtime-script",
+                runtimeBootstrapToken,
+                entry.id,
+                "renderer",
+            )) as string | null;
             if (!source) continue;
-            const bootstrap = getRendererBootstrap(entry.id, entry.name, source);
+            const bootstrap = getRendererBootstrap(entry.id, entry.name, source, entry.storageToken);
             await webFrame.executeJavaScript(bootstrap);
         } catch (error) {
             console.error(`[Plugin:${entry.id}] renderer entry failed`, error);

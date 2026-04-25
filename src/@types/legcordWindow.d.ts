@@ -112,18 +112,6 @@ export interface LegcordWindow {
         reload: (id: string) => Promise<{ ok: boolean }>;
         openFolder: () => void;
     };
-    /** Plugin storage API. Requires user to enable "Extended plugin abilities" in Legcord settings. */
-    fs: {
-        writeFile: (
-            pluginId: string,
-            relativePath: string,
-            data: string,
-        ) => Promise<{ ok: true } | { ok: false; error: string }>;
-        readFile: (
-            pluginId: string,
-            relativePath: string,
-        ) => Promise<{ ok: true; data: string } | { ok: false; error: string }>;
-    };
 }
 
 export interface DetectedGame {

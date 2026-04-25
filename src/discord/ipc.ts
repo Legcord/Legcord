@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -30,6 +31,7 @@ import constPaths from "../shared/consts/paths.js";
 import { splashWindow } from "../splash/main.js";
 import { refreshGlobalKeybinds } from "./globalKeybinds.js";
 import { getRuntimeEntries, getRuntimeScript, listPlugins, reloadPlugin, setPluginEnabled } from "./plugins/manager.js";
+import { isValidPluginId } from "./plugins/pluginId.js";
 import { processList, refreshProcessList } from "./rpcProcess.js";
 import { importGuilds, mainTouchBar, setVoiceState, voiceTouchBar } from "./touchbar.js";
 
@@ -41,19 +43,52 @@ const pluginsPath = path.join(userDataPath, "/plugins/");
 const pluginStoragePath = path.join(userDataPath, "/plugin-storage/");
 const quickCssPath = path.join(userDataPath, "/quickCss.css");
 
-/** Sanitize plugin id to safe dir name (alphanumeric, dash, underscore only). */
-function sanitizePluginId(pluginId: string): string {
-    return pluginId.replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 64) || "default";
+type RuntimeTarget = "preload" | "renderer";
+type RuntimeClient = {
+    bootstrapToken: string;
+    storageTokens: Map<string, string>;
+};
+
+const runtimeClients = new Map<number, RuntimeClient>();
+const runtimeStorageTokens = new Map<string, { pluginId: string; senderId: number }>();
+
+function disposeRuntimeClient(senderId: number) {
+    const client = runtimeClients.get(senderId);
+    if (!client) return;
+    for (const storageToken of client.storageTokens.values()) {
+        runtimeStorageTokens.delete(storageToken);
+    }
+    runtimeClients.delete(senderId);
 }
 
-/** Resolve relative path for a plugin; returns null if path escapes plugin dir. */
 function resolvePluginFilePath(pluginId: string, relativePath: string): string | null {
-    const safeId = sanitizePluginId(pluginId);
-    const baseDir = path.resolve(pluginStoragePath, safeId);
+    if (!isValidPluginId(pluginId)) return null;
+    const baseDir = path.resolve(pluginStoragePath, pluginId);
     const resolved = path.resolve(baseDir, path.normalize(relativePath));
     const relative = path.relative(baseDir, resolved);
     if (relative.startsWith("..") || path.isAbsolute(relative)) return null;
     return resolved;
+}
+
+function getRuntimeClient(senderId: number, bootstrapToken: string) {
+    const client = runtimeClients.get(senderId);
+    if (!client || client.bootstrapToken !== bootstrapToken) return null;
+    return client;
+}
+
+function getRuntimeStorageToken(client: RuntimeClient, senderId: number, pluginId: string) {
+    const existing = client.storageTokens.get(pluginId);
+    if (existing) return existing;
+    const created = randomUUID();
+    client.storageTokens.set(pluginId, created);
+    runtimeStorageTokens.set(created, { pluginId, senderId });
+    return created;
+}
+
+function getScopedPluginId(senderId: number, storageToken: string) {
+    const scoped = runtimeStorageTokens.get(storageToken);
+    if (!scoped || scoped.senderId !== senderId) return null;
+    return scoped.pluginId;
 }
 
 function ifExistsRead(path: string): string | undefined {
@@ -383,14 +418,42 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         if (typeof pluginId !== "string") return { ok: false };
         return { ok: await reloadPlugin(pluginId) };
     });
-    ipcMain.handle("plugins:get-runtime-entries", (_event, target: "preload" | "renderer") => {
-        if (target !== "preload" && target !== "renderer") return [];
-        return getRuntimeEntries(target);
+    ipcMain.handle("plugins:register-runtime-client", (event) => {
+        const senderId = event.sender.id;
+        if (runtimeClients.has(senderId)) return null;
+        const client: RuntimeClient = {
+            bootstrapToken: randomUUID(),
+            storageTokens: new Map(),
+        };
+        runtimeClients.set(senderId, client);
+        event.sender.once("destroyed", () => disposeRuntimeClient(senderId));
+        return client.bootstrapToken;
     });
-    ipcMain.handle("plugins:get-runtime-script", (_event, pluginId: string, target: "preload" | "renderer") => {
-        if (typeof pluginId !== "string" || (target !== "preload" && target !== "renderer")) return null;
-        return getRuntimeScript(pluginId, target);
+    ipcMain.handle("plugins:get-runtime-entries", (event, bootstrapToken: string, target: RuntimeTarget) => {
+        if (typeof bootstrapToken !== "string" || (target !== "preload" && target !== "renderer")) return [];
+        const senderId = event.sender.id;
+        const client = getRuntimeClient(senderId, bootstrapToken);
+        if (!client) return [];
+        return getRuntimeEntries(target).map((entry) => ({
+            ...entry,
+            storageToken: getRuntimeStorageToken(client, senderId, entry.id),
+        }));
     });
+    ipcMain.handle(
+        "plugins:get-runtime-script",
+        (event, bootstrapToken: string, pluginId: string, target: RuntimeTarget) => {
+            if (
+                typeof bootstrapToken !== "string" ||
+                typeof pluginId !== "string" ||
+                (target !== "preload" && target !== "renderer")
+            ) {
+                return null;
+            }
+            const client = getRuntimeClient(event.sender.id, bootstrapToken);
+            if (!client) return null;
+            return getRuntimeScript(pluginId, target);
+        },
+    );
 
     // custom detectables control
     ipcMain.on("refreshProcessList", () => {
@@ -410,17 +473,19 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.handle(
         "pluginWriteFile",
         async (
-            _event,
-            pluginId: string,
+            event,
+            storageToken: string,
             relativePath: string,
             data: string,
         ): Promise<{ ok: true } | { ok: false; error: string }> => {
             if (!getConfig("extendedPluginAbilities")) {
                 return { ok: false, error: "EXTENSION_DISABLED" };
             }
-            if (typeof pluginId !== "string" || typeof relativePath !== "string" || typeof data !== "string") {
+            if (typeof storageToken !== "string" || typeof relativePath !== "string" || typeof data !== "string") {
                 return { ok: false, error: "INVALID_ARGS" };
             }
+            const pluginId = getScopedPluginId(event.sender.id, storageToken);
+            if (!pluginId) return { ok: false, error: "INVALID_TOKEN" };
             const resolved = resolvePluginFilePath(pluginId, relativePath);
             if (!resolved) return { ok: false, error: "INVALID_PATH" };
             try {
@@ -438,16 +503,18 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     ipcMain.handle(
         "pluginReadFile",
         async (
-            _event,
-            pluginId: string,
+            event,
+            storageToken: string,
             relativePath: string,
         ): Promise<{ ok: true; data: string } | { ok: false; error: string }> => {
             if (!getConfig("extendedPluginAbilities")) {
                 return { ok: false, error: "EXTENSION_DISABLED" };
             }
-            if (typeof pluginId !== "string" || typeof relativePath !== "string") {
+            if (typeof storageToken !== "string" || typeof relativePath !== "string") {
                 return { ok: false, error: "INVALID_ARGS" };
             }
+            const pluginId = getScopedPluginId(event.sender.id, storageToken);
+            if (!pluginId) return { ok: false, error: "INVALID_TOKEN" };
             const resolved = resolvePluginFilePath(pluginId, relativePath);
             if (!resolved) return { ok: false, error: "INVALID_PATH" };
             try {
