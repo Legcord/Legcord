@@ -1,4 +1,11 @@
 /// <reference path="../../../node_modules/@uwu/shelter-defs/dist/shelter-defs/rootdefs.d.ts" />
+import {
+    GamesSidebarIcon,
+    KeybindsSidebarIcon,
+    PluginsSidebarIcon,
+    SettingsSidebarIcon,
+    ThemesSidebarIcon,
+} from "./components/icons/SettingsNavIcons.jsx";
 import { KeybindsPage } from "./pages/KeybindsPage.jsx";
 import { PluginsPage } from "./pages/PluginsPage.jsx";
 import { RegisteredGamesPage } from "./pages/RegisteredGamesPage.jsx";
@@ -17,11 +24,11 @@ const {
 const settingsPages = [
     registerSection("divider"),
     registerSection("header", "Legcord"),
-    registerSection("section", "legcord-settings", "Settings", SettingsPage),
-    registerSection("section", "legcord-themes", "Themes", ThemesPage),
-    registerSection("section", "legcord-plugins", "Plugins", PluginsPage),
-    registerSection("section", "legcord-keybinds", "Keybinds", KeybindsPage),
-    registerSection("section", "legcord-games", "Games", RegisteredGamesPage),
+    registerSection("section", "legcord-settings", "Settings", SettingsPage, { icon: SettingsSidebarIcon }),
+    registerSection("section", "legcord-themes", "Themes", ThemesPage, { icon: ThemesSidebarIcon }),
+    registerSection("section", "legcord-plugins", "Plugins", PluginsPage, { icon: PluginsSidebarIcon }),
+    registerSection("section", "legcord-keybinds", "Keybinds", KeybindsPage, { icon: KeybindsSidebarIcon }),
+    registerSection("section", "legcord-games", "Games", RegisteredGamesPage, { icon: GamesSidebarIcon }),
 ];
 
 function restartRequired(payload: { event: string; properties: { origin_pane: string } }) {
