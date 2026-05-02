@@ -83,13 +83,11 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     });
     ipcMain.handle("getCustomBundle", () => {
         const enabled = getConfig("mods").includes("custom");
-        if (enabled) {
-            return {
-                js: ifExistsRead(path.join(app.getPath("userData"), "custom.js")),
-                css: ifExistsRead(path.join(app.getPath("userData"), "custom.css")),
-                enabled,
-            };
-        }
+        return {
+            js: enabled ? ifExistsRead(path.join(app.getPath("userData"), "custom.js")) : undefined,
+            css: enabled ? ifExistsRead(path.join(app.getPath("userData"), "custom.css")) : undefined,
+            enabled,
+        };
     });
 
     // theming

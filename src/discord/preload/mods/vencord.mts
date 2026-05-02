@@ -3,7 +3,7 @@ import type { ModBundle } from "../../../@types/ModBundle.js";
 async function inject() {
     try {
         await ipcRenderer.invoke("getVencordBundle").then(async (bundle: ModBundle) => {
-            if (bundle.enabled) {
+            if (bundle?.enabled) {
                 await webFrame.executeJavaScript(bundle.js);
                 webFrame.insertCSS(bundle.css!); //NOTE - Vencord requires CSS.
             }
