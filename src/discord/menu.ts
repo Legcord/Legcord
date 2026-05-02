@@ -53,16 +53,9 @@ export function setMenu(): void {
                     click() {
                         mainWindows.forEach((mainWindow) => {
                             mainWindow.show();
-                            void mainWindow.webContents.executeJavaScript(`window.shelter.flux.dispatcher.dispatch({
-                                "type": "USER_SETTINGS_MODAL_OPEN",
-                                "section": "legcord-settings",
-                                "subsection": null,
-                                "openWithoutBackstack": false
-                            })`);
                             void mainWindow.webContents.executeJavaScript(
-                                `window.shelter.flux.dispatcher.dispatch({type: "LAYER_PUSH", component: "USER_SETTINGS"})`,
+                                `window.shelter.flux.dispatcher.dispatch({type: "USER_SETTINGS_MODAL_OPEN"})`,
                             );
-                            // this opens the legcord tab directly in the settings modal
                         });
                     },
                 },
