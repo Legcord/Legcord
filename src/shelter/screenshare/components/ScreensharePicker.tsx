@@ -32,8 +32,9 @@ async function getVirtmic() {
 }
 
 const original = navigator.mediaDevices.getDisplayMedia;
-export async function patchNavigator() {
-    navigator.mediaDevices.getDisplayMedia = async function (opts) {
+export async function patchNavigator(requestAudio = false) {
+    navigator.mediaDevices.getDisplayMedia = async function (opts = {}) {
+        if (requestAudio) opts.audio = true;
         const stream = await original.call(this, opts);
         const video = stream.getVideoTracks()[0];
 
@@ -46,16 +47,20 @@ export async function patchNavigator() {
             height: height,
         };
 
-        video
-            .applyConstraints(stream_constraints)
-            .then(() => console.info("Applied video stream track settings.", stream_constraints))
-            .catch(() => {
-                console.error("Failed to apply video stream track settings.", stream_constraints);
-            });
+        if (video) {
+            video
+                .applyConstraints(stream_constraints)
+                .then(() => {
+                    console.log(`Stream modified -> (${width}x${height}) ${store.fps}FPS`);
+                })
+                .catch((error) => {
+                    console.error("Failed to apply video constraints:", error);
+                });
+        }
 
         const virtmic_id = await getVirtmic();
-        stream.getAudioTracks().forEach((t) => stream.removeTrack(t));
         if (virtmic_id) {
+            stream.getAudioTracks().forEach((t) => stream.removeTrack(t));
             const audio = await navigator.mediaDevices.getUserMedia({
                 audio: {
                     deviceId: {
@@ -94,7 +99,7 @@ export const ScreensharePicker = (props: {
             showToast(t["screenshare-selectSource"], "error");
         }
 
-        patchNavigator();
+        patchNavigator(audio());
 
         window.legcord.screenshare.start(source(), name(), audio());
 
@@ -177,31 +182,29 @@ export const ScreensharePicker = (props: {
                             />
                         </div>
                     </div>
-                    <Show when={window.legcord.platform !== "darwin"}>
-                        <div class={classes.audioRow} style="margin-top: 12px;">
-                            <div class={classes.audioLabel}>
-                                <svg class={classes.audioIcon} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                    <title>Audio</title>
-                                    <path
-                                        d="M11 5L6 9H2v6h4l5 4V5z"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    />
-                                    <path
-                                        d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"
-                                        stroke="currentColor"
-                                        stroke-width="2"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                    />
-                                </svg>
-                                Share Audio
-                            </div>
-                            <Checkbox checked={audio()} onChange={setAudio} />
+                    <div class={classes.audioRow} style="margin-top: 12px;">
+                        <div class={classes.audioLabel}>
+                            <svg class={classes.audioIcon} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <title>Audio</title>
+                                <path
+                                    d="M11 5L6 9H2v6h4l5 4V5z"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                                <path
+                                    d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                            Share Audio
                         </div>
-                    </Show>
+                        <Checkbox checked={audio()} onChange={setAudio} />
+                    </div>
 
                     <Show when={window.legcord.platform === "linux" && props.audioSources !== undefined && audio()}>
                         <Divider mt mb />

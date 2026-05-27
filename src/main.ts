@@ -159,6 +159,9 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     if (process.platform === "darwin") {
         const status = systemPreferences.getMediaAccessStatus("screen");
         console.log(`macOS screenshare permission: ${status}`);
+        enableFeatures.add("MacLoopbackAudioForScreenShare");
+        enableFeatures.add("MacSckSystemAudioLoopbackOverride");
+        enableFeatures.add("MacCatapSystemAudioLoopbackCapture");
     }
     // work around chrome 66 disabling autoplay by default
     app.commandLine.appendSwitch("autoplay-policy", "no-user-gesture-required");

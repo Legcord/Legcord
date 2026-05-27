@@ -17,6 +17,7 @@ export function registerCustomHandler(): void {
                 console.log("WebRTC Capturer detected, using native window picker.");
                 if (sources[0] === undefined) return callback({});
             }
+            ipcMain.removeAllListeners("startScreenshare");
             ipcMain.once("startScreenshare", (_event, id: string, name: string, audio: boolean) => {
                 console.log(`ID: ${id}`);
                 if (id === "none") {
@@ -31,6 +32,7 @@ export function registerCustomHandler(): void {
                     switch (process.platform) {
                         case "win32":
                         case "linux":
+                        case "darwin":
                             options = { video: result };
                             if (audio)
                                 options = {
@@ -48,6 +50,6 @@ export function registerCustomHandler(): void {
                 window.webContents.send("getSources", sources);
             });
         },
-        { useSystemPicker: getConfig("useMacSystemPicker") },
+        { useSystemPicker: false },
     );
 }
