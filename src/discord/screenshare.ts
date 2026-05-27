@@ -50,6 +50,6 @@ export function registerCustomHandler(): void {
                 window.webContents.send("getSources", sources);
             });
         },
-        { useSystemPicker: false },
+        { useSystemPicker: getConfig("useMacSystemPicker") },
     );
 }
