@@ -66,6 +66,6 @@ export function registerCustomHandler(): void {
                 }
             });
         },
-        { useSystemPicker: false },
+        { useSystemPicker: getConfig("useMacSystemPicker") },
     );
 }
