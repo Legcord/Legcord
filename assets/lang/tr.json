@@ -1,1 +1,8 @@
-{}
+{
+    "loading_screen_start": "Legcord başlatılıyor…",
+    "loading_screen_update": "Legcord’un yeni bir versiyonu var. Lütfen son versiyona güncelleyin.",
+    "setup_question1": "Legcord kurulumuna hoş geldiniz",
+    "yes": "Evet",
+    "no": "Hayır",
+    "next": "Sonraki"
+}

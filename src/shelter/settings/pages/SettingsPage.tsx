@@ -20,6 +20,20 @@ const noBundleUpdates = () => {
 };
 
 export function SettingsPage() {
+    if (!settings) {
+        return (
+            <>
+                <Header class={classes.category} tag={HeaderTags.HeadingXL}>
+                    {store.i18n["settings-firstTimeCrash"]}
+                </Header>
+                <p>{store.i18n["settings-firstTimeCrash-desc"]}</p>
+                <br />
+                <Button size={ButtonSizes.MAX} onClick={() => window.legcord.restart()}>
+                    Restart Legcord
+                </Button>
+            </>
+        );
+    }
     return (
         <>
             <Show when={!settings.supportBannerDismissed}>

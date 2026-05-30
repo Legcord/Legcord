@@ -53,16 +53,6 @@ export function createTray() {
             click() {
                 mainWindows.forEach((mainWindow) => {
                     mainWindow.show();
-
-                    void mainWindow.webContents.executeJavaScript(`window.shelter.flux.dispatcher.dispatch({
-                                "type": "USER_SETTINGS_MODAL_OPEN",
-                                "section": "My Account",
-                                "subsection": null,
-                                "openWithoutBackstack": false
-                            })`);
-                    void mainWindow.webContents.executeJavaScript(
-                        `window.shelter.flux.dispatcher.dispatch({type: "LAYER_PUSH", component: "USER_SETTINGS"})`,
-                    );
                 });
             },
         },

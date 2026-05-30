@@ -6,6 +6,7 @@ export type KeybindActions =
     | "navigateForward"
     | "openQuickCss"
     | "pushToTalk"
+    | "openSettings"
     | "runJavascript";
 export interface Keybind {
     accelerator: Electron.Accelerator;

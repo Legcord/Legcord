@@ -2,7 +2,7 @@ import { BrowserWindow, Menu, type MenuItemConstructorOptions, app } from "elect
 import type { Keybind, KeybindActions } from "../@types/keybind.js";
 import { getConfig } from "../common/config.js";
 import { setForceQuit } from "../common/forceQuit.js";
-import { runAction } from "../common/keybindActions.js";
+import { openSettings, runAction } from "../common/keybindActions.js";
 import { getLang } from "../common/lang.js";
 import { mainWindows } from "./window.js";
 
@@ -15,6 +15,7 @@ const keybindActionLabels: Record<KeybindActions, string> = {
     navigateBack: "keybind-navigateBack",
     runJavascript: "keybind-runJavascript",
     openQuickCss: "keybind-openQuickCss",
+    openSettings: "keybind-openSettings",
 };
 
 export function setMenu(): void {
@@ -53,16 +54,7 @@ export function setMenu(): void {
                     click() {
                         mainWindows.forEach((mainWindow) => {
                             mainWindow.show();
-                            void mainWindow.webContents.executeJavaScript(`window.shelter.flux.dispatcher.dispatch({
-                                "type": "USER_SETTINGS_MODAL_OPEN",
-                                "section": "legcord-settings",
-                                "subsection": null,
-                                "openWithoutBackstack": false
-                            })`);
-                            void mainWindow.webContents.executeJavaScript(
-                                `window.shelter.flux.dispatcher.dispatch({type: "LAYER_PUSH", component: "USER_SETTINGS"})`,
-                            );
-                            // this opens the legcord tab directly in the settings modal
+                            openSettings();
                         });
                     },
                 },

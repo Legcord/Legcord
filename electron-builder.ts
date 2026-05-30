@@ -1,10 +1,12 @@
 import type { Configuration } from "electron-builder";
 
+import { applyAppImageSandboxFix } from "./scripts/build/sandboxFix.mjs";
+
 export const config: Configuration = {
     appId: "app.legcord.Legcord",
     productName: "Legcord",
     artifactName: "Legcord-${version}-${os}-${arch}.${ext}",
-    beforePack: "./scripts/build/sandboxFix.cjs",
+    beforePack: applyAppImageSandboxFix,
     protocols: [
         {
             name: "Discord",

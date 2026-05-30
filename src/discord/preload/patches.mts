@@ -35,9 +35,13 @@ const version = ipcRenderer.sendSync("displayVersion") as string;
 // releases the hardware, and falls back to the original behavior if "exact" fails.
 // Injected into the page context because contextIsolation is enabled.
 // See: https://github.com/electron/electron/issues/44502
+// Stopping prior audio streams on every new getUserMedia breaks Discord on Windows/Linux
+// (multiple object-shaped audio requests); keep that behavior only on darwin.
 {
+    const stopPrevAudioStreams = process.platform === "darwin";
     const cameraFixScript = document.createElement("script");
     cameraFixScript.textContent = `(function() {
+    var legcordStopPrevAudioStreams = ${stopPrevAudioStreams};
     var _origGUM = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
     var _activeVideoStreams = [];
     var _activeAudioStreams = [];
@@ -58,16 +62,16 @@ const version = ipcRenderer.sendSync("displayVersion") as string;
     function trackStream(stream) {
         var ref = new WeakRef(stream);
         if (stream.getVideoTracks().length > 0) _activeVideoStreams.push(ref);
-        if (stream.getAudioTracks().length > 0) _activeAudioStreams.push(ref);
+        if (legcordStopPrevAudioStreams && stream.getAudioTracks().length > 0) _activeAudioStreams.push(ref);
     }
 
     navigator.mediaDevices.getUserMedia = async function(constraints) {
         var hasVideo = constraints && constraints.video && typeof constraints.video !== "boolean";
         var hasAudio = constraints && constraints.audio && typeof constraints.audio !== "boolean";
 
-        // Release previous hardware when new request comes in for the same kind
+        // Release previous hardware when new request comes in for the same kind (audio: darwin only)
         if (hasVideo && _activeVideoStreams.length > 0) stopTrackedStreams(_activeVideoStreams, "video");
-        if (hasAudio && _activeAudioStreams.length > 0) stopTrackedStreams(_activeAudioStreams, "audio");
+        if (legcordStopPrevAudioStreams && hasAudio && _activeAudioStreams.length > 0) stopTrackedStreams(_activeAudioStreams, "audio");
 
         var hasStringVideoDeviceId = hasVideo && typeof constraints.video.deviceId === "string";
         if (!hasStringVideoDeviceId) {

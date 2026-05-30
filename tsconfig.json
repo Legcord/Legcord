@@ -4,16 +4,17 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "strict": true,
-        "module": "NodeNext",
-        "moduleResolution": "NodeNext",
+        "module": "esnext",
+        "moduleResolution": "bundler",
         "rootDir": "src",
         "lib": ["ESNext", "DOM", "DOM.Iterable"],
         "target": "ESNext",
         "jsx": "preserve",
         "jsxImportSource": "solid-js",
         "sourceMap": true,
-        "noEmit": true
+        "noEmit": true,
+        "allowImportingTsExtensions": true
     },
-    "include": ["src/**/*"],
+    "include": ["src/**/*", "scripts/**/*"],
     "exclude": ["node_modules", "dist"]
 }

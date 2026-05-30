@@ -1,0 +1,9 @@
+allowBuilds:
+  "@parcel/watcher": true
+  "@vencord/venmic": true
+  electron-winstaller: true
+  esbuild: true
+  koffi: true
+
+overrides:
+  yauzl: "^3.3.1" # Electron still can't get their shit together https://github.com/electron/electron/issues/51619

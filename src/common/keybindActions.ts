@@ -2,6 +2,7 @@ import path from "node:path";
 import { app, shell } from "electron";
 import type { Keybind } from "../@types/keybind.js";
 import { mainWindows } from "../discord/window.js";
+import { navigateTo } from "./dom.js";
 let isAudioEngineEnabled = false;
 
 export function runAction(keybind: Keybind) {
@@ -26,6 +27,9 @@ export function runAction(keybind: Keybind) {
             break;
         case "openQuickCss":
             openQuickCss();
+            break;
+        case "openSettings":
+            openSettings();
             break;
         case "runJavascript":
             if (!keybind.js) break;
@@ -120,5 +124,12 @@ function openQuickCss() {
 function runJavascript(js: string) {
     mainWindows.forEach((window) => {
         window.webContents.executeJavaScript(js);
+    });
+}
+
+export function openSettings() {
+    // won't load the correct page anyway (will just do /account) cause shelter doesn't hijack discord's routing
+    mainWindows.forEach((window) => {
+        navigateTo(window, "/settings/legcord-settings");
     });
 }

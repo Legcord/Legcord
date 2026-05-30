@@ -17,7 +17,7 @@ if (process.platform === "darwin") {
 async function inject() {
     try {
         await ipcRenderer.invoke("getShelterBundle").then(async (bundle: ModBundle) => {
-            if (bundle.enabled) {
+            if (bundle?.enabled) {
                 await webFrame.executeJavaScript(`(()=>{
                 const SHELTER_INJECTOR_PLUGINS = ${JSON.stringify(requiredPlugins)};
                 ${bundle.js}

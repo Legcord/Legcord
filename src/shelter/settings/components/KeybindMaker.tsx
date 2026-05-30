@@ -136,6 +136,7 @@ export const KeybindMaker = (props: { close: () => void }) => {
                         { label: t["keybind-leaveCall"], value: "leaveCall" },
                         { label: t["keybind-navigateForward"], value: "navigateForward" },
                         { label: t["keybind-navigateBack"], value: "navigateBack" },
+                        { label: t["keybind-openSettings"], value: "openSettings" },
                         { label: t["keybind-runJavascript"], value: "runJavascript" },
                         { label: t["keybind-openQuickCss"], value: "openQuickCss" },
                     ]}

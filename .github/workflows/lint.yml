@@ -7,10 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Setup Biome
         uses: biomejs/setup-biome@v2
-        with:
-          version: 1.9.4
       - name: Run Biome
         run: biome ci . --reporter=github

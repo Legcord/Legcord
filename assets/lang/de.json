@@ -28,7 +28,7 @@
     "settings-transparency-modern": "Modern",
     "settings-theme-transparent": "Transparent",
     "settings-transparency-tahoe-warning": "Transparenz kann zu großem Lags auf MacOS 26 Tahoe führen.",
-    "settings-popoutPiP": "Popup-Fenster immer im Vordergrund anzeigen",
+    "settings-popoutPiP": "Anruf Popup-Fenster immer im Vordergrund anzeigen",
     "settings-popoutPiP-desc": "Wenn diese Option aktiviert ist, wird das Anruf-Popup im Modus „Immer im Vordergrund“ angezeigt.",
     "settings-venmic-workaround": "Umgehungslösung",
     "settings-venmic-workaround-desc": "Aktivieren oder deaktivieren Sie die Problemumgehung für ein Problem, das dazu führt, dass das Mikrofon anstelle des korrekten Audiosignals geteilt wird.",
@@ -229,5 +229,14 @@
     "games-removeConfirmHeader": "Spiel entfernen?",
     "games-noExecutables": "Keine ausführbaren Dateien",
     "games-lastDetected": "Zuletzt erkannte Spiele",
-    "games-removeFromBlacklist": "Entfernen"
+    "games-removeFromBlacklist": "Entfernen",
+    "settings-material": "Fenster Material",
+    "settings-material-acrylic": "Acryl",
+    "settings-material-none": "Keine",
+    "settings-csp-strict": "Strikt",
+    "settings-csp-none": "Keine",
+    "settings-csp-vanilla": "Vanilla",
+    "settings-firstTimeCrash": "Wir richten Dinge für sie ein!",
+    "settings-automaticClientUpdates": "Automatische client updates",
+    "settings-automaticClientUpdates-desc": "Deaktiviert automatische Legcord Updates"
 }
