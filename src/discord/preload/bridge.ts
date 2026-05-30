@@ -131,28 +131,15 @@ contextBridge.exposeInMainWorld("legcord", {
         reload: (id: string) => ipcRenderer.invoke("plugins:reload", id) as Promise<{ ok: boolean }>,
         openFolder: () => ipcRenderer.send("openRuntimePluginsFolder"),
     },
-    fs: {
-        /**
-         * Write a file in this plugin's scoped storage (e.g. "cache/deleted-messages.json").
-         * Only works when the user has enabled "Extended plugin abilities" in Legcord settings.
-         * @param pluginId - Your plugin id (alphanumeric, dash, underscore only)
-         * @param relativePath - Path relative to plugin storage (no ".." allowed)
-         * @returns { ok: true } or { ok: false, error: "EXTENSION_DISABLED" | "INVALID_PATH" | ... }
-         */
-        writeFile: (pluginId: string, relativePath: string, data: string) =>
-            ipcRenderer.invoke("pluginWriteFile", pluginId, relativePath, data) as Promise<
-                { ok: true } | { ok: false; error: string }
-            >,
-        /**
-         * Read a file from this plugin's scoped storage.
-         * Only works when the user has enabled "Extended plugin abilities" in Legcord settings.
-         * @param pluginId - Your plugin id
-         * @param relativePath - Path relative to plugin storage
-         * @returns { ok: true, data: string } or { ok: false, error: "EXTENSION_DISABLED" | "NOT_FOUND" | ... }
-         */
-        readFile: (pluginId: string, relativePath: string) =>
-            ipcRenderer.invoke("pluginReadFile", pluginId, relativePath) as Promise<
-                { ok: true; data: string } | { ok: false; error: string }
-            >,
-    },
 } as unknown as LegcordWindow);
+
+contextBridge.exposeInMainWorld("__legcordPluginRuntime", {
+    writeFile: (storageToken: string, relativePath: string, data: string) =>
+        ipcRenderer.invoke("pluginWriteFile", storageToken, relativePath, data) as Promise<
+            { ok: true } | { ok: false; error: string }
+        >,
+    readFile: (storageToken: string, relativePath: string) =>
+        ipcRenderer.invoke("pluginReadFile", storageToken, relativePath) as Promise<
+            { ok: true; data: string } | { ok: false; error: string }
+        >,
+});
