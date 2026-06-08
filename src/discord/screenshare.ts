@@ -9,6 +9,7 @@ export function registerCustomHandler(): void {
             let sources = await desktopCapturer
                 .getSources({
                     types: ["window", "screen"],
+                    thumbnailSize: { width: 150, height: 150 },
                 })
                 .catch((err) => console.error(err));
 
@@ -25,6 +26,7 @@ export function registerCustomHandler(): void {
                 const updatedSources = await desktopCapturer
                     .getSources({
                         types: ["window", "screen"],
+                        thumbnailSize: { width: 150, height: 150 },
                     })
                     .catch((err) => console.error(err));
 
@@ -34,7 +36,7 @@ export function registerCustomHandler(): void {
                         window.webContents.send("updateSources", updatedSources);
                     });
                 }
-            }, 1500);
+            }, 1000);
             ipcMain.removeAllListeners("startScreenshare");
             ipcMain.once("startScreenshare", (_event, id: string, name: string, audio: boolean) => {
                 clearInterval(interval);

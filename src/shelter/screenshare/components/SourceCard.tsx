@@ -1,5 +1,5 @@
 import type { Accessor } from "solid-js";
-import { createSignal, onCleanup, onMount, Show } from "solid-js";
+import { Show } from "solid-js";
 import classes from "./SourceCard.module.css";
 
 export interface IPCSources {
@@ -13,54 +13,16 @@ interface SourceCardProps {
     selected_name: Accessor<string>;
 }
 
-export const SourceCard = ({ selected_name, source, onSelect }: SourceCardProps) => {
-    const isSelected = () => selected_name() === source.name;
-    let videoRef: HTMLVideoElement | undefined;
-    const [hasError, setHasError] = createSignal(false);
-    let stream: MediaStream | null = null;
-
-    onMount(async () => {
-        try {
-            stream = await navigator.mediaDevices.getUserMedia({
-                audio: false,
-                video: {
-                    mandatory: {
-                        chromeMediaSource: "desktop",
-                        chromeMediaSourceId: source.id,
-                        minWidth: 150,
-                        maxWidth: 400,
-                        minHeight: 150,
-                        maxHeight: 400,
-                        maxFrameRate: 5,
-                    },
-                } as unknown as MediaTrackConstraints,
-            });
-            if (videoRef) {
-                videoRef.srcObject = stream;
-            }
-        } catch (err) {
-            console.error("Failed to get live preview for", source.name, err);
-            setHasError(true);
-        }
-    });
-
-    onCleanup(() => {
-        if (stream) {
-            stream.getTracks().forEach((track) => {
-                track.stop();
-            });
-            stream = null;
-        }
-    });
-
+export const SourceCard = (props: SourceCardProps) => {
+    const isSelected = () => props.selected_name() === props.source.name;
     return (
         // biome-ignore lint/a11y/useSemanticElements: custom styling makes using button difficult
         <div
             role="button"
             tabIndex={0}
-            onClick={() => onSelect(source.id, source.name)}
+            onClick={() => props.onSelect(props.source.id, props.source.name)}
             onKeyUp={(e) => {
-                if (e.key === "Enter") onSelect(source.id, source.name);
+                if (e.key === "Enter") props.onSelect(props.source.id, props.source.name);
             }}
             class={`${classes.card}${isSelected() ? ` ${classes.cardSelected}` : ""}`}
         >
@@ -79,26 +41,13 @@ export const SourceCard = ({ selected_name, source, onSelect }: SourceCardProps)
                 </div>
             </Show>
             <div class={classes.thumbnailWrapper}>
-                <Show
-                    when={!hasError()}
-                    fallback={
-                        <img
-                            src={source.thumbnail.toDataURL()}
-                            alt={source.name}
-                            class={isSelected() ? classes.thumbnailSelected : classes.thumbnailUnselected}
-                        />
-                    }
-                >
-                    <video
-                        ref={videoRef}
-                        autoplay
-                        muted
-                        class={isSelected() ? classes.thumbnailSelected : classes.thumbnailUnselected}
-                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px;"
-                    />
-                </Show>
+                <img
+                    src={props.source.thumbnail.toDataURL()}
+                    alt={props.source.name}
+                    class={isSelected() ? classes.thumbnailSelected : classes.thumbnailUnselected}
+                />
             </div>
-            <p class={classes.name}>{source.name}</p>
+            <p class={classes.name}>{props.source.name}</p>
         </div>
     );
 };
