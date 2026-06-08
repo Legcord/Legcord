@@ -70,19 +70,49 @@ const version = ipcRenderer.sendSync("displayVersion") as string;
         var hasVideo = constraints && constraints.video && typeof constraints.video !== "boolean";
         var hasAudio = constraints && constraints.audio && typeof constraints.audio !== "boolean";
 
+        var requestedVideoId = null;
+        if (hasVideo && constraints.video.deviceId) {
+            if (typeof constraints.video.deviceId === "string") {
+                requestedVideoId = constraints.video.deviceId;
+            } else if (typeof constraints.video.deviceId === "object") {
+                requestedVideoId = constraints.video.deviceId.ideal || constraints.video.deviceId.exact;
+            }
+        }
+
         // Release previous hardware when new request comes in for the same kind (audio: darwin only)
-        if (hasVideo && _activeVideoStreams.length > 0) stopTrackedStreams(_activeVideoStreams, "video");
+        if (hasVideo && _activeVideoStreams.length > 0) {
+            var shouldStop = true;
+            if (requestedVideoId) {
+                var activeIds = [];
+                for (var i = 0; i < _activeVideoStreams.length; i++) {
+                    var s = _activeVideoStreams[i].deref();
+                    if (s) {
+                        var tracks = s.getVideoTracks();
+                        for (var j = 0; j < tracks.length; j++) {
+                            var settings = tracks[j].getSettings && tracks[j].getSettings();
+                            if (settings && settings.deviceId) activeIds.push(settings.deviceId);
+                        }
+                    }
+                }
+                if (activeIds.includes(requestedVideoId)) {
+                    shouldStop = false;
+                }
+            }
+            if (shouldStop) {
+                stopTrackedStreams(_activeVideoStreams, "video");
+            }
+        }
+
         if (legcordStopPrevAudioStreams && hasAudio && _activeAudioStreams.length > 0) stopTrackedStreams(_activeAudioStreams, "audio");
 
-        var hasStringVideoDeviceId = hasVideo && typeof constraints.video.deviceId === "string";
-        if (!hasStringVideoDeviceId) {
+        if (!requestedVideoId) {
             var stream = await _origGUM(constraints);
             trackStream(stream);
             return stream;
         }
 
-        // Promote video "ideal" (plain string) to "exact" to force device selection
-        var requestedId = constraints.video.deviceId;
+        // Promote video "ideal" to "exact" to force device selection
+        var requestedId = requestedVideoId;
         var modified = Object.assign({}, constraints);
         modified.video = Object.assign({}, constraints.video, {
             deviceId: { exact: requestedId }

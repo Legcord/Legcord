@@ -6,7 +6,7 @@ export function registerCustomHandler(): void {
     session.defaultSession.setDisplayMediaRequestHandler(
         async (request, callback) => {
             console.log(request);
-            const sources = await desktopCapturer
+            let sources = await desktopCapturer
                 .getSources({
                     types: ["window", "screen"],
                 })
@@ -17,8 +17,29 @@ export function registerCustomHandler(): void {
                 console.log("WebRTC Capturer detected, using native window picker.");
                 if (sources[0] === undefined) return callback({});
             }
+
+            mainWindows.every((window) => {
+                window.webContents.send("getSources", sources);
+            });
+
+            const interval = setInterval(async () => {
+                const updatedSources = await desktopCapturer
+                    .getSources({
+                        types: ["window", "screen"],
+                    })
+                    .catch((err) => console.error(err));
+
+                if (updatedSources) {
+                    sources = updatedSources as Electron.DesktopCapturerSource[];
+                    mainWindows.every((window) => {
+                        window.webContents.send("updateSources", updatedSources);
+                    });
+                }
+            }, 1500);
+
             ipcMain.removeAllListeners("startScreenshare");
             ipcMain.once("startScreenshare", (_event, id: string, name: string, audio: boolean) => {
+                clearInterval(interval);
                 console.log(`ID: ${id}`);
                 if (id === "none") {
                     try {
@@ -28,7 +49,7 @@ export function registerCustomHandler(): void {
                     console.log(`Audio status: ${audio}`);
                     const result = { id, name };
                     console.log(result);
-                    let options: Streams = { video: sources[0] };
+                    let options: Streams = { video: sources?.[0] as Electron.DesktopCapturerSource };
                     switch (process.platform) {
                         case "win32":
                         case "linux":
@@ -45,9 +66,6 @@ export function registerCustomHandler(): void {
                             callback({ video: result });
                     }
                 }
-            });
-            mainWindows.every((window) => {
-                window.webContents.send("getSources", sources);
             });
         },
         { useSystemPicker: getConfig("useMacSystemPicker") },

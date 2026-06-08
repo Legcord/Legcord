@@ -64,6 +64,12 @@ export interface LegcordWindow {
         getSources: (
             callback: (event: Electron.IpcRendererEvent, sources: Array<IPCSources>, ...args: unknown[]) => void,
         ) => void;
+        onUpdateSources: (
+            callback: (event: Electron.IpcRendererEvent, sources: Array<IPCSources>, ...args: unknown[]) => void,
+        ) => void;
+        removeUpdateSourcesListener: (
+            callback: (event: Electron.IpcRendererEvent, sources: Array<IPCSources>, ...args: unknown[]) => void,
+        ) => void;
         start: (id: string, name: string, audio: boolean) => void;
         venmicStart: (include: Node[]) => Promise<boolean>;
         venmicSystemStart: (exclude: Node[]) => Promise<boolean>;
