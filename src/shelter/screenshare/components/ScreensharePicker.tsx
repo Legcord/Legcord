@@ -1,5 +1,5 @@
 import type { Node } from "@vencord/venmic";
-import { createSignal, For, onCleanup, Show } from "solid-js";
+import { createSignal, For, onCleanup, onMount, Show } from "solid-js";
 import { Dropdown } from "../../settings/components/Dropdown.jsx";
 import { SegmentedControl } from "../../settings/components/SegmentedControl.jsx";
 import classes from "./ScreensharePicker.module.css";
@@ -60,7 +60,9 @@ export async function patchNavigator(requestAudio = false) {
 
         const virtmic_id = await getVirtmic();
         if (virtmic_id) {
-            stream.getAudioTracks().forEach((t) => stream.removeTrack(t));
+            stream.getAudioTracks().forEach((t) => {
+                stream.removeTrack(t);
+            });
             const audio = await navigator.mediaDevices.getUserMedia({
                 audio: {
                     deviceId: {
@@ -72,7 +74,9 @@ export async function patchNavigator(requestAudio = false) {
                     channelCount: 2,
                 },
             });
-            audio.getAudioTracks().forEach((t) => stream.addTrack(t));
+            audio.getAudioTracks().forEach((t) => {
+                stream.addTrack(t);
+            });
         }
 
         return stream;
@@ -88,9 +92,21 @@ export const ScreensharePicker = (props: {
     const [audioSource, setAudioSource] = createSignal<Node | undefined>(undefined);
     const [name, setName] = createSignal("nothing...");
     const [audio, setAudio] = createSignal(false);
-    if (props.sources.length === 1) {
-        setSource(props.sources[0].id);
-        setName(props.sources[0].name);
+    const [liveSources, setLiveSources] = createSignal(props.sources);
+
+    onMount(() => {
+        const updateHandler = (_event: Electron.IpcRendererEvent, newSources: IPCSources[]) => {
+            setLiveSources(newSources);
+        };
+        window.legcord.screenshare.onUpdateSources(updateHandler);
+        onCleanup(() => {
+            window.legcord.screenshare.removeUpdateSourcesListener(updateHandler);
+        });
+    });
+
+    if (liveSources().length === 1) {
+        setSource(liveSources()[0].id);
+        setName(liveSources()[0].name);
     }
 
     const t = store.i18n;
@@ -122,7 +138,7 @@ export const ScreensharePicker = (props: {
             <ModalHeader close={closeAndSave}>{t["screenshare-title"]}</ModalHeader>
             <ModalBody>
                 <div class={classes.sources}>
-                    <For each={props.sources}>
+                    <For each={liveSources()}>
                         {(source: IPCSources) => (
                             <SourceCard
                                 selected_name={name}

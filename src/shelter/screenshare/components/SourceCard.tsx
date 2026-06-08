@@ -5,7 +5,7 @@ import classes from "./SourceCard.module.css";
 export interface IPCSources {
     id: string;
     name: string;
-    thumbnail: HTMLCanvasElement;
+    thumbnail: string;
 }
 interface SourceCardProps {
     source: IPCSources;
@@ -13,12 +13,17 @@ interface SourceCardProps {
     selected_name: Accessor<string>;
 }
 
-export const SourceCard = ({ selected_name, source, onSelect }: SourceCardProps) => {
-    const isSelected = () => selected_name() === source.name;
+export const SourceCard = (props: SourceCardProps) => {
+    const isSelected = () => props.selected_name() === props.source.name;
     return (
+        // biome-ignore lint/a11y/useSemanticElements: custom styling makes using button difficult
         <div
-            onClick={() => onSelect(source.id, source.name)}
-            onKeyUp={() => {}}
+            role="button"
+            tabIndex={0}
+            onClick={() => props.onSelect(props.source.id, props.source.name)}
+            onKeyUp={(e) => {
+                if (e.key === "Enter") props.onSelect(props.source.id, props.source.name);
+            }}
             class={`${classes.card}${isSelected() ? ` ${classes.cardSelected}` : ""}`}
         >
             <Show when={isSelected()}>
@@ -37,12 +42,12 @@ export const SourceCard = ({ selected_name, source, onSelect }: SourceCardProps)
             </Show>
             <div class={classes.thumbnailWrapper}>
                 <img
-                    src={source.thumbnail.toDataURL()}
-                    alt={source.name}
+                    src={props.source.thumbnail}
+                    alt={props.source.name}
                     class={isSelected() ? classes.thumbnailSelected : classes.thumbnailUnselected}
                 />
             </div>
-            <p class={classes.name}>{source.name}</p>
+            <p class={classes.name}>{props.source.name}</p>
         </div>
     );
 };

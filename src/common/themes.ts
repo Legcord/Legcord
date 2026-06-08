@@ -178,7 +178,7 @@ export function setThemeEnabled(id: string, enabled: boolean) {
     }
 
     if (enabled !== manifest.enabled) {
-        mainWindows.every((passedWindow) => {
+        mainWindows.forEach((passedWindow) => {
             if (enabled) {
                 passedWindow.webContents.send(
                     "addTheme",

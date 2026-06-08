@@ -74,6 +74,16 @@ contextBridge.exposeInMainWorld("legcord", {
         ) => {
             ipcRenderer.on("getSources", callback);
         },
+        onUpdateSources: (
+            callback: (event: Electron.IpcRendererEvent, sources: IPCSources[], ...args: unknown[]) => void,
+        ) => {
+            ipcRenderer.on("updateSources", callback);
+        },
+        removeUpdateSourcesListener: (
+            callback: (event: Electron.IpcRendererEvent, sources: IPCSources[], ...args: unknown[]) => void,
+        ) => {
+            ipcRenderer.removeListener("updateSources", callback);
+        },
         start: (source: string, name: string, audio: boolean) =>
             ipcRenderer.send("startScreenshare", source, name, audio),
         venmicStart: async (include: Node[]) =>

@@ -263,7 +263,24 @@ export function SettingsPage() {
                 <SwitchItem
                     note={store.i18n["settings-useMacSystemPicker-desc"]}
                     value={settings.useMacSystemPicker}
-                    onChange={(e: boolean) => setConfig("useMacSystemPicker", e)}
+                    onChange={(e: boolean) => {
+                        if (e === true) {
+                            shelter.ui
+                                .openConfirmationModal({
+                                    header: () => "Enable macOS Native Picker?",
+                                    body: () =>
+                                        "The native macOS system picker provides hardware-accelerated capture and full system audio looping, but it requires explicit system permissions and lacks Discord's built-in visual UI preview.\n\nDisabling this will use the custom Legcord picker, which provides live thumbnail previews but lacks native system audio routing.",
+                                    confirmText: "Enable Native Picker",
+                                    cancelText: "Keep Custom Picker",
+                                })
+                                .then(
+                                    () => setConfig("useMacSystemPicker", true),
+                                    () => console.log("Cancelled"),
+                                );
+                        } else {
+                            setConfig("useMacSystemPicker", false);
+                        }
+                    }}
                 >
                     {store.i18n["settings-useMacSystemPicker"]}
                 </SwitchItem>

@@ -49,7 +49,7 @@ const defaults: Settings = {
     disableAutogain: false,
     autoHideMenuBar: true,
     blockPowerSavingInVoiceChat: false,
-    useMacSystemPicker: true,
+    useMacSystemPicker: false,
     mobileMode: false,
     tray: "dynamic",
     doneSetup: false,

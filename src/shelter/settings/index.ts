@@ -61,6 +61,8 @@ export function onLoad() {
     dispatcher.subscribe("TRACK", restartRequired);
 }
 export function onUnload() {
-    settingsPages.forEach((e) => e());
+    settingsPages.forEach((e) => {
+        e();
+    });
     dispatcher.unsubscribe("TRACK", restartRequired);
 }

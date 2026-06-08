@@ -5,6 +5,7 @@ import { applyAppImageSandboxFix } from "./scripts/build/sandboxFix.mjs";
 export const config: Configuration = {
     appId: "app.legcord.Legcord",
     productName: "Legcord",
+    // biome-ignore lint/suspicious/noTemplateCurlyInString: electron-builder uses macro variables
     artifactName: "Legcord-${version}-${os}-${arch}.${ext}",
     beforePack: applyAppImageSandboxFix,
     protocols: [
