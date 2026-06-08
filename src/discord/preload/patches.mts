@@ -190,7 +190,9 @@ async function load() {
                         noiseSuppression: false,
                     },
                 });
-                audio.getAudioTracks().forEach((t) => stream.addTrack(t));
+                audio.getAudioTracks().forEach((t) => {
+                    stream.addTrack(t);
+                });
             }
 
             return stream;
