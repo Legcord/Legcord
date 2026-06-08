@@ -5,7 +5,7 @@ import { applyAppImageSandboxFix } from "./scripts/build/sandboxFix.mjs";
 export const config: Configuration = {
     appId: "app.legcord.Legcord",
     productName: "Legcord",
-    artifactName: "Legcord-${version}-${os}-${arch}.${ext}",
+    artifactName: `Legcord-${version}-${os}-${arch}.${ext}`,
     beforePack: applyAppImageSandboxFix,
     protocols: [
         {

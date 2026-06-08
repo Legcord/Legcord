@@ -15,12 +15,11 @@
     background-color: var(--input-background-default);
     border: 1px solid var(--input-border-default);
     border-radius: var(--radius-sm);
-    color: var(--input-text-default);
     transition: border-color 0.1s ease;
     box-sizing: border-box;
     min-height: var(--control-input-height-md);
 
-    &::hover {
+    &:hover {
         border-color: var(--input-border-hover);
         transition: border-color 0.1s ease;
     }

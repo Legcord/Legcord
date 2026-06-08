@@ -32,15 +32,24 @@ export const Dropdown = (props: {
     const text = createMemo(() => props.options.find((o) => o.value === props.value)?.label ?? props.value);
 
     return (
+        // biome-ignore lint/a11y/useSemanticElements: Custom dropdown element
         <div
             ref={container}
             class={`${classes.container} ${props.class ?? ""}`.trim()}
-            // biome-ignore lint/a11y/useSemanticElements: FIX-ME
             role="button"
-            tabIndex="0"
+            tabIndex={0}
+            onKeyDown={() => {}}
             style={props.styles?.container}
         >
-            <div class={classes.valuewrapper} onClick={() => set(!open())} style={props.styles?.valuewrapper}>
+            {/* biome-ignore lint/a11y/useSemanticElements: Custom dropdown element */}
+            <div
+                role="button"
+                tabIndex={0}
+                onKeyDown={() => {}}
+                class={classes.valuewrapper}
+                onClick={() => set(!open())}
+                style={props.styles?.valuewrapper}
+            >
                 <div class={classes.value} data-text-variant="text-md/medium" style={props.styles?.value}>
                     {text()}
                 </div>

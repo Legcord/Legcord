@@ -32,7 +32,7 @@ if (ipcRenderer.sendSync("setup-getOS") !== "darwin") {
 declare global {
     interface Window {
         setup: {
-            // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+            // biome-ignore lint/suspicious/noExplicitAny: required for IPC
             saveSettings: (settings: any) => void;
             restart: () => void;
             os: string;

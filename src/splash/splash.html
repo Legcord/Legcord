@@ -19,9 +19,10 @@
         <div class="container">
             <video autoplay loop class="logo" id="splashscreen-legcord">
                 <source src="legcord://assets/Loading.webm" type="video/webm" />
+                <track kind="captions" src="legcord://assets/empty.vtt" />
             </video>
             <p id="text-splashscreen"></p>
-            <button id="ignore">Start anyway</button>
+            <button type="button" id="ignore">Start anyway</button>
         </div>
     </body>
     <script>
@@ -44,7 +45,7 @@
                     const data = await response.json();
                     const remoteVersion = data.version.replace(/\./g, ""); // easy to compare
                     if (remoteVersion > window.internal.version.replace(/\./g, "")) {
-                        var elem = document.createElement("img");
+                        const elem = document.createElement("img");
                         elem.classList.add("logo");
                         elem.src = "legcord://assets/Update.webp";
                         document.body.prepend(elem);
@@ -55,7 +56,7 @@
                     }
                 }
 
-                function check() {
+                const check = () => {
                     if (internal.installState === "installing") {
                         text.innerHTML = "Installing mods";
                     } else if (internal.installState === "done") {
