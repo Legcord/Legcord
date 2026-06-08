@@ -1,5 +1,5 @@
 import type { Node } from "@vencord/venmic";
-import { For, Show, createSignal, onCleanup, onMount } from "solid-js";
+import { createSignal, For, onCleanup, onMount, Show } from "solid-js";
 import { Dropdown } from "../../settings/components/Dropdown.jsx";
 import { SegmentedControl } from "../../settings/components/SegmentedControl.jsx";
 import classes from "./ScreensharePicker.module.css";
@@ -60,7 +60,9 @@ export async function patchNavigator(requestAudio = false) {
 
         const virtmic_id = await getVirtmic();
         if (virtmic_id) {
-            stream.getAudioTracks().forEach((t) => stream.removeTrack(t));
+            stream.getAudioTracks().forEach((t) => {
+                stream.removeTrack(t);
+            });
             const audio = await navigator.mediaDevices.getUserMedia({
                 audio: {
                     deviceId: {
@@ -72,7 +74,9 @@ export async function patchNavigator(requestAudio = false) {
                     channelCount: 2,
                 },
             });
-            audio.getAudioTracks().forEach((t) => stream.addTrack(t));
+            audio.getAudioTracks().forEach((t) => {
+                stream.addTrack(t);
+            });
         }
 
         return stream;

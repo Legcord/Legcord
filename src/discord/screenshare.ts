@@ -18,7 +18,7 @@ export function registerCustomHandler(): void {
                 if (sources[0] === undefined) return callback({});
             }
 
-            mainWindows.every((window) => {
+            mainWindows.forEach((window) => {
                 window.webContents.send("getSources", sources);
             });
 
@@ -31,7 +31,7 @@ export function registerCustomHandler(): void {
 
                 if (updatedSources) {
                     sources = updatedSources as Electron.DesktopCapturerSource[];
-                    mainWindows.every((window) => {
+                    mainWindows.forEach((window) => {
                         window.webContents.send("updateSources", updatedSources);
                     });
                 }
