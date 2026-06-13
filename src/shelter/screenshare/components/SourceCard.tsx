@@ -16,9 +16,9 @@ interface SourceCardProps {
 export const SourceCard = ({ selected_name, source, onSelect }: SourceCardProps) => {
     const isSelected = () => selected_name() === source.name;
     return (
-        <div
+        <button
+            type="button"
             onClick={() => onSelect(source.id, source.name)}
-            onKeyUp={() => {}}
             class={`${classes.card}${isSelected() ? ` ${classes.cardSelected}` : ""}`}
         >
             <Show when={isSelected()}>
@@ -43,6 +43,6 @@ export const SourceCard = ({ selected_name, source, onSelect }: SourceCardProps)
                 />
             </div>
             <p class={classes.name}>{source.name}</p>
-        </div>
+        </button>
     );
 };

@@ -32,15 +32,13 @@ export const Dropdown = (props: {
     const text = createMemo(() => props.options.find((o) => o.value === props.value)?.label ?? props.value);
 
     return (
-        <div
-            ref={container}
-            class={`${classes.container} ${props.class ?? ""}`.trim()}
-            // biome-ignore lint/a11y/useSemanticElements: FIX-ME
-            role="button"
-            tabIndex="0"
-            style={props.styles?.container}
-        >
-            <div class={classes.valuewrapper} onClick={() => set(!open())} style={props.styles?.valuewrapper}>
+        <div ref={container} class={`${classes.container} ${props.class ?? ""}`.trim()} style={props.styles?.container}>
+            <button
+                type="button"
+                class={classes.valuewrapper}
+                onClick={() => set(!open())}
+                style={props.styles?.valuewrapper}
+            >
                 <div class={classes.value} data-text-variant="text-md/medium" style={props.styles?.value}>
                     {text()}
                 </div>
@@ -60,7 +58,7 @@ export const Dropdown = (props: {
                         />
                     </svg>
                 </div>
-            </div>
+            </button>
             {open() && (
                 <div
                     class={classes.list}

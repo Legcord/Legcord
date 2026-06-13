@@ -17,16 +17,33 @@
 
     <body>
         <div class="container">
+            <!-- biome-ignore lint/a11y/useMediaCaption: silent logo animation, no audio -->
             <video autoplay loop class="logo" id="splashscreen-legcord">
                 <source src="legcord://assets/Loading.webm" type="video/webm" />
             </video>
             <p id="text-splashscreen"></p>
-            <button id="ignore">Start anyway</button>
+            <button id="ignore" type="button">Start anyway</button>
         </div>
     </body>
     <script>
         async function loadLang() {
             const text = document.getElementById("text-splashscreen");
+
+            function check() {
+                if (internal.installState === "installing") {
+                    text.innerHTML = "Installing mods";
+                } else if (internal.installState === "done") {
+                    return true;
+                } else if (internal.installState === "modDownload") {
+                    text.innerHTML = `Updating ${internal.mods}`;
+                } else if (internal.installState === "none") {
+                    text.innerHTML = "Nothing to install.";
+                    return true;
+                } else {
+                    return true;
+                }
+            }
+
             if (window.navigator.onLine === false) {
                 for (let i = 0; i < 5; i++) {
                     await new Promise((r) => setTimeout(r, 1000));
@@ -44,7 +61,7 @@
                     const data = await response.json();
                     const remoteVersion = data.version.replace(/\./g, ""); // easy to compare
                     if (remoteVersion > window.internal.version.replace(/\./g, "")) {
-                        var elem = document.createElement("img");
+                        const elem = document.createElement("img");
                         elem.classList.add("logo");
                         elem.src = "legcord://assets/Update.webp";
                         document.body.prepend(elem);
@@ -52,21 +69,6 @@
                         text.innerHTML = await internal.getLang("loading_screen_update");
                     } else {
                         console.log("Legcord is up to date.");
-                    }
-                }
-
-                function check() {
-                    if (internal.installState === "installing") {
-                        text.innerHTML = "Installing mods";
-                    } else if (internal.installState === "done") {
-                        return true;
-                    } else if (internal.installState === "modDownload") {
-                        text.innerHTML = `Updating ${internal.mods}`;
-                    } else if (internal.installState === "none") {
-                        text.innerHTML = "Nothing to install.";
-                        return true;
-                    } else {
-                        return true;
                     }
                 }
 

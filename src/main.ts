@@ -37,10 +37,22 @@ const tracker = {
 };
 
 const trackSwitch = (key: string, value?: string) => tracker.switches.set(key, value ?? true);
-const trackEnableFeatures = (features: string[]) => features.forEach((f) => tracker.enableFeatures.add(f));
-const trackDisableFeatures = (features: string[]) => features.forEach((f) => tracker.disableFeatures.add(f));
-const trackEnableBlinkFeatures = (features: string[]) => features.forEach((f) => tracker.enableBlinkFeatures.add(f));
-const trackDisableBlinkFeatures = (features: string[]) => features.forEach((f) => tracker.disableBlinkFeatures.add(f));
+const trackEnableFeatures = (features: string[]) =>
+    features.forEach((f) => {
+        tracker.enableFeatures.add(f);
+    });
+const trackDisableFeatures = (features: string[]) =>
+    features.forEach((f) => {
+        tracker.disableFeatures.add(f);
+    });
+const trackEnableBlinkFeatures = (features: string[]) =>
+    features.forEach((f) => {
+        tracker.enableBlinkFeatures.add(f);
+    });
+const trackDisableBlinkFeatures = (features: string[]) =>
+    features.forEach((f) => {
+        tracker.disableBlinkFeatures.add(f);
+    });
 
 export function getAppliedFlags(): AppliedFlagsOutput {
     return {
@@ -176,8 +188,12 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
             app.commandLine.appendSwitch(key, val);
             trackSwitch(key, val);
         });
-        preset.enableFeatures.forEach((val) => enableFeatures.add(val));
-        preset.disableFeatures.forEach((val) => disableFeatures.add(val));
+        preset.enableFeatures.forEach((val) => {
+            enableFeatures.add(val);
+        });
+        preset.disableFeatures.forEach((val) => {
+            disableFeatures.add(val);
+        });
     }
     await fetchMods();
     await initializePluginSystem();
@@ -243,16 +259,24 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
                 } else {
                     if (key === "enable-features") {
                         const flags = val.split(",");
-                        flags.forEach((flag) => enableFeatures.add(flag));
+                        flags.forEach((flag) => {
+                            enableFeatures.add(flag);
+                        });
                     } else if (key === "disable-features") {
                         const flags = val.split(",");
-                        flags.forEach((flag) => disableFeatures.add(flag));
+                        flags.forEach((flag) => {
+                            disableFeatures.add(flag);
+                        });
                     } else if (key === "enable-blink-features") {
                         const flags = val.split(",");
-                        flags.forEach((flag) => enableBlinkFeatures.add(flag));
+                        flags.forEach((flag) => {
+                            enableBlinkFeatures.add(flag);
+                        });
                     } else if (key === "disable-blink-features") {
                         const flags = val.split(",");
-                        flags.forEach((flag) => disableBlinkFeatures.add(flag));
+                        flags.forEach((flag) => {
+                            disableBlinkFeatures.add(flag);
+                        });
                     } else {
                         app.commandLine.appendSwitch(key, val);
                         trackSwitch(key, val);

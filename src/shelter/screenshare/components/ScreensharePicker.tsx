@@ -60,7 +60,9 @@ export async function patchNavigator(requestAudio = false) {
 
         const virtmic_id = await getVirtmic();
         if (virtmic_id) {
-            stream.getAudioTracks().forEach((t) => stream.removeTrack(t));
+            stream.getAudioTracks().forEach((t) => {
+                stream.removeTrack(t);
+            });
             const audio = await navigator.mediaDevices.getUserMedia({
                 audio: {
                     deviceId: {
@@ -72,7 +74,9 @@ export async function patchNavigator(requestAudio = false) {
                     channelCount: 2,
                 },
             });
-            audio.getAudioTracks().forEach((t) => stream.addTrack(t));
+            audio.getAudioTracks().forEach((t) => {
+                stream.addTrack(t);
+            });
         }
 
         return stream;

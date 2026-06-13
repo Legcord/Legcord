@@ -58,6 +58,22 @@
     line-height: 45px;
     transform: translateY(-8px);
 }
+[legcord-platform="linux"] .titlebar #window-controls-container #minimize-icon {
+    background-color: var(--interactive-icon-default);
+    display: list-item;
+    -webkit-mask: url("data:image/svg+xml;charset=utf-8,<svg width='9' height='9' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M11 4.399V5.5H0V4.399h11z' fill='%23000'/></svg>")
+        no-repeat 50% 50%;
+    mask: url("data:image/svg+xml;charset=utf-8,<svg width='9' height='9' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M11 4.399V5.5H0V4.399h11z' fill='%23000'/></svg>")
+        no-repeat 50% 50%;
+}
+[legcord-platform="linux"] .titlebar #window-controls-container #maximize-icon {
+    background-color: var(--interactive-icon-default);
+    display: list-item;
+    -webkit-mask: url("data:image/svg+xml;charset=utf-8,<svg width='9' height='9' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M11 0v11H0V0h11zM9.899 1.101H1.1V9.9h8.8V1.1z' fill='%23000'/></svg>")
+        no-repeat 50% 50%;
+    mask: url("data:image/svg+xml;charset=utf-8,<svg width='9' height='9' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M11 0v11H0V0h11zM9.899 1.101H1.1V9.9h8.8V1.1z' fill='%23000'/></svg>")
+        no-repeat 50% 50%;
+}
 [legcord-platform="linux"] .titlebar #window-controls-container #minimize:hover {
     background-color: var(--interactive-background-hover);
     transition: 0.2s ease;
@@ -85,22 +101,6 @@
     -webkit-mask: url("data:image/svg+xml;charset=utf-8,<svg width='9' height='9' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M6.279 5.5L11 10.221l-.779.779L5.5 6.279.779 11 0 10.221 4.721 5.5 0 .779.779 0 5.5 4.721 10.221 0 11 .779 6.279 5.5z' fill='%23000'/></svg>")
         no-repeat 50% 50%;
     mask: url("data:image/svg+xml;charset=utf-8,<svg width='9' height='9' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M6.279 5.5L11 10.221l-.779.779L5.5 6.279.779 11 0 10.221 4.721 5.5 0 .779.779 0 5.5 4.721 10.221 0 11 .779 6.279 5.5z' fill='%23000'/></svg>")
-        no-repeat 50% 50%;
-}
-[legcord-platform="linux"] .titlebar #window-controls-container #minimize-icon {
-    background-color: var(--interactive-icon-default);
-    display: list-item;
-    -webkit-mask: url("data:image/svg+xml;charset=utf-8,<svg width='9' height='9' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M11 4.399V5.5H0V4.399h11z' fill='%23000'/></svg>")
-        no-repeat 50% 50%;
-    mask: url("data:image/svg+xml;charset=utf-8,<svg width='9' height='9' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M11 4.399V5.5H0V4.399h11z' fill='%23000'/></svg>")
-        no-repeat 50% 50%;
-}
-[legcord-platform="linux"] .titlebar #window-controls-container #maximize-icon {
-    background-color: var(--interactive-icon-default);
-    display: list-item;
-    -webkit-mask: url("data:image/svg+xml;charset=utf-8,<svg width='9' height='9' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M11 0v11H0V0h11zM9.899 1.101H1.1V9.9h8.8V1.1z' fill='%23000'/></svg>")
-        no-repeat 50% 50%;
-    mask: url("data:image/svg+xml;charset=utf-8,<svg width='9' height='9' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M11 0v11H0V0h11zM9.899 1.101H1.1V9.9h8.8V1.1z' fill='%23000'/></svg>")
         no-repeat 50% 50%;
 }
 
@@ -145,30 +145,6 @@
 [legcord-platform="win32"] .titlebar #window-controls-container {
     width: 142px;
 }
-[legcord-platform="win32"] .titlebar #window-controls-container #minimize:hover {
-    background-color: var(--interactive-background-hover);
-    transition: 0.2s ease;
-}
-[legcord-platform="win32"] .titlebar #window-controls-container #maximize:hover {
-    background-color: var(--interactive-background-hover);
-    transition: 0.2s ease;
-}
-[legcord-platform="win32"] .titlebar #window-controls-container #minimize:hover #minimize-icon {
-    background-color: var(--interactive-text-hover);
-    transition: 0.2s ease;
-}
-[legcord-platform="win32"] .titlebar #window-controls-container #maximize:hover #maximize-icon {
-    background-color: var(--interactive-text-hover);
-    transition: 0.2s ease;
-}
-[legcord-platform="win32"] .titlebar #window-controls-container #quit:hover {
-    background-color: #e81123;
-    transition: 0.2s ease;
-}
-[legcord-platform="win32"] .titlebar #window-controls-container #quit:hover #quit-icon {
-    background-color: #ffffff;
-    transition: 0.1s ease;
-}
 [legcord-platform="win32"] .titlebar #window-controls-container #minimize {
     background-color: transparent;
     transition: 0.1s ease;
@@ -189,6 +165,7 @@
     background-color: #000000cc;
     transition: 0.1s ease;
 }
+/* biome-ignore lint/style/noDescendingSpecificity: cross-platform, linux [legcord-platform="linux"] only */
 [legcord-platform="win32"] .titlebar #window-controls-container #quit-icon {
     background-color: var(--interactive-icon-default);
     display: list-item;
@@ -212,6 +189,30 @@
         no-repeat 50% 50%;
     mask: url("data:image/svg+xml;charset=utf-8,<svg width='11' height='11' viewBox='0 0 11 11' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M11 0v11H0V0h11zM9.899 1.101H1.1V9.9h8.8V1.1z' fill='%23000'/></svg>")
         no-repeat 50% 50%;
+}
+[legcord-platform="win32"] .titlebar #window-controls-container #minimize:hover {
+    background-color: var(--interactive-background-hover);
+    transition: 0.2s ease;
+}
+[legcord-platform="win32"] .titlebar #window-controls-container #maximize:hover {
+    background-color: var(--interactive-background-hover);
+    transition: 0.2s ease;
+}
+[legcord-platform="win32"] .titlebar #window-controls-container #minimize:hover #minimize-icon {
+    background-color: var(--interactive-text-hover);
+    transition: 0.2s ease;
+}
+[legcord-platform="win32"] .titlebar #window-controls-container #maximize:hover #maximize-icon {
+    background-color: var(--interactive-text-hover);
+    transition: 0.2s ease;
+}
+[legcord-platform="win32"] .titlebar #window-controls-container #quit:hover {
+    background-color: #e81123;
+    transition: 0.2s ease;
+}
+[legcord-platform="win32"] .titlebar #window-controls-container #quit:hover #quit-icon {
+    background-color: #ffffff;
+    transition: 0.1s ease;
 }
 
 [legcord-platform="win32"][isMaximized] .titlebar #window-controls-container #maximize-icon {
@@ -338,18 +339,16 @@
 
 [legcord-platform="darwin"] .titlebar #window-controls-container #minimize-icon,
 [legcord-platform="darwin"] .titlebar #window-controls-container #maximize-icon,
-[legcord-platform="darwin"] .titlebar #window-controls-container #quit-icon {
+/* biome-ignore lint/style/noDescendingSpecificity: cross-platform */
+    [legcord-platform="darwin"]
+    .titlebar
+    #window-controls-container
+    #quit-icon {
     display: none;
 }
 
 [legcord-platform="darwin"] .titlebar #window-controls-container #spacer {
     display: none;
-}
-
-[legcord-platform="darwin"] .window-title {
-    float: none;
-    position: fixed;
-    left: 50%;
 }
 
 .window-title {
@@ -360,6 +359,12 @@
     float: left;
     padding: 0;
     filter: invert(30%);
+}
+
+[legcord-platform="darwin"] .window-title {
+    float: none;
+    position: fixed;
+    left: 50%;
 }
 
 div#app-mount {

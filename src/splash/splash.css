@@ -66,12 +66,11 @@ video {
 }
 
 #text-splashscreen {
-    font-size: 7vw;
+    font-size: 16px;
     text-align: center;
     color: var(--header-primary);
     font-weight: 400;
     font-style: italic;
-    font-size: 16px;
     text-transform: uppercase;
     width: 100%;
 }

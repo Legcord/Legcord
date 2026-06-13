@@ -48,6 +48,7 @@ export function registerCustomHandler(): void {
             });
             mainWindows.every((window) => {
                 window.webContents.send("getSources", sources);
+                return true;
             });
         },
         { useSystemPicker: getConfig("useMacSystemPicker") },

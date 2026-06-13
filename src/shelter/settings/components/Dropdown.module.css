@@ -3,6 +3,24 @@
     margin-bottom: 24px;
     position: relative;
 }
+option {
+    color: var(--text-subtle);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    align-items: center;
+    padding: 12px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--interactive-background-hover);
+        color: var(--interactive-text-hover);
+    }
+    &[aria-selected="true"] {
+        background-color: var(--interactive-background-selected);
+        color: var(--interactive-text-active);
+    }
+}
 .valuewrapper {
     display: flex;
     justify-content: space-between;
@@ -10,17 +28,16 @@
     cursor: pointer;
     padding: 8px;
 
-    color: var(--text-default);
+    color: var(--input-text-default);
     font-weight: var(--font-weight-medium);
     background-color: var(--input-background-default);
     border: 1px solid var(--input-border-default);
     border-radius: var(--radius-sm);
-    color: var(--input-text-default);
     transition: border-color 0.1s ease;
     box-sizing: border-box;
     min-height: var(--control-input-height-md);
 
-    &::hover {
+    &:hover {
         border-color: var(--input-border-hover);
         transition: border-color 0.1s ease;
     }
@@ -69,23 +86,5 @@
 
     &::-webkit-scrollbar-thumb:hover {
         background-color: rgba(255, 255, 255, 0.3);
-    }
-}
-option {
-    color: var(--text-subtle);
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 20px;
-    align-items: center;
-    padding: 12px;
-    cursor: pointer;
-
-    &:hover {
-        background-color: var(--interactive-background-hover);
-        color: var(--interactive-text-hover);
-    }
-    &[aria-selected="true"] {
-        background-color: var(--interactive-background-selected);
-        color: var(--interactive-text-active);
     }
 }

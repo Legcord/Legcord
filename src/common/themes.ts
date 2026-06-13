@@ -190,6 +190,7 @@ export function setThemeEnabled(id: string, enabled: boolean) {
                 passedWindow.webContents.send("removeTheme", id);
                 console.log(`[Theme Manager] Removing ${manifest.name} made by ${manifest.author}`);
             }
+            return true;
         });
     }
     manifest.enabled = enabled;
