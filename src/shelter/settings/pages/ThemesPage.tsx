@@ -9,7 +9,6 @@ const {
     ui: { Button, Header, HeaderTags, ButtonSizes, TextBox, showToast, SwitchItem },
     plugin: { store },
 } = shelter;
-const settings = store.settings as Settings;
 export function ThemesPage() {
     const [downloadUrl, setDownloadUrl] = createSignal("");
     refreshThemes();
@@ -27,13 +26,14 @@ export function ThemesPage() {
         });
     }
 
+    const settings = () => store.settings as Settings;
     const t = store.i18n;
     return (
         <>
             <Header tag={HeaderTags.H1}>Themes</Header>
             <SwitchItem
                 note={store.i18n["settings-quickCss-desc"]}
-                value={settings.quickCss}
+                value={settings().quickCss}
                 onChange={(e: boolean) => {
                     console.log("Toggled quick CSS", e);
                     if (e) {
@@ -50,7 +50,7 @@ export function ThemesPage() {
                 <Button
                     size={ButtonSizes.LARGE}
                     onClick={window.legcord.themes.openQuickCss}
-                    disabled={!settings.quickCss}
+                    disabled={!settings().quickCss}
                 >
                     {t["themes-openQuickCss"]}
                 </Button>
