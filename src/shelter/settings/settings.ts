@@ -4,8 +4,6 @@ const {
     plugin: { store },
 } = shelter;
 
-const settings = store.settings as Settings;
-
 export let isRestartRequired = false;
 
 export function setRestartRequired() {
@@ -21,7 +19,7 @@ export function refreshThemes() {
 }
 
 export function setConfig<K extends keyof Settings>(key: K, value: Settings[K], shouldRestart?: boolean) {
-    settings[key] = value;
+    store.settings[key] = value;
     console.log(key, ":", store.settings[key]);
     if (shouldRestart) {
         isRestartRequired = true;
@@ -36,7 +34,7 @@ function removeMod(array: ValidMods[], filter: ValidMods) {
 
 export function toggleMod(mod: ValidMods, enabled: boolean) {
     isRestartRequired = true;
-    const currentMods = settings.mods;
+    const currentMods = store.settings.mods;
     if (enabled) {
         if (mod === "vencord") {
             currentMods.push("vencord");

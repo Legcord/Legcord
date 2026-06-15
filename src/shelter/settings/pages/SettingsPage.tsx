@@ -12,21 +12,24 @@ const {
     ui: { SwitchItem, Header, HeaderTags, Button, ButtonSizes },
 } = shelter;
 
-const settings = store.settings as Settings;
-const noBundleUpdates = () => {
+const noBundleUpdates = (settings: Settings) => {
     const value = settings.noBundleUpdates;
     if (Array.isArray(value)) return value;
     return value ? ["shelter", "vencord", "equicord", "custom"] : [];
 };
 
 export function SettingsPage() {
+    const settings = store.settings as Settings;
     if (!settings) {
         return (
             <>
                 <Header class={classes.category} tag={HeaderTags.HeadingXL}>
-                    {store.i18n["settings-firstTimeCrash"]}
+                    {store.i18n?.["settings-firstTimeCrash"] ?? "Setting things up..."}
                 </Header>
-                <p>{store.i18n["settings-firstTimeCrash-desc"]}</p>
+                <p>
+                    {store.i18n?.["settings-firstTimeCrash-desc"] ??
+                        "Settings are not available on a first-time launch. Please restart."}
+                </p>
                 <br />
                 <Button size={ButtonSizes.MAX} onClick={() => window.legcord.restart()}>
                     Restart Legcord
@@ -529,9 +532,9 @@ export function SettingsPage() {
             </Header>
             <SwitchItem
                 note={store.i18n["settings-noBundleUpdates-desc"]}
-                value={noBundleUpdates().includes("shelter")}
+                value={noBundleUpdates(settings).includes("shelter")}
                 onChange={(e: boolean) => {
-                    const next = new Set(noBundleUpdates());
+                    const next = new Set(noBundleUpdates(settings));
                     if (e) next.add("shelter");
                     else next.delete("shelter");
                     setConfig("noBundleUpdates", Array.from(next) as Settings["noBundleUpdates"], true);
@@ -541,9 +544,9 @@ export function SettingsPage() {
             </SwitchItem>
             <Show when={settings.mods.includes("vencord")}>
                 <SwitchItem
-                    value={noBundleUpdates().includes("vencord")}
+                    value={noBundleUpdates(settings).includes("vencord")}
                     onChange={(e: boolean) => {
-                        const next = new Set(noBundleUpdates());
+                        const next = new Set(noBundleUpdates(settings));
                         if (e) next.add("vencord");
                         else next.delete("vencord");
                         setConfig("noBundleUpdates", Array.from(next) as Settings["noBundleUpdates"], true);
@@ -554,9 +557,9 @@ export function SettingsPage() {
             </Show>
             <Show when={settings.mods.includes("equicord")}>
                 <SwitchItem
-                    value={noBundleUpdates().includes("equicord")}
+                    value={noBundleUpdates(settings).includes("equicord")}
                     onChange={(e: boolean) => {
-                        const next = new Set(noBundleUpdates());
+                        const next = new Set(noBundleUpdates(settings));
                         if (e) next.add("equicord");
                         else next.delete("equicord");
                         setConfig("noBundleUpdates", Array.from(next) as Settings["noBundleUpdates"], true);
@@ -567,9 +570,9 @@ export function SettingsPage() {
             </Show>
             <Show when={settings.mods.includes("custom")}>
                 <SwitchItem
-                    value={noBundleUpdates().includes("custom")}
+                    value={noBundleUpdates(settings).includes("custom")}
                     onChange={(e: boolean) => {
-                        const next = new Set(noBundleUpdates());
+                        const next = new Set(noBundleUpdates(settings));
                         if (e) next.add("custom");
                         else next.delete("custom");
                         setConfig("noBundleUpdates", Array.from(next) as Settings["noBundleUpdates"], true);

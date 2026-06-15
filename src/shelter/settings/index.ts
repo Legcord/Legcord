@@ -22,26 +22,30 @@ const {
     flux: { dispatcher, storesFlat },
 } = shelter;
 
-const settingsPages = [
-    registerSection("divider"),
-    registerSection("header", "Legcord"),
-    registerSection("section", "legcord-settings", "Settings", SettingsPage, { icon: SettingsSidebarIcon }),
-    registerSection("section", "legcord-themes", "Themes", ThemesPage, { icon: ThemesSidebarIcon }),
-    registerSection("section", "legcord-plugins", "Plugins", PluginsPage, { icon: PluginsSidebarIcon }),
-    registerSection("section", "legcord-keybinds", "Keybinds", KeybindsPage, { icon: KeybindsSidebarIcon }),
-    registerSection("section", "legcord-games", "Games", RegisteredGamesPage, { icon: GamesSidebarIcon }),
-];
+let settingsCleanups: (() => void)[] = [];
+
+function registerSections(): (() => void)[] {
+    return [
+        registerSection("divider"),
+        registerSection("header", "Legcord"),
+        registerSection("section", "legcord-settings", "Settings", SettingsPage, { icon: SettingsSidebarIcon }),
+        registerSection("section", "legcord-themes", "Themes", ThemesPage, { icon: ThemesSidebarIcon }),
+        registerSection("section", "legcord-plugins", "Plugins", PluginsPage, { icon: PluginsSidebarIcon }),
+        registerSection("section", "legcord-keybinds", "Keybinds", KeybindsPage, { icon: KeybindsSidebarIcon }),
+        registerSection("section", "legcord-games", "Games", RegisteredGamesPage, { icon: GamesSidebarIcon }),
+    ];
+}
 
 function restartRequired(payload: { event: string; properties: { origin_pane: string } }) {
     if (payload.event === "settings_pane_viewed" && typeof payload.properties.origin_pane !== "undefined") {
         const pane = payload.properties.origin_pane;
         if ((pane === "legcord-settings" || pane === "legcord-games") && isRestartRequired) {
             openConfirmationModal({
-                header: () => store.i18n["settings-restartRequired"],
-                body: () => store.i18n["settings-restartRequiredBody"],
+                header: () => store.i18n?.["settings-restartRequired"] ?? "Restart required",
+                body: () => store.i18n?.["settings-restartRequiredBody"] ?? "A restart is required to apply changes.",
                 type: "danger",
-                confirmText: store.i18n["settings-restart"],
-                cancelText: store.i18n["settings-restartLater"],
+                confirmText: store.i18n?.["settings-restart"] ?? "Restart",
+                cancelText: store.i18n?.["settings-restartLater"] ?? "Later",
             }).then(
                 () => window.legcord.restart(),
                 () => console.log("restart skipped"),
@@ -57,11 +61,11 @@ export function onLoad() {
     store.i18n = window.legcord.translations;
     log("Legcord Settings");
     window.legcord.settings.setLang(storesFlat.LocaleStore.locale);
-    settingsPages;
+    settingsCleanups = registerSections();
     dispatcher.subscribe("TRACK", restartRequired);
 }
 export function onUnload() {
-    settingsPages.forEach((e) => {
+    settingsCleanups.forEach((e) => {
         e();
     });
     dispatcher.unsubscribe("TRACK", restartRequired);
