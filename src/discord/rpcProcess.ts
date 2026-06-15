@@ -9,6 +9,9 @@ let rpcWorker: Worker;
 export let processList: GameList[] = [];
 
 export function startRPC(window: BrowserWindow) {
+    if (rpcWorker) {
+        rpcWorker.terminate();
+    }
     const rpcPath = path.join(__dirname, "rpc.js");
 
     rpcWorker = new Worker(rpcPath, {

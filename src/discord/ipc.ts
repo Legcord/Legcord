@@ -60,7 +60,11 @@ function ifExistsRead(path: string): string | undefined {
     if (existsSync(path)) return readFileSync(path, "utf-8");
 }
 
+let ipcRegistered = false;
+
 export function registerIpc(passedWindow: BrowserWindow): void {
+    if (ipcRegistered) return;
+    ipcRegistered = true;
     ipcMain.handle("getShelterBundle", () => {
         return {
             js: ifExistsRead(path.join(app.getPath("userData"), "shelter.js")),

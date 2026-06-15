@@ -6,7 +6,7 @@ import type { WindowState } from "../@types/windowState.js";
 // Performance optimization: Cache window state to avoid reading file on every call
 let windowStateCache: WindowState | null = null;
 let windowStateCacheTime = 0;
-const WINDOW_STATE_CACHE_TTL = 1000; // Cache for 1 second
+const WINDOW_STATE_CACHE_TTL = 5000; // Cache for 5 seconds
 
 export function getWindowStateLocation() {
     const userDataPath = app.getPath("userData");

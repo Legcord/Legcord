@@ -205,6 +205,7 @@ async function load() {
         el.id = "ac-ver";
         el.textContent = `Legcord Version: ${version}`;
         info.after(el);
+        observer.disconnect();
     });
     observer.observe(document.body, { childList: true, subtree: true });
 }

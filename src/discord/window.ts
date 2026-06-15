@@ -187,6 +187,14 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         if (blockedPatterns.some((pattern) => pattern.test(details.url))) {
             return callback({ cancel: true });
         }
+        if (
+            details.url.includes("ws://127.0.0.1:") &&
+            !details.url.includes("127.0.0.1:1211") &&
+            !details.url.includes("127.0.0.1:1112") &&
+            !details.url.includes("127.0.0.1:6888")
+        ) {
+            return callback({ cancel: true });
+        }
         return callback({});
     });
 
@@ -268,9 +276,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         // Update window title with Legcord suffix
         if (!title.endsWith(legcordSuffix)) {
             e.preventDefault();
-            // Security: Use JSON.stringify to prevent code injection via title
-            const safeTitle = JSON.stringify(title.replace("Discord |", "") + legcordSuffix);
-            void passedWindow.webContents.executeJavaScript(`document.title = ${safeTitle}`);
+            passedWindow.setTitle(title.replace("Discord |", "") + legcordSuffix);
         }
     });
     injectThemesMain(passedWindow);
@@ -303,18 +309,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         });
         setForceQuit(true);
     });
-    passedWindow.webContents.session.webRequest.onBeforeRequest((details, callback) => {
-        // Lune Dev exceptions, https://github.com/uwu/shelter/blob/8d4ca369bf01abf348df9d4e111d534800c7a38c/packages/shelter/src/devmode/index.tsx#L24
-        if (
-            details.url.includes("ws://127.0.0.1:") &&
-            !details.url.includes("127.0.0.1:1211") &&
-            !details.url.includes("127.0.0.1:1112") &&
-            !details.url.includes("127.0.0.1:6888")
-        ) {
-            return callback({ cancel: true });
-        }
-        return callback({});
-    });
+
     passedWindow.on("focus", () => {
         void passedWindow.webContents.executeJavaScript(`document.body.removeAttribute("unFocused");`);
     });

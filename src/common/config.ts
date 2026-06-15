@@ -10,7 +10,7 @@ export let firstRun: boolean;
 // Performance optimization: Cache config to avoid reading file on every call
 let configCache: Settings | null = null;
 let configCacheTime = 0;
-const CONFIG_CACHE_TTL = 1000; // Cache for 1 second
+const CONFIG_CACHE_TTL = 5000; // Cache for 5 seconds
 const defaults: Settings = {
     windowStyle: "default",
     channel: "stable",
@@ -56,7 +56,7 @@ const defaults: Settings = {
     popoutPiP: false,
     vaapi: platform() === "linux",
     spellcheckLanguage: ["en-US"],
-    sleepInBackground: false,
+    sleepInBackground: true,
     noBundleUpdates: [],
     automaticUpdates: false,
     additionalArguments: "",
