@@ -46,7 +46,7 @@ export function ThemesPage() {
             >
                 {store.i18n["settings-quickCss"]}
             </SwitchItem>
-            <div class={classes.buttonBox}>
+            <div class={classes.toolbar}>
                 <Button
                     size={ButtonSizes.LARGE}
                     onClick={window.legcord.themes.openQuickCss}
@@ -71,6 +71,8 @@ export function ThemesPage() {
                     {t["themes-import"]}
                 </Button>
             </div>
+            <hr class={classes.divider} />
+            <Header tag={HeaderTags.H3}>{t["themes-installed"]}</Header>
             <For each={store.themes}>{(theme: ThemeManifest) => <ThemesCard theme={theme} />}</For>
         </>
     );

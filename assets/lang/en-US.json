@@ -293,6 +293,7 @@
     "themes-openThemesFolder": "Open themes folder",
     "themes-import": "Import",
     "themes-importUrlPlaceholder": "https://raw.githubusercontent.com/... [.theme.css]",
+    "themes-installed": "Installed Themes",
     "games-registeredGames": "Registered Games",
     "games-refreshList": "Refresh list",
     "games-add": "Add",

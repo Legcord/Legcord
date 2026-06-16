@@ -1,4 +1,4 @@
-import { createSignal } from "solid-js";
+import { createSignal, Show } from "solid-js";
 import type { ThemeManifest } from "../../../@types/themeManifest.js";
 import { refreshThemes } from "../settings.js";
 import classes from "./ThemesCard.module.css";
@@ -14,7 +14,7 @@ export const ThemesCard = (props: { theme: ThemeManifest }) => {
     function toggleTheme(state: boolean) {
         setSwitchState(state);
         if (props.theme.id) {
-            window.legcord.themes.set(props.theme.id, switchState());
+            window.legcord.themes.set(props.theme.id, state);
         }
         refreshThemes();
     }
@@ -47,35 +47,48 @@ export const ThemesCard = (props: { theme: ThemeManifest }) => {
             window.legcord.themes.folder(props.theme.id);
         }
     }
+    const showUpdate = !!props.theme.updateSrc;
     return (
         <div class={classes.card}>
-            <div class={classes.info}>
-                <div class={classes.mainInfo}>
+            <div class={classes.topRow}>
+                <div class={classes.info}>
                     <Header tag={HeaderTags.H2} class={classes.title}>
                         {props.theme.name}
                     </Header>
-                    <Header tag={HeaderTags.H3}>{store.i18n["themes-by"]}</Header>
-                    <Header class={classes.eyebrow} tag={HeaderTags.EYEBROW}>
-                        {props.theme.author}
-                    </Header>
-                    <div class={classes.switch}>
-                        <Switch checked={switchState()} onChange={toggleTheme} />
+                    <div class={classes.author}>
+                        {store.i18n["themes-by"]} {props.theme.author}
                     </div>
                 </div>
-                <Header tag={HeaderTags.H5}>{props.theme.description}</Header>
+                <Switch checked={switchState()} onChange={toggleTheme} />
             </div>
-            <button title={store.i18n["themes-delete"]} type="button" onClick={removeTheme} class={classes.btn}>
-                <img class={classes.icon} alt={store.i18n["themes-delete"]} src="legcord://assets/Trash.png" />
-            </button>
-            <button title={store.i18n["themes-edit"]} type="button" onClick={editTheme} class={classes.btn}>
-                <img class={classes.icon} alt={store.i18n["themes-edit"]} src="legcord://assets/Edit.png" />
-            </button>
-            <button title={store.i18n["themes-update"]} type="button" onClick={updateTheme} class={classes.btn}>
-                <img class={classes.icon} alt={store.i18n["themes-update"]} src="legcord://assets/UpgradeArrow.png" />
-            </button>
-            <button title={store.i18n["themes-open"]} type="button" onClick={openThemesFolder} class={classes.btn}>
-                <img class={classes.icon} alt={store.i18n["themes-open"]} src="legcord://assets/Folder.png" />
-            </button>
+            <Show when={props.theme.description}>
+                <div class={classes.description}>{props.theme.description}</div>
+            </Show>
+            <div class={classes.actions}>
+                <button
+                    title={store.i18n["themes-delete"]}
+                    type="button"
+                    onClick={removeTheme}
+                    class={`${classes.btn} ${classes.btnDanger}`}
+                >
+                    <img class={classes.icon} alt={store.i18n["themes-delete"]} src="legcord://assets/Trash.png" />
+                </button>
+                <button title={store.i18n["themes-edit"]} type="button" onClick={editTheme} class={classes.btn}>
+                    <img class={classes.icon} alt={store.i18n["themes-edit"]} src="legcord://assets/Edit.png" />
+                </button>
+                <Show when={showUpdate}>
+                    <button title={store.i18n["themes-update"]} type="button" onClick={updateTheme} class={classes.btn}>
+                        <img
+                            class={classes.icon}
+                            alt={store.i18n["themes-update"]}
+                            src="legcord://assets/UpgradeArrow.png"
+                        />
+                    </button>
+                </Show>
+                <button title={store.i18n["themes-open"]} type="button" onClick={openThemesFolder} class={classes.btn}>
+                    <img class={classes.icon} alt={store.i18n["themes-open"]} src="legcord://assets/Folder.png" />
+                </button>
+            </div>
         </div>
     );
 };
