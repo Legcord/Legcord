@@ -275,10 +275,6 @@
       <url>https://github.com/Legcord/Legcord/releases/tag/v1.0.2</url>
       <description/>
     </release>
-    <release version="devbuild" date="2024-10-12" type="development">
-      <url>https://github.com/Legcord/Legcord/releases/tag/devbuild</url>
-      <description/>
-    </release>
     <release version="v1.0.0" date="2024-10-11" type="stable">
       <url>https://github.com/Legcord/Legcord/releases/tag/v1.0.0</url>
       <description/>
