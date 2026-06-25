@@ -4,7 +4,7 @@
   <id>app.legcord.Legcord</id>
   <name>Legcord</name>
   <summary>Legcord is a custom client designed to enhance your Discord experience while keeping everything lightweight.</summary>
-  <developer>
+  <developer id="app.legcord">
     <name>Legcord Contributors</name>
   </developer>
   <metadata_license>CC0-1.0</metadata_license>
