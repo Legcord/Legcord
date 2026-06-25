@@ -50,6 +50,17 @@ const latestReleaseInformation = await fetch("https://api.github.com/repos/Legco
     },
 }).then((res) => res.json());
 
+// Ignore devbuild releases
+if (
+    latestReleaseInformation.name?.toLowerCase().includes("devbuild") ||
+    latestReleaseInformation.tag_name?.toLowerCase().includes("devbuild") ||
+    latestReleaseInformation.prerelease ||
+    latestReleaseInformation.draft
+) {
+    console.log("Latest release is a devbuild, nothing to be done");
+    process.exit(0);
+}
+
 const metaInfo = await fs.readFile("./meta/app.legcord.Legcord.metainfo.xml", "utf-8");
 
 const parser = new DOMParser().parseFromString(metaInfo, "text/xml");
