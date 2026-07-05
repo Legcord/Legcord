@@ -4,7 +4,7 @@
   <id>app.legcord.Legcord</id>
   <name>Legcord</name>
   <summary>Legcord is a custom client designed to enhance your Discord experience while keeping everything lightweight.</summary>
-  <developer>
+  <developer id="app.legcord">
     <name>Legcord Contributors</name>
   </developer>
   <metadata_license>CC0-1.0</metadata_license>
@@ -17,15 +17,15 @@
   <screenshots>
     <screenshot type="default">
       <caption>Legcord settings page on MacOS</caption>
-      <image type="source">https://github.com/Legcord/Legcord/blob/77e2ccafb221936a99654c237cb385d486780bc7/assets/screenshots/settings.png</image>
+      <image type="source">https://raw.githubusercontent.com/Legcord/Legcord/refs/tags/v1.2.4/assets/screenshots/settings.png</image>
     </screenshot>
     <screenshot>
       <caption>Legcord settings open with Shelter configs</caption>
-      <image type="source">https://github.com/Legcord/Legcord/blob/77e2ccafb221936a99654c237cb385d486780bc7/assets/screenshots/shelter.png</image>
+      <image type="source">https://raw.githubusercontent.com/Legcord/Legcord/refs/tags/v1.2.4/assets/screenshots/shelter.png</image>
     </screenshot>
     <screenshot>
       <caption>Legcord settings open with custom keybind settings shown</caption>
-      <image type="source">https://github.com/Legcord/Legcord/blob/77e2ccafb221936a99654c237cb385d486780bc7/assets/screenshots/keybinds.png</image>
+      <image type="source">https://raw.githubusercontent.com/Legcord/Legcord/refs/tags/v1.2.4/assets/screenshots/keybinds.png</image>
     </screenshot>
   </screenshots>
   <releases>
@@ -273,10 +273,6 @@
     </release>
     <release version="v1.0.2" date="2024-11-19" type="stable">
       <url>https://github.com/Legcord/Legcord/releases/tag/v1.0.2</url>
-      <description/>
-    </release>
-    <release version="devbuild" date="2024-10-12" type="development">
-      <url>https://github.com/Legcord/Legcord/releases/tag/devbuild</url>
       <description/>
     </release>
     <release version="v1.0.0" date="2024-10-11" type="stable">
