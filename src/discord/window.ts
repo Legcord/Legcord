@@ -8,6 +8,7 @@ import {
     dialog,
     type MessageBoxOptions,
     nativeImage,
+    screen,
     shell,
 } from "electron";
 import contextMenu from "electron-context-menu";
@@ -28,6 +29,51 @@ import { createTray, tray } from "./tray.js";
 import { registerVenmicIpc } from "./venmic.js";
 export let mainWindows: BrowserWindow[] = [];
 export let inviteWindow: BrowserWindow;
+
+function getStoredWindowBounds(): BrowserWindowConstructorOptions {
+    const width = getWindowState("width") ?? 835;
+    const height = getWindowState("height") ?? 600;
+    const x = getWindowState("x");
+    const y = getWindowState("y");
+
+    if (x === undefined || y === undefined) {
+        return {
+            width,
+            height,
+        };
+    }
+
+    // Return the stored window coordinates as-is.
+    // Restore uses setPosition/setSize for a direct API roundtrip.
+    return {
+        width,
+        height,
+        x,
+        y,
+    };
+}
+
+// Save window bounds using the same API family we restore with.
+// This avoids coordinate-space mismatches caused by getNormalBounds()/setBounds() across DPI setups.
+function saveWindowState(win: BrowserWindow): void {
+    try {
+        const [x, y] = win.getPosition();
+        const [width, height] = win.getSize();
+        const display = screen.getDisplayNearestPoint({ x, y });
+
+        setWindowState({
+            width,
+            height,
+            isMaximized: win.isMaximized(),
+            x,
+            y,
+            displayId: display.id,
+            displayScaleFactor: display.scaleFactor,
+        });
+    } catch (e) {
+        console.log("[Window] Failed to save window state:", e);
+    }
+}
 
 contextMenu({
     showSaveImageAs: true,
@@ -291,6 +337,10 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
             passedWindow.destroy();
         }
         if (getConfig("minimizeToTray") && !forceQuit) {
+            // Save state when hiding to tray so we persist display metadata
+            try {
+                saveWindowState(passedWindow);
+            } catch {}
             e.preventDefault();
             passedWindow.hide();
         } else if (!getConfig("minimizeToTray")) {
@@ -299,15 +349,20 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     });
     app.on("before-quit", () => {
         stopRPC();
-        const [width, height] = passedWindow.getSize();
-        setWindowState({
-            width,
-            height,
-            isMaximized: passedWindow.isMaximized(),
-            x: passedWindow.getPosition()[0],
-            y: passedWindow.getPosition()[1],
-        });
+        try {
+            // Ensure current window state is saved with display info
+            if (passedWindow && !passedWindow.isDestroyed()) saveWindowState(passedWindow);
+        } catch (e) {
+            console.log("[Window] before-quit save failed:", e);
+        }
         setForceQuit(true);
+    });
+
+    // also save on minimize in case of session shutdowns
+    passedWindow.on("minimize", () => {
+        try {
+            saveWindowState(passedWindow);
+        } catch {}
     });
 
     passedWindow.on("focus", () => {
@@ -331,6 +386,48 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     }
 
     registerGlobalKeybinds();
+    // Persist bounds on move/resize with debounce to avoid frequent writes
+    let _saveTimer: NodeJS.Timeout | null = null;
+    const queueSave = () => {
+        if (_saveTimer) clearTimeout(_saveTimer);
+        _saveTimer = setTimeout(() => {
+            try {
+                saveWindowState(passedWindow);
+            } catch (e) {
+                console.log("[Window] queueSave failed:", e);
+            }
+            _saveTimer = null;
+        }, 500);
+    };
+    passedWindow.on("move", queueSave);
+    passedWindow.on("resize", queueSave);
+
+    // Fallback: periodic poll to detect bounds changes.
+    // Compare raw getNormalBounds() values to detect movement;
+    // saveWindowState normalizes to DIP where needed.
+    let lastPolledBounds: { x: number; y: number; width: number; height: number } | null = null;
+    const pollInterval = setInterval(() => {
+        try {
+            if (passedWindow.isDestroyed()) {
+                clearInterval(pollInterval);
+                return;
+            }
+            const { x, y, width, height } = passedWindow.getNormalBounds();
+            if (
+                !lastPolledBounds ||
+                lastPolledBounds.x !== x ||
+                lastPolledBounds.y !== y ||
+                lastPolledBounds.width !== width ||
+                lastPolledBounds.height !== height
+            ) {
+                lastPolledBounds = { x, y, width, height };
+                saveWindowState(passedWindow);
+            }
+        } catch (e) {
+            // ignore transient errors
+        }
+    }, 1000);
+    passedWindow.on("closed", () => clearInterval(pollInterval));
     switch (getConfig("channel")) {
         case "stable":
             void passedWindow.loadURL("https://discord.com/app");
@@ -352,11 +449,11 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
 }
 
 export function createWindow() {
+    const storedBounds = getStoredWindowBounds();
     const browserWindowOptions: BrowserWindowConstructorOptions = {
-        width: getWindowState("width") ?? 835,
-        height: getWindowState("height") ?? 600,
-        x: getWindowState("x"),
-        y: getWindowState("y"),
+        // Use safe defaults for constructor; actual bounds applied via setBounds() below
+        width: 835,
+        height: 600,
         title: "Legcord",
         show: false,
         darkTheme: true,
@@ -417,6 +514,13 @@ export function createWindow() {
             break;
     }
     const mainWindow = new BrowserWindow(browserWindowOptions);
+
+    // Restore by position + size directly to match saveWindowState roundtrip.
+    if (storedBounds.x !== undefined && storedBounds.y !== undefined) {
+        mainWindow.setPosition(storedBounds.x, storedBounds.y);
+        mainWindow.setSize(storedBounds.width, storedBounds.height);
+    }
+    
     mainWindows.push(mainWindow);
     doAfterDefiningTheWindow(mainWindow);
 }

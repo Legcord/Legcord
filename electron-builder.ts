@@ -85,6 +85,17 @@ export const config: Configuration = {
     electronDownload: {
         cache: ".cache",
     },
+
+    electronFuses: {
+        runAsNode: false,
+        enableCookieEncryption: false,
+        enableNodeOptionsEnvironmentVariable: false,
+        enableNodeCliInspectArguments: false,
+        enableEmbeddedAsarIntegrityValidation: false,
+        onlyLoadAppFromAsar: true,
+        loadBrowserProcessSpecificV8Snapshot: false,
+        grantFileProtocolExtraPrivileges: false,
+    },
 };
 
 export default config;

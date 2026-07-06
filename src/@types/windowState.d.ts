@@ -4,4 +4,6 @@ export interface WindowState {
     x: number;
     y: number;
     isMaximized: boolean;
+    displayId?: number;
+    displayScaleFactor?: number;
 }
