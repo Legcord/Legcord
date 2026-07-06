@@ -112,6 +112,90 @@ function getThemeManifest(themeId: string): ThemeManifest | null {
     }
 }
 
+// Performance optimization: Cached theme list with directory watcher
+const THEME_LIST_CACHE_TTL = 2000;
+let themeListCache: ThemeManifest[] | null = null;
+let themeListCacheTime = 0;
+let themeWatcher: fs.FSWatcher | null = null;
+let themeListRefreshTimeout: NodeJS.Timeout | null = null;
+
+function refreshThemeListCache(): ThemeManifest[] {
+    try {
+        if (!fs.existsSync(themesFolder)) {
+            themeListCache = [];
+            themeListCacheTime = Date.now();
+            return themeListCache;
+        }
+        const themes: ThemeManifest[] = [];
+        const entries = fs.readdirSync(themesFolder);
+        for (const entry of entries) {
+            const manifestPath = path.join(themesFolder, entry, "manifest.json");
+            if (fs.existsSync(manifestPath)) {
+                const manifest = getThemeManifest(entry);
+                if (manifest) {
+                    themes.push({ ...manifest, id: entry });
+                }
+            }
+        }
+        themeListCache = themes;
+        themeListCacheTime = Date.now();
+        return themes;
+    } catch (err) {
+        console.error("[Theme Manager] Failed to refresh theme list cache:", err);
+        return themeListCache ?? [];
+    }
+}
+
+export function getCachedThemeList(): ThemeManifest[] {
+    const now = Date.now();
+    if (themeListCache && now - themeListCacheTime < THEME_LIST_CACHE_TTL) {
+        return themeListCache;
+    }
+    return refreshThemeListCache();
+}
+
+function invalidateThemeListCache(): void {
+    themeListCache = null;
+}
+
+function debouncedRefreshThemeList(): void {
+    if (themeListRefreshTimeout) {
+        clearTimeout(themeListRefreshTimeout);
+    }
+    themeListRefreshTimeout = setTimeout(() => {
+        refreshThemeListCache();
+        themeListRefreshTimeout = null;
+    }, 500);
+}
+
+export function startThemeWatcher(): void {
+    if (themeWatcher) return;
+    try {
+        if (!fs.existsSync(themesFolder)) {
+            fs.mkdirSync(themesFolder, { recursive: true });
+        }
+        themeWatcher = fs.watch(themesFolder, { recursive: true }, (eventType, filename) => {
+            if (filename && (filename.endsWith("manifest.json") || eventType === "rename")) {
+                debouncedRefreshThemeList();
+            }
+        });
+        refreshThemeListCache();
+    } catch (err) {
+        console.error("[Theme Manager] Failed to start theme watcher:", err);
+    }
+}
+
+export function stopThemeWatcher(): void {
+    if (themeWatcher) {
+        themeWatcher.close();
+        themeWatcher = null;
+    }
+    if (themeListRefreshTimeout) {
+        clearTimeout(themeListRefreshTimeout);
+        themeListRefreshTimeout = null;
+    }
+}
+
 export function injectThemesMain(browserWindow: BrowserWindow): void {
     if (process.argv.includes("--safe-mode")) return;
     if (!fs.existsSync(themesFolder)) {
@@ -168,10 +252,11 @@ export function uninstallTheme(id: string) {
         fs.rmdirSync(path.join(themesFolder, `${id}-BD`), { recursive: true });
         console.log(`Removed ${id} folder`);
     }
+    themeManifestCache.delete(id);
+    invalidateThemeListCache();
 }
 
 export function setThemeEnabled(id: string, enabled: boolean) {
-    // Performance optimization: Use cached manifest if available
     let manifest = getThemeManifest(id);
     if (!manifest) {
         manifest = JSON.parse(fs.readFileSync(path.join(themesFolder, id, "/manifest.json"), "utf8")) as ThemeManifest;
@@ -196,8 +281,8 @@ export function setThemeEnabled(id: string, enabled: boolean) {
     manifest.enabled = enabled;
     fs.writeFileSync(`${themesFolder}/${id}/manifest.json`, JSON.stringify(manifest));
 
-    // Performance optimization: Invalidate cache
     themeManifestCache.delete(id);
+    invalidateThemeListCache();
 }
 
 export async function installTheme(linkOrPath: string) {
