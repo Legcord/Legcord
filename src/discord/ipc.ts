@@ -26,6 +26,7 @@ import {
     getCachedThemeList,
     initQuickCss,
     installTheme,
+    invalidateThemeListCache,
     setThemeEnabled,
     startThemeWatcher,
     uninstallTheme,
@@ -178,6 +179,10 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     });
 
     ipcMain.on("getThemes", (event) => {
+        event.returnValue = getCachedThemeList();
+    });
+    ipcMain.on("refreshThemesCache", (event) => {
+        invalidateThemeListCache();
         event.returnValue = getCachedThemeList();
     });
 

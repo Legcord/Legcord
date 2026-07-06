@@ -60,6 +60,14 @@ export function ThemesPage() {
                 <Button size={ButtonSizes.LARGE} onClick={window.legcord.settings.openThemesFolder}>
                     {t["themes-openThemesFolder"]}
                 </Button>
+                <Button
+                    size={ButtonSizes.LARGE}
+                    onClick={() => {
+                        store.themes = window.legcord.themes.refresh();
+                    }}
+                >
+                    {t["themes-refresh"] ?? "Refresh"}
+                </Button>
             </div>
             <div class={classes.addBox}>
                 <TextBox

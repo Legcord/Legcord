@@ -119,6 +119,26 @@ let themeListCacheTime = 0;
 let themeWatcher: fs.FSWatcher | null = null;
 let themeListRefreshTimeout: NodeJS.Timeout | null = null;
 
+function importLooseThemeFiles(): void {
+    try {
+        if (!fs.existsSync(themesFolder)) return;
+        const entries = fs.readdirSync(themesFolder);
+        for (const entry of entries) {
+            const entryPath = path.join(themesFolder, entry);
+            const stat = fs.statSync(entryPath);
+            if (stat.isFile() && (entry.endsWith(".css") || entry.endsWith(".theme.css"))) {
+                const code = fs.readFileSync(entryPath, "utf8");
+                installThemeFromCode(code);
+                try {
+                    fs.unlinkSync(entryPath);
+                } catch {}
+            }
+        }
+    } catch (err) {
+        console.error("[Theme Manager] Failed to import loose theme files:", err);
+    }
+}
+
 function refreshThemeListCache(): ThemeManifest[] {
     try {
         if (!fs.existsSync(themesFolder)) {
@@ -151,10 +171,11 @@ export function getCachedThemeList(): ThemeManifest[] {
     if (themeListCache && now - themeListCacheTime < THEME_LIST_CACHE_TTL) {
         return themeListCache;
     }
+    importLooseThemeFiles();
     return refreshThemeListCache();
 }
 
-function invalidateThemeListCache(): void {
+export function invalidateThemeListCache(): void {
     themeListCache = null;
 }
 
@@ -207,11 +228,13 @@ export function injectThemesMain(browserWindow: BrowserWindow): void {
         const files = fs.readdirSync(themesFolder);
         for (const file of files) {
             const themePath = path.join(themesFolder, file);
-            if (fs.statSync(themePath).isFile() && file.endsWith(".DS_Store")) {
+            if (fs.statSync(themePath).isFile() && (file.endsWith(".css") || file.endsWith(".theme.css"))) {
                 console.log(`[Theme Manager] Local theme detected: ${themePath}`);
-                installTheme(themePath).then(() => {
+                const code = fs.readFileSync(themePath, "utf8");
+                installThemeFromCode(code);
+                try {
                     fs.unlinkSync(themePath);
-                });
+                } catch {}
             } else {
                 try {
                     const themeFile = getThemeManifest(file);
@@ -285,6 +308,23 @@ export function setThemeEnabled(id: string, enabled: boolean) {
     invalidateThemeListCache();
 }
 
+function installThemeFromCode(code: string, linkOrPath?: string): void {
+    const manifest = parseBDManifest(code);
+    const themePath = path.join(themesFolder, `${manifest.name?.replace(" ", "-")}-BD`);
+    if (!fs.existsSync(themePath)) {
+        fs.mkdirSync(themePath);
+        console.log(`Created ${manifest.name} folder`);
+    }
+    if (linkOrPath && manifest.updateSrc === undefined) {
+        manifest.updateSrc = linkOrPath;
+    }
+    if (code.includes(".titlebar")) manifest.supportsLegcordTitlebar = true;
+    else manifest.supportsLegcordTitlebar = false;
+    fs.writeFileSync(path.join(themePath, "manifest.json"), JSON.stringify(manifest));
+    fs.writeFileSync(path.join(themePath, "src.css"), code);
+    invalidateThemeListCache();
+}
+
 export async function installTheme(linkOrPath: string) {
     let code = "";
     let isLinkImport = false;
@@ -294,19 +334,7 @@ export async function installTheme(linkOrPath: string) {
     } else {
         code = fs.readFileSync(linkOrPath, "utf8");
     }
-    const manifest = parseBDManifest(code);
-    const themePath = path.join(themesFolder, `${manifest.name?.replace(" ", "-")}-BD`);
-    if (!fs.existsSync(themePath)) {
-        fs.mkdirSync(themePath);
-        console.log(`Created ${manifest.name} folder`);
-    }
-    if (isLinkImport && manifest.updateSrc === undefined) {
-        manifest.updateSrc = linkOrPath;
-    }
-    if (code.includes(".titlebar")) manifest.supportsLegcordTitlebar = true;
-    else manifest.supportsLegcordTitlebar = false;
-    fs.writeFileSync(path.join(themePath, "manifest.json"), JSON.stringify(manifest));
-    fs.writeFileSync(path.join(themePath, "src.css"), code);
+    installThemeFromCode(code, isLinkImport ? linkOrPath : undefined);
 }
 
 export function initQuickCss(browserWindow: BrowserWindow) {
