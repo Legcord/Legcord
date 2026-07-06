@@ -93,75 +93,75 @@
     min-height: auto;
 }
 
-.aboutHeader {
-    text-align: center;
-    margin-bottom: 32px;
-    padding: 24px;
-    background: var(--background-secondary);
-    border: 1px solid var(--background-modifier-accent);
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+.aboutLogo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
-.aboutTitle {
-    font-size: 32px;
-    font-weight: 700;
-    margin: 0 0 20px 0;
-    color: var(--header-primary);
-    letter-spacing: -0.5px;
+.aboutLogo svg {
+    opacity: 0.95;
+}
+
+.aboutHeader {
+    text-align: center;
+    margin-bottom: 24px;
+    padding: 32px 24px 24px;
+    background: linear-gradient(180deg, var(--background-secondary-alt) 0%, var(--background-secondary) 100%);
+    border: 1px solid var(--background-modifier-accent);
+    border-radius: 12px;
+}
+
+.aboutVersion {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0 0 16px 0;
+    padding: 6px 14px;
+    background: var(--background-tertiary);
+    border-radius: 20px;
+    display: inline-block;
+    font-family: var(--font-mono);
+    border: 1px solid var(--background-modifier-accent);
+    font-weight: 500;
+    letter-spacing: 0.3px;
 }
 
 .aboutDescription {
-    font-size: 16px;
-    line-height: 1.6;
+    font-size: 14px;
+    line-height: 1.5;
     color: var(--text-muted);
-    margin: 0 0 24px 0;
-    max-width: 600px;
+    margin: 0;
+    padding: 0 8px;
+    max-width: 520px;
     margin-left: auto;
     margin-right: auto;
     font-weight: 400;
 }
 
-.aboutVersion {
-    font-size: 14px;
-    color: var(--text-muted);
-    margin: 0;
-    padding: 10px 18px;
-    background: var(--background-tertiary);
-    border-radius: 8px;
-    display: inline-block;
-    font-family: var(--font-mono);
-    border: 1px solid var(--background-modifier-accent);
-    font-weight: 500;
+.sectionTitle {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 16px 0;
+    color: var(--header-primary);
+    letter-spacing: -0.2px;
+    text-transform: uppercase;
+    opacity: 0.7;
 }
 
 .quickActions {
-    background: var(--background-secondary);
-    border: 1px solid var(--background-modifier-accent);
-    border-radius: 12px;
-    padding: 20px;
-    margin: 0 0 32px 0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-.quickActionsTitle {
-    font-size: 20px;
-    font-weight: 600;
-    margin: 0 0 20px 0;
-    color: var(--header-primary);
-    letter-spacing: -0.3px;
+    margin-bottom: 24px;
 }
 
 .quickActionsList {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
 }
 
 .quickActionButton {
-    background: var(--background-secondary-alt);
+    background: var(--background-secondary);
     border: 1px solid var(--background-modifier-accent);
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 12px 16px;
     font-size: 14px;
     font-weight: 500;
@@ -171,73 +171,110 @@
     align-items: center;
     text-align: left;
     width: 100%;
-    transition: all 0.15s ease;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
     position: relative;
     overflow: hidden;
 }
 
+.quickActionButton::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--brand-experiment);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
 .quickActionButton:hover {
-    background: var(--background-tertiary);
-    border-color: var(--background-modifier-hover);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    transform: translateY(-1px);
+    border-color: var(--brand-experiment);
+    transform: translateX(4px);
+}
+
+.quickActionButton:hover::before {
+    opacity: 0.04;
 }
 
 .quickActionButton:active {
-    transform: translateY(0);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transform: translateX(2px);
 }
 
 .quickActionButtonIcon {
     margin-right: 12px;
-    font-size: 18px;
-    color: var(--interactive-normal);
-    transition: color 0.15s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 20px;
-    height: 20px;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--background-tertiary);
+    color: var(--interactive-normal);
+    flex-shrink: 0;
+    transition: all 0.2s ease;
 }
 
 .quickActionButton:hover .quickActionButtonIcon {
-    color: var(--interactive-hover);
+    color: var(--brand-experiment);
+    background: var(--background-secondary-alt);
+}
+
+.quickActionButtonLabel {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+}
+
+.quickActionButtonTitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--header-primary);
+}
+
+.quickActionButtonDesc {
+    font-size: 12px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.quickActionButtonArrow {
+    margin-left: 8px;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    opacity: 0;
+    transition: all 0.2s ease;
+}
+
+.quickActionButton:hover .quickActionButtonArrow {
+    opacity: 1;
+    transform: translateX(2px);
+    color: var(--brand-experiment);
 }
 
 .contributorsSection {
     padding: 20px;
     background: var(--background-secondary);
-    border: 1px solid var(--background-accent);
+    border: 1px solid var(--background-modifier-accent);
     border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-.contributorsTitle {
-    font-size: 20px;
-    font-weight: 600;
-    margin: 0 0 24px 0;
-    color: var(--header-primary);
-    text-align: center;
-    letter-spacing: -0.3px;
 }
 
 .contributorsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
     padding: 0;
     max-width: 100%;
     width: 100%;
-    justify-items: center;
-    max-height: 40vh;
+    max-height: 280px;
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: var(--background-modifier-accent) transparent;
 }
 
 .contributorsGrid::-webkit-scrollbar {
-    width: 6px;
+    width: 4px;
 }
 
 .contributorsGrid::-webkit-scrollbar-track {
@@ -246,7 +283,7 @@
 
 .contributorsGrid::-webkit-scrollbar-thumb {
     background: var(--background-modifier-accent);
-    border-radius: 3px;
+    border-radius: 2px;
 }
 
 .contributorsGrid::-webkit-scrollbar-thumb:hover {
@@ -256,27 +293,23 @@
 .contributorCard {
     background: var(--background-primary);
     border: 1px solid var(--background-modifier-accent);
-    border-radius: 12px;
-    padding: 20px;
+    border-radius: 10px;
+    padding: 14px 12px;
     text-align: center;
-    transition: all 0.15s ease;
-    min-width: 180px;
-    max-width: 100%;
+    transition: all 0.2s ease;
     box-sizing: border-box;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    position: relative;
 }
 
 .contributorCard:hover {
-    background: var(--background-secondary);
-    border-color: var(--background-modifier-hover);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    background: var(--background-secondary-alt);
+    border-color: var(--brand-experiment);
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .contributorLink {
@@ -290,46 +323,98 @@
 }
 
 .contributorAvatar {
-    width: 64px;
-    height: 64px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     max-width: 100%;
-    border: 3px solid var(--background-modifier-accent);
+    border: 2px solid var(--background-modifier-accent);
     object-fit: cover;
-    transition: all 0.15s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
 }
 
 .contributorCard:hover .contributorAvatar {
     border-color: var(--brand-experiment);
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: scale(1.1);
 }
 
 .contributorName {
     font-weight: 600;
-    font-size: 16px;
-    margin-bottom: 8px;
+    font-size: 13px;
+    margin-bottom: 4px;
     color: var(--header-primary);
     word-break: break-word;
     overflow-wrap: break-word;
     text-align: center;
-    transition: color 0.15s ease;
-    letter-spacing: -0.2px;
+    transition: color 0.2s ease;
 }
 
 .contributorCard:hover .contributorName {
-    color: var(--interactive-hover);
+    color: var(--brand-experiment);
 }
 
 .contributorInfo {
-    font-size: 13px;
+    font-size: 11px;
     color: var(--text-muted);
     margin: 0;
     text-align: center;
     font-weight: 400;
-    line-height: 1.4;
+    line-height: 1.3;
+}
+
+.contributorBadge {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    background: var(--background-tertiary);
+    border: 1px solid var(--background-modifier-accent);
+    border-radius: 20px;
+    padding: 3px 12px;
+    margin-bottom: 16px;
+    letter-spacing: 0.2px;
+}
+
+.techSection {
+    margin-top: 24px;
+    padding: 20px;
+    background: var(--background-secondary);
+    border: 1px solid var(--background-modifier-accent);
+    border-radius: 12px;
+}
+
+.techList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.techTag {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-normal);
+    background: var(--background-primary);
+    border: 1px solid var(--background-modifier-accent);
+    border-radius: 6px;
+    padding: 4px 10px;
+    transition: all 0.15s ease;
+}
+
+.techTag:hover {
+    border-color: var(--brand-experiment);
+    color: var(--brand-experiment);
+    transform: translateY(-1px);
+}
+
+.aboutFooter {
+    margin-top: 24px;
+    text-align: center;
+    padding: 8px 0 4px;
+    font-size: 12px;
+    color: var(--text-muted);
+    opacity: 0.7;
+    letter-spacing: 0.1px;
 }
 
 .loadingState,
@@ -348,6 +433,23 @@
     border-radius: 8px;
     margin: 16px;
 }
+
+.loadingState::after {
+    content: "";
+    display: block;
+    width: 24px;
+    height: 24px;
+    margin: 16px auto 0;
+    border: 3px solid var(--background-modifier-accent);
+    border-top-color: var(--brand-experiment);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
 .modal {
-    max-height: 500px;
+    max-height: 640px;
 }
