@@ -423,7 +423,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
                 lastPolledBounds = { x, y, width, height };
                 saveWindowState(passedWindow);
             }
-        } catch (e) {
+        } catch {
             // ignore transient errors
         }
     }, 1000);
@@ -520,7 +520,7 @@ export function createWindow() {
         mainWindow.setPosition(storedBounds.x, storedBounds.y);
         mainWindow.setSize(storedBounds.width, storedBounds.height);
     }
-    
+
     mainWindows.push(mainWindow);
     doAfterDefiningTheWindow(mainWindow);
 }
