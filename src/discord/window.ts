@@ -5,9 +5,11 @@ import {
     app,
     BrowserWindow,
     type BrowserWindowConstructorOptions,
+    clipboard,
     dialog,
     type MessageBoxOptions,
     nativeImage,
+    net,
     screen,
     shell,
 } from "electron";
@@ -75,10 +77,42 @@ function saveWindowState(win: BrowserWindow): void {
     }
 }
 
+async function copyImageFromContext(
+    parameters: { srcURL: string; x: number; y: number },
+    win?: BrowserWindow,
+): Promise<void> {
+    if (parameters.srcURL) {
+        try {
+            const response = await net.fetch(parameters.srcURL);
+            if (!response.ok) throw new Error(`HTTP ${response.status} ${response.statusText}`);
+
+            const image = nativeImage.createFromBuffer(Buffer.from(await response.arrayBuffer()));
+            if (!image.isEmpty()) {
+                clipboard.writeImage(image);
+                return;
+            }
+        } catch (error) {
+            console.warn("[ContextMenu] Failed to copy image from URL, falling back to copyImageAt:", error);
+        }
+    }
+
+    win?.webContents.copyImageAt(parameters.x, parameters.y);
+}
+
 contextMenu({
     showSaveImageAs: true,
+    showCopyImage: false,
     showCopyImageAddress: true,
     showSearchWithGoogle: false,
+    append: (_defaultActions, parameters, win) => [
+        {
+            label: "Copy Image",
+            visible: parameters.mediaType === "image",
+            click: () => {
+                void copyImageFromContext(parameters, win as BrowserWindow | undefined);
+            },
+        },
+    ],
     prepend: (_defaultActions, parameters) => [
         {
             label: getLang("contextMenu-searchGoogle"),
@@ -423,7 +457,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
                 lastPolledBounds = { x, y, width, height };
                 saveWindowState(passedWindow);
             }
-        } catch (e) {
+        } catch (_e) {
             // ignore transient errors
         }
     }, 1000);
@@ -520,7 +554,7 @@ export function createWindow() {
         mainWindow.setPosition(storedBounds.x, storedBounds.y);
         mainWindow.setSize(storedBounds.width, storedBounds.height);
     }
-    
+
     mainWindows.push(mainWindow);
     doAfterDefiningTheWindow(mainWindow);
 }
