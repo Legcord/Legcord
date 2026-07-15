@@ -58,11 +58,13 @@ For image payloads, it converts the image Blob into a data URL, places it in a t
 
 ## Older Legcord workaround: custom bundle
 
-If your Legcord version does not have filesystem plugins yet, copy `renderer.js` into:
+If your Legcord version does not have filesystem plugins yet, copy `custom-bundle.js` into:
 
 ```text
 ~/Library/Application Support/legcord/custom.js
 ```
+
+Do **not** use `renderer.js` as `custom.js`; `renderer.js` is the filesystem-plugin entry and expects Legcord's plugin loader to provide `module.exports`.
 
 and add `"custom"` to the `mods` array in:
 
