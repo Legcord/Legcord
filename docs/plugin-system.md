@@ -115,6 +115,11 @@ A complete example is available at:
 - `docs/examples/hello-plugin/preload.js`
 - `docs/examples/hello-plugin/renderer.js`
 
+A practical renderer-only workaround plugin is also available at:
+
+- `docs/examples/clipboard-fallback-plugin/manifest.json`
+- `docs/examples/clipboard-fallback-plugin/renderer.js`
+
 To test it:
 
 1. Copy `docs/examples/hello-plugin` into your runtime plugins directory:

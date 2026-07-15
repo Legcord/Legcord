@@ -1,0 +1,9 @@
+{
+  "id": "clipboard-fallback",
+  "name": "Clipboard Fallback",
+  "version": "1.0.0",
+  "description": "Fixes Discord in-page copy actions in Legcord by falling back to document.execCommand('copy') when navigator.clipboard.writeText is blocked.",
+  "author": "Nigel Thornberry",
+  "compatibleVersions": ["*"],
+  "renderer": "renderer.js"
+}
