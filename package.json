@@ -48,13 +48,13 @@
         "lucide-solid": "^1.16.0",
         "rolldown": "1.0.3",
         "rollup-plugin-copy": "^3.5.0",
-        "solid-js": "^1.9.13",
+        "solid-js": "^1.9.14",
         "solid-motionone": "^1.0.4",
         "typescript": "^6.0.3",
         "xml-formatter": "^3.7.0"
     },
     "dependencies": {
-        "adm-zip": "^0.5.17",
+        "adm-zip": "^0.6.0",
         "arrpc": "github:Legcord/arrpc#efe7589762470d32b9ba10d529be5acc23cd0e19",
         "electron-context-menu": "^4.1.2",
         "electron-is-dev": "^3.0.1",
