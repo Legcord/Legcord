@@ -7,9 +7,9 @@
         "node": ">=26"
     },
     "scripts": {
-        "build:dev": "rollup -c --environment BUILD:dev && node scripts/copyVenmic.ts",
+        "build:dev": "rollup -c --environment BUILD:dev && node --experimental-strip-types scripts/copyVenmic.ts",
         "build:plugins": "lune ci --repoSubDir src/shelter --to ts-out/plugins",
-        "build": "pnpm build:plugins && rolldown -c rolldown.config.ts && node scripts/copyVenmic.ts",
+        "build": "pnpm build:plugins && rolldown -c rolldown.config.ts && node --experimental-strip-types scripts/copyVenmic.ts",
         "start": "pnpm run build && electron --trace-warnings --ozone-platform-hint=auto ./ts-out/main.js",
         "startThemeManager": "pnpm run build:dev && electron ./ts-out/main.js themes",
         "package": "pnpm run build && electron-builder",
@@ -18,7 +18,7 @@
         "lint:fix": "biome check --write",
         "postinstall": "electron-builder install-app-deps",
         "CIbuild": "pnpm run build && electron-builder --linux zip && electron-builder --windows zip && electron-builder --macos zip",
-        "updateMeta": "node scripts/utils/updateMeta.ts"
+        "updateMeta": "node --experimental-strip-types scripts/utils/updateMeta.ts"
     },
     "repository": {
         "type": "git",

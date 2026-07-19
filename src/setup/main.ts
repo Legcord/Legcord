@@ -22,7 +22,6 @@ export async function createSetupWindow(): Promise<void> {
             maximizable: false,
             autoHideMenuBar: true,
             webPreferences: {
-                sandbox: true,
                 spellcheck: false,
                 preload: path.join(import.meta.dirname, "setup", "preload.mjs"),
             },
@@ -70,6 +69,6 @@ export async function createSetupWindow(): Promise<void> {
             // workaround electron trying to relaunch from squashfs
             handleRestart();
         });
-        void setupWindow.loadFile(path.join(import.meta.dirname, "/html/setup.html"));
+        void setupWindow.loadURL("legcord://html/setup.html");
     });
 }
