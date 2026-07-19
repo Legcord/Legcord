@@ -29,9 +29,39 @@ void app.whenReady().then(() => {
                 });
             }
             return net.fetch(Url.pathToFileURL(filePath).toString());
+        } else if (req.url.startsWith("legcord://html/")) {
+            const file = req.url.replace("legcord://html/", "");
+            const filePath = path.join(import.meta.dirname, "html", `${file}`);
+            if (filePath.includes("..")) {
+                return new Response("bad", {
+                    status: 400,
+                    headers: { "content-type": "text/html" },
+                });
+            }
+            return net.fetch(Url.pathToFileURL(filePath).toString());
+        } else if (req.url.startsWith("legcord://js/")) {
+            const file = req.url.replace("legcord://js/", "");
+            const filePath = path.join(import.meta.dirname, "js", `${file}`);
+            if (filePath.includes("..")) {
+                return new Response("bad", {
+                    status: 400,
+                    headers: { "content-type": "text/html" },
+                });
+            }
+            return net.fetch(Url.pathToFileURL(filePath).toString());
         } else if (req.url.startsWith("legcord://assets/")) {
             const file = req.url.replace("legcord://assets/", "");
             const filePath = path.join(import.meta.dirname, "assets", "app", `${file}`);
+            if (filePath.includes("..")) {
+                return new Response("bad", {
+                    status: 400,
+                    headers: { "content-type": "text/html" },
+                });
+            }
+            return net.fetch(Url.pathToFileURL(filePath).toString());
+        } else if (req.url.startsWith("legcord://css/")) {
+            const file = req.url.replace("legcord://css/", "");
+            const filePath = path.join(import.meta.dirname, "css", `${file}`);
             if (filePath.includes("..")) {
                 return new Response("bad", {
                     status: 400,

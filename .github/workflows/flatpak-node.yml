@@ -1,0 +1,28 @@
+name: Upload generated-sources.json to release for Flatpak building
+
+on:
+    release:
+        types:
+            - published
+    workflow_dispatch:
+
+permissions:
+    contents: write
+
+jobs:
+    upload:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Install flatpak-node-generator
+              run: pipx install git+https://github.com/flatpak/flatpak-builder-tools.git#subdirectory=node
+
+            - name: Create generated-sources.json
+              run: /root/.local/bin/flatpak-node-generator pnpm pnpm-lock.yaml --node-sdk-extension org.freedesktop.Sdk.Extension.node26 --electron-node-headers
+
+            - name: Upload generated-sources.json to release
+              run: |
+                  gh release upload ${{ github.event.release.tag_name }} generated-sources.json
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

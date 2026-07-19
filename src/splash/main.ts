@@ -31,5 +31,5 @@ export async function createSplashWindow(): Promise<void> {
     ipcMain.on("splash-clientmod", (event) => {
         event.returnValue = getConfig("mods");
     });
-    await splashWindow.loadFile(path.join(import.meta.dirname, "html", "splash.html"));
+    await splashWindow.loadURL("legcord://html/splash.html");
 }
