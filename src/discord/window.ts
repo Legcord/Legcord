@@ -173,7 +173,13 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
                         console.log(commandLine);
                         const lastArg = commandLine.pop();
                         if (lastArg?.startsWith("discord://-")) {
-                            navigateTo(passedWindow, lastArg.replace("discord://-", ""));
+                            const url = lastArg.replace("discord://-", "");
+                            const inviteMatch = url.match(/^\/invite\/([a-zA-Z0-9_-]+)/);
+                            if (inviteMatch) {
+                                passedWindow.webContents.executeJavaScript(`window.legcordInvite?.show(${JSON.stringify(inviteMatch[1])})`);
+                            } else {
+                                navigateTo(passedWindow, url);
+                            }
                         }
                     }
                 } else {
@@ -309,7 +315,13 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
 
     passedWindow.setTouchBar(mainTouchBar);
     app.on("open-url", (_event, url) => {
-        navigateTo(passedWindow, url.replace("discord://-", ""));
+        const resolved = url.replace("discord://-", "");
+        const inviteMatch = resolved.match(/^\/invite\/([a-zA-Z0-9_-]+)/);
+        if (inviteMatch) {
+            passedWindow.webContents.executeJavaScript(`window.legcordInvite?.show(${JSON.stringify(inviteMatch[1])})`);
+        } else {
+            navigateTo(passedWindow, resolved);
+        }
     });
 
     passedWindow.webContents.on("page-title-updated", (e, title) => {
