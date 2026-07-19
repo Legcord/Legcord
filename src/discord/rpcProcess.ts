@@ -3,6 +3,7 @@ import { Worker } from "node:worker_threads";
 import type { GameList } from "arrpc";
 import type { BrowserWindow } from "electron";
 import { getDetectables } from "../common/detectables.js";
+import { navigateTo } from "../common/dom.js";
 
 let rpcWorker: Worker;
 export let processList: GameList[] = [];
@@ -28,7 +29,7 @@ export function startRPC(window: BrowserWindow) {
     rpcWorker.on("message", (message: string) => {
         const json = JSON.parse(message);
         if (json.type === "invite") {
-            window.webContents.executeJavaScript(`window.legcordInvite?.show(${JSON.stringify(json.code)})`);
+            navigateTo(window, `/invite/${json.code}`);
         } else if (json.type === "activity") {
             console.log("activity pulse");
             console.log(json.data);

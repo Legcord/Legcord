@@ -143,13 +143,8 @@ export interface LegcordRPC {
     }) => void;
 }
 
-export interface LegcordInvite {
-    show: (code: string) => void;
-}
-
 declare global {
     interface Window {
         legcordRPC?: LegcordRPC;
-        legcordInvite?: LegcordInvite;
     }
 }

@@ -1,6 +1,7 @@
 import { join } from "node:path";
 import { app, Menu, nativeImage, Tray } from "electron";
 import { getConfig } from "../common/config.js";
+import { navigateTo } from "../common/dom.js";
 import { setForceQuit } from "../common/forceQuit.js";
 import { getLang } from "../common/lang.js";
 import { getDisplayVersion } from "../common/version.js";
@@ -59,7 +60,7 @@ export function createTray() {
             label: getLang("tray-supportServer"),
             click() {
                 mainWindows.forEach((mainWindow) => {
-                    mainWindow.webContents.executeJavaScript(`window.legcordInvite?.show(${JSON.stringify("TnhxcqynZ2")})`);
+                    navigateTo(mainWindow, "/invite/TnhxcqynZ2");
                 });
             },
         },
