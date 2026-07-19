@@ -14,7 +14,7 @@ export function openCssEditor(file: string) {
             preload: path.join(import.meta.dirname, "cssEditor", "preload.mjs"),
         },
     });
-    cssWindow.loadURL(`file://${import.meta.dirname}/html/editor.html`);
+    cssWindow.loadURL("legcord://html/editor.html");
 
     ipcMain.on("editor-setCSS", (_event, css: string) => {
         fs.writeFileSync(file, css);
