@@ -16,8 +16,8 @@ import {
 import contextMenu from "electron-context-menu";
 import { firstRun, getConfig, setConfig } from "../common/config.js";
 import { navigateTo } from "../common/dom.js";
-import { handleCommands, passedValidArgument } from "../common/handleCommands.js";
 import { forceQuit, setForceQuit } from "../common/forceQuit.js";
+import { handleCommands, passedValidArgument } from "../common/handleCommands.js";
 import { getLang } from "../common/lang.js";
 import { injectThemesMain } from "../common/themes.js";
 import { getWindowState, setWindowState } from "../common/windowState.js";

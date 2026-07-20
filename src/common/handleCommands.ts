@@ -1,4 +1,4 @@
-import { ValidActions, actionDescriptions } from "./commandDefinitions";
+import { actionDescriptions, ValidActions } from "./commandDefinitions";
 import { deafenToggle, leaveCall, muteToggle, openSettings } from "./keybindActions";
 
 export function isValidAction(value: string): value is ValidActions {
