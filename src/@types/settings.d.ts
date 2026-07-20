@@ -77,4 +77,6 @@ export interface Settings {
     extendedPluginAbilities: boolean;
     supportBannerDismissed: boolean;
     pluginStates?: Record<string, boolean>;
+    // Remove below once the plugin system is fully implemented.
+    showExperimentalPluginMenu: boolean;
 }

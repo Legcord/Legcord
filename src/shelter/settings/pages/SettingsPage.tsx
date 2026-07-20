@@ -383,6 +383,13 @@ export function SettingsPage() {
             <Header class={classes.category} tag={HeaderTags.H5}>
                 {store.i18n["settings-category-debug"]}
             </Header>
+            <SwitchItem
+                note={store.i18n["settings-showExperimentalPluginMenu-desc"]}
+                value={settings.showExperimentalPluginMenu}
+                onChange={(e: boolean) => setConfig("showExperimentalPluginMenu", e, true)}
+            >
+                {store.i18n["settings-showExperimentalPluginMenu"]}
+            </SwitchItem>
             <Show when={window.legcord.platform === "linux"}>
                 <SwitchItem
                     note={store.i18n["settings-venmic-deviceSelect-desc"]}

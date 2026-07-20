@@ -67,6 +67,7 @@ const defaults: Settings = {
     extendedPluginAbilities: false,
     quickCss: true,
     supportBannerDismissed: false,
+    showExperimentalPluginMenu: false,
     pluginStates: {},
 };
 
@@ -80,6 +81,7 @@ const safeMode: Settings = {
     vaapi: false,
     additionalArguments: "",
     extendedPluginAbilities: false,
+    showExperimentalPluginMenu: false,
     quickCss: false,
 };
 

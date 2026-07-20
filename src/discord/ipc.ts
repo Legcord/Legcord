@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import type { Game } from "arrpc";
@@ -21,7 +21,16 @@ import {
 import { getConfig, getConfigLocation, setConfig, setConfigBulk } from "../common/config.js";
 import { addDetectable, getDetectables, removeDetectable } from "../common/detectables.js";
 import { getLang, getLangName, getRawLang, setLang } from "../common/lang.js";
-import { disableQuickCss, initQuickCss, installTheme, setThemeEnabled, uninstallTheme } from "../common/themes.js";
+import {
+    disableQuickCss,
+    getCachedThemeList,
+    initQuickCss,
+    installTheme,
+    invalidateThemeListCache,
+    setThemeEnabled,
+    startThemeWatcher,
+    uninstallTheme,
+} from "../common/themes.js";
 import { getDisplayVersion, getVersion } from "../common/version.js";
 import { openCssEditor } from "../cssEditor/main.js";
 import { getAppliedFlags, handleRestart } from "../main.js";
@@ -65,6 +74,7 @@ let ipcRegistered = false;
 export function registerIpc(passedWindow: BrowserWindow): void {
     if (ipcRegistered) return;
     ipcRegistered = true;
+    startThemeWatcher();
     ipcMain.handle("getShelterBundle", () => {
         return {
             js: ifExistsRead(path.join(app.getPath("userData"), "shelter.js")),
@@ -169,17 +179,11 @@ export function registerIpc(passedWindow: BrowserWindow): void {
     });
 
     ipcMain.on("getThemes", (event) => {
-        const themes = [];
-        const themeFolders = readdirSync(themesPath);
-        for (const folder of themeFolders) {
-            if (existsSync(`${themesPath}/${folder}/manifest.json`)) {
-                const manifest = JSON.parse(
-                    readFileSync(`${themesPath}/${folder}/manifest.json`, "utf8"),
-                ) as ThemeManifest;
-                themes.push({ ...manifest, id: folder });
-            }
-        }
-        event.returnValue = themes;
+        event.returnValue = getCachedThemeList();
+    });
+    ipcMain.on("refreshThemesCache", (event) => {
+        invalidateThemeListCache();
+        event.returnValue = getCachedThemeList();
     });
 
     ipcMain.on("splashEnd", () => {
