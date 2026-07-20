@@ -29,6 +29,7 @@ import { registerCustomHandler } from "./screenshare.js";
 import { mainTouchBar } from "./touchbar.js";
 import { createTray, tray } from "./tray.js";
 import { registerVenmicIpc } from "./venmic.js";
+import { handleCommands, passedValidArgument } from "../common/externalCommands.js";
 export let mainWindows: BrowserWindow[] = [];
 export let inviteWindow: BrowserWindow;
 
@@ -160,17 +161,18 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         app.on("second-instance", (_event, commandLine, _workingDirectory, additionalData) => {
             void (async () => {
                 // Print out data received from the second instance.
-                console.log(additionalData);
+                console.log(`data received: ${additionalData}`);
 
                 if (!getConfig("multiInstance")) {
-                    // Someone tried to run a second instance, we should focus our window.
-                    if (passedWindow) {
+                    // Someone tried to run a second instance, 
+                    // we should focus our window if the user is not running special commands.
+                    if (passedWindow && !passedValidArgument(commandLine)) {
                         if (passedWindow.isMinimized()) passedWindow.restore();
                         passedWindow.show();
                         passedWindow.focus();
                     }
                     if (commandLine && commandLine.length > 0) {
-                        console.log(commandLine);
+                        handleCommands(commandLine)
                         const lastArg = commandLine.pop();
                         if (lastArg?.startsWith("discord://-")) {
                             navigateTo(passedWindow, lastArg.replace("discord://-", ""));
