@@ -69,7 +69,6 @@ import { initializePluginSystem } from "./discord/plugins/manager.js";
 import { createWindow } from "./discord/window.js";
 import { createSetupWindow } from "./setup/main.js";
 import { createSplashWindow } from "./splash/main.js";
-import { KGlobalAccelRegisterShortcuts } from "./common/dbus.js";
 export let settings: Settings;
 export let bypassSetup = false;
 checkForDataFolder();
@@ -128,14 +127,6 @@ export function handleRestart(exit_code = 0): void {
     app.exit(exit_code);
 }
 args();
-export function getDesktopEnvironment() {
-    const xdgDesktop = (process.env.XDG_CURRENT_DESKTOP || '').toLowerCase();
-    const desktopSession = (process.env.DESKTOP_SESSION || '').toLowerCase();
-
-    if (xdgDesktop.includes('kde') || desktopSession.includes('kde')) return 'kde';
-    if (xdgDesktop.includes('gnome') || desktopSession.includes('gnome')) return 'gnome';
-    return 'unknown';
-}
 if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     // if value isn't set after 3.2.4
     // kill if 2nd instance

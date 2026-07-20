@@ -1,21 +1,5 @@
-import type { KeybindActions } from "../@types/keybind";
+import { ValidActions, actionDescriptions } from "./commandDefinitions";
 import { deafenToggle, leaveCall, muteToggle, openSettings } from "./keybindActions";
-
-export enum ValidActions {
-    mute = "mute",
-    deafen = "deafen",
-    leaveCall = "leave",
-    openSettings = "opensettings",
-    help = "help",
-}
-
-const actionDescriptions: Record<ValidActions, string> = {
-    [ValidActions.mute]: "Toggle microphone mute",
-    [ValidActions.deafen]: "Toggle deafen (mute audio input/output)",
-    [ValidActions.leaveCall]: "Leave the current voice call",
-    [ValidActions.openSettings]: "Open the settings panel",
-    [ValidActions.help]: "Shows this help message",
-};
 
 export function isValidAction(value: string): value is ValidActions {
     return Object.values(ValidActions).some((action) => value.includes(action));
@@ -25,10 +9,8 @@ function findValidAction(str: string): ValidActions | undefined {
     return Object.values(ValidActions).find((action) => str.includes(action));
 }
 
-function sanitizeArguments(args: string[]): (string)[] {
-    return args
-        .filter((arg) => arg.startsWith('--'))
-        .map((arg) => arg.replace('--', ''));
+function sanitizeArguments(args: string[]): string[] {
+    return args.filter((arg) => arg.startsWith("--")).map((arg) => arg.replace("--", ""));
 }
 
 /**
@@ -39,8 +21,7 @@ function sanitizeArguments(args: string[]): (string)[] {
  * @return {*}  {boolean}
  */
 export function passedValidArgument(args: string[]): boolean {
-    if (args.find((arg) => findValidAction(arg))) 
-        return true;
+    if (args.find((arg) => findValidAction(arg))) return true;
     return false;
 }
 

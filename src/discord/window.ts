@@ -16,6 +16,7 @@ import {
 import contextMenu from "electron-context-menu";
 import { firstRun, getConfig, setConfig } from "../common/config.js";
 import { navigateTo } from "../common/dom.js";
+import { handleCommands, passedValidArgument } from "../common/handleCommands.js";
 import { forceQuit, setForceQuit } from "../common/forceQuit.js";
 import { getLang } from "../common/lang.js";
 import { injectThemesMain } from "../common/themes.js";
@@ -29,7 +30,6 @@ import { registerCustomHandler } from "./screenshare.js";
 import { mainTouchBar } from "./touchbar.js";
 import { createTray, tray } from "./tray.js";
 import { registerVenmicIpc } from "./venmic.js";
-import { handleCommands, passedValidArgument } from "../common/externalCommands.js";
 export let mainWindows: BrowserWindow[] = [];
 export let inviteWindow: BrowserWindow;
 
@@ -164,7 +164,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
                 console.log(`data received: ${additionalData}`);
 
                 if (!getConfig("multiInstance")) {
-                    // Someone tried to run a second instance, 
+                    // Someone tried to run a second instance,
                     // we should focus our window if the user is not running special commands.
                     if (passedWindow && !passedValidArgument(commandLine)) {
                         if (passedWindow.isMinimized()) passedWindow.restore();
@@ -172,7 +172,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
                         passedWindow.focus();
                     }
                     if (commandLine && commandLine.length > 0) {
-                        handleCommands(commandLine)
+                        handleCommands(commandLine);
                         const lastArg = commandLine.pop();
                         if (lastArg?.startsWith("discord://-")) {
                             navigateTo(passedWindow, lastArg.replace("discord://-", ""));
