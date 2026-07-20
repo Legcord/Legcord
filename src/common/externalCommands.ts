@@ -1,7 +1,7 @@
 import type { KeybindActions } from "../@types/keybind";
 import { deafenToggle, leaveCall, muteToggle, openSettings } from "./keybindActions";
 
-enum ValidActions {
+export enum ValidActions {
     mute = "mute",
     deafen = "deafen",
     leaveCall = "leave",
@@ -39,7 +39,7 @@ function sanitizeArguments(args: string[]): (string)[] {
  * @return {*}  {boolean}
  */
 export function passedValidArgument(args: string[]): boolean {
-    if (sanitizeArguments(args).length > 0) 
+    if (args.find((arg) => findValidAction(arg))) 
         return true;
     return false;
 }
@@ -81,7 +81,7 @@ export function handleCommands(args: string[]): void {
 
     sanitazed_args.forEach((arg, index) => {
         if (!arg) return;
-        console.log(`argument ${index}: ${arg}`);
+        // console.debug(`argument ${index}: ${arg}`);
 
         if (!isValidAction(arg)) return;
 

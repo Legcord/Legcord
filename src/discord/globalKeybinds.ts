@@ -1,7 +1,9 @@
 import { app, globalShortcut } from "electron";
 import type { Keybind } from "../@types/keybind.js";
 import { getConfig } from "../common/config.js";
+import { KGlobalAccelRegisterShortcuts } from "../common/dbus.js";
 import { runAction } from "../common/keybindActions.js";
+import { getDesktopEnvironment } from "../main.js";
 import { setMenu } from "./menu.js";
 
 export function registerGlobalKeybinds() {
@@ -15,6 +17,11 @@ export function registerGlobalKeybinds() {
             } catch {}
         }
     });
+
+    if (getDesktopEnvironment() === 'kde') {
+        console.info("KDE Enviroment, registering available global shortcuts.")
+        KGlobalAccelRegisterShortcuts();
+    }
 }
 app.on("will-quit", () => {
     try {
