@@ -1,7 +1,7 @@
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
 import { interface as dbusInterface, type ProxyInterface, sessionBus, Variant } from "@jellybrick/dbus-next";
-import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { ACTION_FRIENDLY_NAMES, EXCLUDED_FROM_SHORTCUTS, ValidActions } from "./common/commandDefinitions";
 import { handleAction, isValidAction } from "./common/handleCommands";
 
@@ -137,14 +137,10 @@ export async function setupGlobalShortcuts() {
         handle_token: new Variant("s", "legcord_bind"),
     });
 
-    console.debug("bindRequestPath:", bindRequestPath);
     await awaitResponse(bindRequestPath);
 
     globalShortcuts.on("Activated", (activatedSession: string, shortcutId: string) => {
-        if (activatedSession !== sessionHandle) return;
-        console.log("Shortcut activated via GlobalShortcuts:", shortcutId);
-
-        if (!isValidAction(shortcutId)) return; // i know, just so typescript shuts up
+        if (activatedSession !== sessionHandle || !isValidAction(shortcutId)) return;
         handleAction(shortcutId);
     });
 }
