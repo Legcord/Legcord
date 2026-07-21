@@ -18,6 +18,7 @@ import {
 } from "./common/config.js";
 import { getPreset } from "./common/flags.js";
 import { setLang } from "./common/lang.js";
+import { startDbusService } from "./dbus.js";
 
 // Chrome flags tracking
 export interface AppliedFlagsOutput {
@@ -153,7 +154,7 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
         .add("MediaSessionService");
     // Your data now belongs to CCP
     crashReporter.start({ uploadToServer: false });
-    // enable pulseaudio audio sharing on linux and register keybinds on supported desktop managers
+    // enable pulseaudio audio sharing on linux and register keybinds on supported desktop managers and start dbus socket
     if (process.platform === "linux") {
         app.commandLine.appendSwitch("gtk-version", "3");
         trackSwitch("gtk-version", "3");
@@ -161,6 +162,10 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
         disableFeatures.add("WebRtcAllowInputVolumeAdjustment");
         app.commandLine.appendSwitch("enable-speech-dispatcher");
         trackSwitch("enable-speech-dispatcher");
+
+        startDbusService().catch((reason) => {
+            console.error("Could not start DBus service.", reason);
+        });
     }
     // enable webrtc capturer for wayland
     if (process.platform === "linux" && process.env.XDG_SESSION_TYPE?.toLowerCase() === "wayland") {

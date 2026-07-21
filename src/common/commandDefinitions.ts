@@ -26,3 +26,13 @@ export const ACTION_FRIENDLY_NAMES: Record<ValidActions, string> = {
 
 // we don't need a 'show help' shortcut do we? be fr
 export const EXCLUDED_FROM_SHORTCUTS: ValidActions[] = [ValidActions.help];
+
+type ActionHandler = (action: string | ValidActions) => void;
+
+export let currentHandler: ActionHandler = () => {
+    console.warn("No action handler registered yet");
+};
+
+export function setActionHandler(handler: ActionHandler): void {
+    currentHandler = handler;
+}

@@ -25,7 +25,7 @@ export function passedValidArgument(args: string[]): boolean {
     return false;
 }
 
-function handleAction(action: ValidActions): void {
+export function handleAction(action: ValidActions): void {
     switch (action) {
         case ValidActions.mute:
             muteToggle();
@@ -60,9 +60,8 @@ export function handleCommands(args: string[]): void {
     const sanitazed_args = sanitizeArguments(args);
     const handledActions = new Set<ValidActions>();
 
-    sanitazed_args.forEach((arg, index) => {
+    sanitazed_args.forEach((arg) => {
         if (!arg) return;
-        // console.debug(`argument ${index}: ${arg}`);
 
         if (!isValidAction(arg)) return;
 
@@ -79,7 +78,7 @@ function showHelpMessage(): void {
     const entries = Object.entries(actionDescriptions);
     const width = Math.max(...entries.map(([cmd]) => cmd.length));
 
-    console.log("\nAvailable commands:\n");
+    console.log("\nAvailable commands (ignore '--' if over dbus):\n");
     for (const [cmd, description] of entries) {
         console.log(`  --${cmd.padEnd(width)}  ${description}`);
     }

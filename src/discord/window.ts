@@ -21,6 +21,7 @@ import { handleCommands, passedValidArgument } from "../common/handleCommands.js
 import { getLang } from "../common/lang.js";
 import { injectThemesMain } from "../common/themes.js";
 import { getWindowState, setWindowState } from "../common/windowState.js";
+import { disconnectDbusService } from "../dbus.js";
 import { init } from "../main.js";
 import { registerGlobalKeybinds } from "./globalKeybinds.js";
 import { registerIpc } from "./ipc.js";
@@ -385,6 +386,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     });
     app.on("before-quit", () => {
         stopRPC();
+        disconnectDbusService();
         try {
             // Ensure current window state is saved with display info
             if (passedWindow && !passedWindow.isDestroyed()) saveWindowState(passedWindow);
@@ -552,12 +554,7 @@ export function createWindow() {
     const mainWindow = new BrowserWindow(browserWindowOptions);
 
     // Restore by position + size directly to match saveWindowState roundtrip.
-    if (
-        storedBounds.x !== undefined &&
-        storedBounds.y !== undefined &&
-        storedBounds.width !== undefined &&
-        storedBounds.height !== undefined
-    ) {
+    if (storedBounds.x !== undefined && storedBounds.y !== undefined) {
         mainWindow.setPosition(storedBounds.x, storedBounds.y);
         mainWindow.setSize(storedBounds.width, storedBounds.height);
     }
