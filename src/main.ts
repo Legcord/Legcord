@@ -18,7 +18,7 @@ import {
 } from "./common/config.js";
 import { getPreset } from "./common/flags.js";
 import { setLang } from "./common/lang.js";
-import { startDbusService } from "./dbus.js";
+import { setupGlobalShortcuts, startDbusService } from "./dbus.js";
 
 // Chrome flags tracking
 export interface AppliedFlagsOutput {
@@ -163,9 +163,15 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
         app.commandLine.appendSwitch("enable-speech-dispatcher");
         trackSwitch("enable-speech-dispatcher");
 
-        startDbusService().catch((reason) => {
-            console.error("Could not start DBus service.", reason);
-        });
+        startDbusService()
+            .catch((reason) => {
+                console.error("Could not start DBus service.", reason);
+            })
+            .then(() => {
+                setupGlobalShortcuts().catch((reason) => {
+                    console.error("Could not setup global shortcuts.", reason);
+                });
+            });
     }
     // enable webrtc capturer for wayland
     if (process.platform === "linux" && process.env.XDG_SESSION_TYPE?.toLowerCase() === "wayland") {

@@ -3,7 +3,7 @@ import type { Configuration } from "electron-builder";
 import { applyAppImageSandboxFix } from "./scripts/build/sandboxFix.mjs";
 import { ACTION_FRIENDLY_NAMES, EXCLUDED_FROM_SHORTCUTS, ValidActions } from "./src/common/commandDefinitions";
 
-const desktopActions = () =>
+const desktopActions = (exec: "AppRun" | "/opt/Legcord/legcord") =>
     Object.fromEntries(
         (Object.values(ValidActions) as ValidActions[])
             .filter((action) => !EXCLUDED_FROM_SHORTCUTS.includes(action))
@@ -11,7 +11,7 @@ const desktopActions = () =>
                 action,
                 {
                     Name: ACTION_FRIENDLY_NAMES[action],
-                    Exec: `dbus-send --session --type=method_call --dest=app.legcord.Legcord /app/legcord/Legcord app.legcord.Legcord.TriggerAction string:${action}`,
+                    Exec: `${exec} --${action} %U`,
                 },
             ]),
     );
@@ -66,7 +66,7 @@ export const config: Configuration = {
             entry: {
                 Actions: availableActions,
             },
-            desktopActions: desktopActions(),
+            desktopActions: desktopActions("AppRun"),
         },
     },
 
@@ -106,7 +106,7 @@ export const config: Configuration = {
             entry: {
                 Actions: availableActions,
             },
-            desktopActions: desktopActions(),
+            desktopActions: desktopActions("/opt/Legcord/legcord"),
         },
     },
 
