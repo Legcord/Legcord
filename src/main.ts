@@ -218,8 +218,7 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
             disableFeatures.add(val);
         });
     }
-    await fetchMods();
-    await initializePluginSystem();
+    await Promise.all([fetchMods(), initializePluginSystem()]);
     void import("./discord/extensions/plugin.js"); // load chrome extensions
     console.log(`[Config Manager] Current config: ${readFileSync(getConfigLocation(), "utf-8")}`);
 
