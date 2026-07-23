@@ -1,14 +1,23 @@
 import { createSignal, For, onMount, Show } from "solid-js";
 import type { LegcordPluginInfo } from "../../../@types/legcordWindow.js";
+import { EmptyState } from "../components/EmptyState.jsx";
 import { PluginCard } from "../components/PluginCard.jsx";
+import { SettingsPageHeader } from "../components/SettingsPageHeader.jsx";
+import classes from "./PluginsPage.module.css";
 
 const {
-    ui: { Header, HeaderTags, Divider, Button, ButtonSizes, showToast },
+    ui: { Button, ButtonSizes, showToast },
+    plugin: { store },
 } = shelter;
+
+function formatPluginMessage(template: string, name: string) {
+    return template.replaceAll("{name}", name);
+}
 
 export function PluginsPage() {
     const [plugins, setPlugins] = createSignal<LegcordPluginInfo[]>([]);
     const [busyIds, setBusyIds] = createSignal<string[]>([]);
+    const t = () => store.i18n;
 
     const setBusy = (pluginId: string, state: boolean) => {
         setBusyIds((current) => {
@@ -31,9 +40,10 @@ export function PluginsPage() {
         try {
             if (enabled && !plugin.compatible) {
                 showToast({
-                    title: "Plugins",
+                    title: t()["plugins-toastTitle"],
                     content:
-                        plugin.compatibilityMessage ?? `${plugin.name} is not compatible with this Legcord version.`,
+                        plugin.compatibilityMessage ??
+                        formatPluginMessage(t()["plugins-toastIncompatible"], plugin.name),
                     duration: 3500,
                 });
                 return;
@@ -41,8 +51,11 @@ export function PluginsPage() {
             const result = await window.legcord.plugins.setEnabled(plugin.id, enabled);
             if (!result.ok) {
                 showToast({
-                    title: "Plugins",
-                    content: `Failed to ${enabled ? "enable" : "disable"} ${plugin.name}.`,
+                    title: t()["plugins-toastTitle"],
+                    content: formatPluginMessage(
+                        enabled ? t()["plugins-toastEnableFailed"] : t()["plugins-toastDisableFailed"],
+                        plugin.name,
+                    ),
                     duration: 3000,
                 });
             }
@@ -57,8 +70,11 @@ export function PluginsPage() {
         try {
             const result = await window.legcord.plugins.reload(plugin.id);
             showToast({
-                title: "Plugins",
-                content: result.ok ? `Reloaded ${plugin.name}.` : `Failed to reload ${plugin.name}.`,
+                title: t()["plugins-toastTitle"],
+                content: formatPluginMessage(
+                    result.ok ? t()["plugins-toastReloaded"] : t()["plugins-toastReloadFailed"],
+                    plugin.name,
+                ),
                 duration: 2500,
             });
             await refreshPlugins();
@@ -73,29 +89,37 @@ export function PluginsPage() {
 
     return (
         <>
-            <Header tag={HeaderTags.H1}>Plugins</Header>
-            <Divider mt mb />
-            <div style={{ display: "flex", gap: "8px", "margin-bottom": "12px" }}>
+            <SettingsPageHeader title={t()["plugins-pageTitle"]} description={t()["plugins-pageDesc"]} />
+            <div class={classes.toolbar}>
                 <Button size={ButtonSizes.LARGE} onClick={() => void refreshPlugins()}>
-                    Refresh List
+                    {t()["plugins-refresh"]}
                 </Button>
                 <Button size={ButtonSizes.LARGE} onClick={window.legcord.plugins.openFolder}>
-                    Open Plugins Folder
+                    {t()["plugins-openFolder"]}
                 </Button>
             </div>
-            <Show when={plugins().length === 0}>
-                <Header tag={HeaderTags.H5}>No runtime plugins found in your plugins folder.</Header>
-            </Show>
-            <For each={plugins()}>
-                {(plugin) => (
-                    <PluginCard
-                        plugin={plugin}
-                        busy={isBusy(plugin.id)}
-                        onToggle={(enabled) => void onToggle(plugin, enabled)}
-                        onReload={() => void onReload(plugin)}
+            <Show
+                when={plugins().length > 0}
+                fallback={
+                    <EmptyState
+                        message={t()["plugins-empty"]}
+                        description={t()["plugins-emptyDesc"]}
+                        actionLabel={t()["plugins-openFolder"]}
+                        onAction={window.legcord.plugins.openFolder}
                     />
-                )}
-            </For>
+                }
+            >
+                <For each={plugins()}>
+                    {(plugin) => (
+                        <PluginCard
+                            plugin={plugin}
+                            busy={isBusy(plugin.id)}
+                            onToggle={(enabled) => void onToggle(plugin, enabled)}
+                            onReload={() => void onReload(plugin)}
+                        />
+                    )}
+                </For>
+            </Show>
         </>
     );
 }

@@ -47,5 +47,6 @@ export function navigateTo(passedWindow: BrowserWindow, url: string): void {
     passedWindow.webContents.executeJavaScript(
         `history.pushState({}, null, ${JSON.stringify(sanitized)});window.dispatchEvent(new PopStateEvent("popstate", {}));`,
     );
+    passedWindow.show();
     passedWindow.focus();
 }

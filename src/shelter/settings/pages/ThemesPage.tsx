@@ -1,14 +1,19 @@
-import { createSignal, For } from "solid-js";
+import { createSignal, For, Show } from "solid-js";
 import type { Settings } from "../../../@types/settings.js";
 import type { ThemeManifest } from "../../../@types/themeManifest.js";
+import { EmptyState } from "../components/EmptyState.jsx";
+import { SettingsPageHeader } from "../components/SettingsPageHeader.jsx";
 import { ThemesCard } from "../components/ThemesCard.jsx";
 import { refreshThemes, setConfig } from "../settings.js";
 import classes from "./ThemesPages.module.css";
 
 const {
-    ui: { Button, Header, HeaderTags, ButtonSizes, TextBox, showToast, SwitchItem },
+    ui: { Button, Header, HeaderTags, ButtonSizes, TextBox, showToast, SwitchItem, Text, TextTags },
     plugin: { store },
 } = shelter;
+
+const BETTERDISCORD_THEMES_URL = "https://betterdiscord.app/themes";
+
 export function ThemesPage() {
     const [downloadUrl, setDownloadUrl] = createSignal("");
     refreshThemes();
@@ -28,9 +33,11 @@ export function ThemesPage() {
 
     const settings = () => store.settings as Settings;
     const t = store.i18n;
+    const themes = () => (store.themes as ThemeManifest[]) ?? [];
+
     return (
         <>
-            <Header tag={HeaderTags.H1}>Themes</Header>
+            <SettingsPageHeader title={t["themes-pageTitle"]} description={t["themes-pageDesc"]} divider={true} />
             <SwitchItem
                 note={store.i18n["settings-quickCss-desc"]}
                 value={settings().quickCss}
@@ -46,7 +53,7 @@ export function ThemesPage() {
             >
                 {store.i18n["settings-quickCss"]}
             </SwitchItem>
-            <div class={classes.buttonBox}>
+            <div class={classes.toolbar}>
                 <Button
                     size={ButtonSizes.LARGE}
                     onClick={window.legcord.themes.openQuickCss}
@@ -60,6 +67,14 @@ export function ThemesPage() {
                 <Button size={ButtonSizes.LARGE} onClick={window.legcord.settings.openThemesFolder}>
                     {t["themes-openThemesFolder"]}
                 </Button>
+                <Button
+                    size={ButtonSizes.LARGE}
+                    onClick={() => {
+                        store.themes = window.legcord.themes.refresh();
+                    }}
+                >
+                    {t["themes-refresh"]}
+                </Button>
             </div>
             <div class={classes.addBox}>
                 <TextBox
@@ -71,7 +86,24 @@ export function ThemesPage() {
                     {t["themes-import"]}
                 </Button>
             </div>
-            <For each={store.themes}>{(theme: ThemeManifest) => <ThemesCard theme={theme} />}</For>
+            <Text tag={TextTags.textSM} class={classes.importNote}>
+                {t["themes-importUrlNote"]}
+            </Text>
+            <hr class={classes.divider} />
+            <Header tag={HeaderTags.HeadingLG}>{t["themes-installed"]}</Header>
+            <Show
+                when={themes().length > 0}
+                fallback={
+                    <EmptyState
+                        message={t["themes-empty"]}
+                        description={t["themes-emptyDesc"]}
+                        linkHref={BETTERDISCORD_THEMES_URL}
+                        linkLabel={t["themes-browseThemes"]}
+                    />
+                }
+            >
+                <For each={themes()}>{(theme: ThemeManifest) => <ThemesCard theme={theme} />}</For>
+            </Show>
         </>
     );
 }

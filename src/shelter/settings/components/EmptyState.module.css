@@ -1,0 +1,27 @@
+.empty {
+    margin: 1rem 0 1.5rem;
+    padding: 1rem;
+    border: 1px solid var(--border-subtle, var(--background-modifier-accent));
+    border-radius: 8px;
+    background: var(--background-secondary, transparent);
+}
+
+.message {
+    margin: 0;
+    color: var(--header-primary, var(--text-normal));
+}
+
+.description {
+    margin-top: 6px;
+    color: var(--text-muted, var(--text-subtle));
+    line-height: 1.35;
+    max-width: 36rem;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+}

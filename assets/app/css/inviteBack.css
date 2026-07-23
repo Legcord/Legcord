@@ -1,0 +1,52 @@
+#legcord-invite-back {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2147483646;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 0;
+    padding: 0 16px;
+    min-height: 38px;
+    border: none;
+    border-radius: 8px;
+    background: var(--brand-500, #5865f2);
+    color: var(--white-500, #fff);
+    font-family: var(--font-primary, "gg sans", "gg sans Fallback", "Noto Sans", Helvetica, Arial, sans-serif);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    letter-spacing: 0;
+    white-space: nowrap;
+    cursor: pointer;
+    box-shadow:
+        var(--elevation-high, 0 8px 16px rgba(0, 0, 0, 0.24)),
+        0 0 0 1px rgba(0, 0, 0, 0.08);
+    -webkit-app-region: no-drag;
+    user-select: none;
+    transition:
+        background-color 0.17s ease,
+        box-shadow 0.17s ease,
+        transform 0.17s ease;
+}
+
+#legcord-invite-back[data-visible="true"] {
+    display: inline-flex;
+}
+
+#legcord-invite-back:hover {
+    background: var(--brand-560, #4752c4);
+}
+
+#legcord-invite-back:active {
+    background: var(--brand-600, #3c45a5);
+    transform: translateX(-50%) translateY(1px);
+}
+
+#legcord-invite-back:focus-visible {
+    outline: 2px solid var(--brand-500, #5865f2);
+    outline-offset: 2px;
+}

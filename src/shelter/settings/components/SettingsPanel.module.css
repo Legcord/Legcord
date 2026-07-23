@@ -1,0 +1,111 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+    border: 1px solid var(--border-subtle, var(--background-modifier-accent));
+    border-radius: 8px;
+    background-color: var(--background-surface-higher, var(--background-secondary));
+    text-align: left;
+}
+
+.containerOpened {
+    margin-bottom: 16px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 16px;
+    gap: 16px;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+}
+
+.header:focus-visible {
+    outline: 2px solid var(--focus-primary, var(--brand-500));
+    outline-offset: -2px;
+    border-radius: 8px;
+}
+
+.icon {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background-color: var(--background-base-lowest, var(--background-tertiary));
+    color: var(--interactive-text-default, var(--interactive-normal));
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    flex: 1;
+}
+
+.titleText {
+    cursor: pointer;
+    margin: 0;
+}
+
+.description {
+    color: var(--interactive-text-default, var(--text-muted));
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 500;
+}
+
+.caret {
+    margin-left: auto;
+    color: var(--interactive-text-default, var(--interactive-normal));
+    display: flex;
+    align-items: center;
+}
+
+.caretIcon {
+    transition: none;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    max-height: 0;
+    padding-top: 0;
+    overflow: hidden;
+    gap: 8px;
+    border-width: 0;
+}
+
+.sectionOpened {
+    max-height: none;
+    /* Allow dropdown menus to paint outside the panel instead of being clipped. */
+    overflow: visible;
+    margin: 16px;
+    margin-top: 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-subtle, var(--background-modifier-accent));
+}
+
+:global(.full-motion) .container {
+    transition: margin-bottom 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:global(.full-motion) .caretIcon {
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Avoid transitioning max-height: none ↔ 0 — it visually collapses on content reflow. */
+:global(.full-motion) .section {
+    transition:
+        padding-top 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+        margin-top 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}

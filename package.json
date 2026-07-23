@@ -43,18 +43,19 @@
         "@xmldom/xmldom": "^0.9.10",
         "app-builder-lib": "^26.8.1",
         "babel-preset-solid": "^1.9.12",
-        "electron": "42.3.3",
+        "electron": "43.2.0",
         "electron-builder": "26.8.1",
         "lucide-solid": "^1.16.0",
         "rolldown": "1.0.3",
         "rollup-plugin-copy": "^3.5.0",
-        "solid-js": "^1.9.13",
+        "solid-js": "^1.9.14",
         "solid-motionone": "^1.0.4",
         "typescript": "^6.0.3",
         "xml-formatter": "^3.7.0"
     },
     "dependencies": {
-        "adm-zip": "^0.5.17",
+        "@jellybrick/dbus-next": "^0.11.1",
+        "adm-zip": "^0.6.0",
         "arrpc": "github:Legcord/arrpc#efe7589762470d32b9ba10d529be5acc23cd0e19",
         "electron-context-menu": "^4.1.2",
         "electron-is-dev": "^3.0.1",
@@ -67,6 +68,6 @@
     "optionalDependencies": {
         "@vencord/venmic": "^6.1.0"
     },
-    "packageManager": "pnpm@11.4.0+sha512.f0febc7e37552ab485494a914241b338e0b3580b93d54ce31f00933015880863129038a1b4ae4e414a0ee63ac35bf21197e990172c4a68256450b5636310968f",
+    "packageManager": "pnpm@11.10.0",
     "package-manager-strict": false
 }

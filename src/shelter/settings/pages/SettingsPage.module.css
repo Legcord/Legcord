@@ -1,3 +1,28 @@
-.category {
+.search {
+    margin: 8px 0 4px;
+}
+
+.searchHint {
+    margin: 0 0 8px;
+    color: var(--text-muted, var(--text-subtle));
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.noResults {
+    margin: 24px 0;
+    text-align: center;
+    color: var(--text-muted, var(--text-subtle));
+    font-size: 14px;
+}
+
+.panelActions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.crashTitle {
     margin-bottom: 8px;
 }

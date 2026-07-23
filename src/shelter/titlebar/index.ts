@@ -66,19 +66,25 @@ function layerPop() {
 
 export function onLoad() {
     log("Legcord Titlebar Controller");
-    switch (settings.windowStyle) {
-        case "default":
-            document.body.setAttribute("customTitlebar", "");
-            injectButtonControls();
-            break;
-        case "overlay":
-            document.body.setAttribute("customTitlebar", "");
-            dispatcher.subscribe("LAYER_PUSH", layerPush);
-            dispatcher.subscribe("LAYER_POP", layerPop);
-            break;
-        default:
-            log("Unsupported window style");
+    if (settings.windowStyle === "default") {
+        document.body.setAttribute("customTitlebar", "");
+        injectButtonControls();
+        return;
     }
+
+    // Native + transparency on macOS uses the same overlay chrome as "overlay" (Legcord#1095).
+    const overlayLike =
+        settings.windowStyle === "overlay" ||
+        (settings.windowStyle === "native" && window.legcord.platform === "darwin" && settings.transparency !== "none");
+
+    if (overlayLike) {
+        document.body.setAttribute("customTitlebar", "");
+        dispatcher.subscribe("LAYER_PUSH", layerPush);
+        dispatcher.subscribe("LAYER_POP", layerPop);
+        return;
+    }
+
+    log("Unsupported window style");
 }
 
 export function onUnload() {

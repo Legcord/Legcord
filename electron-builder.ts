@@ -1,10 +1,30 @@
 import type { Configuration } from "electron-builder";
 
 import { applyAppImageSandboxFix } from "./scripts/build/sandboxFix.mjs";
+import { ACTION_FRIENDLY_NAMES, EXCLUDED_FROM_SHORTCUTS, ValidActions } from "./src/common/commandDefinitions";
+
+const desktopActions = (exec: "AppRun" | "/opt/Legcord/legcord") =>
+    Object.fromEntries(
+        (Object.values(ValidActions) as ValidActions[])
+            .filter((action) => !EXCLUDED_FROM_SHORTCUTS.includes(action))
+            .map((action) => [
+                action,
+                {
+                    Name: ACTION_FRIENDLY_NAMES[action],
+                    Exec: `${exec} --${action} %U`,
+                },
+            ]),
+    );
+
+const availableActions = (Object.values(ValidActions) as ValidActions[])
+    .filter((action) => !EXCLUDED_FROM_SHORTCUTS.includes(action))
+    .join(";");
 
 export const config: Configuration = {
     appId: "app.legcord.Legcord",
     productName: "Legcord",
+    // Biome treats electron-builder macro placeholders as template syntax.
+    // biome-ignore lint/suspicious/noTemplateCurlyInString: electron-builder expands these placeholders.
     artifactName: "Legcord-${version}-${os}-${arch}.${ext}",
     beforePack: applyAppImageSandboxFix,
     protocols: [
@@ -41,6 +61,19 @@ export const config: Configuration = {
         },
     },
 
+    appImage: {
+        desktop: {
+            entry: {
+                Actions: availableActions,
+            },
+            desktopActions: desktopActions("AppRun"),
+        },
+    },
+
+    pacman: {
+        depends: ["gtk3", "libnotify", "nss", "libxss", "libxtst", "xdg-utils", "at-spi2-core", "libsecret"],
+    },
+
     nsis: {
         oneClick: false,
         allowToChangeInstallationDirectory: true,
@@ -69,6 +102,12 @@ export const config: Configuration = {
         category: "Network",
         icon: "build/icon.icns",
         depends: ["libgbm-dev", "libasound2", "libnspr4", "libnss3"],
+        desktop: {
+            entry: {
+                Actions: availableActions,
+            },
+            desktopActions: desktopActions("/opt/Legcord/legcord"),
+        },
     },
 
     files: [

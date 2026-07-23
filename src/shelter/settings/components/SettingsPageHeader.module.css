@@ -1,0 +1,10 @@
+.header {
+    margin-bottom: 4px;
+}
+
+.description {
+    margin-top: 4px;
+    color: var(--text-muted, var(--text-subtle));
+    max-width: 42rem;
+    line-height: 1.35;
+}

@@ -1,4 +1,4 @@
-import { createSignal } from "solid-js";
+import { createSignal, Show } from "solid-js";
 import classes from "./BackupSection.module.css";
 
 const {
@@ -143,7 +143,7 @@ function applyClientModsFromRestore(raw: unknown): void {
     }
 }
 
-export function BackupSection() {
+export function BackupSection(props: { embedded?: boolean }) {
     const t = store.i18n;
 
     function buildClientMods(includes: IncludeOptions) {
@@ -248,11 +248,13 @@ export function BackupSection() {
     }
 
     return (
-        <div class={classes.item}>
-            <Header class={classes.title} tag={HeaderTags.H3}>
-                {t["backup-pageTitle"]}
-            </Header>
-            <div class={classes.note}>{t["backup-pageSubtitle"]}</div>
+        <div class={props.embedded ? classes.embedded : classes.item}>
+            <Show when={!props.embedded}>
+                <Header class={classes.title} tag={HeaderTags.H3}>
+                    {t["backup-pageTitle"]}
+                </Header>
+                <div class={classes.note}>{t["backup-pageSubtitle"]}</div>
+            </Show>
             <div class={classes.actions}>
                 <Button onClick={openBackupModal} size={ButtonSizes.LARGE}>
                     {t["backup-createBackup"]}
@@ -261,7 +263,9 @@ export function BackupSection() {
                     {t["backup-restore"]}
                 </Button>
             </div>
-            <Divider />
+            <Show when={!props.embedded}>
+                <Divider />
+            </Show>
         </div>
     );
 }

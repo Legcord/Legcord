@@ -78,6 +78,7 @@ export interface LegcordWindow {
         uninstall: (id: string) => void;
         set: (id: string, state: boolean) => void;
         getThemes: () => Readonly<ThemeManifest[]>;
+        refresh: () => Readonly<ThemeManifest[]>;
         openQuickCss: () => void;
         edit: (id: string) => void;
         folder: (id: string) => void;

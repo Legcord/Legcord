@@ -1,0 +1,12 @@
+.toolbar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 12px;
+}
+
+.tip {
+    margin-top: 8px;
+    color: var(--text-muted, var(--text-subtle));
+    max-width: 42rem;
+    line-height: 1.35;
+}

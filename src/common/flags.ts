@@ -32,6 +32,76 @@ const performance: Preset = {
     disableFeatures: ["Vulkan"],
 };
 
+/** Light GPU boost without forcing the discrete GPU — a middle ground. */
+const balanced: Preset = {
+    switches: [["enable-gpu-rasterization"], ["enable-zero-copy"], ["ignore-gpu-blocklist"]],
+    enableFeatures: [
+        "CanvasOopRasterization",
+        "UseSkiaRenderer",
+        "WebAssemblyLazyCompilation",
+        "CalculateNativeWinOcclusion",
+        "ThrottleDisplayNoneAndVisibilityHiddenCrossOriginIframes",
+    ],
+    disableFeatures: ["Vulkan"],
+};
+
+/** Reduce RAM / CPU usage at the cost of some visual smoothness. */
+const memory: Preset = {
+    switches: [
+        ["enable-low-end-device-mode"],
+        ["enable-low-res-tiling"],
+        ["process-per-site"],
+        ["renderer-process-limit", "2"],
+        ["force_low_power_gpu"],
+        ["disk-cache-size", "67108864"], // 64 MB
+        ["skia-resource-cache-limit-mb", "64"],
+    ],
+    enableFeatures: ["CalculateNativeWinOcclusion", "TurnOffStreamingMediaCachingOnBattery"],
+    disableFeatures: [],
+};
+
+/** Favor voice/video call quality with HW WebRTC encode/decode. */
+const voip: Preset = {
+    switches: [
+        ["enable-gpu-rasterization"],
+        ["enable-zero-copy"],
+        ["ignore-gpu-blocklist"],
+        ["force_high_performance_gpu"],
+        ["disable-background-timer-throttling"],
+        ["disable-renderer-backgrounding"],
+        ["disable-backgrounding-occluded-windows"],
+        ["enable-gpu-memory-buffer-video-frames"],
+    ],
+    enableFeatures: [
+        "WebRtcHWDecoding",
+        "WebRtcHWEncoding",
+        "AcceleratedVideoDecoder",
+        "AcceleratedVideoEncoder",
+        "AcceleratedVideoDecodeLinuxGL",
+        "AcceleratedVideoDecodeLinuxZeroCopyGL",
+        "ZeroCopyDesktopCapture",
+    ],
+    disableFeatures: ["UseChromeOSDirectVideoDecoder"],
+};
+
+/** Minimize input/render latency; keeps the app hot in the background. */
+const latency: Preset = {
+    switches: [
+        ["enable-gpu-rasterization"],
+        ["enable-zero-copy"],
+        ["ignore-gpu-blocklist"],
+        ["force_high_performance_gpu"],
+        ["enable-hardware-overlays", "single-fullscreen,single-on-top,underlay"],
+        ["disable-background-timer-throttling"],
+        ["disable-renderer-backgrounding"],
+        ["disable-backgrounding-occluded-windows"],
+        ["disable-ipc-flooding-protection"],
+        ["disable-backing-store-limit"],
+    ],
+    enableFeatures: ["EnableDrDc", "CanvasOopRasterization", "UseSkiaRenderer", "WebAssemblyLazyCompilation"],
+    disableFeatures: ["Vulkan"],
+};
+
 const smoothExperiment: Preset = {
     switches: [
         ["enable-gpu-rasterization"],
@@ -54,6 +124,7 @@ const smoothExperiment: Preset = {
         "AcceleratedVideoEncoder",
         "AcceleratedVideoDecoder",
         "AcceleratedVideoDecodeLinuxZeroCopyGL",
+        "ZeroCopyDesktopCapture",
     ],
     disableFeatures: ["Vulkan", "UseChromeOSDirectVideoDecoder"],
 };
@@ -66,7 +137,7 @@ const battery: Preset = {
         ["enable-low-res-tiling"],
         ["process-per-site"],
     ],
-    enableFeatures: ["TurnOffStreamingMediaCachingOnBattery"],
+    enableFeatures: ["TurnOffStreamingMediaCachingOnBattery", "CalculateNativeWinOcclusion"],
     disableFeatures: [],
 };
 
@@ -160,6 +231,14 @@ function mergeWithCustomFlags(preset: Preset): Preset {
     };
 }
 
+function mergePresets(base: Preset, extra: Preset): Preset {
+    return {
+        switches: [...base.switches, ...extra.switches],
+        enableFeatures: [...base.enableFeatures, ...extra.enableFeatures],
+        disableFeatures: [...base.disableFeatures, ...extra.disableFeatures],
+    };
+}
+
 export function getPreset(): Preset | undefined {
     //     MIT License
 
@@ -182,30 +261,57 @@ export function getPreset(): Preset | undefined {
     // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     // SOFTWARE.
-    if (getConfig("vaapi")) {
-        console.log("VAAPI mode enabled");
-        mergeWithCustomFlags(vaapi);
-    }
+    let preset: Preset | undefined;
+
     switch (getConfig("performanceMode")) {
         case "dynamic":
             if (powerMonitor.isOnBatteryPower()) {
                 console.log("Battery mode enabled");
-                return mergeWithCustomFlags(battery);
+                preset = battery;
             } else {
                 console.log("Performance mode enabled");
-                return mergeWithCustomFlags(performance);
+                preset = performance;
             }
+            break;
         case "performance":
             console.log("Performance mode enabled");
-            return mergeWithCustomFlags(performance);
+            preset = performance;
+            break;
+        case "balanced":
+            console.log("Balanced mode enabled");
+            preset = balanced;
+            break;
         case "battery":
             console.log("Battery mode enabled");
-            return mergeWithCustomFlags(battery);
+            preset = battery;
+            break;
+        case "memory":
+            console.log("Memory saver mode enabled");
+            preset = memory;
+            break;
+        case "voip":
+            console.log("Voice & video mode enabled");
+            preset = voip;
+            break;
+        case "latency":
+            console.log("Low latency mode enabled");
+            preset = latency;
+            break;
         case "smoothScreenshare":
             console.log("Smooth screenshare mode enabled");
-            return mergeWithCustomFlags(smoothExperiment);
+            preset = smoothExperiment;
+            break;
         default:
             console.log("No performance modes set");
+    }
+
+    if (getConfig("vaapi")) {
+        console.log("VAAPI flags enabled");
+        preset = preset ? mergePresets(preset, vaapi) : vaapi;
+    }
+
+    if (preset) {
+        return mergeWithCustomFlags(preset);
     }
 }
 

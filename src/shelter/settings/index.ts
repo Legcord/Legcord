@@ -25,15 +25,18 @@ const {
 let settingsCleanups: (() => void)[] = [];
 
 function registerSections(): (() => void)[] {
-    return [
+    const array = [
         registerSection("divider"),
         registerSection("header", "Legcord"),
         registerSection("section", "legcord-settings", "Settings", SettingsPage, { icon: SettingsSidebarIcon }),
         registerSection("section", "legcord-themes", "Themes", ThemesPage, { icon: ThemesSidebarIcon }),
-        registerSection("section", "legcord-plugins", "Plugins", PluginsPage, { icon: PluginsSidebarIcon }),
         registerSection("section", "legcord-keybinds", "Keybinds", KeybindsPage, { icon: KeybindsSidebarIcon }),
         registerSection("section", "legcord-games", "Games", RegisteredGamesPage, { icon: GamesSidebarIcon }),
     ];
+    if (window.legcord.settings.getConfig().showExperimentalPluginMenu) {
+        array.push(registerSection("section", "legcord-plugins", "Plugins", PluginsPage, { icon: PluginsSidebarIcon }));
+    }
+    return array;
 }
 
 function restartRequired(payload: { event: string; properties: { origin_pane: string } }) {

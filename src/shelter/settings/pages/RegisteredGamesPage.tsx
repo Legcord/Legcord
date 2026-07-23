@@ -5,6 +5,8 @@ import { sleep } from "../../../common/sleep.js";
 import { AddDetectableModal } from "../components/AddDetectableModal.jsx";
 import { DetectableCard } from "../components/DetectableCard.jsx";
 import { Dropdown } from "../components/Dropdown.jsx";
+import { EmptyState } from "../components/EmptyState.jsx";
+import { SettingsPageHeader } from "../components/SettingsPageHeader.jsx";
 import classes from "./RegisteredGames.module.css";
 
 const {
@@ -93,8 +95,7 @@ export function RegisteredGamesPage() {
 
     return (
         <>
-            <Header tag={HeaderTags.H1}>{t["games-registeredGames"]}</Header>
-            <Divider mt mb />
+            <SettingsPageHeader title={t["games-registeredGames"]} description={t["games-pageDesc"]} />
             <div class={classes.addBox}>
                 <Dropdown
                     class={classes.dropdown}
@@ -128,27 +129,21 @@ export function RegisteredGamesPage() {
             </div>
             <Show
                 when={(detectables()?.length ?? 0) > 0}
-                fallback={
-                    <Header tag={HeaderTags.H5} class={classes.empty}>
-                        {t["games-empty"]}
-                    </Header>
-                }
+                fallback={<EmptyState message={t["games-empty"]} description={t["games-emptyDesc"]} />}
             >
                 <For each={detectables()}>
                     {(detectable) => <DetectableCard detectable={detectable} onRemove={refreshDetectables} />}
                 </For>
             </Show>
 
-            <Header tag={HeaderTags.H3} class={classes.sectionHeader}>
+            <Header tag={HeaderTags.HeadingLG} class={classes.sectionHeader}>
                 {t["games-lastDetected"]}
             </Header>
             <Divider mt mb />
             <Show
                 when={lastDetected().length > 0}
                 fallback={
-                    <Header tag={HeaderTags.H5} class={classes.empty}>
-                        {t["games-lastDetectedEmpty"]}
-                    </Header>
+                    <EmptyState message={t["games-lastDetectedEmpty"]} description={t["games-lastDetectedEmptyDesc"]} />
                 }
             >
                 <ul class={classes.gameList}>
@@ -171,16 +166,14 @@ export function RegisteredGamesPage() {
                 </ul>
             </Show>
 
-            <Header tag={HeaderTags.H3} class={classes.sectionHeader}>
+            <Header tag={HeaderTags.HeadingLG} class={classes.sectionHeader}>
                 {t["games-blacklisted"]}
             </Header>
             <Divider mt mb />
             <Show
                 when={blacklisted().length > 0}
                 fallback={
-                    <Header tag={HeaderTags.H5} class={classes.empty}>
-                        {t["games-blacklistedEmpty"]}
-                    </Header>
+                    <EmptyState message={t["games-blacklistedEmpty"]} description={t["games-blacklistedEmptyDesc"]} />
                 }
             >
                 <ul class={classes.gameList}>

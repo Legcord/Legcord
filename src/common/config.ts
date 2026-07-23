@@ -60,6 +60,10 @@ const defaults: Settings = {
     noBundleUpdates: [],
     automaticUpdates: false,
     additionalArguments: "",
+    proxyMode: "system",
+    proxyRules: "",
+    proxyBypassRules: "<local>",
+    proxyPacScript: "",
     customIcon: join(import.meta.dirname, "../", "/assets/desktop.png"),
     smoothScroll: true,
     autoScroll: false,
@@ -67,6 +71,7 @@ const defaults: Settings = {
     extendedPluginAbilities: false,
     quickCss: true,
     supportBannerDismissed: false,
+    showExperimentalPluginMenu: false,
     pluginStates: {},
 };
 
@@ -80,6 +85,7 @@ const safeMode: Settings = {
     vaapi: false,
     additionalArguments: "",
     extendedPluginAbilities: false,
+    showExperimentalPluginMenu: false,
     quickCss: false,
 };
 

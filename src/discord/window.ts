@@ -5,9 +5,11 @@ import {
     app,
     BrowserWindow,
     type BrowserWindowConstructorOptions,
+    clipboard,
     dialog,
     type MessageBoxOptions,
     nativeImage,
+    net,
     screen,
     shell,
 } from "electron";
@@ -15,9 +17,18 @@ import contextMenu from "electron-context-menu";
 import { firstRun, getConfig, setConfig } from "../common/config.js";
 import { navigateTo } from "../common/dom.js";
 import { forceQuit, setForceQuit } from "../common/forceQuit.js";
+import { handleCommands, passedValidArgument } from "../common/handleCommands.js";
 import { getLang } from "../common/lang.js";
 import { injectThemesMain } from "../common/themes.js";
+import {
+    DEFAULT_WINDOW_HEIGHT,
+    DEFAULT_WINDOW_WIDTH,
+    MIN_WINDOW_HEIGHT,
+    MIN_WINDOW_WIDTH,
+    sanitizeWindowBounds,
+} from "../common/windowBounds.js";
 import { getWindowState, setWindowState } from "../common/windowState.js";
+import { disconnectDbusService } from "../dbus.js";
 import { init } from "../main.js";
 import { registerGlobalKeybinds } from "./globalKeybinds.js";
 import { registerIpc } from "./ipc.js";
@@ -30,27 +41,17 @@ import { registerVenmicIpc } from "./venmic.js";
 export let mainWindows: BrowserWindow[] = [];
 export let inviteWindow: BrowserWindow;
 
-function getStoredWindowBounds(): BrowserWindowConstructorOptions {
-    const width = getWindowState("width") ?? 835;
-    const height = getWindowState("height") ?? 600;
-    const x = getWindowState("x");
-    const y = getWindowState("y");
-
-    if (x === undefined || y === undefined) {
-        return {
-            width,
-            height,
-        };
-    }
-
-    // Return the stored window coordinates as-is.
-    // Restore uses setPosition/setSize for a direct API roundtrip.
-    return {
-        width,
-        height,
-        x,
-        y,
-    };
+function getStoredWindowBounds() {
+    return sanitizeWindowBounds(
+        {
+            width: getWindowState("width"),
+            height: getWindowState("height"),
+            x: getWindowState("x"),
+            y: getWindowState("y"),
+            displayId: getWindowState("displayId"),
+        },
+        screen.getAllDisplays(),
+    );
 }
 
 // Save window bounds using the same API family we restore with.
@@ -59,26 +60,67 @@ function saveWindowState(win: BrowserWindow): void {
     try {
         const [x, y] = win.getPosition();
         const [width, height] = win.getSize();
-        const display = screen.getDisplayNearestPoint({ x, y });
+        const sanitized = sanitizeWindowBounds(
+            {
+                width,
+                height,
+                x,
+                y,
+                displayId: screen.getDisplayNearestPoint({ x, y }).id,
+            },
+            screen.getAllDisplays(),
+        );
 
         setWindowState({
-            width,
-            height,
+            width: sanitized.width,
+            height: sanitized.height,
             isMaximized: win.isMaximized(),
-            x,
-            y,
-            displayId: display.id,
-            displayScaleFactor: display.scaleFactor,
+            x: sanitized.x,
+            y: sanitized.y,
+            displayId: sanitized.displayId,
+            displayScaleFactor: sanitized.displayScaleFactor,
         });
     } catch (e) {
         console.log("[Window] Failed to save window state:", e);
     }
 }
 
+async function copyImageFromContext(
+    parameters: { srcURL: string; x: number; y: number },
+    win?: BrowserWindow,
+): Promise<void> {
+    if (parameters.srcURL) {
+        try {
+            const response = await net.fetch(parameters.srcURL);
+            if (!response.ok) throw new Error(`HTTP ${response.status} ${response.statusText}`);
+
+            const image = nativeImage.createFromBuffer(Buffer.from(await response.arrayBuffer()));
+            if (!image.isEmpty()) {
+                clipboard.writeImage(image);
+                return;
+            }
+        } catch (error) {
+            console.warn("[ContextMenu] Failed to copy image from URL, falling back to copyImageAt:", error);
+        }
+    }
+
+    win?.webContents.copyImageAt(parameters.x, parameters.y);
+}
+
 contextMenu({
     showSaveImageAs: true,
+    showCopyImage: false,
     showCopyImageAddress: true,
     showSearchWithGoogle: false,
+    append: (_defaultActions, parameters, win) => [
+        {
+            label: "Copy Image",
+            visible: parameters.mediaType === "image",
+            click: () => {
+                void copyImageFromContext(parameters, win as BrowserWindow | undefined);
+            },
+        },
+    ],
     prepend: (_defaultActions, parameters) => [
         {
             label: getLang("contextMenu-searchGoogle"),
@@ -101,7 +143,7 @@ contextMenu({
 function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     createTray();
     if (getWindowState("isMaximized") ?? false) {
-        passedWindow.setSize(835, 600); //just so the whole thing doesn't cover whole screen
+        passedWindow.setSize(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT); //just so the whole thing doesn't cover whole screen
         passedWindow.maximize();
         void passedWindow.webContents.executeJavaScript(`document.body.setAttribute("isMaximized", "");`);
         passedWindow.hide(); // please don't flashbang the user
@@ -126,17 +168,18 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
         app.on("second-instance", (_event, commandLine, _workingDirectory, additionalData) => {
             void (async () => {
                 // Print out data received from the second instance.
-                console.log(additionalData);
+                console.log(`data received: ${additionalData}`);
 
                 if (!getConfig("multiInstance")) {
-                    // Someone tried to run a second instance, we should focus our window.
-                    if (passedWindow) {
+                    // Someone tried to run a second instance,
+                    // we should focus our window if the user is not running special commands.
+                    if (passedWindow && !passedValidArgument(commandLine)) {
                         if (passedWindow.isMinimized()) passedWindow.restore();
                         passedWindow.show();
                         passedWindow.focus();
                     }
                     if (commandLine && commandLine.length > 0) {
-                        console.log(commandLine);
+                        handleCommands(commandLine);
                         const lastArg = commandLine.pop();
                         if (lastArg?.startsWith("discord://-")) {
                             navigateTo(passedWindow, lastArg.replace("discord://-", ""));
@@ -349,6 +392,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     });
     app.on("before-quit", () => {
         stopRPC();
+        disconnectDbusService();
         try {
             // Ensure current window state is saved with display info
             if (passedWindow && !passedWindow.isDestroyed()) saveWindowState(passedWindow);
@@ -423,7 +467,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
                 lastPolledBounds = { x, y, width, height };
                 saveWindowState(passedWindow);
             }
-        } catch (e) {
+        } catch (_e) {
             // ignore transient errors
         }
     }, 1000);
@@ -450,10 +494,15 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
 
 export function createWindow() {
     const storedBounds = getStoredWindowBounds();
+    if (storedBounds.usedFallback) {
+        console.log("[Window] Stored bounds were invalid or off-screen; using sanitized placement", storedBounds);
+    }
     const browserWindowOptions: BrowserWindowConstructorOptions = {
-        // Use safe defaults for constructor; actual bounds applied via setBounds() below
-        width: 835,
-        height: 600,
+        // Use safe defaults for constructor; actual bounds applied via setPosition/setSize below
+        width: DEFAULT_WINDOW_WIDTH,
+        height: DEFAULT_WINDOW_HEIGHT,
+        minWidth: MIN_WINDOW_WIDTH,
+        minHeight: MIN_WINDOW_HEIGHT,
         title: "Legcord",
         show: false,
         darkTheme: true,
@@ -478,7 +527,22 @@ export function createWindow() {
             }
             break;
         case "native":
-            browserWindowOptions.frame = true;
+            // On macOS, frame:true + transparent/vibrancy makes the native title bar
+            // and traffic lights invisible (Legcord#1095). Use overlay chrome instead.
+            if (os.platform() === "darwin" && getConfig("transparency") !== "none") {
+                browserWindowOptions.titleBarStyle = "hidden";
+                browserWindowOptions.titleBarOverlay = {
+                    color: getConfig("overlayButtonColor"),
+                    symbolColor: "#99aab5",
+                    height: 30,
+                };
+                browserWindowOptions.trafficLightPosition = {
+                    x: 10,
+                    y: 10,
+                };
+            } else {
+                browserWindowOptions.frame = true;
+            }
             break;
         case "overlay":
             browserWindowOptions.titleBarStyle = "hidden";
@@ -516,11 +580,9 @@ export function createWindow() {
     const mainWindow = new BrowserWindow(browserWindowOptions);
 
     // Restore by position + size directly to match saveWindowState roundtrip.
-    if (storedBounds.x !== undefined && storedBounds.y !== undefined) {
-        mainWindow.setPosition(storedBounds.x, storedBounds.y);
-        mainWindow.setSize(storedBounds.width, storedBounds.height);
-    }
-    
+    mainWindow.setPosition(storedBounds.x, storedBounds.y);
+    mainWindow.setSize(storedBounds.width, storedBounds.height);
+
     mainWindows.push(mainWindow);
     doAfterDefiningTheWindow(mainWindow);
 }

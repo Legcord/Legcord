@@ -95,7 +95,12 @@
     "settings-prfmMode": "Modo rendimiento",
     "settings-prfmMode-desc": "El modo de rendimiento es una función experimental de Legcord diseñada para optimizar la capacidad de respuesta y el rendimiento en función de tus necesidades. El impacto puede variar en función de tu hardware y uso, por lo que te recomendamos que pruebes cada modo para determinar cuál te conviene más.",
     "settings-prfmMode-performance": "Rendimiento",
+    "settings-prfmMode-balanced": "Equilibrado",
     "settings-prfmMode-battery": "Batería",
+    "settings-prfmMode-memory": "Ahorro de memoria",
+    "settings-prfmMode-voip": "Voz y vídeo",
+    "settings-prfmMode-latency": "Baja latencia",
+    "settings-prfmMode-smoothScreenshare": "Compartir pantalla fluido",
     "settings-prfmMode-dynamic": "Dinámico",
     "settings-prfmMode-vaapi": "VAAPI",
     "settings-disableAutogain": "Desactivar ganancia automática",
@@ -298,5 +303,6 @@
     "games-removeFromBlacklist": "Eliminar",
     "games-application": "Aplicación",
     "settings-vaapi": "VAAPI",
-    "settings-vaapi-desc": "Utiliza VAAPI (aceleración por hardware) para la decodificación de vídeo en Linux. Esto reduce considerablemente el uso de la CPU durante el uso compartido de pantalla, pero puede causar problemas en algunos sistemas. Desactívalo si experimentas bloqueos o pantallas en negro durante el uso compartido de pantalla."
+    "settings-vaapi-desc": "Utiliza VAAPI (aceleración por hardware) para la decodificación de vídeo en Linux. Esto reduce considerablemente el uso de la CPU durante el uso compartido de pantalla, pero puede causar problemas en algunos sistemas. Desactívalo si experimentas bloqueos o pantallas en negro durante el uso compartido de pantalla.",
+    "settings-material": "Material de Ventana"
 }

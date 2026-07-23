@@ -18,6 +18,8 @@ import {
 } from "./common/config.js";
 import { getPreset } from "./common/flags.js";
 import { setLang } from "./common/lang.js";
+import { applyProxyCommandLineSwitches, applySessionProxy, configureNodeProxyEnv } from "./common/proxy.js";
+import { setupGlobalShortcuts, startDbusService } from "./dbus.js";
 
 // Chrome flags tracking
 export interface AppliedFlagsOutput {
@@ -153,7 +155,7 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
         .add("MediaSessionService");
     // Your data now belongs to CCP
     crashReporter.start({ uploadToServer: false });
-    // enable pulseaudio audio sharing on linux
+    // enable pulseaudio audio sharing on linux and register keybinds on supported desktop managers and start dbus socket
     if (process.platform === "linux") {
         app.commandLine.appendSwitch("gtk-version", "3");
         trackSwitch("gtk-version", "3");
@@ -161,6 +163,16 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
         disableFeatures.add("WebRtcAllowInputVolumeAdjustment");
         app.commandLine.appendSwitch("enable-speech-dispatcher");
         trackSwitch("enable-speech-dispatcher");
+
+        startDbusService()
+            .catch((reason) => {
+                console.error("Could not start DBus service.", reason);
+            })
+            .then(() => {
+                setupGlobalShortcuts().catch((reason) => {
+                    console.error("Could not setup global shortcuts.", reason);
+                });
+            });
     }
     // enable webrtc capturer for wayland
     if (process.platform === "linux" && process.env.XDG_SESSION_TYPE?.toLowerCase() === "wayland") {
@@ -182,6 +194,8 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
     app.commandLine.appendSwitch("enable-transparent-visuals");
     trackSwitch("enable-transparent-visuals");
     checkIfConfigIsBroken();
+    configureNodeProxyEnv();
+    applyProxyCommandLineSwitches();
     const preset = getPreset();
     if (preset) {
         preset.switches.forEach(([key, val]) => {
@@ -322,6 +336,7 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
 
     void app.whenReady().then(async () => {
         if (isDev) console.log(JSON.stringify(getAppliedFlags()));
+        await applySessionProxy();
         process.on("SIGINT", () => app.quit());
         process.on("SIGTERM", () => app.quit());
         // Patch for linux bug to ensure things are loaded before window creation (fixes transparency on some linux systems)

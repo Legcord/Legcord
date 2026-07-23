@@ -1,6 +1,7 @@
 import type { Game } from "arrpc";
 import { createSignal } from "solid-js";
 import { setRestartRequired } from "../settings.js";
+import classes from "./AddDetectableModal.module.css";
 
 const {
     ui: {
@@ -16,6 +17,8 @@ const {
         SwitchItem,
         showToast,
         openConfirmationModal,
+        Text,
+        TextTags,
     },
     plugin: { store },
 } = shelter;
@@ -88,16 +91,25 @@ export const AddDetectableModal = (props: { close: () => void; executable: strin
         <ModalRoot size={ModalSizes.SMALL}>
             <ModalHeader close={props.close}>{t["detectable-addApp"]}</ModalHeader>
             <ModalBody>
-                <Header tag={HeaderTags.H5}>{t["detectable-appName"]}</Header>
+                <Header tag={HeaderTags.HeadingSM}>{t["detectable-appName"]}</Header>
                 <TextBox value={appName()} onInput={setAppName} placeholder={t["detectable-placeholderName"]} />
                 <Divider mt mb />
-                <Header tag={HeaderTags.H5}>{t["detectable-appId"]}</Header>
+                <Header tag={HeaderTags.HeadingSM}>{t["detectable-appId"]}</Header>
+                <Text tag={TextTags.textSM} class={classes.fieldNote}>
+                    {t["detectable-appId-note"]}
+                </Text>
                 <TextBox value={appId()} onInput={setAppId} placeholder={t["detectable-placeholderId"]} />
                 <Divider mt mb />
-                <Header tag={HeaderTags.H5}>{t["detectable-themes"]}</Header>
+                <Header tag={HeaderTags.HeadingSM}>{t["detectable-themes"]}</Header>
+                <Text tag={TextTags.textSM} class={classes.fieldNote}>
+                    {t["detectable-themes-note"]}
+                </Text>
                 <TextBox value={themes()} onInput={setThemes} placeholder={t["detectable-placeholderThemes"]} />
                 <Divider mt mb />
-                <Header tag={HeaderTags.H5}>{t["detectable-aliases"]}</Header>
+                <Header tag={HeaderTags.HeadingSM}>{t["detectable-aliases"]}</Header>
+                <Text tag={TextTags.textSM} class={classes.fieldNote}>
+                    {t["detectable-aliases-note"]}
+                </Text>
                 <TextBox value={aliases()} onInput={setAliases} placeholder={t["detectable-placeholderAliases"]} />
                 <Divider mt mb />
                 <SwitchItem hideBorder value={enabled()} onChange={setEnabled}>

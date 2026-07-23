@@ -5,9 +5,16 @@ import { parentPort } from "node:worker_threads";
 import RPCServer, { type GameList, type ServerSettings } from "arrpc";
 
 const detectables: GameList = process.env.detectables ? JSON.parse(process.env.detectables) : [];
+const defaultSettings: ServerSettings = {
+    processScanning: true,
+    windowsLegacyScanning: false,
+    scanInterval: 5000,
+};
 const settings: ServerSettings = process.env.settings
-    ? JSON.parse(process.env.settings)
-    : { processScanning: true, windowsLegacyScanning: false, scanInterval: 5000 };
+    ? { ...defaultSettings, ...JSON.parse(process.env.settings) }
+    : defaultSettings;
+
+console.log("[arRPC] worker settings", settings);
 
 const RPC = await new RPCServer(detectables, settings);
 // Guard parentPort

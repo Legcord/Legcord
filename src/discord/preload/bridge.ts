@@ -102,6 +102,7 @@ contextBridge.exposeInMainWorld("legcord", {
         uninstall: (id: string) => ipcRenderer.send("uninstallTheme", id),
         edit: (id: string) => ipcRenderer.send("editTheme", id),
         getThemes: () => ipcRenderer.sendSync("getThemes") as ThemeManifest[],
+        refresh: () => ipcRenderer.sendSync("refreshThemesCache") as ThemeManifest[],
         openImportPicker: () => ipcRenderer.send("openImportPicker"),
         set: (id: string, state: boolean) => ipcRenderer.send("setThemeEnabled", id, state),
         folder: (id: string) => ipcRenderer.send("openThemeFolder", id),
