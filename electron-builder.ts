@@ -1,7 +1,7 @@
 import type { Configuration } from "electron-builder";
 
 import { applyAppImageSandboxFix } from "./scripts/build/sandboxFix.mjs";
-import "./scripts/fetchLatestChangelog"
+import "./scripts/fetchLatestChangelog";
 import fetchLatestChangelog from "./scripts/fetchLatestChangelog";
 import { ACTION_FRIENDLY_NAMES, EXCLUDED_FROM_SHORTCUTS, ValidActions } from "./src/common/commandDefinitions";
 
@@ -115,7 +115,7 @@ export const config: Configuration = {
         fpm: [
             ...(changelogPath ? ["--deb-upstream-changelog", changelogPath] : []),
             "license.txt=/usr/share/doc/legcord/copyright",
-        ]
+        ],
     },
 
     files: [
