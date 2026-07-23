@@ -50,6 +50,7 @@
         "rollup-plugin-copy": "^3.5.0",
         "solid-js": "^1.9.14",
         "solid-motionone": "^1.0.4",
+        "spdx-license-list": "^6.11.0",
         "typescript": "^6.0.3",
         "xml-formatter": "^3.7.0"
     },
