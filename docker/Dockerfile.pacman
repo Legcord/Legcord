@@ -1,0 +1,21 @@
+FROM archlinux
+
+WORKDIR /app
+
+COPY ./dist/*.pacman .
+
+RUN pacman -Syu --noconfirm
+
+RUN pacman -U --noconfirm ./*.pacman
+
+RUN pacman -Syu --noconfirm x11vnc xorg-server-xvfb
+
+RUN mkdir ~/.vnc
+RUN x11vnc -storepasswd 1234 ~/.vnc/passwd
+
+COPY docker/start.sh /start.sh
+RUN chmod +x /start.sh
+
+EXPOSE 5900
+
+CMD ["/start.sh"]

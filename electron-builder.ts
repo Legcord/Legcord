@@ -75,7 +75,7 @@ export const config: Configuration = {
     },
 
     pacman: {
-        depends: ["gtk3", "libnotify", "nss", "libxss", "libxtst", "xdg-utils", "at-spi2-core", "libsecret"],
+        depends: ["gtk3", "libnotify", "xdg-utils", "at-spi2-core", "alsa-lib", "nspr", "nss"],
     },
 
     nsis: {
@@ -105,7 +105,7 @@ export const config: Configuration = {
     deb: {
         category: "Network",
         icon: "build/icon.icns",
-        depends: ["libgbm-dev", "libasound2", "libnspr4", "libnss3"],
+        depends: ["libasound2", "libnspr4", "libnss3", "libasound2t64", "libasound2-plugins"],
         desktop: {
             entry: {
                 Actions: availableActions,
