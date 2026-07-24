@@ -109,9 +109,7 @@ export const config: Configuration = {
             },
             desktopActions: desktopActions("/opt/Legcord/legcord"),
         },
-        fpm: [
-            `${debianLicence()}=/usr/share/doc/legcord/copyright`,
-        ],
+        fpm: [`${debianLicence()}=/usr/share/doc/legcord/copyright`],
     },
 
     files: [
