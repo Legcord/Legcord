@@ -1,11 +1,8 @@
 import type { Configuration } from "electron-builder";
 
 import { applyAppImageSandboxFix } from "./scripts/build/sandboxFix.mjs";
-import fetchLatestChangelog from "./scripts/fetchLatestChangelog";
 import debianLicence from "./scripts/spdxLicenceDebianFormat";
 import { ACTION_FRIENDLY_NAMES, EXCLUDED_FROM_SHORTCUTS, ValidActions } from "./src/common/commandDefinitions";
-
-const changelogPath = fetchLatestChangelog();
 
 const desktopActions = (exec: "AppRun" | "/opt/Legcord/legcord") =>
     Object.fromEntries(
@@ -113,7 +110,6 @@ export const config: Configuration = {
             desktopActions: desktopActions("/opt/Legcord/legcord"),
         },
         fpm: [
-            ...(changelogPath ? ["--deb-upstream-changelog", changelogPath] : []),
             `${debianLicence()}=/usr/share/doc/legcord/copyright`,
         ],
     },
