@@ -10,7 +10,7 @@ const {
 } = shelter;
 
 function openAboutModal() {
-    openModal((close: () => void) => <AboutPopup close={close} />);
+    openModal(({ close }: { close: () => void }) => <AboutPopup close={close} />);
 }
 
 export function SupportBanner() {

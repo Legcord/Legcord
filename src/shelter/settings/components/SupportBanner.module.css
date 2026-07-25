@@ -454,4 +454,29 @@
 
 .modal {
     max-height: 640px;
+    position: relative;
+}
+
+.closeButton {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--background-tertiary);
+    border: 1px solid var(--background-modifier-accent);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.closeButton:hover {
+    background: var(--background-modifier-hover);
+    color: var(--text-normal);
+    border-color: var(--background-modifier-hover);
 }
