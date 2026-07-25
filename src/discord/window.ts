@@ -541,7 +541,7 @@ export function createWindow() {
             };
             browserWindowOptions.trafficLightPosition = {
                 x: 10,
-                y: 10,
+                y: 8.5,
             };
             break;
     }
