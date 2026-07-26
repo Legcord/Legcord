@@ -15,11 +15,8 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
-            - name: Install flatpak-node-generator
-              run: pipx install git+https://github.com/flatpak/flatpak-builder-tools.git#subdirectory=node
-
-            - name: Create generated-sources.json
-              run: /root/.local/bin/flatpak-node-generator pnpm pnpm-lock.yaml --node-sdk-extension org.freedesktop.Sdk.Extension.node26 --electron-node-headers
+            - name: Run flatpak-node-generator
+              run: pipx run git+https://github.com/flatpak/flatpak-builder-tools.git#subdirectory=node pnpm pnpm-lock.yaml --node-sdk-extension org.freedesktop.Sdk.Extension.node26 --electron-node-headers
 
             - name: Upload generated-sources.json to release
               run: |
