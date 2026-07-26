@@ -5,8 +5,8 @@ import type { ThemeManifest } from "../@types/themeManifest.js";
 import { mainWindows } from "../discord/window.js";
 import { getConfig } from "./config.js";
 
-// Performance optimization: Cache theme manifests to avoid reading on every calll
 const themeManifestCache = new Map<string, { manifest: ThemeManifest; mtime: number }>();
+const themeCssCache = new Map<string, string>();
 let quickCssWatcher: fs.FSWatcher | null = null;
 
 const userDataPath = app.getPath("userData");
@@ -112,10 +112,7 @@ function getThemeManifest(themeId: string): ThemeManifest | null {
     }
 }
 
-// Performance optimization: Cached theme list with directory watcher
-const THEME_LIST_CACHE_TTL = 2000;
 let themeListCache: ThemeManifest[] | null = null;
-let themeListCacheTime = 0;
 let themeWatcher: fs.FSWatcher | null = null;
 let themeListRefreshTimeout: NodeJS.Timeout | null = null;
 
@@ -143,7 +140,6 @@ function refreshThemeListCache(): ThemeManifest[] {
     try {
         if (!fs.existsSync(themesFolder)) {
             themeListCache = [];
-            themeListCacheTime = Date.now();
             return themeListCache;
         }
         const themes: ThemeManifest[] = [];
@@ -158,7 +154,6 @@ function refreshThemeListCache(): ThemeManifest[] {
             }
         }
         themeListCache = themes;
-        themeListCacheTime = Date.now();
         return themes;
     } catch (err) {
         console.error("[Theme Manager] Failed to refresh theme list cache:", err);
@@ -167,8 +162,7 @@ function refreshThemeListCache(): ThemeManifest[] {
 }
 
 export function getCachedThemeList(): ThemeManifest[] {
-    const now = Date.now();
-    if (themeListCache && now - themeListCacheTime < THEME_LIST_CACHE_TTL) {
+    if (themeListCache) {
         return themeListCache;
     }
     importLooseThemeFiles();
@@ -217,51 +211,52 @@ export function stopThemeWatcher(): void {
     }
 }
 
+function buildThemeCssCache(): void {
+    themeCssCache.clear();
+    if (!fs.existsSync(themesFolder)) return;
+    const files = fs.readdirSync(themesFolder);
+    for (const file of files) {
+        const themePath = path.join(themesFolder, file);
+        if (fs.statSync(themePath).isFile() && (file.endsWith(".css") || file.endsWith(".theme.css"))) {
+            try {
+                const code = fs.readFileSync(themePath, "utf8");
+                installThemeFromCode(code);
+                fs.unlinkSync(themePath);
+            } catch {}
+        } else {
+            try {
+                const themeFile = getThemeManifest(file);
+                if (!themeFile) continue;
+
+                if (themeFile.enabled === undefined) {
+                    const disabledPath = `${userDataPath}/disabled.txt`;
+                    if (fs.existsSync(disabledPath) && fs.readFileSync(disabledPath).toString().includes(file)) {
+                        themeFile.enabled = false;
+                    } else {
+                        themeFile.enabled = true;
+                    }
+                }
+                if (themeFile.enabled) {
+                    themeCssCache.set(file, fs.readFileSync(`${themePath}/${themeFile.theme}`, "utf-8"));
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    }
+}
+
 export function injectThemesMain(browserWindow: BrowserWindow): void {
     if (process.argv.includes("--safe-mode")) return;
     if (!fs.existsSync(themesFolder)) {
         fs.mkdirSync(themesFolder);
         console.log("Created missing theme folder");
     }
+    buildThemeCssCache();
     browserWindow.webContents.on("did-finish-load", () => {
-        if (getConfig("quickCss")) initQuickCss(browserWindow); // load quick CSS if enabled
-        const files = fs.readdirSync(themesFolder);
-        for (const file of files) {
-            const themePath = path.join(themesFolder, file);
-            if (fs.statSync(themePath).isFile() && (file.endsWith(".css") || file.endsWith(".theme.css"))) {
-                console.log(`[Theme Manager] Local theme detected: ${themePath}`);
-                const code = fs.readFileSync(themePath, "utf8");
-                installThemeFromCode(code);
-                try {
-                    fs.unlinkSync(themePath);
-                } catch {}
-            } else {
-                try {
-                    const themeFile = getThemeManifest(file);
-                    if (!themeFile) continue;
-
-                    if (themeFile.enabled === undefined) {
-                        const disabledPath = `${userDataPath}/disabled.txt`;
-                        if (fs.existsSync(disabledPath) && fs.readFileSync(disabledPath).toString().includes(file)) {
-                            themeFile.enabled = false;
-                        } else {
-                            themeFile.enabled = true;
-                        }
-                    }
-                    if (themeFile.enabled === false) {
-                        console.log(`%cSkipped ${themeFile.name} made by ${themeFile.author}`, "color:red");
-                    } else {
-                        browserWindow.webContents.send(
-                            "addTheme",
-                            file,
-                            fs.readFileSync(`${themePath}/${themeFile.theme}`, "utf-8"),
-                        );
-                        console.log(`%cLoaded ${themeFile.name} made by ${themeFile.author}`, "color:red");
-                    }
-                } catch (err) {
-                    console.error(err);
-                }
-            }
+        if (getConfig("quickCss")) initQuickCss(browserWindow);
+        for (const [id, css] of themeCssCache) {
+            browserWindow.webContents.send("addTheme", id, css);
         }
     });
 }
@@ -275,6 +270,7 @@ export function uninstallTheme(id: string) {
         fs.rmdirSync(path.join(themesFolder, `${id}-BD`), { recursive: true });
         console.log(`Removed ${id} folder`);
     }
+    themeCssCache.delete(id);
     themeManifestCache.delete(id);
     invalidateThemeListCache();
 }
@@ -288,13 +284,12 @@ export function setThemeEnabled(id: string, enabled: boolean) {
     if (enabled !== manifest.enabled) {
         mainWindows.every((passedWindow) => {
             if (enabled) {
-                passedWindow.webContents.send(
-                    "addTheme",
-                    id,
-                    fs.readFileSync(path.join(themesFolder, id, manifest.theme), "utf-8"),
-                );
+                const css = fs.readFileSync(path.join(themesFolder, id, manifest.theme), "utf-8");
+                themeCssCache.set(id, css);
+                passedWindow.webContents.send("addTheme", id, css);
                 console.log(`[Theme Manager] Loaded ${manifest.name} made by ${manifest.author}`);
             } else {
+                themeCssCache.delete(id);
                 passedWindow.webContents.send("removeTheme", id);
                 console.log(`[Theme Manager] Removing ${manifest.name} made by ${manifest.author}`);
             }
@@ -322,6 +317,7 @@ function installThemeFromCode(code: string, linkOrPath?: string): void {
     else manifest.supportsLegcordTitlebar = false;
     fs.writeFileSync(path.join(themePath, "manifest.json"), JSON.stringify(manifest));
     fs.writeFileSync(path.join(themePath, "src.css"), code);
+    themeCssCache.clear();
     invalidateThemeListCache();
 }
 

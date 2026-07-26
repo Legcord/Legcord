@@ -7,10 +7,19 @@ import { getLang } from "./lang.js";
 import { getWindowStateLocation } from "./windowState.js";
 export let firstRun: boolean;
 
-// Performance optimization: Cache config to avoid reading file on every call
 let configCache: Settings | null = null;
-let configCacheTime = 0;
-const CONFIG_CACHE_TTL = 5000; // Cache for 5 seconds
+
+function ensureConfigCache(): Settings {
+    if (configCache) return configCache;
+    try {
+        const rawData = readFileSync(getConfigLocation(), "utf-8");
+        configCache = JSON.parse(rawData) as Settings;
+    } catch {
+        configCache = {} as Settings;
+    }
+    return configCache;
+}
+
 const defaults: Settings = {
     windowStyle: "overlay",
     channel: "stable",
@@ -110,17 +119,7 @@ export function getConfig<K extends keyof Settings>(object: K): Settings[K] {
         return safeMode[object];
     }
 
-    // Performance optimization: Use cached config if available and fresh
-    const now = Date.now();
-    if (configCache && now - configCacheTime < CONFIG_CACHE_TTL) {
-        return configCache[object];
-    }
-
-    const rawData = readFileSync(getConfigLocation(), "utf-8");
-    const returnData = JSON.parse(rawData) as Settings;
-    configCache = returnData;
-    configCacheTime = now;
-    return returnData[object];
+    return ensureConfigCache()[object];
 }
 
 const START_MINIMIZED_MODES = new Set<Settings["startMinimized"]>(["off", "minimized", "tray"]);
@@ -148,33 +147,17 @@ function migrateStartMinimized(settingsObject: Record<string, unknown>): boolean
     return false;
 }
 export function setConfig<K extends keyof Settings>(object: K, toSet: Settings[K]): void {
-    const rawData = readFileSync(getConfigLocation(), "utf-8");
-    const parsed = JSON.parse(rawData) as Settings;
+    const parsed = ensureConfigCache();
     parsed[object] = toSet;
     const toSave = JSON.stringify(parsed, null, 4);
     writeFileSync(getConfigLocation(), toSave, "utf-8");
-
-    // Performance optimization: Update cache immediately
-    configCache = parsed;
-    configCacheTime = Date.now();
 }
 export function setConfigBulk(object: Settings): void {
-    let existingData = {};
-    try {
-        const existingDataBuffer = readFileSync(getConfigLocation(), "utf-8");
-        existingData = JSON.parse(existingDataBuffer.toString()) as Settings;
-    } catch (_error) {
-        // Ignore errors when the file doesn't exist or parsing fails
-    }
-    // Merge the existing data with the new data
+    const existingData = configCache ?? ({} as Settings);
     const mergedData = { ...existingData, ...object };
-    // Write the merged data back to the file
+    configCache = mergedData as Settings;
     const toSave = JSON.stringify(mergedData, null, 4);
     writeFileSync(getConfigLocation(), toSave, "utf-8");
-
-    // Performance optimization: Update cache immediately
-    configCache = mergedData as Settings;
-    configCacheTime = Date.now();
 }
 export function checkIfConfigExists(): void {
     const userDataPath = app.getPath("userData");
@@ -208,17 +191,11 @@ export function checkIfConfigExists(): void {
 }
 export function checkIfConfigIsBroken(): void {
     try {
-        const settingsData = readFileSync(getConfigLocation(), "utf-8");
-        const settingsObject = JSON.parse(settingsData) as Settings & Record<string, unknown>;
+        const settingsObject = ensureConfigCache() as Settings & Record<string, unknown>;
 
-        // Migrate before typeof repair — boolean → "tray" | "off"
         if (migrateStartMinimized(settingsObject)) {
             writeFileSync(getConfigLocation(), JSON.stringify(settingsObject, null, 4), "utf-8");
         }
-
-        // Performance optimization: Update cache after validation
-        configCache = settingsObject as Settings;
-        configCacheTime = Date.now();
 
         let configWasFine = true;
         const settingsKeys = Object.keys(settingsObject) as (keyof Settings)[];
@@ -244,13 +221,6 @@ export function checkIfConfigIsBroken(): void {
             console.log(`Missing config root entry ${missingKey}, setting default config for this entry...`);
             setConfig(missingKey, defaults[missingKey]);
         });
-
-        // Performance optimization: Ensure cache is updated after fixes
-        if (!configWasFine) {
-            const updatedData = readFileSync(getConfigLocation(), "utf-8");
-            configCache = JSON.parse(updatedData) as Settings;
-            configCacheTime = Date.now();
-        }
 
         console.log(configWasFine ? "Config is fine" : "Config is now fine");
     } catch (e) {
