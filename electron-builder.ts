@@ -137,6 +137,9 @@ export const config: Configuration = {
         loadBrowserProcessSpecificV8Snapshot: false,
         grantFileProtocolExtraPrivileges: false,
     },
+    toolsets: {
+        appimage: "1.0.3",
+    },
 };
 
 export default config;
