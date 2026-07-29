@@ -414,3 +414,22 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
         });
     });
 }
+
+/**
+ * The following code is adapted from Vesktop, a desktop app aiming to give you a snappier Discord Experience
+ * Copyright (c) 2023 Vendicated and Vencord contributors
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *
+ * Modified to work with Legcord by @imide
+ */
+
+// Sets the WebRTC IP handling policy for all current and future windows.
+// Switching to "default_public_and_private_interfaces" may fix calls stuck at "DTLS Connecting" when using VPNs, Tailscale, etc.
+// https://github.com/Vencord/Vesktop/issues/876
+app.on("web-contents-created", (_event, contents) => {
+    contents.setWebRTCIPHandlingPolicy(getConfig("webRTCIPHandlingPolicy") ?? "default");
+});
+
+for (const win of BrowserWindow.getAllWindows()) {
+    win.webContents.setWebRTCIPHandlingPolicy(getConfig("webRTCIPHandlingPolicy") ?? "default");
+}
