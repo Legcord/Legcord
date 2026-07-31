@@ -54,7 +54,8 @@ winget install --id=smartfrigde.Legcord  -e
 
 ### Flatpak
 
-Not available yet.
+You can find our **official** Legcord flatpak on [Flathub!](https://flathub.org/en/apps/app.legcord.Legcord)
+Maintained by @imide, a contributor to Legcord and is officially sanctioned by us.
 
 ### Debian, Ubuntu and Raspbian
 
