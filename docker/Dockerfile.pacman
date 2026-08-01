@@ -4,14 +4,14 @@ WORKDIR /app
 
 COPY ./dist/*.pacman .
 
-RUN pacman -Syu --noconfirm
+RUN <<EOF
+pacman -Syu --noconfirm
+pacman -U --noconfirm ./*.pacman
+pacman -Syu --noconfirm x11vnc xorg-server-xvfb
 
-RUN pacman -U --noconfirm ./*.pacman
+EOF
 
-RUN pacman -Syu --noconfirm x11vnc xorg-server-xvfb
-
-RUN mkdir ~/.vnc
-RUN x11vnc -storepasswd 1234 ~/.vnc/passwd
+RUN mkdir ~/.vnc && x11vnc -storepasswd 1234 ~/.vnc/passwd
 
 COPY docker/start.sh /start.sh
 RUN chmod +x /start.sh

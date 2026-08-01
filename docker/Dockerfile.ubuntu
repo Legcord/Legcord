@@ -1,4 +1,4 @@
-FROM debian:bookworm
+FROM ubuntu
 
 WORKDIR /app
 
