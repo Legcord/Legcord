@@ -5,7 +5,7 @@ services:
   debian-bookworm:
     build:
       context: .
-      dockerfile: ./docker/Dockerfile.deb
+      dockerfile: ./docker/Dockerfile.bookworm
     ports:
       - "5900:5900"
     volumes:
@@ -28,6 +28,16 @@ services:
       dockerfile: ./docker/Dockerfile.ubuntu
     ports:
       - "5902:5900"
+    volumes:
+      - ./docker/start.sh:/start.sh
+    command: ["/bin/bash", "/start.sh"]
+
+  debian-trixie:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.trixie
+    ports:
+      - "5900:5900"
     volumes:
       - ./docker/start.sh:/start.sh
     command: ["/bin/bash", "/start.sh"]

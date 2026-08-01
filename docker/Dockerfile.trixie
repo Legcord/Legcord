@@ -1,0 +1,21 @@
+FROM debian:trixie
+
+WORKDIR /app
+
+COPY ./dist/*.deb .
+
+RUN <<EOF
+apt-get update -y && apt-get upgrade -y
+apt-get install ./*.deb -y
+apt-get install -qqy x11-apps x11vnc xvfb
+
+EOF
+
+RUN mkdir ~/.vnc && x11vnc -storepasswd 1234 ~/.vnc/passwd
+
+COPY docker/start.sh /start.sh
+RUN chmod +x /start.sh
+
+EXPOSE 5900
+
+CMD ["/start.sh"]
