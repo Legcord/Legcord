@@ -998,7 +998,15 @@ export function SettingsPage() {
                         </SwitchItem>
                     </SearchableSetting>
                 </Show>
-                <div class={classes.panelActions}>
+                <div class={classes.panelActions}   style={{
+                        width: "40rem",
+                        height: "10.5rem",
+                        display: "grid",
+                        "grid-template-columns": "1fr 1fr",
+                        gap: "1rem",
+                        "justify-items": "center",
+                        "margin-left": "auto",
+                        "margin-right": "auto",}}>
                     <SearchableSetting keywords={[t["settings-openCustomIconDialog"], "icon"]}>
                         <Button size={ButtonSizes.MAX} onClick={window.legcord.settings.openCustomIconDialog}>
                             {t["settings-openCustomIconDialog"]}
@@ -1029,14 +1037,23 @@ export function SettingsPage() {
                             {t["settings-openGPUInfo"]}
                         </Button>
                     </SearchableSetting>
-                    <SearchableSetting keywords={[t["settings-clearClientModCache"], "cache"]}>
-                        <Button
-                            size={ButtonSizes.MAX}
-                            onClick={() => setConfig("modCache", {} as Settings["modCache"])}
-                        >
-                            {t["settings-clearClientModCache"]}
-                        </Button>
-                    </SearchableSetting>
+                    <div
+                        style={{
+                            "grid-column": "1 / 3",
+                            display: "flex",
+                            "justify-content": "center",
+                            width: "20rem",
+                        }}
+                    >
+                        <SearchableSetting keywords={[t["settings-clearClientModCache"], "cache"]}>
+                            <Button
+                                size={ButtonSizes.MAX}
+                                onClick={() => setConfig("modCache", {} as Settings["modCache"])}
+                            >
+                                {t["settings-clearClientModCache"]}
+                            </Button>
+                        </SearchableSetting>
+                    </div>
                 </div>
             </SettingsPanel>
         </SettingsSearchProvider>
