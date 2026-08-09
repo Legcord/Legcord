@@ -1,0 +1,47 @@
+# These are supposed to run and tested indenpendently, not at the same time. Please
+# build them however you like, but always run each at a time if testing for GUI.
+
+services:
+  debian-bookworm:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.bookworm
+    ports:
+      - "5900:5900"
+    volumes:
+      - ./docker/start.sh:/start.sh
+    command: ["/bin/bash", "/start.sh"]
+
+  archlinux:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.pacman
+    ports:
+      - "5901:5900"
+    volumes:
+      - ./docker/start.sh:/start.sh
+    command: ["/bin/bash", "/start.sh"]
+
+  ubuntu:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.ubuntu
+    ports:
+      - "5902:5900"
+    volumes:
+      - ./docker/start.sh:/start.sh
+    command: ["/bin/bash", "/start.sh"]
+
+  debian-trixie:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.trixie
+    ports:
+      - "5900:5900"
+    volumes:
+      - ./docker/start.sh:/start.sh
+    command: ["/bin/bash", "/start.sh"]
+
+networks:
+  default:
+    driver: bridge

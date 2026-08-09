@@ -102,7 +102,19 @@ export const config: Configuration = {
     deb: {
         category: "Network",
         icon: "build/icon.icns",
-        depends: ["libasound2", "libnspr4", "libnss3", "libasound2t64", "libasound2-plugins"],
+        depends: [
+            "libasound2",
+            "libnspr4",
+            "libnss3",
+            "libasound2-plugins",
+            "libatk1.0-0 | libatk1.0-0t64",
+            "libatk-bridge2.0-0",
+            "libgbm1",
+            "libasound2t64 | libasound2",
+            "libcups2",
+            "libgtk3.0 | libgtk-3-0",
+            "at-spi2-common",
+        ],
         desktop: {
             entry: {
                 Actions: availableActions,
