@@ -77,12 +77,7 @@ export const ThemesCard = (props: { theme: ThemeManifest }) => {
                     <img class={classes.icon} alt={store.i18n["themes-edit"]} src="legcord://assets/Edit.png" />
                 </button>
                 <Show when={showUpdate}>
-                    <button
-                        title={store.i18n["themes-update"]}
-                        type="button"
-                        onClick={updateTheme}
-                        class={classes.btn}
-                    >
+                    <button title={store.i18n["themes-update"]} type="button" onClick={updateTheme} class={classes.btn}>
                         <img
                             class={classes.icon}
                             alt={store.i18n["themes-update"]}
@@ -90,12 +85,7 @@ export const ThemesCard = (props: { theme: ThemeManifest }) => {
                         />
                     </button>
                 </Show>
-                <button
-                    title={store.i18n["themes-open"]}
-                    type="button"
-                    onClick={openThemesFolder}
-                    class={classes.btn}
-                >
+                <button title={store.i18n["themes-open"]} type="button" onClick={openThemesFolder} class={classes.btn}>
                     <img class={classes.icon} alt={store.i18n["themes-open"]} src="legcord://assets/Folder.png" />
                 </button>
             </div>
