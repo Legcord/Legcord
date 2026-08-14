@@ -16,6 +16,7 @@
         "packageQuick": "pnpm run build && electron-builder --dir",
         "lint": "biome check",
         "lint:fix": "biome check --write",
+        "test": "node --experimental-strip-types --import ./tests/register-ts.mjs --test tests/screenshare-previews.test.ts",
         "postinstall": "electron-builder install-app-deps",
         "CIbuild": "pnpm run build && electron-builder --linux zip && electron-builder --windows zip && electron-builder --macos zip",
         "updateMeta": "node --experimental-strip-types scripts/utils/updateMeta.ts"

@@ -11,7 +11,8 @@ import type { venmicListObject } from "../venmic.js";
 interface IPCSources {
     id: string;
     name: string;
-    thumbnail: HTMLCanvasElement;
+    thumbnail: string;
+    appIcon?: string;
 }
 interface LegcordPluginInfo {
     id: string;

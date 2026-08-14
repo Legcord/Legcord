@@ -5,7 +5,8 @@ import classes from "./SourceCard.module.css";
 export interface IPCSources {
     id: string;
     name: string;
-    thumbnail: HTMLCanvasElement;
+    thumbnail: string;
+    appIcon?: string;
 }
 interface SourceCardProps {
     source: IPCSources;
@@ -37,7 +38,7 @@ export const SourceCard = ({ selected_name, source, onSelect }: SourceCardProps)
             </Show>
             <div class={classes.thumbnailWrapper}>
                 <img
-                    src={source.thumbnail.toDataURL()}
+                    src={source.thumbnail || source.appIcon}
                     alt={source.name}
                     class={isSelected() ? classes.thumbnailSelected : classes.thumbnailUnselected}
                 />
