@@ -16,8 +16,7 @@ jobs:
             - uses: actions/checkout@v4
 
             - name: Run flatpak-node-generator
-              run: pipx run git+https://github.com/flatpak/flatpak-builder-tools.git#subdirectory=node pnpm pnpm-lock.yaml --node-sdk-extension org.freedesktop.Sdk.Extension.node26 --electron-node-headers
-
+              run: pipx run git+https://github.com/flatpak/flatpak-builder-tools.git#subdirectory=node pnpm pnpm-lock.yaml --node-sdk-extension org.freedesktop.Sdk.Extension.node26 --electron-node-headers --pnpm-store-version v11
             - name: Upload generated-sources.json to release
               run: |
                   gh release upload ${{ github.event.release.tag_name }} generated-sources.json

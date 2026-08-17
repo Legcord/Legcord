@@ -264,20 +264,22 @@ async function load() {
         addStyle("legcord://assets/css/discord.css");
     });
     injectJS("legcord://assets/js/patchVencordQuickCSS.js");
+
     // Settings info version injection
-    const observer = new MutationObserver(() => {
-        if (document.body.querySelector("#ac-ver")) return;
-
-        const info = document.body.querySelector('[class*="sidebar"] [class*="compactInfo"]');
-        const host = info?.parentElement;
-        if (!host || !/(stable|ptb|canary) \d+|Electron|Chromium/i.test(host.textContent)) return;
-
-        const el = host.querySelector("span")!.cloneNode() as HTMLSpanElement;
-        el.id = "ac-ver";
-        el.textContent = `Legcord Version: ${version}`;
-        info.after(el);
-        observer.disconnect();
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
+    addScript(`(() => {
+        const versionElm = document.createElement("style");
+        versionElm.appendChild(document.createTextNode(\`
+            div[class*="compactInfo"] {
+                margin-bottom: 15px;
+            }
+            div[class*="compactInfo"] > span::before {
+                content: "Legcord Version: ${version}";
+                color: inherit;
+                position: absolute;
+                margin-top: 20px;
+            }
+        \`));
+        document.body.append(versionElm);
+    })()`);
 }
 load();
