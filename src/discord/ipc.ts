@@ -18,7 +18,7 @@ import {
     unblacklistGame as blacklistGameRemove,
     getBlacklist,
 } from "../common/blacklistGame.js";
-import { getConfig, getConfigLocation, setConfig, setConfigBulk } from "../common/config.js";
+import { getConfig, getConfigLocation, getEntireConfig, setConfig, setConfigBulk } from "../common/config.js";
 import { addDetectable, getDetectables, removeDetectable } from "../common/detectables.js";
 import { getLang, getLangName, getRawLang, setLang } from "../common/lang.js";
 import {
@@ -331,8 +331,7 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         refreshGlobalKeybinds();
     });
     ipcMain.on("getEntireConfig", (event) => {
-        const rawData = readFileSync(getConfigLocation(), "utf-8");
-        event.returnValue = JSON.parse(rawData) as Settings;
+        event.returnValue = getEntireConfig();
     });
     ipcMain.on("getTranslations", (event) => {
         event.returnValue = getRawLang();
@@ -372,7 +371,7 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         event.returnValue = os.release();
     });
     ipcMain.on("copyDebugInfo", () => {
-        const settingsFileContent = readFileSync(getConfigLocation(), "utf-8");
+        const settingsFileContent = JSON.stringify(getEntireConfig(), null, 4);
         clipboard.writeText(
             `**OS:** ${os.platform()} ${os.version()}\n**Architecture:** ${os.arch()}\n**Legcord version:** ${getVersion()}\n**Electron version:** ${
                 process.versions.electron
