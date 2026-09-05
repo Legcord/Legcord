@@ -6,6 +6,10 @@
     margin-top: 0px;
 }
 
+[legcord-platform="darwin"] div[class*="leading"]:has(+ div[class*="title"]) {
+    margin-left: 70px;
+}
+
 [legcord-platform="darwin"] #window-controls-container {
     float: left;
     width: 150px;
@@ -76,7 +80,7 @@
     display: none;
 }
 
-div[class*="bar__"][class*="hidden__"] {
+[legcord-platform="darwin"] div[class*="bar__"][class*="hidden__"] {
     pointer-events: unset;
     visibility: unset;
 }
