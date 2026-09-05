@@ -95,6 +95,11 @@ export interface Settings {
     overlayButtonColor: string;
     processScanning: boolean;
     windowsLegacyScanning: boolean;
+    webRTCIPHandlingPolicy?:
+        | "default"
+        | "default_public_interface_only"
+        | "default_public_and_private_interfaces"
+        | "disable_non_proxied_udp";
     scanInterval: number;
     modCache?: Record<ValidMods, string>;
     extendedPluginAbilities: boolean;
