@@ -1,5 +1,6 @@
 import { desktopCapturer, ipcMain, type Streams, session } from "electron";
 import { getConfig } from "../common/config.js";
+import { serializeCapturerSources } from "./screenshareSources.js";
 import { mainWindows } from "./window.js";
 
 export function registerCustomHandler(): void {
@@ -9,6 +10,8 @@ export function registerCustomHandler(): void {
             const sources = await desktopCapturer
                 .getSources({
                     types: ["window", "screen"],
+                    thumbnailSize: { width: 320, height: 180 },
+                    fetchWindowIcons: true,
                 })
                 .catch((err) => console.error(err));
 
@@ -46,8 +49,9 @@ export function registerCustomHandler(): void {
                     }
                 }
             });
+            const pickerSources = serializeCapturerSources(sources);
             mainWindows.every((window) => {
-                window.webContents.send("getSources", sources);
+                window.webContents.send("getSources", pickerSources);
                 return true;
             });
         },

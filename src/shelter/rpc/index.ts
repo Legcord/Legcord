@@ -42,33 +42,20 @@ async function listen(msg: {
         FluxDispatcher.dispatch({ type: "LOCAL_ACTIVITY_UPDATE", ...msg });
         return console.log(`Game ${gameName} (${appId}) is blacklisted, skipping...`);
     }
-    if (
-        msg.activity?.assets?.large_image?.startsWith("https://") ??
-        msg.activity?.assets?.small_image?.startsWith("https://")
-    ) {
-        if (typeof msg.activity.assets.large_image === "string") {
-            msg.activity.assets.large_image = await fetchExternalAsset(
-                msg.activity.application_id,
-                msg.activity.assets.large_image,
-            );
+    if (msg.activity?.assets) {
+        const { large_image, small_image } = msg.activity.assets;
+
+        if (typeof large_image === "string") {
+            msg.activity.assets.large_image = large_image.startsWith("https://")
+                ? await fetchExternalAsset(msg.activity.application_id, large_image)
+                : await fetchAssetId(msg.activity.application_id, large_image);
         }
-        if (typeof msg.activity.assets.small_image === "string") {
-            msg.activity.assets.small_image = await fetchExternalAsset(
-                msg.activity.application_id,
-                msg.activity.assets.small_image,
-            );
+
+        if (typeof small_image === "string") {
+            msg.activity.assets.small_image = small_image.startsWith("https://")
+                ? await fetchExternalAsset(msg.activity.application_id, small_image)
+                : await fetchAssetId(msg.activity.application_id, small_image);
         }
-    } else {
-        if (msg.activity?.assets?.large_image)
-            msg.activity.assets.large_image = await fetchAssetId(
-                msg.activity.application_id,
-                msg.activity.assets.large_image,
-            );
-        if (msg.activity?.assets?.small_image)
-            msg.activity.assets.small_image = await fetchAssetId(
-                msg.activity.application_id,
-                msg.activity.assets.small_image,
-            );
     }
 
     console.log("RPC activity update", msg.activity);

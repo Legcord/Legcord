@@ -354,13 +354,17 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
         process.on("SIGINT", () => app.quit());
         process.on("SIGTERM", () => app.quit());
         // Patch for linux bug to ensure things are loaded before window creation (fixes transparency on some linux systems)
-        await new Promise<void>((resolve) =>
-            setTimeout(() => {
-                init().then(() => {
-                    resolve();
-                });
-            }, 1500),
-        );
+        if (process.platform === "linux") {
+            await new Promise<void>((resolve) =>
+                setTimeout(() => {
+                    init().then(() => {
+                        resolve();
+                    });
+                }, 1500),
+            );
+        } else {
+            await init();
+        }
         session.defaultSession.setPermissionRequestHandler(async (_webContents, permission, callback) => {
             switch (permission) {
                 case "fullscreen":

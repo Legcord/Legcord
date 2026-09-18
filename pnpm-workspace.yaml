@@ -6,7 +6,7 @@ allowBuilds:
   koffi: true
 
 minimumReleaseAgeExclude:
-  - electron@42.3.3 || 43.2.0
+  - electron@42.3.3 || 43.2.0 || 44.2.0
 
 overrides:
   yauzl: "^3.3.1" # Electron still can't get their shit together https://github.com/electron/electron/issues/51619

@@ -113,6 +113,9 @@ export function getConfigLocation(): string {
     const storagePath = join(userDataPath, "/storage/");
     return `${storagePath}settings.json`;
 }
+export function getEntireConfig(): Settings {
+    return ensureConfigCache();
+}
 
 export function getConfig<K extends keyof Settings>(object: K): Settings[K] {
     if (process.argv.includes("--safe-mode")) {
