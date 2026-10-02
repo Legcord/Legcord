@@ -264,10 +264,10 @@ export function injectThemesMain(browserWindow: BrowserWindow): void {
 export function uninstallTheme(id: string) {
     const themePath = path.join(themesFolder, id);
     if (fs.existsSync(themePath)) {
-        fs.rmdirSync(themePath, { recursive: true });
+        fs.rmSync(themePath, { recursive: true });
         console.log(`Removed ${id} folder`);
     } else if (fs.existsSync(path.join(themesFolder, `${id}-BD`))) {
-        fs.rmdirSync(path.join(themesFolder, `${id}-BD`), { recursive: true });
+        fs.rmSync(path.join(themesFolder, `${id}-BD`), { recursive: true });
         console.log(`Removed ${id} folder`);
     }
     themeCssCache.delete(id);
