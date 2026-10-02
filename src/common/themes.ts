@@ -9,8 +9,14 @@ const themeManifestCache = new Map<string, { manifest: ThemeManifest; mtime: num
 const themeCssCache = new Map<string, string>();
 let quickCssWatcher: fs.FSWatcher | null = null;
 
-const userDataPath = app.getPath("userData");
-const themesFolder = path.join(userDataPath, "/themes/");
+let userDataPath: string;
+let themesFolder: string;
+
+void app.whenReady().then(() => {
+    userDataPath = app.getPath("userData");
+    themesFolder = path.join(userDataPath, "/themes/");
+});
+
 function parseBDManifest(content: string) {
     const metaReg = /@([^ ]*) (.*)/g;
     if (!content.startsWith("/**")) {
