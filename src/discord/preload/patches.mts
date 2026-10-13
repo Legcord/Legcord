@@ -1,7 +1,6 @@
 import { addScript, addStyle, injectJS } from "../../common/dom.js";
-import { sleep } from "../../common/sleep.js";
 
-const { ipcRenderer } = require("electron");
+const { ipcRenderer, webFrame } = require("electron");
 const version = ipcRenderer.sendSync("displayVersion") as string;
 
 {
@@ -236,36 +235,68 @@ const version = ipcRenderer.sendSync("displayVersion") as string;
     }
 }
 
-async function load() {
-    await sleep(5000).then(() => {
-        // Venmic audio injection lives in the Shelter screenshare getDisplayMedia patch.
-        // dirty hack to make clicking notifications focus Legcord
-        addScript(`
-        (() => {
-        const originalSetter = Object.getOwnPropertyDescriptor(Notification.prototype, "onclick").set;
-        Object.defineProperty(Notification.prototype, "onclick", {
-            set(onClick) {
-            originalSetter.call(this, function() {
-                onClick.apply(this, arguments);
-                legcord.window.show();
-            })
-            },
-            configurable: true
-        });
-        })();
-        `);
-        addScript(`
-        shelter.plugins.removePlugin("armcord-settings")
-        shelter.plugins.removePlugin("armcord-screenshare")
-    `);
-        if (ipcRenderer.sendSync("getConfig", "disableAutogain")) {
-            injectJS("legcord://assets/js/disableAutogain.js");
-        }
-        addStyle("legcord://assets/css/discord.css");
-    });
-    injectJS("legcord://assets/js/patchVencordQuickCSS.js");
+async function waitForPageGlobal(name: string, timeoutMs = 10000): Promise<boolean> {
+    const start = Date.now();
+    while (Date.now() - start < timeoutMs) {
+        try {
+            const exists = await webFrame.executeJavaScript(`!!window[${JSON.stringify(name)}]`, true);
+            if (exists) return true;
+        } catch {}
+        await new Promise((r) => setTimeout(r, 100));
+    }
+    console.warn(`[Legcord] Timeout waiting for window.${name}, skipping dependent injections`);
+    return false;
+}
 
-    // Settings info version injection
+async function waitForBody(timeoutMs = 10000): Promise<boolean> {
+    const start = Date.now();
+    while (Date.now() - start < timeoutMs) {
+        if (document.body) return true;
+        await new Promise((r) => setTimeout(r, 100));
+    }
+    console.warn("[Legcord] Timeout waiting for document.body");
+    return false;
+}
+
+function loadImmediate(): void {
+    addScript(`
+    (() => {
+    const originalSetter = Object.getOwnPropertyDescriptor(Notification.prototype, "onclick").set;
+    Object.defineProperty(Notification.prototype, "onclick", {
+        set(onClick) {
+        originalSetter.call(this, function() {
+            onClick.apply(this, arguments);
+            legcord.window.show();
+        })
+        },
+        configurable: true
+    });
+    })();
+    `);
+    addStyle("legcord://assets/css/discord.css");
+}
+
+async function loadShelterDeps(): Promise<void> {
+    const ready = await waitForPageGlobal("shelter");
+    if (!ready) return;
+    addScript(`
+    shelter.plugins.removePlugin("armcord-settings")
+    shelter.plugins.removePlugin("armcord-screenshare")
+`);
+    if (ipcRenderer.sendSync("getConfig", "disableAutogain")) {
+        await injectJS("legcord://assets/js/disableAutogain.js");
+    }
+}
+
+async function loadVencordDeps(): Promise<void> {
+    const ready = await waitForPageGlobal("Vencord");
+    if (!ready) return;
+    await injectJS("legcord://assets/js/patchVencordQuickCSS.js");
+}
+
+async function loadVersionInfo(): Promise<void> {
+    const ready = await waitForBody();
+    if (!ready) return;
     addScript(`(() => {
         const versionElm = document.createElement("style");
         versionElm.appendChild(document.createTextNode(\`
@@ -282,4 +313,8 @@ async function load() {
         document.body.append(versionElm);
     })()`);
 }
-load();
+
+loadImmediate();
+void loadShelterDeps();
+void loadVencordDeps();
+void loadVersionInfo();
