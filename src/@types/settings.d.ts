@@ -82,6 +82,11 @@ export interface Settings {
     quickCss: boolean;
     autoScroll: boolean;
     additionalArguments: string;
+    /**
+     * When true, skip denylisting dangerous Chromium switches in additionalArguments.
+     * settings.json only — not exposed in the settings UI or writable via renderer IPC.
+     */
+    disableDangerousSwitchBlocking: boolean;
     /** How Legcord resolves HTTP(S) proxies (Chromium + main-process fetch). */
     proxyMode: ProxyMode;
     /** Fixed proxy rules, e.g. `http://127.0.0.1:8080` or `socks5://host:1080`. */

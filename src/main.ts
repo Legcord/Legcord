@@ -20,6 +20,7 @@ import {
 import { getPreset } from "./common/flags.js";
 import { setLang } from "./common/lang.js";
 import { applyProxyCommandLineSwitches, applySessionProxy, configureNodeProxyEnv } from "./common/proxy.js";
+import { DANGEROUS_CHROMIUM_SWITCHES, sanitizeAdditionalArguments } from "./common/sanitization.js";
 import { revealWindow } from "./common/windowVisibility.js";
 import { setupGlobalShortcuts, startDbusService } from "./dbus.js";
 
@@ -277,10 +278,17 @@ if (!app.requestSingleInstanceLock() && getConfig("multiInstance") === false) {
         }
     }
     if (getConfig("additionalArguments") !== undefined) {
-        for (const arg of getConfig("additionalArguments").split(" ")) {
+        const allowDangerous = getConfig("disableDangerousSwitchBlocking") === true;
+        const rawArgs = getConfig("additionalArguments");
+        const argsToApply = allowDangerous ? rawArgs : sanitizeAdditionalArguments(rawArgs);
+        for (const arg of argsToApply.split(" ")) {
             if (arg.startsWith("--")) {
                 const [key, ...rest] = arg.substring(2).split("=");
                 const val = rest.length > 0 ? rest.join("=") : undefined;
+                if (!key || (!allowDangerous && DANGEROUS_CHROMIUM_SWITCHES.has(key.toLowerCase()))) {
+                    console.warn(`[Flags] Blocked dangerous Chromium switch: --${key}`);
+                    continue;
+                }
                 if (val === undefined) {
                     app.commandLine.appendSwitch(key);
                     trackSwitch(key);

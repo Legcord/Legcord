@@ -13,12 +13,25 @@ export function addStyle(styleUrl: string): void {
     document.head.append(style);
 }
 
+function themeDomId(id: string): string {
+    return `legcord-theme-${id.replace(/[^a-zA-Z0-9_-]/g, "_")}`;
+}
+
 export function addTheme(id: string, styleString: string): void {
-    if (document.getElementById(id)) return;
-    const style = document.createElement("style");
-    style.textContent = styleString;
-    style.id = id;
-    document.head.append(style);
+    const domId = themeDomId(id);
+    let style = document.getElementById(domId) as HTMLStyleElement | null;
+    if (!style) {
+        style = document.createElement("style");
+        style.id = domId;
+        document.head.append(style);
+    }
+    if (style.textContent !== styleString) {
+        style.textContent = styleString;
+    }
+}
+
+export function removeTheme(id: string): void {
+    document.getElementById(themeDomId(id))?.remove();
 }
 
 export function addScript(scriptString: string): void {

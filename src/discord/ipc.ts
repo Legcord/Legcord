@@ -18,7 +18,14 @@ import {
     unblacklistGame as blacklistGameRemove,
     getBlacklist,
 } from "../common/blacklistGame.js";
-import { getConfig, getConfigLocation, getEntireConfig, setConfig, setConfigBulk } from "../common/config.js";
+import {
+    getConfig,
+    getConfigLocation,
+    getEntireConfig,
+    isIpcWritableSettingsKey,
+    setConfig,
+    setConfigBulk,
+} from "../common/config.js";
 import { addDetectable, getDetectables, removeDetectable } from "../common/detectables.js";
 import { getLang, getLangName, getRawLang, setLang } from "../common/lang.js";
 import {
@@ -27,6 +34,8 @@ import {
     initQuickCss,
     installTheme,
     invalidateThemeListCache,
+    resolveThemeDir,
+    resolveThemeFile,
     setThemeEnabled,
     startThemeWatcher,
     uninstallTheme,
@@ -179,7 +188,7 @@ export function registerIpc(passedWindow: BrowserWindow): void {
             .then((result) => {
                 if (result.canceled) return;
                 for (const file of result.filePaths) {
-                    installTheme(file);
+                    void installTheme(file, { allowLocalPath: true });
                 }
             })
             .catch((err) => {
@@ -187,25 +196,35 @@ export function registerIpc(passedWindow: BrowserWindow): void {
             });
     });
     ipcMain.on("setThemeEnabled", (_event, name: string, enabled: boolean) => {
-        console.log(name, enabled);
-        setThemeEnabled(name, enabled);
+        if (typeof name !== "string" || !resolveThemeDir(name)) return;
+        setThemeEnabled(name, Boolean(enabled));
     });
     ipcMain.on("editTheme", (_event, id: string) => {
-        const manifest = JSON.parse(readFileSync(`${themesPath}/${id}/manifest.json`, "utf8")) as ThemeManifest;
+        const themeDir = resolveThemeDir(id);
+        if (!themeDir) return;
+        const manifestPath = path.join(themeDir, "manifest.json");
+        if (!existsSync(manifestPath)) return;
+        const manifest = JSON.parse(readFileSync(manifestPath, "utf8")) as ThemeManifest;
+        const themeFile = resolveThemeFile(id, manifest.theme);
+        if (!themeFile) return;
         if (getConfig("useSystemCssEditor")) {
-            void shell.openPath(`${themesPath}/${id}/${manifest.theme}`);
+            void shell.openPath(themeFile);
         } else {
-            openCssEditor(`${themesPath}/${id}/${manifest.theme}`);
+            openCssEditor(themeFile);
         }
     });
     ipcMain.on("openThemeFolder", (_event, id: string) => {
-        void shell.openPath(path.join(themesPath, id));
+        const themeDir = resolveThemeDir(id);
+        if (!themeDir) return;
+        void shell.openPath(themeDir);
     });
     ipcMain.on("uninstallTheme", (_event, id: string) => {
+        if (!resolveThemeDir(id) && !resolveThemeDir(`${id}-BD`)) return;
         uninstallTheme(id);
     });
 
     ipcMain.handle("installBDTheme", async (_event, link: string) => {
+        if (typeof link !== "string" || (!link.startsWith("https://") && !link.startsWith("http://"))) return;
         await installTheme(link);
     });
 
@@ -294,6 +313,11 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         event.returnValue = flags;
     });
     ipcMain.on("setConfig", (event, key: keyof Settings, value: Settings[keyof Settings]) => {
+        if (!isIpcWritableSettingsKey(key)) {
+            console.warn(`[IPC] Rejected setConfig for key: ${String(key)}`);
+            event.returnValue = undefined;
+            return;
+        }
         setConfig(key, value);
         event.returnValue = undefined;
     });
@@ -340,8 +364,12 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         event.returnValue = getConfig(arg);
     });
     ipcMain.on("saveSettings", (_event, args: Settings) => {
-        console.log(args);
-        setConfigBulk(args);
+        if (!args || typeof args !== "object") return;
+        const writable = Object.fromEntries(
+            Object.entries(args).filter(([key]) => isIpcWritableSettingsKey(key)),
+        ) as Settings;
+        console.log(writable);
+        setConfigBulk(writable);
     });
     ipcMain.on("openStorageFolder", () => {
         shell.showItemInFolder(storagePath);

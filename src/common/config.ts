@@ -4,6 +4,7 @@ import { dirname, join } from "node:path";
 import { app, dialog } from "electron";
 import type { Settings } from "../@types/settings.js";
 import { getLang } from "./lang.js";
+import { sanitizeAdditionalArguments } from "./sanitization.js";
 import { getWindowStateLocation } from "./windowState.js";
 export let firstRun: boolean;
 
@@ -70,6 +71,7 @@ const defaults: Settings = {
     noBundleUpdates: [],
     automaticUpdates: false,
     additionalArguments: "",
+    disableDangerousSwitchBlocking: false,
     proxyMode: "system",
     proxyRules: "",
     proxyBypassRules: "<local>",
@@ -85,6 +87,21 @@ const defaults: Settings = {
     pluginStates: {},
 };
 
+/** Known Settings keys (from defaults). Used to reject arbitrary IPC config writes. */
+export const SETTINGS_KEYS = new Set<string>(Object.keys(defaults));
+
+/** Keys that exist in Settings but must not be writable from renderer IPC. */
+const IPC_BLOCKED_SETTINGS_KEYS = new Set<keyof Settings>(["disableDangerousSwitchBlocking"]);
+
+export function isValidSettingsKey(key: unknown): key is keyof Settings {
+    return typeof key === "string" && SETTINGS_KEYS.has(key);
+}
+
+/** True when renderer IPC is allowed to write this settings key. */
+export function isIpcWritableSettingsKey(key: unknown): key is keyof Settings {
+    return isValidSettingsKey(key) && !IPC_BLOCKED_SETTINGS_KEYS.has(key);
+}
+
 const safeMode: Settings = {
     ...defaults,
     mods: [],
@@ -95,6 +112,7 @@ const safeMode: Settings = {
     disableHttpCache: true,
     vaapi: false,
     additionalArguments: "",
+    disableDangerousSwitchBlocking: false,
     extendedPluginAbilities: false,
     showExperimentalPluginMenu: false,
     quickCss: false,
@@ -149,15 +167,31 @@ function migrateStartMinimized(settingsObject: Record<string, unknown>): boolean
     }
     return false;
 }
+function sanitizeSettingsValue<K extends keyof Settings>(key: K, value: Settings[K]): Settings[K] {
+    if (key === "additionalArguments" && typeof value === "string") {
+        if (ensureConfigCache().disableDangerousSwitchBlocking) return value;
+        return sanitizeAdditionalArguments(value) as Settings[K];
+    }
+    return value;
+}
+
 export function setConfig<K extends keyof Settings>(object: K, toSet: Settings[K]): void {
     const parsed = ensureConfigCache();
-    parsed[object] = toSet;
+    parsed[object] = sanitizeSettingsValue(object, toSet);
     const toSave = JSON.stringify(parsed, null, 4);
     writeFileSync(getConfigLocation(), toSave, "utf-8");
 }
 export function setConfigBulk(object: Settings): void {
     const existingData = configCache ?? ({} as Settings);
-    const mergedData = { ...existingData, ...object };
+    const sanitizedEntries = Object.fromEntries(
+        Object.entries(object)
+            .filter(([key]) => isValidSettingsKey(key))
+            .map(([key, value]) => [
+                key,
+                sanitizeSettingsValue(key as keyof Settings, value as Settings[keyof Settings]),
+            ]),
+    ) as Partial<Settings>;
+    const mergedData = { ...existingData, ...sanitizedEntries };
     configCache = mergedData as Settings;
     const toSave = JSON.stringify(mergedData, null, 4);
     writeFileSync(getConfigLocation(), toSave, "utf-8");

@@ -4,6 +4,7 @@ import AdmZip from "adm-zip";
 import { app } from "electron";
 import type { Settings } from "../@types/settings.js";
 import { setConfigBulk } from "./config.js";
+import { resolvePathUnderBaseDir } from "./sanitization.js";
 
 export const LEGCORD_BACKUP_VERSION = 1;
 export const MANIFEST_ENTRY = "manifest.json";
@@ -135,20 +136,6 @@ export function buildBackupZipBuffer(payload: BackupSavePayload, paths: BackupPa
 function writeFileEnsuringDirs(filePath: string, data: Buffer): void {
     mkdirSync(path.dirname(filePath), { recursive: true });
     writeFileSync(filePath, data);
-}
-
-/**
- * Resolve a path relative to baseDir, rejecting traversal outside baseDir (zip slip).
- * `relativePath` uses forward slashes as stored in the archive.
- */
-function resolvePathUnderBaseDir(baseDir: string, relativePath: string): string | null {
-    const base = path.resolve(baseDir);
-    const resolved = path.resolve(base, relativePath);
-    const rel = path.relative(base, resolved);
-    if (rel.startsWith("..") || path.isAbsolute(rel)) {
-        return null;
-    }
-    return resolved;
 }
 
 /** Apply extracted zip entries to disk. Returns client mod blob for the renderer. */

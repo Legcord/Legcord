@@ -1,11 +1,13 @@
-import { addTheme } from "../../common/dom.js";
+import { addTheme, removeTheme } from "../../common/dom.js";
 
 const { ipcRenderer } = require("electron");
 
 ipcRenderer.on("addTheme", (_event: unknown, name: string, css: string) => {
-    if (document.getElementById(name)) return;
+    if (typeof name !== "string" || typeof css !== "string") return;
     addTheme(name, css);
 });
+
 ipcRenderer.on("removeTheme", (_event: unknown, name: string) => {
-    document.getElementById(name)!.remove();
+    if (typeof name !== "string") return;
+    removeTheme(name);
 });

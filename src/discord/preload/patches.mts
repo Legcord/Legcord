@@ -258,7 +258,9 @@ async function waitForBody(timeoutMs = 10000): Promise<boolean> {
     return false;
 }
 
-function loadImmediate(): void {
+async function loadImmediate(): Promise<void> {
+    const ready = await waitForPageGlobal("document.body");
+    if (!ready) return;
     addScript(`
     (() => {
     const originalSetter = Object.getOwnPropertyDescriptor(Notification.prototype, "onclick").set;
@@ -314,7 +316,7 @@ async function loadVersionInfo(): Promise<void> {
     })()`);
 }
 
-loadImmediate();
+void loadImmediate();
 void loadShelterDeps();
 void loadVencordDeps();
 void loadVersionInfo();
