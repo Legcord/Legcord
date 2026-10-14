@@ -44,10 +44,7 @@ export function setMenu(): void {
                 { type: "separator" },
                 {
                     label: getLang("menu-developerTools"),
-                    accelerator: process.platform === "darwin" ? "Cmd+Option+I" : "Ctrl+Shift+I",
-                    click() {
-                        BrowserWindow.getFocusedWindow()!.webContents.toggleDevTools();
-                    },
+                    role: "toggleDevTools",
                 },
                 {
                     label: getLang("menu-openSettings"),
