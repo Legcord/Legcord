@@ -62,11 +62,11 @@ jobs:
 
       - name: Build Electron for Windows (NSIS, AppX, & ZIP)
         if: matrix.os == 'windows-latest'
-        run: pnpm electron-builder --ia32 --arm64 --x64 -w nsis appx zip
+        run: pnpm electron-builder --arm64 --x64 -w nsis appx zip
 
       - name: Build Electron for Linux (RPM, DEB, AppImage & ZIP)
         if: matrix.os == 'ubuntu-latest'
-        run: pnpm electron-builder --armv7l --arm64 --x64 -l rpm deb appimage zip tar.gz
+        run: pnpm electron-builder --arm64 --x64 -l rpm deb appimage zip tar.gz
 
       - name: Save Electron Cache
         uses: actions/cache/save@v5
