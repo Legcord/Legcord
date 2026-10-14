@@ -9,8 +9,14 @@ const themeManifestCache = new Map<string, { manifest: ThemeManifest; mtime: num
 const themeCssCache = new Map<string, string>();
 let quickCssWatcher: fs.FSWatcher | null = null;
 
-const userDataPath = app.getPath("userData");
-const themesFolder = path.join(userDataPath, "/themes/");
+let userDataPath: string;
+let themesFolder: string;
+
+void app.whenReady().then(() => {
+    userDataPath = app.getPath("userData");
+    themesFolder = path.join(userDataPath, "/themes/");
+});
+
 function parseBDManifest(content: string) {
     const metaReg = /@([^ ]*) (.*)/g;
     if (!content.startsWith("/**")) {
@@ -264,10 +270,10 @@ export function injectThemesMain(browserWindow: BrowserWindow): void {
 export function uninstallTheme(id: string) {
     const themePath = path.join(themesFolder, id);
     if (fs.existsSync(themePath)) {
-        fs.rmdirSync(themePath, { recursive: true });
+        fs.rmSync(themePath, { recursive: true });
         console.log(`Removed ${id} folder`);
     } else if (fs.existsSync(path.join(themesFolder, `${id}-BD`))) {
-        fs.rmdirSync(path.join(themesFolder, `${id}-BD`), { recursive: true });
+        fs.rmSync(path.join(themesFolder, `${id}-BD`), { recursive: true });
         console.log(`Removed ${id} folder`);
     }
     themeCssCache.delete(id);
