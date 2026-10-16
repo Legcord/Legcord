@@ -4,7 +4,7 @@ import type { GameList, ServerSettings } from "arrpc";
 import type { BrowserWindow } from "electron";
 import { getConfig } from "../common/config.js";
 import { getDetectables } from "../common/detectables.js";
-import { navigateTo } from "../common/dom.js";
+import { navigateTo } from "../common/windowVisibility.js";
 
 /** Floor so a bad/zero config value cannot busy-loop the scanner. */
 const MIN_SCAN_INTERVAL_MS = 1000;

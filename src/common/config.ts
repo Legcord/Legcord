@@ -3,6 +3,7 @@ import { platform } from "node:os";
 import { dirname, join } from "node:path";
 import { app, dialog } from "electron";
 import type { Settings } from "../@types/settings.js";
+import { normalizeDockSettings } from "./dockVisibility.js";
 import { getLang } from "./lang.js";
 import { sanitizeAdditionalArguments } from "./sanitization.js";
 import { getWindowStateLocation } from "./windowState.js";
@@ -25,6 +26,7 @@ const defaults: Settings = {
     windowStyle: "overlay",
     channel: "stable",
     bounceOnPing: false,
+    hideDock: false,
     csp: "none",
     minimizeToTray: true,
     processScanning: true,
@@ -178,6 +180,7 @@ function sanitizeSettingsValue<K extends keyof Settings>(key: K, value: Settings
 export function setConfig<K extends keyof Settings>(object: K, toSet: Settings[K]): void {
     const parsed = ensureConfigCache();
     parsed[object] = sanitizeSettingsValue(object, toSet);
+    normalizeDockSettings(parsed, process.platform);
     const toSave = JSON.stringify(parsed, null, 4);
     writeFileSync(getConfigLocation(), toSave, "utf-8");
 }
@@ -192,6 +195,7 @@ export function setConfigBulk(object: Settings): void {
             ]),
     ) as Partial<Settings>;
     const mergedData = { ...existingData, ...sanitizedEntries };
+    normalizeDockSettings(mergedData, process.platform);
     configCache = mergedData as Settings;
     const toSave = JSON.stringify(mergedData, null, 4);
     writeFileSync(getConfigLocation(), toSave, "utf-8");
@@ -230,7 +234,9 @@ export function checkIfConfigIsBroken(): void {
     try {
         const settingsObject = ensureConfigCache() as Settings & Record<string, unknown>;
 
-        if (migrateStartMinimized(settingsObject)) {
+        const migratedStartMinimized = migrateStartMinimized(settingsObject);
+        const normalizedDock = normalizeDockSettings(settingsObject, process.platform);
+        if (migratedStartMinimized || normalizedDock) {
             writeFileSync(getConfigLocation(), JSON.stringify(settingsObject, null, 4), "utf-8");
         }
 

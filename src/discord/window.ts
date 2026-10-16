@@ -15,7 +15,6 @@ import {
 } from "electron";
 import contextMenu from "electron-context-menu";
 import { firstRun, getConfig, isBackgroundStart, setConfig } from "../common/config.js";
-import { navigateTo } from "../common/dom.js";
 import { forceQuit, setForceQuit } from "../common/forceQuit.js";
 import { handleCommands, passedValidArgument } from "../common/handleCommands.js";
 import { getLang } from "../common/lang.js";
@@ -35,9 +34,10 @@ import {
     sanitizeWindowBounds,
 } from "../common/windowBounds.js";
 import { getWindowState, setWindowState } from "../common/windowState.js";
-import { applyStartupWindowVisibility, revealWindow } from "../common/windowVisibility.js";
+import { applyStartupWindowVisibility, navigateTo, revealWindow } from "../common/windowVisibility.js";
 import { disconnectDbusService } from "../dbus.js";
 import { init } from "../main.js";
+import { applyDockVisibility } from "./dock.js";
 import { registerGlobalKeybinds } from "./globalKeybinds.js";
 import { registerIpc } from "./ipc.js";
 import { setMenu } from "./menu.js";
@@ -149,7 +149,12 @@ contextMenu({
     ],
 });
 function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
-    createTray();
+    try {
+        createTray();
+    } catch (error) {
+        console.error("[Tray] Could not create menu bar icon", error);
+    }
+    applyDockVisibility();
     if (getWindowState("isMaximized") ?? false) {
         passedWindow.setSize(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT); //just so the whole thing doesn't cover whole screen
         passedWindow.maximize();
@@ -200,6 +205,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
     }
     app.on("activate", async () => {
         app.show();
+        if (getConfig("hideDock") === true) applyDockVisibility();
     });
     passedWindow.webContents.on("frame-created", (_, { frame }) => {
         if (!frame) {
@@ -282,26 +288,25 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
             callback({ requestHeaders });
         },
     );
-    if (getConfig("tray") === "dynamic") {
-        passedWindow.webContents.on("page-favicon-updated", (_, favicons) => {
-            try {
-                let favicon = nativeImage.createFromDataURL(favicons[0]);
+    passedWindow.webContents.on("page-favicon-updated", (_, favicons) => {
+        if (getConfig("tray") !== "dynamic" || !tray || tray.isDestroyed()) return;
+        try {
+            let favicon = nativeImage.createFromDataURL(favicons[0]);
 
-                switch (process.platform) {
-                    case "darwin":
-                        favicon = favicon.resize({ height: 22 });
-                        break;
-                    case "win32":
-                        favicon = favicon.resize({ height: 32 });
-                        break;
-                }
-
-                tray.setImage(favicon);
-            } catch {
-                return;
+            switch (process.platform) {
+                case "darwin":
+                    favicon = favicon.resize({ height: 22 });
+                    break;
+                case "win32":
+                    favicon = favicon.resize({ height: 32 });
+                    break;
             }
-        });
-    }
+
+            tray.setImage(favicon);
+        } catch {
+            return;
+        }
+    });
 
     passedWindow.setTouchBar(mainTouchBar);
     app.on("open-url", (_event, url) => {
@@ -342,7 +347,7 @@ function doAfterDefiningTheWindow(passedWindow: BrowserWindow): void {
                 app.dock?.setBadge("•");
             } else if (title.startsWith("(")) {
                 const pings = extractPings(title);
-                if (pings && getConfig("bounceOnPing")) app.dock?.bounce();
+                if (pings && getConfig("bounceOnPing") && !getConfig("hideDock")) app.dock?.bounce();
                 app.setBadgeCount(pings ?? 0);
             } else {
                 app.setBadgeCount(0);

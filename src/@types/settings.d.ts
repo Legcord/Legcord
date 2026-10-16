@@ -75,6 +75,7 @@ export interface Settings {
     doneSetup: boolean;
     spellcheckLanguage: string[];
     smoothScroll: boolean;
+    hideDock: boolean;
     bounceOnPing: boolean;
     popoutPiP: boolean;
     sleepInBackground: boolean;

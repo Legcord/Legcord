@@ -2,7 +2,7 @@ import path from "node:path";
 import { app, shell } from "electron";
 import type { Keybind } from "../@types/keybind.js";
 import { mainWindows } from "../discord/window.js";
-import { navigateTo } from "./dom.js";
+import { navigateTo } from "./windowVisibility.js";
 
 let isAudioEngineEnabled = false;
 

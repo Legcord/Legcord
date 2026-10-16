@@ -1,9 +1,9 @@
 import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { app, nativeImage, TouchBar } from "electron";
-import { navigateTo } from "../common/dom.js";
 import { deafenToggle, leaveCall, muteToggle } from "../common/keybindActions.js";
 import { getLang } from "../common/lang.js";
+import { navigateTo } from "../common/windowVisibility.js";
 import { mainWindows } from "./window.js";
 
 const { TouchBarButton, TouchBarSpacer, TouchBarPopover, TouchBarScrubber } = TouchBar;

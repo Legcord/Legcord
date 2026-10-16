@@ -13,6 +13,8 @@
     "setup_question5": "Do you want to use a tray icon?",
     "settings-bounceOnPing": "Bounce in dock on ping",
     "settings-bounceOnPing-desc": "Bounce the app in the dock when you receive a ping.",
+    "settings-hideDock": "Hide from Dock",
+    "settings-hideDock-desc": "Keep Legcord hidden from the Dock, even when its window is open. Legcord remains accessible from the menu bar; its icon is enabled automatically and must stay enabled while the Dock icon is hidden. Changes apply immediately.",
     "settings-theme": "Window style",
     "settings-theme-desc": "Window style manages what titlebar Legcord uses.",
     "settings-theme-default": "Default (Custom)",

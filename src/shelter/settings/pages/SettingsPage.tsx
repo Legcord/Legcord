@@ -86,6 +86,9 @@ export function SettingsPage() {
             t["settings-transparency"],
             t["settings-material"],
             t["settings-bounceOnPing"],
+            ...(window.legcord.platform === "darwin"
+                ? [t["settings-hideDock"], t["settings-hideDock-desc"], "dock", "macOS"]
+                : []),
             t["settings-trayIcon"],
             t["settings-skipSplash"],
             t["settings-mobileMode"],
@@ -359,6 +362,17 @@ export function SettingsPage() {
                     </SearchableSetting>
                 </Show>
                 <Show when={window.legcord.platform === "darwin"}>
+                    <SearchableSetting
+                        keywords={[t["settings-hideDock"], t["settings-hideDock-desc"], "dock", "macOS"]}
+                    >
+                        <SwitchItem
+                            note={t["settings-hideDock-desc"]}
+                            value={settings.hideDock}
+                            onChange={(e: boolean) => setConfig("hideDock", e)}
+                        >
+                            {t["settings-hideDock"]}
+                        </SwitchItem>
+                    </SearchableSetting>
                     <SearchableSetting keywords={[t["settings-bounceOnPing"], t["settings-bounceOnPing-desc"]]}>
                         <SwitchItem
                             note={t["settings-bounceOnPing-desc"]}
@@ -377,7 +391,9 @@ export function SettingsPage() {
                         note={t["settings-trayIcon-desc"]}
                         options={[
                             { label: t["settings-trayIcon-dynamic"], value: "dynamic" },
-                            { label: t["settings-trayIcon-disabled"], value: "disabled" },
+                            ...(window.legcord.platform === "darwin" && settings.hideDock
+                                ? []
+                                : [{ label: t["settings-trayIcon-disabled"], value: "disabled" }]),
                             { label: t["settings-trayIcon-normal"], value: "dsc-tray" },
                             { label: t["settings-trayIcon-classic"], value: "clsc-dsc-tray" },
                             { label: t["settings-trayIcon-colored-plug"], value: "ac_plug_colored" },

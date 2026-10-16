@@ -86,6 +86,12 @@ export function setConfig<K extends keyof Settings>(key: K, value: Settings[K], 
             isRestartRequired = true;
         }
         window.legcord.settings.setConfig(key, value);
+        if (window.legcord.platform === "darwin" && (key === "hideDock" || key === "tray")) {
+            // The main process may have restored the menu bar icon to keep Legcord accessible.
+            const saved = window.legcord.settings.getConfig();
+            store.settings.hideDock = saved.hideDock;
+            store.settings.tray = saved.tray;
+        }
     });
 }
 

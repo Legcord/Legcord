@@ -1,5 +1,3 @@
-import type { BrowserWindow } from "electron";
-
 let scriptCounter = 0;
 
 export function addStyle(styleUrl: string): void {
@@ -51,17 +49,4 @@ export async function injectJS(inject: string): Promise<void> {
     el.id = id;
     el.appendChild(document.createTextNode(js));
     document.body.appendChild(el);
-}
-
-export function navigateTo(passedWindow: BrowserWindow, url: string): void {
-    // Sanitize: only allow path-like URLs (no protocol, no quotes)
-    const sanitized = url.replace(/[^a-zA-Z0-9/_\-@.]/g, "");
-    console.log(`[legcord deeplink] Navigating to ${sanitized}`);
-    passedWindow.webContents.executeJavaScript(
-        `history.pushState({}, null, ${JSON.stringify(sanitized)});window.dispatchEvent(new PopStateEvent("popstate", {}));`,
-    );
-    passedWindow.setSkipTaskbar(false);
-    if (passedWindow.isMinimized()) passedWindow.restore();
-    passedWindow.show();
-    passedWindow.focus();
 }

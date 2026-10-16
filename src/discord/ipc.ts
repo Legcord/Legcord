@@ -47,6 +47,7 @@ import { getAppliedFlags, handleRestart } from "../main.js";
 import { isPowerSavingEnabled, setPowerSaving } from "../power.js";
 import constPaths from "../shared/consts/paths.js";
 import { splashWindow } from "../splash/main.js";
+import { applyDockVisibility } from "./dock.js";
 import { refreshGlobalKeybinds } from "./globalKeybinds.js";
 import { getRuntimeEntries, getRuntimeScript, listPlugins, reloadPlugin, setPluginEnabled } from "./plugins/manager.js";
 import { processList, refreshProcessList } from "./rpcProcess.js";
@@ -319,6 +320,7 @@ export function registerIpc(passedWindow: BrowserWindow): void {
             return;
         }
         setConfig(key, value);
+        if (key === "hideDock" || key === "tray") applyDockVisibility();
         event.returnValue = undefined;
     });
     ipcMain.on("getRpcBlacklist", (event) => {
@@ -370,6 +372,7 @@ export function registerIpc(passedWindow: BrowserWindow): void {
         ) as Settings;
         console.log(writable);
         setConfigBulk(writable);
+        if ("hideDock" in writable || "tray" in writable) applyDockVisibility();
     });
     ipcMain.on("openStorageFolder", () => {
         shell.showItemInFolder(storagePath);
@@ -588,6 +591,7 @@ export function registerIpc(passedWindow: BrowserWindow): void {
                 quickCssPath,
                 getConfigLocation,
             });
+            applyDockVisibility();
             return JSON.stringify({ ok: true, clientMods });
         } catch (err) {
             console.error(err);
