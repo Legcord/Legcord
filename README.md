@@ -15,7 +15,7 @@
 
    Legcord natively supports theming of the entire app, you can easily import BetterDiscord themes and manage them
 
-- **Made for Privacy™**
+- **Made for Privacy**
 
    Legcord automatically blocks all of Discord's trackers; even without any client mods, you can feel safe and secure!
 
