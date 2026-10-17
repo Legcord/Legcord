@@ -668,6 +668,31 @@ export function SettingsPage() {
                         ]}
                     />
                 </SearchableSetting>
+                <SearchableSetting keywords={[t["settings-webrtcIPHandling"], t["settings-webrtcIPHandling-desc"]]}>
+                    <DropdownItem
+                        value={settings.webRTCIPHandlingPolicy ?? "default"}
+                        onChange={(v) =>
+                            setConfig("webRTCIPHandlingPolicy", v as Settings["webRTCIPHandlingPolicy"], true)
+                        }
+                        title={t["settings-webrtcIPHandling"]}
+                        note={t["settings-webrtcIPHandling-desc"]}
+                        options={[
+                            { label: t["settings-webrtcIPHandling-default"], value: "default" },
+                            {
+                                label: t["settings-webrtcIPHandling-public_interface_only"],
+                                value: "default_public_interface_only",
+                            },
+                            {
+                                label: t["settings-webrtcIPHandling-public_and_private_interfaces"],
+                                value: "default_public_and_private_interfaces",
+                            },
+                            {
+                                label: t["settings-webrtcIPHandling-disable_non_proxied_udp"],
+                                value: "disable_non_proxied_udp",
+                            },
+                        ]}
+                    />
+                </SearchableSetting>
                 <Show when={(settings.proxyMode ?? "system") === "fixed_servers"}>
                     <SearchableSetting keywords={[t["settings-proxyRules"], t["settings-proxyRules-desc"]]}>
                         <TextBoxItem
