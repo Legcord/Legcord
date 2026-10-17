@@ -29,6 +29,38 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.3.1" date="2026-10-17" type="stable">
+      <url>https://github.com/Legcord/Legcord/releases/tag/v1.3.1</url>
+      <description>
+        <p>What’s New in Legcord v1.3.1 ✨</p>
+        <ul>
+          <li>🔒 **Security fixes (CVE-2026-105294 &amp; CVE-2026-105293**)</li>
+        </ul>
+        <ul>
+          <li>⚡ **Faster startup and improved performance**</li>
+        </ul>
+        <ul>
+          <li>🖥️ **Improved screensharing previews**</li>
+        </ul>
+        <ul>
+          <li>🎨 **Improved themes and interface fixes**</li>
+        </ul>
+        <ul>
+          <li>🎮 **More reliable Rich Presence**</li>
+        </ul>
+        <ul>
+          <li>📦 **Improved portable mode**</li>
+        </ul>
+        <ul>
+          <li>🐧 Fixed Debian package dependencies (#1146 by @renangiuliasse).</li>
+          <li>🐧 Updated Flatpak metadata to remove a broken release entry (#1140 by @imide).</li>
+          <li>📖 Updated the README to include Flathub installation instructions (#1143 by @imide).</li>
+          <li>🔧 Fixed the CI workflow to run the intended command instead of installing dependencies in the affected step (#1137 by @imide).</li>
+          <li>🔧 Set the pnpm store version in CI for more consistent builds (#1139 by @imide).</li>
+          <li>📝 Added `.gitattributes` to enforce consistent LF line endings across the repository (#1167 by @youtsuhodev).</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.3.0" date="2026-07-26" type="stable">
       <url>https://github.com/Legcord/Legcord/releases/tag/v1.3.0</url>
       <description>
