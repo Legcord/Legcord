@@ -45,7 +45,7 @@
         "@xmldom/xmldom": "^0.9.10",
         "app-builder-lib": "^26.16.1",
         "babel-preset-solid": "^1.9.12",
-        "electron": "44.7.2",
+        "electron": "44.9.0",
         "electron-builder": "26.16.1",
         "lucide-solid": "^1.26.0",
         "monaco-editor": "0.56.0",
