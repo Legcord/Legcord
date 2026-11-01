@@ -120,6 +120,10 @@ A practical renderer-only workaround plugin is also available at:
 - `docs/examples/clipboard-fallback-plugin/manifest.json`
 - `docs/examples/clipboard-fallback-plugin/renderer.js`
 
+A main-and-renderer plugin that opens a channel in its own window is available at:
+
+- `docs/examples/channel-popout/README.md`
+
 To test it:
 
 1. Copy `docs/examples/hello-plugin` into your runtime plugins directory:

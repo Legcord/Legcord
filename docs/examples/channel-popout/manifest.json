@@ -1,0 +1,10 @@
+{
+    "id": "channel-popout",
+    "name": "Channel Popout",
+    "version": "1.0.0",
+    "description": "Right-click a channel and open its chat in a separate window.",
+    "author": "dethrad",
+    "compatibleVersions": ["*"],
+    "main": "main.js",
+    "renderer": "renderer.js"
+}
