@@ -1,3 +1,24 @@
+# Winding down Legcord / End of Life
+
+<https://pzurek.dev/blog/the-end-of-legcord/>
+
+It's been a good run folks. Originally Armcord, Legcord's legacy is over.
+
+Discord is moving to Rust (<https://x.com/svishnevskiy/status/2118081920194203799>), and Legcord will no longer be compatible with the Rust rewrite.
+
+We ask that you do *NOT* use the Legcord name or brand for forks, and overall don't suggest forking the repository for long term use.
+
+The codebase is in a pretty bad state as it stands.
+
+## PRs will only be accepted for critical bugs / security issues while the Electron client is mainstream.
+
+# PSA: DO NOT BLINDLY TRUST NEW CLIENT MODS CLAIMING TO WORK ON THE NEW CLIENT
+
+With just about every client mod wrapping up, there is going to be a plethora of AI slop apps and even malicious actors making apps for Discord.
+
+Even if you aren't against AI, we strongly recommend against using AI built clients due to how sensitive Discord's API is. It is very easy to catch a permanent ban if you hit the API in the wrong ways.
+
+### END OF ARCHIVE NOTE
 
 ![Legcord](https://github.com/user-attachments/assets/f7b007d4-44fa-4c88-96e4-0a448b568b5d)
 
