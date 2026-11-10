@@ -2,7 +2,7 @@
 
 <https://pzurek.dev/blog/the-end-of-legcord/>
 
-It's been a good run folks. Originally Armcord, Legcord's legacy is over.
+It's been a good run folks. Originally Legcord's legacy is over.
 
 Discord is moving to Rust (<https://x.com/svishnevskiy/status/2118081920194203799>), and Legcord will no longer be compatible with the Rust rewrite.
 
