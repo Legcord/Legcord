@@ -1,6 +1,6 @@
 /* Legcord on Windows */
 
-[legcord-platform="win32"] div[class*="title"] + div[class*="trailing"] {
+[legcord-platform="win32"] div[class*="title"] ~ div[class*="trailing"] {
     margin-right: 173px;
 }
 
